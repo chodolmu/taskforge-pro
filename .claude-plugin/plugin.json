@@ -1,0 +1,24 @@
+{
+  "name": "taskforge-pro",
+  "version": "1.0.0",
+  "description": "통합 프로젝트 매니저. TaskForge PM + Harness-100 도메인 전문가 + GSD 검증 체계를 하나로. 프로젝트를 마일스톤→스프린트→태스크로 자동 분할하고, 100개 도메인 하네스로 전문 실행하며, goal-backward 검증으로 품질을 보장합니다.",
+  "author": {
+    "name": "Cho Jun",
+    "url": "https://github.com/chodolmu"
+  },
+  "repository": "https://github.com/chodolmu/taskforge-pro",
+  "license": "MIT",
+  "keywords": [
+    "project-manager",
+    "task-driven",
+    "planning",
+    "execution",
+    "handoff",
+    "harness",
+    "domain-expert",
+    "validation",
+    "goal-backward",
+    "multi-agent"
+  ],
+  "skills": "./skills/"
+}
