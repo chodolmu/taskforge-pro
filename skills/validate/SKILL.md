@@ -1,6 +1,6 @@
 ---
 name: validate
-description: 태스크, 스프린트, 마일���톤 단위�� 검증을 실행한다. "/validate", "검증", "테스트 돌려", "확인��봐" 등을 말할 때 사용한��. 스프린트나 마일스��� 완료 후 품질 확인에 사용된다. goal-backward 검증과 anti-pattern 스캔을 포함한다.
+description: 코드를 자동으로 검증한다. "/validate", "빌드 확인", "코드 검증", "자동 검증", "테스트 돌려" 등을 말할 때 사용한다. 태스크/스프린트 단위로 빌드, 타입체크, 린트, acceptance criteria, goal-backward 검증을 AI가 자동 실행한다. 사용자가 직접 확인하는 것은 "/verify"(대화형 UAT), 마일스톤 종합 감사는 "/audit"를 사용한다.
 ---
 
 # Validate — 검증 실행 (Goal-Backward 강화)
@@ -84,17 +84,11 @@ Acceptance:
 
 5. 결과 리포트 생성 (verification-report 템플릿 사용)
 
-### 3. 마일스톤 검증 (마일스톤 완료 후)
+### 3. 마일스톤 검증 → `/audit`로 위임
 
-마일스톤의 `validationStrategy`에 따라 전체 QA:
-
-1. 자동 검증 전체 실행
-2. Opus 모델로 전체 리뷰:
-   - SpecCard의 요구사항 대비 구현 완료 여부
-   - 마일스톤 목표 달성 여부
-   - 전체적 코드 품질 및 아키텍처 평가
-3. 사용자에게 데모 가능한 상태인지 확인 요청
-4. 마일스톤 level goal-backward 검증 (모든 스프린트의 mustHaves 종합)
+마일스톤 레벨 검증은 `/audit` 스킬이 담당한다. 마일스톤이 완료되면:
+- "마일스톤 검증은 `/audit`로 실행하세요 (3-source 교차 검증 + 회귀 감사)"
+- `/validate milestone`을 호출해도 자동으로 `/audit` 안내로 리다이렉트
 
 ## 검증 결과 저장
 
@@ -133,7 +127,7 @@ Acceptance:
 
 ```
 /validate              → 가장 최근 완료된 단위를 자동 감지하여 검증
-/validate sprint       → 현재 스프린트 검증
-/validate milestone    → 현재 마일스톤 검증
+/validate sprint       → 현재 스프린트 검증 (goal-backward 포함)
 /validate task m1-s1-t3 → 특정 태스크 검증
+/validate milestone    → /audit로 안내 (마일스톤은 audit이 담당)
 ```

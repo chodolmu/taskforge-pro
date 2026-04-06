@@ -96,7 +96,12 @@ Acceptance Criteria 검증:
 1. **Handoff 생성**: `/handoff` 스킬을 자동으로 호출하여 작업 이력을 남긴다
 2. **자동 검증**: `validation.auto`에 지정된 항목을 실행 (build, typecheck 등)
 3. **Acceptance Criteria 확인**: 완료 기준 전체 충족 확인
-4. **상태 업데이트**: execution-state.json 갱신
+4. **상태 업데이트**: execution-state.json의 태스크 상태를 전이:
+   - `ready` → `in_progress` (실행 시작 시)
+   - `in_progress` → `completed` (검증 통과 시)
+   - `in_progress` → `failed` (검증 실패 또는 에러 시)
+   - `blocked` → `ready` (의존 태스크 완료 시 자동 전환)
+   - 상태 전이 시 `startedAt`, `completedAt`, `failedAt` 타임스탬프도 기록
 5. **결과 보고**: 사용자에게 간략히 보고
 
 ```
