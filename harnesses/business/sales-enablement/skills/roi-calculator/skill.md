@@ -1,174 +1,174 @@
 ---
 name: roi-calculator
-description: "B2B 영업용 ROI(투자수익률) 계산 프레임워크. '영업 ROI 계산', 'TCO 분석', '투자 회수 기간', '비용 절감 분석', '가치 제안 수치화' 등 영업 제안서 작성 시 사용한다. 단, 재무제표 감사, 세무 자문은 이 스킬의 범위가 아니다."
+description: "A B2B sales ROI (Return on Investment) calculation framework. Used for 'sales ROI calculation,' 'TCO analysis,' 'payback period,' 'cost reduction analysis,' and 'value proposition quantification' when writing sales proposals. Note: Financial statement auditing and tax advisory are outside the scope of this skill."
 ---
 
-# ROI Calculator — B2B 영업용 ROI 계산 프레임워크
+# ROI Calculator — B2B Sales ROI Calculation Framework
 
-proposal-writer와 presenter의 가치 제안 수치화를 강화하는 스킬.
+A skill that enhances value proposition quantification for proposal-writer and presenter.
 
-## 대상 에이전트
+## Target Agents
 
-- **proposal-writer** — 제안서에 설득력 있는 ROI를 포함한다
-- **presenter** — PT에서 ROI 시각화 자료를 구성한다
+- **proposal-writer** — Includes persuasive ROI in the proposal
+- **presenter** — Constructs ROI visualization materials for the presentation
 
-## ROI 계산 공식
+## ROI Calculation Formulas
 
-### 기본 ROI
+### Basic ROI
 
 ```
-ROI = (순이익 - 투자비용) / 투자비용 × 100%
+ROI = (Net Benefit - Investment Cost) / Investment Cost x 100%
 
-순이익 = 비용 절감 + 매출 증가 + 생산성 향상 (가치)
-투자비용 = 도입비 + 구축비 + 운영비 + 전환비용
+Net Benefit = Cost Savings + Revenue Increase + Productivity Gains (Value)
+Investment Cost = Adoption Cost + Implementation Cost + Operating Cost + Switching Cost
 ```
 
 ### TCO (Total Cost of Ownership)
 
 ```
-TCO = 초기 비용 + 운영 비용(N년) + 전환 비용 + 숨은 비용
+TCO = Initial Cost + Operating Cost (N years) + Switching Cost + Hidden Costs
 
-초기 비용:
-  - 라이선스/구매비
-  - 구축/커스터마이징
-  - 데이터 마이그레이션
-  - 교육 비용
+Initial Cost:
+  - License/purchase fees
+  - Implementation/customization
+  - Data migration
+  - Training costs
 
-운영 비용 (연간):
-  - 구독료/유지보수
-  - 인프라 비용
-  - 관리 인건비
-  - 업그레이드 비용
+Operating Cost (annual):
+  - Subscription/maintenance fees
+  - Infrastructure costs
+  - Administrative labor costs
+  - Upgrade costs
 
-전환 비용:
-  - 기존 시스템 해지
-  - 병행 운영 기간 비용
-  - 생산성 저하 (학습 곡선)
+Switching Cost:
+  - Existing system termination
+  - Parallel operation period costs
+  - Productivity loss (learning curve)
 
-숨은 비용:
-  - 다운타임 비용
-  - 보안 사고 리스크
-  - 규정 미준수 페널티
+Hidden Costs:
+  - Downtime costs
+  - Security incident risk
+  - Regulatory non-compliance penalties
 ```
 
-### Payback Period (투자 회수 기간)
+### Payback Period
 
 ```
-Payback = 총 투자비 / 월간 순이익
+Payback = Total Investment / Monthly Net Benefit
 
-예시:
-  투자비: 1.2억원
-  월간 절감: 1,500만원
-  Payback = 1.2억 / 1,500만 = 8개월
+Example:
+  Investment: $1M
+  Monthly savings: $125K
+  Payback = $1M / $125K = 8 months
 ```
 
-## 가치 정량화 프레임워크
+## Value Quantification Framework
 
-### 비용 절감 (Cost Reduction)
-
-```
-1. 인건비 절감
-   절감액 = 자동화 대상 시간 × 시급 × 인원수
-   예: 주 10시간 × 3만원 × 20명 = 월 2,400만원
-
-2. 인프라 절감
-   절감액 = (현재 인프라비 - 신규 인프라비) × 12
-   예: (월 500만 - 월 200만) × 12 = 연 3,600만원
-
-3. 오류 비용 절감
-   절감액 = 오류 건수 × 건당 처리 비용 × 감소율
-   예: 월 50건 × 10만원 × 80% = 월 400만원
-```
-
-### 매출 증가 (Revenue Growth)
+### Cost Reduction
 
 ```
-1. 전환율 개선
-   증가액 = 현재 매출 × 전환율 상승분
-   예: 월 10억 × 2% 상승 = 월 2,000만원
+1. Labor cost savings
+   Savings = Automated hours x Hourly rate x Headcount
+   Example: 10 hrs/week x $50/hr x 20 people = $40K/month
 
-2. 이탈 감소
-   증가액 = 이탈 고객 × 고객 가치 × 방지율
-   예: 월 100명 × 50만원 × 30% = 월 1,500만원
+2. Infrastructure savings
+   Savings = (Current infra cost - New infra cost) x 12
+   Example: ($50K/mo - $20K/mo) x 12 = $360K/year
 
-3. 업셀/크로스셀
-   증가액 = 타깃 고객 × 추가 구매율 × 평균 금액
+3. Error cost reduction
+   Savings = Error count x Cost per error x Reduction rate
+   Example: 50/month x $1K x 80% = $40K/month
 ```
 
-### 생산성 향상 (Productivity)
+### Revenue Growth
 
 ```
-1. 시간 절약
-   가치 = 절약 시간 × 시급 × 인원
-   예: 일 2시간 × 3만원 × 50명 = 월 6,600만원
+1. Conversion rate improvement
+   Increase = Current revenue x Conversion rate uplift
+   Example: $10M/month x 2% uplift = $200K/month
 
-2. 의사결정 속도
-   가치 = 기회비용 × 단축 기간
-   
-3. 고객 응대 효율
-   가치 = 건당 처리시간 단축 × 건수 × 시간 가치
+2. Churn reduction
+   Increase = Churned customers x Customer value x Prevention rate
+   Example: 100/month x $5K x 30% = $150K/month
+
+3. Upsell/Cross-sell
+   Increase = Target customers x Additional purchase rate x Average value
 ```
 
-## 3단계 ROI 프레젠테이션
+### Productivity
 
 ```
-Stage 1: 보수적 시나리오
-  - 최소한의 효과만 반영
-  - "최악의 경우에도 이 정도 ROI"
-  - 고객이 의심하는 수치를 미리 낮춤
+1. Time savings
+   Value = Hours saved x Hourly rate x Headcount
+   Example: 2 hrs/day x $50/hr x 50 people = $110K/month
 
-Stage 2: 기본 시나리오
-  - 유사 고객 사례 기반
-  - "대부분의 고객이 경험하는 ROI"
-  - 구체적 사례 인용
+2. Decision speed
+   Value = Opportunity cost x Time reduction
 
-Stage 3: 최적 시나리오
-  - 전체 기능 활용 시
-  - "최적화 후 달성 가능한 ROI"
-  - 장기적 가치 포함
+3. Customer service efficiency
+   Value = Processing time reduction per case x Case volume x Time value
 ```
 
-## ROI 신뢰도 높이기
+## Three-Stage ROI Presentation
 
 ```
-1. 고객 데이터 사용
-   "귀사의 현재 처리 건수 X를 기준으로 계산하면..."
+Stage 1: Conservative Scenario
+  - Reflects only minimum effects
+  - "Even in the worst case, ROI is at least this much"
+  - Pre-emptively lowers figures the customer might question
 
-2. 동종 업계 사례
-   "유사 규모 제조업체 A사에서 18개월간 측정한 결과..."
+Stage 2: Base Scenario
+  - Based on comparable customer cases
+  - "ROI most customers experience"
+  - Cites specific case studies
 
-3. 보수적 가정 명시
-   "채택률을 50%로 보수적으로 가정했습니다"
-
-4. 제3자 데이터 인용
-   "Gartner에 따르면 이 카테고리 평균 ROI는 X%..."
-
-5. 단계별 마일스톤
-   "3개월: 비용 절감 시작, 6개월: BEP, 12개월: ROI 200%"
+Stage 3: Optimistic Scenario
+  - When full functionality is utilized
+  - "ROI achievable after optimization"
+  - Includes long-term value
 ```
 
-## ROI 계산 시트 템플릿
+## Boosting ROI Credibility
+
+```
+1. Use customer data
+   "Based on your current processing volume of X..."
+
+2. Industry peer case studies
+   "Measured over 18 months at a similarly sized manufacturer..."
+
+3. State conservative assumptions
+   "We've conservatively assumed a 50% adoption rate"
+
+4. Cite third-party data
+   "According to Gartner, the average ROI in this category is X%..."
+
+5. Phased milestones
+   "Month 3: Cost savings begin, Month 6: Break-even, Month 12: ROI 200%"
+```
+
+## ROI Calculation Sheet Template
 
 ```markdown
-## ROI 분석 요약
+## ROI Analysis Summary
 
-### 투자 비용 (3년 TCO)
-| 항목 | Year 1 | Year 2 | Year 3 | 합계 |
-|------|--------|--------|--------|------|
-| 초기 비용 | | - | - | |
-| 운영 비용 | | | | |
-| **합계** | | | | |
+### Investment Cost (3-Year TCO)
+| Item | Year 1 | Year 2 | Year 3 | Total |
+|------|--------|--------|--------|-------|
+| Initial Cost | | - | - | |
+| Operating Cost | | | | |
+| **Total** | | | | |
 
-### 기대 효과 (연간)
-| 항목 | 산출 근거 | Year 1 | Year 2 | Year 3 |
-|------|----------|--------|--------|--------|
-| 비용 절감 | | | | |
-| 매출 증가 | | | | |
-| 생산성 | | | | |
-| **합계** | | | | |
+### Expected Benefits (Annual)
+| Item | Calculation Basis | Year 1 | Year 2 | Year 3 |
+|------|-----------------|--------|--------|--------|
+| Cost Savings | | | | |
+| Revenue Increase | | | | |
+| Productivity | | | | |
+| **Total** | | | | |
 
-### ROI 요약
-- 3년 ROI: [N]%
-- Payback: [N]개월
-- 3년 순이익: [N]원
+### ROI Summary
+- 3-Year ROI: [N]%
+- Payback: [N] months
+- 3-Year Net Benefit: $[N]
 ```

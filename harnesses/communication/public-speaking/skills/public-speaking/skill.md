@@ -1,131 +1,131 @@
 ---
 name: public-speaking
-description: "퍼블릭스피킹 종합 준비를 에이전트 팀이 협업하여 연설문→발표대본→토론준비서→Q&A예상답변→리허설가이드까지 한 번에 생성하는 풀 파이프라인. '연설문 써줘', '발표 준비해줘', '프레젠테이션 대본', '토론 준비', '스피치 작성', '기조연설', '투자 피치', '발표 연습 가이드', 'Q&A 준비', '면접 발표 준비' 등 퍼블릭스피킹 준비 전반에 이 스킬을 사용한다. 기존 발표 자료가 있으면 토론준비·Q&A·리허설 가이드를 지원한다. 단, 실제 슬라이드 디자인(PowerPoint/Keynote 파일 생성), 영상 촬영/편집, 실시간 발표 코칭은 이 스킬의 범위가 아니다."
+description: " comprehensive preparation agent team to speechdocument→presentationversus→debatepreparationfrom→Q&Aexpectedanswer→rehearsalguideto Korean creation Full pipeline. 'speechdocument ', 'presentation preparationplease do', 'presentation versus', 'debate preparation', 'value writing', 'basisspeech', 'investment value', 'presentation annual guide', 'Q&A preparation', 'interview presentation preparation' etc. preparation before skill usage. existing presentation material debatepreparation·Q&A·rehearsal guide degreeKRW. However, actual specialistperson(PowerPoint/Keynote file creation), /, actualtime presentation is outside this skill's scope."
 ---
 
-# Public Speaking — 퍼블릭스피킹 종합 파이프라인
+# Public Speaking — comprehensive pipeline
 
-퍼블릭스피킹의 청중분석→연설문→토론준비→Q&A→리허설가이드를 에이전트 팀이 협업하여 한 번에 생성한다.
+ audienceanalysis→speechdocument→debatepreparation→Q&A→rehearsalguide An agent team collaborates to generate all deliverables at once.
 
-## 실행 모드
+## execution mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**agent team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## agent composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| agent | file | role | type |
 |---------|------|------|------|
-| audience-analyst | `.claude/agents/audience-analyst.md` | 청중 프로파일, 감정 여정, 메시지 프레이밍 | general-purpose |
-| speech-writer | `.claude/agents/speech-writer.md` | 연설문/발표 대본, 수사학, 무대 지시 | general-purpose |
-| debate-preparer | `.claude/agents/debate-preparer.md` | 논증 강화, 반론 방어, 교차심문 | general-purpose |
-| qa-strategist | `.claude/agents/qa-strategist.md` | 예상 질문, 답변 전략, Q&A 운영 | general-purpose |
-| rehearsal-coach | `.claude/agents/rehearsal-coach.md` | 리허설 계획, 전달력, 교차 검증 | general-purpose |
+| audience-analyst | `.claude/agents/audience-analyst.md` | audience file, emotion , message | general-purpose |
+| speech-writer | `.claude/agents/speech-writer.md` | speechdocument/presentation versus, numbercompany, stage degreewhen | general-purpose |
+| debate-preparer | `.claude/agents/debate-preparer.md` | , counterargument , gapdocument | general-purpose |
+| qa-strategist | `.claude/agents/qa-strategist.md` | expected question, answer strategy, Q&A operations | general-purpose |
+| rehearsal-coach | `.claude/agents/rehearsal-coach.md` | rehearsal plan, delivercapability, cross-verification | general-purpose |
 
-## 워크플로우
+## workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: preparation (Orchestrator directly perform)
 
-1. 사용자 입력에서 추출한다:
-    - **발표 유형**: 기조연설/프레젠테이션/피치/토론/면접발표
-    - **주제**: 발표 주제와 핵심 메시지
-    - **청중**: 대상 청중의 특성
-    - **시간**: 할당 시간
-    - **맥락**: 행사명, 상황, 특별 요구사항
-    - **기존 자료** (선택): 이전 발표 자료, 슬라이드, 원고
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+ - **presentation type**: basisspeech/presentation/value/debate/interviewpresentation
+ - **week**: presentation week and core message
+ - **audience**: target audience nature
+ - **time**: to do time
+ - **context**: eventpeople, situation, by requirements
+ - **existing material** (optional): before presentation material, , KRW
+2. `_workspace/` Create the directory at the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. If existing files are provided, copy them to `_workspace/`and skip the corresponding Phase
+5. Determine the **execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: team composition and execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| order | task | responsible | dependency | deliverable |
 |------|------|------|------|--------|
-| 1 | 청중 분석 | analyst | 없음 | `_workspace/01_audience_analysis.md` |
-| 2 | 연설문 작성 | writer | 작업 1 | `_workspace/02_speech_script.md` |
-| 3a | 토론 준비 | preparer | 작업 1, 2 | `_workspace/03_debate_prep.md` |
-| 3b | Q&A 전략 | strategist | 작업 1, 2 | `_workspace/04_qa_playbook.md` |
-| 4 | 리허설 가이드 및 검증 | coach | 작업 3a, 3b | `_workspace/05_rehearsal_guide.md` |
+| 1 | audience analysis | analyst | None | `_workspace/01_audience_analysis.md` |
+| 2 | speechdocument writing | writer | task 1 | `_workspace/02_speech_script.md` |
+| 3a | debate preparation | preparer | task 1, 2 | `_workspace/03_debate_prep.md` |
+| 3b | Q&A strategy | strategist | task 1, 2 | `_workspace/04_qa_playbook.md` |
+| 4 | rehearsal guide and verify | coach | task 3a, 3b | `_workspace/05_rehearsal_guide.md` |
 
-작업 3a(토론)와 3b(Q&A)는 **병렬 실행**한다. 둘 다 작업 1, 2에 의존한다.
+task 3a(debate) and 3b(Q&A) ** execution**. task 1, 2 dependency.
 
-**팀원 간 소통 흐름:**
-- analyst 완료 → writer에게 청중 프로파일+감정 여정+프레이밍 전달, preparer에게 청중 태도 전달, strategist에게 질문 방향 전달
-- writer 완료 → preparer에게 핵심 논점+취약 포인트 전달, strategist에게 질문 유발 포인트 전달
-- preparer 완료 → strategist에게 반론 목록 공유
-- coach는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**teamKRW between flow:**
+- analyst complete → writerto audience file+emotion + deliver, preparerto audience also deliver, strategistto question direction deliver
+- writer complete → preparerto core point+approx. point deliver, strategistto question point deliver
+- preparer complete → strategistto counterargument list 
+- coach all deliverable cross-verification. 🔴 required revision findings when Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: integration and final deliverable
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 검증 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 청중 분석 — `01_audience_analysis.md`
-    - 연설문/발표 대본 — `02_speech_script.md`
-    - 토론 준비서 — `03_debate_prep.md`
-    - Q&A 플레이북 — `04_qa_playbook.md`
-    - 리허설 가이드 — `05_rehearsal_guide.md`
+1. `_workspace/` Verify all files in the directory
+2. verify reportConfirm that all critical revisions from the review report have been addressed
+3. Report the final summary to the user:
+ - audience analysis — `01_audience_analysis.md`
+ - speechdocument/presentation versus — `02_speech_script.md`
+ - debate preparationfrom — `03_debate_prep.md`
+ - Q&A — `04_qa_playbook.md`
+ - rehearsal guide — `05_rehearsal_guide.md`
 
-## 작업 규모별 모드
+## task scaleby mode
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| user request pattern | execution mode | deploy agent |
 |----------------|----------|-------------|
-| "발표 준비해줘", "스피치 전체 준비" | **풀 파이프라인** | 5명 전원 |
-| "연설문만 써줘" | **연설 모드** | analyst + writer + coach |
-| "이 발표 자료로 Q&A 준비해줘" (자료 제공) | **Q&A 모드** | strategist + coach |
-| "토론 준비해줘" | **토론 모드** | analyst + preparer + coach |
-| "리허설 가이드만" (대본 제공) | **리허설 모드** | coach 단독 |
+| "presentation preparationplease do", "value overall preparation" | **Full pipeline** | 5people beforeKRW |
+| "speechdocument only " | **speech mode** | analyst + writer + coach |
+| " presentation material Q&A preparationplease do" (material provide) | **Q&A mode** | strategist + coach |
+| "debate preparationplease do" | **debate mode** | analyst + preparer + coach |
+| "rehearsal guide" (versus provide) | **rehearsal mode** | coach |
 
-**기존 파일 활용**: 사용자가 발표 자료, 대본 등을 제공하면 해당 단계를 건너뛴다.
+**existing file utilization**: user presentation material, versus etc. provide applicable stage case.
 
-## 데이터 전달 프로토콜
+## data deliver protocol
 
-| 전략 | 방식 | 용도 |
+| strategy | method | also |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
+| File-based | `_workspace/` | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information transfer, revision requests |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{}_{agent}_{deliverable}.{extensionspecialist}`
 
-## 에러 핸들링
+## error handling
 
-| 에러 유형 | 전략 |
+| error type | strategy |
 |----------|------|
-| 청중 정보 없음 | 행사 유형에서 일반적 청중 프로파일 추론, "추정 기반" 명시 |
-| 발표 유형 불명확 | 비즈니스 프레젠테이션을 기본값으로 적용 |
-| 웹 검색 실패 | 사용자 제공 정보와 일반 지식 기반 작업 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행 |
-| 검증에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
-| 토론 불필요 | 토론 준비 생략, Q&A 방어에 집중 |
+| audience information None | event typefrom general audience file , "estimation based" specify |
+| presentation type people | presentation basicas applied |
+| web search failure | user provide information and day degree based task |
+| agent failure | Retry once -> proceed without that deliverable |
+| verifyfrom 🔴 findings | Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds) |
+| debate needed | debate preparation , Q&A during |
 
-## 테스트 시나리오
+## test scenario
 
-### 정상 흐름
-**프롬프트**: "다음 주 기술 컨퍼런스에서 'AI 시대의 소프트웨어 개발' 주제로 30분 기조연설을 해야 해. 청중은 개발자 500명이야."
-**기대 결과**:
-- 청중 분석: 개발자 세그먼트(주니어/시니어/리드), 기대, 우려, 감정 여정
-- 연설문: 30분 기조연설 대본 + 무대 지시 + 수사학 기법
-- 토론 준비: AI 대체론 등 예상 반론 + 반박 논리
-- Q&A: 15개 이상 예상 질문 + 답변 스크립트
-- 리허설: D-7부터 일정 + 전달력 가이드 + 정합성 매트릭스 확인
+### flow
+**Prompt**: "next week technical from 'AI whenversus development' week 30minute basisspeech . audience developmentspecialist 500people."
+**expected result**:
+- audience analysis: developmentspecialist segment(week/when/), expected, , emotion 
+- speechdocument: 30minute basisspeech versus + stage degreewhen + numbercompany technique
+- debate preparation: AI versus etc. expected counterargument + 
+- Q&A: 15items or more expected question + answer 
+- rehearsal: D-7department schedule + delivercapability guide + consistency matrix confirm
 
-### 기존 자료 활용 흐름
-**프롬프트**: "이 발표 대본으로 Q&A 준비랑 리허설 가이드 만들어줘" + 대본 파일 제공
-**기대 결과**:
-- 청중 분석, 연설문 작성 건너뜀
-- 대본을 `_workspace/02_speech_script.md`로 복사
-- strategist + coach 투입
+### existing material utilization flow
+**Prompt**: " presentation versusas Q&A preparation rehearsal guide create it" + versus file provide
+**expected result**:
+- audience analysis, speechdocument writing case
+- versus `_workspace/02_speech_script.md` company
+- strategist + coach deploy
 
-### 에러 흐름
-**프롬프트**: "발표 준비해줘, 주제는 아직 미정"
-**기대 결과**:
-- 주제가 불명확하므로 사용자에게 발표 주제/맥락 확인 질문
-- 답변 기반으로 작업 진행
-- 검증 보고서에 "주제 확정 후 최종 검토 필요" 명시
+### error flow
+**Prompt**: "presentation preparationplease do, week un-"
+**expected result**:
+- week people userto presentation week/context confirm question
+- answer basedas task progress
+- verify report "week after final review needed" specify
 
-## 에이전트별 확장 스킬
+## agentby extension skill
 
-| 확장 스킬 | 경로 | 대상 에이전트 | 역할 |
+| extension skill | | target agent | role |
 |----------|------|-------------|------|
-| rhetoric-patterns | `.claude/skills/rhetoric-patterns/skill.md` | speech-writer, debate-preparer | 수사학 패턴, 논증 구조, 설득 기법 |
-| audience-engagement | `.claude/skills/audience-engagement/skill.md` | audience-analyst, rehearsal-coach | 청중 분석, 참여 전략, 긴장 관리, 비언어 커뮤니케이션 |
+| rhetoric-patterns | `.claude/skills/rhetoric-patterns/skill.md` | speech-writer, debate-preparer | numbercompany pattern, structure, persuasion technique |
+| audience-engagement | `.claude/skills/audience-engagement/skill.md` | audience-analyst, rehearsal-coach | audience analysis, strategy, management, communication |

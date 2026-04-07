@@ -1,126 +1,118 @@
 ---
 name: character-design-system
-description: "스토리보더(storyboarder)와 이미지생성자(image-generator)가 사용하는 캐릭터 디자인 시스템 스킬. 캐릭터 시트 설계, 실루엣 테스트, 표정 차트, AI 이미지 생성 시 일관성 유지 방법론을 제공한다. '캐릭터 디자인', '캐릭터 시트', '외형 일관성', '캐릭터 설정' 등에 활용한다."
+description: "A character design system skill used by the storyboarder and image-generator agents. Provides character sheet design, silhouette testing, expression charts, and AI image generation consistency methodologies. Used for 'character design,' 'character sheet,' 'visual consistency,' 'character setup,' and related topics."
 ---
 
-# Character Design System — 캐릭터 디자인 시스템 방법론
+# Character Design System — Character Design Methodology
 
-storyboarder와 image-generator 에이전트가 캐릭터를 설계하고 일관성 있는 이미지를 생성할 때 활용하는 전문 지식.
+Expert knowledge used by the storyboarder and image-generator agents when designing characters and generating consistent images.
 
-## 왜 시스템이 필요한가
+## Why a System Is Needed
 
-AI 이미지 생성에서 가장 큰 문제는 **캐릭터 일관성**이다. 패널마다 얼굴이 바뀌면 만화가 성립하지 않는다. 체계적인 캐릭터 시트와 프롬프트 전략이 일관성의 핵심이다.
+The biggest challenge in AI image generation is **character consistency**. If the face changes from panel to panel, the comic falls apart. A systematic character sheet and prompt strategy are the keys to consistency.
 
-## 캐릭터 시트 설계
+## Character Sheet Design
 
-### 필수 구성 요소
-
-```
-캐릭터 시트
-├── 전신 정면도 (기본 포즈)
-├── 전신 측면도
-├── 전신 후면도
-├── 얼굴 클로즈업 (3/4 앵글)
-├── 표정 차트 (6가지 기본 감정)
-├── 의상 설정 (기본 + 변형)
-└── 소품/액세서리
-```
-
-### 캐릭터 설정서 템플릿
+### Required Components
 
 ```
-## [캐릭터명]
+Character Sheet
+├── Full-body front view (default pose)
+├── Full-body side view
+├── Full-body back view
+├── Face close-up (3/4 angle)
+├── Expression chart (6 basic emotions)
+├── Outfit design (default + variations)
+└── Props/Accessories
+```
 
-### 기본 정보
-- 나이: / 성별: / 키: / 체형:
-- 역할: 주인공 / 적대자 / 조연 / 엑스트라
+### Character Specification Template
 
-### 외형 핵심 특징 (AI 프롬프트 고정값)
-- 머리카락: [색상], [길이], [스타일] (예: "short black hair, messy")
-- 눈: [색상], [특징] (예: "sharp dark brown eyes")
-- 체형: [타입] (예: "athletic build, broad shoulders")
-- 특이사항: [흉터, 안경, 문신 등]
+```
+## [Character Name]
 
-### 의상
-- 기본: [상세 묘사]
-- 변형: [상황별 의상]
+### Basic Info
+- Age: / Gender: / Height: / Body type:
+- Role: Protagonist / Antagonist / Supporting / Extra
 
-### 프롬프트 고정 문구
+### Key Visual Traits (AI Prompt Fixed Values)
+- Hair: [Color], [Length], [Style] (e.g., "short black hair, messy")
+- Eyes: [Color], [Distinctive features] (e.g., "sharp dark brown eyes")
+- Body type: [Type] (e.g., "athletic build, broad shoulders")
+- Distinguishing features: [Scars, glasses, tattoos, etc.]
+
+### Outfit
+- Default: [Detailed description]
+- Variations: [Context-specific outfits]
+
+### Prompt Anchor Phrase
 "[gender] [age range], [hair], [eyes], [body type], [clothing], [distinctive feature]"
-→ 이 문구를 모든 패널의 프롬프트에 동일하게 삽입
+-> Insert this phrase identically into every panel's prompt
 ```
 
-## 실루엣 테스트
+## Silhouette Test
 
-좋은 캐릭터 디자인은 **실루엣만으로도 식별 가능**해야 한다.
+Good character design should be **identifiable from the silhouette alone**.
 
-### 실루엣 차별화 요소
+### Silhouette Differentiation Elements
 
-| 요소 | 차별화 방법 |
-|------|-----------|
-| **체형** | 키 차이, 체격 차이를 과장 |
-| **헤어스타일** | 각 캐릭터의 독특한 실루엣 |
-| **자세** | 기본 자세(습관적 포즈)를 다르게 |
-| **소품** | 항상 들고 다니는 물건 (지팡이, 책, 모자) |
-| **의상 실루엣** | 망토, 코트 자락, 후드 등 |
+| Element | Differentiation Method |
+|---------|----------------------|
+| **Body Type** | Exaggerate height and build differences |
+| **Hairstyle** | Give each character a unique silhouette shape |
+| **Posture** | Assign different default poses (habitual stances) |
+| **Props** | Items they always carry (staff, book, hat) |
+| **Clothing Silhouette** | Capes, coat tails, hoods, etc. |
 
-### 주요 캐릭터 차별화 체크리스트
+### Key Character Differentiation Checklist
 
-- [ ] 3명의 캐릭터를 나란히 놓았을 때 실루엣만으로 구분 가능한가?
-- [ ] 흑백으로 변환해도 각 캐릭터를 식별할 수 있는가?
-- [ ] 축소된 썸네일에서도 캐릭터를 구분할 수 있는가?
+- [ ] When three characters are side by side, can they be distinguished by silhouette alone?
+- [ ] Can each character be identified when converted to black and white?
+- [ ] Can characters be told apart in a reduced thumbnail?
 
-## 표정 차트 (Expression Sheet)
+## Expression Chart (Expression Sheet)
 
-### 6가지 기본 표정
+### Six Basic Expressions
 
-| 감정 | 눈 | 눈썹 | 입 | 기타 |
-|------|---|------|---|------|
-| **기쁨** | 반달 모양, 좁아짐 | 올라감 | 활짝 열림/미소 | 볼 홍조 |
-| **슬픔** | 처짐, 촉촉 | 안쪽 끝 올라감 | 아래로 처짐 | 눈물, 고개 숙임 |
-| **분노** | 날카롭게, 좁아짐 | V자로 내려감 | 이 악물기/벌림 | 이마 핏줄 |
-| **공포** | 크게 뜸, 동공 축소 | 올라감 | 벌림 | 땀, 떨림 |
-| **놀라움** | 크게 뜸, 동공 확대 | 올라감 | O자로 벌림 | 뒤로 젖힘 |
-| **경멸** | 반쯤 감김 | 한쪽만 올림 | 비웃음/한쪽만 올림 | 고개 돌림 |
+| Emotion | Eyes | Eyebrows | Mouth | Other |
+|---------|------|----------|-------|-------|
+| **Joy** | Crescent-shaped, narrowed | Raised | Wide open/Smile | Flushed cheeks |
+| **Sadness** | Drooping, moist | Inner ends raised | Downturned | Tears, head lowered |
+| **Anger** | Sharp, narrowed | V-shaped downward | Clenched/Open | Forehead veins |
+| **Fear** | Wide open, small pupils | Raised | Open | Sweat, trembling |
+| **Surprise** | Wide open, dilated pupils | Raised | O-shaped | Leaning back |
+| **Contempt** | Half-closed | One side raised | Smirk/One side up | Head turned away |
 
-### 캐릭터별 표정 변형
+### Character-Specific Expression Variations
 
-같은 감정이라도 **캐릭터 성격에 따라 표현이 다르다**:
+The same emotion is **expressed differently based on character personality**:
 
-| 감정 | 활발한 캐릭터 | 냉정한 캐릭터 | 소심한 캐릭터 |
-|------|------------|------------|------------|
-| 기쁨 | 환호, 점프 | 미세한 미소 | 수줍은 미소, 시선 회피 |
-| 분노 | 고함, 과격한 동작 | 차갑게 응시 | 울먹이며 주먹 쥠 |
-| 놀라움 | "헉!" 과장 리액션 | 눈만 약간 넓힘 | 뒤로 물러남, 손으로 입 가림 |
+| Emotion | Energetic Character | Cool Character | Timid Character |
+|---------|-------------------|----------------|-----------------|
+| Joy | Cheering, jumping | Subtle smile | Shy smile, averted eyes |
+| Anger | Shouting, violent gestures | Cold stare | Teary-eyed, clenched fists |
+| Surprise | "Whoa!" exaggerated reaction | Eyes widen slightly | Steps back, covers mouth |
 
-## AI 이미지 생성 일관성 전략
+## AI Image Generation Consistency Strategy
 
-### 레퍼런스 기반 생성
+### Reference-Based Generation
 
-```bash
-# 캐릭터 시트를 먼저 생성
-python scripts/generate_image.py "character sheet of [캐릭터 묘사]" \
-  --ratio 3:4 --size 2K --output images/character/char_[name].png
+1. Generate character sheet first as a reference image
+2. Use the reference in all subsequent panel generation prompts
 
-# 이후 모든 패널에서 레퍼런스로 사용
-python scripts/generate_scene.py "[장면 묘사]" \
-  --refs images/character/char_[name].png \
-  --ratio 16:9 --size 2K --output webtoon/ch01/p01.png
-```
+### Prompt Consistency Rules
 
-### 프롬프트 일관성 규칙
+1. **Anchor Phrase**: Copy identical character appearance description into every prompt
+2. **Style Lock**: Consistently use the same style instruction (e.g., "Korean manhwa style")
+3. **Negative Prompt**: Include prevention phrases like "different face, inconsistent design"
+4. **Reference Image Required**: Always include the character sheet as reference
+5. **Outfit Changes Must Be Explicit**: When outfit changes, start with "same character, new outfit:"
 
-1. **고정 문구 (Anchor Phrase)**: 캐릭터 외형 묘사는 매 프롬프트에 동일하게 복사
-2. **스타일 고정**: "Korean manhwa style" 등 스타일 지시를 일관되게
-3. **네거티브 프롬프트**: "different face, inconsistent design" 등 방지 문구
-4. **레퍼런스 이미지 필수**: `--refs`에 캐릭터 시트 항상 포함
-5. **의상 변경 시 명시**: 의상이 바뀌면 "same character, new outfit:" 으로 시작
+### Handling Consistency Breaks
 
-### 일관성 깨짐 시 대응
-
-| 문제 | 원인 | 해결 |
-|------|------|------|
-| 얼굴 변화 | 프롬프트에 외형 묘사 누락 | 고정 문구 재삽입 + 레퍼런스 |
-| 체형 변화 | 앵글에 따른 왜곡 | 체형 명시 ("athletic build" 등) |
-| 의상 변화 | 프롬프트에 의상 미명시 | 의상 설명 반드시 포함 |
-| 색상 변화 | 조명에 따른 변형 | 고유 색상 명시 ("always red jacket") |
+| Problem | Cause | Solution |
+|---------|-------|---------|
+| Face changes | Appearance description missing from prompt | Reinsert anchor phrase + reference |
+| Body type changes | Distortion from angle | Explicitly specify body type ("athletic build," etc.) |
+| Outfit changes | Outfit not specified in prompt | Always include outfit description |
+| Color changes | Lighting variation | Specify intrinsic colors ("always red jacket") |

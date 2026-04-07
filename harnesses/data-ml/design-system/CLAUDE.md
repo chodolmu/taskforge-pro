@@ -1,37 +1,37 @@
 # Design System Harness
 
-UI 디자인 시스템 구축: 디자인토큰→컴포넌트라이브러리→스토리북→접근성검증→문서를 에이전트 팀이 협업하여 수행하는 하네스.
+UI design system construction: a harness in which an agent team collaborates to create design tokens, a component library, Storybook, accessibility verification, and documentation.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── token-designer.md       — 디자인 토큰 (색상, 타이포, 간격, 그림자, 모션)
-│   ├── component-developer.md  — 컴포넌트 개발 (React/Vue, 변형, 합성, 상태)
-│   ├── a11y-auditor.md         — 접근성 검증 (WCAG 2.1, ARIA, 키보드, 스크린리더)
-│   ├── storybook-builder.md    — 스토리북 (스토리, 인터랙션 테스트, 문서화)
-│   └── doc-writer.md           — 문서 작성 (설계 원칙, 사용 가이드, 기여 가이드)
+│   ├── token-designer.md       — Design tokens (colors, typography, spacing, shadows, motion)
+│   ├── component-developer.md  — Component development (React/Vue, variants, composition, state)
+│   ├── a11y-auditor.md         — Accessibility verification (WCAG 2.1, ARIA, keyboard, screen reader)
+│   ├── storybook-builder.md    — Storybook (stories, interaction tests, documentation)
+│   └── doc-writer.md           — Documentation (design principles, usage guides, contribution guide)
 ├── skills/
 │   ├── design-system/
-│       └── skill.md            — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md            — Orchestrator (team coordination, workflow, error handling)
 │   ├── wcag-checker/
-│   │   └── skill.md            — 접근성 검증 (WCAG 체크리스트, 대비비, ARIA)
+│   │   └── skill.md            — Accessibility verification (WCAG checklist, contrast ratios, ARIA)
 │   └── token-generator/
-│       └── skill.md            — 디자인 토큰 생성 (색상 스케일, 타이포, 간격)
-└── CLAUDE.md                   — 이 파일
+│       └── skill.md            — Design token generation (color scales, typography, spacing)
+└── CLAUDE.md                   — This file
 ```
 
-## 사용법
+## Usage
 
-`/design-system` 스킬을 트리거하거나, "디자인 시스템 만들어줘" 같은 자연어로 요청한다.
+Trigger the `/design-system` skill, or make a natural language request such as "Build a design system."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 및 브랜드 정보
-- `01_design_tokens/` — 디자인 토큰 정의 파일
-- `02_components/` — 컴포넌트 라이브러리 코드
-- `03_storybook/` — 스토리북 스토리 및 설정
-- `04_a11y_report.md` — 접근성 검증 보고서
-- `05_docs/` — 디자인 시스템 문서
+All deliverables are stored in the `_workspace/` directory:
+- `00_input.md` — User input and brand information
+- `01_design_tokens/` — Design token definition files
+- `02_components/` — Component library code
+- `03_storybook/` — Storybook stories and configuration
+- `04_a11y_report.md` — Accessibility verification report
+- `05_docs/` — Design system documentation

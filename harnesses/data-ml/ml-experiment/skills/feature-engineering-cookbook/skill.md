@@ -1,70 +1,70 @@
 ---
 name: feature-engineering-cookbook
-description: "피처 엔지니어링 기법 카탈로그: 수치형/범주형/시계열/텍스트 변환, 피처 선택, 피처 스토어 설계. '피처 엔지니어링', '특성 공학', '변수 변환', '인코딩', '스케일링', '피처 선택', '피처 스토어', '피처 중요도' 등 데이터 전처리 및 피처 설계 시 이 스킬을 사용한다. data-engineer의 피처 엔지니어링 역량을 강화한다. 단, 모델 설계나 학습 관리는 이 스킬의 범위가 아니다."
+description: "Feature engineering techniques catalog: numeric/categorical/time-series/text transformations, feature selection, feature store design. Use this skill for data preprocessing and feature design involving 'feature engineering', 'variable transformation', 'encoding', 'scaling', 'feature selection', 'feature store', 'feature importance', etc. Enhances the data-engineer's feature engineering capabilities. Note: model design and training management are outside this skill's scope."
 ---
 
-# Feature Engineering Cookbook — 피처 엔지니어링 기법 카탈로그
+# Feature Engineering Cookbook — Feature Engineering Techniques Catalog
 
-데이터 타입별 변환 기법, 피처 선택 방법, 피처 스토어 설계 가이드.
+Transformation techniques by data type, feature selection methods, and feature store design guide.
 
-## 수치형 변환
+## Numeric Transformations
 
-### 스케일링
+### Scaling
 
-| 방법 | 공식 | 적합 | 부적합 |
-|------|------|------|--------|
-| StandardScaler | (x - μ) / σ | 정규분포, SVM, 로지스틱 회귀 | 이상치 민감 |
-| MinMaxScaler | (x - min) / (max - min) | [0,1] 필요, 신경망 | 이상치 민감 |
-| RobustScaler | (x - Q2) / (Q3 - Q1) | 이상치 존재 | — |
-| PowerTransformer | Box-Cox / Yeo-Johnson | 왜도 큰 분포 | 음수값(Box-Cox) |
-| QuantileTransformer | 분위수 기반 | 균일/정규 분포 변환 | 순서 관계 파괴 |
+| Method | Formula | Suitable | Not Suitable |
+|--------|---------|----------|-------------|
+| StandardScaler | (x - μ) / σ | Normal distribution, SVM, logistic regression | Sensitive to outliers |
+| MinMaxScaler | (x - min) / (max - min) | [0,1] required, neural networks | Sensitive to outliers |
+| RobustScaler | (x - Q2) / (Q3 - Q1) | When outliers exist | — |
+| PowerTransformer | Box-Cox / Yeo-Johnson | Highly skewed distributions | Negative values (Box-Cox) |
+| QuantileTransformer | Quantile-based | Uniform/normal distribution transformation | Destroys order relationships |
 
-### 이산화 (Binning)
+### Binning (Discretization)
 
 ```python
-# 등간격 (Equal Width)
+# Equal Width
 pd.cut(df['age'], bins=5)
 
-# 등빈도 (Equal Frequency)
+# Equal Frequency
 pd.qcut(df['income'], q=5)
 
-# 도메인 기반
+# Domain-based
 bins = [0, 18, 30, 50, 65, 100]
-labels = ['미성년', '청년', '중년', '장년', '노년']
+labels = ['Minor', 'Young Adult', 'Middle-aged', 'Senior', 'Elderly']
 pd.cut(df['age'], bins=bins, labels=labels)
 ```
 
-### 수학적 변환
+### Mathematical Transformations
 
 ```python
-# 로그 변환 (오른쪽 꼬리 분포)
+# Log transformation (right-skewed distribution)
 df['log_income'] = np.log1p(df['income'])
 
-# 제곱근 (카운트 데이터)
+# Square root (count data)
 df['sqrt_count'] = np.sqrt(df['count'])
 
-# 역수 (반비례 관계)
+# Reciprocal (inverse relationship)
 df['inv_distance'] = 1 / (df['distance'] + 1)
 ```
 
-## 범주형 인코딩
+## Categorical Encoding
 
-| 방법 | 카디널리티 | 순서 | 트리 모델 | 선형 모델 |
-|------|-----------|------|----------|----------|
-| Label Encoding | 무관 | 있음 | ✅ | ❌ |
-| One-Hot Encoding | 낮음(<20) | 없음 | ✅ | ✅ |
-| Target Encoding | 높음 | N/A | ✅ | ✅ |
-| Frequency Encoding | 높음 | N/A | ✅ | ✅ |
-| Binary Encoding | 중간 | N/A | ✅ | ✅ |
-| Ordinal Encoding | 무관 | 있음 | ✅ | ✅ |
+| Method | Cardinality | Order | Tree Models | Linear Models |
+|--------|------------|-------|------------|--------------|
+| Label Encoding | Any | Yes | ✅ | ❌ |
+| One-Hot Encoding | Low (<20) | No | ✅ | ✅ |
+| Target Encoding | High | N/A | ✅ | ✅ |
+| Frequency Encoding | High | N/A | ✅ | ✅ |
+| Binary Encoding | Medium | N/A | ✅ | ✅ |
+| Ordinal Encoding | Any | Yes | ✅ | ✅ |
 
-### Target Encoding (과적합 방지)
+### Target Encoding (Overfitting Prevention)
 
 ```python
 from sklearn.model_selection import KFold
 
 def target_encode_cv(train, col, target, n_folds=5):
-    """K-Fold 기반 타깃 인코딩 — 데이터 누수 방지"""
+    """K-Fold based target encoding — prevents data leakage"""
     global_mean = train[target].mean()
     encoded = pd.Series(index=train.index, dtype=float)
 
@@ -77,10 +77,10 @@ def target_encode_cv(train, col, target, n_folds=5):
     return encoded
 ```
 
-## 시계열 피처
+## Time-Series Features
 
 ```python
-# 날짜 분해
+# Date decomposition
 df['year'] = df['date'].dt.year
 df['month'] = df['date'].dt.month
 df['dayofweek'] = df['date'].dt.dayofweek
@@ -88,66 +88,66 @@ df['is_weekend'] = df['dayofweek'].isin([5, 6]).astype(int)
 df['hour'] = df['date'].dt.hour
 df['is_business_hour'] = df['hour'].between(9, 18).astype(int)
 
-# 순환 인코딩 (월, 시간 등 주기적 변수)
+# Cyclic encoding (periodic variables like month, hour)
 df['month_sin'] = np.sin(2 * np.pi * df['month'] / 12)
 df['month_cos'] = np.cos(2 * np.pi * df['month'] / 12)
 
-# Lag 피처
+# Lag features
 df['sales_lag_1'] = df['sales'].shift(1)
 df['sales_lag_7'] = df['sales'].shift(7)
 
-# Rolling 통계
+# Rolling statistics
 df['sales_ma_7'] = df['sales'].rolling(7).mean()
 df['sales_std_7'] = df['sales'].rolling(7).std()
 ```
 
-## 피처 선택 방법
+## Feature Selection Methods
 
-### 필터 방법
+### Filter Methods
 
-| 방법 | 수치→수치 | 범주→수치 | 수치→범주 |
-|------|----------|----------|----------|
-| 상관계수 (Pearson) | ✅ | — | — |
-| 상호정보량 (MI) | ✅ | ✅ | ✅ |
-| 카이제곱 | — | — | ✅ |
+| Method | Numeric→Numeric | Categorical→Numeric | Numeric→Categorical |
+|--------|----------------|--------------------|--------------------|
+| Pearson Correlation | ✅ | — | — |
+| Mutual Information (MI) | ✅ | ✅ | ✅ |
+| Chi-squared | — | — | ✅ |
 | ANOVA F-test | — | — | ✅ |
-| 분산 기반 | ✅ (분산=0 제거) | — | — |
+| Variance-based | ✅ (remove var=0) | — | — |
 
-### 래퍼/임베디드 방법
+### Wrapper/Embedded Methods
 
 ```python
-# 트리 기반 피처 중요도
+# Tree-based feature importance
 from sklearn.ensemble import RandomForestClassifier
 model = RandomForestClassifier().fit(X, y)
 importances = pd.Series(model.feature_importances_, index=X.columns)
 top_features = importances.nlargest(20).index
 
-# Permutation Importance (모델 무관)
+# Permutation Importance (model-agnostic)
 from sklearn.inspection import permutation_importance
 result = permutation_importance(model, X_test, y_test, n_repeats=10)
 
-# SHAP (해석 가능한 피처 중요도)
+# SHAP (interpretable feature importance)
 import shap
 explainer = shap.TreeExplainer(model)
 shap_values = explainer.shap_values(X_test)
 shap.summary_plot(shap_values, X_test)
 ```
 
-## 결측치 처리 의사결정
+## Missing Value Treatment Decision
 
 ```
-결측 비율 확인
-├── < 5%: 제거 또는 단순 대체(평균/중앙값/최빈값)
-├── 5~30%: 모델 기반 대체 (KNN, MICE, 트리 기반)
-├── 30~50%: 결측 자체를 피처로 + 대체
+Check missing ratio
+├── < 5%: Remove or simple imputation (mean/median/mode)
+├── 5~30%: Model-based imputation (KNN, MICE, tree-based)
+├── 30~50%: Use missingness as a feature + imputation
 │           df['col_missing'] = df['col'].isna().astype(int)
-└── > 50%: 컬럼 제거 고려 (비즈니스 중요도 확인)
+└── > 50%: Consider column removal (check business importance)
 ```
 
-## 데이터 누수 방지 체크리스트
+## Data Leakage Prevention Checklist
 
-- [ ] 타깃 변수에서 파생된 피처가 없는가?
-- [ ] 미래 정보를 사용하는 피처가 없는가?
-- [ ] train/test 분할 전에 인코딩/스케일링을 하지 않았는가?
-- [ ] Target Encoding에 CV를 적용했는가?
-- [ ] 시계열 데이터에서 미래 데이터를 참조하지 않는가?
+- [ ] No features derived from the target variable?
+- [ ] No features using future information?
+- [ ] Encoding/scaling was not done before train/test split?
+- [ ] CV was applied to Target Encoding?
+- [ ] Time-series data does not reference future data?

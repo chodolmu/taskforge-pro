@@ -1,38 +1,38 @@
 # E-commerce Launcher Harness
 
-이커머스 상품 런칭의 기획→상세페이지→가격전략→마케팅→CS 셋업을 에이전트 팀이 협업하여 생성하는 하네스.
+An e-commerce launch harness. An agent team collaborates to produce product planning, product detail pages, pricing strategy, marketing plans, and customer service architecture for online store launches.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── product-planner.md      — 상품 기획 (시장조사, 타깃, 포지셔닝)
-│   ├── detail-page-writer.md   — 상세페이지 작성 (카피, SEO, 전환)
-│   ├── pricing-strategist.md   — 가격 전략 (원가, 경쟁가격, 마진)
-│   ├── marketing-manager.md    — 마케팅 매니저 (채널, 광고, 런칭)
-│   └── cs-architect.md         — CS 설계자 (FAQ, 응대매뉴얼, 반품정책)
+│   ├── product-planner.md        — Product planning (market analysis, positioning, competitive differentiation)
+│   ├── detail-page-writer.md     — Product detail page writing (copy, structure, SEO)
+│   ├── pricing-strategist.md     — Pricing strategy (cost analysis, competitive pricing, promotions)
+│   ├── marketing-manager.md      — Marketing plan (channel strategy, launch campaigns, CRM)
+│   └── cs-architect.md           — CS architecture (FAQ, response templates, escalation)
 ├── skills/
 │   ├── ecommerce-launcher/
-│   │   └── skill.md            — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md              — Orchestrator (team coordination, workflow, error handling)
 │   ├── conversion-optimization/
-│   │   └── skill.md            — 구매전환 최적화 (detail-page-writer 확장)
+│   │   └── skill.md              — Conversion optimization (detail-page-writer extension)
 │   └── product-copy-formulas/
-│       └── skill.md            — 상품 카피 공식 (marketing-manager 확장)
-└── CLAUDE.md                   — 이 파일
+│       └── skill.md              — Product copywriting formulas (detail-page-writer extension)
+└── CLAUDE.md                     — This file
 ```
 
-## 사용법
+## Usage
 
-`/ecommerce-launcher` 스킬을 트리거하거나, "이커머스 상품 런칭해줘" 같은 자연어로 요청한다.
+Trigger the `/ecommerce-launcher` skill, or make a natural language request such as "Help me launch a product online."
 
-## 산출물
+## Outputs
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_product_brief.md` — 상품 기획서
-- `02_detail_page.md` — 상세페이지 원고
-- `03_pricing_plan.md` — 가격 전략서
-- `04_marketing_plan.md` — 마케팅 플랜
-- `05_cs_manual.md` — CS 운영 매뉴얼
-- `06_review_report.md` — 통합 리뷰 보고서
+All outputs are saved to the `_workspace/` directory:
+- `00_input.md` — Product information and launch conditions
+- `01_product_plan.md` — Product planning document
+- `02_detail_page.md` — Product detail page
+- `03_pricing_strategy.md` — Pricing strategy
+- `04_marketing_plan.md` — Marketing plan
+- `05_cs_guide.md` — Customer service guide
+- `06_launch_checklist.md` — Launch checklist

@@ -1,99 +1,101 @@
+```markdown
 ---
 name: ingredient-substitution-engine
-description: "식재료 대체 방안과 알레르기·식이 제한 대응 가이드. 'recipe-writer'와 'meal-designer' 에이전트가 식이 제한에 맞는 레시피를 작성하거나 대체 재료를 선정할 때 이 스킬의 대체 매트릭스와 변환 규칙을 반드시 활용해야 한다. '재료 대체', '알레르기 대응', '비건 대체' 등에 사용한다. 단, 칼로리 계산이나 장보기 목록은 이 스킬의 범위가 아니다."
+description: "A guide for ingredient substitutions and allergy/dietary restriction responses. When the 'recipe-writer' and 'meal-designer' agents write recipes that accommodate dietary restrictions or select substitute ingredients, they must use the substitution matrix and conversion rules from this skill. Use for 'ingredient substitution', 'allergy response', 'vegan substitution', and similar requests. Note: calorie calculation and grocery lists are outside the scope of this skill."
 ---
 
-# Ingredient Substitution Engine — 식재료 대체 엔진
+# Ingredient Substitution Engine
 
-식이 제한, 알레르기, 재료 부재 시 적절한 대체재를 선정하고 조리법을 조정한다.
+Selects appropriate substitutes and adjusts cooking methods for dietary restrictions, allergies, and missing ingredients.
 
-## 알레르기 대체 매트릭스
+## Allergy Substitution Matrix
 
-### 8대 알레르기 식품 대체안
+### Substitutes for the 8 Major Allergens
 
-| 알레르기 식품 | 대체재 | 용도별 비율 | 영양 보완 |
+| Allergen | Substitute | Ratio by Use Case | Nutritional Notes |
 |-------------|--------|-----------|----------|
-| 우유 | 두유, 오트밀크, 코코넛밀크 | 1:1 | 칼슘 보충 필요 |
-| 달걀 | 아마씨+물(1T:3T), 바나나 1/2개, 두부 1/4컵 | 1개당 | 단백질 별도 보충 |
-| 밀(글루텐) | 쌀가루, 메밀가루, 옥수수전분 | 0.7~1:1 | 식이섬유 보충 |
-| 대두(콩) | 완두콩, 해바라기씨, 코코넛 아미노스 | 용도별 | 단백질 확인 |
-| 땅콩 | 해바라기씨버터, 호박씨버터 | 1:1 | 유사 영양 |
-| 견과류 | 해바라기씨, 호박씨, 코코넛 | 1:1 | 불포화지방 확인 |
-| 갑각류 | 새송이버섯, 하트오브팜 | 식감 대체 | 요오드 보충 |
-| 생선 | 해조류(미역, 김), 치아씨드(오메가3) | 영양 대체 | 오메가3 보충 |
+| Milk | Soy milk, oat milk, coconut milk | 1:1 | Calcium supplementation needed |
+| Egg | Flaxseed + water (1T:3T), 1/2 banana, 1/4 cup tofu | Per egg | Separate protein supplementation |
+| Wheat (gluten) | Rice flour, buckwheat flour, cornstarch | 0.7~1:1 | Dietary fiber supplementation |
+| Soy | Peas, sunflower seeds, coconut aminos | By use case | Check protein content |
+| Peanut | Sunflower seed butter, pumpkin seed butter | 1:1 | Similar nutrition |
+| Tree nuts | Sunflower seeds, pumpkin seeds, coconut | 1:1 | Check unsaturated fats |
+| Shellfish | King oyster mushrooms, hearts of palm | Texture substitute | Iodine supplementation |
+| Fish | Seaweed (wakame, nori), chia seeds (omega-3) | Nutritional substitute | Omega-3 supplementation |
 
-### 교차 알레르기 주의
+### Cross-Allergy Warnings
 
 ```
-우유 알레르기 → 산양유도 주의 (약 90% 교차)
-밀 알레르기 → 보리, 호밀도 주의 (글루텐)
-대두 알레르기 → 다른 콩류는 대체로 안전 (확인 필요)
-땅콩 → 다른 견과류와 교차 반응 가능
-새우 → 게, 가재 교차 반응 높음
+Milk allergy → Goat milk also caution (approx. 90% cross-reactivity)
+Wheat allergy → Barley, rye also caution (gluten)
+Soy allergy → Other legumes generally safe (confirmation needed)
+Peanut → Cross-reaction possible with other tree nuts
+Shrimp → High cross-reactivity with crab, lobster
 ```
 
-## 식이 제한별 대체 가이드
+## Substitution Guide by Dietary Restriction
 
-### 비건 (Vegan)
+### Vegan
 
-| 원재료 | 대체재 | 비고 |
+| Original Ingredient | Substitute | Notes |
 |--------|--------|------|
-| 소고기/돼지고기 | 두부, 세이탄, 템페, 잭프루트 | 단백질 확인 |
-| 닭고기 | 콩고기, 두부, 병아리콩 | 식감 유사 |
-| 생선 | 해조류, 코코넛 아미노스 | 감칠맛 보완 |
-| 버터 | 코코넛오일, 비건마가린 | 1:1 |
-| 꿀 | 아가베시럽, 메이플시럽 | 1:1 (당도 차이) |
-| 치즈 | 영양효모, 캐슈넛크림 | 감칠맛 대체 |
-| 젤라틴 | 한천(아가), 구아검 | 용도별 비율 상이 |
+| Beef / pork | Tofu, seitan, tempeh, jackfruit | Check protein content |
+| Chicken | Soy meat, tofu, chickpeas | Similar texture |
+| Fish | Seaweed, coconut aminos | Supplement umami |
+| Butter | Coconut oil, vegan margarine | 1:1 |
+| Honey | Agave syrup, maple syrup | 1:1 (sweetness varies) |
+| Cheese | Nutritional yeast, cashew cream | Umami substitute |
+| Gelatin | Agar-agar, guar gum | Ratio varies by use case |
 
-### 당뇨/저탄수화물
+### Diabetes / Low-Carb
 
-| 고탄수 재료 | 저탄수 대체 | 탄수화물 감소 |
+| High-Carb Ingredient | Low-Carb Substitute | Carb Reduction |
 |-----------|-----------|------------|
-| 백미 | 콜리플라워라이스, 곤약밥 | -80% |
-| 밀가루 면 | 곤약면, 두부면, 호박면 | -70~90% |
-| 감자 | 콜리플라워, 무 | -60% |
-| 설탕 | 에리스리톨, 스테비아, 알룰로스 | -100% (칼로리) |
-| 빵 | 계란빵, 아몬드가루빵 | -50~70% |
+| White rice | Cauliflower rice, konjac rice | -80% |
+| Wheat noodles | Konjac noodles, tofu noodles, zucchini noodles | -70~90% |
+| Potato | Cauliflower, daikon radish | -60% |
+| Sugar | Erythritol, stevia, allulose | -100% (calories) |
+| Bread | Egg bread, almond flour bread | -50~70% |
 
-### 할랄/코셔
+### Halal / Kosher
 
-| 금지 재료 | 대체재 |
+| Prohibited Ingredient | Substitute |
 |----------|--------|
-| 돼지고기 | 소고기, 닭고기, 양고기 |
-| 돼지기름(라드) | 식물성 기름, 버터 |
-| 미림(알코올) | 식초+설탕, 매실청 |
-| 젤라틴(돼지) | 어류 젤라틴, 한천 |
+| Pork | Beef, chicken, lamb |
+| Lard | Vegetable oil, butter |
+| Mirin (alcohol) | Vinegar + sugar, plum syrup |
+| Gelatin (pork) | Fish gelatin, agar-agar |
 
-## 조리법 조정 규칙
+## Cooking Adjustment Rules
 
-### 대체 시 조리 시간 변경
+### Cooking Time Changes When Substituting
 
-| 변경 | 조정 |
+| Change | Adjustment |
 |------|------|
-| 밀가루 → 쌀가루 | 수분 10% 감소, 온도 동일 |
-| 버터 → 오일 | 양 20% 감소, 온도 -10°C |
-| 설탕 → 에리스리톨 | 양 130% (감미도 70%) |
-| 생크림 → 코코넛크림 | 양 동일, 냉장 시간 +2시간 |
-| 일반 두부 → 언두부 | 해동 후 물기 제거, 식감 유사 |
+| Wheat flour → Rice flour | Reduce moisture by 10%, same temperature |
+| Butter → Oil | Reduce quantity by 20%, temperature -10°C |
+| Sugar → Erythritol | Use 130% quantity (70% sweetness) |
+| Heavy cream → Coconut cream | Same quantity, refrigeration time +2 hours |
+| Regular tofu → Frozen tofu | Thaw and remove moisture, similar texture |
 
-### 맛 보완 전략
+### Flavor Compensation Strategies
 
 ```
-감칠맛 부족 (고기 제외 시):
-  → 간장 + 표고버섯 + 다시마 + 영양효모
+Lacking umami (when removing meat):
+  → Soy sauce + shiitake mushrooms + kelp + nutritional yeast
 
-크리미한 질감 부족 (유제품 제외 시):
-  → 캐슈넛크림 + 코코넛밀크 + 아보카도
+Lacking creamy texture (when removing dairy):
+  → Cashew cream + coconut milk + avocado
 
-바삭한 식감 부족 (밀가루 제외 시):
-  → 쌀가루 + 전분 + 오븐 고온 마무리
+Lacking crispy texture (when removing wheat flour):
+  → Rice flour + starch + high-heat oven finish
 
-결착력 부족 (달걀 제외 시):
-  → 아마씨물 + 전분 + 두부 으깬 것
+Lacking binding (when removing eggs):
+  → Flaxseed water + starch + mashed tofu
 ```
 
-## 참고
+## References
 
-- 식품의약품안전처 식품 알레르기 표시 기준
-- 상세 대체 레시피: `references/substitution-recipes.md` 참조
+- Ministry of Food and Drug Safety food allergy labeling standards
+- Detailed substitution recipes: see `references/substitution-recipes.md`
+```

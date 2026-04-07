@@ -1,100 +1,100 @@
 ---
 name: content-lifecycle-manager
-description: "지식베이스 콘텐츠의 생명주기 관리와 품질 거버넌스를 체계화하는 전문 스킬. maintenance-planner와 wiki-builder가 콘텐츠 갱신 주기, 소유권, 품질 점수를 관리할 때 활용한다. '콘텐츠 생명주기', '거버넌스', '갱신 주기', '문서 품질', '지식 관리 프로세스' 등의 맥락에서 자동 적용한다. 단, CMS 서버 운영이나 자동화 스크립트 배포는 이 스킬의 범위가 아니다."
+description: "A specialized skill for systematizing knowledge base content lifecycle management and quality governance. Used by the maintenance-planner and wiki-builder agents when managing content update cycles, ownership, and quality scores. Automatically applied in contexts involving 'content lifecycle,' 'governance,' 'update cycle,' 'document quality,' or 'knowledge management process.' Note: CMS server operations and automation script deployment are outside the scope of this skill."
 ---
 
-# Content Lifecycle Manager — 콘텐츠 생명주기 관리 도구
+# Content Lifecycle Manager — Content Lifecycle Management Tool
 
-maintenance-planner, wiki-builder 에이전트의 콘텐츠 관리 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the content management capabilities of the maintenance-planner and wiki-builder agents.
 
-## 적용 대상 에이전트
+## Target Agents
 
-- **maintenance-planner** — 거버넌스, 갱신 주기, 품질 관리
-- **wiki-builder** — 문서 작성 시 생명주기 메타데이터 포함
+- **maintenance-planner** — Governance, update cycles, quality management
+- **wiki-builder** — Including lifecycle metadata during document creation
 
-## 콘텐츠 생명주기 5단계
-
-```
-[계획] → [작성] → [검토] → [발행] → [유지보수]
-  │                                      │
-  └──────── [폐기/아카이브] ←──────────────┘
-```
-
-### 단계별 역할과 산출물
-
-| 단계 | 책임자 | 행동 | 산출물 |
-|------|--------|------|--------|
-| 계획 | 콘텐츠 소유자 | 주제 정의, 범위 설정 | 콘텐츠 브리프 |
-| 작성 | 작성자 | 초안 작성 | 드래프트 문서 |
-| 검토 | 리뷰어 | 기술 정확성 + 가독성 검토 | 리뷰 피드백 |
-| 발행 | 편집자 | 포맷팅, 메타데이터, 링크 | 발행 문서 |
-| 유지보수 | 소유자 | 정기 검토, 업데이트 | 갱신 기록 |
-| 폐기 | 소유자 | 아카이브 또는 삭제 | 폐기 사유 |
-
-## 콘텐츠 유형별 갱신 주기
-
-| 콘텐츠 유형 | 권장 갱신 주기 | 트리거 이벤트 |
-|-----------|-------------|-------------|
-| API 레퍼런스 | 릴리스마다 | API 변경 시 |
-| 온보딩 가이드 | 분기 | 프로세스 변경 시 |
-| 아키텍처 문서 | 반기 | 아키텍처 결정 시 |
-| 코딩 컨벤션 | 연간 | 컨벤션 합의 시 |
-| FAQ | 월간 | 질문 축적 시 |
-| 용어집 | 분기 | 신규 용어 등장 시 |
-| 장애 대응 런북 | 장애 후 | 장애 발생 시 |
-
-## 문서 품질 스코어카드
-
-### 5-Dimension 품질 평가
-
-| 차원 | 가중치 | 1점 | 3점 | 5점 |
-|------|--------|-----|-----|-----|
-| 정확성 | 30% | 오류 있음 | 대체로 정확 | 완전히 정확 |
-| 최신성 | 25% | 1년+ 미갱신 | 6개월 내 확인 | 최신 상태 |
-| 완성도 | 20% | 핵심 누락 | 기본 커버 | 포괄적 |
-| 가독성 | 15% | 읽기 어려움 | 보통 | 매우 명확 |
-| 검색성 | 10% | 메타데이터 없음 | 기본 태그 | 풍부한 메타 |
-
-### 품질 등급
-
-| 총점 | 등급 | 행동 |
-|------|------|------|
-| 4.0-5.0 | A (우수) | 유지 |
-| 3.0-3.9 | B (양호) | 경미한 개선 |
-| 2.0-2.9 | C (보통) | 갱신 필요 |
-| 1.0-1.9 | D (미흡) | 즉시 재작성 또는 폐기 |
-
-## 거버넌스 모델
-
-### RACI 매트릭스
-
-| 활동 | 작성자 | 리뷰어 | 소유자 | 관리자 |
-|------|--------|--------|--------|--------|
-| 신규 작성 | R | C | A | I |
-| 리뷰 | I | R | A | I |
-| 발행 | I | C | R | I |
-| 갱신 | R | C | A | I |
-| 폐기 | I | C | R | A |
-
-R=실행, A=승인, C=자문, I=통보
-
-### 소유권 모델
-
-| 모델 | 적합한 상황 | 장점 | 단점 |
-|------|-----------|------|------|
-| 개인 소유 | 전문 기술 문서 | 품질 높음 | 병목, 버스 팩터 |
-| 팀 소유 | 프로세스 문서 | 부담 분산 | 책임 분산 |
-| 커뮤니티 | 위키형 지식 | 자발적 기여 | 품질 편차 |
-
-## 문서 상태 워크플로우
+## 5-Stage Content Lifecycle
 
 ```
-[draft] → [review] → [published] → [outdated] → [archived]
-                ↑                       │
-                └── [revision] ←────────┘
+[Plan] -> [Create] -> [Review] -> [Publish] -> [Maintain]
+  |                                                |
+  +------------ [Retire/Archive] <-----------------+
 ```
 
-### 상태별 메타데이터 관리
+### Roles and Deliverables by Stage
+
+| Stage | Responsible | Action | Deliverable |
+|-------|------------|--------|-------------|
+| Plan | Content Owner | Define topic, set scope | Content brief |
+| Create | Author | Draft writing | Draft document |
+| Review | Reviewer | Technical accuracy + readability review | Review feedback |
+| Publish | Editor | Formatting, metadata, linking | Published document |
+| Maintain | Owner | Regular review, updates | Update records |
+| Retire | Owner | Archive or delete | Retirement rationale |
+
+## Update Cycles by Content Type
+
+| Content Type | Recommended Cycle | Trigger Events |
+|-------------|------------------|----------------|
+| API Reference | Every release | API changes |
+| Onboarding Guide | Quarterly | Process changes |
+| Architecture Docs | Semi-annually | Architecture decisions |
+| Coding Conventions | Annually | Convention agreements |
+| FAQ | Monthly | Question accumulation |
+| Glossary | Quarterly | New terms emerge |
+| Incident Runbooks | After incidents | Incident occurrence |
+
+## Document Quality Scorecard
+
+### 5-Dimension Quality Assessment
+
+| Dimension | Weight | 1 Point | 3 Points | 5 Points |
+|-----------|--------|---------|----------|----------|
+| Accuracy | 30% | Contains errors | Mostly accurate | Fully accurate |
+| Currency | 25% | 1+ year without update | Verified within 6 months | Up to date |
+| Completeness | 20% | Key content missing | Basic coverage | Comprehensive |
+| Readability | 15% | Difficult to read | Average | Very clear |
+| Findability | 10% | No metadata | Basic tags | Rich metadata |
+
+### Quality Grades
+
+| Total Score | Grade | Action |
+|------------|-------|--------|
+| 4.0-5.0 | A (Excellent) | Maintain |
+| 3.0-3.9 | B (Good) | Minor improvements |
+| 2.0-2.9 | C (Fair) | Update needed |
+| 1.0-1.9 | D (Poor) | Immediate rewrite or retire |
+
+## Governance Model
+
+### RACI Matrix
+
+| Activity | Author | Reviewer | Owner | Admin |
+|----------|--------|----------|-------|-------|
+| New creation | R | C | A | I |
+| Review | I | R | A | I |
+| Publish | I | C | R | I |
+| Update | R | C | A | I |
+| Retire | I | C | R | A |
+
+R=Responsible, A=Accountable, C=Consulted, I=Informed
+
+### Ownership Models
+
+| Model | Best For | Pros | Cons |
+|-------|---------|------|------|
+| Individual ownership | Specialized technical docs | High quality | Bottleneck, bus factor |
+| Team ownership | Process docs | Distributed load | Distributed responsibility |
+| Community | Wiki-style knowledge | Voluntary contributions | Quality variance |
+
+## Document Status Workflow
+
+```
+[draft] -> [review] -> [published] -> [outdated] -> [archived]
+                ^                          |
+                +---- [revision] <---------+
+```
+
+### Status Metadata Management
 
 ```yaml
 ---
@@ -109,42 +109,42 @@ version: "2.1"
 change_log:
   - date: "2024-06-20"
     author: "dev-a"
-    summary: "API v3 변경사항 반영"
+    summary: "Updated for API v3 changes"
 ---
 ```
 
-## 콘텐츠 감사 (Content Audit)
+## Content Audit
 
-### 감사 절차
+### Audit Procedure
 
 ```
-1. 전체 문서 인벤토리 생성
-2. 각 문서에 품질 스코어카드 적용
-3. 등급별 행동 계획 수립
-4. 소유자 없는 문서(orphan) 식별
-5. 중복/상충 문서 식별
-6. 갱신 일정 캘린더 생성
+1. Generate complete document inventory
+2. Apply quality scorecard to each document
+3. Establish action plans by grade
+4. Identify orphan documents (no owner)
+5. Identify duplicate/conflicting documents
+6. Create update schedule calendar
 ```
 
-### 감사 보고서 템플릿
+### Audit Report Template
 
 ```markdown
-## 콘텐츠 감사 보고서
+## Content Audit Report
 
-**감사일**: {날짜}
-**대상**: {범위}
+**Audit Date**: {Date}
+**Scope**: {Scope}
 
-### 요약
-- 총 문서 수: {N}
-- 등급 분포: A({a}%), B({b}%), C({c}%), D({d}%)
-- 소유자 미지정: {orphan}건
-- 1년+ 미갱신: {stale}건
+### Summary
+- Total documents: {N}
+- Grade distribution: A({a}%), B({b}%), C({c}%), D({d}%)
+- No owner assigned: {orphan} items
+- 1+ year without update: {stale} items
 
-### 즉시 조치 필요
-| 문서 | 현재 등급 | 이슈 | 제안 행동 |
-|------|---------|------|----------|
+### Immediate Action Required
+| Document | Current Grade | Issue | Suggested Action |
+|----------|-------------|-------|-----------------|
 
-### 분기 내 개선 필요
-| 문서 | 현재 등급 | 이슈 | 제안 행동 |
-|------|---------|------|----------|
+### Improvement Needed Within Quarter
+| Document | Current Grade | Issue | Suggested Action |
+|----------|-------------|-------|-----------------|
 ```

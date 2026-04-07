@@ -1,37 +1,37 @@
 # Public Speaking Harness
 
-퍼블릭스피킹 종합의 연설문→발표대본→토론준비서→Q&A예상답변→리허설가이드를 에이전트 팀이 협업하여 생성하는 하네스.
+ comprehensive speechdocument→presentationversus→debatepreparationfrom→Q&Aexpectedanswer→rehearsalguide A harness where an agent team collaborates to produce deliverables.
 
-## 구조
+## structure
 
 ```
 .claude/
 ├── agents/
-│   ├── audience-analyst.md     — 청중 분석 (타깃 청중, 맥락, 기대)
-│   ├── speech-writer.md        — 연설/발표 작가 (연설문, 발표대본)
-│   ├── debate-preparer.md      — 토론 준비 전문가 (논증, 반론, 교차심문)
-│   ├── qa-strategist.md        — Q&A 전략가 (예상 질문, 답변 전략)
-│   └── rehearsal-coach.md      — 리허설 코치 및 교차 검증 (전달력, 정합성)
+│ ├── audience-analyst.md — audience analysis (target audience, context, expected)
+│ ├── speech-writer.md — speech/presentation work (speechdocument, presentationversus)
+│ ├── debate-preparer.md — debate preparation expert (, counterargument, gapdocument)
+│ ├── qa-strategist.md — Q&A strategy (expected question, answer strategy)
+│ └── rehearsal-coach.md — rehearsal value and cross-verification (delivercapability, consistency)
 ├── skills/
-│   ├── public-speaking/
-│   │   └── skill.md           — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
-│   ├── rhetoric-patterns/
-│   │   └── skill.md           — 수사학 패턴 라이브러리 (speech-writer 확장)
-│   └── audience-engagement/
-│       └── skill.md           — 청중 참여 전략 (audience-analyst 확장)
-└── CLAUDE.md                  — 이 파일
+│ ├── public-speaking/
+│ │ └── skill.md — Orchestrator (team , workflow, error handling)
+│ ├── rhetoric-patterns/
+│ │ └── skill.md — numbercompany pattern library (speech-writer extension)
+│ └── audience-engagement/
+│ └── skill.md — audience strategy (audience-analyst extension)
+└── CLAUDE.md — file
 ```
 
-## 사용법
+## usage
 
-`/public-speaking` 스킬을 트리거하거나, "연설문 써줘" 같은 자연어로 요청한다.
+`/public-speaking` skill , "speechdocument " specialistannual request.
 
-## 산출물
+## deliverable
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_audience_analysis.md` — 청중 분석 보고서
-- `02_speech_script.md` — 연설문/발표 대본
-- `03_debate_prep.md` — 토론 준비서
-- `04_qa_playbook.md` — Q&A 예상 답변집
-- `05_rehearsal_guide.md` — 리허설 가이드 및 검증 보고서
+all deliverable `_workspace/` save:
+- `00_input.md` — user input organization
+- `01_audience_analysis.md` — audience analysis report
+- `02_speech_script.md` — speechdocument/presentation versus
+- `03_debate_prep.md` — debate preparationfrom
+- `04_qa_playbook.md` — Q&A expected answer
+- `05_rehearsal_guide.md` — rehearsal guide and verify report

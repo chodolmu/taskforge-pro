@@ -1,160 +1,160 @@
 ---
 name: ip-landscape-analysis
-description: "IP 랜드스케이프 분석 가이드. patent-mapper와 protection-advisor 에이전트가 기술 분야별 특허 현황을 분석하고 전략을 수립할 때 참조. 'IP 랜드스케이프', '특허 맵', '기술 동향' 요청 시 사용. 단, 특허 출원 대행이나 특허 검색 DB 접속은 범위 밖."
+description: "IP landscape analysis guide. Referenced by the patent-mapper and protection-advisor agents when analyzing technology-specific patent landscapes and developing strategies. Use for 'IP landscape', 'patent map', or 'technology trends' requests. Patent filing services and patent search database access are out of scope."
 ---
 
-# IP Landscape Analysis — IP 랜드스케이프 분석
+# IP Landscape Analysis — IP Landscape Analysis
 
-patent-mapper / protection-advisor 에이전트의 IP 전략 분석 역량 강화.
+Enhances the IP strategy analysis capabilities of the patent-mapper and protection-advisor agents.
 
-## IP 랜드스케이프 분석 프로세스
+## IP Landscape Analysis Process
 
-### 5단계 분석 절차
+### 5-Step Analysis Procedure
 
 ```
-1단계: 기술 분야 정의
-  - 기술 키워드 + IPC/CPC 코드
-  - 검색식 설계
+Step 1: Define Technology Scope
+  - Technology keywords + IPC/CPC codes
+  - Search query design
 
-2단계: 데이터 수집
-  - KIPRIS (한국), USPTO (미국), EPO (유럽)
-  - 검색 범위: 최근 10~20년
+Step 2: Data Collection
+  - KIPRIS (Korea), USPTO (US), EPO (Europe)
+  - Search range: Last 10-20 years
 
-3단계: 정량 분석
-  - 출원 추이, 출원인 랭킹, 기술 분류
-  - 특허 패밀리 분석
+Step 3: Quantitative Analysis
+  - Filing trends, applicant rankings, technology classification
+  - Patent family analysis
 
-4단계: 정성 분석
-  - 핵심 특허 선별, 청구항 분석
-  - 공백 영역(White Space) 식별
+Step 4: Qualitative Analysis
+  - Key patent selection, claims analysis
+  - White space identification
 
-5단계: 전략 도출
-  - 기회/위협 매핑
-  - 출원/매입/라이선스/회피 전략
+Step 5: Strategy Derivation
+  - Opportunity/threat mapping
+  - Filing/acquisition/licensing/design-around strategies
 ```
 
-## 특허 맵 유형
+## Patent Map Types
 
-### 기술-시간 맵
+### Technology-Timeline Map
 
 ```
          2020  2021  2022  2023  2024
-기술 A    ██    ███   ████  █████ ██████
-기술 B    █     ██    ███   ████  ████
-기술 C    ███   ██    ██    █     █
-기술 D    -     -     █     ██    ████
+Tech A    ##    ###   ####  ##### ######
+Tech B    #     ##    ###   ####  ####
+Tech C    ###   ##    ##    #     #
+Tech D    -     -     #     ##    ####
 
-→ 기술 A: 급성장, 기술 D: 신흥
-→ 기술 C: 쇠퇴
+-> Tech A: Rapid growth, Tech D: Emerging
+-> Tech C: Declining
 ```
 
-### 출원인 포트폴리오 맵
+### Applicant Portfolio Map
 
-| 출원인 | 기술 A | 기술 B | 기술 C | 합계 |
-|--------|--------|--------|--------|------|
-| 삼성 | 45 | 32 | 18 | 95 |
-| LG | 38 | 28 | 25 | 91 |
-| 경쟁사 X | 52 | 15 | 8 | 75 |
-| 우리 회사 | 12 | 20 | 5 | 37 |
+| Applicant | Tech A | Tech B | Tech C | Total |
+|-----------|--------|--------|--------|-------|
+| Company X | 45 | 32 | 18 | 95 |
+| Company Y | 38 | 28 | 25 | 91 |
+| Competitor Z | 52 | 15 | 8 | 75 |
+| Our Company | 12 | 20 | 5 | 37 |
 
-### 인용 네트워크 맵
-
-```
-핵심 특허 식별 기준:
-- 피인용 수 상위 10%
-- 심사관 인용 (더 높은 가중치)
-- 연결 중심성 (Betweenness Centrality)
-```
-
-## 공백 분석 (White Space)
-
-### 기술-시장 매트릭스
+### Citation Network Map
 
 ```
-         시장 A    시장 B    시장 C
-기술 1    ████     ██       ░░░░  ← 공백
-기술 2    ███      ░░░░     ██    ← 공백
-기술 3    ░░░░     ███      ████  ← 공백
-
-░░░░ = White Space (출원 부재/소수)
-→ 전략적 출원 기회
+Key patent identification criteria:
+- Top 10% by forward citations
+- Examiner citations (higher weight)
+- Betweenness centrality
 ```
 
-### 공백 유형
+## White Space Analysis
 
-| 유형 | 설명 | 전략 |
-|------|------|------|
-| 기술 공백 | 미개척 기술 영역 | 선제 출원 |
-| 시장 공백 | 미적용 시장/지역 | 해외 출원 |
-| 출원인 공백 | 경쟁사 미진입 영역 | 빠른 포트폴리오 구축 |
-
-## FTO (Freedom to Operate) 분석
-
-### FTO 분석 절차
+### Technology-Market Matrix
 
 ```
-1. 대상 제품/기술 명세 확인
-2. 관련 특허 검색 (등록/유효 특허)
-3. 청구항 분석 (구성요소 대비)
-4. 침해 가능성 평가
-   - 문언 침해: 모든 구성요소 일치
-   - 균등 침해: 실질적으로 동일
-5. FTO 의견서 작성
+         Market A    Market B    Market C
+Tech 1    ####       ##         ....  <- Gap
+Tech 2    ###        ....       ##    <- Gap
+Tech 3    ....       ###        ####  <- Gap
+
+.... = White Space (no/few filings)
+-> Strategic filing opportunities
 ```
 
-### 침해 리스크 매트릭스
+### White Space Types
 
-| 리스크 | 침해 가능성 | 영향 | 대응 |
-|--------|-----------|------|------|
-| 🔴 높음 | 문언 침해 가능 | 핵심 기능 | 회피 설계/라이선스 |
-| 🟡 중간 | 균등 침해 가능 | 일부 기능 | 회피 설계 검토 |
-| 🟢 낮음 | 침해 가능성 낮음 | 비핵심 | 모니터링 |
+| Type | Description | Strategy |
+|------|------------|----------|
+| Technology Gap | Unexplored technology area | Preemptive filing |
+| Market Gap | Unapplied market/region | Foreign filing |
+| Applicant Gap | Area competitors have not entered | Rapid portfolio build |
 
-## IP 전략 프레임워크
+## FTO (Freedom to Operate) Analysis
 
-### 공격/방어 전략
-
-| 전략 | 목적 | 수단 |
-|------|------|------|
-| 특허 울타리 | 핵심 기술 보호 | 주변 특허 출원 |
-| 선점 출원 | 시장 진입 장벽 | 신기술 빠른 출원 |
-| 크로스라이선스 | 상호 실시 | 포트폴리오 교환 |
-| 방어 공개 | 경쟁사 출원 방지 | 기술 공개 (선행기술화) |
-| 특허 풀 | 표준 기술 활용 | 업계 공동 라이선스 |
-
-### IP 포트폴리오 최적화
+### FTO Analysis Procedure
 
 ```
-유지 기준:
-  ★★★ 핵심: 사업 직접 관련, 높은 가치
-  ★★  중요: 방어적 가치, 잠재 수익
-  ★   보통: 유지비 대비 가치 검토
-
-정리 기준:
-  - 사업 관련성 없음 + 라이선스 수요 없음 → 포기
-  - 유지비 > 가치 → 매각 또는 포기
-  - 만료 3년 이내 + 활용 계획 없음 → 포기 검토
+1. Confirm target product/technology specifications
+2. Search relevant patents (registered/valid patents)
+3. Claims analysis (element-by-element comparison)
+4. Infringement risk assessment
+   - Literal infringement: All elements match
+   - Doctrine of equivalents: Substantially identical
+5. FTO opinion preparation
 ```
 
-## 갱신 관리
+### Infringement Risk Matrix
 
-### 국가별 특허 수명/갱신 비용
+| Risk | Infringement Likelihood | Impact | Response |
+|------|----------------------|--------|----------|
+| High | Literal infringement possible | Core functionality | Design-around / License |
+| Medium | Equivalents infringement possible | Some functionality | Design-around review |
+| Low | Low infringement likelihood | Non-core | Monitoring |
 
-| 국가 | 존속 기간 | 갱신 주기 | 갱신비 추세 |
-|------|----------|----------|-----------|
-| 한국 | 출원일+20년 | 매년 (4년차~) | 연차 증가 |
-| 미국 | 출원일+20년 | 3.5/7.5/11.5년 | 3단계 |
-| 유럽(EP) | 출원일+20년 | 매년 (3년차~) | 연차 증가 |
-| 일본 | 출원일+20년 | 매년 (4년차~) | 연차 증가 |
-| 중국 | 출원일+20년 | 매년 | 연차 증가 |
+## IP Strategy Framework
 
-## 품질 체크리스트
+### Offensive/Defensive Strategies
 
-| 항목 | 기준 |
-|------|------|
-| 검색 범위 | IPC/CPC + 키워드 병용 |
-| 정량 분석 | 추이, 랭킹, 분류 |
-| 공백 분석 | 기술-시장 매트릭스 |
-| FTO | 핵심 제품/기술 커버 |
-| 전략 도출 | 공격/방어 전략 명시 |
-| 포트폴리오 | 유지/정리 기준 |
+| Strategy | Purpose | Means |
+|----------|---------|-------|
+| Patent Fence | Protect core technology | File surrounding patents |
+| Preemptive Filing | Market entry barrier | Fast filing on new technology |
+| Cross-Licensing | Mutual practice rights | Portfolio exchange |
+| Defensive Publication | Block competitor filings | Publish technology (establish prior art) |
+| Patent Pool | Access standard technology | Industry-wide joint licensing |
+
+### IP Portfolio Optimization
+
+```
+Retention Criteria:
+  3 stars - Core: Directly business-related, high value
+  2 stars - Important: Defensive value, revenue potential
+  1 star - Moderate: Review value vs maintenance cost
+
+Pruning Criteria:
+  - No business relevance + no licensing demand -> Abandon
+  - Maintenance cost > value -> Sell or abandon
+  - Expiring within 3 years + no utilization plan -> Consider abandonment
+```
+
+## Renewal Management
+
+### Country-Specific Patent Life/Renewal Costs
+
+| Country | Patent Term | Renewal Cycle | Cost Trend |
+|---------|-----------|-------------|-----------|
+| Korea | Filing date + 20 years | Annual (from year 4) | Increases annually |
+| United States | Filing date + 20 years | At 3.5/7.5/11.5 years | 3 stages |
+| Europe (EP) | Filing date + 20 years | Annual (from year 3) | Increases annually |
+| Japan | Filing date + 20 years | Annual (from year 4) | Increases annually |
+| China | Filing date + 20 years | Annual | Increases annually |
+
+## Quality Checklist
+
+| Item | Criteria |
+|------|----------|
+| Search Scope | IPC/CPC + keyword combination |
+| Quantitative Analysis | Trends, rankings, classification |
+| White Space Analysis | Technology-market matrix |
+| FTO | Core products/technologies covered |
+| Strategy | Offensive/defensive strategies specified |
+| Portfolio | Retention/pruning criteria defined |

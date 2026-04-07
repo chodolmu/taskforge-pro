@@ -1,8 +1,8 @@
 # ADR Writer Harness
 
-아키텍처 결정 기록(ADR) 작성 에이전트 팀 하네스.
+An agent team harness for creating Architecture Decision Records (ADRs).
 
-## 구조
+## Structure
 
 ```
 .claude/
@@ -14,14 +14,14 @@
 │   └── impact-tracker.md
 ├── skills/
 │   ├── adr-writer/
-│   │   └── skill.md              — 오케스트레이터
+│   │   └── skill.md              — Orchestrator
 │   ├── quality-attribute-analyzer/
-│   │   └── skill.md              — 품질 속성 분석 (CAP 정리, 가중 평가, ATAM)
+│   │   └── skill.md              — Quality attribute analysis (CAP theorem, weighted evaluation, ATAM)
 │   └── madr-template-engine/
-│       └── skill.md              — MADR 포맷 (ADR 상태 관리, 번호 체계, 의존성 그래프)
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md              — MADR format (ADR status management, numbering system, dependency graph)
+└── CLAUDE.md                     — This file
 ```
 
-## 사용법
+## Usage
 
-`/adr-writer` 스킬을 트리거하거나 자연어로 요청한다.
+Trigger the `/adr-writer` skill, or make a natural language request.

@@ -1,127 +1,132 @@
+```markdown
 ---
 name: tax-calculator
-description: "세금 계산과 절세 전략 수립의 전 과정을 에이전트 팀이 협업하여 생성하는 풀 파이프라인. '세금 계산해줘', '연말정산 시뮬레이션', '종합소득세 얼마나 나와', '절세 방법', '세액공제 최적화', '연금저축 세액공제', '사업소득 세금', '프리랜서 세금', '양도소득세 계산', '실효세율 분석' 등 세금 계산·절세·세무신고 관련 요청에 이 스킬을 사용한다. 기존 세금 자료가 있으면 분석이나 최적화를 지원한다. 단, 세무사·공인회계사 업무 대체, 세무 대리·신고 대행, 조세불복·심판 대리는 이 스킬의 범위가 아니다."
+description: "A full pipeline where an agent team collaborates to handle the entire process of tax calculation and tax-saving strategy development. Use this skill for requests related to tax calculation, tax savings, and tax filing such as: 'calculate my taxes', 'year-end tax settlement simulation', 'how much will my comprehensive income tax be', 'tax-saving methods', 'tax credit optimization', 'pension savings tax credit', 'business income tax', 'freelancer taxes', 'capital gains tax calculation', 'effective tax rate analysis'. If existing tax documents are available, it supports analysis and optimization. However, replacing certified tax accountant or CPA work, acting as a tax agent or filing on behalf of clients, and representing tax appeals or adjudications are outside the scope of this skill."
 ---
 
-# Tax Calculator — 세금 계산·절세 전략 풀 파이프라인
+# Tax Calculator — Full Tax Calculation & Tax-Saving Strategy Pipeline
 
-소득분석→공제항목최적화→세액계산→절세시뮬레이션→신고자료준비를 에이전트 팀이 협업하여 한 번에 생성한다.
+An agent team collaborates to produce income analysis → deduction optimization → tax calculation → tax-saving simulation → filing preparation in one pass.
 
-## 실행 모드
+## Execution Modes
 
-**에이전트 팀** — 4명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 4 agents communicate directly via SendMessage and cross-validate each other.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| Agent | File | Role | Type |
 |---------|------|------|------|
-| income-analyst | `.claude/agents/income-analyst.md` | 소득 분류, 과세표준 산출 | general-purpose |
-| deduction-optimizer | `.claude/agents/deduction-optimizer.md` | 소득공제·세액공제 최적화 | general-purpose |
-| tax-engine | `.claude/agents/tax-engine.md` | 세액 계산, 납부/환급 산출 | general-purpose |
-| strategy-advisor | `.claude/agents/strategy-advisor.md` | 절세 시뮬레이션, 신고 준비 | general-purpose |
+| income-analyst | `.claude/agents/income-analyst.md` | Income classification, taxable income calculation | general-purpose |
+| deduction-optimizer | `.claude/agents/deduction-optimizer.md` | Income deduction & tax credit optimization | general-purpose |
+| tax-engine | `.claude/agents/tax-engine.md` | Tax calculation, payable/refund amount | general-purpose |
+| strategy-advisor | `.claude/agents/strategy-advisor.md` | Tax-saving simulation, filing preparation | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Orchestrator performs directly)
 
-1. 사용자 입력에서 추출한다:
-    - **소득 정보**: 근로소득(총급여), 사업소득, 금융소득, 기타소득
-    - **가족 구성**: 배우자, 부양가족 (인적공제용)
-    - **공제 항목** (선택): 보험료, 의료비, 교육비, 기부금, 연금저축 등
-    - **기납부세액** (선택): 원천징수세액, 중간예납
-    - **과세 연도**: 귀속 연도
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Income information**: Employment income (gross salary), business income, financial income, miscellaneous income
+    - **Family composition**: Spouse, dependents (for personal exemptions)
+    - **Deduction items** (optional): Insurance premiums, medical expenses, education costs, donations, pension savings, etc.
+    - **Pre-paid tax** (optional): Withheld tax at source, interim prepayment
+    - **Tax year**: Attribution year
+2. Create a `_workspace/` directory in the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. **Determine execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| Order | Task | Owner | Depends On | Output |
 |------|------|------|------|--------|
-| 1 | 소득 분석 | analyst | 없음 | `_workspace/01_income_analysis.md` |
-| 2 | 공제 최적화 | optimizer | 작업 1 | `_workspace/02_deduction_optimization.md` |
-| 3 | 세액 계산 | engine | 작업 1, 2 | `_workspace/03_tax_calculation.md` |
-| 4 | 절세 전략 + 신고 준비 | advisor | 작업 1, 2, 3 | `_workspace/04_tax_strategy.md`, `_workspace/05_filing_preparation.md` |
+| 1 | Income analysis | analyst | None | `_workspace/01_income_analysis.md` |
+| 2 | Deduction optimization | optimizer | Task 1 | `_workspace/02_deduction_optimization.md` |
+| 3 | Tax calculation | engine | Tasks 1, 2 | `_workspace/03_tax_calculation.md` |
+| 4 | Tax strategy + filing prep | advisor | Tasks 1, 2, 3 | `_workspace/04_tax_strategy.md`, `_workspace/05_filing_preparation.md` |
 
-이 워크플로우는 **순차 실행**이다 — 각 단계가 이전 단계에 의존한다.
+This workflow is **sequential** — each step depends on the previous one.
 
-**팀원 간 소통 흐름:**
-- analyst 완료 → optimizer에게 종합소득금액·세율 구간 전달, engine에게 과세표준 기초 전달
-- optimizer 완료 → engine에게 공제 합계 전달, advisor에게 미활용 공제 항목 전달
-- engine 완료 → advisor에게 결정세액·실효세율·세율 구간 분석 전달
-- advisor는 전체 결과를 종합하여 절세 전략 수립 + 신고 가이드 생성
+**Inter-agent communication flow:**
+- analyst completes → passes comprehensive income amount & tax bracket to optimizer, passes taxable income basis to engine
+- optimizer completes → passes deduction totals to engine, passes unused deduction items to advisor
+- engine completes → passes final tax amount, effective tax rate & tax bracket analysis to advisor
+- advisor synthesizes all results to build tax-saving strategies + filing guide
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Outputs
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 계산 수치의 일관성을 검증한다 (소득금액→공제→세액의 연쇄 계산 정확성)
-3. 최종 요약을 사용자에게 보고한다:
-    - 소득 분석 — `01_income_analysis.md`
-    - 공제 최적화 — `02_deduction_optimization.md`
-    - 세액 계산서 — `03_tax_calculation.md`
-    - 절세 전략 — `04_tax_strategy.md`
-    - 신고 준비 — `05_filing_preparation.md`
+1. Review all files in `_workspace/`
+2. Validate consistency of calculated figures (accuracy of the income → deduction → tax chain)
+3. Report final summary to user:
+    - Income analysis — `01_income_analysis.md`
+    - Deduction optimization — `02_deduction_optimization.md`
+    - Tax calculation statement — `03_tax_calculation.md`
+    - Tax-saving strategy — `04_tax_strategy.md`
+    - Filing preparation — `05_filing_preparation.md`
 
-## 작업 규모별 모드
+## Mode by Task Scale
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| User Request Pattern | Execution Mode | Agents Engaged |
 |----------------|----------|-------------|
-| "세금 전체 계산하고 절세 방법 알려줘" | **풀 파이프라인** | 4명 전원 |
-| "연봉 5000만원이면 세금 얼마야" | **간편 계산 모드** | analyst + engine |
-| "공제 항목 최적화해줘" | **공제 모드** | analyst + optimizer |
-| "절세 방법만 알려줘" | **전략 모드** | advisor (기존 세액 정보 활용) |
-| "연말정산 준비 뭐 해야 해" | **신고 준비 모드** | advisor 단독 |
+| "Calculate all my taxes and show me how to save" | **Full Pipeline** | All 4 agents |
+| "How much tax on an annual salary of 50M KRW?" | **Quick Calculation Mode** | analyst + engine |
+| "Optimize my deduction items" | **Deduction Mode** | analyst + optimizer |
+| "Just tell me how to save on taxes" | **Strategy Mode** | advisor (uses existing tax info) |
+| "What do I need to prepare for year-end settlement?" | **Filing Prep Mode** | advisor solo |
 
-**기존 파일 활용**: 사용자가 기존 원천징수영수증 등을 제공하면, 해당 데이터를 추출하여 `_workspace/`에 반영한다.
+**Using existing files**: If the user provides an existing withholding tax receipt or similar, extract that data and incorporate it into `_workspace/`.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
+| Strategy | Method | Purpose |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| File-based | `_workspace/` directory | Store and share primary outputs |
+| Message-based | SendMessage | Real-time delivery of key information, revision requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+Filename convention: `{order}_{agent}_{output}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
+| Error Type | Strategy |
 |----------|------|
-| 소득 정보 부족 | 제공된 정보만으로 계산, "추가 소득 확인 필요" 명시 |
-| 세법 연도 불명확 | 최신 세법 기준 적용, "귀속 연도 확인 필요" 명시 |
-| 계산 수치 불일치 | 전 단계 재검증 요청 (최대 2회) |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 보고서에 누락 명시 |
-| 복잡한 세무 구조 | "세무사 상담 권고" 명시 + 기본 분석만 제공 |
+| Insufficient income information | Calculate with information provided, note "additional income verification required" |
+| Unclear tax year | Apply latest tax law, note "attribution year verification required" |
+| Calculated figure mismatch | Request re-validation of prior step (max 2 times) |
+| Agent failure | 1 retry → if still failing, proceed without that output and note the omission in the report |
+| Complex tax structure | Note "tax accountant consultation recommended" + provide basic analysis only |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "연봉 7000만원 직장인이고, 배우자 1명, 자녀 2명이야. 연금저축 400만원, 신용카드 2000만원 썼어. 세금 계산하고 절세 방법 알려줘"
-**기대 결과**:
-- 소득 분석: 총급여 7000만원 → 근로소득공제 → 근로소득금액 산출
-- 공제 최적화: 인적공제(4인), 연금저축세액공제, 신용카드공제 등 최적 조합
-- 세액 계산: 과세표준→산출세액→결정세액→납부/환급액 전 과정
-- 절세 전략: IRP 추가 납입, 의료비 공제 활용 등 3개+ 시뮬레이션
-- 신고 준비: 필요 증빙 체크리스트, 홈택스 신고 가이드
+### Normal Flow
+**Prompt**: "I'm a salaried worker earning 70M KRW annually, with 1 spouse and 2 children. I contributed 4M KRW to pension savings and spent 20M KRW on credit cards. Calculate my taxes and show me how to save."
+**Expected Result**:
+- Income analysis: Gross salary 70M KRW → employment income deduction → net employment income calculated
+- Deduction optimization: Personal exemptions (4 people), pension savings tax credit, credit card deduction, etc. — optimal combination
+- Tax calculation: Full process from taxable income → calculated tax → final tax → payable/refund amount
+- Tax-saving strategy: IRP additional contribution, medical expense deduction utilization, etc. — 3+ simulations
+- Filing preparation: Required documentation checklist, HomeTax filing guide
 
-### 기존 파일 활용 흐름
-**프롬프트**: "작년 원천징수영수증인데 이걸로 분석해줘" + 파일 첨부
-**기대 결과**:
-- 원천징수영수증에서 소득·공제·세액 데이터 추출
-- 현재 공제 상태 분석 + 추가 절세 가능 항목 안내
+### Existing File Flow
+**Prompt**: "This is last year's withholding tax receipt — analyze it for me" + file attachment
+**Expected Result**:
+- Extract income, deduction, and tax data from the withholding tax receipt
+- Analyze current deduction status + identify additional tax-saving opportunities
 
-### 에러 흐름
-**프롬프트**: "프리랜서인데 연 수입 1억이야, 세금 얼마나 내야 해?"
-**기대 결과**:
-- 사업소득으로 분류, 필요경비율(단순경비율/기준경비율) 적용
-- 경비 증빙 방법에 따른 세액 차이 시뮬레이션
-- 사업자 등록 유무에 따른 차이 안내
-- 4대 보험 지역가입자 부담 안내
+### Error Flow
+**Prompt**: "I'm a freelancer with annual revenue of 100M KRW — how much tax do I owe?"
+**Expected Result**:
+- Classify as business income, apply expense ratio (simplified expense ratio / standard expense ratio)
+- Simulate tax differences based on expense documentation method
+- Explain differences based on business registration status
+- Provide information on regional health insurance premium burden
 
-## 에이전트별 확장 스킬
+## Per-Agent Extended Skills
 
-| 에이전트 | 확장 스킬 | 용도 |
+| Agent | Extended Skill | Purpose |
 |---------|----------|------|
-| deduction-optimizer | `deduction-optimizer-engine` | 공제 한도표, 최적화 알고리즘, 신용카드 배분 |
-| tax-engine, strategy-advisor | `tax-bracket-simulator` | 세율 구간 분석, 세액 시뮬레이션, 한계세율 계산 |
+| deduction-optimizer | `deduction-optimizer-engine` | Deduction limit tables, optimization algorithm, credit card allocation |
+| tax-engine, strategy-advisor | `tax-bracket-simulator` | Tax bracket analysis, tax simulation, marginal tax rate calculation |
+```
+deduction-optimizer-engine` | Deduction limit table, optimization algorithm, credit card allocation |
+| tax-engine, strategy-advisor | `tax-bracket-simulator` | Tax bracket analysis, tax amount simulation, marginal tax rate calculation |
+```

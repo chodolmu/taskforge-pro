@@ -1,133 +1,133 @@
 ---
 name: route-optimizer
-description: "여행 동선을 최적화하고 이동 시간·비용을 최소화하는 경로 최적화 도구. 'itinerary-designer' 에이전트가 일별 동선을 설계할 때 이 스킬의 동선 최적화 알고리즘, 교통수단 비교 매트릭스, 시간 블록 배분 규칙을 반드시 활용해야 한다. '동선 최적화', '이동 경로', '교통수단 비교' 등에 사용한다. 단, 예산 계산이나 현지 정보는 이 스킬의 범위가 아니다."
+description: "A route optimization tool that optimizes travel routing and minimizes travel time and cost. The 'itinerary-designer' agent must use this skill's route optimization algorithms, transport comparison matrices, and time block allocation rules when designing daily routes. Used for 'route optimization', 'travel routes', 'transport comparison', etc. Budget calculation and local information are outside this skill's scope."
 ---
 
-# Route Optimizer — 여행 동선 최적화 도구
+# Route Optimizer — Travel Route Optimization Tool
 
-일별 방문지 동선 최적화, 교통수단 선택, 시간 블록 배분 전략.
+Daily visit route optimization, transport selection, and time block allocation strategies.
 
-## 동선 최적화 원칙
+## Route Optimization Principles
 
-### 5대 원칙
-
-```
-1. 클러스터링: 인접 관광지를 같은 날에 묶기
-2. 순환 경로: 숙소→관광→숙소 순환 동선 (지그재그 금지)
-3. 시간 정합: 운영시간·요일 제약 반영
-4. 피크 회피: 인기 관광지는 오전 일찍 또는 저녁 배치
-5. 여유 확보: 총 이동시간 일일 2시간 이내 권장
-```
-
-### 동선 설계 알고리즘
+### 5 Core Principles
 
 ```
-Step 1: 모든 방문지 위치 좌표 매핑
-Step 2: 지역별 클러스터링 (도보 15분 이내 = 같은 클러스터)
-Step 3: 클러스터별 방문 소요시간 산출
-Step 4: 일별 클러스터 배정 (총 소요시간 8-10시간 이내)
-Step 5: 클러스터 간 이동 최적 교통수단 선정
-Step 6: 시간대별 스케줄 배치 (운영시간 반영)
-Step 7: 여유시간·식사시간 삽입
+1. Clustering: Group nearby attractions on the same day
+2. Circular routes: Accommodation→Sightseeing→Accommodation loop (no zigzagging)
+3. Time alignment: Reflect operating hours/day-of-week constraints
+4. Peak avoidance: Schedule popular attractions early morning or evening
+5. Buffer time: Recommend daily transit time under 2 hours
 ```
 
-## 시간 블록 배분 템플릿
-
-### 일반 관광 일정 (10시간 블록)
+### Route Design Algorithm
 
 ```
-08:00-09:00  아침 식사 + 이동
-09:00-11:30  오전 관광 (핵심 관광지, 인기 명소)
-11:30-13:00  점심 식사 + 여유
-13:00-15:30  오후 관광 1 (박물관, 체험)
-15:30-16:00  간식/카페 휴식
-16:00-17:30  오후 관광 2 (거리 탐방, 쇼핑)
-17:30-18:30  이동 + 정리
-18:30-20:00  저녁 식사
-20:00-21:30  야간 활동 (선택: 야경, 바)
+Step 1: Map coordinates for all visit points
+Step 2: Cluster by area (within 15-min walk = same cluster)
+Step 3: Calculate visit duration per cluster
+Step 4: Assign clusters to days (total 8-10 hours per day)
+Step 5: Select optimal transport between clusters
+Step 6: Arrange time-based schedule (reflecting operating hours)
+Step 7: Insert buffer time and meal breaks
 ```
 
-### 여행 유형별 시간 배분
+## Time Block Allocation Template
 
-| 유형 | 관광 | 식사 | 이동 | 여유 | 쇼핑 |
-|------|------|------|------|------|------|
-| 액티비티형 | 60% | 15% | 15% | 5% | 5% |
-| 미식형 | 30% | 40% | 15% | 10% | 5% |
-| 힐링형 | 40% | 20% | 10% | 25% | 5% |
-| 쇼핑형 | 25% | 15% | 15% | 10% | 35% |
-| 문화형 | 50% | 15% | 15% | 15% | 5% |
-
-## 교통수단 비교 매트릭스
-
-### 도시 내 이동
-
-| 교통수단 | 속도 | 비용 | 편의성 | 적합 상황 |
-|---------|------|------|--------|----------|
-| 도보 | 4km/h | 무료 | 높음 | 1km 이내, 거리 탐방 |
-| 지하철/전철 | 30km/h | 저 | 높음 | 3km+, 정시성 필요 |
-| 버스 | 15-25km/h | 저 | 중 | 지하철 미연결 구간 |
-| 택시/그랩 | 25-40km/h | 중~고 | 높음 | 3인+, 짐 있을 때 |
-| 자전거/킥보드 | 12km/h | 저 | 중 | 평지, 날씨 좋을 때 |
-
-### 도시 간 이동
-
-| 교통수단 | 적합 거리 | 비용 | 시간 | 비고 |
-|---------|----------|------|------|------|
-| KTX/신칸센 | 100-500km | 중~고 | 1-3시간 | 도심-도심, 정시 |
-| 시외/고속버스 | 50-300km | 저~중 | 2-5시간 | 경제적 |
-| 국내 항공 | 300km+ | 중~고 | 1-2시간 | 섬, 먼 거리 |
-| 렌터카 | 자유 | 중 | 자유 | 근교, 비도심 |
-| 페리 | 해상 | 중 | 2-12시간 | 섬 이동 |
-
-## 인기 도시별 교통 팁
-
-### 도쿄
+### General Tourism Schedule (10-hour block)
 
 ```
-패스: Suica/Pasmo IC카드 (충전식)
-추천 패스: 도쿄 메트로 24시간권 (600엔)
-핵심: JR 야마노테선 + 메트로 조합
-택시 기본: 500엔 (비쌈, 최후 수단)
-팁: 러시아워(7:30-9:30) 지하철 회피
+08:00-09:00  Breakfast + transit
+09:00-11:30  Morning sightseeing (key attractions, popular spots)
+11:30-13:00  Lunch + leisure
+13:00-15:30  Afternoon sightseeing 1 (museums, experiences)
+15:30-16:00  Snack/cafe break
+16:00-17:30  Afternoon sightseeing 2 (street exploration, shopping)
+17:30-18:30  Transit + wrap-up
+18:30-20:00  Dinner
+20:00-21:30  Evening activities (optional: night views, bar)
 ```
 
-### 파리
+### Time Allocation by Travel Type
+
+| Type | Sightseeing | Meals | Transit | Leisure | Shopping |
+|------|------------|-------|---------|---------|----------|
+| Adventure | 60% | 15% | 15% | 5% | 5% |
+| Culinary | 30% | 40% | 15% | 10% | 5% |
+| Relaxation | 40% | 20% | 10% | 25% | 5% |
+| Shopping | 25% | 15% | 15% | 10% | 35% |
+| Cultural | 50% | 15% | 15% | 15% | 5% |
+
+## Transport Comparison Matrix
+
+### Intra-City Travel
+
+| Transport | Speed | Cost | Convenience | Best For |
+|-----------|-------|------|-------------|----------|
+| Walking | 4km/h | Free | High | Under 1km, street exploration |
+| Metro/Rail | 30km/h | Low | High | 3km+, punctuality needed |
+| Bus | 15-25km/h | Low | Medium | Segments not on metro |
+| Taxi/Rideshare | 25-40km/h | Med-High | High | 3+ people, with luggage |
+| Bike/Scooter | 12km/h | Low | Medium | Flat terrain, good weather |
+
+### Inter-City Travel
+
+| Transport | Suitable Distance | Cost | Time | Notes |
+|-----------|-------------------|------|------|-------|
+| High-speed Rail | 100-500km | Med-High | 1-3hrs | City-to-city, punctual |
+| Intercity Bus | 50-300km | Low-Med | 2-5hrs | Economical |
+| Domestic Flight | 300km+ | Med-High | 1-2hrs | Islands, long distances |
+| Rental Car | Flexible | Medium | Flexible | Suburbs, rural areas |
+| Ferry | Maritime | Medium | 2-12hrs | Island travel |
+
+## City-Specific Transport Tips
+
+### Tokyo
 
 ```
-패스: Navigo Easy (충전식)
-추천 패스: Paris Visite 또는 개별 t+ 티켓
-핵심: 메트로 16개 노선 + RER
-택시 기본: 7.30유로
-팁: 구역(Zone) 확인, 1-2구역이면 메트로 충분
+Pass: Suica/Pasmo IC card (rechargeable)
+Recommended Pass: Tokyo Metro 24-hour ticket (600 yen)
+Key: JR Yamanote Line + Metro combination
+Taxi base fare: 500 yen (expensive, last resort)
+Tip: Avoid rush hour subway (7:30-9:30)
 ```
 
-### 방콕
+### Paris
 
 ```
-패스: Rabbit Card (BTS), MRT 카드 별도
-추천: 그랩(Grab) 앱 필수
-핵심: BTS(스카이트레인) + MRT(지하철)
-택시 기본: 35바트 (미터 요구)
-팁: 교통체증 심함, 수상보트(차오프라야) 활용
+Pass: Navigo Easy (rechargeable)
+Recommended Pass: Paris Visite or individual t+ tickets
+Key: Metro 16 lines + RER
+Taxi base fare: 7.30 euros
+Tip: Check zones, Zones 1-2 covered by metro
 ```
 
-## 일정표 출력 형식
+### Bangkok
+
+```
+Pass: Rabbit Card (BTS), separate MRT card
+Recommended: Grab app essential
+Key: BTS (Skytrain) + MRT (Subway)
+Taxi base fare: 35 baht (insist on meter)
+Tip: Heavy traffic, use river boats (Chao Phraya)
+```
+
+## Itinerary Output Format
 
 ```markdown
-### Day X — [일자] ([요일]) — [테마]
+### Day X — [Date] ([Day]) — [Theme]
 
-| 시간 | 활동 | 장소 | 이동 | 비고 |
-|------|------|------|------|------|
-| 09:00 | 관광 | [장소명] | 도보 5분 | 입장료 X원 |
-| 11:00 | 이동 | → [다음 장소] | 지하철 20분 | X호선 |
-| 11:30 | 관광 | [장소명] | - | 예약 필요 |
-| 13:00 | 점심 | [식당명] | 도보 3분 | 예산 X원 |
+| Time | Activity | Location | Transit | Notes |
+|------|----------|----------|---------|-------|
+| 09:00 | Sightseeing | [Place] | 5 min walk | Admission $X |
+| 11:00 | Transit | → [Next place] | 20 min metro | Line X |
+| 11:30 | Sightseeing | [Place] | - | Reservation needed |
+| 13:00 | Lunch | [Restaurant] | 3 min walk | Budget $X |
 
-**일일 이동 요약**: 총 X회, Xkm, 약 X시간
-**일일 예산**: 교통 X원 + 입장 X원 + 식비 X원 = 총 X원
+**Daily transit summary**: Total X trips, X km, approx. X hours
+**Daily budget**: Transport $X + Admission $X + Meals $X = Total $X
 ```
 
-## 참고
+## Notes
 
-- Google Maps, 각 도시 교통공사 정보 기준
-- 상세 도시별 가이드: `references/city-transport-guide.md` 참조
+- Based on Google Maps and city transit authority information
+- Detailed city guides: see `references/city-transport-guide.md`

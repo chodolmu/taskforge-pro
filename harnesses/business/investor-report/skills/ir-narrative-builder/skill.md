@@ -1,85 +1,85 @@
 ---
 name: ir-narrative-builder
-description: "투자자 보고서의 서사(narrative) 구성을 전문적으로 지원하는 스킬. strategy-updater와 ir-reviewer가 투자자 커뮤니케이션의 톤, 구조, 스토리라인을 설계할 때 활용한다. '투자자 서사', 'equity story', 'IR 메시지', '전략 업데이트 스토리' 등의 맥락에서 자동 적용한다. 단, 법정 공시 문구 작성이나 증권사 리포트 작성은 이 스킬의 범위가 아니다."
+description: "A skill that professionally supports investor report narrative construction. Used by strategy-updater and ir-reviewer when designing the tone, structure, and storyline of investor communications. Automatically applied in contexts such as 'investor narrative', 'equity story', 'IR message', 'strategy update story'. However, drafting statutory disclosure text or writing brokerage reports are outside the scope of this skill."
 ---
 
-# IR Narrative Builder — 투자자 커뮤니케이션 서사 구성 도구
+# IR Narrative Builder — Investor Communication Narrative Construction Tool
 
-strategy-updater, ir-reviewer 에이전트의 투자자 서사 구성 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the investor narrative capabilities of strategy-updater and ir-reviewer agents.
 
-## 적용 대상 에이전트
+## Target Agents
 
-- **strategy-updater** — Equity Story 구성, 전략 서사 작성
-- **ir-reviewer** — 서사 일관성 검증, 투자자 유형별 톤 검토
+- **strategy-updater** — Equity Story construction, strategy narrative writing
+- **ir-reviewer** — Narrative consistency verification, investor-type-specific tone review
 
-## Equity Story 5단계 프레임워크
-
-```
-1. WHY NOW — 왜 지금 이 시장인가 (시장 기회)
-2. WHY US — 왜 우리인가 (경쟁 우위)
-3. PROOF POINTS — 증거가 있는가 (실적 데이터)
-4. WHERE NEXT — 다음 단계는 (성장 전략)
-5. WHY INVEST — 왜 투자해야 하는가 (가치 창출)
-```
-
-### 단계별 작성 가이드
-
-| 단계 | 핵심 질문 | 포함 요소 | 주의점 |
-|------|----------|----------|-------|
-| WHY NOW | 시장 변곡점 | TAM/SAM/SOM, 규제 변화 | 과대 추정 경계 |
-| WHY US | 차별화 근거 | 기술 해자, 네트워크 효과 | 추상적 표현 지양 |
-| PROOF POINTS | 정량 실적 | 매출, 고객, NPS | 체리피킹 경계 |
-| WHERE NEXT | 실행 로드맵 | 제품, 시장 확장 | 실현 가능성 |
-| WHY INVEST | 밸류에이션 | 멀티플, 비교 기업 | 보수적 추정 |
-
-## 투자자 유형별 서사 톤
-
-### VC 대상
-**톤**: 비전 중심, 성장 포텐셜 강조
-**구조**: Executive Summary → 시장 기회 → 제품 마일스톤 → 성장 지표 → 팀 → Runway → 다음 목표
-
-### PE 대상
-**톤**: 수치 중심, 운영 효율성 강조
-**구조**: Executive Summary → P&L/CF/BS → EBITDA Bridge → KPI 벤치마크 → Value Creation Plan → 리스크 → 이니셔티브
-
-### 상장 주주 대상
-**톤**: 균형적, 투명성 강조
-**구조**: CEO 레터 → 재무 하이라이트 → 사업부별 실적 → 시장 환경 → ESG → 주주환원 → Outlook
-
-## EBITDA Bridge 작성법
+## Equity Story 5-Stage Framework
 
 ```
-전분기 EBITDA
-  (+) 매출 증가 효과
-  (+) 마진 개선 효과
-  (-) 인건비 증가
-  (-) 마케팅비 증가
-  (+/-) 환율 효과
-  (+/-) 일회성 항목
-= 당분기 EBITDA
+1. WHY NOW — Why this market right now (market opportunity)
+2. WHY US — Why us (competitive advantage)
+3. PROOF POINTS — Is there evidence (performance data)
+4. WHERE NEXT — What is the next step (growth strategy)
+5. WHY INVEST — Why should you invest (value creation)
 ```
 
-**원칙:** 큰 변동 순 나열, 긍정→부정 순서, 일회성 vs 구조적 구분
+### Stage-by-Stage Writing Guide
 
-## 서사 품질 체크리스트 (ir-reviewer용)
+| Stage | Core Question | Elements to Include | Cautions |
+|-------|-------------|---------------------|----------|
+| WHY NOW | Market inflection point | TAM/SAM/SOM, regulatory changes | Guard against overestimation |
+| WHY US | Differentiation basis | Technology moat, network effects | Avoid abstract expressions |
+| PROOF POINTS | Quantitative results | Revenue, customers, NPS | Guard against cherry-picking |
+| WHERE NEXT | Execution roadmap | Product, market expansion | Feasibility |
+| WHY INVEST | Valuation | Multiples, comparable companies | Conservative estimates |
 
-### 일관성 검증
-- [ ] 숫자가 재무 분석과 정확히 일치하는가?
-- [ ] 전분기 보고서와 서사 방향이 일관되는가?
-- [ ] 긍정/부정 정보의 균형이 적절한가?
-- [ ] Forward-looking 문구에 면책 조항이 있는가?
+## Narrative Tone by Investor Type
 
-### 설득력 검증
-- [ ] 모든 주장에 데이터 근거가 있는가?
-- [ ] 리스크가 솔직하게 공개되었는가?
-- [ ] 다음 분기 목표가 SMART 기준을 충족하는가?
+### For VCs
+**Tone**: Vision-centered, emphasize growth potential
+**Structure**: Executive Summary → Market Opportunity → Product Milestones → Growth Metrics → Team → Runway → Next Targets
 
-## 리스크 공시 3-레벨 매트릭스
+### For PE
+**Tone**: Numbers-centered, emphasize operational efficiency
+**Structure**: Executive Summary → P&L/CF/BS → EBITDA Bridge → KPI Benchmarks → Value Creation Plan → Risks → Initiatives
 
-| 등급 | 기준 | 표현 방식 |
-|------|------|----------|
-| HIGH | 발생 확률 높고 영향 큰 리스크 | 구체적 대응 계획 필수 |
-| MEDIUM | 모니터링 필요 | 조기 경보 지표 명시 |
-| LOW | 통제 가능 | 간략 언급 |
+### For Public Shareholders
+**Tone**: Balanced, emphasize transparency
+**Structure**: CEO Letter → Financial Highlights → Business Unit Performance → Market Environment → ESG → Shareholder Returns → Outlook
 
-**원칙:** 리스크를 숨기지 말 것 → 투자자 신뢰 구축. 리스크 + 대응 방안을 쌍으로 제시.
+## EBITDA Bridge Construction
+
+```
+Prior Quarter EBITDA
+  (+) Revenue increase effect
+  (+) Margin improvement effect
+  (-) Labor cost increase
+  (-) Marketing cost increase
+  (+/-) FX effect
+  (+/-) One-time items
+= Current Quarter EBITDA
+```
+
+**Principles:** List in order of magnitude, positive before negative, distinguish one-time vs. structural
+
+## Narrative Quality Checklist (for ir-reviewer)
+
+### Consistency Verification
+- [ ] Do figures exactly match the financial analysis?
+- [ ] Is the narrative direction consistent with the prior quarter report?
+- [ ] Is the balance between positive/negative information appropriate?
+- [ ] Do forward-looking statements have disclaimers?
+
+### Persuasiveness Verification
+- [ ] Do all claims have data-backed evidence?
+- [ ] Are risks honestly disclosed?
+- [ ] Do next quarter targets meet SMART criteria?
+
+## Risk Disclosure 3-Level Matrix
+
+| Grade | Criteria | Expression Approach |
+|-------|---------|---------------------|
+| HIGH | High probability and high impact risk | Specific response plan required |
+| MEDIUM | Monitoring needed | Specify early warning indicators |
+| LOW | Controllable | Brief mention |
+
+**Principle:** Do not hide risks → build investor trust. Present risk + response plan as a pair.

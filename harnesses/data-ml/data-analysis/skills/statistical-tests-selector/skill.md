@@ -1,83 +1,83 @@
 ---
 name: statistical-tests-selector
-description: "통계 검정 선택 의사결정 트리, 검정별 가정/공식/해석 가이드, 효과 크기와 검정력 분석. '통계 검정', 't-검정', 'ANOVA', '카이제곱', '상관분석', 'p-value', '가설 검정', '정규성 검정', '비모수 검정', '효과 크기' 등 통계 분석 방법 선택 시 이 스킬을 사용한다. analyst의 통계 분석 역량을 강화한다. 단, 데이터 정제나 시각화는 이 스킬의 범위가 아니다."
+description: "Statistical test selection decision tree, per-test assumptions/formulas/interpretation guide, effect size, and power analysis. Use this skill for statistical analysis method selection involving 'statistical test', 't-test', 'ANOVA', 'chi-squared', 'correlation analysis', 'p-value', 'hypothesis testing', 'normality test', 'nonparametric test', 'effect size', etc. Enhances the analyst's statistical analysis capabilities. Note: data cleaning and visualization are outside this skill's scope."
 ---
 
-# Statistical Tests Selector — 통계 검정 선택 가이드
+# Statistical Tests Selector — Statistical Test Selection Guide
 
-데이터 유형과 분석 목적에 따라 적절한 통계 검정을 선택하고 해석하는 가이드.
+A guide for selecting and interpreting appropriate statistical tests based on data type and analysis purpose.
 
-## 검정 선택 의사결정 트리
+## Test Selection Decision Tree
 
 ```
-비교할 것이 무엇인가?
-├── 두 그룹의 평균 차이
-│   ├── 독립 표본 → 정규 분포? → Yes: 독립 t-검정
-│   │                          → No: Mann-Whitney U
-│   └── 대응 표본 → 정규 분포? → Yes: 대응 t-검정
-│                              → No: Wilcoxon 부호순위
-├── 세 그룹 이상 평균 차이
-│   ├── 독립 → 정규 분포? → Yes: One-way ANOVA → 사후: Tukey HSD
-│   │                     → No: Kruskal-Wallis → 사후: Dunn
-│   └── 반복 측정 → Repeated Measures ANOVA / Friedman
-├── 두 변수의 관계
-│   ├── 연속 × 연속 → 선형? → Yes: Pearson 상관
-│   │                       → No: Spearman 순위 상관
-│   └── 범주 × 범주 → 카이제곱 독립성 검정
-├── 비율 차이
-│   ├── 두 그룹 → Z-검정 (비율)
-│   └── 세 그룹 이상 → 카이제곱 동질성 검정
-└── 분포 검정
-    ├── 정규성 → Shapiro-Wilk (n<5000) / K-S test
-    └── 등분산 → Levene's test / Bartlett's test
+What are you comparing?
+├── Mean difference between two groups
+│   ├── Independent samples → Normal? → Yes: Independent t-test
+│   │                                  → No: Mann-Whitney U
+│   └── Paired samples → Normal? → Yes: Paired t-test
+│                                 → No: Wilcoxon signed-rank
+├── Mean difference among three or more groups
+│   ├── Independent → Normal? → Yes: One-way ANOVA → Post-hoc: Tukey HSD
+│   │                          → No: Kruskal-Wallis → Post-hoc: Dunn
+│   └── Repeated measures → Repeated Measures ANOVA / Friedman
+├── Relationship between two variables
+│   ├── Continuous × Continuous → Linear? → Yes: Pearson correlation
+│   │                                      → No: Spearman rank correlation
+│   └── Categorical × Categorical → Chi-squared independence test
+├── Proportion difference
+│   ├── Two groups → Z-test (proportions)
+│   └── Three or more groups → Chi-squared homogeneity test
+└── Distribution testing
+    ├── Normality → Shapiro-Wilk (n<5000) / K-S test
+    └── Homogeneity of variance → Levene's test / Bartlett's test
 ```
 
-## 핵심 검정 상세
+## Core Test Details
 
-### 독립 표본 t-검정
+### Independent Samples t-test
 
 ```python
 from scipy import stats
 
-# 가정 확인
-# 1. 정규성
+# Assumption checks
+# 1. Normality
 stat, p = stats.shapiro(group_a)
-print(f"정규성 검정: p={p:.4f}")
+print(f"Normality test: p={p:.4f}")
 
-# 2. 등분산
+# 2. Homogeneity of variance
 stat, p = stats.levene(group_a, group_b)
-print(f"등분산 검정: p={p:.4f}")
+print(f"Levene's test: p={p:.4f}")
 
-# 검정 수행
+# Conduct test
 if levene_p >= 0.05:
-    t, p = stats.ttest_ind(group_a, group_b)  # 등분산
+    t, p = stats.ttest_ind(group_a, group_b)  # Equal variance
 else:
-    t, p = stats.ttest_ind(group_a, group_b, equal_var=False)  # Welch
+    t, p = stats.ttest_ind(group_a, group_b, equal_var=False)  # Welch's
 
-# 효과 크기 (Cohen's d)
+# Effect size (Cohen's d)
 d = (group_a.mean() - group_b.mean()) / np.sqrt(
     ((len(group_a)-1)*group_a.std()**2 + (len(group_b)-1)*group_b.std()**2)
     / (len(group_a) + len(group_b) - 2)
 )
 ```
 
-### 효과 크기 해석
+### Effect Size Interpretation
 
-| 지표 | 작음 | 중간 | 큼 |
-|------|------|------|-----|
+| Metric | Small | Medium | Large |
+|--------|-------|--------|-------|
 | Cohen's d | 0.2 | 0.5 | 0.8 |
 | Pearson r | 0.1 | 0.3 | 0.5 |
 | eta-squared (η²) | 0.01 | 0.06 | 0.14 |
 | Cramer's V | 0.1 | 0.3 | 0.5 |
 
-### ANOVA + 사후 검정
+### ANOVA + Post-hoc Tests
 
 ```python
 # One-way ANOVA
 f_stat, p = stats.f_oneway(group_a, group_b, group_c)
 
 if p < 0.05:
-    # 사후 검정 (어느 그룹 간 차이?)
+    # Post-hoc test (which groups differ?)
     from statsmodels.stats.multicomp import pairwise_tukeyhsd
     tukey = pairwise_tukeyhsd(
         endog=all_values, groups=all_labels, alpha=0.05
@@ -85,26 +85,26 @@ if p < 0.05:
     print(tukey.summary())
 ```
 
-### 카이제곱 검정
+### Chi-squared Test
 
 ```python
-# 독립성 검정 (범주 × 범주)
+# Independence test (categorical × categorical)
 contingency = pd.crosstab(df['gender'], df['purchase'])
 chi2, p, dof, expected = stats.chi2_contingency(contingency)
 
-# 효과 크기 (Cramer's V)
+# Effect size (Cramer's V)
 n = contingency.sum().sum()
 v = np.sqrt(chi2 / (n * (min(contingency.shape) - 1)))
 ```
 
-## 다중 비교 보정
+## Multiple Comparison Correction
 
-| 방법 | 보수성 | 수식 | 사용 |
-|------|--------|------|------|
-| Bonferroni | 매우 보수적 | α/n | 비교 수 적을 때 |
-| Holm-Bonferroni | 보수적 | 단계적 조정 | 범용 |
-| Benjamini-Hochberg | 덜 보수적 | FDR 제어 | 탐색적 분석 |
-| Tukey HSD | 중간 | ANOVA 사후 | 전체 쌍비교 |
+| Method | Conservatism | Formula | Usage |
+|--------|-------------|---------|-------|
+| Bonferroni | Very conservative | α/n | Few comparisons |
+| Holm-Bonferroni | Conservative | Stepwise adjustment | General purpose |
+| Benjamini-Hochberg | Less conservative | FDR control | Exploratory analysis |
+| Tukey HSD | Moderate | ANOVA post-hoc | All pairwise comparisons |
 
 ```python
 from statsmodels.stats.multitest import multipletests
@@ -114,54 +114,54 @@ reject, pvals_corrected, _, _ = multipletests(
 )
 ```
 
-## 검정력 분석
+## Power Analysis
 
 ```python
 from statsmodels.stats.power import TTestIndPower
 
 analysis = TTestIndPower()
 
-# 필요 표본 크기 계산
+# Required sample size calculation
 n = analysis.solve_power(
-    effect_size=0.5,    # Cohen's d = 0.5 (중간 효과)
-    alpha=0.05,         # 유의수준
-    power=0.8,          # 검정력 80%
+    effect_size=0.5,    # Cohen's d = 0.5 (medium effect)
+    alpha=0.05,         # Significance level
+    power=0.8,          # 80% power
     alternative='two-sided'
 )
-print(f"그룹당 필요 표본 수: {int(np.ceil(n))}")
+print(f"Required sample size per group: {int(np.ceil(n))}")
 ```
 
-| 효과 크기 | 검정력 80% 필요 n (그룹당) |
-|----------|------------------------|
-| d = 0.2 (작음) | 394 |
-| d = 0.5 (중간) | 64 |
-| d = 0.8 (큼) | 26 |
+| Effect Size | Required n for 80% Power (per group) |
+|------------|--------------------------------------|
+| d = 0.2 (small) | 394 |
+| d = 0.5 (medium) | 64 |
+| d = 0.8 (large) | 26 |
 
-## p-value 올바른 해석
+## Correct Interpretation of p-values
 
 ```
-p = 0.03일 때:
+When p = 0.03:
 
-✅ 올바른 해석:
-"귀무가설이 참일 때, 이 데이터만큼 극단적인 결과를 관찰할 확률이 3%이다."
+✅ Correct interpretation:
+"Under the null hypothesis, the probability of observing results this extreme is 3%."
 
-❌ 잘못된 해석:
-"대립가설이 참일 확률이 97%이다." (베이지안이 아님)
-"효과가 크다." (효과 크기는 별도 측정)
-"결과가 중요하다." (통계적 유의성 ≠ 실용적 중요성)
+❌ Incorrect interpretations:
+"The probability that the alternative hypothesis is true is 97%." (Not Bayesian)
+"The effect is large." (Effect size is measured separately)
+"The result is important." (Statistical significance ≠ practical importance)
 ```
 
-## 보고 템플릿
+## Reporting Template
 
 ```markdown
-### 분석: A/B 그룹 전환율 비교
+### Analysis: A/B Group Conversion Rate Comparison
 
-**가설**: 새 디자인(B)이 기존(A)보다 전환율이 높다
-**검정**: 이표본 비율 z-검정 (단측)
-**표본**: A: n=1000, 전환율 5.2% | B: n=1000, 전환율 6.8%
-**결과**: z=1.58, p=0.057, 95% CI: [-0.05%, 3.25%]
-**효과 크기**: h=0.067 (작음)
-**결론**: 유의수준 5%에서 통계적으로 유의미하지 않음 (p=0.057).
-         검정력 분석: 현재 효과 크기로 80% 검정력 달성에
-         그룹당 n=3,500 필요. 표본 확대 권장.
+**Hypothesis**: The new design (B) has a higher conversion rate than the original (A)
+**Test**: Two-sample proportion z-test (one-tailed)
+**Sample**: A: n=1000, conversion 5.2% | B: n=1000, conversion 6.8%
+**Result**: z=1.58, p=0.057, 95% CI: [-0.05%, 3.25%]
+**Effect Size**: h=0.067 (small)
+**Conclusion**: Not statistically significant at the 5% level (p=0.057).
+         Power analysis: To achieve 80% power at this effect size,
+         n=3,500 per group is needed. Sample expansion recommended.
 ```

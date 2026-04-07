@@ -1,38 +1,38 @@
 # Web Scraper Harness
 
-웹 스크래핑 시스템의 대상분석→크롤러설계→파싱→저장→모니터링을 에이전트 팀이 협업하여 구축하는 하네스.
+Web scraping system construction: a harness in which an agent team collaborates to build target analysis, crawler design, parsing, storage, and monitoring.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── target-analyst.md      — 대상 사이트 분석 (구조, robots.txt, 법적 검토)
-│   ├── crawler-developer.md   — 크롤러 설계 및 구현 (요청전략, 세션관리, 우회)
-│   ├── parser-engineer.md     — HTML/JSON 파싱 로직 (선택자, 데이터 추출)
-│   ├── data-manager.md        — 데이터 저장·정제·검증 (스키마, 중복제거, 내보내기)
-│   └── monitor-operator.md    — 모니터링·알림·유지보수 (헬스체크, 변경감지, 로그)
+│   ├── target-analyst.md      — Target site analysis (structure, robots.txt, legal review)
+│   ├── crawler-developer.md   — Crawler design and implementation (request strategy, session management, evasion)
+│   ├── parser-engineer.md     — HTML/JSON parsing logic (selectors, data extraction)
+│   ├── data-manager.md        — Data storage, cleansing, and validation (schema, deduplication, export)
+│   └── monitor-operator.md    — Monitoring, alerting, and maintenance (health checks, change detection, logging)
 ├── skills/
 │   ├── web-scraper/
-│       └── skill.md           — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md           — Orchestrator (team coordination, workflow, error handling)
 │   ├── anti-bot-analyzer/
-│   │   └── skill.md           — 안티봇 분석 (방어 계층, Rate Limit, 법적 리스크)
+│   │   └── skill.md           — Anti-bot analysis (defense layers, rate limits, legal risk)
 │   └── selector-generator/
-│       └── skill.md           — 선택자 생성 (CSS/XPath, 견고성 점수, 변경 감지)
-└── CLAUDE.md                  — 이 파일
+│       └── skill.md           — Selector generation (CSS/XPath, robustness scoring, change detection)
+└── CLAUDE.md                  — This file
 ```
 
-## 사용법
+## Usage
 
-`/web-scraper` 스킬을 트리거하거나, "웹 스크래핑 시스템 만들어줘" 같은 자연어로 요청한다.
+Trigger the `/web-scraper` skill, or make a natural language request such as "Build a web scraping system."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_target_analysis.md` — 대상 사이트 분석 보고서
-- `02_crawler_design.md` — 크롤러 설계 및 코드
-- `03_parser_logic.md` — 파싱 로직 및 코드
-- `04_data_storage.md` — 데이터 저장 설계
-- `05_monitor_config.md` — 모니터링 설정
-- `src/` — 실제 스크래핑 소스코드
+All deliverables are stored in the `_workspace/` directory:
+- `00_input.md` — User input summary
+- `01_target_analysis.md` — Target site analysis report
+- `02_crawler_design.md` — Crawler design and code
+- `03_parser_logic.md` — Parsing logic and code
+- `04_data_storage.md` — Data storage design
+- `05_monitor_config.md` — Monitoring configuration
+- `src/` — Actual scraping source code

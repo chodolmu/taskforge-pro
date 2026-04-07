@@ -1,38 +1,38 @@
 # LLM App Builder Harness
 
-LLM 앱 개발의 프롬프트엔지니어링→RAG파이프라인설계→평가프레임워크→최적화→배포설정을 에이전트 팀이 협업하여 수행하는 하네스.
+LLM application construction: a harness where an agent team collaborates to perform prompt engineering → RAG architecture → optimization → evaluation → deployment.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── prompt-engineer.md       — 프롬프트 엔지니어링 (시스템 프롬프트, few-shot, 가드레일)
-│   ├── rag-architect.md         — RAG 파이프라인 설계 (임베딩, 검색, 청킹, 리랭킹)
-│   ├── eval-specialist.md       — 평가 프레임워크 (벤치마크, A/B, 회귀 테스트)
-│   ├── optimization-engineer.md — 최적화 (비용, 레이턴시, 품질 트레이드오프)
-│   └── deploy-engineer.md       — 배포 설정 (API, 스케일링, 모니터링, 가드레일)
+│   ├── prompt-engineer.md         — Prompt Engineer (prompt design, few-shot, chain-of-thought, guardrails)
+│   ├── rag-architect.md           — RAG Architect (retrieval design, embedding, vector DB, chunking)
+│   ├── optimization-engineer.md   — Optimization Engineer (latency, cost, caching, model selection)
+│   ├── eval-specialist.md         — Evaluation Specialist (benchmark design, quality metrics, A/B testing)
+│   └── deploy-engineer.md        — Deploy Engineer (API serving, scaling, monitoring, CI/CD)
 ├── skills/
 │   ├── llm-app-builder/
-│       └── skill.md             — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
-│   ├── prompt-optimizer/
-│   │   └── skill.md             — 프롬프트 최적화 (CRISP, 가드레일, A/B 테스트)
-│   └── chunking-strategy-guide/
-│       └── skill.md             — 청킹 전략 (시맨틱 청킹, 문서별 전처리, 품질)
-└── CLAUDE.md                    — 이 파일
+│   │   └── skill.md              — Orchestrator (team coordination, workflow, error handling)
+│   ├── chunking-strategy-guide/
+│   │   └── skill.md              — Document chunking strategy guide
+│   └── prompt-optimizer/
+│       └── skill.md              — Prompt optimization methodology guide
+└── CLAUDE.md                      — This file
 ```
 
-## 사용법
+## Usage
 
-`/llm-app-builder` 스킬을 트리거하거나, "LLM 앱 만들어줘" 같은 자연어로 요청한다.
+Trigger the `/llm-app-builder` skill or use natural language like "Build an LLM application for me."
 
-## 산출물
+## Outputs
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_prompt_design.md` — 프롬프트 설계서
-- `02_rag_pipeline.md` — RAG 파이프라인 설계
-- `03_eval_framework.md` — 평가 프레임워크
-- `04_optimization.md` — 최적화 전략
-- `05_deploy_config.md` — 배포 설정
-- `src/` — 앱 소스코드
+All outputs are stored in the `_workspace/` directory:
+- `00_input.md` — User input and application requirements
+- `01_prompt_design.md` — Prompt templates and engineering document
+- `02_rag_architecture.md` — RAG pipeline architecture
+- `03_optimization_plan.md` — Performance optimization plan
+- `04_eval_report.md` — Evaluation results and quality metrics
+- `05_deploy_config/` — Deployment configuration and infrastructure
+- `src/` — Application source code

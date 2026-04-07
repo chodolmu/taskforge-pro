@@ -1,148 +1,150 @@
+```markdown
 ---
 name: legal-writing-methodology
-description: "법률 의견서와 전략 보고서의 전문적 작성 방법론. 'opinion-writer'와 'strategy-advisor' 에이전트가 법률 의견서를 작성하거나 전략을 수립할 때 이 스킬의 문서 구조, 논증 기법, 인용 형식을 반드시 활용해야 한다. '법률 의견서 작성', '법률 문서 구조', '논증 방법' 등에 사용한다. 단, 판례 검색이나 법리 분석은 이 스킬의 범위가 아니다."
+description: "Professional methodology for drafting legal opinions and strategy reports. The 'opinion-writer' and 'strategy-advisor' agents must utilize the document structure, argumentation techniques, and citation formats in this skill when drafting legal opinions or formulating strategies. Used for 'legal opinion drafting', 'legal document structure', 'argumentation methods', etc. Note: case law research and legal doctrine analysis are outside the scope of this skill."
 ---
 
-# Legal Writing Methodology — 법률 문서 작성 방법론
+# Legal Writing Methodology
 
-법률 의견서, 전략 보고서의 전문적 구조와 논증 기법.
+Professional structure and argumentation techniques for legal opinions and strategy reports.
 
-## 법률 의견서 표준 구조
+## Standard Legal Opinion Structure
 
-### 공식 의견서 템플릿
+### Official Opinion Template
 
 ```markdown
-# 법률 의견서
+# Legal Opinion
 
-**수신**: [의뢰인/부서]
-**발신**: [작성자]
-**일자**: [YYYY.MM.DD]
-**건명**: [사건/이슈 명칭]
-**문서번호**: LO-[YYYY]-[순번]
+**To**: [Client/Department]
+**From**: [Author]
+**Date**: [YYYY.MM.DD]
+**Re**: [Matter/Issue Title]
+**Document No.**: LO-[YYYY]-[Sequence]
 
 ---
 
-## I. 질의 요지
-[의뢰인의 법률 질문을 명확하게 정리]
+## I. Issue Presented
+[Clearly state the client's legal question]
 
-## II. 사실관계
-[판단의 기초가 되는 사실을 시간순 또는 주제별 정리]
-※ 확인되지 않은 사실은 "~로 전제합니다" 명시
+## II. Statement of Facts
+[Organize the facts underlying the analysis, in chronological or thematic order]
+※ Unverified facts should be noted as "assumed to be ~"
 
-## III. 검토 의견
+## III. Analysis
 
-### 1. 쟁점 [1]: [쟁점명]
-#### 가. 관련 법령
-[적용 법조문 + 해설]
+### 1. Issue [1]: [Issue Name]
+#### a. Applicable Law
+[Relevant statutory provisions + commentary]
 
-#### 나. 관련 판례
-[핵심 판례 + 법리 추출]
+#### b. Relevant Case Law
+[Key cases + extracted legal principles]
 
-#### 다. 검토
-[IRAC 방식으로 분석]
+#### c. Analysis
+[Analysis using the IRAC method]
 
-#### 라. 소결
-[이 쟁점에 대한 결론]
+#### d. Sub-Conclusion
+[Conclusion on this issue]
 
-### 2. 쟁점 [2]: [쟁점명]
-[같은 구조 반복]
+### 2. Issue [2]: [Issue Name]
+[Repeat same structure]
 
-## IV. 종합 의견
-[전체 결론 + 확실성 수준 + 리스크 요약]
+## IV. Overall Opinion
+[Overall conclusion + level of certainty + risk summary]
 
-## V. 권고 사항
-1. [즉시 조치 사항]
-2. [중기 조치 사항]
-3. [주의 사항]
+## V. Recommendations
+1. [Immediate action items]
+2. [Medium-term action items]
+3. [Items requiring caution]
 
-## VI. 면책 고지
-본 의견서는 제시된 사실관계와 현행 법령에 기초한 법률 검토이며,
-법률 자문(legal advice)으로 간주되지 않습니다.
-최종 의사결정 시 자격 있는 변호사의 자문을 받으시기 바랍니다.
+## VI. Disclaimer
+This opinion is a legal review based on the facts presented and current applicable law,
+and does not constitute legal advice.
+Please consult a qualified attorney before making any final decisions.
 ```
 
-## 논증 기법
+## Argumentation Techniques
 
-### 연역적 논증 (Deductive)
-
-```
-대전제: [법규범] "~한 경우에는 ~한다" (민법 제750조)
-소전제: [사실] "본 건에서 피고는 ~하였다"
-결론:  "따라서 피고는 ~할 의무가 있다"
-```
-
-### 유추적 논증 (Analogical)
+### Deductive Reasoning
 
 ```
-선례 사실: [판례 A에서의 사실관계]
-선례 결론: [판례 A의 법원 판단]
-유사성: [본 건과의 핵심 유사점]
-구별점: [차이점이 결론에 영향 없는 이유]
-결론: "판례 A의 법리가 본 건에도 적용된다"
+Major Premise: [Legal Rule] "If ~, then ~" (Civil Code § 750)
+Minor Premise: [Fact] "In this case, the defendant ~"
+Conclusion:   "Therefore, the defendant is obligated to ~"
 ```
 
-### 정책적 논증 (Policy)
+### Analogical Reasoning
 
 ```
-현행 법리: [현재 해석/적용]
-문제점: [현행 해석의 한계]
-대안 해석: [제안하는 해석]
-정책적 정당성: [사회적 타당성, 입법 취지]
+Precedent Facts: [Facts from Case A]
+Precedent Holding: [Court's ruling in Case A]
+Similarity: [Key similarities to the present case]
+Distinctions: [Why differences do not affect the conclusion]
+Conclusion: "The legal principle from Case A applies to the present case"
 ```
 
-## 인용 형식
-
-### 판례 인용
+### Policy Argument
 
 ```
-대법원 2023. 5. 15. 선고 2022다12345 판결
-서울고등법원 2022. 8. 10. 선고 2021나67890 판결
-헌법재판소 2023. 3. 20. 2022헌마123 결정
+Current Doctrine: [Current interpretation/application]
+Problem: [Limitations of the current interpretation]
+Alternative Interpretation: [Proposed interpretation]
+Policy Justification: [Social validity, legislative intent]
 ```
 
-### 법령 인용
+## Citation Formats
+
+### Case Citation
 
 ```
-민법 제750조 (불법행위의 내용)
-개인정보 보호법 제15조 제1항 제1호
-근로기준법 시행령 제12조
+Supreme Court, May 15, 2023, Case No. 2022Da12345
+Seoul High Court, Aug. 10, 2022, Case No. 2021Na67890
+Constitutional Court, Mar. 20, 2023, Case No. 2022HeonMa123
 ```
 
-### 문헌 인용
+### Statutory Citation
 
 ```
-[저자], "[논문/서적명]", [출판사/학술지], [연도], [페이지]
-예: 김상용, "채권각론", 화산미디어, 2023, 205면
+Civil Code § 750 (Content of Unlawful Acts)
+Personal Information Protection Act § 15(1)(1)
+Enforcement Decree of the Labor Standards Act § 12
 ```
 
-## 위험 대응 전략 프레임워크
+### Literature Citation
 
-### 전략 옵션 비교표
+```
+[Author], "[Title of Article/Book]", [Publisher/Journal], [Year], [Page(s)]
+Example: Kim Sang-yong, "Law of Obligations — Special Part", Hwasan Media, 2023, p. 205
+```
+
+## Risk Response Strategy Framework
+
+### Strategy Options Comparison Table
 
 ```markdown
-| 옵션 | 소송 | 조정/중재 | 협상 | 회피 |
-|------|------|----------|------|------|
-| 예상 기간 | 1-3년 | 3-6개월 | 1-3개월 | 즉시 |
-| 예상 비용 | 높음 | 중간 | 낮음 | 없음 |
-| 승소 가능성 | [%] | - | - | - |
-| 비공개 | 불가 | 가능 | 가능 | - |
-| 선례 효과 | 있음 | 없음 | 없음 | - |
-| 강제력 | 강함 | 중간 | 약함 | - |
-| 관계 영향 | 파괴적 | 중립적 | 유지 | 유지 |
+| Option | Litigation | Mediation/Arbitration | Negotiation | Avoidance |
+|--------|------------|-----------------------|-------------|-----------|
+| Expected Duration | 1–3 years | 3–6 months | 1–3 months | Immediate |
+| Expected Cost | High | Medium | Low | None |
+| Win Probability | [%] | - | - | - |
+| Confidentiality | Not possible | Possible | Possible | - |
+| Precedential Effect | Yes | No | No | - |
+| Enforceability | Strong | Medium | Weak | - |
+| Relationship Impact | Destructive | Neutral | Preserved | Preserved |
 ```
 
-### 비용-편익 분석
+### Cost-Benefit Analysis
 
 ```
-소송 기대값 = (승소확률 × 인용금액) - (소송비용 + 기회비용 + 패소위험)
+Expected Value of Litigation = (Win Probability × Award Amount) - (Litigation Costs + Opportunity Costs + Loss Risk)
 
-판단 기준:
-  기대값 > 0: 소송 고려 가치
-  기대값 < 0: 협상/조정 우선
-  기대값 ≈ 0: 비금전적 요소(선례, 억지 효과) 고려
+Decision Criteria:
+  Expected Value > 0: Litigation worth considering
+  Expected Value < 0: Prioritize negotiation/mediation
+  Expected Value ≈ 0: Consider non-monetary factors (precedent, deterrence effect)
 ```
 
-## 참고
+## References
 
-- 대한변호사협회 의견서 양식 참조
-- 상세 작성례: `references/legal-writing-examples.md` 참조
+- Refer to the Korean Bar Association opinion template
+- Detailed writing examples: see `references/legal-writing-examples.md`
+```

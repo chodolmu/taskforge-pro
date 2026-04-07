@@ -1,80 +1,80 @@
 ---
 name: vendor-scoring
-description: "벤더 평가 스코어카드 프레임워크. vendor-comparator와 evaluation-designer 에이전트가 벤더를 체계적으로 비교 평가할 때 참조. '벤더 평가', '공급업체 비교', '입찰 평가' 요청 시 사용. 단, 입찰 공고 게시나 계약 체결은 범위 밖."
+description: "Vendor evaluation scorecard framework. Referenced by vendor-comparator and evaluation-designer agents when systematically comparing and evaluating vendors. Used for 'vendor evaluation', 'supplier comparison', 'bid evaluation' requests. Note: posting bid announcements and executing contracts are out of scope."
 ---
 
-# Vendor Scoring — 벤더 평가 스코어카드
+# Vendor Scoring — Vendor Evaluation Scorecard
 
-vendor-comparator / evaluation-designer 에이전트의 벤더 평가 역량 강화.
+Enhances the vendor evaluation capabilities of vendor-comparator / evaluation-designer agents.
 
-## 평가 기준 프레임워크
+## Evaluation Criteria Framework
 
-### 표준 평가 카테고리
+### Standard Evaluation Categories
 
-| 카테고리 | 가중치 (기본) | 세부 항목 |
-|---------|-------------|----------|
-| 기술 적합성 | 30% | 요구사항 충족도, 기술력, 혁신성 |
-| 가격 경쟁력 | 25% | 단가, TCO, 가격 구조 투명성 |
-| 실적/신뢰성 | 20% | 유사 프로젝트, 레퍼런스, 재무 안정성 |
-| 서비스/지원 | 15% | SLA, 대응 속도, 교육, 유지보수 |
-| 전략 적합성 | 10% | 비전 일치, 장기 파트너십, 혁신 로드맵 |
+| Category | Weight (Default) | Sub-items |
+|----------|-----------------|-----------|
+| Technical Fit | 30% | Requirement fulfillment, technical capability, innovation |
+| Price Competitiveness | 25% | Unit price, TCO, price structure transparency |
+| Track Record/Reliability | 20% | Similar projects, references, financial stability |
+| Service/Support | 15% | SLA, response speed, training, maintenance |
+| Strategic Fit | 10% | Vision alignment, long-term partnership, innovation roadmap |
 
-### 가격 평가 공식
+### Price Evaluation Formula
 
 ```
-기술 점수: 절대 평가 (1~5점 각 항목)
-가격 점수: 상대 평가
+Technical score: Absolute evaluation (1-5 points per item)
+Price score: Relative evaluation
 
-가격 점수 공식 (최저가 기준):
-  점수 = (최저 제안가 / 해당 업체 제안가) × 만점
+Price score formula (lowest-price basis):
+  Score = (Lowest bid / Vendor's bid) × Maximum points
 
-예시:
-  A사 ₩1억 → (1/1) × 5 = 5.0점
-  B사 ₩1.2억 → (1/1.2) × 5 = 4.17점
-  C사 ₩1.5억 → (1/1.5) × 5 = 3.33점
+Example:
+  Vendor A $100K → (100/100) × 5 = 5.0 points
+  Vendor B $120K → (100/120) × 5 = 4.17 points
+  Vendor C $150K → (100/150) × 5 = 3.33 points
 ```
 
-## 종합 평가표 템플릿
+## Comprehensive Evaluation Template
 
-| 평가 기준 (가중치) | A사 | B사 | C사 |
-|------------------|-----|-----|-----|
-| 기술 적합성 (30%) | 4.2 (1.26) | 3.8 (1.14) | 4.5 (1.35) |
-| 가격 경쟁력 (25%) | 5.0 (1.25) | 4.2 (1.05) | 3.3 (0.83) |
-| 실적/신뢰성 (20%) | 3.5 (0.70) | 4.5 (0.90) | 4.0 (0.80) |
-| 서비스/지원 (15%) | 4.0 (0.60) | 3.5 (0.53) | 4.2 (0.63) |
-| 전략 적합성 (10%) | 3.8 (0.38) | 4.0 (0.40) | 3.5 (0.35) |
-| **종합 점수** | **4.19** | **4.02** | **3.96** |
-| **순위** | **1위** | **2위** | **3위** |
+| Evaluation Criteria (Weight) | Vendor A | Vendor B | Vendor C |
+|-----------------------------|----------|----------|----------|
+| Technical Fit (30%) | 4.2 (1.26) | 3.8 (1.14) | 4.5 (1.35) |
+| Price Competitiveness (25%) | 5.0 (1.25) | 4.2 (1.05) | 3.3 (0.83) |
+| Track Record/Reliability (20%) | 3.5 (0.70) | 4.5 (0.90) | 4.0 (0.80) |
+| Service/Support (15%) | 4.0 (0.60) | 3.5 (0.53) | 4.2 (0.63) |
+| Strategic Fit (10%) | 3.8 (0.38) | 4.0 (0.40) | 3.5 (0.35) |
+| **Overall Score** | **4.19** | **4.02** | **3.96** |
+| **Rank** | **1st** | **2nd** | **3rd** |
 
-## 벤더 리스크 평가
+## Vendor Risk Evaluation
 
-| 리스크 유형 | 확인 항목 | 평가 방법 |
-|-----------|----------|----------|
-| 재무 리스크 | 매출, 부채비율, 영업이익 | 재무제표 분석 |
-| 운영 리스크 | 인력 안정성, 프로세스 | 현장 실사 |
-| 의존 리스크 | 단일 벤더 의존도 | 대체 업체 조사 |
-| 법적 리스크 | 소송, 규제 위반 | 공시 확인 |
-| 평판 리스크 | 고객 불만, 언론 | 레퍼런스 확인 |
+| Risk Type | Verification Items | Evaluation Method |
+|-----------|-------------------|-------------------|
+| Financial risk | Revenue, debt ratio, operating profit | Financial statement analysis |
+| Operational risk | Workforce stability, processes | On-site audit |
+| Dependency risk | Single vendor dependency | Alternative vendor research |
+| Legal risk | Lawsuits, regulatory violations | Public disclosure review |
+| Reputation risk | Customer complaints, media | Reference check |
 
-## 레퍼런스 체크 가이드
+## Reference Check Guide
 
-### 질문 목록
+### Question List
 
-| 질문 | 확인 포인트 |
-|------|-----------|
-| 프로젝트 규모와 기간은? | 유사성 확인 |
-| 납기 준수율은? | 실행력 |
-| 품질 이슈 있었나? | 문제 해결력 |
-| 변경 관리는 어떠했나? | 유연성 |
-| 다시 선정하겠는가? | 종합 만족도 |
+| Question | Verification Point |
+|----------|-------------------|
+| Project scale and duration? | Similarity check |
+| On-time delivery rate? | Execution capability |
+| Any quality issues? | Problem-solving ability |
+| How was change management? | Flexibility |
+| Would you select them again? | Overall satisfaction |
 
-## 품질 체크리스트
+## Quality Checklist
 
-| 항목 | 기준 |
-|------|------|
-| 평가 기준 | 5대 카테고리 + 가중치 |
-| 가격 공식 | 상대 평가 공식 명시 |
-| 최소 후보 | 3개 업체 이상 |
-| 레퍼런스 | 업체당 2건 이상 |
-| 독립성 | 평가위원 이해충돌 점검 |
-| 투명성 | 점수 산출 근거 기록 |
+| Item | Criteria |
+|------|----------|
+| Evaluation criteria | 5 categories + weights |
+| Price formula | Relative evaluation formula specified |
+| Minimum candidates | 3+ vendors |
+| References | 2+ per vendor |
+| Independence | Evaluator conflict of interest check |
+| Transparency | Score calculation basis recorded |

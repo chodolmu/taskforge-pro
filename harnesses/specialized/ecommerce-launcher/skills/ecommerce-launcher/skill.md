@@ -1,141 +1,141 @@
 ---
 name: ecommerce-launcher
-description: "이커머스 상품 런칭의 기획, 상세페이지, 가격전략, 마케팅, CS 셋업을 에이전트 팀이 협업하여 한 번에 생성하는 풀 런칭 파이프라인. '이커머스 상품 런칭해줘', '상품 출시 준비해줘', '스마트스토어 상품 등록', '쿠팡 상품 런칭', '상세페이지 만들어줘', '가격 전략 세워줘', '마케팅 계획 짜줘', '런칭 준비', '상품 기획서', '이커머스 CS 매뉴얼' 등 이커머스 상품 런칭 전반에 이 스킬을 사용한다. 기존 기획서나 상세페이지가 있는 경우에도 가격/마케팅/CS 보완을 지원한다. 단, 실제 플랫폼 API 연동(상품 등록 자동화), 결제 시스템 구축, 물류 시스템 연동, 실시간 주문 관리는 이 스킬의 범위가 아니다."
+description: "Full launch pipeline for e-commerce products where an agent team collaborates to generate product planning, detail pages, pricing strategy, marketing, and CS setup all at once. Use this skill for requests such as 'launch an e-commerce product', 'prepare a product launch', 'register a product on Naver Smart Store', 'launch on Coupang', 'create a detail page', 'develop a pricing strategy', 'create a marketing plan', 'launch prep', 'product planning brief', 'e-commerce CS manual', and other e-commerce product launch tasks. Also supports supplementing pricing/marketing/CS even when existing briefs or detail pages are provided. However, actual platform API integration (automated product registration), payment system development, logistics system integration, and real-time order management are outside the scope of this skill."
 ---
 
-# E-commerce Launcher — 이커머스 상품 런칭 풀 파이프라인
+# E-commerce Launcher — E-commerce Product Launch Full Pipeline
 
-이커머스 상품의 기획→상세페이지→가격전략→마케팅→CS를 에이전트 팀이 협업하여 한 번에 생성한다.
+An agent team collaborates to generate product planning, detail pages, pricing strategy, marketing, and CS setup for an e-commerce product launch.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 members communicate directly via SendMessage and cross-validate each other's work.
 
-## 에이전트 구성
+## Agent Roster
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| product-planner | `.claude/agents/product-planner.md` | 시장조사, 경쟁분석, 상품 포지셔닝 | general-purpose |
-| detail-page-writer | `.claude/agents/detail-page-writer.md` | 상세페이지 카피, SEO, 전환 최적화 | general-purpose |
-| pricing-strategist | `.claude/agents/pricing-strategist.md` | 원가분석, 가격설계, 프로모션 | general-purpose |
-| marketing-manager | `.claude/agents/marketing-manager.md` | 런칭 캠페인, 채널전략, 광고카피 | general-purpose |
-| cs-architect | `.claude/agents/cs-architect.md` | FAQ, 응대매뉴얼, 반품정책, VOC | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| product-planner | `.claude/agents/product-planner.md` | Market research, competitive analysis, product positioning | general-purpose |
+| detail-page-writer | `.claude/agents/detail-page-writer.md` | Detail page copy, SEO, conversion optimization | general-purpose |
+| pricing-strategist | `.claude/agents/pricing-strategist.md` | Cost analysis, pricing design, promotions | general-purpose |
+| marketing-manager | `.claude/agents/marketing-manager.md` | Launch campaigns, channel strategy, ad copy | general-purpose |
+| cs-architect | `.claude/agents/cs-architect.md` | FAQ, response manuals, return policies, VOC | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Performed Directly by Orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **상품 정보**: 상품명, 카테고리, 핵심 특징
-    - **타깃 시장** (선택): 타깃 고객층, 가격대
-    - **플랫폼** (선택): 네이버/쿠팡/자사몰 등
-    - **제약 조건** (선택): 예산, 일정, 특이사항
-    - **기존 파일** (선택): 기존 기획서, 상세페이지 등
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다 (아래 "작업 규모별 모드" 참조)
+1. Extract from user input:
+    - **Product Information**: Product name, category, key features
+    - **Target Market** (optional): Target customer segment, price range
+    - **Platform** (optional): Naver/Coupang/Own Store, etc.
+    - **Constraints** (optional): Budget, timeline, special considerations
+    - **Existing Files** (optional): Existing briefs, detail pages, etc.
+2. Create the `_workspace/` directory at the project root
+3. Organize the input and save it as `_workspace/00_input.md`
+4. If existing files are provided, copy them to `_workspace/` and skip the corresponding phase
+5. **Determine the execution mode** based on the scope of the request (see "Execution Modes by Scope" below)
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-팀을 구성하고 작업을 할당한다. 작업 간 의존 관계는 다음과 같다:
+Assemble the team and assign tasks. Task dependencies are as follows:
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 상품 기획 | planner | 없음 | `_workspace/01_product_brief.md` |
-| 2a | 상세페이지 작성 | writer | 작업 1 | `_workspace/02_detail_page.md` |
-| 2b | 가격 전략 수립 | pricing | 작업 1 | `_workspace/03_pricing_plan.md` |
-| 3 | 마케팅 플랜 | marketing | 작업 1, 2a, 2b | `_workspace/04_marketing_plan.md` |
-| 4 | CS 매뉴얼 | cs | 작업 1, 2b | `_workspace/05_cs_manual.md` |
-| 5 | 통합 리뷰 | 오케스트레이터 | 전체 | `_workspace/06_review_report.md` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1 | Product Planning | planner | None | `_workspace/01_product_brief.md` |
+| 2a | Detail Page Writing | writer | Task 1 | `_workspace/02_detail_page.md` |
+| 2b | Pricing Strategy | pricing | Task 1 | `_workspace/03_pricing_plan.md` |
+| 3 | Marketing Plan | marketing | Tasks 1, 2a, 2b | `_workspace/04_marketing_plan.md` |
+| 4 | CS Manual | cs | Tasks 1, 2b | `_workspace/05_cs_manual.md` |
+| 5 | Integrated Review | orchestrator | All | `_workspace/06_review_report.md` |
 
-작업 2a(상세페이지)와 2b(가격)는 **병렬 실행**한다. 둘 다 작업 1(기획)에만 의존하므로 동시에 시작할 수 있다.
+Tasks 2a (Detail Page) and 2b (Pricing) run **in parallel**. Both depend only on Task 1 (Planning) and can start simultaneously.
 
-**팀원 간 소통 흐름:**
-- planner 완료 → writer에게 USP·타깃 전달, pricing에게 경쟁가격·원가 전달, marketing에게 타깃·트렌드 전달, cs에게 스펙·인증 전달
-- writer 완료 → marketing에게 상세페이지 키워드 전달, cs에게 FAQ 섹션 전달
-- pricing 완료 → writer에게 가격 표기 방식 전달, marketing에게 프로모션 전략 전달, cs에게 가격 정책 전달
-- marketing 완료 → cs에게 프로모션 관련 예상 문의 전달
-- 오케스트레이터가 전체 산출물을 교차 검증하여 리뷰 보고서 생성
+**Inter-Agent Communication Flow:**
+- planner completes -> delivers USP and target to writer, competitive pricing and costs to pricing, target and trends to marketing, specs and certifications to cs
+- writer completes -> delivers detail page keywords to marketing, FAQ section to cs
+- pricing completes -> delivers price display format to writer, promotion strategy to marketing, pricing policy to cs
+- marketing completes -> delivers promotion-related anticipated inquiries to cs
+- orchestrator cross-validates all deliverables and produces the review report
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-전체 산출물의 정합성을 교차 검증하고 최종 정리한다:
+Cross-validate all deliverables for consistency and finalize:
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 상세페이지↔가격↔마케팅↔CS 간 불일치를 검출한다
-3. 통합 리뷰 보고서(`_workspace/06_review_report.md`)를 생성한다
-4. 최종 요약을 사용자에게 보고한다:
-    - 상품 기획서 — `01_product_brief.md`
-    - 상세페이지 원고 — `02_detail_page.md`
-    - 가격 전략서 — `03_pricing_plan.md`
-    - 마케팅 플랜 — `04_marketing_plan.md`
-    - CS 매뉴얼 — `05_cs_manual.md`
-    - 리뷰 보고서 — `06_review_report.md`
+1. Verify all files in `_workspace/`
+2. Detect inconsistencies across detail page, pricing, marketing, and CS
+3. Generate the integrated review report (`_workspace/06_review_report.md`)
+4. Report the final summary to the user:
+    - Product Planning Brief — `01_product_brief.md`
+    - Detail Page Copy — `02_detail_page.md`
+    - Pricing Strategy Document — `03_pricing_plan.md`
+    - Marketing Plan — `04_marketing_plan.md`
+    - CS Operations Manual — `05_cs_manual.md`
+    - Review Report — `06_review_report.md`
 
-## 작업 규모별 모드
+## Execution Modes by Scope
 
-사용자 요청의 범위에 따라 투입 에이전트를 조절한다:
+Adjust agent deployment based on the scope of the user's request:
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "이커머스 런칭해줘", "상품 출시 풀 준비" | **풀 파이프라인** | 5명 전원 |
-| "상세페이지만 만들어줘" | **상세페이지 모드** | planner + writer |
-| "가격 전략 세워줘" | **가격 모드** | planner + pricing |
-| "마케팅 계획 짜줘" (기존 기획 있음) | **마케팅 모드** | marketing 단독 |
-| "CS 매뉴얼 만들어줘" | **CS 모드** | planner + cs |
-| "이 기획서로 나머지 준비해줘" + 기존 파일 | **보완 모드** | 해당 영역 에이전트만 |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|-----------------|
+| "Launch an e-commerce product", "Full product launch prep" | **Full Pipeline** | All 5 agents |
+| "Just create the detail page" | **Detail Page Mode** | planner + writer |
+| "Develop a pricing strategy" | **Pricing Mode** | planner + pricing |
+| "Create a marketing plan" (existing brief available) | **Marketing Mode** | marketing only |
+| "Create a CS manual" | **CS Mode** | planner + cs |
+| "Prepare the rest using this brief" + existing file | **Supplement Mode** | Relevant agents only |
 
-**기존 파일 활용**: 사용자가 기획서, 상세페이지 등 기존 파일을 제공하면, 해당 파일을 `_workspace/`의 적절한 번호 위치에 복사하고 해당 단계의 에이전트는 건너뛴다.
+**Using Existing Files**: When the user provides existing files such as briefs or detail pages, copy them to the appropriate numbered position in `_workspace/` and skip the corresponding agent's phase.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-Based | `_workspace/` directory | Store and share main deliverables |
+| Message-Based | SendMessage | Real-time key information delivery, correction requests |
+| Task-Based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{order}_{agent}_{deliverable}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 웹 검색 실패 | 기획자가 일반 지식 기반으로 작업, 보고서에 "데이터 제한" 명시 |
-| 원가 정보 부재 | 카테고리 평균 마진율로 역산, 사용자 확인 요청 |
-| 플랫폼 미지정 | 네이버 스마트스토어 기준으로 작성 + 멀티플랫폼 보완 가이드 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰 보고서에 누락 명시 |
-| 정합성 불일치 발견 | 해당 에이전트에 수정 요청 → 재작업 (최대 2회) |
+| Error Type | Strategy |
+|-----------|----------|
+| Web search failure | Planner works from general knowledge, notes "Data limitations" in report |
+| Cost information absent | Reverse-engineer from category-average margin rate, request user confirmation |
+| Platform unspecified | Write based on Naver Smart Store standards + append multi-platform guide |
+| Agent failure | Retry once -> if still fails, proceed without that deliverable, note omission in review report |
+| Consistency discrepancy found | Request corrections from relevant agent -> rework (up to 2 rounds) |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "수제 그래놀라 브랜드를 네이버 스마트스토어에 런칭하려고 해. 원가 5,000원이고, 건강한 간식 컨셉이야"
-**기대 결과**:
-- 기획서: 건강간식 카테고리 경쟁 분석 3건 이상, 타깃 고객 정의, USP 도출
-- 상세페이지: 건강 베네핏 중심 카피, 모바일 최적화 구성
-- 가격: 원가 5,000원 기반 마진 설계, BEP 계산, 프로모션 가격
-- 마케팅: 건강/라이프스타일 채널 중심 런칭 플랜
-- CS: 식품 관련 FAQ, 유통기한/알레르기 정보 포함
+### Normal Flow
+**Prompt**: "I want to launch a handmade granola brand on Naver Smart Store. Manufacturing cost is $5 per unit and it's a healthy snack concept."
+**Expected Results**:
+- Planning Brief: 3+ competitive analyses in the healthy snack category, target customer definition, USP development
+- Detail Page: Health-benefit-focused copy, mobile-optimized structure
+- Pricing: Margin design based on $5 manufacturing cost, BEP calculation, promotional pricing
+- Marketing: Launch plan centered on health/lifestyle channels
+- CS: Food-related FAQ, shelf life/allergen information included
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 상세페이지 초안으로 가격이랑 마케팅 계획 세워줘" + 상세페이지 파일
-**기대 결과**:
-- 기존 상세페이지를 `_workspace/02_detail_page.md`로 복사
-- 상세페이지에서 상품 정보를 역추출하여 기획 브리프 생성
-- pricing + marketing + cs 투입
+### Existing File Flow
+**Prompt**: "Use this detail page draft to develop pricing and marketing plans" + detail page file
+**Expected Results**:
+- Copy existing detail page to `_workspace/02_detail_page.md`
+- Reverse-extract product information from the detail page to generate a planning brief
+- Deploy pricing + marketing + cs agents
 
-### 에러 흐름
-**프롬프트**: "상품 런칭 준비해줘, 뭘 팔지는 아직 안 정했어"
-**기대 결과**:
-- 기획자가 트렌드 기반 카테고리 3개 제안 후 사용자 선택 요청
-- 또는 가장 유망한 카테고리 1개를 선택하여 예시로 진행
-- 리뷰 보고서에 "상품 미확정 — 예시 기반 진행" 명시
+### Error Flow
+**Prompt**: "Prepare a product launch, but I haven't decided what to sell yet"
+**Expected Results**:
+- Planner suggests 3 trend-based categories and requests user selection
+- Or selects the most promising category and proceeds as an example
+- Review report notes "Product undetermined — proceeded on example basis"
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-| 확장 스킬 | 경로 | 대상 에이전트 | 역할 |
-|----------|------|-------------|------|
-| conversion-optimization | `.claude/skills/conversion-optimization/skill.md` | detail-page-writer, pricing-strategist | 구매 심리, 전환 구조, CTA, 가격 심리 |
-| product-copy-formulas | `.claude/skills/product-copy-formulas/skill.md` | detail-page-writer, marketing-manager | PAS/FAB/AIDA 카피 공식, 채널별 가이드 |
+| Extension Skill | Path | Target Agent | Role |
+|----------------|------|-------------|------|
+| conversion-optimization | `.claude/skills/conversion-optimization/skill.md` | detail-page-writer, pricing-strategist | Purchase psychology, conversion structure, CTA, pricing psychology |
+| product-copy-formulas | `.claude/skills/product-copy-formulas/skill.md` | detail-page-writer, marketing-manager | PAS/FAB/AIDA copy formulas, channel-specific guides |

@@ -1,130 +1,130 @@
 ---
 name: learning-design
-description: "교육설계자(curriculum-designer)와 콘텐츠작성자(content-writer)가 사용하는 학습 설계 전문 스킬. 블룸 분류학, 가네의 9단계, 역방향 설계, 인지 부하 이론 등 교수설계 핵심 이론과 적용 방법을 제공한다. '학습목표', '교수설계', '커리큘럼', '학습 이론' 등에 활용한다."
+description: "A learning design skill used by the curriculum-designer and content-writer agents. Provides core instructional design theories and applications including Bloom's Taxonomy, Gagne's Nine Events of Instruction, Backward Design, and Cognitive Load Theory. Used for 'learning objectives,' 'instructional design,' 'curriculum,' 'learning theory,' and related topics."
 ---
 
-# Learning Design — 학습 설계 전문 방법론
+# Learning Design — Learning Design Methodology
 
-curriculum-designer와 content-writer 에이전트가 커리큘럼과 교안을 설계할 때 활용하는 교수설계 전문 지식.
+Expert knowledge used by the curriculum-designer and content-writer agents when designing curricula and lesson plans.
 
-## 왜 학습 설계 이론이 필요한가
+## Why Learning Design Theory Matters
 
-"이거 알려줄게"와 "이걸 학습할 수 있게 설계할게"는 완전히 다르다. 학습 설계는 **인지 과학에 기반한 체계적 교육 구조화** 기술이다.
+"I'll teach you this" and "I'll design this so you can learn it" are fundamentally different. Learning design is a **systematic educational structuring technique grounded in cognitive science**.
 
-## 블룸 분류학 (Bloom's Taxonomy) 실전 적용
+## Bloom's Taxonomy — Practical Application
 
-### 6단계 인지 영역
+### Six Cognitive Levels
 
-| 수준 | 동사 | 학습목표 예시 | 평가 방법 |
-|------|------|------------|---------|
-| 1. **기억** | 정의하다, 나열하다, 식별하다 | "HTTP 메서드 4가지를 나열한다" | 객관식, 빈칸 채우기 |
-| 2. **이해** | 설명하다, 비교하다, 요약하다 | "REST와 GraphQL의 차이를 설명한다" | 서술형, 비교 표 |
-| 3. **적용** | 사용하다, 구현하다, 실행하다 | "Flask 라우트를 작성한다" | 코딩 실습 |
-| 4. **분석** | 분류하다, 구분하다, 검사하다 | "주어진 API의 설계 문제를 식별한다" | 코드 리뷰 |
-| 5. **평가** | 판단하다, 비평하다, 추천하다 | "두 아키텍처 중 더 적합한 것을 논증한다" | 에세이, 토론 |
-| 6. **창조** | 설계하다, 개발하다, 구축하다 | "자신만의 REST API를 설계하고 구현한다" | 프로젝트 |
+| Level | Verbs | Learning Objective Example | Assessment Method |
+|-------|-------|--------------------------|-------------------|
+| 1. **Remember** | Define, list, identify | "List the 4 HTTP methods" | Multiple choice, fill-in-blank |
+| 2. **Understand** | Explain, compare, summarize | "Explain the difference between REST and GraphQL" | Written response, comparison table |
+| 3. **Apply** | Use, implement, execute | "Write a Flask route" | Coding lab |
+| 4. **Analyze** | Classify, distinguish, examine | "Identify design issues in a given API" | Code review |
+| 5. **Evaluate** | Judge, critique, recommend | "Argue which of two architectures is more appropriate" | Essay, discussion |
+| 6. **Create** | Design, develop, build | "Design and implement your own REST API" | Project |
 
-### 레슨별 블룸 수준 배분
+### Per-Lesson Bloom's Level Distribution
 
-| 과정 단계 | 권장 블룸 수준 | 비율 |
-|----------|-------------|------|
-| 초반 (1~3레슨) | 1~2 (기억, 이해) | 60% |
-| 중반 (4~7레슨) | 3~4 (적용, 분석) | 60% |
-| 후반 (8~10레슨) | 4~6 (분석, 평가, 창조) | 70% |
+| Course Phase | Recommended Bloom's Levels | Proportion |
+|-------------|--------------------------|-----------|
+| Early (Lessons 1-3) | 1-2 (Remember, Understand) | 60% |
+| Middle (Lessons 4-7) | 3-4 (Apply, Analyze) | 60% |
+| Late (Lessons 8-10) | 4-6 (Analyze, Evaluate, Create) | 70% |
 
-## 역방향 설계 (Backward Design)
+## Backward Design (Understanding by Design)
 
-### UbD (Understanding by Design) 3단계
-
-```
-Step 1: 원하는 결과 결정 → "학습자가 궁극적으로 무엇을 할 수 있어야 하는가?"
-Step 2: 평가 증거 결정 → "그것을 증명할 수 있는 과제/평가는?"
-Step 3: 학습 경험 설계 → "그 평가를 통과하려면 무엇을 배워야 하는가?"
-```
-
-### 실전 적용
+### UbD Three Stages
 
 ```
-[잘못된 순서]
-"Python 변수를 가르치자" → "뭘 평가하지?" → "시험 문제를 만들자"
-
-[올바른 순서 (역방향)]
-"학습자가 간단한 계산기 프로그램을 만들 수 있어야 한다"
-→ "계산기 프로그램을 제출하면 된다"
-→ "그러려면 변수, 입출력, 조건문, 함수를 배워야 한다"
+Step 1: Determine desired results -> "What should learners ultimately be able to do?"
+Step 2: Determine assessment evidence -> "What tasks/assessments prove they can do it?"
+Step 3: Plan learning experiences -> "What must they learn to pass those assessments?"
 ```
 
-## 가네의 9단계 교수 사건
+### Practical Application
 
-각 레슨의 구조를 이 9단계로 설계한다:
-
-| # | 단계 | 목적 | 실전 예시 (프로그래밍 교육) |
-|---|------|------|-------------------------|
-| 1 | **주의 획득** | 학습 동기 유발 | "이 코드 3줄로 웹서버를 만들 수 있습니다" |
-| 2 | **목표 고지** | 기대치 설정 | "이 레슨이 끝나면 여러분은 ~을 할 수 있습니다" |
-| 3 | **선행학습 자극** | 기존 지식과 연결 | "지난 레슨에서 배운 변수를 기억하세요?" |
-| 4 | **자극 제시** | 새 내용 전달 | 강의, 데모, 코드 워크스루 |
-| 5 | **학습 안내** | 이해를 돕는 부가 설명 | 다이어그램, 비유, 단계별 분해 |
-| 6 | **수행 유도** | 직접 해보기 | 가이드된 실습, 따라하기 |
-| 7 | **피드백 제공** | 수행 결과 확인 | 자동 테스트, 코드 리뷰, 정답 비교 |
-| 8 | **수행 평가** | 독립적 과제 | 퀴즈, 미니 프로젝트 |
-| 9 | **파지 & 전이** | 다른 상황에 적용 | "이 개념을 실제 프로젝트에 어떻게 쓸까요?" |
-
-## 인지 부하 이론 (Cognitive Load Theory)
-
-### 3가지 인지 부하
-
-| 유형 | 설명 | 관리 방법 |
-|------|------|----------|
-| **내재적** | 학습 내용 자체의 복잡성 | 분할 (chunking), 선행 조건 확인 |
-| **외재적** | 나쁜 설계로 인한 불필요한 부하 | 불필요한 정보 제거, 구조화 |
-| **유의미** | 학습에 기여하는 인지 노력 | 이것을 최대화하는 것이 목표 |
-
-### 인지 부하 감소 전략
-
-1. **분할 원칙**: 한 레슨에서 새로운 개념 3개 이하
-2. **중복 원칙**: 같은 정보를 텍스트+음성으로 동시 제시하지 않는다 (하나만)
-3. **시공간 접근 원칙**: 설명과 관련 다이어그램을 가까이 배치
-4. **사전 훈련 원칙**: 복잡한 프로세스를 배우기 전에 구성 요소를 먼저 학습
-5. **점진적 복잡성**: 처음에는 단순화된 버전 → 점차 복잡성 추가
-
-## 학습 경로 설계 패턴
-
-### 선형 경로 (Linear)
 ```
-L1 → L2 → L3 → L4 → 프로젝트
-```
-- 각 레슨이 다음 레슨의 선행 조건
-- 적합: 누적적 기술 (프로그래밍, 수학)
+[Wrong order]
+"Let's teach Python variables" -> "How do we assess?" -> "Make some test questions"
 
-### 허브 앤 스포크 (Hub and Spoke)
+[Correct order (Backward)]
+"Learners should be able to build a simple calculator program"
+-> "They submit a working calculator program"
+-> "Therefore they need to learn variables, I/O, conditionals, and functions"
+```
+
+## Gagne's Nine Events of Instruction
+
+Design each lesson's structure using these nine events:
+
+| # | Event | Purpose | Practical Example (Programming Education) |
+|---|-------|---------|------------------------------------------|
+| 1 | **Gain Attention** | Motivate learning | "With just 3 lines of code, you can create a web server" |
+| 2 | **State Objectives** | Set expectations | "By the end of this lesson, you will be able to..." |
+| 3 | **Stimulate Prior Knowledge** | Connect to existing knowledge | "Remember the variables we covered last lesson?" |
+| 4 | **Present Content** | Deliver new material | Lecture, demo, code walkthrough |
+| 5 | **Provide Guidance** | Support understanding | Diagrams, analogies, step-by-step breakdowns |
+| 6 | **Elicit Performance** | Hands-on practice | Guided lab, follow-along exercise |
+| 7 | **Provide Feedback** | Confirm performance | Automated tests, code review, answer comparison |
+| 8 | **Assess Performance** | Independent task | Quiz, mini project |
+| 9 | **Enhance Retention & Transfer** | Apply in other contexts | "How would you use this concept in a real project?" |
+
+## Cognitive Load Theory
+
+### Three Types of Cognitive Load
+
+| Type | Description | Management Strategy |
+|------|-------------|-------------------|
+| **Intrinsic** | Inherent complexity of the learning content | Chunking, prerequisite verification |
+| **Extraneous** | Unnecessary load from poor design | Remove irrelevant information, improve structure |
+| **Germane** | Cognitive effort contributing to learning | The goal is to maximize this |
+
+### Cognitive Load Reduction Strategies
+
+1. **Chunking Principle**: No more than 3 new concepts per lesson
+2. **Redundancy Principle**: Don't present identical information in text + audio simultaneously (choose one)
+3. **Spatial Contiguity Principle**: Place explanations near related diagrams
+4. **Pre-training Principle**: Learn component parts before the complex process
+5. **Progressive Complexity**: Start with simplified versions, gradually add complexity
+
+## Learning Path Design Patterns
+
+### Linear Path
+```
+L1 -> L2 -> L3 -> L4 -> Project
+```
+- Each lesson is a prerequisite for the next
+- Best for: Cumulative skills (programming, mathematics)
+
+### Hub and Spoke
 ```
       L2
      /
-L1 → L3 → 프로젝트
+L1 -> L3 -> Project
      \
       L4
 ```
-- L1 이후 L2/L3/L4 순서 자유
-- 적합: 독립적 주제 (디자인 도구, 마케팅 채널)
+- After L1, L2/L3/L4 can be taken in any order
+- Best for: Independent topics (design tools, marketing channels)
 
-### 나선형 (Spiral)
+### Spiral
 ```
-L1(기초) → L2(기초) → L3(기초) → ...
-L4(심화) → L5(심화) → L6(심화) → ...
-↑ 같은 주제를 심화 수준으로 재방문
+L1(basics) -> L2(basics) -> L3(basics) -> ...
+L4(advanced) -> L5(advanced) -> L6(advanced) -> ...
+^ Same topics revisited at deeper levels
 ```
-- 같은 개념을 점점 깊이 있게 재방문
-- 적합: 복잡한 시스템 (데이터베이스 설계, 아키텍처)
+- Revisit the same concepts with increasing depth
+- Best for: Complex systems (database design, architecture)
 
-## 학습목표 작성 공식: ABCD
+## Learning Objective Writing Formula: ABCD
 
 ```
-A (Audience): 학습자는
-B (Behavior): [행동 동사]할 수 있다
-C (Condition): [조건] 하에서
-D (Degree): [성공 기준]으로
+A (Audience): The learner
+B (Behavior): will be able to [action verb]
+C (Condition): given [condition]
+D (Degree): to [success criterion]
 
-예: "초급 학습자는(A) Flask로 CRUD API를 구현할 수 있다(B)
-    공식 문서를 참조하여(C) 4개 엔드포인트를 30분 안에(D)"
+Example: "Beginner learners (A) will be able to implement a CRUD API with Flask (B),
+          referencing the official documentation (C), completing 4 endpoints within 30 minutes (D)"
 ```

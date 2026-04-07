@@ -1,78 +1,79 @@
 ---
 name: strangler-fig-patterns
-description: "레거시 시스템을 점진적으로 교체하는 Strangler Fig 패턴과 관련 마이그레이션 패턴의 상세 구현 가이드. 'strangler fig', '점진적 마이그레이션', '리팩토링 패턴', 'branch by abstraction', 'parallel run', '점진적 교체', '마이그레이션 패턴 선택' 등 레거시 전환 패턴 적용 시 이 스킬을 사용한다. refactoring-strategist와 migration-engineer의 패턴 선택·구현을 강화한다. 단, 전체 팀 오케스트레이션이나 프로젝트 관리는 이 스킬의 범위가 아니다."
+description: "Detailed implementation guide for the Strangler Fig pattern and related migration patterns for incrementally replacing legacy systems. Use this skill for 'strangler fig', 'incremental migration', 'refactoring patterns', 'branch by abstraction', 'parallel run', 'gradual replacement', 'migration pattern selection', and other legacy migration pattern applications. Enhances pattern selection and implementation for refactoring-strategist and migration-engineer. Note: full team orchestration and project management are outside the scope of this skill."
 ---
 
-# Strangler Fig Patterns — 점진적 마이그레이션 패턴 가이드
+# Strangler Fig Patterns — Incremental Migration Pattern Guide
 
-레거시 시스템 교체를 위한 검증된 패턴들의 상세 구현 방법론.
+Detailed implementation methodologies for proven patterns for replacing legacy systems.
 
-## 패턴 카탈로그
+## Pattern Catalog
 
 ### 1. Strangler Fig Pattern
 
-**적용 조건**: 모놀리스에서 새 시스템으로 점진적 전환이 필요할 때
+**Applicable Conditions**: When incremental transition from a monolith to a new system is needed
 
 ```
-┌─────────────────────────────────────────────┐
-│                 라우터/프록시                  │
-│  ┌──────────┐    ┌──────────────────────┐   │
-│  │ 레거시    │ ←→ │ 새 시스템            │   │
-│  │ (축소 중) │    │ (확장 중)            │   │
-│  └──────────┘    └──────────────────────┘   │
-└─────────────────────────────────────────────┘
++---------------------------------------------+
+|              Router/Proxy                    |
+|  +----------+    +----------------------+   |
+|  | Legacy   | <-> | New System          |   |
+|  | (shrink- |    | (expanding)          |   |
+|  |  ing)    |    |                      |   |
+|  +----------+    +----------------------+   |
++---------------------------------------------+
 ```
 
-**구현 단계:**
+**Implementation Steps:**
 
-| 단계 | 작업 | 검증 기준 | 롤백 방법 |
-|------|------|----------|----------|
-| 1. 인터셉터 삽입 | 라우터/프록시 계층 추가 | 기존 트래픽 100% 레거시 경유 확인 | 인터셉터 제거 |
-| 2. 기능 단위 추출 | 가장 독립적인 기능부터 새 서비스로 | 동일 입출력 검증 (Shadow Test) | 라우팅 복원 |
-| 3. 트래픽 전환 | 카나리 → 점진적 비율 증가 | 에러율, 지연시간, 비즈니스 메트릭 | 비율 0% 복귀 |
-| 4. 레거시 제거 | 이관 완료된 코드 삭제 | 전환 완료 100% 확인 | N/A |
+| Step | Task | Verification Criteria | Rollback Method |
+|------|------|----------------------|-----------------|
+| 1. Insert Interceptor | Add router/proxy layer | Confirm 100% existing traffic routes through legacy | Remove interceptor |
+| 2. Extract by Feature | Start with most independent feature into new service | Verify identical input/output (Shadow Test) | Restore routing |
+| 3. Traffic Migration | Canary -> gradual percentage increase | Error rate, latency, business metrics | Revert to 0% |
+| 4. Legacy Removal | Delete fully migrated code | Confirm 100% migration complete | N/A |
 
-**추출 우선순위 매트릭스:**
+**Extraction Priority Matrix:**
 
 ```
-높은 비즈니스 가치
-       │
-  ③ Quick │ ① 최우선
-    Wins  │  추출 대상
-  ────────┼──────────→ 낮은 결합도
-  ④ 후순위 │ ② 점진적
-    보류   │  분리 후 추출
-       │
-낮은 비즈니스 가치
+High Business Value
+       |
+  (3) Quick | (1) Top Priority
+    Wins    |  Extraction Targets
+  ----------+-----------> Low Coupling
+  (4) Defer | (2) Gradual
+    Hold    |  Decouple then Extract
+       |
+Low Business Value
 ```
 
 ### 2. Branch by Abstraction
 
-**적용 조건**: 내부 컴포넌트를 교체할 때 (같은 코드베이스 내)
+**Applicable Conditions**: When replacing internal components (within the same codebase)
 
 ```python
-# Step 1: 추상화 계층 삽입
+# Step 1: Insert abstraction layer
 class PaymentGateway(ABC):
     @abstractmethod
     def process(self, amount: Decimal) -> PaymentResult: ...
 
-# Step 2: 레거시 구현 래핑
+# Step 2: Wrap legacy implementation
 class LegacyPayment(PaymentGateway):
     def process(self, amount):
         return self.old_system.charge(amount)
 
-# Step 3: 신규 구현
+# Step 3: New implementation
 class ModernPayment(PaymentGateway):
     def process(self, amount):
         return self.stripe_client.create_charge(amount)
 
-# Step 4: 피처 플래그로 전환
+# Step 4: Switch via feature flag
 gateway = ModernPayment() if feature_flag('new_payment') else LegacyPayment()
 ```
 
-### 3. Parallel Run (Scientist 패턴)
+### 3. Parallel Run (Scientist Pattern)
 
-**적용 조건**: 교체 전에 신규 시스템의 정확성을 검증할 때
+**Applicable Conditions**: When verifying the accuracy of a new system before replacement
 
 ```python
 class Experiment:
@@ -84,60 +85,60 @@ class Experiment:
                 self.report_mismatch(input_data, control_result, candidate_result)
         except Exception as e:
             self.report_error(input_data, e)
-        return control_result  # 항상 레거시 결과 반환
+        return control_result  # Always return legacy result
 ```
 
-**비교 전략:**
+**Comparison Strategies:**
 
-| 비교 수준 | 방법 | 허용 범위 |
-|----------|------|----------|
-| 정확 일치 | `==` | 0% 차이 |
-| 구조적 일치 | 스키마 비교 | 필드 존재/타입 일치 |
-| 의미적 일치 | 비즈니스 규칙 기반 | 도메인별 허용 오차 |
-| 통계적 일치 | 집계/분포 비교 | 99.9% 일치율 이상 |
+| Comparison Level | Method | Tolerance |
+|-----------------|--------|-----------|
+| Exact match | `==` | 0% difference |
+| Structural match | Schema comparison | Field presence/type match |
+| Semantic match | Business rule-based | Domain-specific tolerance |
+| Statistical match | Aggregate/distribution comparison | >= 99.9% match rate |
 
 ### 4. Anti-Corruption Layer (ACL)
 
-**적용 조건**: 레거시와 신규 시스템이 공존해야 할 때 도메인 오염 방지
+**Applicable Conditions**: When legacy and new systems must coexist, preventing domain contamination
 
-**ACL 구성요소:**
+**ACL Components:**
 
-| 구성요소 | 역할 | 구현 |
-|---------|------|------|
-| Translator | 도메인 모델 변환 | DTO ↔ Domain Object 매핑 |
-| Adapter | 인터페이스 변환 | 레거시 API → 현대 인터페이스 |
-| Facade | 복잡성 은닉 | 레거시 다중 호출 → 단일 메서드 |
+| Component | Role | Implementation |
+|-----------|------|---------------|
+| Translator | Domain model conversion | DTO <-> Domain Object mapping |
+| Adapter | Interface conversion | Legacy API -> Modern interface |
+| Facade | Complexity hiding | Multiple legacy calls -> single method |
 
-### 5. Feature Toggle 전략
+### 5. Feature Toggle Strategy
 
 ```yaml
 toggles:
-  # Phase 1: 개발 팀만
+  # Phase 1: Dev team only
   new_user_service: { type: permission, users: ["dev-team"] }
-  # Phase 2: 카나리 (10%)
+  # Phase 2: Canary (10%)
   new_user_service: { type: gradual-rollout, percentage: 10, sticky: true }
-  # Phase 3: 전면 전환
+  # Phase 3: Full rollout
   new_user_service: { type: release, enabled: true }
-  # Phase 4: 토글 제거 (레거시 코드 삭제)
+  # Phase 4: Remove toggle (delete legacy code)
 ```
 
-## 패턴 선택 의사결정 트리
+## Pattern Selection Decision Tree
 
 ```
-레거시 교체가 필요한가?
-├── 외부 시스템/서비스 교체 → Strangler Fig
-├── 내부 컴포넌트 교체
-│   ├── 교체 전 검증 필요 → Parallel Run + Branch by Abstraction
-│   └── 교체 확신 있음 → Branch by Abstraction
-├── 레거시-신규 공존 장기화 → Anti-Corruption Layer
-└── 모든 경우 → Feature Toggle 병용 권장
+Is legacy replacement needed?
++-- External system/service replacement -> Strangler Fig
++-- Internal component replacement
+|   +-- Pre-replacement verification needed -> Parallel Run + Branch by Abstraction
+|   +-- Confident in replacement -> Branch by Abstraction
++-- Long-term legacy-new coexistence -> Anti-Corruption Layer
++-- All cases -> Feature Toggle recommended in combination
 ```
 
-## 위험 신호와 대응
+## Warning Signs and Responses
 
-| 위험 신호 | 의미 | 대응 |
-|----------|------|------|
-| 추출할 모듈이 10개 이상 의존 | 결합도 과다 | ACL 삽입 후 점진적 의존성 정리 |
-| Parallel Run 불일치율 > 5% | 동작 차이 과다 | 비즈니스 규칙 재검증, 엣지 케이스 수집 |
-| 토글 수 > 20개 동시 활성 | 토글 부채 | 정기 토글 청소 스프린트 도입 |
-| 마이그레이션 6개월 이상 지속 | 병렬 운영 비용 증가 | 범위 축소 또는 부분 Big Bang 검토 |
+| Warning Sign | Meaning | Response |
+|-------------|---------|----------|
+| Module to extract has 10+ dependencies | Excessive coupling | Insert ACL then incrementally resolve dependencies |
+| Parallel Run mismatch rate > 5% | Excessive behavioral differences | Re-verify business rules, collect edge cases |
+| > 20 toggles active simultaneously | Toggle debt | Introduce regular toggle cleanup sprints |
+| Migration ongoing for 6+ months | Increasing parallel operation costs | Reduce scope or consider partial Big Bang |

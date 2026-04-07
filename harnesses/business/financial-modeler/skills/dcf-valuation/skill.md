@@ -1,121 +1,121 @@
 ---
 name: dcf-valuation
-description: "DCF(할인현금흐름) 밸류에이션의 상세 방법론과 실무 가이드를 제공하는 전문 스킬. valuation-expert 에이전트가 기업 가치를 산출할 때 WACC, FCF 추정, 터미널 밸류 계산에 활용한다. 'DCF 분석', '할인현금흐름', 'WACC 계산', '기업가치 평가', '터미널 밸류' 등의 맥락에서 자동 적용한다. 단, 실시간 시장 데이터 조회나 실제 거래 자문은 이 스킬의 범위가 아니다."
+description: "A specialized skill providing detailed DCF (Discounted Cash Flow) valuation methodology and practical guidelines. Used by the valuation-expert agent for WACC calculation, FCF estimation, and terminal value computation when calculating enterprise value. Automatically applied in contexts such as 'DCF analysis', 'discounted cash flow', 'WACC calculation', 'enterprise valuation', 'terminal value'. However, real-time market data retrieval and actual transaction advisory are outside the scope of this skill."
 ---
 
-# DCF Valuation — 할인현금흐름 밸류에이션 방법론
+# DCF Valuation — Discounted Cash Flow Valuation Methodology
 
-valuation-expert 에이전트의 DCF 분석 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the DCF analysis capabilities of the valuation-expert agent.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **valuation-expert** — DCF 모델 구축, WACC 산정, 터미널 밸류 계산
+- **valuation-expert** — DCF model construction, WACC calculation, terminal value computation
 
-## DCF 모델 구축 절차
+## DCF Model Construction Process
 
-### Step 1: FCFF(Free Cash Flow to Firm) 추정
-
-```
-FCFF = EBIT × (1 - 세율)
-     + 감가상각비
-     - 자본적 지출(CAPEX)
-     - 순운전자본 증가(ΔNWC)
-```
-
-| 항목 | 추정 방법 | 주의점 |
-|------|----------|-------|
-| EBIT | 매출 × 영업이익률 추정 | 정상화(Normalized) EBIT 사용 |
-| 세율 | 실효세율 또는 법정세율 | 이연법인세 고려 |
-| 감가상각 | 유형자산 × 감가율 | CAPEX와 균형 확인 |
-| CAPEX | 유지 CAPEX + 성장 CAPEX | 감가상각 대비 비율 검증 |
-| ΔNWC | 매출 대비 NWC 비율 적용 | 매출 성장 시 현금 유출 |
-
-### Step 2: WACC(가중평균자본비용) 산정
+### Step 1: FCFF (Free Cash Flow to Firm) Estimation
 
 ```
-WACC = E/(E+D) × Ke + D/(E+D) × Kd × (1-T)
+FCFF = EBIT x (1 - Tax Rate)
+     + Depreciation & Amortization
+     - Capital Expenditures (CAPEX)
+     - Change in Net Working Capital (dNWC)
 ```
 
-| 변수 | 산정 방법 | 한국 기업 참고값 |
-|------|----------|----------------|
-| Ke (자기자본비용) | CAPM = Rf + β × MRP + SP | 10-15% |
-| Rf (무위험이자율) | 국고채 10년 금리 | 3-4% |
-| MRP (시장리스크프리미엄) | 한국 주식시장 ERP | 5-7% |
-| β (베타) | 동종업체 Unlevered β 평균 → Re-lever | 0.8-1.5 |
-| SP (소형주프리미엄) | 시가총액 기반 | 스타트업 3-5% |
-| Kd (타인자본비용) | 차입금리 가중평균 | 4-6% |
-| T (세율) | 실효세율 | 20-25% |
+| Item | Estimation Method | Key Considerations |
+|------|------------------|---------------------|
+| EBIT | Revenue x Operating Margin estimate | Use normalized EBIT |
+| Tax Rate | Effective or statutory rate | Consider deferred tax |
+| D&A | Tangible Assets x Depreciation Rate | Verify balance with CAPEX |
+| CAPEX | Maintenance CAPEX + Growth CAPEX | Validate ratio vs. D&A |
+| dNWC | NWC as % of Revenue | Cash outflow with revenue growth |
 
-### CAPM 베타 산정 프로세스
+### Step 2: WACC (Weighted Average Cost of Capital) Calculation
 
 ```
-1. 비교 기업 5개 이상 선정
-2. 각 기업의 Levered β 수집
-3. Unlevered β 산출: βU = βL / [1 + (1-T) × D/E]
-4. 비교 기업 평균 Unlevered β 산출
-5. 대상 기업의 자본구조로 Re-lever: βL = βU × [1 + (1-T) × D/E]
+WACC = E/(E+D) x Ke + D/(E+D) x Kd x (1-T)
 ```
 
-### Step 3: 터미널 밸류 (Terminal Value)
+| Variable | Calculation Method | Reference Values |
+|----------|-------------------|-----------------|
+| Ke (Cost of Equity) | CAPM = Rf + B x MRP + SP | 10-15% |
+| Rf (Risk-Free Rate) | 10-year government bond yield | 3-4% |
+| MRP (Market Risk Premium) | Equity Risk Premium | 5-7% |
+| B (Beta) | Peer Unlevered B average → Re-lever | 0.8-1.5 |
+| SP (Size Premium) | Market cap based | Startups 3-5% |
+| Kd (Cost of Debt) | Weighted average borrowing rate | 4-6% |
+| T (Tax Rate) | Effective tax rate | 20-25% |
 
-**방법 1: 영구성장률 모델 (Gordon Growth)**
+### CAPM Beta Calculation Process
+
+```
+1. Select 5+ comparable companies
+2. Collect each company's Levered Beta
+3. Calculate Unlevered Beta: BU = BL / [1 + (1-T) x D/E]
+4. Calculate average Unlevered Beta of comparables
+5. Re-lever for target company's capital structure: BL = BU x [1 + (1-T) x D/E]
+```
+
+### Step 3: Terminal Value
+
+**Method 1: Perpetuity Growth Model (Gordon Growth)**
 ```
 TV = FCFFn+1 / (WACC - g)
-   = FCFFn × (1+g) / (WACC - g)
+   = FCFFn x (1+g) / (WACC - g)
 ```
 
-| 변수 | 기준 | 주의점 |
-|------|------|-------|
-| g (영구성장률) | GDP 성장률 이하 (1.5-3%) | g > WACC이면 모델 무효 |
-| FCFFn | 마지막 예측 연도 FCF | 정상화된 수준이어야 함 |
+| Variable | Standard | Caution |
+|----------|---------|---------|
+| g (Perpetual Growth Rate) | At or below GDP growth (1.5-3%) | Model invalid if g > WACC |
+| FCFFn | Last forecast year FCF | Must be at normalized level |
 
-**방법 2: Exit Multiple**
+**Method 2: Exit Multiple**
 ```
-TV = EBITDAn × Exit Multiple
+TV = EBITDAn x Exit Multiple
 ```
 
-| 산업 | 일반적 EV/EBITDA 범위 |
-|------|---------------------|
+| Industry | Typical EV/EBITDA Range |
+|---------|------------------------|
 | SaaS | 15-30x |
-| 제조 | 6-10x |
-| 유통 | 8-12x |
-| 금융 | 8-12x |
-| 바이오 | 20-40x (파이프라인 가치) |
+| Manufacturing | 6-10x |
+| Retail | 8-12x |
+| Financial Services | 8-12x |
+| Biotech | 20-40x (pipeline value) |
 
-### Step 4: 기업 가치 산출
+### Step 4: Enterprise Value Calculation
 
 ```
-Enterprise Value = Σ(FCFFt / (1+WACC)^t) + TV / (1+WACC)^n
-Equity Value = EV - 순부채 - 우선주 - 소수지분
-주당 가치 = Equity Value / 발행주식수
+Enterprise Value = Sum(FCFFt / (1+WACC)^t) + TV / (1+WACC)^n
+Equity Value = EV - Net Debt - Preferred Stock - Minority Interest
+Per-Share Value = Equity Value / Shares Outstanding
 ```
 
-## DCF 품질 검증 체크리스트
+## DCF Quality Validation Checklist
 
-- [ ] 터미널 밸류가 전체 가치의 60-75% 범위인가? (초과 시 경고)
-- [ ] 영구성장률이 GDP 성장률 이하인가?
-- [ ] WACC 산정에 사용된 베타가 합리적인가?
-- [ ] FCF 추정이 과거 트렌드와 일관성이 있는가?
-- [ ] 감가상각 ≈ 유지 CAPEX 수준인가? (성숙 기업)
-- [ ] 매출 성장률이 점진적으로 수렴하는가?
-- [ ] 영업이익률이 업종 평균에 수렴하는가?
+- [ ] Is terminal value within 60-75% of total value? (Warning if exceeded)
+- [ ] Is perpetual growth rate at or below GDP growth?
+- [ ] Is the beta used in WACC calculation reasonable?
+- [ ] Is FCF projection consistent with historical trends?
+- [ ] Is D&A approximately equal to maintenance CAPEX? (for mature companies)
+- [ ] Does revenue growth rate gradually converge?
+- [ ] Does operating margin converge to industry average?
 
-## 스타트업/고성장 기업 DCF 보정
+## Startup/High-Growth Company DCF Adjustments
 
-| 이슈 | 해결 방법 |
-|------|----------|
-| 음(-)의 현금흐름 | 흑자 전환 시점 명시, 그 전까지는 현금 소진 모델링 |
-| 높은 성장률 | 2단계 모델 (고성장기 + 안정성장기) |
-| 베타 추정 불가 | 유사 상장기업 베타, 또는 VC 할인율 (25-35%) 직접 적용 |
-| 시장 데이터 부족 | VC Method, Berkus Method 병행 |
+| Issue | Solution |
+|-------|----------|
+| Negative cash flows | Explicitly state breakeven timing, model cash burn until then |
+| High growth rates | 2-stage model (high growth period + stable growth period) |
+| Beta not estimable | Use comparable public company beta, or directly apply VC discount rate (25-35%) |
+| Insufficient market data | Parallel VC Method, Berkus Method |
 
-## 멀티플 밸류에이션 (Cross-check용)
+## Multiples Valuation (Cross-check)
 
-| 멀티플 | 적용 대상 | 산정 |
-|--------|----------|------|
-| EV/Revenue (PSR) | 초기 SaaS, 고성장 | EV / 연매출 (NTM) |
-| EV/EBITDA | 수익성 있는 기업 | EV / EBITDA (NTM) |
-| P/E | 상장사 | 주가 / EPS |
+| Multiple | Applicable To | Calculation |
+|---------|--------------|-------------|
+| EV/Revenue (PSR) | Early SaaS, high growth | EV / Annual Revenue (NTM) |
+| EV/EBITDA | Profitable companies | EV / EBITDA (NTM) |
+| P/E | Public companies | Stock Price / EPS |
 | EV/ARR | SaaS | EV / ARR |
 
-DCF 결과를 반드시 멀티플 밸류에이션으로 교차 검증한다.
+Always cross-validate DCF results with multiples valuation.

@@ -1,37 +1,37 @@
 # Performance Optimizer Harness
 
-성능 최적화의 프로파일링→병목분석→최적화→벤치마크를 에이전트 팀이 협업하여 수행하는 하네스.
+An agent team harness for performance optimization covering profiling, bottleneck analysis, optimization, and benchmarking.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── profiler.md              — 프로파일러 (CPU, 메모리, I/O, 네트워크 프로파일링)
-│   ├── bottleneck-analyst.md    — 병목 분석가 (핫스팟 식별, 근본원인, 영향산정)
-│   ├── optimization-engineer.md — 최적화 엔지니어 (코드/쿼리/아키텍처 최적화)
-│   ├── benchmark-manager.md     — 벤치마크 관리자 (테스트설계, 실행, 비교분석)
-│   └── perf-reviewer.md         — 성능 리뷰어 (교차검증, 회귀방지, 최종보고서)
+│   ├── profiler.md              — Profiler (CPU, memory, I/O, network profiling)
+│   ├── bottleneck-analyst.md    — Bottleneck analyst (hotspot identification, root cause, impact assessment)
+│   ├── optimization-engineer.md — Optimization engineer (code/query/architecture optimization)
+│   ├── benchmark-manager.md     — Benchmark manager (test design, execution, comparative analysis)
+│   └── perf-reviewer.md         — Performance reviewer (cross-validation, regression prevention, final report)
 ├── skills/
 │   ├── performance-optimizer/
-│   │   └── skill.md              — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md              — Orchestrator (team coordination, workflow, error handling)
 │   ├── query-optimization-patterns/
-│   │   └── skill.md              — 쿼리 최적화 패턴 가이드
+│   │   └── skill.md              — Query optimization pattern guide
 │   └── caching-strategy-selector/
-│       └── skill.md              — 캐싱 전략 선택 가이드
-└── CLAUDE.md                    — 이 파일
+│       └── skill.md              — Caching strategy selection guide
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/performance-optimizer` 스킬을 트리거하거나, "성능 최적화해줘" 같은 자연어로 요청한다.
+Trigger the `/performance-optimizer` skill, or make a natural language request such as "optimize performance."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_profiling_report.md` — 프로파일링 결과
-- `02_bottleneck_analysis.md` — 병목 분석 보고서
-- `03_optimization_plan.md` — 최적화 계획 및 구현
-- `04_benchmark_results.md` — 벤치마크 결과 및 비교
-- `05_review_report.md` — 리뷰 보고서
+All deliverables are stored in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_profiling_report.md` — Profiling results
+- `02_bottleneck_analysis.md` — Bottleneck analysis report
+- `03_optimization_plan.md` — Optimization plan and implementation
+- `04_benchmark_results.md` — Benchmark results and comparison
+- `05_review_report.md` — Review report

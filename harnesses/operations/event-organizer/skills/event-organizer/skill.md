@@ -1,125 +1,125 @@
 ---
 name: event-organizer
-description: "이벤트의 컨셉 기획, 장소·로지스틱스, 프로그램 설계, 홍보, 실행 계획, 사후 평가를 에이전트 팀이 협업하여 한 번에 생성하는 풀 파이프라인. '이벤트 기획', '행사 준비', '컨퍼런스 기획', '세미나 준비', '워크숍 설계', '네트워킹 행사', '전시회 기획', '축제 기획', '행사 프로그램', '이벤트 홍보', '행사 체크리스트', '이벤트 예산' 등 이벤트 기획·운영 전반에 이 스킬을 사용한다. 소규모 팀 모임부터 대규모 컨퍼런스까지 모든 규모에 적용 가능하다. 단, 실제 장소 예약, 결제 처리, 실시간 라이브 스트리밍 기술 운영, 물리적 인쇄물 제작은 이 스킬의 범위가 아니다."
+description: "event concept basis, venue·logistics, program design, promotion, execution plan, companyafter assessment agent team to Korean creation Full pipeline. 'event basis', 'event preparation', ' basis', 'taxun- preparation', ' design', ' event', 'beforewhen basis', ' basis', 'event program', 'event promotion', 'event checklist', 'event budget' etc. event basis·operations before skill usage. scale team department versusscale to all scale applied possible. However, actual venue exampleapprox., processing, actualtime technical operations, quality person work is outside this skill's scope."
 ---
 
-# Event Organizer — 이벤트 기획·운영 풀 파이프라인
+# Event Organizer — event basis·operations Full pipeline
 
-이벤트의 컨셉→장소→프로그램→홍보→실행→사후평가를 에이전트 팀이 협업하여 한 번에 생성한다.
+event concept→venue→program→promotion→execution→companyafterassessment An agent team collaborates to generate all deliverables at once.
 
-## 실행 모드
+## execution mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**agent team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## agent composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| agent | file | role | type |
 |---------|------|------|------|
-| concept-planner | `.claude/agents/concept-planner.md` | 컨셉, 목표, 타깃, 예산 | general-purpose |
-| logistics-manager | `.claude/agents/logistics-manager.md` | 장소, 동선, 장비, 안전 | general-purpose |
-| program-designer | `.claude/agents/program-designer.md` | 타임테이블, 세션, 연사 | general-purpose |
-| promotion-lead | `.claude/agents/promotion-lead.md` | 채널전략, 홍보콘텐츠, 등록 | general-purpose |
-| evaluation-analyst | `.claude/agents/evaluation-analyst.md` | KPI, 설문, ROI, 교훈 | general-purpose |
+| concept-planner | `.claude/agents/concept-planner.md` | concept, goal, target, budget | general-purpose |
+| logistics-manager | `.claude/agents/logistics-manager.md` | venue, flow of movement, equipment, planbefore | general-purpose |
+| program-designer | `.claude/agents/program-designer.md` | , tax, speaker | general-purpose |
+| promotion-lead | `.claude/agents/promotion-lead.md` | channelstrategy, promotioncontent, etc.record | general-purpose |
+| evaluation-analyst | `.claude/agents/evaluation-analyst.md` | KPI, document, ROI, | general-purpose |
 
-## 워크플로우
+## workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: preparation (Orchestrator directly perform)
 
-1. 사용자 입력에서 추출한다:
-    - **행사 목적**: 무엇을 위한 행사인가
-    - **행사 유형**: 컨퍼런스/세미나/워크숍/네트워킹/전시/축제 등
-    - **규모**: 예상 참석자 수
-    - **예산** (선택): 총 예산 또는 1인당 예산
-    - **일시/장소** (선택): 확정 또는 희망 조건
-    - **제약 조건** (선택): 특수 요구사항
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 자료가 있으면 `_workspace/`에 복사하고 해당 Phase를 조정한다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+ - **event purpose**: for eventperson
+ - **event type**: /taxun-///beforewhen/ etc.
+ - **scale**: expected attendee number
+ - **budget** (optional): total budget or 1person budget
+ - **daywhen/venue** (optional): or condition
+ - **constraint condition** (optional): number requirements
+2. `_workspace/` Create the directory at the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. existing material `_workspace/` companyand applicable Phase 
+5. Determine the **execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: team composition and execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| order | task | responsible | dependency | deliverable |
 |------|------|------|------|--------|
-| 1 | 컨셉 기획 | planner | 없음 | `_workspace/01_concept_plan.md` |
-| 2a | 로지스틱스 | logistics | 작업 1 | `_workspace/02_logistics_plan.md` |
-| 2b | 프로그램 설계 | designer | 작업 1 | `_workspace/03_program_design.md` |
-| 3 | 홍보 계획 | promotion | 작업 1, 2a, 2b | `_workspace/04_promotion_plan.md` |
-| 4 | 평가 프레임워크 | analyst | 작업 1, 2a, 2b, 3 | `_workspace/05_evaluation_framework.md` |
+| 1 | concept basis | planner | None | `_workspace/01_concept_plan.md` |
+| 2a | logistics | logistics | task 1 | `_workspace/02_logistics_plan.md` |
+| 2b | program design | designer | task 1 | `_workspace/03_program_design.md` |
+| 3 | promotion plan | promotion | task 1, 2a, 2b | `_workspace/04_promotion_plan.md` |
+| 4 | assessment framework | analyst | task 1, 2a, 2b, 3 | `_workspace/05_evaluation_framework.md` |
 
-작업 2a(로지스틱스)와 2b(프로그램)는 **병렬 실행**한다. 둘 다 작업 1(컨셉)에만 의존한다.
+task 2a(logistics) and 2b(program) ** execution**. task 1(concept) only dependency.
 
-**팀원 간 소통 흐름:**
-- planner 완료 → logistics에게 규모·예산·형태, designer에게 테마·타깃·메시지 전달
-- logistics + designer 상호 공유 → 공간↔프로그램 정합성 확인
-- logistics + designer 완료 → promotion에게 장소·프로그램 정보 전달
-- promotion 완료 → analyst에게 홍보 KPI 전달
-- analyst는 모든 산출물을 교차 검증, 불일치 발견 시 수정 요청 (최대 2회)
+**teamKRW between flow:**
+- planner complete → logisticsto scale·budget·, designerto ·target·message deliver
+- logistics + designer → between↔program consistency confirm
+- logistics + designer complete → promotionto venue·program information deliver
+- promotion complete → analystto promotion KPI deliver
+- analyst all deliverable cross-verification, dayvalue findings when revision request (versus 2)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: integration and final deliverable
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. analyst의 정합성 검증 결과를 반영한다
-3. 최종 요약을 사용자에게 보고한다
+1. `_workspace/` Verify all files in the directory
+2. analyst consistency verify result reflected
+3. Report the final summary to the user
 
-## 작업 규모별 모드
+## task scaleby mode
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| user request pattern | execution mode | deploy agent |
 |----------------|----------|-------------|
-| "이벤트 전체 기획해줘" | **풀 파이프라인** | 5명 전원 |
-| "프로그램만 설계해줘" | **프로그램 모드** | planner + designer |
-| "행사 홍보 전략만" | **홍보 모드** | planner + promotion |
-| "행사 체크리스트만 만들어줘" | **체크리스트 모드** | logistics 단독 |
-| "사후 평가 보고서 만들어줘" (행사 완료 후) | **평가 모드** | analyst 단독 |
+| "event overall basisplease do" | **Full pipeline** | 5people beforeKRW |
+| "program only designplease do" | **program mode** | planner + designer |
+| "event promotion strategy" | **promotion mode** | planner + promotion |
+| "event checklist only create it" | **checklist mode** | logistics |
+| "companyafter assessment report create it" (event complete after) | **assessment mode** | analyst |
 
-## 데이터 전달 프로토콜
+## data deliver protocol
 
-| 전략 | 방식 | 용도 |
+| strategy | method | also |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| File-based | `_workspace/` | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information transfer, revision requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{}_{agent}_{deliverable}.{extensionspecialist}`
 
-## 에러 핸들링
+## error handling
 
-| 에러 유형 | 전략 |
+| error type | strategy |
 |----------|------|
-| 행사 정보 부족 | planner가 유형별 기본 템플릿 제공, "[상세화 필요]" 명시 |
-| 예산 미정 | 3가지 규모(소/중/대)별 시나리오 제공 |
-| 장소 미정 | logistics가 요구사항 체크리스트와 추천 기준 제공 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행 |
-| 정합성 불일치 | analyst가 수정 요청 → 재작업 (최대 2회) |
+| event information insufficient | planner typeby basic template provide, "[detailed needed]" specify |
+| budget un- | 3degree scale(/during/versus)by scenario provide |
+| venue un- | logistics requirements checklist and recommendation standard provide |
+| agent failure | Retry once -> proceed without that deliverable |
+| consistency dayvalue | analyst revision request → re-task (versus 2) |
 
-## 테스트 시나리오
+## test scenario
 
-### 정상 흐름
-**프롬프트**: "200명 규모의 AI 기술 컨퍼런스를 기획해줘. 예산 5천만원, 서울에서 다음 달에 개최하고 싶어."
-**기대 결과**:
-- 컨셉: AI 컨퍼런스 테마·슬로건, SMART 목표, 예산 배분
-- 로지스틱스: 서울 200명 장소 요구사항, 동선, D-day 타임라인
-- 프로그램: 키노트+세션 5~6개, 연사 프로필, MC 큐시트
-- 홍보: D-60 타임라인, SNS 시리즈, 이메일 시퀀스
-- 평가: KPI 측정체계, 설문지, ROI 분석 프레임워크
+### flow
+**Prompt**: "200people scale AI technical basisplease do. budget 50,000 KRW, fromfrom next itemsand ."
+**expected result**:
+- concept: AI ·case, SMART goal, budget allocation
+- logistics: from 200people venue requirements, flow of movement, D-day timeline
+- program: +tax 5~6items, speaker , MC when
+- promotion: D-60 timeline, SNS when, email when
+- assessment: KPI total, documentdegree, ROI analysis framework
 
-### 부분 요청 흐름
-**프롬프트**: "다음 주 팀 워크숍 프로그램만 짜줘. 20명, 반나절."
-**기대 결과**:
-- 프로그램 모드 (planner + designer)
-- 반나절 워크숍 타임테이블, 아이스브레이커, 참여형 활동
-- 소규모 맞춤 간결한 산출물
+### departmentminute request flow
+**Prompt**: "next week team program only . 20people, ."
+**expected result**:
+- program mode (planner + designer)
+- , , 
+- scale betweenKorean deliverable
 
-### 에러 흐름
-**프롬프트**: "이벤트 기획해줘, 아직 아무것도 정해진 게 없어"
-**기대 결과**:
-- planner가 행사 유형 5가지 제안 (목적별)
-- 각 유형별 규모/예산/기간 가이드라인 제공
-- 사용자 선택 후 풀 파이프라인 진행
+### error flow
+**Prompt**: "event basisplease do, also "
+**expected result**:
+- planner event type 5degree proposal (purposeby)
+- each typeby scale/budget/duration guideperson provide
+- user optional after Full pipeline progress
 
-## 에이전트별 확장 스킬
+## agentby extension skill
 
-| 확장 스킬 | 경로 | 대상 에이전트 | 역할 |
+| extension skill | | target agent | role |
 |----------|------|-------------|------|
-| budget-planning | `.claude/skills/budget-planning/skill.md` | concept-planner, logistics-manager | 예산 카테고리, 산출 템플릿, 스폰서십 가이드 |
-| venue-evaluation | `.claude/skills/venue-evaluation/skill.md` | logistics-manager | 장소 평가 스코어카드, 답사 체크리스트, 계약 확인 |
+| budget-planning | `.claude/skills/budget-planning/skill.md` | concept-planner, logistics-manager | budget category, calculation template, from guide |
+| venue-evaluation | `.claude/skills/venue-evaluation/skill.md` | logistics-manager | venue assessment scorecard, company checklist, totalapprox. confirm |

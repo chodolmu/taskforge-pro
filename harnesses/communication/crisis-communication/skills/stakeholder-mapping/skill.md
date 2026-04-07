@@ -1,86 +1,86 @@
 ---
 name: stakeholder-mapping
-description: "위기 이해관계자 매핑 프레임워크. situation-analyst와 message-strategist 에이전트가 위기 시 이해관계자별 대응 전략을 수립할 때 참조. '이해관계자 분석', '위기 등급', '영향 평가' 요청 시 사용. 단, 법률 자문이나 소송 대리는 범위 밖."
+description: "crisis stakeholder mapping framework. situation-analyst and message-strategist agent crisis when stakeholderby response strategy establishto do when reference. 'stakeholder analysis', 'crisis etc.grade', 'impact assessment' request when usage. However, rate specialistdocument versus scope outside."
 ---
 
-# Stakeholder Mapping — 위기 이해관계자 매핑
+# Stakeholder Mapping — crisis stakeholder mapping
 
-situation-analyst / message-strategist 에이전트의 이해관계자 분석 역량 강화.
+situation-analyst / message-strategist agent stakeholder analysis competency .
 
-## 위기 등급 분류 체계
+## crisis etc.grade classification total
 
-| 등급 | 기준 | 대응 시간 | 의사결정자 |
+| etc.grade | standard | response time | decision-makingspecialist |
 |------|------|----------|----------|
-| Level 1 (경미) | 내부 영향, 미디어 관심 낮음 | 24시간 | 부서장 |
-| Level 2 (보통) | 고객 영향, 지역 미디어 | 12시간 | 본부장/임원 |
-| Level 3 (심각) | 대규모 영향, 전국 미디어 | 4시간 | C-Level |
-| Level 4 (위기) | 생명/안전, 기업 존속 위협 | 1시간 | CEO + 이사회 |
+| Level 1 (un-) | withindepartment impact, media Low | 24time | departmentfrom |
+| Level 2 (report) | client impact, degree media | 12time | department/KRW |
+| Level 3 (each) | versusscale impact, before media | 4time | C-Level |
+| Level 4 (crisis) | people/planbefore, basis within | 1time | CEO + company |
 
-## 이해관계자 영향-관심 매트릭스
+## stakeholder impact- matrix
 
 ```
-          관심도
-     높음          낮음
-  ┌───────────┬───────────┐
-높│  핵심관리   │  만족유지   │
-영│ (지속소통)  │ (정기보고)  │
-향├───────────┼───────────┤
-력│  정보제공   │  모니터링   │
-낮│ (투명공개)  │ (관찰)     │
-  └───────────┴───────────┘
+ 
+ High Low
+ ┌───────────┬───────────┐
+│ coremanagement │ maintenance │
+│ (degreewithin) │ (basisreporting) │
+├───────────┼───────────┤
+capability│ informationprovide │ monitoring │
+│ (peopleitems) │  │
+ └───────────┴───────────┘
 ```
 
-### 위기 시 이해관계자 분류
+### crisis when stakeholder classification
 
-| 이해관계자 | 관심사 | 핵심 메시지 | 소통 채널 | 빈도 |
+| stakeholder | company | core message | channel | frequency |
 |----------|--------|-----------|----------|------|
-| 피해자/가족 | 안전, 보상, 진심 | 사과, 지원 약속 | 직접 대면 | 즉시+지속 |
-| 직원 | 고용, 안전, 정보 | 사실, 역할, 행동지침 | 내부 채널 | 즉시 |
-| 고객 | 서비스, 신뢰 | 영향범위, 대응조치 | 공식 채널 | 4시간 내 |
-| 미디어 | 사실, 책임, 대응 | 공식입장, 타임라인 | 보도자료/기자회견 | 규칙적 |
-| 규제기관 | 법규 준수, 조치 | 보고, 협조 의사 | 공식 보고 | 법정 기한 |
-| 투자자 | 재무 영향, 거버넌스 | 영향 평가, 대응계획 | IR 공시 | 24시간 내 |
-| 지역사회 | 안전, 환경 | 영향, 복구 계획 | 지역 미디어, 설명회 | 48시간 내 |
+| moat/ | planbefore, report, | company, degreeKRW approx.within | directly versus | i.e.when+degreewithin |
+| KRW | , planbefore, information | companyactual, role, actiondegree | withindepartment channel | i.e.when |
+| client | service, | impactscope, responseaction | official channel | 4time within |
+| media | companyactual, responsibility, response | official, timeline | press release/basisspecialist | rulequality |
+| basis | levelnumber, action | reporting, company | official reporting | deadline |
+| investmentspecialist | financial impact, | impact assessment, responseplan | IR when | 24time within |
+| degreecompany | planbefore, environment | impact, plan | degree media, description | 48time within |
 
-## 위기 커뮤니케이션 타임라인
+## crisis communication timeline
 
-### Golden Hour (최초 1시간)
+### Golden Hour ( 1time)
 
 ```
-0~15분: 사실 확인, 위기 등급 판단
-15~30분: 위기대응팀 소집, 초기 정보 수집
-30~45분: 핵심 메시지 초안, 내부 통보
-45~60분: 외부 초기 성명 발표 (최소 "인지+조사중")
+0~15minute: companyactual confirm, crisis etc.grade judgment
+15~30minute: crisisresponseteam , initial information collection
+30~45minute: core message plan, withindepartment report
+45~60minute: external initial naturepeople presentation (minimum "persondegree+researchduring")
 ```
 
-### 24시간 대응 로드맵
+### 24time response roadmap
 
-| 시간 | 활동 | 산출물 |
+| time | | deliverable |
 |------|------|--------|
-| 0~1h | 초기 대응 | 내부 통보문, 초기 성명 |
-| 1~4h | 사실 파악 | 상황 보고서 v1 |
-| 4~8h | 공식 대응 | 보도자료, Q&A |
-| 8~12h | 이해관계자 소통 | 고객 공지, 직원 메시지 |
-| 12~24h | 대응 조치 발표 | 개선 계획, 후속 보도 |
+| 0~1h | initial response | withindepartment reportdocument, initial naturepeople |
+| 1~4h | companyactual identify | situation report v1 |
+| 4~8h | official response | press release, Q&A |
+| 8~12h | stakeholder | client degree, KRW message |
+| 12~24h | response action presentation | improvement plan, afterwithin press coverage |
 
-## 메시지 프레이밍 전략
+## message strategy
 
-### 위기 유형별 톤
+### crisis typeby tone
 
-| 위기 유형 | 책임 정도 | 톤 | 핵심 요소 |
+| crisis type | responsibility also | tone | core element |
 |----------|----------|-----|----------|
-| 피해자형 (자연재해 등) | 낮음 | 연민, 결의 | 지원, 복구, 회복력 |
-| 사고형 (의도 없음) | 중간 | 유감, 책임감 | 사실, 조치, 재발 방지 |
-| 과실형 (의도 없으나 과실) | 높음 | 사과, 책임 | 인정, 보상, 개선 |
-| 의도적 (은폐, 위반) | 매우 높음 | 진심 사과 | 전면 인정, 구조 개혁 |
+| moat (specialistannualre- etc.) | Low | annual, | degreeKRW, , capability |
+| company (intent None) | duringbetween | , responsibility | companyactual, action, re- degree |
+| actual (intent actual) | High | company, responsibility | person, report, improvement |
+| intentquality (, ) | High | company and | before person, structure items |
 
-## 품질 체크리스트
+## quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| 위기 등급 | 4단계 중 명확한 분류 |
-| 이해관계자 | 7대 그룹 모두 분석 |
-| 메시지 차별화 | 이해관계자별 맞춤 메시지 |
-| 타임라인 | Golden Hour 대응 포함 |
-| 톤 일관성 | 위기 유형에 맞는 톤 |
-| 에스컬레이션 | 등급 상향 기준 명시 |
+| crisis etc.grade | 4stage during peopleKorean classification |
+| stakeholder | 7versus analysis |
+| message differentiation | stakeholderby message |
+| timeline | Golden Hour response included |
+| tone consistency | crisis type tone |
+| | etc.grade standard specify |

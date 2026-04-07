@@ -1,135 +1,135 @@
 ---
 name: media-response-templates
-description: "미디어 대응 템플릿 라이브러리. press-release-writer와 qa-preparer 에이전트가 보도자료, 성명서, Q&A를 작성할 때 참조. '보도자료 템플릿', '기자회견 준비', '미디어 Q&A' 요청 시 사용. 단, 실제 미디어 배포나 기자 접촉은 범위 밖."
+description: "media response template library. press-release-writer and qa-preparer agent press release, statement, Q&A writingto do when reference. 'press release template', 'basisspecialist preparation', 'media Q&A' request when usage. However, actual media deployment basisspecialist scope outside."
 ---
 
-# Media Response Templates — 미디어 대응 템플릿
+# Media Response Templates — media response template
 
-press-release-writer / qa-preparer 에이전트의 미디어 대응 문서 품질 표준화.
+press-release-writer / qa-preparer agent media response document quality tablelevel.
 
-## 보도자료 구조 (역피라미드)
+## press release structure (un-)
 
 ```
-1. 헤드라인 — 핵심 사실 1문장
-2. 서브헤드 — 보충 정보 1문장
-3. 리드 (1단락) — 5W1H 요약
-4. 본문 (2~3단락) — 상세 사실, 대응, 인용
-5. CEO/대표 코멘트 — 공식 인용문
-6. 대응 조치 — 구체적 행동 계획
-7. 보일러플레이트 — 회사 소개
-8. 연락처 — 홍보 담당자
+1. person — core companyactual 1sentence
+2. from — report information 1sentence
+3. (1) — 5W1H summary
+4. body text (2~3) — detailed companyactual, response, person
+5. CEO/versustable comment — official persondocument
+6. response action — specific action plan
+7. boilerplate — company items
+8. annual — promotion person responsible
 ```
 
-### 위기 보도자료 템플릿
+### crisis press release template
 
 ```markdown
-# [회사명], [위기 사안]에 대한 공식 입장 발표
+# [companypeople], [crisis companyplan] regarding official presentation
 
-**[도시], [날짜]** — [회사명]은 [날짜/시간]에 발생한 [사안 요약]과 
-관련하여 다음과 같이 공식 입장을 밝힙니다.
+**[when], [date]** — [companypeople] [date/time] occurrenceKorean [companyplan summary] and 
+relatedto next and as official .
 
-[회사명]은 [사안]을 [인지한 시점]에 인지하였으며, 즉시 [초기 대응 
-조치]를 시행하였습니다.
+[companypeople] [companyplan] [persondegreeKorean timing] persondegree, i.e.when [initial response 
+action] implementation.
 
-현재까지 파악된 사실은 다음과 같습니다:
-- [사실 1]
-- [사실 2]  
-- [사실 3]
+currentto identifydone companyactual next and :
+- [companyactual 1]
+- [companyactual 2] 
+- [companyactual 3]
 
-[CEO/대표 이름], [직함]은 "[인용문 — 유감/사과 표현, 대응 의지, 
-재발 방지 약속]"이라고 밝혔습니다.
+[CEO/versustable name],  "[persondocument — /company and tablecurrent, response degree, 
+re- degree approx.within]" .
 
-[회사명]은 다음과 같은 조치를 시행 중입니다:
-1. [조치 1]
-2. [조치 2]
-3. [조치 3]
+[companypeople] next and action implementation during:
+1. [action 1]
+2. [action 2]
+3. [action 3]
 
-향후 추가 정보는 [채널]을 통해 안내할 예정입니다.
+after addition information [channel] through planwithinto do example.
 
 ---
-[회사 소개 보일러플레이트]
+[company items boilerplate]
 
-**미디어 문의**: [담당자 이름], [이메일], [전화]
+**media document**: [person responsible name], [email], [before]
 ```
 
-## Q&A 브리핑 시트 설계
+## Q&A when design
 
-### Q&A 카테고리
+### Q&A category
 
-| 카테고리 | 예상 질문 수 | 우선순위 |
+| category | expected question number | priority |
 |---------|------------|---------|
-| 사실 관계 | 5~10개 | 최우선 |
-| 원인/책임 | 5~8개 | 높음 |
-| 피해/영향 | 5~8개 | 높음 |
-| 대응/조치 | 5~7개 | 중간 |
-| 재발 방지 | 3~5개 | 중간 |
-| 법적 문제 | 3~5개 | 주의 |
-| 경영/인사 | 3~5개 | 낮음 |
+| companyactual total | 5~10items | |
+| cause/responsibility | 5~8items | High |
+| /impact | 5~8items | High |
+| response/action | 5~7items | duringbetween |
+| re- degree | 3~5items | duringbetween |
+| legal problem | 3~5items | week |
+| /personcompany | 3~5items | Low |
 
-### Q&A 답변 구조 (ABT)
+### Q&A answer structure (ABT)
 
 ```
-A (Acknowledge): 질문 인정
-B (Bridge): 핵심 메시지로 전환
-T (Tell): 준비된 메시지 전달
+A (Acknowledge): question person
+B (Bridge): core message beforeexchange
+T (Tell): preparationdone message deliver
 
-예시:
-Q: "사고 원인이 무엇입니까?"
-A: "현재 정확한 원인을 조사 중입니다."
-B: "확인된 사실을 말씀드리면,"
-T: "[구체적 사실]이며, [조사 일정]까지 결과를 공유하겠습니다."
+examplewhen:
+Q: "company cause ?"
+A: "current Korean cause research during."
+B: "confirmdone companyactual ,"
+T: "[specific companyactual], [research schedule]to result ."
 ```
 
-### 위험 질문 대응 전략
+### risk question response strategy
 
-| 질문 유형 | 전략 | 예시 답변 |
+| question type | strategy | examplewhen answer |
 |----------|------|----------|
-| 추측 유도 | 사실만 답변 | "확인된 사실만 말씀드릴 수 있습니다" |
-| 비교 질문 | 비교 거부 | "현재 상황에 집중하고 있습니다" |
-| 감정 자극 | 공감 후 전환 | "충분히 이해합니다. 현재 저희는..." |
-| 법적 함정 | 법무 확인 | "법무팀 검토 후 답변드리겠습니다" |
-| Off the record | 거부 | "모든 발언은 on the record입니다" |
+| also | companyactual only answer | "confirmdone companyactual only number " |
+| comparison question | comparison department | "current situation duringand " |
+| emotion specialist | empathy after beforeexchange | "minute . current ..." |
+| legal | confirm | "team review after answer" |
+| Off the record | department | "all on the record" |
 
-## 기자회견 체크리스트
+## basisspecialist checklist
 
-### 사전 준비
+### companybefore preparation
 
-- [ ] 발표문 확정 (5분 이내)
-- [ ] Q&A 브리핑 시트 (30문항 이상)
-- [ ] 대변인 리허설 (최소 2회)
-- [ ] 금지어/주의사항 목록
-- [ ] 배경 자료 (Fact Sheet)
-- [ ] 장소/시간/출입 통제
+-  presentationdocument (5minute within)
+-  Q&A when (30document or more)
+-  versusperson rehearsal (minimum 2)
+-  prohibited/weekmatters list
+-  background material (Fact Sheet)
+-  venue/time/ 
 
-### 금지 표현
+### prohibited tablecurrent
 
-| 금지 표현 | 대체 표현 |
+| prohibited tablecurrent | versus tablecurrent |
 |----------|----------|
-| "노코멘트" | "현재 확인 중이며, 파악 후 안내하겠습니다" |
-| "Off the record" | 사용 금지 |
-| "개인적 의견으로는..." | "공식 입장은..." |
-| "100% 안전합니다" | "가능한 모든 조치를 취하고 있습니다" |
-| "책임 없다" | "원인 조사 중이며, 결과에 따라 조치하겠습니다" |
+| "comment" | "current confirm during, identify after planwithin" |
+| "Off the record" | usage prohibited |
+| "itemspersonquality as..." | "official ..." |
+| "100% planbefore" | "possibleKorean all action and " |
+| "responsibility " | "cause research during, result according to action" |
 
-## 소셜미디어 대응
+## media response
 
-### 플랫폼별 대응 가이드
+### platformby response guide
 
-| 플랫폼 | 톤 | 길이 | 대응 속도 |
+| platform | tone | | response within also |
 |--------|-----|------|----------|
-| Twitter/X | 간결, 공식 | 280자 | 1시간 내 |
-| Facebook | 상세, 공감 | 500자 | 2시간 내 |
-| Instagram | 비주얼+텍스트 | 2200자 | 4시간 내 |
-| 네이버 블로그 | 상세 설명 | 제한 없음 | 6시간 내 |
-| 유튜브 | 영상 성명 | 2~3분 | 12시간 내 |
+| Twitter/X | between, official | 280specialist | 1time within |
+| Facebook | detailed, empathy | 500specialist | 2time within |
+| Instagram | week+ | 2200specialist | 4time within |
+| blog | detailed description | limitation None | 6time within |
+| | naturepeople | 2~3minute | 12time within |
 
-## 품질 체크리스트
+## quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| 사실 정확성 | 법무/현장 확인 완료 |
-| 톤 | 위기 유형에 맞는 톤 |
-| Q&A | 30문항 이상, ABT 구조 |
-| 금지 표현 | 금지어 목록 검수 |
-| 일관성 | 모든 채널 메시지 통일 |
-| 후속 계획 | 다음 업데이트 시점 명시 |
+| companyactual accuracy | /current confirm complete |
+| tone | crisis type tone |
+| Q&A | 30document or more, ABT structure |
+| prohibited tablecurrent | prohibited list number |
+| consistency | all channel message day |
+| afterwithin plan | next timing specify |

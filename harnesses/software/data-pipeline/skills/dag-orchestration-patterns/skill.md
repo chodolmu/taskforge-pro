@@ -1,15 +1,15 @@
 ---
 name: dag-orchestration-patterns
-description: "Airflow DAG 설계 패턴, 의존관계 관리, 재시도 전략, 멱등성 보장, 백필 전략 등 데이터 파이프라인 오케스트레이션 가이드. 'Airflow DAG', 'DAG 설계', '의존관계', '재시도 전략', '멱등성', '백필', '파이프라인 오케스트레이션', 'Dagster', 'Prefect' 등 파이프라인 스케줄링 시 이 스킬을 사용한다. scheduler-engineer의 DAG 설계 역량을 강화한다. 단, 데이터 품질 규칙 정의나 모니터링 대시보드는 이 스킬의 범위가 아니다."
+description: "Airflow DAG  pattern, of , retry strategy, etc. ,  strategy etc. data pipeline orchestration guide. 'Airflow DAG', 'DAG ', 'of', 'retry strategy', 'etc.', '', 'pipeline orchestration', 'Dagster', 'Prefect' etc. pipeline scheduling  this  for. scheduler-engineerof DAG   -ize. , data  rule of monitoring dashboard this of scope ."
 ---
 
-# DAG Orchestration Patterns — 파이프라인 오케스트레이션 패턴 가이드
+# DAG Orchestration Patterns — pipeline orchestration pattern guide
 
-Airflow 중심의 DAG 설계 패턴과 운영 전략.
+Airflow of DAG  patternand operations strategy.
 
-## DAG 설계 패턴
+## DAG  pattern
 
-### 1. Extract-Load-Transform (ELT) 패턴
+### 1. Extract-Load-Transform (ELT) pattern
 
 ```python
 with DAG("elt_orders", schedule="0 2 * * *", catchup=False) as dag:
@@ -22,10 +22,10 @@ with DAG("elt_orders", schedule="0 2 * * *", catchup=False) as dag:
     extract >> load_raw >> transform >> quality >> notify
 ```
 
-### 2. Fan-out/Fan-in 패턴
+### 2. Fan-out/Fan-in pattern
 
 ```python
-# 다중 소스 병렬 추출 → 통합 변환
+#   parallel  → integrated transformation
 sources = ["mysql", "postgres", "api"]
 extract_tasks = [
     PythonOperator(task_id=f"extract_{src}", python_callable=extract, op_args=[src])
@@ -37,25 +37,25 @@ transform = PythonOperator(task_id="transform", python_callable=transform_data)
 extract_tasks >> merge >> transform
 ```
 
-### 3. 센서 기반 이벤트 대기
+### 3.   event pending
 
 ```python
 wait_for_data = S3KeySensor(
     task_id="wait_for_file",
     bucket_name="data-lake",
     bucket_key="raw/orders/{{ ds }}/data.parquet",
-    timeout=3600,  # 1시간 대기
+    timeout=3600,  # 1between pending
     poke_interval=60,
-    mode="reschedule"  # 대기 중 워커 해제
+    mode="reschedule"  # pending   
 )
 ```
 
-## 멱등성 보장 패턴
+## etc.  pattern
 
-### 파티션 교체 (가장 권장)
+### partition replacement ( )
 
 ```sql
--- 날짜 파티션 전체 교체 (멱등적)
+-- date partition before replacement (etc.-based)
 DELETE FROM analytics.orders WHERE date_partition = '{{ ds }}';
 INSERT INTO analytics.orders
 SELECT * FROM staging.orders WHERE date_partition = '{{ ds }}';
@@ -70,14 +70,14 @@ WHEN MATCHED THEN UPDATE SET t.amount = s.amount, t.updated_at = CURRENT_TIMESTA
 WHEN NOT MATCHED THEN INSERT (id, amount, created_at) VALUES (s.id, s.amount, CURRENT_TIMESTAMP);
 ```
 
-### 멱등성 체크리스트
+### etc. list
 
-- [ ] 같은 DAG를 2번 실행해도 결과가 동일한가?
-- [ ] 날짜 파라미터(`{{ ds }}`)를 사용하여 범위를 제한하는가?
-- [ ] INSERT 전에 기존 데이터를 정리하는가?
-- [ ] 외부 API 호출에 고유 요청 ID를 사용하는가?
+- [ ] such as DAG 2 executionalso result identical?
+- [ ] date parameter(`{{ ds }}`) forto scope limitedlower?
+- [ ] INSERT beforein existing data lower?
+- [ ] external API in  request ID forlower?
 
-## 재시도 전략
+## retry strategy
 
 ```python
 default_args = {
@@ -89,46 +89,46 @@ default_args = {
 }
 ```
 
-### 작업별 재시도 설정
+### per retry configuration
 
-| 작업 유형 | 재시도 횟수 | 대기 시간 | 이유 |
+|  type | retry count | pending between | this |
 |----------|-----------|----------|------|
-| DB 추출 | 3회 | 5분 지수 백오프 | 일시적 연결 문제 |
-| API 호출 | 5회 | 30초 지수 백오프 | Rate limit, 네트워크 |
-| 변환 (SQL) | 1회 | 즉시 | 로직 오류는 재시도 무의미 |
-| 파일 업로드 | 3회 | 1분 | 네트워크 불안정 |
+| DB  | 3 | 5minutes count backoff | day-based connection  |
+| API  | 5 | 30seconds count backoff | Rate limit, network |
+| transformation (SQL) | 1 | immediate | as error retry of |
+| day as | 3 | 1minutes | network  |
 
-## 백필 전략
+##  strategy
 
 ```python
-# 안전한 백필 설정
+# safe  configuration
 dag = DAG(
     "daily_orders",
     schedule="0 2 * * *",
     start_date=datetime(2024, 1, 1),
-    catchup=False,  # 자동 백필 비활성
-    max_active_runs=1,  # 동시 실행 방지
+    catchup=False,  # automatic  inactive
+    max_active_runs=1,  #  execution 
 )
 
-# CLI로 수동 백필
+# CLIas manual 
 # airflow dags backfill daily_orders -s 2024-01-01 -e 2024-01-31
 ```
 
-### 백필 주의사항
+###  weekofmatter
 
-| 주의 | 설명 | 대응 |
+| weekof | people |  |
 |------|------|------|
-| 동시 실행 | 같은 데이터 범위 중복 처리 | `max_active_runs=1` |
-| API Rate Limit | 대량 과거 데이터 요청 | 배치 크기 제한, 슬립 삽입 |
-| 리소스 경합 | DB/클러스터 과부하 | 병렬도 제한, 시간 분산 |
-| 데이터 정합성 | 과거 데이터 구조 변경 | 스키마 진화 처리 로직 |
+|  execution | such as data scope  processing | `max_active_runs=1` |
+| API Rate Limit |  and data request |  size limited,  insert |
+| resource contention | DB/cluster andlower | parallelalso limited, between variance |
+| data  | and data  change | schema -ize processing as |
 
-## 의존관계 패턴
+## of pattern
 
-### Cross-DAG 의존
+### Cross-DAG of
 
 ```python
-# DAG A의 완료를 대기
+# DAG Aof completed pending
 wait_for_upstream = ExternalTaskSensor(
     task_id="wait_for_dag_a",
     external_dag_id="dag_a",
@@ -139,7 +139,7 @@ wait_for_upstream = ExternalTaskSensor(
 )
 ```
 
-### Dataset 기반 의존 (Airflow 2.4+)
+### Dataset  of (Airflow 2.4+)
 
 ```python
 # Producer DAG
@@ -150,12 +150,12 @@ with DAG("produce_orders", schedule="0 2 * * *") as dag:
         task_id="produce", outlets=[orders_dataset]
     )
 
-# Consumer DAG — 자동 트리거
+# Consumer DAG — automatic tree
 with DAG("consume_orders", schedule=[orders_dataset]) as dag:
     consume = PythonOperator(task_id="consume", ...)
 ```
 
-## 알림 전략
+## alert strategy
 
 ```python
 def failure_callback(context):
@@ -171,9 +171,9 @@ default_args = {
 }
 ```
 
-| 이벤트 | 채널 | 대상 |
+| event |  | upper |
 |--------|------|------|
-| P0 작업 실패 | Slack + PagerDuty | 온콜 엔지니어 |
-| SLA 미달 | Slack | 데이터 팀 |
-| 재시도 발생 | Slack (정보) | 모니터링 채널 |
-| 백필 완료 | Slack | 요청자 |
+| P0  failure | Slack + PagerDuty |  engineer |
+| SLA  | Slack | data team |
+| retry  | Slack (information) | monitoring  |
+|  completed | Slack | request |

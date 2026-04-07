@@ -1,8 +1,8 @@
 # Knowledge Base Builder Harness
 
-조직 지식관리 체계 구축 에이전트 팀 하네스.
+An agent team harness for building organizational knowledge management systems.
 
-## 구조
+## Structure
 
 ```
 .claude/
@@ -14,14 +14,14 @@
 │   └── maintenance-planner.md
 ├── skills/
 │   ├── knowledge-base-builder/
-│   │   └── skill.md              — 오케스트레이터
+│   │   └── skill.md              — Orchestrator
 │   ├── information-architecture/
-│   │   └── skill.md              — 정보 구조 설계 (IA 4대 체계, 카드 소팅, 태그)
+│   │   └── skill.md              — Information architecture design (4 IA systems, card sorting, tags)
 │   └── content-lifecycle-manager/
-│       └── skill.md              — 콘텐츠 생명주기 (품질 스코어카드, RACI, 감사)
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md              — Content lifecycle (quality scorecard, RACI, auditing)
+└── CLAUDE.md                     — This file
 ```
 
-## 사용법
+## Usage
 
-`/knowledge-base-builder` 스킬을 트리거하거나 자연어로 요청한다.
+Trigger the `/knowledge-base-builder` skill, or make a natural language request.

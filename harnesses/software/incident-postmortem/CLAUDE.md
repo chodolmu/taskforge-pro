@@ -1,38 +1,38 @@
 # Incident Postmortem Harness
 
-장애 사후분석 보고서를 에이전트 팀이 협업하여 생성하는 하네스. 타임라인 재구성→근본원인 분석→영향범위 산정→재발방지 대책→보고서 생성 파이프라인을 자동화한다.
+An agent team harness that collaborates to generate incident postmortem reports. Automates the pipeline of timeline reconstruction -> root cause analysis -> impact assessment -> remediation planning -> report generation.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── timeline-reconstructor.md — 타임라인 재구성 (이벤트 수집, 시간순 정렬, 갭 식별)
-│   ├── root-cause-investigator.md — 근본원인 조사 (5 Whys, 피시본, Fault Tree)
-│   ├── impact-assessor.md        — 영향범위 산정 (사용자, 매출, SLA, 평판)
-│   ├── remediation-planner.md    — 재발방지 대책 (단기/중기/장기, 오너십, KPI)
-│   └── postmortem-reviewer.md    — 교차 검증 (타임라인↔원인↔영향↔대책 정합성)
+│   ├── timeline-reconstructor.md — Timeline reconstruction (event collection, chronological ordering, gap identification)
+│   ├── root-cause-investigator.md — Root cause investigation (5 Whys, Fishbone, Fault Tree)
+│   ├── impact-assessor.md        — Impact assessment (users, revenue, SLA, reputation)
+│   ├── remediation-planner.md    — Remediation planning (short/mid/long-term, ownership, KPIs)
+│   └── postmortem-reviewer.md    — Cross-validation (timeline <-> cause <-> impact <-> remediation consistency)
 ├── skills/
 │   ├── incident-postmortem/
-│   │   └── skill.md              — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md              — Orchestrator (team coordination, workflow, error handling)
 │   ├── rca-methodology/
-│   │   └── skill.md              — 근본원인 분석 방법론 가이드
+│   │   └── skill.md              — Root cause analysis methodology guide
 │   └── sla-impact-calculator/
-│       └── skill.md              — SLA/SLO 기반 영향도 산정 가이드
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md              — SLA/SLO-based impact calculation guide
+└── CLAUDE.md                     — This file
 ```
 
-## 사용법
+## Usage
 
-`/incident-postmortem` 스킬을 트리거하거나, "장애 포스트모텀 작성해줘" 같은 자연어로 요청한다.
+Trigger the `/incident-postmortem` skill, or make a natural language request such as "write an incident postmortem."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_timeline.md` — 장애 타임라인
-- `02_root_cause.md` — 근본원인 분석
-- `03_impact_assessment.md` — 영향범위 산정
-- `04_remediation_plan.md` — 재발방지 대책
-- `05_review_report.md` — 리뷰 보고서
-- `postmortem_report.md` — 최종 통합 포스트모텀 보고서
+All deliverables are stored in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_timeline.md` — Incident timeline
+- `02_root_cause.md` — Root cause analysis
+- `03_impact_assessment.md` — Impact assessment
+- `04_remediation_plan.md` — Remediation plan
+- `05_review_report.md` — Review report
+- `postmortem_report.md` — Final integrated postmortem report

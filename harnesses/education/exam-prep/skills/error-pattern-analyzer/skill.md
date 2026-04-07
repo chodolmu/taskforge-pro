@@ -1,122 +1,122 @@
 ---
 name: error-pattern-analyzer
-description: "오답 패턴을 체계적으로 분류하고 개념 결손 지도를 구성하는 전문 스킬. error-analyst와 diagnostician 에이전트가 학습자의 오답 데이터를 분석하여 근본 원인을 진단하고 맞춤형 보완 전략을 수립할 때 활용한다. '오답 패턴', '틀린 이유 분석', '개념 결손', '취약점 분석', '오류 유형' 등의 맥락에서 자동 적용한다. 단, 심리 검사나 학습 장애 진단은 이 스킬의 범위가 아니다."
+description: "A specialized skill for systematically classifying error patterns and constructing concept deficit maps. Used by error-analyst and diagnostician agents when analyzing learner error data to diagnose root causes and develop customized remediation strategies. Automatically applied in contexts such as 'error patterns', 'wrong answer analysis', 'concept deficits', 'weakness analysis', 'error types'. However, psychological testing and learning disability diagnosis are outside the scope of this skill."
 ---
 
-# Error Pattern Analyzer — 오답 패턴 분석 도구
+# Error Pattern Analyzer — Error Pattern Analysis Tool
 
-error-analyst, diagnostician 에이전트의 오답 분석 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the error-analyst and diagnostician agents' error analysis capabilities.
 
-## 적용 대상 에이전트
+## Target Agents
 
-- **error-analyst** — 오답 패턴 분류, 보완 전략 수립
-- **diagnostician** — 취약점 식별, 개념 결손 진단
+- **error-analyst** — Error pattern classification, remediation strategy formulation
+- **diagnostician** — Weakness identification, concept deficit diagnosis
 
-## 오답 원인 5-Type 분류 체계
+## 5-Type Error Classification System
 
-### Type 1: 개념 결손 (Conceptual Gap)
+### Type 1: Conceptual Gap
 
-**정의:** 핵심 개념을 이해하지 못하거나 잘못 이해
-**신호:** 같은 개념 관련 문항에서 반복 오답
-**처방:** 개념 재학습 → 다양한 예시 → 자기 설명
-
-```
-예시: 정규화(Normalization) 문제를 모두 틀림
-→ 함수 종속성 개념 자체가 부정확
-→ 처방: 함수 종속성 개념 재학습 + 단계별 정규화 실습
-```
-
-### Type 2: 절차 오류 (Procedural Error)
-
-**정의:** 개념은 이해하나 적용 절차에서 실수
-**신호:** 풀이 과정 중 특정 단계에서 오류 발생
-**처방:** 단계별 체크리스트 + 반복 연습
+**Definition:** The core concept is not understood or is misunderstood
+**Signal:** Repeated errors on questions related to the same concept
+**Prescription:** Concept re-learning -> varied examples -> self-explanation
 
 ```
-예시: SQL JOIN 개념은 이해하나 다중 JOIN 시 결과 오류
-→ JOIN 순서와 조건 적용 절차 오류
-→ 처방: 단계별 JOIN 워크시트 + 점진적 복잡도 증가
+Example: All normalization questions answered incorrectly
+-> Functional dependency concept itself is inaccurate
+-> Prescription: Re-learn functional dependency + step-by-step normalization practice
 ```
 
-### Type 3: 부주의 오류 (Careless Mistake)
+### Type 2: Procedural Error
 
-**정의:** 이해하고 있으나 실수로 틀림
-**신호:** 동일 유형에서 맞았다 틀렸다 반복, 시간 부족 시 증가
-**처방:** 검산 습관 + 시간 관리 훈련
+**Definition:** The concept is understood but mistakes occur during application
+**Signal:** Errors occur at a specific step in the solution process
+**Prescription:** Step-by-step checklist + repeated practice
 
-### Type 4: 함정 오류 (Trap Error)
+```
+Example: Understands SQL JOIN concept but gets wrong results with multiple JOINs
+-> JOIN order and condition application procedure error
+-> Prescription: Step-by-step JOIN worksheet + progressively increasing complexity
+```
 
-**정의:** 출제자가 의도한 오류 유발 장치에 빠짐
-**신호:** 매력적 오답에 반복적으로 빠짐
-**처방:** 함정 유형 패턴 학습 + "왜 이것이 답이 아닌가" 훈련
+### Type 3: Careless Mistake
 
-### Type 5: 지식 부재 (Knowledge Gap)
+**Definition:** Understands the material but makes errors due to inattention
+**Signal:** Same question type is sometimes right, sometimes wrong; increases under time pressure
+**Prescription:** Verification habits + time management training
 
-**정의:** 해당 영역을 아예 학습하지 않음
-**신호:** 특정 주제에서 찍기 수준의 정답률 (25%)
-**처방:** 해당 영역 신규 학습 필요
+### Type 4: Trap Error
 
-## 오답 분석 보고서 템플릿
+**Definition:** Falls for intentional error-inducing devices set by the question writer
+**Signal:** Repeatedly selects attractive distractors
+**Prescription:** Trap pattern learning + "Why is this NOT the answer?" training
+
+### Type 5: Knowledge Gap
+
+**Definition:** The area has not been studied at all
+**Signal:** Guessing-level accuracy (25%) on a specific topic
+**Prescription:** New study of the area is required
+
+## Error Analysis Report Template
 
 ```markdown
-### 오답 분석 결과
+### Error Analysis Results
 
-#### 1. 오답 유형 분포
+#### 1. Error Type Distribution
 
-| 오류 유형 | 건수 | 비율 | 심각도 |
-|----------|------|------|-------|
-| 개념 결손 | 8 | 32% | 높음 |
-| 절차 오류 | 5 | 20% | 중간 |
-| 부주의 | 4 | 16% | 낮음 |
-| 함정 | 5 | 20% | 중간 |
-| 지식 부재 | 3 | 12% | 높음 |
+| Error Type | Count | Ratio | Severity |
+|-----------|-------|-------|---------|
+| Conceptual gap | 8 | 32% | High |
+| Procedural error | 5 | 20% | Medium |
+| Careless mistake | 4 | 16% | Low |
+| Trap error | 5 | 20% | Medium |
+| Knowledge gap | 3 | 12% | High |
 
-#### 2. 개념 결손 맵
+#### 2. Concept Deficit Map
 
-[개념 A] ← 선수 개념
-    ↓
-[개념 B] ← 결손 발견 ★
-    ↓
-[개념 C] ← 학습 불가 (B 선행 필요)
+[Concept A] <- Prerequisite concept
+    |
+[Concept B] <- Deficit discovered here
+    |
+[Concept C] <- Cannot learn (requires B first)
 
-#### 3. 우선 보완 순서
+#### 3. Remediation Priority Order
 
-1순위: 개념 B 재학습 (후속 개념 C에 영향)
-2순위: 지식 부재 영역 신규 학습
-3순위: 함정 패턴 인식 훈련
+1st: Re-learn Concept B (affects downstream Concept C)
+2nd: New study of knowledge gap areas
+3rd: Trap pattern recognition training
 ```
 
-## 개념 결손 추적 매트릭스
+## Concept Deficit Tracking Matrix
 
-### 선수 학습 의존성 그래프
+### Prerequisite Dependency Graph
 
-개념 간 의존 관계를 추적하여, 근본 결손을 찾는다:
-
-```
-만약 학습자가 "트리 순회"를 틀렸다면:
-  → "재귀 함수" 이해 여부 확인
-    → "스택" 이해 여부 확인
-      → "함수 호출 구조" 이해 여부 확인
-
-가장 하위의 결손 개념 = 근본 원인
-```
-
-### 보완 학습 우선순위 결정
+Track inter-concept dependencies to find the root deficit:
 
 ```
-우선순위 = 결손 심각도 × 영향 범위 × 출제 빈도
+If the learner got "tree traversal" wrong:
+  -> Check understanding of "recursion"
+    -> Check understanding of "stack"
+      -> Check understanding of "function call structure"
 
-결손 심각도: 완전결손(3), 부분결손(2), 불안정(1)
-영향 범위: 후속 개념 수 (많을수록 높음)
-출제 빈도: 최근 3년 출제 비중
+The lowest-level deficit = root cause
 ```
 
-## 시험 유형별 오답 패턴 특성
+### Remediation Priority Calculation
 
-| 시험 유형 | 주요 오답 패턴 | 핵심 대응 |
-|---------|-------------|----------|
-| 자격증 필기 | 유사 개념 혼동, 암기 누락 | 비교표, 플래시카드 |
-| 자격증 실기 | 절차 오류, 시간 초과 | 실전 연습, 타임어택 |
-| 수능 | 함정 오류, 시간 배분 | 함정 패턴 훈련, 시간 전략 |
-| 공무원 | 세부 사항 혼동, 법조문 암기 | 키워드 암기법, 기출 반복 |
-| 토익 | 듣기 집중력, 어휘 혼동 | 쉐도잉, 유사 어휘 정리 |
+```
+Priority = Deficit Severity x Impact Scope x Exam Frequency
+
+Deficit severity: Complete deficit (3), Partial deficit (2), Unstable (1)
+Impact scope: Number of downstream concepts (more = higher)
+Exam frequency: Exam weight over last 3 years
+```
+
+## Error Pattern Characteristics by Exam Type
+
+| Exam Type | Primary Error Patterns | Key Countermeasures |
+|-----------|----------------------|-------------------|
+| Certification (written) | Similar concept confusion, memorization gaps | Comparison tables, flashcards |
+| Certification (practical) | Procedural errors, time overrun | Hands-on practice, timed drills |
+| Standardized tests | Trap errors, time allocation | Trap pattern training, time strategy |
+| Civil service | Detail confusion, statute memorization | Keyword mnemonics, past exam repetition |
+| TOEIC | Listening concentration, vocabulary confusion | Shadowing, similar vocabulary organization |

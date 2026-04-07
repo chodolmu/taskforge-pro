@@ -1,133 +1,133 @@
 ---
 name: strategy-framework
-description: "조직의 전략 프레임워크를 OKR 설계, BSC 매핑, SWOT 분석, 비전·미션 선언문, 전략 실행 로드맵으로 체계화하는 풀 파이프라인. '전략 프레임워크 만들어줘', 'OKR 설계해줘', 'BSC 분석', 'SWOT 분석', '비전 미션 작성', '전략 로드맵', '전략 수립', '중장기 전략', '경영전략 프레임워크', '전략 체계 설계' 등 조직 전략 수립 전반에 이 스킬을 사용한다. 기존 OKR이나 SWOT이 있는 경우에도 보완·검증을 지원한다. 단, 재무제표 작성, ERP 시스템 구축, 인사평가 실행, 실시간 KPI 대시보드 개발은 이 스킬의 범위가 아니다."
+description: "A full pipeline that systematizes an organization's strategy framework through OKR design, BSC mapping, SWOT analysis, vision & mission statement, and strategy execution roadmap. Use this skill for 'build a strategy framework,' 'design OKRs,' 'BSC analysis,' 'SWOT analysis,' 'write vision and mission,' 'strategy roadmap,' 'strategy formulation,' 'mid-to-long-term strategy,' 'business strategy framework,' and 'strategy system design' — across the full spectrum of organizational strategy development. It also supports supplementing and validating existing OKRs or SWOT analyses. Note: Financial statement preparation, ERP system implementation, performance review execution, and real-time KPI dashboard development are outside the scope of this skill."
 ---
 
-# Strategy Framework — 전략 프레임워크 풀 파이프라인
+# Strategy Framework — Full Strategy Pipeline
 
-조직의 전략을 OKR→BSC→SWOT→비전·미션→실행 로드맵으로 체계화한다.
+Systematizes an organization's strategy through the sequence: OKR → BSC → SWOT → Vision & Mission → Execution Roadmap.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| okr-designer | `.claude/agents/okr-designer.md` | OKR 목표·핵심결과 설계, 정렬 | general-purpose |
-| bsc-analyst | `.claude/agents/bsc-analyst.md` | BSC 4대 관점 매핑, KPI 체계 | general-purpose |
-| swot-specialist | `.claude/agents/swot-specialist.md` | SWOT 분석, TOWS 전략 도출 | general-purpose |
-| strategy-writer | `.claude/agents/strategy-writer.md` | 비전·미션, 전략 실행 로드맵 | general-purpose |
-| strategy-reviewer | `.claude/agents/strategy-reviewer.md` | 교차 검증, 정합성 확인 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| okr-designer | `.claude/agents/okr-designer.md` | OKR goal & key result design, alignment | general-purpose |
+| bsc-analyst | `.claude/agents/bsc-analyst.md` | BSC four-perspective mapping, KPI system | general-purpose |
+| swot-specialist | `.claude/agents/swot-specialist.md` | SWOT analysis, TOWS strategy derivation | general-purpose |
+| strategy-writer | `.claude/agents/strategy-writer.md` | Vision & mission, strategy execution roadmap | general-purpose |
+| strategy-reviewer | `.claude/agents/strategy-reviewer.md` | Cross-verification, consistency checking | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Performed directly by the orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **조직 정보**: 조직명, 산업, 규모, 현재 상황
-    - **전략 기간**: 연간/3개년/5개년
-    - **기존 전략 자산** (선택): 기존 OKR, 비전·미션, 분석 자료
-    - **특별 요구사항** (선택): 특정 프레임워크 강조, 특정 관점 집중
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Organization Info**: Name, industry, size, current situation
+    - **Strategy Period**: Annual/3-year/5-year
+    - **Existing Strategy Assets** (optional): Existing OKRs, vision & mission, analytical materials
+    - **Special Requirements** (optional): Emphasis on specific frameworks, focus on certain perspectives
+2. Create the `_workspace/` directory at the project root
+3. Organize input and save as `_workspace/00_input.md`
+4. If existing files are present, copy them to `_workspace/` and skip the corresponding phase
+5. **Determine the execution mode** based on request scope
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | OKR 설계 | okr-designer | 없음 | `_workspace/01_okr_design.md` |
-| 2a | BSC 매핑 | bsc-analyst | 작업 1 | `_workspace/02_bsc_mapping.md` |
-| 2b | SWOT 분석 | swot-specialist | 작업 1 | `_workspace/03_swot_analysis.md` |
-| 3 | 비전·미션+로드맵 | strategy-writer | 작업 1,2a,2b | `_workspace/04_vision_mission.md`, `_workspace/05_strategy_roadmap.md` |
-| 4 | 전략 리뷰 | strategy-reviewer | 작업 1,2a,2b,3 | `_workspace/06_review_report.md` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1 | OKR design | okr-designer | None | `_workspace/01_okr_design.md` |
+| 2a | BSC mapping | bsc-analyst | Task 1 | `_workspace/02_bsc_mapping.md` |
+| 2b | SWOT analysis | swot-specialist | Task 1 | `_workspace/03_swot_analysis.md` |
+| 3 | Vision & Mission + Roadmap | strategy-writer | Tasks 1, 2a, 2b | `_workspace/04_vision_mission.md`, `_workspace/05_strategy_roadmap.md` |
+| 4 | Strategy review | strategy-reviewer | Tasks 1, 2a, 2b, 3 | `_workspace/06_review_report.md` |
 
-작업 2a(BSC)와 2b(SWOT)는 **병렬 실행**한다. 둘 다 작업 1(OKR)에만 의존하므로 동시에 시작할 수 있다.
+Tasks 2a (BSC) and 2b (SWOT) execute **in parallel**. Both depend only on Task 1 (OKR), so they can start simultaneously.
 
-**팀원 간 소통 흐름:**
-- okr-designer 완료 → bsc-analyst에게 OKR 체계 전달, swot-specialist에게 전략적 가정 전달
-- bsc-analyst 완료 → swot-specialist에게 전략적 사각지대 전달, strategy-writer에게 KPI 체계 전달
-- swot-specialist 완료 → strategy-writer에게 TOWS 전략 우선순위 전달
-- strategy-writer 완료 → strategy-reviewer에게 모든 문서 전달
-- strategy-reviewer는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**Inter-agent communication flow:**
+- okr-designer completes → sends OKR system to bsc-analyst; sends strategic assumptions to swot-specialist
+- bsc-analyst completes → sends strategic blind spots to swot-specialist; sends KPI system to strategy-writer
+- swot-specialist completes → sends TOWS strategy priorities to strategy-writer
+- strategy-writer completes → sends all documents to strategy-reviewer
+- strategy-reviewer cross-verifies all deliverables. When RED Must Fix items are found, sends revision requests to the relevant agent → rework → re-verify (up to 2 iterations)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 리뷰 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - OKR 설계서 — `01_okr_design.md`
-    - BSC 매핑표 — `02_bsc_mapping.md`
-    - SWOT 분석서 — `03_swot_analysis.md`
-    - 비전·미션 선언문 — `04_vision_mission.md`
-    - 전략 실행 로드맵 — `05_strategy_roadmap.md`
-    - 리뷰 보고서 — `06_review_report.md`
+1. Verify all files in `_workspace/`
+2. Confirm that all RED Must Fix items from the review report have been addressed
+3. Report the final summary to the user:
+    - OKR Design Document — `01_okr_design.md`
+    - BSC Mapping Table — `02_bsc_mapping.md`
+    - SWOT Analysis Report — `03_swot_analysis.md`
+    - Vision & Mission Statement — `04_vision_mission.md`
+    - Strategy Execution Roadmap — `05_strategy_roadmap.md`
+    - Review Report — `06_review_report.md`
 
-## 작업 규모별 모드
+## Execution Modes by Request Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "전략 프레임워크 만들어줘", "풀 전략 체계" | **풀 파이프라인** | 5명 전원 |
-| "OKR만 설계해줘" | **OKR 모드** | okr-designer + reviewer |
-| "SWOT 분석해줘" | **SWOT 모드** | swot-specialist + reviewer |
-| "비전 미션 써줘" (기존 분석 있음) | **문서 모드** | strategy-writer + reviewer |
-| "이 OKR 검토해줘" | **리뷰 모드** | reviewer 단독 |
-| "OKR이랑 BSC 만들어줘" | **분석 모드** | okr-designer + bsc-analyst + reviewer |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|----------------|
+| "Build a strategy framework," "Full strategy system" | **Full Pipeline** | All 5 agents |
+| "Just design OKRs" | **OKR Mode** | okr-designer + reviewer |
+| "Run a SWOT analysis" | **SWOT Mode** | swot-specialist + reviewer |
+| "Write the vision and mission" (existing analysis available) | **Document Mode** | strategy-writer + reviewer |
+| "Review this OKR" | **Review Mode** | reviewer only |
+| "Create OKR and BSC" | **Analysis Mode** | okr-designer + bsc-analyst + reviewer |
 
-**기존 파일 활용**: 사용자가 OKR, SWOT 등 기존 파일을 제공하면, 해당 파일을 `_workspace/`의 적절한 번호 위치에 복사하고 해당 단계의 에이전트는 건너뛴다.
+**Existing file utilization**: When the user provides existing files (OKR, SWOT, etc.), copy the file to the appropriate numbered position in `_workspace/` and skip the corresponding agent's phase.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information transfer, revision requests |
 
-파일명 컨벤션: `{순번}_{산출물명}.md`
+File naming convention: `{order_number}_{deliverable_name}.md`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 조직 정보 부족 | 산업 벤치마크 기반 가설 OKR 설계, "가설 기반" 태그 명시 |
-| 웹 검색 실패 | 일반 지식 기반 작업, "데이터 제한" 명시 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰 보고서에 누락 명시 |
-| 리뷰에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
-| OKR↔SWOT 모순 | 모순 지점을 명시하고 okr-designer·swot-specialist 간 조정 협의 |
+| Error Type | Strategy |
+|-----------|----------|
+| Insufficient organization info | Design hypothesis-based OKR using industry benchmarks, tag with "HYPOTHESIS-BASED" |
+| Web search failure | Proceed with general knowledge, tag with "DATA LIMITED" |
+| Agent failure | Retry once → if still failing, proceed without that deliverable and note the omission in the review report |
+| RED found in review | Send revision request to the relevant agent → rework → re-verify (up to 2 iterations) |
+| OKR-SWOT contradiction | Identify the contradiction point and coordinate between okr-designer and swot-specialist |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "시리즈B 단계 SaaS 스타트업(직원 50명)의 2025년 전략 프레임워크를 만들어줘. B2B HR테크 분야이고, ARR 50억에서 100억으로 성장하려고 해"
-**기대 결과**:
-- OKR: 회사 레벨 3~5개 Objective + 부서별 캐스케이딩
-- BSC: 4대 관점 KPI 매핑 + 전략맵, SaaS 핵심 메트릭(ARR, NRR, CAC, LTV) 반영
-- SWOT: HR테크 산업 동향 반영, TOWS 전략 5개 이상
-- 비전·미션: SaaS 기업에 적합한 선언문
-- 로드맵: 분기별 마일스톤 + ARR 성장 경로
+### Normal Flow
+**Prompt**: "Build a 2025 strategy framework for a Series B SaaS startup (50 employees). We're in the B2B HR tech space and want to grow ARR from $5M to $10M."
+**Expected Result**:
+- OKR: 3-5 company-level Objectives + department-level cascading
+- BSC: Four-perspective KPI mapping + strategy map, reflecting core SaaS metrics (ARR, NRR, CAC, LTV)
+- SWOT: Reflecting HR tech industry trends, 5+ TOWS strategies
+- Vision & Mission: Statements appropriate for a SaaS company
+- Roadmap: Quarterly milestones + ARR growth trajectory
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이미 SWOT 분석은 했어. 이걸 기반으로 OKR이랑 BSC, 로드맵까지 만들어줘" + SWOT 파일 첨부
-**기대 결과**:
-- SWOT 파일을 `_workspace/03_swot_analysis.md`로 복사
-- swot-specialist 건너뛰고 okr-designer + bsc-analyst + strategy-writer + reviewer 투입
-- 기존 SWOT의 TOWS 전략을 OKR과 로드맵에 반영
+### Existing File Flow
+**Prompt**: "I've already done the SWOT analysis. Based on this, build the OKR, BSC, and roadmap." + attached SWOT file
+**Expected Result**:
+- Copy the SWOT file to `_workspace/03_swot_analysis.md`
+- Skip swot-specialist; deploy okr-designer + bsc-analyst + strategy-writer + reviewer
+- Incorporate the existing SWOT's TOWS strategies into the OKR and roadmap
 
-### 에러 흐름
-**프롬프트**: "우리 회사 전략 프레임워크 만들어줘"
-**기대 결과**:
-- 조직 정보 부족 → 산업/규모/현황 추가 질문
-- 최소 정보(산업명)만 제공 시 벤치마크 기반 가설 프레임워크 생성
-- 모든 문서에 "가설 기반 — 실제 데이터로 검증 필요" 태그 명시
+### Error Flow
+**Prompt**: "Build a strategy framework for our company"
+**Expected Result**:
+- Insufficient organization info → Ask follow-up questions about industry/size/current situation
+- If only minimal info (industry name) is provided, generate a hypothesis-based framework using benchmarks
+- Tag all documents with "HYPOTHESIS-BASED — Needs validation with actual data"
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-에이전트의 도메인 전문성을 강화하는 확장 스킬:
+Extension skills that enhance each agent's domain expertise:
 
-| 스킬 | 파일 | 대상 에이전트 | 역할 |
-|------|------|-------------|------|
-| okr-quality-checker | `.claude/skills/okr-quality-checker/skill.md` | okr-designer, strategy-reviewer | QSIM/SMART-V 기준, OKR 구조 검증, 채점 시스템, 안티패턴 |
-| tows-matrix-builder | `.claude/skills/tows-matrix-builder/skill.md` | swot-specialist, strategy-writer | TOWS 매트릭스 구조, SO/WO/ST/WT 전략 도출 가이드, 우선순위 평가 |
+| Skill | File | Target Agent | Role |
+|-------|------|-------------|------|
+| okr-quality-checker | `.claude/skills/okr-quality-checker/skill.md` | okr-designer, strategy-reviewer | QSIM/SMART-V criteria, OKR structure verification, scoring system, anti-patterns |
+| tows-matrix-builder | `.claude/skills/tows-matrix-builder/skill.md` | swot-specialist, strategy-writer | TOWS matrix structure, SO/WO/ST/WT strategy derivation guide, priority evaluation |

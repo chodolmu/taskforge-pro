@@ -1,128 +1,128 @@
 ---
 name: ip-portfolio
-description: "지식재산 포트폴리오 관리의 IP현황분석, 특허·상표·저작권매핑, 갱신일정, 라이선스전략, 보호전략보고서를 에이전트 팀이 협업하여 한 번에 생성하는 풀 IP 관리 파이프라인. 'IP 포트폴리오 관리해줘', '특허 포트폴리오 분석', '상표 관리', 'IP 전략 세워줘', '특허 갱신 일정', '라이선스 전략', 'IP 보호 전략', '지식재산 현황 분석', '특허 맵 만들어줘', '영업비밀 관리' 등 지식재산 관리 전반에 이 스킬을 사용한다. 특정 IP 유형(특허/상표/저작권)만의 분석이나 기존 포트폴리오 업데이트도 지원한다. 단, 실제 특허 출원서 작성(patent-drafter 스킬 사용), 특허청 전자출원, 법적 의견서(legal opinion) 작성, 소송 대리는 이 스킬의 범위가 아니다."
+description: "Full IP management pipeline for intellectual property portfolio management where an agent team collaborates to generate IP status analysis, patent/trademark/copyright mapping, renewal schedules, license strategies, and protection strategy reports. Use this skill for requests such as 'manage IP portfolio', 'patent portfolio analysis', 'trademark management', 'develop IP strategy', 'patent renewal schedule', 'license strategy', 'IP protection strategy', 'intellectual property status analysis', 'create a patent map', 'trade secret management', and other intellectual property management tasks. Also supports analysis of specific IP types (patents/trademarks/copyrights) or updating existing portfolios. However, actual patent application drafting (use patent-drafter skill), patent office electronic filing, legal opinion writing, and litigation representation are outside the scope of this skill."
 ---
 
-# IP Portfolio — 지식재산 포트폴리오 관리 풀 파이프라인
+# IP Portfolio — Intellectual Property Portfolio Management Full Pipeline
 
-IP의 현황분석→매핑→갱신일정→라이선스전략→보호전략을 에이전트 팀이 협업하여 한 번에 생성한다.
+An agent team collaborates to generate IP status analysis, asset mapping, renewal schedules, license strategies, and protection strategy reports.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 members communicate directly via SendMessage and cross-validate each other's work.
 
-## 에이전트 구성
+## Agent Roster
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| ip-analyst | `.claude/agents/ip-analyst.md` | IP 현황 파악, 가치 평가, 포트폴리오 맵 | general-purpose |
-| patent-mapper | `.claude/agents/patent-mapper.md` | 특허·상표·저작권 분류, 권리범위 매핑 | general-purpose |
-| renewal-scheduler | `.claude/agents/renewal-scheduler.md` | 갱신 기한, 비용 산정, 유지/포기 | general-purpose |
-| license-strategist | `.claude/agents/license-strategist.md` | 수익화, 크로스라이선스, 오픈소스 | general-purpose |
-| protection-advisor | `.claude/agents/protection-advisor.md` | 침해 대응, 방어 전략, 보호 보고서 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| ip-analyst | `.claude/agents/ip-analyst.md` | IP status assessment, value evaluation, portfolio mapping | general-purpose |
+| patent-mapper | `.claude/agents/patent-mapper.md` | Patent/trademark/copyright classification, rights scope mapping | general-purpose |
+| renewal-scheduler | `.claude/agents/renewal-scheduler.md` | Renewal deadlines, cost calculation, retention/abandonment | general-purpose |
+| license-strategist | `.claude/agents/license-strategist.md` | Monetization, cross-licensing, open source | general-purpose |
+| protection-advisor | `.claude/agents/protection-advisor.md` | Infringement response, defense strategy, protection report | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Performed Directly by Orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **기업 정보**: 기업명, 산업, 규모
-    - **IP 정보** (선택): IP 목록, 등록번호, 출원 현황
-    - **관심 영역** (선택): 특정 기술 분야, 특정 IP 유형
-    - **목표** (선택): 수익화, 보호 강화, 비용 최적화, 분쟁 대비
-    - **기존 자료** (선택): IP 대장, 라이선스 계약, 분쟁 이력
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 참조 자료로 활용한다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Company Information**: Company name, industry, size
+    - **IP Information** (optional): IP list, registration numbers, filing status
+    - **Areas of Interest** (optional): Specific technology domains, specific IP types
+    - **Objectives** (optional): Monetization, enhanced protection, cost optimization, dispute preparedness
+    - **Existing Materials** (optional): IP register, license agreements, dispute history
+2. Create the `_workspace/` directory at the project root
+3. Organize the input and save it as `_workspace/00_input.md`
+4. If existing files are provided, copy them to `_workspace/` and use as reference materials
+5. **Determine the execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | IP 현황 분석 | analyst | 없음 | `_workspace/01_ip_analysis.md` |
-| 2 | IP 자산 매핑 | mapper | 작업 1 | `_workspace/02_ip_map.md` |
-| 3a | 갱신 일정 관리 | scheduler | 작업 1, 2 | `_workspace/03_renewal_schedule.md` |
-| 3b | 라이선스 전략 | license | 작업 1, 2 | `_workspace/04_license_strategy.md` |
-| 4 | 보호 전략 보고서 | protection | 작업 1, 2, 3a, 3b | `_workspace/05_protection_report.md` |
-| 5 | 통합 리뷰 | 오케스트레이터 | 전체 | `_workspace/06_review_report.md` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1 | IP Status Analysis | analyst | None | `_workspace/01_ip_analysis.md` |
+| 2 | IP Asset Mapping | mapper | Task 1 | `_workspace/02_ip_map.md` |
+| 3a | Renewal Schedule | scheduler | Tasks 1, 2 | `_workspace/03_renewal_schedule.md` |
+| 3b | License Strategy | license | Tasks 1, 2 | `_workspace/04_license_strategy.md` |
+| 4 | Protection Strategy Report | protection | Tasks 1, 2, 3a, 3b | `_workspace/05_protection_report.md` |
+| 5 | Integrated Review | orchestrator | All | `_workspace/06_review_report.md` |
 
-작업 3a(갱신)와 3b(라이선스)는 **병렬 실행**한다. 둘 다 작업 1, 2에만 의존한다.
+Tasks 3a (Renewal) and 3b (License) run **in parallel**. Both depend only on Tasks 1 and 2.
 
-**팀원 간 소통 흐름:**
-- analyst 완료 → mapper에게 인벤토리·분류 기준 전달, scheduler에게 등급 전달, license에게 수익화 후보 전달, protection에게 핵심 IP·위협 전달
-- mapper 완료 → scheduler에게 등록일/만료일 전달, license에게 권리범위 전달, protection에게 청구항 분석 전달
-- scheduler ↔ license: 포기 검토 대상 중 라이선싱 가능 IP 교차 확인
-- protection은 전체를 종합하여 최종 보호 전략 수립
+**Inter-Agent Communication Flow:**
+- analyst completes -> delivers inventory and classification to mapper, ratings to scheduler, monetization candidates to license, core IP and threats to protection
+- mapper completes -> delivers registration/expiration dates to scheduler, rights scope to license, claims analysis to protection
+- scheduler <-> license: Cross-verify which abandonment candidates are still licensable
+- protection synthesizes everything into the final protection strategy
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일의 정합성을 확인한다
-2. 가치평가↔갱신전략↔라이선스↔보호 간 불일치를 검출한다
-3. 통합 리뷰 보고서를 생성한다
-4. 최종 요약을 사용자에게 보고한다
+1. Verify consistency across all files in `_workspace/`
+2. Detect discrepancies across valuation, renewal strategy, licensing, and protection
+3. Generate the integrated review report
+4. Report the final summary to the user
 
-## 작업 규모별 모드
+## Execution Modes by Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "IP 포트폴리오 관리해줘" | **풀 파이프라인** | 5명 전원 |
-| "특허 현황 분석해줘" | **분석 모드** | analyst + mapper |
-| "IP 갱신 일정 정리해줘" | **갱신 모드** | analyst + mapper + scheduler |
-| "라이선스 전략 세워줘" | **라이선스 모드** | analyst + license |
-| "IP 보호 전략 수립해줘" | **보호 모드** | analyst + mapper + protection |
-| "이 IP 목록으로 관리 체계 만들어줘" + 목록 | **맞춤 모드** | 해당 영역 에이전트 |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|-----------------|
+| "Manage my IP portfolio" | **Full Pipeline** | All 5 agents |
+| "Analyze patent status" | **Analysis Mode** | analyst + mapper |
+| "Organize IP renewal schedule" | **Renewal Mode** | analyst + mapper + scheduler |
+| "Develop a licensing strategy" | **License Mode** | analyst + license |
+| "Develop IP protection strategy" | **Protection Mode** | analyst + mapper + protection |
+| "Build a management system for this IP list" + list | **Custom Mode** | Relevant agents |
 
-**기존 파일 활용**: 사용자가 IP 대장, 기존 분석 보고서 등을 제공하면 해당 파일을 `_workspace/`에 복사하고 참조 자료로 활용한다.
+**Using Existing Files**: When the user provides IP registers, existing analysis reports, etc., copy them to `_workspace/` and use as reference materials.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 교차 확인 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-Based | `_workspace/` directory | Store and share main deliverables |
+| Message-Based | SendMessage | Real-time key information delivery, cross-verification |
+| Task-Based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{산출물}.{확장자}`
+File naming convention: `{order}_{deliverable}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| IP 목록 미제공 | 기업명 기반 KIPRIS/USPTO 공개 검색으로 수집 |
-| 웹 검색 실패 | 사용자 제공 정보만으로 작업, "데이터 제한" 명시 |
-| 해외 IP 정보 부재 | 한국 IP만 우선 분석 + "해외 확인 필요" 태그 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행 |
-| 가치평가-보호전략 불일치 | 교차 검증에서 발견 → 수정 요청 (최대 2회) |
+| Error Type | Strategy |
+|-----------|----------|
+| IP list not provided | Collect via company name search on public KIPRIS/USPTO databases |
+| Web search failure | Work with user-provided information only, note "Data limitations" |
+| Foreign IP information unavailable | Prioritize domestic IP analysis, tag with "Foreign verification needed" |
+| Agent failure | Retry once -> if still fails, proceed without that deliverable |
+| Valuation-protection strategy mismatch | Detected in cross-validation -> request corrections (up to 2 rounds) |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "우리 회사(IT 기업, 특허 50건, 상표 20건)의 IP 포트폴리오를 분석하고 관리 체계를 만들어줘"
-**기대 결과**:
-- 분석: 50건 특허 + 20건 상표 인벤토리, 기술 분야별 분포, 가치 등급
-- 매핑: IPC 분류, 패밀리 관계, 기술-제품 매트릭스
-- 갱신: 12개월 캘린더, 연간 비용, 유지/포기 권고
-- 라이선스: B/C 등급 IP 수익화 전략, 로열티 조건
-- 보호: 침해 모니터링 체계, 방어 출원 계획, 영업비밀 관리
+### Normal Flow
+**Prompt**: "Analyze our company's (IT firm, 50 patents, 20 trademarks) IP portfolio and build a management system"
+**Expected Results**:
+- Analysis: 50-patent + 20-trademark inventory, technology domain distribution, value ratings
+- Mapping: IPC classification, family relationships, technology-product matrix
+- Renewal: 12-month calendar, annual costs, retention/abandonment recommendations
+- License: B/C-tier IP monetization strategy, royalty terms
+- Protection: Infringement monitoring system, defensive filing plan, trade secret management
 
-### 특정 영역 흐름
-**프롬프트**: "우리 특허 갱신 일정을 정리하고, 포기할 것과 유지할 것을 구분해줘"
-**기대 결과**:
-- analyst가 가볍게 가치 평가
-- mapper가 등록일/만료일 정리
-- scheduler가 갱신 캘린더 + 유지/포기 권고
+### Specific Area Flow
+**Prompt**: "Organize our patent renewal schedule, and sort out which to keep and which to abandon"
+**Expected Results**:
+- analyst performs lightweight value assessment
+- mapper organizes registration/expiration dates
+- scheduler produces renewal calendar + retention/abandonment recommendations
 
-### 에러 흐름
-**프롬프트**: "IP 관리해줘, 근데 IP 목록은 없어. 회사명은 OO테크"
-**기대 결과**:
-- analyst가 KIPRIS에서 "OO테크" 출원인 검색
-- 공개된 특허/상표만으로 포트폴리오 구성
-- "비공개 IP 미포함 — 내부 목록 제공 시 업데이트 가능" 명시
+### Error Flow
+**Prompt**: "Manage our IP, but I don't have an IP list. Company name is XX Tech"
+**Expected Results**:
+- analyst searches KIPRIS for "XX Tech" as applicant
+- Builds portfolio from publicly available patents/trademarks only
+- Notes "Non-public IP not included — available for update upon internal list provision"
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-| 확장 스킬 | 경로 | 대상 에이전트 | 역할 |
-|----------|------|-------------|------|
-| patent-valuation | `.claude/skills/patent-valuation/skill.md` | ip-analyst, license-strategist | 3대 가치평가, 로열티 벤치마크, 특허 강도 |
-| ip-landscape-analysis | `.claude/skills/ip-landscape-analysis/skill.md` | patent-mapper, protection-advisor | 특허 맵, 공백 분석, FTO, IP 전략 |
+| Extension Skill | Path | Target Agent | Role |
+|----------------|------|-------------|------|
+| patent-valuation | `.claude/skills/patent-valuation/skill.md` | ip-analyst, license-strategist | Three valuation approaches, royalty benchmarks, patent strength |
+| ip-landscape-analysis | `.claude/skills/ip-landscape-analysis/skill.md` | patent-mapper, protection-advisor | Patent maps, gap analysis, FTO, IP strategy |

@@ -1,27 +1,38 @@
 # Exam Prep Harness
 
-시험 준비의 출제경향→약점진단→맞춤학습→모의고사→오답분석 에이전트 팀 하네스.
+An agent team harness for exam preparation: exam trend analysis, weakness diagnosis, customized study plans, mock exams, and error analysis.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── trend-analyst.md
-│   ├── diagnostician.md
-│   ├── learning-designer.md
-│   ├── examiner.md
-│   └── error-analyst.md
+│   ├── trend-analyst.md         — Trend Analyst (frequency, patterns, predictions)
+│   ├── diagnostician.md         — Diagnostician (by area, by type analysis)
+│   ├── learning-designer.md     — Learning Designer (customized curriculum, strategy)
+│   ├── examiner.md              — Examiner (exam-style questions, difficulty calibration)
+│   └── error-analyst.md         — Error Analyst (patterns, root causes, remedies)
 ├── skills/
 │   ├── exam-prep/
-│   │   └── skill.md              — 오케스트레이터
-│   ├── bloom-taxonomy-engine/
-│   │   └── skill.md              — Bloom 분류학 (인지 수준별 문항, 학습 활동 매핑)
-│   └── error-pattern-analyzer/
-│       └── skill.md              — 오답 패턴 분석 (5-Type 분류, 개념 결손 추적)
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md             — Orchestrator (team coordination, workflow, error handling)
+│   ├── error-pattern-analyzer/
+│   │   └── skill.md             — Error Pattern Analyzer (by type, by cause)
+│   └── bloom-taxonomy-engine/
+│       └── skill.md             — Bloom Taxonomy Engine (questions by cognitive level)
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/exam-prep` 스킬을 트리거하거나 자연어로 요청한다.
+Trigger the `/exam-prep` skill, or make a natural language request such as "Help me prepare for an exam."
+
+## Deliverables
+
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_trend_analysis.md` — Exam trend analysis
+- `02_diagnosis.md` — Diagnostic results
+- `03_study_plan.md` — Study plan
+- `04_mock_exam.md` — Mock exam
+- `05_error_analysis.md` — Error analysis report
+- `06_review_report.md` — Review report

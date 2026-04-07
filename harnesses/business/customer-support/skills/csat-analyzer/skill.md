@@ -1,167 +1,167 @@
 ---
 name: csat-analyzer
-description: "고객만족도(CSAT/NPS/CES) 메트릭을 체계적으로 설계하고 분석하는 방법론. 'CSAT 분석', 'NPS 설계', 'CES 측정', 'CS 메트릭', '고객만족도 체계', 'VOC 분석' 등 CS 성과 측정 시 사용한다. 단, 실제 설문 발송, 통계 소프트웨어 실행은 이 스킬의 범위가 아니다."
+description: "A methodology for systematically designing and analyzing customer satisfaction metrics (CSAT/NPS/CES). Use this skill for 'CSAT analysis', 'NPS design', 'CES measurement', 'CS metrics', 'customer satisfaction system', 'VOC analysis', and other CS performance measurement needs. However, actual survey distribution and statistical software execution are outside the scope of this skill."
 ---
 
-# CSAT Analyzer — 고객만족도 메트릭 설계 + 분석
+# CSAT Analyzer — Customer Satisfaction Metric Design + Analysis
 
-cs-analyst의 CS 성과 측정 역량을 강화하는 스킬.
+A skill that enhances the CS performance measurement capabilities of cs-analyst.
 
-## 대상 에이전트
+## Target Agents
 
-- **cs-analyst** — CS 메트릭 체계를 설계하고 분석한다
-- **cs-reviewer** — 메트릭 기반으로 CS 품질을 검증한다
+- **cs-analyst** — Designs and analyzes CS metric systems
+- **cs-reviewer** — Validates CS quality based on metrics
 
-## 핵심 CS 메트릭 3종
+## 3 Core CS Metrics
 
 ### CSAT (Customer Satisfaction Score)
 
 ```
-질문: "이번 상담에 얼마나 만족하셨나요?" (1-5점)
+Question: "How satisfied were you with this interaction?" (1-5 scale)
 
-CSAT = (4점+5점 응답 수) / 전체 응답 수 × 100%
+CSAT = (4 + 5 rated responses) / Total responses x 100%
 
-벤치마크:
-  우수: 85%+
-  양호: 70-84%
-  개선필요: 60-69%
-  위험: <60%
+Benchmarks:
+  Excellent: 85%+
+  Good: 70-84%
+  Needs Improvement: 60-69%
+  At Risk: <60%
 
-측정 시점: 상담 직후 (인터랙션 기반)
+Measurement Timing: Immediately after interaction (interaction-based)
 ```
 
 ### NPS (Net Promoter Score)
 
 ```
-질문: "이 서비스를 친구/동료에게 추천하시겠습니까?" (0-10점)
+Question: "How likely are you to recommend this service to a friend or colleague?" (0-10 scale)
 
-분류:
-  추천자(Promoter): 9-10점
-  중립자(Passive): 7-8점
-  비추천자(Detractor): 0-6점
+Classification:
+  Promoter: 9-10
+  Passive: 7-8
+  Detractor: 0-6
 
-NPS = 추천자% - 비추천자%  (범위: -100 ~ +100)
+NPS = Promoter% - Detractor%  (Range: -100 to +100)
 
-벤치마크 (B2C SaaS):
-  우수: 50+
-  양호: 30-49
-  보통: 0-29
-  위험: <0
+Benchmarks (B2C SaaS):
+  Excellent: 50+
+  Good: 30-49
+  Average: 0-29
+  At Risk: <0
 
-측정 시점: 분기별 (관계 기반)
+Measurement Timing: Quarterly (relationship-based)
 ```
 
 ### CES (Customer Effort Score)
 
 ```
-질문: "문제 해결이 얼마나 쉬웠나요?" (1-7점)
+Question: "How easy was it to resolve your issue?" (1-7 scale)
 
-CES = 전체 응답의 평균
+CES = Average of all responses
 
-벤치마크:
-  우수: 5.5+
-  양호: 4.5-5.4
-  개선필요: 3.5-4.4
-  위험: <3.5
+Benchmarks:
+  Excellent: 5.5+
+  Good: 4.5-5.4
+  Needs Improvement: 3.5-4.4
+  At Risk: <3.5
 
-측정 시점: 상담 직후 (노력 기반)
-특징: 재구매 예측에 가장 강력
+Measurement Timing: Immediately after interaction (effort-based)
+Note: Strongest predictor of repeat purchase behavior
 ```
 
-## 운영 메트릭
+## Operational Metrics
 
-### 효율성 메트릭
+### Efficiency Metrics
 
-| 메트릭 | 공식 | 벤치마크 |
-|--------|------|----------|
-| FCR (1차 해결률) | 1차 해결 건 / 전체 건 × 100 | 70-75% |
-| AHT (평균 처리 시간) | 총 처리 시간 / 처리 건수 | 채팅 5-8분, 전화 6-10분 |
-| ASA (평균 응답 시간) | 총 대기 시간 / 응답 건수 | 채팅 30초, 전화 60초 |
-| 에스컬레이션율 | 에스컬레이션 건 / 전체 건 | <15% |
-| 재문의율 | 7일 내 재문의 / 전체 건 | <20% |
+| Metric | Formula | Benchmark |
+|--------|---------|-----------|
+| FCR (First Contact Resolution) | 1st contact resolutions / Total cases x 100 | 70-75% |
+| AHT (Average Handle Time) | Total handle time / Number of cases | Chat 5-8 min, Phone 6-10 min |
+| ASA (Average Speed of Answer) | Total wait time / Answered cases | Chat 30 sec, Phone 60 sec |
+| Escalation Rate | Escalated cases / Total cases | <15% |
+| Re-inquiry Rate | Re-inquiries within 7 days / Total cases | <20% |
 
-### 생산성 메트릭
+### Productivity Metrics
 
-| 메트릭 | 공식 | 용도 |
-|--------|------|------|
-| 상담원당 처리량 | 일 처리 건수 / 상담원 수 | 용량 계획 |
-| 채널별 비용 | 채널 비용 / 채널 처리 건 | 채널 최적화 |
-| 셀프서비스 비율 | FAQ/봇 해결 / 전체 문의 | 자동화 효과 |
+| Metric | Formula | Purpose |
+|--------|---------|---------|
+| Cases per Agent | Daily cases / Number of agents | Capacity planning |
+| Cost per Channel | Channel cost / Channel cases | Channel optimization |
+| Self-Service Ratio | FAQ/bot resolutions / Total inquiries | Automation effectiveness |
 
-## VOC (Voice of Customer) 분석 프레임워크
+## VOC (Voice of Customer) Analysis Framework
 
-### 감성 분류
-
-```
-긍정 키워드: 감사, 빠른, 친절, 해결, 만족, 좋은
-부정 키워드: 불만, 느린, 불편, 반복, 답변없음, 화남
-중립: 문의, 확인, 궁금, 알려주세요
-
-감성 점수 = (긍정 건수 - 부정 건수) / 전체 건수
-```
-
-### 토픽 분류
+### Sentiment Classification
 
 ```
-1. 카테고리별 분류:
-   - 제품 기능 이슈 (40%)
-   - 결제/환불 (25%)
-   - 배송/물류 (15%)
-   - 계정/인증 (10%)
-   - 기타 (10%)
+Positive Keywords: thank you, fast, friendly, resolved, satisfied, great
+Negative Keywords: complaint, slow, inconvenient, repeated, no response, angry
+Neutral: inquiry, confirmation, curious, please let me know
 
-2. 추세 분석:
-   - 급증 토픽 감지 (전주 대비 +50%)
-   - 신규 토픽 식별
-   - 계절적 패턴
-
-3. 심각도 분류:
-   - Critical: 서비스 장애, 금전적 손해
-   - Major: 기능 미작동, 반복 이슈
-   - Minor: 불편함, 개선 요청
+Sentiment Score = (Positive count - Negative count) / Total count
 ```
 
-## CS 대시보드 설계
+### Topic Classification
 
 ```
-실시간 모니터 (운영팀):
-┌──────────┬──────────┬──────────┐
-│ 대기 건수 │ 평균 대기 │ 상담원   │
-│  [실시간] │  [실시간] │ [가용/전체] │
-├──────────┴──────────┴──────────┤
-│ 시간별 인입량 그래프              │
-├──────────────────────────────┤
-│ 채널별 현황 (채팅/전화/이메일)    │
-└──────────────────────────────┘
+1. Category-based Classification:
+   - Product Feature Issues (40%)
+   - Billing/Refunds (25%)
+   - Shipping/Logistics (15%)
+   - Account/Authentication (10%)
+   - Other (10%)
 
-주간/월간 리포트 (관리자):
-┌──────────┬──────────┬──────────┐
-│ CSAT     │ NPS      │ FCR      │
-│ [트렌드]  │ [트렌드]  │ [트렌드]  │
-├──────────┴──────────┴──────────┤
-│ 토픽별 문의 분포 + 전주 대비     │
-├──────────────────────────────┤
-│ 상담원별 성과 (처리량, CSAT)     │
-├──────────────────────────────┤
-│ VOC 주요 이슈 TOP 5            │
-└──────────────────────────────┘
+2. Trend Analysis:
+   - Surging topic detection (week-over-week +50%)
+   - New topic identification
+   - Seasonal patterns
+
+3. Severity Classification:
+   - Critical: Service outage, financial loss
+   - Major: Feature malfunction, recurring issues
+   - Minor: Inconvenience, improvement requests
 ```
 
-## 개선 프레임워크
+## CS Dashboard Design
 
 ```
-CSAT 낮을 때:
-  1. 상담원 교육 (응대 품질)
-  2. 응답 템플릿 개선
-  3. 권한 위임 (즉시 해결 능력)
+Real-Time Monitor (Operations Team):
++------------+------------+------------+
+| Queue Count| Avg Wait   | Agents     |
+| [Real-time]| [Real-time]| [Avail/Total]|
++------------+------------+------------+
+| Hourly Incoming Volume Graph          |
++---------------------------------------+
+| Channel Status (Chat/Phone/Email)     |
++---------------------------------------+
 
-FCR 낮을 때:
-  1. FAQ/지식베이스 강화
-  2. 상담원 권한 확대
-  3. 에스컬레이션 기준 재정의
+Weekly/Monthly Report (Management):
++------------+------------+------------+
+| CSAT       | NPS        | FCR        |
+| [Trend]    | [Trend]    | [Trend]    |
++------------+------------+------------+
+| Inquiry Distribution by Topic + WoW   |
++---------------------------------------+
+| Agent Performance (Volume, CSAT)      |
++---------------------------------------+
+| Top 5 VOC Issues                      |
++---------------------------------------+
+```
 
-AHT 높을 때:
-  1. 매크로/템플릿 제공
-  2. 내부 도구 UX 개선
-  3. 교육 + 멘토링
+## Improvement Framework
+
+```
+When CSAT is low:
+  1. Agent training (response quality)
+  2. Improve response templates
+  3. Authority delegation (immediate resolution capability)
+
+When FCR is low:
+  1. Strengthen FAQ/knowledge base
+  2. Expand agent authority
+  3. Redefine escalation criteria
+
+When AHT is high:
+  1. Provide macros/templates
+  2. Improve internal tool UX
+  3. Training + mentoring
 ```

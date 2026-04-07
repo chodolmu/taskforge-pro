@@ -1,137 +1,137 @@
 ---
 name: data-analysis
-description: "데이터 분석 프로젝트의 탐색적 분석(EDA), 데이터 정제, 통계 분석, 시각화, 보고서 작성을 에이전트 팀이 협업하여 한 번에 수행하는 풀 분석 파이프라인. '데이터 분석해줘', 'EDA 해줘', '탐색적 분석', '통계 분석', '데이터 시각화', '분석 보고서 써줘', 'CSV 분석', '데이터 인사이트 뽑아줘', '데이터 정제', '이상치 분석' 등 데이터 분석 전반에 이 스킬을 사용한다. 단, 실시간 데이터 스트리밍, ML 모델 학습/배포, BI 대시보드 서버 구축은 이 스킬의 범위가 아니다."
+description: "A full analysis pipeline where an agent team collaborates to perform exploratory data analysis (EDA), data cleaning, statistical analysis, visualization, and report writing. Use this skill for 'analyze this data', 'do EDA', 'exploratory analysis', 'statistical analysis', 'data visualization', 'write an analysis report', 'analyze CSV', 'extract data insights', 'data cleaning', 'outlier analysis', and other data analysis tasks. Note: real-time data streaming, ML model training/deployment, and BI dashboard server construction are outside this skill's scope."
 ---
 
-# Data Analysis — 데이터 분석 풀 파이프라인
+# Data Analysis — Full Data Analysis Pipeline
 
-데이터의 탐색→정제→분석→시각화→보고서를 에이전트 팀이 협업하여 한 번에 수행한다.
+An agent team collaborates to perform the full data lifecycle: exploration → cleaning → analysis → visualization → reporting.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 members communicate directly via SendMessage and cross-validate.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| explorer | `.claude/agents/explorer.md` | 탐색적 분석, 데이터 프로파일링 | general-purpose |
-| cleaner | `.claude/agents/cleaner.md` | 데이터 정제, 변환 파이프라인 | general-purpose |
-| analyst | `.claude/agents/analyst.md` | 통계 분석, 인사이트 도출 | general-purpose |
-| visualizer | `.claude/agents/visualizer.md` | 차트 설계, 시각화 코드 생성 | general-purpose |
-| reporter | `.claude/agents/reporter.md` | 최종 보고서 작성, 품질 검증 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| explorer | `.claude/agents/explorer.md` | Exploratory analysis, data profiling | general-purpose |
+| cleaner | `.claude/agents/cleaner.md` | Data cleaning, transformation pipeline | general-purpose |
+| analyst | `.claude/agents/analyst.md` | Statistical analysis, insight derivation | general-purpose |
+| visualizer | `.claude/agents/visualizer.md` | Chart design, visualization code generation | general-purpose |
+| reporter | `.claude/agents/reporter.md` | Final report writing, quality verification | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Orchestrator performs directly)
 
-1. 사용자 입력에서 추출한다:
-    - **데이터 소스**: 파일 경로, 포맷(CSV/Excel/JSON/DB), 크기
-    - **분석 목적**: 비즈니스 질문, 가설, 기대 결과
-    - **제약 조건** (선택): 시간, 특정 분석 기법, 보고 대상
-    - **도메인 정보** (선택): 업종, 변수 의미, 비즈니스 맥락
-2. `_workspace/` 디렉토리와 `_workspace/scripts/` 하위 디렉토리를 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 데이터 파일을 `_workspace/data/`에 복사한다
-5. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-6. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Data Source**: File path, format (CSV/Excel/JSON/DB), size
+    - **Analysis Purpose**: Business questions, hypotheses, expected results
+    - **Constraints** (optional): Time, specific analysis techniques, reporting audience
+    - **Domain Information** (optional): Industry, variable meanings, business context
+2. Create `_workspace/` directory and `_workspace/scripts/` subdirectory
+3. Organize input and save to `_workspace/00_input.md`
+4. Copy data files to `_workspace/data/`
+5. If existing files are present, copy to `_workspace/` and skip the corresponding Phase
+6. **Determine execution mode** based on request scope
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 탐색적 분석 | explorer | 없음 | `01_exploration_report.md` |
-| 2 | 데이터 정제 | cleaner | 작업 1 | `02_cleaning_log.md`, `scripts/02_cleaning.py` |
-| 3a | 통계 분석 | analyst | 작업 2 | `03_analysis_results.md`, `scripts/03_analysis.py` |
-| 3b | EDA 시각화 | visualizer | 작업 1 | `04_visualizations.md` (EDA 부분) |
-| 4 | 분석 결과 시각화 | visualizer | 작업 3a | `04_visualizations.md` (분석 부분), `scripts/04_viz_*.py` |
-| 5 | 최종 보고서 | reporter | 작업 3a, 4 | `05_final_report.md` |
+| Order | Task | Owner | Dependencies | Output |
+|-------|------|-------|-------------|--------|
+| 1 | Exploratory Analysis | explorer | None | `01_exploration_report.md` |
+| 2 | Data Cleaning | cleaner | Task 1 | `02_cleaning_log.md`, `scripts/02_cleaning.py` |
+| 3a | Statistical Analysis | analyst | Task 2 | `03_analysis_results.md`, `scripts/03_analysis.py` |
+| 3b | EDA Visualization | visualizer | Task 1 | `04_visualizations.md` (EDA portion) |
+| 4 | Analysis Result Visualization | visualizer | Task 3a | `04_visualizations.md` (analysis portion), `scripts/04_viz_*.py` |
+| 5 | Final Report | reporter | Tasks 3a, 4 | `05_final_report.md` |
 
-작업 3a(분석)와 3b(EDA 시각화)는 **병렬 실행**한다.
+Tasks 3a (analysis) and 3b (EDA visualization) run **in parallel**.
 
-**팀원 간 소통 흐름:**
-- explorer 완료 → cleaner에게 정제 권고 전달, analyst에게 분석 제안 전달, visualizer에게 분포 시각화 대상 전달
-- cleaner 완료 → analyst에게 정제 데이터 위치와 변환 이력 전달
-- analyst 완료 → visualizer에게 분석 결과 시각화 요청, reporter에게 인사이트 전달
-- visualizer 완료 → reporter에게 시각화 목록 전달
-- reporter는 모든 산출물을 교차 검증. 불일치 발견 시 해당 에이전트에 수정 요청 (최대 2회)
+**Inter-team communication flow:**
+- explorer completes → Sends cleaning recommendations to cleaner, analysis suggestions to analyst, distribution visualization targets to visualizer
+- cleaner completes → Sends cleaned data location and transformation history to analyst
+- analyst completes → Sends visualization requests to visualizer, insights to reporter
+- visualizer completes → Sends visualization list to reporter
+- reporter cross-validates all outputs. Sends correction requests when inconsistencies are found (up to 2 times)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Outputs
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. reporter의 보고서에서 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 탐색 보고서 — `01_exploration_report.md`
-    - 정제 로그 — `02_cleaning_log.md`
-    - 분석 결과 — `03_analysis_results.md`
-    - 시각화 — `04_visualizations.md`
-    - 최종 보고서 — `05_final_report.md`
-    - 재현 스크립트 — `scripts/` 디렉토리
+1. Check all files in `_workspace/`
+2. Verify that all required corrections from reporter have been addressed
+3. Report final summary to the user:
+    - Exploration Report — `01_exploration_report.md`
+    - Cleaning Log — `02_cleaning_log.md`
+    - Analysis Results — `03_analysis_results.md`
+    - Visualizations — `04_visualizations.md`
+    - Final Report — `05_final_report.md`
+    - Reproducible Scripts — `scripts/` directory
 
-## 작업 규모별 모드
+## Scale-Based Modes
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "데이터 분석해줘", "풀 분석" | **풀 파이프라인** | 5명 전원 |
-| "EDA만 해줘", "데이터 탐색" | **탐색 모드** | explorer + visualizer |
-| "데이터 정제해줘", "클리닝" | **정제 모드** | explorer + cleaner |
-| "통계 분석만", "가설 검정" | **분석 모드** | analyst + visualizer + reporter |
-| "시각화만 해줘", "차트 그려줘" | **시각화 모드** | visualizer 단독 |
-| "분석 보고서 써줘" (기존 분석 있음) | **보고서 모드** | reporter 단독 |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|-----------------|
+| "Analyze the data", "Full analysis" | **Full Pipeline** | All 5 |
+| "Just do EDA", "Data exploration" | **Exploration Mode** | explorer + visualizer |
+| "Clean the data", "Data cleaning" | **Cleaning Mode** | explorer + cleaner |
+| "Statistical analysis only", "Hypothesis testing" | **Analysis Mode** | analyst + visualizer + reporter |
+| "Visualization only", "Draw charts" | **Visualization Mode** | visualizer only |
+| "Write analysis report" (existing analysis) | **Report Mode** | reporter only |
 
-**기존 파일 활용**: 이미 정제된 데이터가 있으면 explorer와 cleaner를 건너뛴다. 분석 결과가 있으면 analyst를 건너뛰고 시각화와 보고서만 진행한다.
+**Leveraging existing files**: If already cleaned data exists, skip explorer and cleaner. If analysis results exist, skip analyst and proceed with visualization and reporting only.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 및 데이터 저장 |
-| 메시지 기반 | SendMessage | 핵심 정보 전달, 수정 요청 |
-| 코드 기반 | `_workspace/scripts/` | 재현 가능한 분석 스크립트 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Primary outputs and data storage |
+| Message-based | SendMessage | Key information transfer, correction requests |
+| Code-based | `_workspace/scripts/` | Reproducible analysis scripts |
 
-파일명 컨벤션: `{순번}_{산출물}.{확장자}`
+File naming convention: `{order}_{output}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 파일 읽기 실패 | 인코딩 순차 시도(UTF-8→CP949→EUC-KR→Latin-1), 구분자 자동 탐지 |
-| 대용량 데이터(>1GB) | 샘플링 후 분석, chunk 처리, 전체 통계는 dask 사용 |
-| 분석 가정 불충족 | 비모수 대안 자동 전환, 전환 이유를 보고서에 명시 |
-| 시각화 한글 깨짐 | OS별 한글 폰트 설정 코드 자동 삽입 |
-| 에이전트 실패 | 1회 재시도 후 실패 시 해당 산출물 없이 진행, 보고서에 누락 명시 |
-| reporter 불일치 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
+| Error Type | Strategy |
+|-----------|----------|
+| File read failure | Try encodings sequentially (UTF-8→CP949→EUC-KR→Latin-1), auto-detect delimiter |
+| Large data (>1GB) | Analyze with sampling, chunk processing, use dask for full statistics |
+| Analysis assumptions not met | Auto-switch to nonparametric alternatives, state rationale in report |
+| Font rendering issues | Auto-insert OS-specific font configuration code |
+| Agent failure | 1 retry, proceed without that output if failed, note omission in report |
+| Reporter finds inconsistency | Send correction request to relevant agent → rework → re-verify (up to 2 times) |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "이 매출 CSV 파일을 분석해서 매출 하락 원인을 찾아줘"
-**기대 결과**:
-- EDA: 변수 프로파일, 결측/이상치 분석, 매출 관련 변수 식별
-- 정제: 결측치 처리, 이상치 캡핑, 타입 변환 로그
-- 분석: 시계열 분해, 구간별 비교(t-test/ANOVA), 상관분석
-- 시각화: 매출 추이 라인차트, 요인별 비교 막대그래프, 상관 히트맵
-- 보고서: 하락 원인 Top 3 + 권고 액션 + 경영진 요약
+### Normal Flow
+**Prompt**: "Analyze this sales CSV file and find the cause of the sales decline"
+**Expected Results**:
+- EDA: Variable profiling, missing/outlier analysis, sales-related variable identification
+- Cleaning: Missing value treatment, outlier capping, type conversion log
+- Analysis: Time-series decomposition, segment comparison (t-test/ANOVA), correlation analysis
+- Visualization: Sales trend line chart, factor comparison bar chart, correlation heatmap
+- Report: Top 3 decline causes + recommended actions + executive summary
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이미 정제된 데이터가 있어. 통계 분석이랑 시각화만 해줘" + 정제 데이터 파일 첨부
-**기대 결과**:
-- 기존 데이터를 `_workspace/data/`에 복사
-- 분석 모드: explorer와 cleaner는 건너뛰고 analyst + visualizer + reporter 투입
-- 정제 이력은 사용자 제공 정보 기반으로 기록
+### Existing File Flow
+**Prompt**: "I already have cleaned data. Just do statistical analysis and visualization" + cleaned data file attached
+**Expected Results**:
+- Copy existing data to `_workspace/data/`
+- Analysis mode: Skip explorer and cleaner, deploy analyst + visualizer + reporter
+- Cleaning history recorded based on user-provided information
 
-### 에러 흐름
-**프롬프트**: "이 엑셀 파일 분석해줘" (결측 50% 이상 변수 다수, 이상치 대량)
-**기대 결과**:
-- explorer가 데이터 품질 문제를 상세히 보고
-- cleaner가 변수별 처리 전략을 근거와 함께 제시, 행 30% 이상 감소 시 경고
-- analyst가 데이터 충분성 한계를 명시하고 검정력 분석 수행
-- reporter가 한계 섹션에 데이터 품질 이슈를 정직하게 기록
+### Error Flow
+**Prompt**: "Analyze this Excel file" (many variables with >50% missing, numerous outliers)
+**Expected Results**:
+- explorer reports data quality issues in detail
+- cleaner presents per-variable treatment strategies with rationale, warning if rows decrease >30%
+- analyst states data sufficiency limitations and performs power analysis
+- reporter honestly records data quality issues in limitations section
 
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-| 스킬 | 경로 | 강화 대상 에이전트 | 역할 |
-|------|------|-----------------|------|
-| statistical-tests-selector | `.claude/skills/statistical-tests-selector/skill.md` | analyst | 검정 선택 트리, t-검정/ANOVA/카이제곱, 효과 크기, 검정력 |
-| visualization-chooser | `.claude/skills/visualization-chooser/skill.md` | visualizer | 차트 유형 매트릭스, matplotlib/seaborn/plotly 패턴, 안티패턴 |
+| Skill | Path | Enhanced Agent | Role |
+|-------|------|---------------|------|
+| statistical-tests-selector | `.claude/skills/statistical-tests-selector/skill.md` | analyst | Test selection tree, t-test/ANOVA/chi-squared, effect size, power |
+| visualization-chooser | `.claude/skills/visualization-chooser/skill.md` | visualizer | Chart type matrix, matplotlib/seaborn/plotly patterns, anti-patterns |

@@ -1,132 +1,134 @@
+```markdown
 ---
 name: deduction-optimizer-engine
-description: "소득공제·세액공제 항목을 최적 조합으로 극대화하는 공제 최적화 엔진. 'deduction-optimizer' 에이전트가 공제 항목을 분석하고 최적 조합을 도출할 때 이 스킬의 공제 한도표, 우선순위 알고리즘, 시뮬레이션 방법을 반드시 활용해야 한다. '공제 최적화', '세액공제 극대화', '연말정산 시뮬레이션' 등에 사용한다. 단, 소득 분류나 세액 계산은 이 스킬의 범위가 아니다."
+description: "A deduction optimization engine that maximizes income deductions and tax credits through optimal combinations. The 'deduction-optimizer' agent must use this skill's deduction limit tables, priority algorithms, and simulation methods when analyzing deduction items and deriving optimal combinations. Used for 'deduction optimization', 'tax credit maximization', 'year-end tax settlement simulation', etc. However, income classification and tax calculation are outside the scope of this skill."
 ---
 
-# Deduction Optimizer Engine — 공제 최적화 엔진
+# Deduction Optimizer Engine
 
-소득공제·세액공제 항목의 한도, 요건, 최적 조합 전략을 제공한다.
+Provides limits, requirements, and optimal combination strategies for income deductions and tax credits.
 
-## 소득공제 항목 체계 (근로소득 기준)
+## Income Deduction Item Framework (Based on Employment Income)
 
-### 인적공제
+### Personal Deductions
 
-| 구분 | 공제액 | 요건 |
+| Category | Deduction Amount | Requirements |
 |------|--------|------|
-| 기본공제 (본인) | 150만원 | 무조건 |
-| 기본공제 (배우자) | 150만원 | 연소득 100만원 이하 |
-| 기본공제 (직계존속) | 150만원/인 | 60세+, 연소득 100만원 이하 |
-| 기본공제 (직계비속) | 150만원/인 | 20세 이하 또는 장애인 |
-| 추가공제 (경로우대) | 100만원/인 | 70세 이상 |
-| 추가공제 (장애인) | 200만원/인 | 장애인 등록 |
-| 추가공제 (부녀자) | 50만원 | 종합소득 3천만원 이하 여성 |
-| 추가공제 (한부모) | 100만원 | 배우자 없이 기본공제 자녀 |
+| Basic deduction (self) | 1,500,000 KRW | Unconditional |
+| Basic deduction (spouse) | 1,500,000 KRW | Annual income 1,000,000 KRW or less |
+| Basic deduction (lineal ascendants) | 1,500,000 KRW/person | Age 60+, annual income 1,000,000 KRW or less |
+| Basic deduction (lineal descendants) | 1,500,000 KRW/person | Age 20 or under, or disabled |
+| Additional deduction (senior citizen) | 1,000,000 KRW/person | Age 70 or older |
+| Additional deduction (disabled) | 2,000,000 KRW/person | Registered disability |
+| Additional deduction (working woman) | 500,000 KRW | Female with aggregate income 30,000,000 KRW or less |
+| Additional deduction (single parent) | 1,000,000 KRW | Children on basic deduction with no spouse |
 
-### 특별소득공제
+### Special Income Deductions
 
-| 항목 | 공제 한도 | 비고 |
+| Item | Deduction Limit | Notes |
 |------|----------|------|
-| 국민연금 | 전액 | 근로자 부담분 |
-| 건강보험료 | 전액 | 근로자 부담분 |
-| 고용보험료 | 전액 | 근로자 부담분 |
-| 주택임차차입금 | 연 400만원 | 무주택 세대주 |
-| 장기주택저당차입금 | 연 300~1800만원 | 상환기간별 |
+| National pension | Full amount | Employee contribution |
+| Health insurance | Full amount | Employee contribution |
+| Employment insurance | Full amount | Employee contribution |
+| Housing rental loan | 4,000,000 KRW/year | Head of household with no home |
+| Long-term home mortgage | 3,000,000–18,000,000 KRW/year | Varies by repayment period |
 
-### 그 외 소득공제
+### Other Income Deductions
 
-| 항목 | 공제율 | 한도 | 요건 |
+| Item | Deduction Rate | Limit | Requirements |
 |------|--------|------|------|
-| 신용카드 등 | 15-40% | 총급여별 | 총급여 25% 초과분 |
-| 주택마련저축 | 40% | 240만원 | 총급여 7천만원 이하 |
-| 소기업·소상공인 공제 | 전액 | 300만원 | 사업자 |
-| 우리사주조합 출연금 | 전액 | 400만원 | - |
+| Credit cards, etc. | 15–40% | Based on total salary | Amount exceeding 25% of total salary |
+| Home savings | 40% | 2,400,000 KRW | Total salary 70,000,000 KRW or less |
+| Small business deduction | Full amount | 3,000,000 KRW | Business owners |
+| Employee stock ownership contribution | Full amount | 4,000,000 KRW | — |
 
-## 세액공제 항목 체계
+## Tax Credit Item Framework
 
-### 주요 세액공제
+### Major Tax Credits
 
-| 항목 | 공제율 | 한도 | 요건 |
+| Item | Credit Rate | Limit | Requirements |
 |------|--------|------|------|
-| 연금저축 | 12-15% | 납입 600만원 | 총급여 5500만원 기준 |
-| IRP(퇴직연금) | 12-15% | 연금저축 합산 900만원 | 총급여 5500만원 기준 |
-| 보험료 | 12% | 100만원(일반), 150만원(장애인) | 기본공제 대상 보험 |
-| 의료비 | 15-20% | 한도 없음(난임 등) | 총급여 3% 초과분 |
-| 교육비 | 15% | 본인 한도 없음, 자녀 300만원 | - |
-| 기부금 | 15-30% | 소득 한도 | 유형별 차등 |
-| 월세 | 15-17% | 750만원 | 총급여 7천만원 이하 |
-| 자녀세액공제 | 정액 | 1명 15만, 2명 35만, 3명+ 35만+30만×추가 | - |
+| Pension savings | 12–15% | Contributions up to 6,000,000 KRW | Based on total salary of 55,000,000 KRW |
+| IRP (retirement pension) | 12–15% | Combined with pension savings up to 9,000,000 KRW | Based on total salary of 55,000,000 KRW |
+| Insurance premiums | 12% | 1,000,000 KRW (general), 1,500,000 KRW (disabled) | Insurance for basic deduction subjects |
+| Medical expenses | 15–20% | No limit (infertility treatment, etc.) | Amount exceeding 3% of total salary |
+| Education expenses | 15% | No limit for self, 3,000,000 KRW per child | — |
+| Donations | 15–30% | Income limit | Varies by type |
+| Monthly rent | 15–17% | 7,500,000 KRW | Total salary 70,000,000 KRW or less |
+| Child tax credit | Fixed amount | 1 child: 150,000; 2 children: 350,000; 3+ children: 350,000 + 300,000 × additional | — |
 
-### 세액공제율 구분 (총급여 기준)
-
-```
-연금저축·IRP 세액공제율:
-  총급여 5,500만원 이하: 15%
-  총급여 5,500만원 초과: 12%
-
-최대 세액공제액:
-  연금저축 600만원 × 15% = 90만원
-  IRP 포함 900만원 × 15% = 135만원
-```
-
-## 공제 최적화 알고리즘
-
-### 우선순위 결정 공식
+### Tax Credit Rate Breakdown (Based on Total Salary)
 
 ```
-공제 효율성 = 실질 세금 감소액 / 필요 지출액
+Pension savings / IRP tax credit rate:
+  Total salary 55,000,000 KRW or less: 15%
+  Total salary above 55,000,000 KRW: 12%
 
-소득공제 실질 감소: 공제액 × 한계세율
-세액공제 실질 감소: 공제액 × 공제율 (직접 차감)
-
-우선순위:
-1. 세액공제 (직접 세금 감소) > 소득공제 (간접 감소)
-2. 높은 공제율 항목 > 낮은 공제율 항목
-3. 한도 미달 항목 > 한도 도달 항목
-4. 필수 지출 동반 항목 > 추가 지출 필요 항목
+Maximum tax credit:
+  Pension savings 6,000,000 KRW × 15% = 900,000 KRW
+  Including IRP 9,000,000 KRW × 15% = 1,350,000 KRW
 ```
 
-### 최적화 시뮬레이션 순서
+## Deduction Optimization Algorithm
+
+### Priority Determination Formula
 
 ```
-Step 1: 무조건 공제 적용 (인적공제, 4대보험)
-Step 2: 연금저축/IRP 세액공제 극대화 (가장 높은 ROI)
-Step 3: 신용카드 등 사용금액 공제 최적 배분
-Step 4: 의료비·교육비 세액공제 확인
-Step 5: 월세·주택자금 공제 확인
-Step 6: 기부금 공제 확인
-Step 7: 한도 초과/미달 항목 재조정
+Deduction Efficiency = Actual Tax Reduction / Required Expenditure
+
+Income deduction actual reduction: Deduction amount × marginal tax rate
+Tax credit actual reduction: Deduction amount × credit rate (direct offset)
+
+Priority:
+1. Tax credits (direct tax reduction) > Income deductions (indirect reduction)
+2. High credit rate items > Low credit rate items
+3. Items below limit > Items at limit
+4. Items with mandatory spending > Items requiring additional spending
 ```
 
-### 신용카드 공제 최적화
+### Optimization Simulation Steps
 
 ```
-공제율 차이:
-  신용카드: 15%
-  체크카드/현금영수증: 30%
-  전통시장: 40%
-  대중교통: 40%
-  도서·공연: 30%
-
-최적 전략:
-  1. 총급여 25%까지 → 신용카드 (혜택 극대화)
-  2. 25% 초과분 → 체크카드/현금영수증 (공제율 2배)
-  3. 전통시장·대중교통 → 추가 한도 활용
+Step 1: Apply unconditional deductions (personal deductions, social insurance)
+Step 2: Maximize pension savings/IRP tax credits (highest ROI)
+Step 3: Optimize allocation of credit card usage deductions
+Step 4: Verify medical and education expense tax credits
+Step 5: Verify monthly rent and housing fund deductions
+Step 6: Verify donation deductions
+Step 7: Readjust items exceeding or falling short of limits
 ```
 
-## 세율 구간별 공제 효과
+### Credit Card Deduction Optimization
 
-| 과세표준 | 세율 | 소득공제 100만원 효과 | 비고 |
+```
+Deduction rate differences:
+  Credit card: 15%
+  Check card / cash receipts: 30%
+  Traditional markets: 40%
+  Public transportation: 40%
+  Books and performances: 30%
+
+Optimal strategy:
+  1. Up to 25% of total salary → Credit card (maximize card benefits)
+  2. Amount exceeding 25% → Check card / cash receipts (2x deduction rate)
+  3. Traditional markets / public transportation → Utilize additional limits
+```
+
+## Deduction Effect by Tax Bracket
+
+| Taxable Income | Tax Rate | Effect of 1,000,000 KRW Income Deduction | Notes |
 |---------|------|-------------------|------|
-| ~1,400만 | 6% | 6만원 절세 | 공제 효과 낮음 |
-| ~5,000만 | 15% | 15만원 절세 | |
-| ~8,800만 | 24% | 24만원 절세 | |
-| ~1.5억 | 35% | 35만원 절세 | |
-| ~3억 | 38% | 38만원 절세 | 공제 효과 높음 |
-| ~5억 | 40% | 40만원 절세 | |
-| ~10억 | 42% | 42만원 절세 | |
-| 10억 초과 | 45% | 45만원 절세 | |
+| Up to 14,000,000 | 6% | 60,000 KRW savings | Low deduction effect |
+| Up to 50,000,000 | 15% | 150,000 KRW savings | |
+| Up to 88,000,000 | 24% | 240,000 KRW savings | |
+| Up to 150,000,000 | 35% | 350,000 KRW savings | |
+| Up to 300,000,000 | 38% | 380,000 KRW savings | High deduction effect |
+| Up to 500,000,000 | 40% | 400,000 KRW savings | |
+| Up to 1,000,000,000 | 42% | 420,000 KRW savings | |
+| Over 1,000,000,000 | 45% | 450,000 KRW savings | |
 
-## 참고
+## Notes
 
-- 소득세법, 조세특례제한법 기준 (매년 개정 확인 필수)
-- 상세 공제 요건: `references/deduction-details.md` 참조
+- Based on the Income Tax Act and Restriction of Special Taxation Act (must verify annual amendments)
+- Detailed deduction requirements: refer to `references/deduction-details.md`
+```

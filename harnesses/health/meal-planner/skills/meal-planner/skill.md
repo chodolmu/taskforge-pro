@@ -1,128 +1,132 @@
+```markdown
 ---
 name: meal-planner
-description: "식단 관리의 영양분석부터 조리가이드까지 전 과정을 에이전트 팀이 협업하여 생성하는 풀 파이프라인. '식단 짜줘', '일주일 식단', '다이어트 식단', '벌크업 식단', '당뇨 식단', '아이 이유식 식단', '장보기 목록', '영양 분석해줘', '레시피 알려줘', '밀프렙 계획', '칼로리 계산', '식단 관리' 등 식단·영양·레시피 관련 요청에 이 스킬을 사용한다. 기존 식단이 있으면 영양 분석이나 개선을 지원한다. 단, 의료 영양치료(MNT) 처방, 식품 안전 인증, 식당 메뉴 개발 컨설팅은 이 스킬의 범위가 아니다."
+description: "A full pipeline where an agent team collaborates to handle everything from nutritional analysis to cooking guides for meal management. Use this skill for any meal, nutrition, or recipe-related requests such as 'create a meal plan', 'weekly meal plan', 'diet meal plan', 'bulking meal plan', 'diabetic meal plan', 'baby food plan', 'grocery list', 'analyze my nutrition', 'give me a recipe', 'meal prep plan', 'calorie count', 'manage my diet'. If an existing meal plan is provided, supports nutritional analysis and improvement. Does NOT cover medical nutrition therapy (MNT) prescriptions, food safety certification, or restaurant menu development consulting."
 ---
 
-# Meal Planner — 식단 관리 풀 파이프라인
+# Meal Planner — Full Meal Management Pipeline
 
-영양분석→식단설계→레시피→장보기목록→조리가이드를 에이전트 팀이 협업하여 한 번에 생성한다.
+An agent team collaborates to generate nutrition analysis → meal design → recipes → grocery list → cooking guide all at once.
 
-## 실행 모드
+## Execution Modes
 
-**에이전트 팀** — 4명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 4 agents communicate directly via SendMessage and cross-validate each other.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| Agent | File | Role | Type |
 |---------|------|------|------|
-| nutritionist | `.claude/agents/nutritionist.md` | 영양 분석, 칼로리·매크로 목표 설정 | general-purpose |
-| meal-designer | `.claude/agents/meal-designer.md` | 일간/주간 식단표 설계 | general-purpose |
-| recipe-writer | `.claude/agents/recipe-writer.md` | 상세 레시피, 영양정보, 대체재료 | general-purpose |
-| shopping-coordinator | `.claude/agents/shopping-coordinator.md` | 장보기 목록, 조리 가이드, 밀프렙 | general-purpose |
+| nutritionist | `.claude/agents/nutritionist.md` | Nutritional analysis, calorie & macro goal setting | general-purpose |
+| meal-designer | `.claude/agents/meal-designer.md` | Daily/weekly meal plan design | general-purpose |
+| recipe-writer | `.claude/agents/recipe-writer.md` | Detailed recipes, nutritional info, ingredient substitutions | general-purpose |
+| shopping-coordinator | `.claude/agents/shopping-coordinator.md` | Grocery list, cooking guide, meal prep | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Orchestrator performs directly)
 
-1. 사용자 입력에서 추출한다:
-    - **신체 정보**: 성별, 연령, 신장, 체중, 활동 수준
-    - **목표**: 감량/유지/증량/근육증가/건강관리
-    - **식이 제한** (선택): 알레르기, 채식, 종교적 제한, 질환
-    - **선호** (선택): 좋아하는/싫어하는 음식, 조리 시간 제약
-    - **기간**: 며칠/몇 주치 식단
-    - **인원수**: 1인/가족 인원
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Physical info**: gender, age, height, weight, activity level
+    - **Goal**: weight loss / maintenance / weight gain / muscle gain / health management
+    - **Dietary restrictions** (optional): allergies, vegetarian, religious restrictions, medical conditions
+    - **Preferences** (optional): liked/disliked foods, cooking time constraints
+    - **Duration**: how many days/weeks of meal plan
+    - **Number of people**: single / family size
+2. Create a `_workspace/` directory in the project root
+3. Organize the input and save to `_workspace/00_input.md`
+4. **Determine execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| Order | Task | Assigned To | Depends On | Output |
 |------|------|------|------|--------|
-| 1 | 영양 분석·목표 설정 | nutritionist | 없음 | `_workspace/01_nutrition_analysis.md` |
-| 2 | 식단표 설계 | meal-designer | 작업 1 | `_workspace/02_meal_plan.md` |
-| 3 | 레시피 작성 | recipe-writer | 작업 1, 2 | `_workspace/03_recipes.md` |
-| 4a | 장보기 목록 | shopping-coordinator | 작업 3 | `_workspace/04_shopping_list.md` |
-| 4b | 조리 가이드 | shopping-coordinator | 작업 2, 3 | `_workspace/05_cooking_guide.md` |
+| 1 | Nutritional analysis & goal setting | nutritionist | None | `_workspace/01_nutrition_analysis.md` |
+| 2 | Meal plan design | meal-designer | Task 1 | `_workspace/02_meal_plan.md` |
+| 3 | Recipe writing | recipe-writer | Tasks 1, 2 | `_workspace/03_recipes.md` |
+| 4a | Grocery list | shopping-coordinator | Task 3 | `_workspace/04_shopping_list.md` |
+| 4b | Cooking guide | shopping-coordinator | Tasks 2, 3 | `_workspace/05_cooking_guide.md` |
 
-**팀원 간 소통 흐름:**
-- nutritionist 완료 → meal-designer에게 칼로리·매크로 목표, 식이 제한 전달
-- meal-designer 완료 → recipe-writer에게 메뉴별 레시피 작성 요청, shopping-coordinator에게 밀프렙 전략 전달
-- recipe-writer 완료 → shopping-coordinator에게 전체 재료 목록 전달
-- shopping-coordinator는 재료 통합 시 정합성 확인. 누락/불일치 발견 시 recipe-writer에게 확인 요청
+**Team communication flow:**
+- nutritionist completes → sends calorie & macro targets and dietary restrictions to meal-designer
+- meal-designer completes → requests recipe writing per menu item from recipe-writer, sends meal prep strategy to shopping-coordinator
+- recipe-writer completes → sends full ingredient list to shopping-coordinator
+- shopping-coordinator verifies consistency when consolidating ingredients. If gaps or mismatches found, requests confirmation from recipe-writer
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 식단표와 레시피의 영양소 합계가 목표와 일치하는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 영양 분석 — `01_nutrition_analysis.md`
-    - 식단표 — `02_meal_plan.md`
-    - 레시피 모음 — `03_recipes.md`
-    - 장보기 목록 — `04_shopping_list.md`
-    - 조리 가이드 — `05_cooking_guide.md`
+1. Review all files in `_workspace/`
+2. Verify that nutrient totals in the meal plan and recipes match the targets
+3. Report final summary to the user:
+    - Nutritional analysis — `01_nutrition_analysis.md`
+    - Meal plan — `02_meal_plan.md`
+    - Recipe collection — `03_recipes.md`
+    - Grocery list — `04_shopping_list.md`
+    - Cooking guide — `05_cooking_guide.md`
 
-## 작업 규모별 모드
+## Mode by Task Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| User Request Pattern | Execution Mode | Agents Deployed |
 |----------------|----------|-------------|
-| "식단 전체 짜줘", "일주일 식단" | **풀 파이프라인** | 4명 전원 |
-| "내 칼로리 계산해줘" | **영양분석 모드** | nutritionist 단독 |
-| "오늘 저녁 레시피 알려줘" | **레시피 모드** | recipe-writer 단독 |
-| "이 식단 영양 분석해줘" (기존 파일) | **분석 모드** | nutritionist 단독 |
-| "장보기 목록만 만들어줘" (식단 있음) | **장보기 모드** | shopping-coordinator 단독 |
+| "Create a full meal plan", "weekly meal plan" | **Full Pipeline** | All 4 agents |
+| "Calculate my calories" | **Nutrition Analysis Mode** | nutritionist only |
+| "Give me a recipe for tonight's dinner" | **Recipe Mode** | recipe-writer only |
+| "Analyze the nutrition of this meal plan" (existing file) | **Analysis Mode** | nutritionist only |
+| "Just make me a grocery list" (meal plan provided) | **Shopping Mode** | shopping-coordinator only |
 
-**기존 파일 활용**: 사용자가 기존 식단표를 제공하면, `_workspace/02_meal_plan.md`로 복사하고 해당 단계를 건너뛴다.
+**Using existing files**: If the user provides an existing meal plan, copy it to `_workspace/02_meal_plan.md` and skip that step.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
+| Strategy | Method | Purpose |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| File-based | `_workspace/` directory | Store and share primary deliverables |
+| Message-based | SendMessage | Real-time key info delivery, revision requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{order}_{agent}_{deliverable}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
+| Error Type | Strategy |
 |----------|------|
-| 사용자 신체 정보 부족 | 한국인 평균 기준 기본값 사용, "추정값" 명시 |
-| 극단적 칼로리 목표 | 안전 범위 내로 조정 + 경고 표시 |
-| 식이 제한으로 메뉴 구성 곤란 | 대체 메뉴 제시 + 영양 보충 안내 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 보고서에 누락 명시 |
-| 영양소 목표 미달 | 식단설계자에게 메뉴 교체 요청 (최대 2회) |
+| Insufficient physical info from user | Use default values based on population averages, mark as "estimated" |
+| Extreme calorie targets | Adjust to safe range + display warning |
+| Dietary restrictions make menu composition difficult | Suggest alternative menus + nutrition supplementation guidance |
+| Agent failure | 1 retry → if still failing, proceed without that deliverable and note the gap in the report |
+| Nutrient targets not met | Request menu replacement from meal-designer (max 2 times) |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "30대 남성, 178cm, 82kg, 사무직이고 일주일에 3번 운동해. 5kg 감량 목표로 1주일 식단 짜줘"
-**기대 결과**:
-- 영양 분석: BMR→TDEE 계산, 감량 칼로리(약 1800kcal), 매크로 배분
-- 식단표: 7일 × 3끼 + 간식, 일일 칼로리 달성률 95% 이상
-- 레시피: 최소 15개 레시피 (중복 메뉴 제외), 대체재료 포함
-- 장보기: 카테고리별 통합 목록, 주 2회 구매 분할, 예산 추정
-- 조리 가이드: 일요일 밀프렙 플랜 + 일별 조리 타임라인
+### Normal Flow
+**Prompt**: "Male in his 30s, 178cm, 82kg, office worker who exercises 3 times a week. Create a 1-week meal plan to lose 5kg."
+**Expected Results**:
+- Nutritional analysis: BMR → TDEE calculation, deficit calories (~1800kcal), macro distribution
+- Meal plan: 7 days × 3 meals + snacks, daily calorie target achievement rate 95% or above
+- Recipes: minimum 15 recipes (excluding duplicates), with ingredient substitutions
+- Grocery list: consolidated list by category, split into 2 shopping trips per week, budget estimate
+- Cooking guide: Sunday meal prep plan + daily cooking timeline
 
-### 기존 파일 활용 흐름
-**프롬프트**: "지금 먹고 있는 식단인데 영양 분석해주고 개선점 알려줘" + 식단 파일 첨부
-**기대 결과**:
-- 기존 식단을 `_workspace/02_meal_plan.md`로 복사
-- nutritionist가 현재 식단의 영양 분석 수행
-- 개선 권고 사항 포함 보고서 생성
+### Existing File Flow
+**Prompt**: "Here's my current meal plan — analyze the nutrition and tell me how to improve it" + attached meal plan file
+**Expected Results**:
+- Copy existing meal plan to `_workspace/02_meal_plan.md`
+- nutritionist performs nutritional analysis of the current meal plan
+- Generate report including improvement recommendations
 
-### 에러 흐름
-**프롬프트**: "견과류 알레르기 있고 유제품 못 먹어, 비건 식단 짜줘"
-**기대 결과**:
-- 식이 제한 반영: 견과류·유제품·동물성 식품 전부 제외
-- 단백질 부족 리스크 안내 + 식물성 단백질 급원 강화 식단
-- 비타민 B12, 칼슘, 오메가3 보충 권고
-- 대체재료 목록 충실히 작성
+### Error Flow
+**Prompt**: "I have a nut allergy and can't eat dairy. Create a vegan meal plan."
+**Expected Results**:
+- Apply dietary restrictions: exclude all nuts, dairy, and animal products
+- Inform of protein deficiency risk + strengthen plant-based protein sources in the meal plan
+- Recommend supplementation for vitamin B12, calcium, and omega-3
+- Provide thorough list of ingredient substitutions
 
-## 에이전트별 확장 스킬
+## Per-Agent Extended Skills
 
-| 에이전트 | 확장 스킬 | 용도 |
+| Agent | Extended Skill | Purpose |
 |---------|----------|------|
-| nutritionist, meal-designer | `nutrition-calculator` | BMR/TDEE 계산, 매크로 배분 공식 |
-| recipe-writer, meal-designer | `ingredient-substitution-engine` | 알레르기 대체재, 식이 제한 대응 |
+| nutritionist, meal-designer | `nutrition-calculator` | BMR/TDEE calculation, macro distribution formulas |
+| recipe-writer, meal-designer | `ingredient-substitution-engine` | Allergy substitutions, dietary restriction handling |
+```
+ner | `ingredient-substitution-engine` | Allergy substitutes, dietary restriction handling |
+```

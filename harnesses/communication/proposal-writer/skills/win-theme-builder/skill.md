@@ -1,110 +1,110 @@
 ---
 name: win-theme-builder
-description: "Win Theme 구축 프레임워크. differentiator와 client-analyst 에이전트가 제안서의 핵심 차별화 메시지를 구축할 때 참조. 'Win Theme', '차별화 전략', '경쟁 우위' 요청 시 사용. 단, 경쟁사 첩보 수집이나 입찰 담합은 범위 밖."
+description: "Win Theme building framework. differentiator and client-analyst agent proposal core differentiation message buildingto do when reference. 'Win Theme', 'differentiation strategy', 'competition advantage' request when usage. However, competitor report collection scope outside."
 ---
 
-# Win Theme Builder — Win Theme 구축 프레임워크
+# Win Theme Builder — Win Theme building framework
 
-differentiator / client-analyst 에이전트의 제안서 차별화 전략을 강화.
+differentiator / client-analyst agent proposal differentiation strategy .
 
-## Win Theme 정의
+## Win Theme definition
 
 ```
-Win Theme = 고객의 핵심 니즈 + 우리만의 차별화 역량 + 증명 가능한 근거
+Win Theme = client core + only differentiation competency + people possibleKorean basis
 
-공식:
-"[고객]이 [핵심 과제]를 해결하기 위해
- [우리의 차별화 역량]으로
- [정량적 성과]를 달성합니다"
+official:
+"[client] [core task] basis for
+ [ differentiation competency]as
+ [quality performance] nature"
 ```
 
-## Win Theme 개발 프로세스
+## Win Theme development process
 
-### 1단계: 고객 Hot Button 분석
+### 1stage: client Hot Button analysis
 
-| 분석 항목 | 소스 | 분석 포인트 |
+| analysis item | | analysis point |
 |----------|------|-----------|
-| 공식 요구사항 | RFP/RFI | 명시된 평가 기준, 가중치 |
-| 비공식 니즈 | 사전 미팅, 업계 동향 | 진짜 고민, 정치적 맥락 |
-| 의사결정 구조 | 조직도, 이해관계자 | 최종결정자의 우선순위 |
-| 실패 공포 | 과거 실패 사례 | 반복하고 싶지 않은 것 |
+| official requirements | RFP/RFI | specifydone assessment standard, duringvalue |
+| official | companybefore un-, total | , valuequality context |
+| decision-making structure | , stakeholder | finaldecisionspecialist priority |
+| failure | failure case | and degree |
 
-### 2단계: 경쟁 포지셔닝
+### 2stage: competition positioning
 
-| 구분 | 우리 | 경쟁 A | 경쟁 B |
+| minute | | competition A | competition B |
 |------|------|--------|--------|
-| 강점 1 | ★★★ | ★★ | ★ |
-| 강점 2 | ★★ | ★★★ | ★★ |
-| 약점 1 | ★ | ★★ | ★★★ |
+| strength 1 | ★★★ | ★★ | ★ |
+| strength 2 | ★★ | ★★★ | ★★ |
+| weakness 1 | ★ | ★★ | ★★★ |
 
-**Ghost 전략** (경쟁사 약점 간접 부각):
-- 직접 비방 금지
-- "우리의 X 역량이 중요한 이유는..." 형태로 간접 강조
-- 평가 기준에 우리 강점이 반영되도록 프레이밍
+**Ghost strategy** (competitor weakness between departmenteach):
+- directly prohibited
+- " X competency duringKorean ..." between 
+- assessment standard strength reflectedrecord 
 
-### 3단계: Win Theme 문장 구조화
+### 3stage: Win Theme sentence structure
 
-#### Theme 유형별 패턴
+#### Theme typeby pattern
 
-| 유형 | 패턴 | 예시 |
+| type | pattern | examplewhen |
 |------|------|------|
-| 실적 기반 | "X건의 유사 프로젝트에서 입증된..." | "47건의 금융권 구축으로 입증된 전문성" |
-| 기술 기반 | "유일하게 X를 제공하는..." | "유일하게 실시간 분석을 지원하는 플랫폼" |
-| 팀 기반 | "X년 경력의 전문가 N명이..." | "평균 15년 경력 PM 3명 전담 투입" |
-| 비용 기반 | "X% 낮은 TCO로..." | "경쟁 대비 30% 낮은 5년 TCO" |
-| 리스크 기반 | "X를 통해 리스크를 제거하는..." | "단계별 검증으로 구현 리스크 최소화" |
+| results based | "Xcase company projectfrom done..." | "47case buildingas done specialistnature" |
+| technical based | "day X provide..." | "day actualtime analysis degreeKRW platform" |
+| team based | "Xyear experience expert Npeople..." | "pyeongbalanced 15year experience PM 3people before deploy" |
+| cost based | "X% TCO..." | "competition versus 30% 5year TCO" |
+| risk based | "X through risk ..." | "stageby verifyas implementation risk minimization" |
 
-## 제안서 전체 Win Theme 일관성
+## proposal overall Win Theme consistency
 
 ### Theme Matrix
 
-| Win Theme | Executive Summary | 솔루션 | 가격 | 레퍼런스 | 팀 구성 |
+| Win Theme | Executive Summary | solution | price | reference | team composition |
 |-----------|------------------|--------|------|---------|--------|
-| Theme 1: 전문성 | ○ | ○ | | ○ | ○ |
-| Theme 2: 비용효율 | ○ | | ○ | ○ | |
-| Theme 3: 리스크관리 | ○ | ○ | | | ○ |
+| Theme 1: specialistnature | ○ | ○ | | ○ | ○ |
+| Theme 2: cost | ○ | | ○ | ○ | |
+| Theme 3: riskmanagement | ○ | ○ | | | ○ |
 
-**원칙**: 모든 Win Theme이 제안서의 모든 주요 섹션에 관통해야 함.
+**principle**: all Win Theme proposal all key section through .
 
-## 차별화 증거 유형
+## differentiation type
 
-| 증거 유형 | 설득력 | 예시 |
+| type | persuasioncapability | examplewhen |
 |----------|--------|------|
-| 정량적 실적 | ★★★★★ | "고객사 매출 23% 증가" |
-| 고객 추천서 | ★★★★ | "XX그룹 CIO 추천서" |
-| 인증/수상 | ★★★★ | "AWS Advanced Partner" |
-| 특허/IP | ★★★ | "관련 특허 3건 보유" |
-| 사례 연구 | ★★★ | "유사 프로젝트 상세 사례" |
-| 팀 이력 | ★★ | "팀원 평균 경력 12년" |
+| quality results | ★★★★★ | "clientcompany sales 23% increase" |
+| client recommendationfrom | ★★★★ | "XX CIO recommendationfrom" |
+| authentication/number | ★★★★ | "AWS Advanced Partner" |
+| /IP | ★★★ | "related 3case report" |
+| case annual | ★★★ | "company project detailed case" |
+| team capability | ★★ | "teamKRW pyeongbalanced experience 12year" |
 
-## Executive Summary Win Theme 삽입
+## Executive Summary Win Theme 
 
 ```markdown
-## Executive Summary 구조
+## Executive Summary structure
 
-1. 고객 상황 공감 (2~3문장)
-   → "귀사가 직면한 [과제]를 깊이 이해합니다"
+1. client situation empathy (2~3sentence)
+ → "company Korean [task] "
 
-2. Win Theme 1 선언 (1문단)
-   → [핵심 역량] + [증거] + [기대 성과]
+2. Win Theme 1 (1document)
+ → [core competency] +  + [expected performance]
 
-3. Win Theme 2 선언 (1문단)
-   → [핵심 역량] + [증거] + [기대 성과]
+3. Win Theme 2 (1document)
+ → [core competency] +  + [expected performance]
 
-4. Win Theme 3 선언 (1문단)
-   → [핵심 역량] + [증거] + [기대 성과]
+4. Win Theme 3 (1document)
+ → [core competency] +  + [expected performance]
 
-5. 비전 제시 (2~3문장)
-   → "본 제안이 실현되면 [미래 상태]"
+5. vision present (2~3sentence)
+ → " proposal actualcurrent [un- status]"
 ```
 
-## 품질 체크리스트
+## quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| Theme 수 | 2~4개 (초과 시 집중력 분산) |
-| 고객 연결 | 각 Theme이 고객 Hot Button과 매핑 |
-| 차별화 | 경쟁사가 쉽게 주장할 수 없는 내용 |
-| 증거 | 각 Theme에 정량적 증거 1개 이상 |
-| 일관성 | 제안서 전 섹션에 Theme 관통 |
-| Ghost | 경쟁사 약점 간접 부각 |
+| Theme number | 2~4items (exceeding when duringcapability minute) |
+| client annual | each Theme client Hot Button and mapping |
+| differentiation | competitor argumentto do number content |
+| | each Theme quality 1items or more |
+| consistency | proposal before section Theme |
+| Ghost | competitor weakness between departmenteach |

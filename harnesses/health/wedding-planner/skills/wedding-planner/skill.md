@@ -1,127 +1,127 @@
 ---
 name: wedding-planner
-description: "결혼 준비를 에이전트 팀이 협업하여 종합 설계하는 파이프라인. '결혼 준비 도와줘', '웨딩 플랜', '결혼 예산', '웨딩홀 추천', '스드메 비교', '청첩장 문구', '결혼 체크리스트', '허니문 계획', '예단 준비', '혼수 리스트', '결혼 타임라인' 등 결혼 준비 전반에 이 스킬을 사용한다. 특정 항목만 필요한 경우에도 해당 부분만 지원한다. 단, 실제 업체 예약 대행, 결제 처리, 혼인신고 대행은 이 스킬의 범위가 아니다."
+description: "wedding preparation A pipeline where an agent team collaborates for comprehensive planning. 'wedding preparation ', ' ', 'wedding budget', 'wedding hall recommendation', 'studio/dress/makeup comparison', 'invitation document', 'wedding checklist', 'honeymoon plan', 'betrothal gifts preparation', 'trousseau list', 'wedding timeline' etc. wedding preparation before skill usage. item only neededKorean case also applicable departmentminute only degreeKRW. However, actual vendor exampleapprox. versus, processing, marriage registration versus is outside this skill's scope."
 ---
 
-# Wedding Planner — 결혼 준비 종합 파이프라인
+# Wedding Planner — wedding preparation comprehensive pipeline
 
-타임라인설계→예산관리표→업체비교표→체크리스트→청첩장문구를 에이전트 팀이 협업하여 한 번에 생성한다.
+timelinedesign→budgetmanagementtable→vendorcomparisontable→checklist→invitationdocument An agent team collaborates to generate all deliverables at once.
 
-## 실행 모드
+## execution mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**agent team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## agent composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| agent | file | role | type |
 |---------|------|------|------|
-| timeline-designer | `.claude/agents/timeline-designer.md` | D-day 역산, 월별 일정 | general-purpose |
-| budget-controller | `.claude/agents/budget-controller.md` | 예산 배분, 비용 절감 | general-purpose |
-| vendor-analyst | `.claude/agents/vendor-analyst.md` | 업체 조사, 비교표 | general-purpose |
-| checklist-builder | `.claude/agents/checklist-builder.md` | 체크리스트, 청첩장 문구 | general-purpose |
-| wedding-reviewer | `.claude/agents/wedding-reviewer.md` | 교차 검증, 정합성 확인 | general-purpose |
+| timeline-designer | `.claude/agents/timeline-designer.md` | D-day , monthby schedule | general-purpose |
+| budget-controller | `.claude/agents/budget-controller.md` | budget allocation, cost reduction | general-purpose |
+| vendor-analyst | `.claude/agents/vendor-analyst.md` | vendor research, comparisontable | general-purpose |
+| checklist-builder | `.claude/agents/checklist-builder.md` | checklist, invitation document | general-purpose |
+| wedding-reviewer | `.claude/agents/wedding-reviewer.md` | cross-verification, consistency confirm | general-purpose |
 
-## 워크플로우
+## workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: preparation (Orchestrator directly perform)
 
-1. 사용자 입력에서 추출한다:
-    - **결혼식 날짜**: D-day 또는 예정 시기
-    - **결혼 유형** (선택): 웨딩홀/호텔/야외/스몰웨딩
-    - **예산** (선택): 총 예산 또는 항목별 예산
-    - **하객 규모** (선택): 예상 하객 수
-    - **특별 요청** (선택): 지역, 스타일, 종교 등
-    - **기존 파일** (선택): 기존 체크리스트, 예산표 등
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+ - **wedding ceremony date**: D-day or example period
+ - **wedding type** (optional): wedding hall///
+ - **budget** (optional): total budget or itemby budget
+ - **guest scale** (optional): expected guest number
+ - **by request** (optional): degree, style, etc.
+ - **existing file** (optional): existing checklist, budgettable etc.
+2. `_workspace/` Create the directory at the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. If existing files are provided, copy them to `_workspace/`and skip the corresponding Phase
+5. Determine the **execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: team composition and execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| order | task | responsible | dependency | deliverable |
 |------|------|------|------|--------|
-| 1 | 타임라인 설계 | timeline | 없음 | `_workspace/01_timeline.md` |
-| 2a | 예산 관리 | budget | 작업 1 | `_workspace/02_budget.md` |
-| 2b | 업체 비교 | vendor | 작업 1 | `_workspace/03_vendor_comparison.md` |
-| 3 | 체크리스트·청첩장 | checklist | 작업 1, 2a, 2b | `_workspace/04_checklist_invitation.md` |
-| 4 | 종합 리뷰 | reviewer | 작업 1~3 | `_workspace/05_review_report.md` |
+| 1 | timeline design | timeline | None | `_workspace/01_timeline.md` |
+| 2a | budget management | budget | task 1 | `_workspace/02_budget.md` |
+| 2b | vendor comparison | vendor | task 1 | `_workspace/03_vendor_comparison.md` |
+| 3 | checklist·invitation | checklist | task 1, 2a, 2b | `_workspace/04_checklist_invitation.md` |
+| 4 | comprehensive review | reviewer | task 1~3 | `_workspace/05_review_report.md` |
 
-작업 2a(예산)와 2b(업체)는 **병렬 실행**한다. 둘 다 작업 1(타임라인)에만 의존하므로 동시에 시작할 수 있다.
+task 2a(budget) and 2b(vendor) ** execution**. task 1(timeline) only dependency when whenworkto do number .
 
-**팀원 간 소통 흐름:**
-- timeline 완료 → budget에게 지출 시점, vendor에게 예약 시기, checklist에게 월별 할 일 전달
-- budget ↔ vendor: 예산 한도 ↔ 업체 가격 상호 조율
-- checklist는 timeline + budget + vendor 결과를 통합하여 체크리스트 작성
-- reviewer는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**teamKRW between flow:**
+- timeline complete → budgetto expense timing, vendorto exampleapprox. period, checklistto monthby to do day deliver
+- budget ↔ vendor: budget Korean also ↔ vendor price 
+- checklist timeline + budget + vendor result integrationto checklist writing
+- reviewer all deliverable cross-verification. 🔴 required revision findings when Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: integration and final deliverable
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 리뷰 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다
+1. `_workspace/` Verify all files in the directory
+2. review reportConfirm that all critical revisions from the review report have been addressed
+3. Report the final summary to the user
 
-## 작업 규모별 모드
+## task scaleby mode
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| user request pattern | execution mode | deploy agent |
 |----------------|----------|-------------|
-| "결혼 준비 전체 도와줘" | **풀 파이프라인** | 5명 전원 |
-| "결혼 타임라인만 짜줘" | **타임라인 모드** | timeline + reviewer |
-| "결혼 예산 정리해줘" | **예산 모드** | timeline + budget + reviewer |
-| "웨딩홀 비교해줘" | **업체 모드** | vendor + reviewer |
-| "청첩장 문구 써줘" | **문구 모드** | checklist + reviewer |
-| "이 결혼 계획 검토해줘" | **리뷰 모드** | reviewer 단독 |
+| "wedding preparation overall " | **Full pipeline** | 5people beforeKRW |
+| "wedding timeline only " | **timeline mode** | timeline + reviewer |
+| "wedding budget organizationplease do" | **budget mode** | timeline + budget + reviewer |
+| "wedding hall comparisonplease do" | **vendor mode** | vendor + reviewer |
+| "invitation document " | **document mode** | checklist + reviewer |
+| " wedding plan reviewplease do" | **review mode** | reviewer |
 
-**기존 파일 활용**: 사용자가 기존 예산표, 업체 리스트 등을 제공하면 해당 단계를 건너뛴다.
+**existing file utilization**: user existing budgettable, vendor list etc. provide applicable stage case.
 
-## 데이터 전달 프로토콜
+## data deliver protocol
 
-| 전략 | 방식 | 용도 |
+| strategy | method | also |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| File-based | `_workspace/` | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information transfer, revision requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{}_{agent}_{deliverable}.{extensionspecialist}`
 
-## 에러 핸들링
+## error handling
 
-| 에러 유형 | 전략 |
+| error type | strategy |
 |----------|------|
-| 결혼 날짜 미정 | 6개월/12개월 후 2가지 시나리오 제시 |
-| 예산 미제시 | 한국 평균 결혼 비용 기준으로 진행, "예산 확정 필요" 명시 |
-| 웹 검색 실패 | 일반적 시세 기반 작업, "최신 정보 확인 필요" 명시 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰 보고서에 누락 명시 |
-| 리뷰에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
+| wedding date un- | 6months/12months after 2degree scenario present |
+| budget un-present | Korean pyeongbalanced wedding cost standardas progress, "budget needed" specify |
+| web search failure | general whentax based task, " information confirm needed" specify |
+| agent failure | Retry once -> proceed without that deliverable, note the gap in the review report |
+| reviewfrom 🔴 findings | Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds) |
 
-## 테스트 시나리오
+## test scenario
 
-### 정상 흐름
-**프롬프트**: "내년 5월에 결혼해요. 하객 200명 정도, 예산은 총 5000만원이에요. 서울 강남 쪽 웨딩홀 찾고 있어요."
-**기대 결과**:
-- 타임라인: D-12개월 역산 일정, 5월 성수기 고려 조기 예약 강조
-- 예산: 5000만원 항목별 배분, 식대(200명) 비중 높음
-- 업체: 강남 웨딩홀 3곳 비교, 스드메 추천
-- 체크리스트: 전체 체크리스트 + 청첩장 문구 4종
-- 리뷰: 정합성 매트릭스 전항목 확인
+### flow
+**Prompt**: "withinyear 5month wedding. guest 200people , budget total 50000,000 KRW. from wedding hall ."
+**expected result**:
+- timeline: D-12months schedule, 5month peak season basis exampleapprox. 
+- budget: 50000,000 KRW itemby allocation, catering cost(200people) proportion High
+- vendor: wedding hall 3 comparison, studio/dress/makeup recommendation
+- checklist: overall checklist + invitation document 4
+- review: consistency matrix beforeitem confirm
 
-### 기존 파일 활용 흐름
-**프롬프트**: "웨딩홀은 정했고 스드메도 정했어. 나머지 체크리스트랑 예산 정리 도와줘"
-**기대 결과**:
-- 기존 결정 사항을 `_workspace/`에 기록
-- budget + checklist + reviewer 투입
-- timeline은 간소화, vendor는 건너뜀
+### existing file utilization flow
+**Prompt**: "wedding hall studio/dress/makeup also . degree checklist budget organization "
+**expected result**:
+- existing decision matters `_workspace/` basisrecord
+- budget + checklist + reviewer deploy
+- timeline between, vendor case
 
-### 에러 흐름
-**프롬프트**: "결혼 준비 뭐부터 해야 해? 아직 아무것도 안 정했어"
-**기대 결과**:
-- 날짜 미정 → timeline이 6개월/12개월 2가지 시나리오 제시
-- 예산 미정 → budget이 규모별 평균 예산 안내
-- 첫 단계(날짜·예산 합의) 가이드 제공
+### error flow
+**Prompt**: "wedding preparation department ? also plan "
+**expected result**:
+- date un- → timeline 6months/12months 2degree scenario present
+- budget un- → budget scaleby pyeongbalanced budget planwithin
+- stage(date·budget ) guide provide
 
-## 에이전트별 확장 스킬
+## agentby extension skill
 
-| 에이전트 | 확장 스킬 | 용도 |
+| agent | extension skill | also |
 |---------|----------|------|
-| vendor-analyst, budget-controller | `vendor-negotiation-guide` | 업체 비교 매트릭스, 가격 기준표, 협상 전략 |
-| budget-controller, wedding-reviewer | `wedding-budget-optimizer` | 예산 배분 공식, 비용 기준표, 절약 전략 |
+| vendor-analyst, budget-controller | `vendor-negotiation-guide` | vendor comparison matrix, price standardtable, negotiation strategy |
+| budget-controller, wedding-reviewer | `wedding-budget-optimizer` | budget allocation official, cost standardtable, approx. strategy |

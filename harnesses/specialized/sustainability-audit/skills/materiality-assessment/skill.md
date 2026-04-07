@@ -1,163 +1,165 @@
 ---
 name: materiality-assessment
-description: "ESG 중대성 평가 매트릭스. esg-reporter와 improvement-planner 에이전트가 ESG 이슈의 중대성을 평가하고 우선순위를 설정할 때 참조. '중대성 평가', '중요성 분석', 'Materiality Matrix' 요청 시 사용. 단, 이해관계자 설문 시행이나 외부 인증은 범위 밖."
+description: "ESG materiality assessment matrix. Referenced by the esg-reporter and improvement-planner agents when evaluating ESG issue materiality and setting priorities. Use for 'materiality assessment', 'importance analysis', or 'Materiality Matrix' requests. Stakeholder surveys and external certification are out of scope."
 ---
 
-# Materiality Assessment — ESG 중대성 평가
+# Materiality Assessment — ESG Materiality Assessment
 
-esg-reporter / improvement-planner 에이전트의 중대성 분석 역량 강화.
+Enhances the materiality analysis capabilities of the esg-reporter and improvement-planner agents.
 
-## 이중 중대성 (Double Materiality)
+## Double Materiality
 
-### 개념
-
-```
-재무적 중대성 (Financial Materiality):
-  ESG 이슈 → 기업 가치 영향
-  "이 이슈가 매출, 비용, 자산에 영향을 주는가?"
-
-영향 중대성 (Impact Materiality):
-  기업 활동 → 환경/사회 영향
-  "우리 사업이 환경/사회에 미치는 영향은?"
-
-이중 중대성 = 재무적 + 영향 중대성 모두 고려
-(CSRD/ESRS 요구사항)
-```
-
-## 중대성 평가 프로세스
-
-### 5단계 절차
+### Concept
 
 ```
-1단계: ESG 이슈 풀 도출
-  - GRI Standards 주제 참조
-  - 업종별 SASB 지표
-  - 경쟁사/동종업계 벤치마킹
-  - 미디어/규제 동향
+Financial Materiality:
+  ESG issue -> Impact on corporate value
+  "Does this issue affect revenue, costs, or assets?"
 
-2단계: 이해관계자 식별
-  - 내부: 경영진, 직원, 이사회
-  - 외부: 투자자, 고객, 공급망, 지역사회, 규제기관
+Impact Materiality:
+  Corporate activity -> Environmental/social impact
+  "What is our business's impact on the environment/society?"
 
-3단계: 중대성 평가
-  - 이해관계자 설문/인터뷰
-  - 전문가 패널 평가
-  - 데이터 기반 분석
-
-4단계: 매트릭스 작성
-  - X축: 비즈니스 영향 (재무적 중대성)
-  - Y축: 이해관계자 관심도 (영향 중대성)
-  - 이슈 배치 → 사분면 분류
-
-5단계: 검증 및 승인
-  - 경영진 검토/승인
-  - 이사회 보고
-  - 외부 검증 (선택)
+Double Materiality = Consider both financial + impact materiality
+(CSRD/ESRS requirement)
 ```
 
-## 중대성 매트릭스
+## Materiality Assessment Process
+
+### 5-Step Procedure
 
 ```
-이해관계자 관심도
-높음 ┌─────────────┬─────────────┐
-     │  모니터링     │  최우선 관리  │
-     │  (소통 강화)  │  (전략 핵심)  │
-     ├─────────────┼─────────────┤
-     │  관찰        │  관리        │
-     │  (최소 관리)  │  (개선 계획)  │
-낮음 └─────────────┴─────────────┘
-     낮음        비즈니스 영향      높음
+Step 1: Develop ESG Issue Pool
+  - Reference GRI Standards topics
+  - SASB industry-specific indicators
+  - Competitor/peer benchmarking
+  - Media/regulatory trends
+
+Step 2: Identify Stakeholders
+  - Internal: Management, employees, board
+  - External: Investors, customers, supply chain, communities, regulators
+
+Step 3: Assess Materiality
+  - Stakeholder surveys/interviews
+  - Expert panel evaluation
+  - Data-driven analysis
+
+Step 4: Build Matrix
+  - X-axis: Business impact (financial materiality)
+  - Y-axis: Stakeholder concern (impact materiality)
+  - Plot issues -> Quadrant classification
+
+Step 5: Validation and Approval
+  - Management review/approval
+  - Board reporting
+  - External verification (optional)
 ```
 
-### 사분면별 대응 전략
+## Materiality Matrix
 
-| 사분면 | 이슈 예시 | 대응 |
-|--------|---------|------|
-| 최우선 관리 | 탄소 배출, 인권, 거버넌스 | 전략 통합, KPI, 보고 |
-| 관리 | 폐기물, 공급망 | 개선 계획, 모니터링 |
-| 모니터링 | 생물다양성, 정보보안 | 이해관계자 소통, 동향 파악 |
-| 관찰 | 일부 사회공헌 | 최소 관리 |
+```
+Stakeholder Concern
+High  +---------------+---------------+
+      |  Monitor      |  Top Priority |
+      |  (Enhance     |  (Strategic   |
+      |   dialogue)   |   core)       |
+      +---------------+---------------+
+      |  Observe      |  Manage       |
+      |  (Minimal     |  (Improvement |
+      |   oversight)  |   plan)       |
+Low   +---------------+---------------+
+      Low        Business Impact     High
+```
 
-## 업종별 중대 이슈 가이드
+### Quadrant Response Strategies
 
-### 제조업
+| Quadrant | Issue Examples | Response |
+|----------|-------------|----------|
+| Top Priority | Carbon emissions, human rights, governance | Strategic integration, KPIs, reporting |
+| Manage | Waste, supply chain | Improvement plans, monitoring |
+| Monitor | Biodiversity, information security | Stakeholder dialogue, trend tracking |
+| Observe | Certain philanthropic efforts | Minimal oversight |
 
-| 이슈 | E/S/G | 중대성 | GRI 지표 |
-|------|-------|--------|---------|
-| 탄소 배출 | E | ★★★★★ | 305-1~5 |
-| 에너지 관리 | E | ★★★★ | 302-1~4 |
-| 산업 안전 | S | ★★★★★ | 403-1~10 |
-| 폐기물 관리 | E | ★★★★ | 306-1~5 |
-| 공급망 관리 | S | ★★★ | 308, 414 |
+## Industry-Specific Material Issues Guide
 
-### IT/서비스업
+### Manufacturing
 
-| 이슈 | E/S/G | 중대성 | GRI 지표 |
-|------|-------|--------|---------|
-| 정보 보안 | G | ★★★★★ | 418 |
-| 인재 관리 | S | ★★★★★ | 401, 404 |
-| 다양성/포용 | S | ★★★★ | 405 |
-| 에너지 (데이터센터) | E | ★★★★ | 302 |
-| 디지털 윤리 | G | ★★★ | - |
+| Issue | E/S/G | Materiality | GRI Indicator |
+|-------|-------|------------|--------------|
+| Carbon Emissions | E | 5/5 | 305-1 through 305-5 |
+| Energy Management | E | 4/5 | 302-1 through 302-4 |
+| Occupational Safety | S | 5/5 | 403-1 through 403-10 |
+| Waste Management | E | 4/5 | 306-1 through 306-5 |
+| Supply Chain Management | S | 3/5 | 308, 414 |
 
-### 금융업
+### IT/Services
 
-| 이슈 | E/S/G | 중대성 | GRI 지표 |
-|------|-------|--------|---------|
-| ESG 투자/금융 | E/S | ★★★★★ | FS7, FS8 |
-| 윤리/컴플라이언스 | G | ★★★★★ | 205, 206 |
-| 정보 보안 | G | ★★★★★ | 418 |
-| 금융 접근성 | S | ★★★★ | FS13, FS14 |
-| 기후 리스크 | E | ★★★★ | TCFD |
+| Issue | E/S/G | Materiality | GRI Indicator |
+|-------|-------|------------|--------------|
+| Information Security | G | 5/5 | 418 |
+| Talent Management | S | 5/5 | 401, 404 |
+| Diversity/Inclusion | S | 4/5 | 405 |
+| Energy (Data Centers) | E | 4/5 | 302 |
+| Digital Ethics | G | 3/5 | - |
 
-## ESG 보고 프레임워크 매핑
+### Financial Services
 
-| 프레임워크 | 주요 대상 | 의무/자발 | 특징 |
-|----------|---------|----------|------|
-| GRI | 모든 이해관계자 | 자발 (사실상 표준) | 범용, 주제별 표준 |
-| SASB | 투자자 | 자발 → ISSB 통합 | 업종별 77개 표준 |
-| TCFD | 금융/투자자 | 의무화 추세 | 기후 재무 공시 |
-| ISSB (S1/S2) | 투자자 | 의무화 추세 | 글로벌 기준 통합 |
-| CSRD/ESRS | EU 기업 | 의무 | 이중 중대성, 상세 |
-| K-ESG | 국내 기업 | 자발 | 환경부 가이드라인 |
+| Issue | E/S/G | Materiality | GRI Indicator |
+|-------|-------|------------|--------------|
+| ESG Investment/Finance | E/S | 5/5 | FS7, FS8 |
+| Ethics/Compliance | G | 5/5 | 205, 206 |
+| Information Security | G | 5/5 | 418 |
+| Financial Accessibility | S | 4/5 | FS13, FS14 |
+| Climate Risk | E | 4/5 | TCFD |
 
-## KPI 설정 가이드
+## ESG Reporting Framework Mapping
 
-### E (환경) KPI
+| Framework | Primary Audience | Mandatory/Voluntary | Characteristics |
+|-----------|-----------------|--------------------|----|
+| GRI | All stakeholders | Voluntary (de facto standard) | Universal, topic-specific standards |
+| SASB | Investors | Voluntary -> ISSB integration | 77 industry standards |
+| TCFD | Financial/Investors | Trending mandatory | Climate financial disclosure |
+| ISSB (S1/S2) | Investors | Trending mandatory | Global standard consolidation |
+| CSRD/ESRS | EU companies | Mandatory | Double materiality, detailed |
+| K-ESG | Domestic companies | Voluntary | Government guidelines |
 
-| KPI | 단위 | 산출 |
-|-----|------|------|
-| 탄소 배출량 | tCO2eq | Scope 1+2+3 |
-| 탄소 원단위 | tCO2eq/억원 | 배출량/매출 |
-| 재생에너지 비율 | % | 재생에너지/총 에너지 |
-| 폐기물 재활용률 | % | 재활용량/총 폐기물 |
-| 용수 사용량 | m³ | 직접 측정 |
+## KPI Setting Guide
 
-### S (사회) KPI
+### E (Environmental) KPIs
 
-| KPI | 단위 | 산출 |
-|-----|------|------|
-| 산업재해율 | ‰ | 재해자/근로자 × 1000 |
-| 다양성 비율 | % | 여성 관리자/전체 관리자 |
-| 교육 시간 | 시간/인 | 총 교육시간/직원수 |
-| 직원 만족도 | 점 | 서베이 점수 |
+| KPI | Unit | Calculation |
+|-----|------|------------|
+| Carbon Emissions | tCO2eq | Scope 1+2+3 |
+| Carbon Intensity | tCO2eq/Revenue Unit | Emissions/Revenue |
+| Renewable Energy Share | % | Renewable/Total Energy |
+| Waste Recycling Rate | % | Recycled/Total Waste |
+| Water Usage | cubic meters | Direct measurement |
 
-### G (거버넌스) KPI
+### S (Social) KPIs
 
-| KPI | 단위 | 산출 |
-|-----|------|------|
-| 이사회 독립성 | % | 사외이사/전체 이사 |
-| 윤리 위반 건수 | 건 | 보고 체계 |
-| 정보보안 사고 | 건 | 보안 관제 |
-| 컴플라이언스 | % | 교육 이수율 |
+| KPI | Unit | Calculation |
+|-----|------|------------|
+| Occupational Injury Rate | per mille | Injured/Workers x 1000 |
+| Diversity Ratio | % | Female Managers/Total Managers |
+| Training Hours | Hours/Person | Total Training Hours/Headcount |
+| Employee Satisfaction | Score | Survey score |
 
-## 품질 체크리스트
+### G (Governance) KPIs
 
-| 항목 | 기준 |
-|------|------|
-| 이중 중대성 | 재무적 + 영향 중대성 모두 |
-| 이해관계자 | 5그룹 이상 참여 |
-| 이슈 풀 | 업종별 15~25개 |
-| 매트릭스 | 4사분면 배치 |
-| 프레임워크 | GRI + 1개 이상 연계 |
-| KPI | E/S/G 각 3개 이상 |
+| KPI | Unit | Calculation |
+|-----|------|------------|
+| Board Independence | % | Independent Directors/Total Directors |
+| Ethics Violations | Count | Via reporting system |
+| Information Security Incidents | Count | Security monitoring |
+| Compliance | % | Training completion rate |
+
+## Quality Checklist
+
+| Item | Criteria |
+|------|----------|
+| Double Materiality | Both financial + impact materiality considered |
+| Stakeholders | 5+ groups engaged |
+| Issue Pool | 15-25 issues per industry |
+| Matrix | 4-quadrant placement |
+| Framework | GRI + 1 or more additional frameworks linked |
+| KPIs | 3+ per E/S/G pillar |

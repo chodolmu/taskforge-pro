@@ -1,165 +1,165 @@
 ---
 name: kpi-tree-builder
-description: "KPI 트리(지표 계층 구조)를 체계적으로 설계하고 드릴다운 구조를 정의하는 방법론. 'KPI 트리 만들어줘', '지표 계층 설계', '드릴다운 구조', 'KPI 분해', '성과 지표 체계', '매출 분해 트리' 등 KPI 체계 설계 시 사용한다. 단, 실제 데이터베이스 쿼리 최적화, 실시간 모니터링 인프라 구축은 이 스킬의 범위가 아니다."
+description: "Methodology for systematically designing KPI trees (metric hierarchy) and defining drill-down structures. Use this skill for 'build a KPI tree', 'metric hierarchy design', 'drill-down structure', 'KPI decomposition', 'performance metrics framework', 'revenue decomposition tree', and other KPI system design tasks. Note: actual database query optimization and real-time monitoring infrastructure construction are outside the scope of this skill."
 ---
 
-# KPI Tree Builder — KPI 트리 설계 방법론
+# KPI Tree Builder — KPI Tree Design Methodology
 
-kpi-designer와 dashboard-builder의 지표 설계를 강화하는 스킬.
+A skill that enhances metric design for the kpi-designer and dashboard-builder.
 
-## 대상 에이전트
+## Target Agents
 
-- **kpi-designer** — KPI 계층 구조를 체계적으로 설계한다
-- **dashboard-builder** — 드릴다운 네비게이션을 구현한다
+- **kpi-designer** — Systematically designs KPI hierarchies
+- **dashboard-builder** — Implements drill-down navigation
 
-## KPI 트리 분해 방법론
+## KPI Tree Decomposition Methodology
 
-### 수학적 분해 (Multiplicative)
-
-```
-매출 = 주문건수 × 객단가
-     = (방문자수 × 전환율) × (상품단가 × 주문당 상품수)
-
-방문자수 = 자연유입 + 유료유입 + 직접유입
-전환율 = 장바구니전환 × 결제전환
-```
-
-### 가산적 분해 (Additive)
+### Multiplicative Decomposition
 
 ```
-총비용 = 인건비 + 마케팅비 + 서버비 + 기타운영비
-총매출 = 제품A매출 + 제품B매출 + 서비스매출
+Revenue = Order Count x Average Order Value
+       = (Visitors x Conversion Rate) x (Product Price x Items per Order)
+
+Visitors = Organic Traffic + Paid Traffic + Direct Traffic
+Conversion Rate = Cart Conversion x Checkout Conversion
 ```
 
-### 비율 분해 (Ratio)
+### Additive Decomposition
 
 ```
-고객생애가치(LTV) = ARPU × 평균 이용 기간
-CAC 회수기간 = CAC / 월 ARPU
-ROI = (이익 - 투자) / 투자 × 100
+Total Cost = Personnel + Marketing + Server + Other Operating
+Total Revenue = Product A Revenue + Product B Revenue + Service Revenue
 ```
 
-## 도메인별 KPI 트리 템플릿
-
-### 이커머스
+### Ratio Decomposition
 
 ```
-매출 (Revenue)
-├── GMV (총 거래액)
-│   ├── 주문건수
-│   │   ├── 방문자수 (UV)
-│   │   │   ├── 오가닉 트래픽
-│   │   │   ├── 유료 트래픽 (CPC, CPA)
-│   │   │   └── 리퍼럴 트래픽
-│   │   └── 구매전환율 (CVR)
-│   │       ├── 장바구니 전환율
-│   │       └── 결제 완료율
-│   └── 객단가 (AOV)
-│       ├── 상품 단가
-│       └── 주문당 상품 수
-├── 수수료율
-└── 취소/반품률
+Customer Lifetime Value (LTV) = ARPU x Average Subscription Duration
+CAC Payback Period = CAC / Monthly ARPU
+ROI = (Profit - Investment) / Investment x 100
+```
+
+## Domain-Specific KPI Tree Templates
+
+### E-Commerce
+
+```
+Revenue
+├── GMV (Gross Merchandise Value)
+│   ├── Order Count
+│   │   ├── Unique Visitors (UV)
+│   │   │   ├── Organic Traffic
+│   │   │   ├── Paid Traffic (CPC, CPA)
+│   │   │   └── Referral Traffic
+│   │   └── Purchase Conversion Rate (CVR)
+│   │       ├── Cart Conversion Rate
+│   │       └── Checkout Completion Rate
+│   └── Average Order Value (AOV)
+│       ├── Product Unit Price
+│       └── Items per Order
+├── Commission Rate
+└── Cancellation/Return Rate
 ```
 
 ### SaaS
 
 ```
-ARR (연간반복매출)
-├── 신규 ARR
-│   ├── 신규 고객 수
-│   │   ├── 리드 수
-│   │   ├── 리드→트라이얼 전환율
-│   │   └── 트라이얼→유료 전환율
-│   └── 신규 ARPA (고객당 매출)
-├── 확장 ARR (업셀/크로스셀)
-│   ├── 확장 고객 비율
-│   └── 확장 금액
-├── 이탈 ARR (-)
-│   ├── 이탈 고객 수
-│   └── 이탈 ARPA
-└── NRR (순 매출 유지율)
-    = (시작 ARR + 확장 - 축소 - 이탈) / 시작 ARR
+ARR (Annual Recurring Revenue)
+├── New ARR
+│   ├── New Customer Count
+│   │   ├── Lead Count
+│   │   ├── Lead-to-Trial Conversion
+│   │   └── Trial-to-Paid Conversion
+│   └── New ARPA (Revenue per Account)
+├── Expansion ARR (Upsell/Cross-sell)
+│   ├── Expansion Customer Ratio
+│   └── Expansion Amount
+├── Churned ARR (-)
+│   ├── Churned Customer Count
+│   └── Churned ARPA
+└── NRR (Net Revenue Retention)
+    = (Starting ARR + Expansion - Contraction - Churn) / Starting ARR
 ```
 
-### 마케팅
+### Marketing
 
 ```
-ROAS (광고 수익률)
-├── 광고 매출
-│   ├── 클릭수
-│   │   ├── 노출수 (Impressions)
-│   │   └── CTR (클릭률)
-│   └── 클릭당 전환 가치
-│       ├── 전환율
-│       └── 전환당 가치
-└── 광고 비용
-    ├── CPC × 클릭수
-    └── CPM × 노출수/1000
+ROAS (Return on Ad Spend)
+├── Ad Revenue
+│   ├── Clicks
+│   │   ├── Impressions
+│   │   └── CTR (Click-Through Rate)
+│   └── Value per Click
+│       ├── Conversion Rate
+│       └── Value per Conversion
+└── Ad Spend
+    ├── CPC x Clicks
+    └── CPM x Impressions/1000
 ```
 
-## KPI 정의서 표준 양식
+## KPI Definition Standard Form
 
 ```markdown
-### KPI: [지표명]
+### KPI: [Metric Name]
 
-| 항목 | 내용 |
-|------|------|
-| 정의 | [지표의 명확한 정의] |
-| 공식 | [계산 수식] |
-| 단위 | [%, 원, 건, 명 등] |
-| 측정 주기 | [일/주/월/분기] |
-| 데이터 소스 | [테이블명 또는 API] |
-| 목표 | [목표치 + 근거] |
-| 임계값 | [경고: 80%, 위험: 60%] |
-| 책임자 | [담당 팀/개인] |
-| 드릴다운 | [하위 지표 목록] |
-| 필터 | [기간, 지역, 상품 등] |
+| Item | Content |
+|------|---------|
+| Definition | [Clear definition of the metric] |
+| Formula | [Calculation formula] |
+| Unit | [%, currency, count, people, etc.] |
+| Measurement Frequency | [Daily/Weekly/Monthly/Quarterly] |
+| Data Source | [Table name or API] |
+| Target | [Target value + rationale] |
+| Threshold | [Warning: 80%, Critical: 60%] |
+| Owner | [Responsible team/individual] |
+| Drill-Down | [Sub-metric list] |
+| Filters | [Period, region, product, etc.] |
 ```
 
-## 지표 품질 체크리스트 (SMART-D)
+## Metric Quality Checklist (SMART-D)
 
 ```
-S - Specific: 명확하게 정의되어 있는가?
-M - Measurable: 정량적으로 측정 가능한가?
-A - Actionable: 이 지표로 의사결정이 가능한가?
-R - Relevant: 비즈니스 목표와 연결되는가?
-T - Timely: 적절한 주기로 갱신되는가?
-D - Drillable: 원인 분석을 위해 분해 가능한가?
+S - Specific: Is it clearly defined?
+M - Measurable: Can it be measured quantitatively?
+A - Actionable: Can decisions be made from this metric?
+R - Relevant: Is it connected to business objectives?
+T - Timely: Is it refreshed at an appropriate frequency?
+D - Drillable: Can it be decomposed for root cause analysis?
 ```
 
-## 임계값 설정 방법
+## Threshold Setting Methods
 
 ```
-방법 1: 통계 기반
-  - 평균 ± 1σ: 경고
-  - 평균 ± 2σ: 위험
-  - 과거 12개월 데이터 기준
+Method 1: Statistics-based
+  - Mean +/- 1 sigma: Warning
+  - Mean +/- 2 sigma: Critical
+  - Based on past 12 months of data
 
-방법 2: 벤치마크 기반
-  - 산업 평균 대비 80%: 경고
-  - 산업 평균 대비 60%: 위험
+Method 2: Benchmark-based
+  - Below 80% of industry average: Warning
+  - Below 60% of industry average: Critical
 
-방법 3: 목표 기반
-  - 목표 대비 80% 미달: 경고
-  - 목표 대비 60% 미달: 위험
+Method 3: Target-based
+  - Below 80% of target: Warning
+  - Below 60% of target: Critical
 
-방법 4: 추세 기반
-  - 전주 대비 -10%: 경고
-  - 전주 대비 -20%: 위험
+Method 4: Trend-based
+  - -10% vs previous week: Warning
+  - -20% vs previous week: Critical
 ```
 
-## 드릴다운 설계 패턴
+## Drill-Down Design Patterns
 
 ```
-Level 0: 경영 요약 (Executive Summary)
-  → 핵심 KPI 3-5개, 트렌드, 이상치 알림
+Level 0: Executive Summary
+  > 3-5 key KPIs, trends, anomaly alerts
 
-Level 1: 부서별 대시보드
-  → 마케팅/세일즈/운영/CS별 핵심 지표
+Level 1: Department Dashboards
+  > Key metrics per Marketing/Sales/Operations/CS
 
-Level 2: 상세 분석
-  → 시계열, 세그먼트별 비교, 코호트
+Level 2: Detailed Analysis
+  > Time series, segment comparisons, cohorts
 
-Level 3: 원시 데이터
-  → 개별 트랜잭션, 필터링, 내보내기
+Level 3: Raw Data
+  > Individual transactions, filtering, export
 ```

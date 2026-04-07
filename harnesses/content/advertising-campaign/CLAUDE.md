@@ -1,37 +1,37 @@
 # Advertising Campaign Harness
 
-광고 캠페인의 타깃분석→카피→크리에이티브→미디어플랜을 에이전트 팀이 협업하여 설계하는 하네스.
+A harness where an agent team collaborates to design advertising campaigns: target analysis, copy, creative, and media plans.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── market-analyst.md        — 시장·타깃 분석 (오디언스 세분화, 경쟁 광고 분석, 인사이트 도출)
-│   ├── copywriter.md            — 광고 카피 작성 (헤드라인, 바디카피, CTA, 톤앤보이스)
-│   ├── creative-director.md     — 크리에이티브 설계 (비주얼 컨셉, 스토리보드, 이미지 생성)
-│   ├── media-planner.md         — 미디어 플래닝 (채널 선정, 예산 배분, 일정 수립)
-│   └── campaign-reviewer.md     — 캠페인 QA (전략↔카피↔크리에이티브↔미디어 정합성 검증)
+│   ├── market-analyst.md        — Market/Target Analysis (audience segmentation, competitive ad analysis, insight extraction)
+│   ├── copywriter.md            — Ad Copywriting (headlines, body copy, CTAs, tone & voice)
+│   ├── creative-director.md     — Creative Design (visual concepts, storyboards, image generation)
+│   ├── media-planner.md         — Media Planning (channel selection, budget allocation, scheduling)
+│   └── campaign-reviewer.md     — Campaign QA (strategy<->copy<->creative<->media consistency verification)
 ├── skills/
 │   ├── advertising-campaign/
-│   │   └── skill.md             — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md             — Orchestrator (team coordination, workflow, error handling)
 │   ├── ad-copywriting-formulas/
-│   │   └── skill.md             — 카피라이터 확장 (AIDA/PAS/BAB 설득 공식, 심리 트리거, 채널별 글자수)
+│   │   └── skill.md             — copywriter extension (AIDA/PAS/BAB persuasion formulas, psychological triggers, channel-specific character limits)
 │   └── media-mix-calculator/
-│       └── skill.md             — 미디어플래너 확장 (GRP/CPM/ROAS 계산, 예산 배분 모델, 벤치마크)
-└── CLAUDE.md                    — 이 파일
+│       └── skill.md             — media-planner extension (GRP/CPM/ROAS calculations, budget allocation models, benchmarks)
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/advertising-campaign` 스킬을 트리거하거나, "광고 캠페인 기획해줘" 같은 자연어로 요청한다.
+Trigger the `/advertising-campaign` skill, or make a natural language request such as "Plan an advertising campaign."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_market_analysis.md` — 시장·타깃 분석 보고서
-- `02_ad_copy.md` — 광고 카피 세트
-- `03_creative_concept.md` — 크리에이티브 컨셉·스토리보드
-- `04_media_plan.md` — 미디어 플랜
-- `05_review_report.md` — 리뷰 보고서
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_market_analysis.md` — Market/target analysis report
+- `02_ad_copy.md` — Ad copy set
+- `03_creative_concept.md` — Creative concept/storyboards
+- `04_media_plan.md` — Media plan
+- `05_review_report.md` — Review report

@@ -1,121 +1,123 @@
+```markdown
 ---
 name: form-filling-guide
-description: "행정 서식(신청서·사업계획서)의 항목별 기재 가이드. 'document-drafter'와 'attachment-preparer' 에이전트가 신청서를 작성하고 첨부자료를 준비할 때 이 스킬의 기재 규칙과 작성 패턴을 반드시 활용해야 한다. '신청서 작성법', '기재 요령', '서식 작성 가이드' 등에 사용한다. 단, 요건 조사나 제출 검증은 이 스킬의 범위가 아니다."
+description: "Item-by-item filling guide for administrative forms (applications, business plans). The 'document-drafter' and 'attachment-preparer' agents MUST use the filling rules and writing patterns from this skill when preparing applications and attachments. Used for 'how to fill out an application', 'form completion tips', 'form writing guide', etc. Note: requirement research and submission validation are outside the scope of this skill."
 ---
 
-# Form Filling Guide — 행정 서식 기재 가이드
+# Form Filling Guide — Administrative Form Completion Guide
 
-인허가 신청서, 사업계획서 등 행정 서식의 정확한 기재 방법과 주의사항.
+Accurate completion methods and notes for administrative forms such as permit applications and business plans.
 
-## 기재 기본 원칙
+## Basic Filling Principles
 
-### 공통 규칙
+### Common Rules
 
 ```
-1. 정확성: 등기부등본·사업자등록증과 정확히 일치
-2. 완전성: 빈 칸 없이 작성 (해당 없음은 "해당 없음" 기재)
-3. 일관성: 사업자명, 대표자명, 주소가 모든 서류에서 동일
-4. 최신성: 제출일 기준 최신 정보
-5. 가독성: 검정 잉크, 명확한 글씨 (전자 작성 권장)
+1. Accuracy: Must exactly match the registry and business registration certificate
+2. Completeness: No blank fields (write "N/A" for items that do not apply)
+3. Consistency: Business name, representative name, and address must be identical across all documents
+4. Currency: Use the most up-to-date information as of the submission date
+5. Legibility: Black ink, clear handwriting (electronic completion recommended)
 ```
 
-### 기재 시 흔한 반려 사유
+### Common Rejection Reasons
 
-| 반려 사유 | 빈도 | 예방법 |
+| Rejection Reason | Frequency | Prevention |
 |----------|------|--------|
-| 주소 불일치 | 최다 | 등기부·사업자등록증 기준 통일 |
-| 용도지역 미확인 | 높음 | 토지이용계획 확인 후 기재 |
-| 면적 불일치 | 높음 | 건축물대장 기준 |
-| 누락 서류 | 높음 | 구비서류 체크리스트 활용 |
-| 자격 미달 | 중간 | 사전 요건 확인 |
-| 서명 누락 | 중간 | 서명/날인 위치 확인 |
-| 수수료 미납 | 낮음 | 사전 확인 |
+| Address mismatch | Most common | Standardize based on registry and business registration certificate |
+| Unverified zoning | High | Fill in after confirming land use plan |
+| Area discrepancy | High | Base on building register |
+| Missing documents | High | Use required document checklist |
+| Unmet qualifications | Medium | Verify requirements in advance |
+| Missing signature | Medium | Confirm signature/seal locations |
+| Unpaid fees | Low | Verify in advance |
 
-## 서식별 기재 가이드
+## Form-by-Form Filling Guide
 
-### 사업자등록 신청서
+### Business Registration Application
 
-| 항목 | 기재 요령 | 주의사항 |
+| Field | Filling Instructions | Notes |
 |------|----------|---------|
-| 상호 | 사용할 사업체 이름 | 등기부와 동일 (법인) |
-| 사업장 소재지 | 실제 영업장 도로명 주소 | 임대차계약서 주소와 일치 |
-| 업태 | 대분류 (서비스업, 제조업 등) | 업종코드표 참조 |
-| 종목 | 세부 업종 (소프트웨어 개발 등) | 실제 사업 내용과 일치 |
-| 개업일 | 사업 시작일 (미래 가능) | 사실상 사업 개시일 기준 |
-| 사업자 유형 | 일반/간이/면세 | 매출 규모에 따라 결정 |
+| Business name | Name of the business entity to use | Must match the registry (for corporations) |
+| Business location | Actual place of business road name address | Must match the lease agreement address |
+| Business category | Major classification (services, manufacturing, etc.) | Refer to industry code table |
+| Business type | Detailed industry (software development, etc.) | Must match actual business activities |
+| Opening date | Business start date (future date allowed) | Based on actual business commencement date |
+| Taxpayer type | General/simplified/tax-exempt | Determined by revenue scale |
 
-### 사업계획서 작성 프레임워크
+### Business Plan Writing Framework
 
 ```markdown
-## 1. 사업 개요
-- 사업명, 목적, 필요성
-- 사업 기간, 장소
+## 1. Business Overview
+- Business name, purpose, and necessity
+- Business period and location
 
-## 2. 사업 내용
-- 제공 서비스/제품 상세
-- 사업 수행 방법·절차
-- 시설·장비 현황
+## 2. Business Details
+- Service/product description
+- Business execution methods and procedures
+- Facilities and equipment status
 
-## 3. 사업 추진 일정
-| 단계 | 기간 | 세부 내용 |
+## 3. Business Implementation Schedule
+| Phase | Period | Details |
 |------|------|----------|
 
-## 4. 조직·인력 계획
-- 조직도
-- 인력 현황 (자격·경력)
+## 4. Organizational and Staffing Plan
+- Organizational chart
+- Personnel roster (qualifications and experience)
 
-## 5. 자금 계획
-| 항목 | 금액 | 산출 근거 |
+## 5. Funding Plan
+| Item | Amount | Calculation Basis |
 |------|------|----------|
-| 시설비 | | |
-| 장비비 | | |
-| 인건비 | | |
-| 운영비 | | |
-| **합계** | | |
+| Facility costs | | |
+| Equipment costs | | |
+| Labor costs | | |
+| Operating costs | | |
+| **Total** | | |
 
-## 6. 기대 효과
-- 정량적 효과 (매출, 고용 등)
-- 정성적 효과 (지역사회 기여 등)
+## 6. Expected Outcomes
+- Quantitative outcomes (revenue, employment, etc.)
+- Qualitative outcomes (community contribution, etc.)
 ```
 
-## 첨부자료 품질 기준
+## Attachment Quality Standards
 
-### 증빙서류 형식 요건
+### Supporting Document Format Requirements
 
-| 서류 유형 | 형식 | 기한 | 비고 |
+| Document Type | Format | Validity | Notes |
 |----------|------|------|------|
-| 공적 증명서 | 원본 또는 정부24 출력 | 발급 3개월 이내 | 민원24 온라인 가능 |
-| 계약서 | 원본 또는 공증 사본 | 유효 기간 내 | 확정일자 필요 시 별도 |
-| 자격증 | 원본 대조필 사본 | 유효 기간 내 | 기관 직인 대조 |
-| 도면 | 축척 명시, 설계사 날인 | 현행 기준 | 건축사 도장 필요 |
-| 사진 | 칼라, 촬영일 명시 | 최근 6개월 | 현장 사진 |
+| Official certificates | Original or Government24 printout | Within 3 months of issuance | Online via Minwon24 available |
+| Contracts | Original or notarized copy | Within validity period | Certified date required separately if needed |
+| Licenses/certificates | Certified copy compared to original | Within validity period | Verified with institutional seal |
+| Drawings | Scale indicated, designer's seal | Current standards | Architect's stamp required |
+| Photos | Color, date of capture indicated | Within last 6 months | On-site photos |
 
-### 플레이스홀더 기재 방식
+### Placeholder Filling Method
 
-사용자 정보 미확보 시:
+When user information is not available:
 
 ```
-[사업자명]: "주식회사 OOO" ← 사업자등록증 기준으로 기입
-[대표자명]: "OOO" ← 등기부등본 기준으로 기입
-[소재지]: "OO시 OO구 OO로 OO (OO동, OO빌딩 O층)"
-[전화번호]: "OO-OOOO-OOOO"
-[면적]: "OO㎡" ← 건축물대장 기준으로 기입
+[Business name]: "OOO Co., Ltd." ← Fill in based on business registration certificate
+[Representative name]: "OOO" ← Fill in based on registry
+[Address]: "OO-si OO-gu OO-ro OO (OO-dong, OO Building, Floor O)"
+[Phone number]: "OO-OOOO-OOOO"
+[Area]: "OO m²" ← Fill in based on building register
 ```
 
-## 전자민원 제출 가이드
+## Electronic Civil Service Submission Guide
 
-### 주요 전자민원 시스템
+### Major Electronic Civil Service Systems
 
-| 시스템 | URL | 용도 |
+| System | URL | Purpose |
 |--------|-----|------|
-| 정부24 | gov.kr | 범용 민원 |
-| 홈택스 | hometax.go.kr | 세무 관련 |
-| 워크넷 | work.go.kr | 고용·노동 |
-| 식품안전나라 | foodsafetykorea.go.kr | 식품 인허가 |
-| 세움터 | eais.go.kr | 건축 인허가 |
-| 공정위 시스템 | ftc.go.kr | 가맹·통신판매 |
+| Government24 | gov.kr | General civil services |
+| Hometax | hometax.go.kr | Tax-related |
+| Work.go.kr | work.go.kr | Employment and labor |
+| Food Safety Korea | foodsafetykorea.go.kr | Food permits and licenses |
+| Seumteo | eais.go.kr | Construction permits and licenses |
+| FTC System | ftc.go.kr | Franchising and mail-order sales |
 
-## 참고
+## Notes
 
-- 각 관할기관별 최신 서식 확인 필수
-- 상세 서식 작성례: `references/form-examples.md` 참조
+- Always verify the latest forms from each relevant jurisdiction
+- Detailed form completion examples: refer to `references/form-examples.md`
+```

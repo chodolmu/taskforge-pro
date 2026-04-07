@@ -1,128 +1,128 @@
 ---
 name: personal-branding
-description: "개인 브랜딩을 에이전트 팀이 체계적으로 수행하는 파이프라인. '이력서 써줘', '개인 브랜딩', 'resume', 'CV 작성', '포트폴리오 만들어줘', 'LinkedIn 프로필 최적화', '자기소개서 써줘', '커버레터', '경력 정리', '취업 준비 도와줘', '이직 준비' 등 개인 브랜딩·커리어 문서 전반에 이 스킬을 사용한다. 단, 구인 공고 검색, 면접 시뮬레이션, 연봉 협상 코칭은 이 스킬의 범위가 아니다."
+description: "A pipeline where an agent team systematically performs personal branding. Use this skill for requests such as 'write my resume,' 'personal branding,' 'CV writing,' 'create a portfolio,' 'optimize LinkedIn profile,' 'write a cover letter,' 'organize my career,' 'help with job preparation,' or 'prepare for a job change.' Note: job posting search, interview simulation, and salary negotiation coaching are outside the scope of this skill."
 ---
 
-# Personal Branding — 개인 브랜딩 파이프라인
+# Personal Branding — Personal Branding Pipeline
 
-포지셔닝 분석→이력서·CV→포트폴리오→LinkedIn 프로필→자기소개서·커버레터를 에이전트 팀이 협업하여 제작한다.
+An agent team collaborates to produce: positioning analysis, resume/CV, portfolio, LinkedIn profile, and cover letter.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 일관된 브랜드를 구축한다.
+**Agent Team** — Five agents communicate directly via SendMessage to build a consistent brand.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| positioning-strategist | `.claude/agents/positioning-strategist.md` | 강점 분석·차별화·키워드 전략 | general-purpose |
-| resume-writer | `.claude/agents/resume-writer.md` | 이력서·CV 작성 | general-purpose |
-| portfolio-designer | `.claude/agents/portfolio-designer.md` | 포트폴리오 큐레이션·설계 | general-purpose |
-| profile-optimizer | `.claude/agents/profile-optimizer.md` | LinkedIn 프로필 최적화 | general-purpose |
-| cover-letter-writer | `.claude/agents/cover-letter-writer.md` | 자기소개서·커버레터 작성 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| positioning-strategist | `.claude/agents/positioning-strategist.md` | Strength analysis, differentiation, keyword strategy | general-purpose |
+| resume-writer | `.claude/agents/resume-writer.md` | Resume/CV writing | general-purpose |
+| portfolio-designer | `.claude/agents/portfolio-designer.md` | Portfolio curation and design | general-purpose |
+| profile-optimizer | `.claude/agents/profile-optimizer.md` | LinkedIn profile optimization | general-purpose |
+| cover-letter-writer | `.claude/agents/cover-letter-writer.md` | Cover letter writing | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Performed Directly by Orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **경력 정보**: 현재 직무, 경력 연차, 주요 경험
-    - **목표**: 원하는 포지션, 타깃 기업/업계
-    - **기존 자료** (선택): 현재 이력서, 포트폴리오, LinkedIn URL
-    - **요청 범위** (선택): 전체 패키지 또는 특정 문서만
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 자료가 있으면 `_workspace/`에 복사하고 분석 기반으로 활용한다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Career Information**: Current role, years of experience, key experiences
+    - **Goals**: Desired position, target companies/industries
+    - **Existing Materials** (optional): Current resume, portfolio, LinkedIn URL
+    - **Request Scope** (optional): Full package or specific documents only
+2. Create the `_workspace/` directory in the project root
+3. Organize inputs and save to `_workspace/00_input.md`
+4. If existing materials are provided, copy them to `_workspace/` and use as analysis basis
+5. Determine the **execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 포지셔닝 전략 | positioning-strategist | 없음 | `_workspace/01_positioning_brief.md` |
-| 2a | 이력서 작성 | resume-writer | 작업 1 | `_workspace/02_resume.md` |
-| 2b | 포트폴리오 설계 | portfolio-designer | 작업 1 | `_workspace/03_portfolio.md` |
-| 3a | LinkedIn 프로필 | profile-optimizer | 작업 1, 2a | `_workspace/04_linkedin_profile.md` |
-| 3b | 커버레터 | cover-letter-writer | 작업 1, 2a | `_workspace/05_cover_letter.md` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1 | Positioning Strategy | positioning-strategist | None | `_workspace/01_positioning_brief.md` |
+| 2a | Resume Writing | resume-writer | Task 1 | `_workspace/02_resume.md` |
+| 2b | Portfolio Design | portfolio-designer | Task 1 | `_workspace/03_portfolio.md` |
+| 3a | LinkedIn Profile | profile-optimizer | Tasks 1, 2a | `_workspace/04_linkedin_profile.md` |
+| 3b | Cover Letter | cover-letter-writer | Tasks 1, 2a | `_workspace/05_cover_letter.md` |
 
-작업 2a(이력서)와 2b(포트폴리오)는 **병렬 실행**한다.
-작업 3a(LinkedIn)와 3b(커버레터)는 **병렬 실행**한다.
+Tasks 2a (resume) and 2b (portfolio) are executed **in parallel**.
+Tasks 3a (LinkedIn) and 3b (cover letter) are executed **in parallel**.
 
-**팀원 간 소통 흐름:**
-- positioning-strategist 완료 → 전 에이전트에게 UVP, 키워드, 내러티브 전달
-- resume-writer 완료 → profile-optimizer에게 경력 서술, cover-letter-writer에게 핵심 성과 전달
-- portfolio-designer 완료 → profile-optimizer에게 Featured 항목, cover-letter-writer에게 프로젝트 성과 전달
-- 전체 산출물 간 **브랜드 일관성** 교차 확인
+**Inter-agent Communication Flow:**
+- positioning-strategist completes -> Delivers UVP, keywords, and narrative to all agents
+- resume-writer completes -> Delivers career descriptions to profile-optimizer; delivers key achievements to cover-letter-writer
+- portfolio-designer completes -> Delivers featured items to profile-optimizer; delivers project achievements to cover-letter-writer
+- Cross-verify **brand consistency** across all deliverables
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 산출물 간 브랜드 메시지 일관성을 검증한다:
-    - 이력서↔LinkedIn 경력 서술 일관성
-    - 포트폴리오↔이력서 프로젝트 정합성
-    - 커버레터↔포지셔닝 UVP 반영 여부
-3. 최종 요약을 사용자에게 보고한다
+1. Review all files in `_workspace/`
+2. Verify brand message consistency across deliverables:
+    - Resume <-> LinkedIn career descriptions consistency
+    - Portfolio <-> Resume project alignment
+    - Cover letter <-> Positioning UVP reflection
+3. Present the final summary to the user
 
-## 작업 규모별 모드
+## Execution Modes by Request Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "개인 브랜딩 해줘", "취업 준비" | **풀 패키지** | 5명 전원 |
-| "이력서만 써줘" | **이력서 모드** | positioning-strategist + resume-writer |
-| "포트폴리오 만들어줘" | **포트폴리오 모드** | positioning-strategist + portfolio-designer |
-| "LinkedIn 프로필 최적화해줘" | **프로필 모드** | positioning-strategist + profile-optimizer |
-| "자기소개서 써줘", "커버레터" | **커버레터 모드** | positioning-strategist + cover-letter-writer |
+| User Request Pattern | Execution Mode | Deployed Agents |
+|---------------------|---------------|-----------------|
+| "Do personal branding," "Job preparation" | **Full Package** | All 5 agents |
+| "Just write a resume" | **Resume Mode** | positioning-strategist + resume-writer |
+| "Create a portfolio" | **Portfolio Mode** | positioning-strategist + portfolio-designer |
+| "Optimize my LinkedIn profile" | **Profile Mode** | positioning-strategist + profile-optimizer |
+| "Write a cover letter" | **Cover Letter Mode** | positioning-strategist + cover-letter-writer |
 
-**기존 파일 활용**: 기존 이력서를 제공하면 positioning-strategist가 분석하여 전략 수립에 활용한다.
+**Using Existing Files**: If an existing resume is provided, positioning-strategist analyzes it to inform strategy development.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 웹 탐색 | WebSearch/WebFetch | JD 분석, 업계 트렌드 조사 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Primary deliverable storage and sharing |
+| Message-based | SendMessage | Real-time critical information transfer, revision requests |
+| Web exploration | WebSearch/WebFetch | JD analysis, industry trend research |
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 경력 정보 부족 | 핵심 질문 리스트 제시, 가용 정보로 초안 작성 |
-| 목표 미지정 | 3가지 포지셔닝 시나리오 제안 |
-| 웹 검색 실패 | 일반적 JD 트렌드 지식 기반 작업, "시장 데이터 제한" 명시 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 보고에 누락 명시 |
-| 기밀 경력 | 수치·사명 추상화 가이드 적용 |
+| Error Type | Strategy |
+|-----------|----------|
+| Insufficient career information | Present a list of key questions; draft based on available info |
+| Goal unspecified | Propose 3 positioning scenarios |
+| Web search failure | Work based on general JD trend knowledge; note "limited market data" |
+| Agent failure | Retry once; if still failing, proceed without that deliverable; note omission in report |
+| Confidential career details | Apply number/company name abstraction guidelines |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "3년차 백엔드 개발자인데, 시니어 포지션으로 이직 준비하고 있어. 전체 브랜딩 패키지 만들어줘."
-**기대 결과**:
-- 포지셔닝: 시니어 역할에 맞는 UVP, 기술+리더십 강점 분석
-- 이력서: ATS 최적화, 성과 정량화, 시니어 키워드 반영
-- 포트폴리오: 3~5개 프로젝트 케이스 스터디, 기술적 의사결정 강조
-- LinkedIn: 시니어 개발자 키워드, About 섹션 서술
-- 커버레터: 성장 스토리 + 시니어 역할 준비도
+### Normal Flow
+**Prompt**: "I'm a backend developer with 3 years of experience, preparing to transition to a senior position. Create a full branding package for me."
+**Expected Results**:
+- Positioning: UVP suited for senior role, technical + leadership strengths analysis
+- Resume: ATS-optimized, quantified achievements, senior keywords included
+- Portfolio: 3-5 project case studies emphasizing technical decision-making
+- LinkedIn: Senior developer keywords, About section narrative
+- Cover Letter: Growth story + senior role readiness
 
-### 단일 문서 요청 흐름
-**프롬프트**: "이 JD에 맞는 커버레터만 써줘" + JD 제공
-**기대 결과**:
-- positioning-strategist가 JD 분석 → 핵심 요건 추출
-- cover-letter-writer가 맞춤 커버레터 작성
-- 다른 에이전트는 건너뜀
+### Single Document Request Flow
+**Prompt**: "Just write a cover letter matching this JD" + JD provided
+**Expected Results**:
+- positioning-strategist analyzes JD and extracts key requirements
+- cover-letter-writer creates a customized cover letter
+- Other agents are skipped
 
-### 에러 흐름
-**프롬프트**: "이력서 써줘"
-**기대 결과**:
-- 경력 정보 부족하므로 positioning-strategist가 질문 리스트 제시
-- 사용자 응답 기반으로 이력서 모드 실행
-- LinkedIn, 포트폴리오, 커버레터는 건너뛰되, "추가 제작 가능" 안내
+### Error Flow
+**Prompt**: "Write my resume"
+**Expected Results**:
+- Career info is insufficient, so positioning-strategist presents a question list
+- Execute resume mode based on user responses
+- Skip LinkedIn, portfolio, cover letter but note "additional creation available"
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-에이전트의 도메인 전문성을 강화하는 확장 스킬:
+Extension skills that enhance each agent's domain expertise:
 
-| 에이전트 | 확장 스킬 | 역할 |
-|---------|----------|------|
-| resume-writer | `ats-optimizer` | ATS 파싱 원리, 키워드 최적화, 성과 정량화(STAR-Q), 형식 규칙 |
-| profile-optimizer | `linkedin-seo` | LinkedIn 검색 알고리즘, 섹션별 최적화, 리크루터 검색 패턴, SSI |
+| Agent | Extension Skill | Role |
+|-------|----------------|------|
+| resume-writer | `ats-optimizer` | ATS parsing principles, keyword optimization, achievement quantification (STAR-Q), format rules |
+| profile-optimizer | `linkedin-seo` | LinkedIn search algorithm, section-by-section optimization, recruiter search patterns, SSI |

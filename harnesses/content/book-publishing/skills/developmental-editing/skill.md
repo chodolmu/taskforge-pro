@@ -1,143 +1,143 @@
 ---
 name: developmental-editing
-description: "편집자(manuscript-editor)가 사용하는 발전적 편집 전문 스킬. 원고 구조 분석, 서사 아크 진단, 캐릭터 아크 설계, 페이싱 조절, 장르별 편집 기준을 제공한다. '원고 편집', '구조 편집', '서사 분석', '원고 피드백' 등에 활용한다."
+description: "A specialized skill for the manuscript-editor agent covering developmental editing. Provides manuscript structure analysis, narrative arc diagnostics, character arc design, pacing adjustment, and genre-specific editing standards. Use for 'manuscript editing,' 'structural editing,' 'narrative analysis,' 'manuscript feedback,' and similar topics."
 ---
 
-# Developmental Editing — 발전적 편집 방법론
+# Developmental Editing — Developmental Editing Methodology
 
-manuscript-editor 에이전트가 원고를 구조적으로 편집할 때 활용하는 편집 전문 지식.
+Specialized editing knowledge used by the manuscript-editor agent when structurally editing manuscripts.
 
-## 왜 발전적 편집인가
+## Why Developmental Editing
 
-교정교열(맞춤법/문법)은 편집의 10%에 불과하다. **발전적 편집**은 원고의 구조, 서사, 캐릭터, 페이싱을 진단하고 개선하는 것으로, 책의 완성도를 결정하는 핵심 작업이다.
+Proofreading (spelling/grammar) is only 10% of editing. **Developmental editing** diagnoses and improves the manuscript's structure, narrative, characters, and pacing — the core work that determines a book's quality.
 
-## 원고 구조 진단: SPINE 체크
+## Manuscript Structure Diagnostics: SPINE Check
 
-| 요소 | 점검 항목 | 진단 질문 |
-|------|---------|----------|
-| **S**tructure | 전체 구조 | 목차가 논리적 흐름을 만드는가? 각 장이 전체에 기여하는가? |
-| **P**acing | 페이싱 | 처지는 구간이 있는가? 클라이맥스 타이밍이 적절한가? |
-| **I**ntention | 의도 | 저자가 전달하려는 핵심 메시지가 명확한가? |
-| **N**arrative | 서사/논리 | (소설) 서사 아크가 완결되는가? (비문학) 논증이 탄탄한가? |
-| **E**ngagement | 독자 참여 | 독자가 계속 읽고 싶어하는가? 첫 장이 강력한가? |
+| Element | Check Item | Diagnostic Question |
+|---------|-----------|-------------------|
+| **S**tructure | Overall structure | Does the table of contents create a logical flow? Does each chapter contribute to the whole? |
+| **P**acing | Pacing | Are there sagging sections? Is the climax timing appropriate? |
+| **I**ntention | Intent | Is the author's core message clear? |
+| **N**arrative | Narrative/Logic | (Fiction) Is the narrative arc complete? (Non-fiction) Is the argumentation solid? |
+| **E**ngagement | Reader engagement | Does the reader want to keep reading? Is the first chapter compelling? |
 
-## 장르별 편집 기준
+## Genre-Specific Editing Standards
 
-### 비즈니스/자기계발서
+### Business/Self-Help
 
-| 편집 기준 | 이상적 상태 | 흔한 문제 |
-|----------|-----------|----------|
-| **핵심 메시지** | 한 문장으로 요약 가능 | 여러 주제가 산만하게 섞임 |
-| **구조** | 문제→원인→해결→실행 또는 프레임워크 중심 | 일화 나열만 하고 체계 부재 |
-| **사례** | 각 장에 최소 1개 구체적 사례 | 이론만 있고 사례 부재 |
-| **실행 가능성** | 독자가 당장 따라할 수 있는 액션 | 추상적 조언만 나열 |
-| **첫 장** | 독자의 고통/욕구를 직격 | 저자 자기소개로 시작 |
+| Editing Criterion | Ideal State | Common Problem |
+|------------------|-------------|----------------|
+| **Core Message** | Summarizable in one sentence | Multiple topics scattered randomly |
+| **Structure** | Problem->Cause->Solution->Action or framework-centered | Anecdote listing with no system |
+| **Case Studies** | At least 1 concrete case per chapter | Theory only, no cases |
+| **Actionability** | Reader can take immediate action | Only abstract advice listed |
+| **First Chapter** | Directly targets reader's pain/desire | Starts with author self-introduction |
 
-### 소설
+### Fiction
 
-| 편집 기준 | 이상적 상태 | 흔한 문제 |
-|----------|-----------|----------|
-| **도입** | 첫 페이지에서 긴장/궁금증 | 풍경 묘사나 설정 설명으로 시작 |
-| **캐릭터** | 주인공에게 결핍+욕구+변화 | 평면적, 변화 없음 |
-| **갈등** | 매 장에 갈등 또는 긴장 | 갈등 없이 사건만 나열 |
-| **대화** | 캐릭터별 고유한 말투 | 모든 캐릭터가 같은 어투 |
-| **결말** | 감정적 만족 + 서사적 해결 | 급작스러운 마무리 |
+| Editing Criterion | Ideal State | Common Problem |
+|------------------|-------------|----------------|
+| **Opening** | Tension/curiosity from the first page | Starts with scenery description or setting explanation |
+| **Characters** | Protagonist has deficiency + desire + change | Flat, no change |
+| **Conflict** | Conflict or tension in every chapter | Events listed without conflict |
+| **Dialogue** | Unique speech patterns per character | All characters speak the same way |
+| **Ending** | Emotional satisfaction + narrative resolution | Abrupt conclusion |
 
-### 에세이
+### Essay
 
-| 편집 기준 | 이상적 상태 | 흔한 문제 |
-|----------|-----------|----------|
-| **고유 시선** | 저자만의 관점이 드러남 | 일반론, 누구나 할 수 있는 이야기 |
-| **감각적 묘사** | 구체적 장면, 감각 | 추상적 감정 서술 |
-| **구성** | 에세이 간 흐름과 주제 연결 | 무작위 배열 |
-| **깊이** | 표면 너머의 성찰 | 일기장 수준의 기록 |
+| Editing Criterion | Ideal State | Common Problem |
+|------------------|-------------|----------------|
+| **Unique Perspective** | Author's distinctive viewpoint emerges | Generic observations anyone could make |
+| **Sensory Description** | Concrete scenes, sensory details | Abstract emotional statements |
+| **Structure** | Flow and thematic connections between essays | Random arrangement |
+| **Depth** | Reflection beyond the surface | Diary-level recording |
 
-## 페이싱 분석 도구
+## Pacing Analysis Tools
 
-### 장별 에너지 매핑
+### Chapter Energy Mapping
 
-각 장의 에너지 수준을 1~10으로 평가하여 매핑한다:
+Rate each chapter's energy level 1-10 and map:
 
 ```
-에너지
-10│        ●
- 8│    ●       ●
- 6│  ●   ●       ●   ●
- 4│●       ●       ●   ●
- 2│                       ●
-  └──────────────────────── 장
+Energy
+10|        *
+ 8|    *       *
+ 6|  *   *       *   *
+ 4|*       *       *   *
+ 2|                       *
+  +------------------------- Chapter
   1  2  3  4  5  6  7  8  9  10
 ```
 
-### 페이싱 문제 진단
+### Pacing Problem Diagnosis
 
-| 패턴 | 문제 | 해결 |
-|------|------|------|
-| 계속 높음 (8,9,8,9,8) | 독자 피로, 감정 무감각 | 이완 장 삽입 |
-| 계속 낮음 (3,4,3,2,3) | 지루함, 이탈 | 갈등/위기 추가, 장 통합 |
-| 첫 장이 낮음 (2) | 독자가 시작도 안 함 | 중간의 강력한 장면을 앞으로 |
-| 끝이 낮음 (3) | 반클라이맥스 | 결말 재설계 |
-| 중반 침체 (7,8,3,3,3,8) | 중반 이탈 | "미드포인트 반전" 삽입 |
+| Pattern | Problem | Solution |
+|---------|---------|----------|
+| Constantly high (8,9,8,9,8) | Reader fatigue, emotional numbness | Insert relaxation chapters |
+| Constantly low (3,4,3,2,3) | Boredom, drop-off | Add conflict/crisis, merge chapters |
+| Low first chapter (2) | Reader never starts | Move a powerful mid-section scene forward |
+| Low ending (3) | Anti-climax | Redesign the ending |
+| Midpoint slump (7,8,3,3,3,8) | Mid-section drop-off | Insert "midpoint reversal" |
 
-## 편집 피드백 작성법
+## Editing Feedback Writing
 
-### 편집 메모 3계층
+### 3-Tier Editing Notes
 
-| 계층 | 범위 | 예시 |
-|------|------|------|
-| **매크로** | 전체 구조 | "3장과 5장의 순서를 바꾸면 논리적 흐름이 개선됩니다" |
-| **미디엄** | 장/섹션 단위 | "이 장의 후반부가 늘어집니다. 핵심 사례 1개만 남기세요" |
-| **마이크로** | 문장/단락 | "이 비유가 핵심 메시지를 흐리게 합니다" |
+| Tier | Scope | Example |
+|------|-------|---------|
+| **Macro** | Overall structure | "Swapping chapters 3 and 5 would improve logical flow" |
+| **Medium** | Chapter/section level | "The latter half of this chapter drags. Keep only 1 core case study" |
+| **Micro** | Sentence/paragraph | "This metaphor obscures the core message" |
 
-### 편집 보고서 포맷
+### Editing Report Format
 
 ```
-## 편집 보고서
+## Editing Report
 
-### 전체 평가 요약
-[원고의 강점 2~3개 + 핵심 개선점 2~3개]
+### Overall Assessment Summary
+[2-3 strengths + 2-3 key improvements]
 
-### 구조 피드백 (매크로)
-[전체 구조에 대한 의견, 장 순서 변경 제안 등]
+### Structural Feedback (Macro)
+[Overall structure opinions, chapter reordering suggestions, etc.]
 
-### 장별 피드백 (미디엄)
-#### 1장: [제목]
-- 강점: [구체적]
-- 개선점: [구체적 + 제안]
-- 에너지 수준: [1~10]
+### Chapter-by-Chapter Feedback (Medium)
+#### Chapter 1: [Title]
+- Strengths: [Specific]
+- Improvements: [Specific + suggestion]
+- Energy Level: [1-10]
 
-#### 2장: ...
+#### Chapter 2: ...
 
-### 문체/톤 피드백
-[일관성, 독자 수준 적합성, 장르 적합성]
+### Style/Tone Feedback
+[Consistency, reader-level appropriateness, genre fit]
 
-### 우선 수정 사항 (TOP 5)
-1. [가장 중요한 수정]
+### Priority Revisions (TOP 5)
+1. [Most important revision]
 2. ...
 
-### 격려의 말
-[저자에게 긍정적 마무리]
+### Words of Encouragement
+[Positive closing for the author]
 ```
 
-## 편집자의 핵심 질문 20가지
+## Editor's 20 Key Questions
 
-1. 이 책이 존재해야 하는 이유는 무엇인가?
-2. 독자는 이 책을 읽고 무엇이 달라지는가?
-3. 첫 페이지가 독자를 붙잡는가?
-4. 각 장이 전체에 기여하는가? 빼도 되는 장은 없는가?
-5. 가장 약한 장은 어디인가?
-6. 독자가 이탈할 지점은 어디인가?
-7. 핵심 메시지가 반복 강화되고 있는가?
-8. 사례/스토리가 충분한가?
-9. 독자 수준에 맞는 어휘인가?
-10. 결말이 만족스러운가?
-11. (소설) 주인공이 변화하는가?
-12. (소설) 갈등이 매 장에 존재하는가?
-13. (비문학) 논증에 빈틈이 없는가?
-14. (비문학) 반론을 다루었는가?
-15. 제목이 내용을 정확히 반영하는가?
-16. 부제가 제목을 보완하는가?
-17. 목차만 보고 책의 흐름을 파악할 수 있는가?
-18. 불필요한 반복이 있는가?
-19. 톤이 일관되는가?
-20. 이 책의 경쟁 도서 대비 차별점은 무엇인가?
+1. What is the reason this book must exist?
+2. What changes for the reader after reading this book?
+3. Does the first page grab the reader?
+4. Does each chapter contribute to the whole? Are there any chapters that could be removed?
+5. Which is the weakest chapter?
+6. Where will readers drop off?
+7. Is the core message being repeatedly reinforced?
+8. Are there enough case studies/stories?
+9. Is the vocabulary appropriate for the reader level?
+10. Is the ending satisfying?
+11. (Fiction) Does the protagonist change?
+12. (Fiction) Is there conflict in every chapter?
+13. (Non-fiction) Is the argumentation watertight?
+14. (Non-fiction) Have counterarguments been addressed?
+15. Does the title accurately reflect the content?
+16. Does the subtitle complement the title?
+17. Can the book's flow be grasped from the table of contents alone?
+18. Is there unnecessary repetition?
+19. Is the tone consistent?
+20. What differentiates this book from its competitors?

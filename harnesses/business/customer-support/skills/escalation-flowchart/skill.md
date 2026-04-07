@@ -1,166 +1,166 @@
 ---
 name: escalation-flowchart
-description: "에스컬레이션 단계를 체계적으로 설계하고 SLA를 정의하는 방법론. '에스컬레이션 설계', 'SLA 정의', '이슈 등급 분류', '위기 대응 프로토콜', '상담 라우팅' 등 에스컬레이션 체계 설계 시 사용한다. 단, CRM 시스템 설정, 콜센터 라우팅 구현은 이 스킬의 범위가 아니다."
+description: "A methodology for systematically designing escalation tiers and defining SLAs. Use this skill for 'escalation design', 'SLA definition', 'issue severity classification', 'crisis response protocol', 'support routing', and other escalation system design needs. However, CRM system configuration and call center routing implementation are outside the scope of this skill."
 ---
 
-# Escalation Flowchart — 에스컬레이션 설계 방법론
+# Escalation Flowchart — Escalation Design Methodology
 
-escalation-manager의 에스컬레이션 정책 설계를 강화하는 스킬.
+A skill that enhances the escalation policy design capabilities of escalation-manager.
 
-## 대상 에이전트
+## Target Agents
 
-- **escalation-manager** — 체계적인 에스컬레이션 정책을 설계한다
-- **response-specialist** — 에스컬레이션 트리거 조건을 응대에 반영한다
+- **escalation-manager** — Designs systematic escalation policies
+- **response-specialist** — Reflects escalation trigger conditions in responses
 
-## 에스컬레이션 3단계 구조
+## 3-Tier Escalation Structure
 
-### L1: 프론트라인 (1차 응대)
-
-```
-담당: CS 상담원 (일반)
-범위: FAQ, 일반 문의, 간단한 처리
-권한: 
-  - 정보 안내
-  - 계정 기본 설정
-  - 소액 크레딧 (5만원 이하)
-  - 표준 환불 처리
-응답 SLA: 
-  채팅 30초, 이메일 4시간, 전화 즉시
-해결 목표: 전체 문의의 70-80%
-```
-
-### L2: 전문 지원 (2차 응대)
+### L1: Frontline (First Response)
 
 ```
-담당: 시니어 상담원, 기술 지원
-범위: 기술 이슈, 복잡한 계정 문제, 특수 요청
-권한:
-  - 기술적 조사 및 해결
-  - 중액 크레딧 (50만원 이하)
-  - 예외 처리 승인
-  - 부서 간 조율
-응답 SLA:
-  채팅 2분, 이메일 8시간
-해결 목표: L1 미해결의 80%
+Assigned To: CS Agents (General)
+Scope: FAQ, general inquiries, simple processing
+Authority:
+  - Information guidance
+  - Basic account settings
+  - Small credits (under $50)
+  - Standard refund processing
+Response SLA:
+  Chat 30 sec, Email 4 hours, Phone immediate
+Resolution Target: 70-80% of all inquiries
 ```
 
-### L3: 전문가/관리자 (3차 응대)
+### L2: Specialist Support (Second Response)
 
 ```
-담당: 팀 리더, 개발팀, 법무팀
-범위: 서비스 장애, 법적 이슈, VIP 컴플레인
-권한:
-  - 대액 보상 결정
-  - 서비스 수정/패치 요청
-  - 공식 사과문 발행
-  - 법적 대응 시작
-응답 SLA:
-  긴급 1시간, 일반 24시간
-해결 목표: 모든 미해결 건
+Assigned To: Senior Agents, Technical Support
+Scope: Technical issues, complex account problems, special requests
+Authority:
+  - Technical investigation and resolution
+  - Medium credits (under $500)
+  - Exception processing approval
+  - Cross-department coordination
+Response SLA:
+  Chat 2 min, Email 8 hours
+Resolution Target: 80% of L1 unresolved cases
 ```
 
-## 이슈 심각도 분류 (Severity)
-
-| 등급 | 설명 | 예시 | SLA | 에스컬레이션 |
-|------|------|------|-----|-------------|
-| SEV-1 (Critical) | 서비스 전면 장애, 데이터 유출 | 전체 서비스 다운 | 15분 응답, 4시간 해결 | 즉시 L3 + 경영진 |
-| SEV-2 (Major) | 핵심 기능 장애, 다수 영향 | 결제 불가 | 30분 응답, 8시간 해결 | 1시간 미해결 시 L3 |
-| SEV-3 (Moderate) | 일부 기능 장애, 우회 가능 | 특정 기능 오류 | 4시간 응답, 24시간 해결 | L1 또는 L2 |
-| SEV-4 (Low) | 경미한 문제, 불편 | UI 표시 오류 | 24시간 응답, 72시간 해결 | L1 |
-
-## 에스컬레이션 트리거 조건
-
-### 자동 에스컬레이션
+### L3: Expert/Manager (Third Response)
 
 ```
-L1 → L2 트리거:
-  - 상담 시간 15분 초과
-  - 동일 이슈 3회 이상 문의
-  - 기술적 조사 필요 (로그 확인 등)
-  - 고객이 상급자 요청
-
-L2 → L3 트리거:
-  - 24시간 미해결
-  - 고객 SNS/미디어 언급
-  - 법적 조치 언급
-  - SEV-1/SEV-2 이슈
-  - VIP/Enterprise 고객
+Assigned To: Team Leaders, Development Team, Legal Team
+Scope: Service outages, legal issues, VIP complaints
+Authority:
+  - Large compensation decisions
+  - Service modification/patch requests
+  - Official apology issuance
+  - Legal response initiation
+Response SLA:
+  Critical 1 hour, Normal 24 hours
+Resolution Target: All unresolved cases
 ```
 
-### 감정 기반 에스컬레이션
+## Issue Severity Classification
+
+| Grade | Description | Example | SLA | Escalation |
+|-------|-------------|---------|-----|------------|
+| SEV-1 (Critical) | Full service outage, data breach | Entire service down | 15 min response, 4 hr resolution | Immediate L3 + Executives |
+| SEV-2 (Major) | Core feature failure, multiple users affected | Payments not working | 30 min response, 8 hr resolution | L3 if unresolved in 1 hr |
+| SEV-3 (Moderate) | Partial feature failure, workaround available | Specific feature error | 4 hr response, 24 hr resolution | L1 or L2 |
+| SEV-4 (Low) | Minor issue, inconvenience | UI display error | 24 hr response, 72 hr resolution | L1 |
+
+## Escalation Trigger Conditions
+
+### Automatic Escalation
 
 ```
-감정 수준 판별:
-  🟢 안정: 정상 응대 진행
-  🟡 불만: 공감 표현 강화, L1 내 해결 시도
-  🔴 격앙: 즉시 L2 에스컬레이션
-  ⚫ 위협: 즉시 L3 + 법무팀 알림
+L1 → L2 Triggers:
+  - Interaction exceeds 15 minutes
+  - Same issue inquired 3+ times
+  - Technical investigation required (log review, etc.)
+  - Customer requests supervisor
 
-판별 키워드:
-  🔴: "책임자 바꿔", "소보원", "고소", "언론"
-  ⚫: "폭파", "해킹", 인신공격, 위협적 표현
+L2 → L3 Triggers:
+  - Unresolved for 24 hours
+  - Customer mentions on social media/press
+  - Legal action mentioned
+  - SEV-1/SEV-2 issue
+  - VIP/Enterprise customer
 ```
 
-## 에스컬레이션 프로세스 플로우
+### Emotion-Based Escalation
 
 ```
-고객 문의 인입
-     │
-     ├─ 자동 분류 (키워드/고객 등급)
-     │
-     ├─ L1 배정
-     │   ├─ 해결 → 종료 + CSAT 조사
-     │   └─ 미해결 → 트리거 확인
-     │       ├─ 자동 트리거 → L2 배정
-     │       └─ 수동 판단 → L2 요청
-     │
-     ├─ L2 배정
-     │   ├─ 해결 → 종료 + CSAT 조사
-     │   └─ 미해결 → L3 에스컬레이션
-     │       ├─ 기술 이슈 → 개발팀
-     │       ├─ 법적 이슈 → 법무팀
-     │       └─ 비즈니스 → 팀 리더
-     │
-     └─ L3 처리
-         ├─ 해결 → 고객 통보 + 사후 관리
-         └─ 미해결 → 경영진 보고
+Emotion Level Assessment:
+  Green (Stable): Proceed with normal response
+  Yellow (Dissatisfied): Strengthen empathy, attempt L1 resolution
+  Red (Agitated): Immediate L2 escalation
+  Black (Threatening): Immediate L3 + Legal team alert
+
+Detection Keywords:
+  Red: "Let me speak to your manager", "consumer protection", "lawsuit", "press"
+  Black: Threats, hacking mentions, personal attacks, threatening language
 ```
 
-## SLA 매트릭스 템플릿
+## Escalation Process Flow
+
+```
+Customer Inquiry Incoming
+     |
+     +-- Auto-classification (keyword/customer grade)
+     |
+     +-- L1 Assignment
+     |   +-- Resolved → Close + CSAT survey
+     |   +-- Unresolved → Check triggers
+     |       +-- Auto trigger → L2 assignment
+     |       +-- Manual judgment → L2 request
+     |
+     +-- L2 Assignment
+     |   +-- Resolved → Close + CSAT survey
+     |   +-- Unresolved → L3 escalation
+     |       +-- Technical issue → Development team
+     |       +-- Legal issue → Legal team
+     |       +-- Business → Team leader
+     |
+     +-- L3 Processing
+         +-- Resolved → Notify customer + follow-up management
+         +-- Unresolved → Executive report
+```
+
+## SLA Matrix Template
 
 ```markdown
-| 채널 | 최초 응답 | 업데이트 주기 | 해결 목표 |
-|------|----------|-------------|----------|
-| 채팅 | 30초 | 실시간 | 10분 |
-| 전화 | 즉시 | 실시간 | 통화 중 |
-| 이메일 | 4시간 | 24시간 | 48시간 |
-| SNS | 1시간 | 4시간 | 24시간 |
+| Channel | First Response | Update Frequency | Resolution Target |
+|---------|---------------|------------------|-------------------|
+| Chat | 30 sec | Real-time | 10 min |
+| Phone | Immediate | Real-time | During call |
+| Email | 4 hours | 24 hours | 48 hours |
+| Social Media | 1 hour | 4 hours | 24 hours |
 
-업무시간 외:
-  SEV-1/2: 24/7 대응 (온콜)
-  SEV-3/4: 익영업일 처리
+After Hours:
+  SEV-1/2: 24/7 response (on-call)
+  SEV-3/4: Next business day
 ```
 
-## 위기 대응 프로토콜 (SEV-1)
+## Crisis Response Protocol (SEV-1)
 
 ```
-T+0분: 이슈 감지
-  → 즉시 Slack/전화 알림
-  → 담당자 지정
+T+0 min: Issue detected
+  → Immediate Slack/phone alert
+  → Assign owner
 
-T+15분: 1차 평가
-  → 영향 범위 파악
-  → 고객 공지 초안 작성
+T+15 min: Initial assessment
+  → Determine impact scope
+  → Draft customer notice
 
-T+30분: 고객 커뮤니케이션
-  → 인앱 공지 / 상태 페이지 업데이트
-  → "현재 [문제]를 인지하고 있으며 해결 중입니다"
+T+30 min: Customer communication
+  → In-app notice / Status page update
+  → "We are aware of [issue] and are actively working to resolve it"
 
-T+1시간: 경영진 보고
-  → 영향 범위, 예상 해결 시간, 필요 자원
+T+1 hour: Executive report
+  → Impact scope, estimated resolution time, required resources
 
-T+해결: 사후 조치
-  → 고객 공지 (해결 완료)
-  → 영향 고객 보상 결정
-  → 포스트모템 (5 Whys)
+T+Resolution: Post-incident actions
+  → Customer notice (resolution complete)
+  → Determine compensation for affected customers
+  → Post-mortem (5 Whys)
 ```

@@ -1,123 +1,123 @@
 ---
 name: compliance-checker
-description: "규정 준수(Compliance) 검증 풀 파이프라인. 법률매핑→현황진단→갭분석→개선계획을 에이전트 팀이 협업하여 한 번에 수행한다. '규정 준수 점검해줘', '컴플라이언스 체크', '법률 준수 현황', '갭분석 해줘', '규제 대응 계획', '법적 리스크 분석', '컴플라이언스 감사', '준법 점검', '법률 이행 현황 진단' 등 규정 준수 검증 전반에 이 스킬을 사용한다. 단, 실제 법률 자문(변호사 의견), 소송 대리, 행정 신고/제출 대행, 법률 데이터베이스(판례검색시스템) 직접 연동은 이 스킬의 범위가 아니다."
+description: "A full compliance verification pipeline. An agent team collaborates to perform law mapping, status audit, gap analysis, and remediation planning in a single pass. Use this skill for contexts such as 'check regulatory compliance', 'compliance check', 'legal compliance status', 'run gap analysis', 'regulatory response plan', 'legal risk analysis', 'compliance audit', 'regulatory inspection', 'compliance status assessment', and other compliance verification tasks. Note: Actual legal counsel (attorney opinions), litigation representation, administrative filings/submissions, and direct integration with legal databases (case law search systems) are outside the scope of this skill."
 ---
 
-# Compliance Checker — 규정 준수 검증 파이프라인
+# Compliance Checker — Compliance Verification Pipeline
 
-조직의 법률·규정 준수 상태를 체계적으로 진단하고, 갭을 분석하며, 실행 가능한 개선 계획을 수립한다.
+Systematically diagnoses an organization's law and regulation compliance status, analyzes gaps, and develops actionable remediation plans.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 4명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 4 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| law-mapper | `.claude/agents/law-mapper.md` | 법규 식별, 조항 매핑, 의무사항 추출 | general-purpose |
-| status-auditor | `.claude/agents/status-auditor.md` | 현황 조사, 증거 수집, 이행 평가 | general-purpose |
-| gap-analyst | `.claude/agents/gap-analyst.md` | 갭 식별, 리스크 산정, 우선순위 도출 | general-purpose |
-| remediation-planner | `.claude/agents/remediation-planner.md` | 시정 조치, 일정 수립, 모니터링 체계 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| law-mapper | `.claude/agents/law-mapper.md` | Law identification, clause mapping, obligation extraction | general-purpose |
+| status-auditor | `.claude/agents/status-auditor.md` | Status investigation, evidence collection, compliance assessment | general-purpose |
+| gap-analyst | `.claude/agents/gap-analyst.md` | Gap identification, risk calculation, priority derivation | general-purpose |
+| remediation-planner | `.claude/agents/remediation-planner.md` | Corrective actions, scheduling, monitoring framework | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Performed Directly by Orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **대상 조직/서비스**: 점검 대상의 사업 유형, 규모
-    - **업종·산업 분야**: 금융, IT, 의료, 제조, 교육 등
-    - **적용 규제 영역** (선택): 개인정보, 금융, 노동, 환경 등
-    - **기존 자료** (선택): 정책서, 컴플라이언스 보고서, 조직도 등
-    - **중점 검토 사항** (선택): 특정 법률 또는 특정 영역
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 자료가 있으면 `_workspace/`에 복사하고 해당 Phase를 활용한다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Target Organization/Service**: Business type and scale of the audit target
+    - **Industry/Sector**: Finance, IT, Healthcare, Manufacturing, Education, etc.
+    - **Regulatory Domain** (optional): Personal data, finance, labor, environment, etc.
+    - **Existing Materials** (optional): Policy documents, compliance reports, org charts, etc.
+    - **Focus Areas** (optional): Specific law or specific domain
+2. Create the `_workspace/` directory in the project root
+3. Organize the input and save to `_workspace/00_input.md`
+4. If existing materials are available, copy to `_workspace/` and utilize for the relevant phase
+5. Determine the **execution mode** based on the requested scope
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 법률 매핑 | law-mapper | 없음 | `_workspace/01_law_mapping.md` |
-| 2 | 현황 진단 | status-auditor | 작업 1 | `_workspace/02_status_audit.md` |
-| 3 | 갭 분석 | gap-analyst | 작업 1, 2 | `_workspace/03_gap_analysis.md` |
-| 4 | 개선 계획 | remediation-planner | 작업 1, 2, 3 | `_workspace/04_remediation_plan.md` |
+| Order | Task | Owner | Dependencies | Output |
+|-------|------|-------|-------------|--------|
+| 1 | Law Mapping | law-mapper | None | `_workspace/01_law_mapping.md` |
+| 2 | Status Audit | status-auditor | Task 1 | `_workspace/02_status_audit.md` |
+| 3 | Gap Analysis | gap-analyst | Tasks 1, 2 | `_workspace/03_gap_analysis.md` |
+| 4 | Remediation Plan | remediation-planner | Tasks 1, 2, 3 | `_workspace/04_remediation_plan.md` |
 
-**팀원 간 소통 흐름:**
-- law-mapper 완료 → status-auditor에게 의무사항 체크리스트 전달, gap-analyst에게 매핑 원본 전달
-- status-auditor 완료 → gap-analyst에게 이행 현황 전달, remediation-planner에게 기존 인프라 정보 전달
-- gap-analyst 완료 → remediation-planner에게 우선순위 매트릭스와 근본 원인 분석 전달
-- remediation-planner는 최종 보고서 작성 시 전체 산출물의 논리적 일관성을 교차 검증한다
+**Inter-agent Communication Flow:**
+- law-mapper completes -> Delivers obligation checklist to status-auditor, mapping original to gap-analyst
+- status-auditor completes -> Delivers compliance status to gap-analyst, existing infrastructure info to remediation-planner
+- gap-analyst completes -> Delivers priority matrix and root cause analysis to remediation-planner
+- remediation-planner cross-verifies logical consistency across all deliverables when writing the final report
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 개선 계획서의 종합 의견이 법률 매핑·현황 진단·갭 분석과 일관성이 있는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 법률 매핑 보고서 — `01_law_mapping.md`
-    - 현황 진단 보고서 — `02_status_audit.md`
-    - 갭 분석 보고서 — `03_gap_analysis.md`
-    - 개선 계획서 — `04_remediation_plan.md`
+1. Review all files in `_workspace/`
+2. Verify that the remediation plan's comprehensive opinion is consistent with law mapping, status audit, and gap analysis
+3. Report the final summary to the user:
+    - Law Mapping Report — `01_law_mapping.md`
+    - Status Audit Report — `02_status_audit.md`
+    - Gap Analysis Report — `03_gap_analysis.md`
+    - Remediation Plan — `04_remediation_plan.md`
 
-## 작업 규모별 모드
+## Modes by Request Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "규정 준수 전체 점검", "컴플라이언스 풀 감사" | **풀 파이프라인** | 4명 전원 |
-| "어떤 법률이 적용되는지 알려줘" | **법률 매핑 모드** | law-mapper 단독 |
-| "현재 준수 현황만 진단해줘" (기존 매핑 있음) | **현황 진단 모드** | status-auditor |
-| "갭분석만 해줘" (매핑+현황 있음) | **갭 분석 모드** | gap-analyst |
-| "개선 계획만 세워줘" (갭분석 결과 있음) | **개선 계획 모드** | remediation-planner |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|----------------|-----------------|
+| "Full compliance check", "Full compliance audit" | **Full Pipeline** | All 4 agents |
+| "Tell me which laws apply" | **Law Mapping Mode** | law-mapper only |
+| "Just assess current compliance status" (existing mapping available) | **Status Audit Mode** | status-auditor |
+| "Just do gap analysis" (mapping + status available) | **Gap Analysis Mode** | gap-analyst |
+| "Just create a remediation plan" (gap analysis results available) | **Remediation Plan Mode** | remediation-planner |
 
-**기존 파일 활용**: 사용자가 기존 법률 매핑, 현황 진단 등의 자료를 제공하면, 해당 파일을 `_workspace/`의 적절한 번호 위치에 복사하고 해당 단계의 에이전트는 건너뛴다.
+**Using Existing Files**: If the user provides existing law mapping, status audit, or other materials, copy them to the appropriate numbered position in `_workspace/` and skip that phase's agent.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Storing and sharing main deliverables |
+| Message-based | SendMessage | Real-time delivery of key information, revision requests |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{order}_{agent}_{deliverable}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 웹 검색 실패 | 법률 분석가가 일반 지식 기반으로 작업, "최신 개정 미확인" 명시 |
-| 대상 조직 정보 부족 | 일반적 조직 기준으로 가정 진단, "가정 기반" 명시 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 최종 보고서에 누락 명시 |
-| 법률 적용 판단 불확실 | 보수적으로 포함, "전문 법률 자문 권고" 명시 |
-| 갭 분석과 현황 진단 불일치 | remediation-planner가 불일치 식별, 보수적 판단 적용 |
+| Error Type | Strategy |
+|-----------|----------|
+| Web search failure | Law analyst works based on general knowledge, notes "latest amendments unverified" |
+| Insufficient target organization info | Assume-based audit using general organization standards, note "assumption-based" |
+| Agent failure | Retry once -> if failed, proceed without that deliverable, note omission in final report |
+| Uncertain law applicability | Conservatively include, note "professional legal consultation recommended" |
+| Gap analysis and status audit inconsistency | remediation-planner identifies inconsistency, applies conservative judgment |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "온라인 쇼핑몰 운영 회사의 개인정보보호법 준수 현황을 전체 점검해줘"
-**기대 결과**:
-- 법률 매핑: 개인정보보호법, 전자상거래법, 정보통신망법 등 관련 법규 매핑
-- 현황 진단: 개인정보 수집·이용·제공·파기 등 의무사항별 이행 현황
-- 갭 분석: 미이행 항목별 리스크 등급, 5×5 리스크 매트릭스
-- 개선 계획: 단기/중기/장기 로드맵, 모니터링 KPI
+### Normal Flow
+**Prompt**: "Run a full check on our online shopping mall's Personal Information Protection Act compliance."
+**Expected Results**:
+- Law Mapping: Maps applicable laws including Personal Information Protection Act, E-Commerce Act, Information and Communications Network Act
+- Status Audit: Compliance status for each obligation including personal data collection, use, provision, destruction
+- Gap Analysis: Risk grade for each non-compliant item, 5x5 risk matrix
+- Remediation Plan: Short/mid/long-term roadmap, monitoring KPIs
 
-### 부분 흐름
-**프롬프트**: "우리 회사에 적용되는 노동 관련 법률 목록을 정리해줘. 50인 규모 IT 회사야"
-**기대 결과**:
-- 법률 매핑 모드로 전환 (law-mapper 단독)
-- 근로기준법, 산업안전보건법, 남녀고용평등법 등 적용 법규 목록
-- 조항별 의무사항 매핑
+### Partial Flow
+**Prompt**: "List the labor-related laws applicable to our company. We're a 50-person IT company."
+**Expected Results**:
+- Switches to law mapping mode (law-mapper only)
+- Lists applicable laws including Labor Standards Act, Occupational Safety and Health Act, Equal Employment Act
+- Maps obligations by clause
 
-### 에러 흐름
-**프롬프트**: "규정 준수 점검해줘, 금융회사인데 자세한 건 모르겠어"
-**기대 결과**:
-- 풀 파이프라인 실행, 금융업 관련 법규를 포괄적으로 매핑
-- 현황 진단은 일반적 금융회사 기준으로 가정, "가정 기반 진단" 명시
-- 최종 보고서에 "실제 현황 확인 시 갭 분석 재수행 권고" 포함
+### Error Flow
+**Prompt**: "Check our regulatory compliance, we're a financial company but I don't know the details."
+**Expected Results**:
+- Full pipeline execution, comprehensively maps financial industry regulations
+- Status audit assumes general financial company standards, notes "assumption-based audit"
+- Final report includes "recommend re-running gap analysis upon actual status verification"
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-| 에이전트 | 확장 스킬 | 용도 |
-|---------|----------|------|
-| law-mapper, gap-analyst | `regulation-knowledge-base` | 업종별 적용 법령 DB, 의무사항 매핑 |
-| status-auditor, remediation-planner | `audit-checklist-engine` | 감사 체크리스트 생성, 이행 성숙도 평가 |
+| Agent | Extension Skill | Purpose |
+|-------|----------------|---------|
+| law-mapper, gap-analyst | `regulation-knowledge-base` | Industry-specific applicable law DB, obligation mapping |
+| status-auditor, remediation-planner | `audit-checklist-engine` | Audit checklist generation, compliance maturity assessment |

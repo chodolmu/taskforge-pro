@@ -1,8 +1,8 @@
 # Personal Branding Harness
 
-개인 브랜딩 에이전트 팀 하네스.
+A personal branding agent team harness.
 
-## 구조
+## Structure
 
 ```
 .claude/
@@ -14,14 +14,14 @@
 │   └── cover-letter-writer.md
 ├── skills/
 │   ├── personal-branding/
-│   │   └── skill.md              — 오케스트레이터
+│   │   └── skill.md              — Orchestrator
 │   ├── ats-optimizer/
-│   │   └── skill.md              — ATS 통과 최적화 (키워드, 형식, 성과 정량화)
+│   │   └── skill.md              — ATS optimization (keywords, formatting, achievement quantification)
 │   └── linkedin-seo/
-│       └── skill.md              — LinkedIn SEO (검색 알고리즘, 섹션별 최적화, SSI)
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md              — LinkedIn SEO (search algorithm, section-by-section optimization, SSI)
+└── CLAUDE.md                     — This file
 ```
 
-## 사용법
+## Usage
 
-`/personal-branding` 스킬을 트리거하거나 자연어로 요청한다.
+Trigger the `/personal-branding` skill, or make a natural language request.

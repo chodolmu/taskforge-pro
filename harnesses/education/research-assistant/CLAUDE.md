@@ -1,8 +1,8 @@
 # Research Assistant Harness
 
-학술 연구 보조 에이전트 팀 하네스.
+An agent team harness for academic research assistance.
 
-## 구조
+## Structure
 
 ```
 .claude/
@@ -14,14 +14,14 @@
 │   └── research-coordinator.md
 ├── skills/
 │   ├── research-assistant/
-│   │   └── skill.md              — 오케스트레이터
+│   │   └── skill.md              — Orchestrator
 │   ├── systematic-review-protocol/
-│   │   └── skill.md              — 체계적 문헌 고찰 (PRISMA, PICO, Boolean 검색)
+│   │   └── skill.md              — Systematic review (PRISMA, PICO, Boolean search)
 │   └── citation-formatter/
-│       └── skill.md              — 인용 형식 변환 (APA/MLA/Chicago, BibTeX)
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md              — Citation format conversion (APA/MLA/Chicago, BibTeX)
+└── CLAUDE.md                     — This file
 ```
 
-## 사용법
+## Usage
 
-`/research-assistant` 스킬을 트리거하거나 자연어로 요청한다.
+Trigger the `/research-assistant` skill, or make a natural language request.

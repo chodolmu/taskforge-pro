@@ -1,149 +1,149 @@
 ---
 name: quest-design-patterns
-description: "퀘스트디자이너(quest-designer)가 사용하는 퀘스트 설계 패턴 전문 스킬. 퀘스트 아키타입, 보상 심리학, 난이도 곡선, 플레이어 동기 부여 프레임워크를 제공한다. '퀘스트 설계', '보상 체계', '미션 구조', '퀘스트 패턴' 등에 활용한다."
+description: "A specialized skill for the quest-designer agent covering quest design patterns. Provides quest archetypes, reward psychology, difficulty curves, and player motivation frameworks. Use for 'quest design,' 'reward systems,' 'mission structure,' 'quest patterns,' and similar topics."
 ---
 
-# Quest Design Patterns — 퀘스트 설계 패턴 방법론
+# Quest Design Patterns — Quest Design Pattern Methodology
 
-quest-designer 에이전트가 메인/사이드 퀘스트를 설계할 때 활용하는 게임 디자인 전문 지식.
+Specialized game design knowledge used by the quest-designer agent when designing main/side quests.
 
-## 왜 패턴이 필요한가
+## Why Patterns Are Needed
 
-퀘스트는 게임의 **서사와 게임플레이를 연결하는 접착제**다. "가서 10마리 잡아와"만 반복하면 플레이어는 이탈한다. 다양한 구조적 패턴을 조합해야 플레이어가 "한 퀘스트만 더"를 반복하게 된다.
+Quests are the **glue connecting narrative and gameplay**. If the game just repeats "go kill 10 of these," players will disengage. Combining diverse structural patterns is what keeps players saying "just one more quest."
 
-## 퀘스트 아키타입 12가지
+## 12 Quest Archetypes
 
-### 전투/행동 계열
+### Combat/Action Category
 
-| # | 아키타입 | 핵심 루프 | 서사적 기능 | 위험 요소 |
-|---|---------|---------|-----------|----------|
-| 1 | **사냥** | 특정 대상 처치 | 위협 제거, 영웅성 증명 | 단순 반복이 되기 쉬움 → 타깃에 스토리 부여 |
-| 2 | **방어** | 거점/NPC 보호 | 책임감, 시간 압박 | 실패 시 좌절감 → 부분 성공 옵션 제공 |
-| 3 | **추격** | 도망치는 대상 추적 | 긴장감, 시공간 활용 | 반복 실패 → 단계별 단서로 난이도 조절 |
+| # | Archetype | Core Loop | Narrative Function | Risk Factor |
+|---|-----------|-----------|-------------------|-------------|
+| 1 | **Hunt** | Eliminate a specific target | Threat removal, proving heroism | Can become repetitive -> Give the target a story |
+| 2 | **Defense** | Protect a base/NPC | Sense of responsibility, time pressure | Frustration on failure -> Provide partial success options |
+| 3 | **Pursuit** | Track a fleeing target | Tension, spatial utilization | Repeated failure -> Adjust difficulty with staged clues |
 
-### 탐색/발견 계열
+### Exploration/Discovery Category
 
-| # | 아키타입 | 핵심 루프 | 서사적 기능 | 위험 요소 |
-|---|---------|---------|-----------|----------|
-| 4 | **탐험** | 미지 영역 발견 | 세계관 확장, 호기심 | 방향감 상실 → 환경 스토리텔링으로 유도 |
-| 5 | **수집** | 아이템/정보 모으기 | 세계 이해 심화 | 지루한 심부름 → 각 아이템에 미니 서사 |
-| 6 | **수수께끼** | 퍼즐/암호 해결 | 지적 성취감, 세계 규칙 학습 | 막힘 → 힌트 시스템 단계적 제공 |
+| # | Archetype | Core Loop | Narrative Function | Risk Factor |
+|---|-----------|-----------|-------------------|-------------|
+| 4 | **Exploration** | Discover unknown regions | World-building expansion, curiosity | Loss of direction -> Guide with environmental storytelling |
+| 5 | **Collection** | Gather items/information | Deepening world understanding | Tedious errands -> Add mini-narrative to each item |
+| 6 | **Puzzle** | Solve puzzles/ciphers | Intellectual achievement, learning world rules | Getting stuck -> Provide tiered hint system |
 
-### 사회/관계 계열
+### Social/Relationship Category
 
-| # | 아키타입 | 핵심 루프 | 서사적 기능 | 위험 요소 |
-|---|---------|---------|-----------|----------|
-| 7 | **호위** | NPC와 동행 | 관계 형성, 캐릭터 발전 | 느린 NPC → AI 행동 품질 확보 |
-| 8 | **협상** | 대화로 해결 | 세력 관계 탐구, 롤플레이 | 정답이 뻔함 → 모든 선택에 대가 부여 |
-| 9 | **배달** | 물건/정보 전달 | 세계 이동, NPC 네트워크 | 단순 이동 → 이동 중 이벤트 삽입 |
+| # | Archetype | Core Loop | Narrative Function | Risk Factor |
+|---|-----------|-----------|-------------------|-------------|
+| 7 | **Escort** | Accompany an NPC | Relationship building, character development | Slow NPC -> Ensure AI behavior quality |
+| 8 | **Negotiation** | Resolve through dialogue | Exploring faction relations, role-playing | Obvious answer -> Assign a cost to every choice |
+| 9 | **Delivery** | Carry goods/information | World traversal, NPC network | Simple travel -> Insert events during travel |
 
-### 변형/복합 계열
+### Variant/Composite Category
 
-| # | 아키타입 | 핵심 루프 | 서사적 기능 | 위험 요소 |
-|---|---------|---------|-----------|----------|
-| 10 | **잠입** | 발각 없이 목표 달성 | 긴장감, 대안적 플레이 | 발각=실패 금지 → 발각 시 전투 전환 |
-| 11 | **경쟁** | NPC/플레이어와 경쟁 | 성취감, 사회적 비교 | 불공정 → 시각적 진행 표시 |
-| 12 | **딜레마** | 양립 불가 선택 | 도덕적 무게, 플레이어 정체성 | 정답 존재 → 모든 선택이 일장일단 |
+| # | Archetype | Core Loop | Narrative Function | Risk Factor |
+|---|-----------|-----------|-------------------|-------------|
+| 10 | **Infiltration** | Achieve objective undetected | Tension, alternative play style | Detection=failure prohibited -> Switch to combat on detection |
+| 11 | **Competition** | Compete against NPCs/players | Achievement, social comparison | Unfairness -> Visual progress indicators |
+| 12 | **Dilemma** | Irreconcilable choices | Moral weight, player identity | Correct answer exists -> Ensure every choice has pros and cons |
 
-## 퀘스트 구조 설계: 3층 아키텍처
-
-```
-[표면층] 플레이어가 보는 것: "마을 장로가 약초를 구해달라고 한다"
-[기계층] 게임이 추적하는 것: 이동→수집→전투→귀환 + 플래그 변경
-[서사층] 이야기가 전달하는 것: 장로의 숨겨진 과거, 약초의 진짜 용도
-```
-
-### 표면층 설계 규칙
-- 목표가 **즉시 이해**되어야 한다 — "무엇을 해야 하는가"가 3초 안에 파악
-- 목표 달성 경로가 **2가지 이상** 있어야 한다 — 전투/잠입/설득
-- **진행 상황**이 눈에 보여야 한다 — 0/5 → 3/5 → 완료
-
-### 기계층 설계 규칙
-- 퀘스트 스텝은 **3~7단계** (3 미만: 너무 단순, 7 초과: 피로)
-- 각 스텝은 **다른 게임 메카닉**을 활용 — 전투→대화→탐색 변주
-- **실패 상태**를 정의한다 — 실패 시 어떻게 되는가? (리트라이/분기/영구 결과)
-
-### 서사층 설계 규칙
-- 퀘스트 완료 후 플레이어가 **세계에 대해 새로운 것을 1개 이상** 알게 된다
-- NPC의 요청에는 **숨겨진 동기**가 있다 — 표면적 이유와 진짜 이유
-- 퀘스트 결과가 **이후 퀘스트에 영향**을 미친다 — 고립된 퀘스트 금지
-
-## 보상 심리학: DRIP 모델
-
-| 요소 | 설명 | 적용 |
-|------|------|------|
-| **D**elayed | 지연 보상 — 즉각적이지 않은 보상 | 메인 퀘스트 보상은 챕터 끝에 |
-| **R**andom | 랜덤 보상 — 변동비율 강화 | 전리품 확률 시스템 |
-| **I**ntrinsic | 내적 보상 — 스토리, 캐릭터 성장 | 감동적 컷신, 관계 변화 |
-| **P**rogressive | 점진적 보상 — 누적되는 성취 | 도전과제, 칭호, 스킬트리 |
-
-### 보상 밸런스 공식
+## Quest Structure Design: 3-Layer Architecture
 
 ```
-퀘스트 보상 가치 = (소요 시간 x 기본 보상률) x 난이도 계수 x 선택 보너스
-
-- 기본 보상률: 분당 경험치/골드 기준선
-- 난이도 계수: 쉬움(0.8), 보통(1.0), 어려움(1.5), 숨겨진(2.0)
-- 선택 보너스: 추가 목표/도덕적 선택 완수 시 1.2~1.5배
+[Surface Layer] What the player sees: "The village elder asks you to find herbs"
+[Mechanical Layer] What the game tracks: Travel -> Collect -> Combat -> Return + Flag changes
+[Narrative Layer] What the story conveys: The elder's hidden past, the true purpose of the herbs
 ```
 
-## 난이도 곡선 설계
+### Surface Layer Design Rules
+- The objective must be **immediately understandable** — "What do I need to do?" is grasped within 3 seconds
+- There must be **2 or more paths** to the objective — combat/stealth/persuasion
+- **Progress** must be visible — 0/5 -> 3/5 -> Complete
 
-### 이상적 난이도 곡선: 톱니 패턴
+### Mechanical Layer Design Rules
+- Quest steps should be **3-7 stages** (under 3: too simple, over 7: fatigue)
+- Each step should utilize **different game mechanics** — combat -> dialogue -> exploration variations
+- Define **failure states** — What happens on failure? (Retry/Branch/Permanent consequence)
 
-```
-난이도
-  ↑
-  │    /\      /\        /\
-  │   /  \    /  \      /  \
-  │  /    \  /    \    /    \    ← 각 톱니 = 퀘스트 체인
-  │ /      \/      \  /      \
-  │/                \/        \
-  └───────────────────────────→ 진행도
-```
+### Narrative Layer Design Rules
+- After completing a quest, the player should learn **at least 1 new thing** about the world
+- NPC requests have **hidden motivations** — the surface reason and the real reason
+- Quest outcomes should **affect subsequent quests** — no isolated quests
 
-- 각 톱니의 **꼭짓점**: 보스 전투 또는 핵심 분기
-- 각 톱니의 **골짜기**: 회복 퀘스트, 스토리 전개, 탐색
-- **전체 기울기**: 서서히 상승 — 챕터 1 최고 난이도 < 챕터 3 최저 난이도
+## Reward Psychology: DRIP Model
 
-### 메인 vs 사이드 퀘스트 배치
+| Element | Description | Application |
+|---------|-------------|-------------|
+| **D**elayed | Delayed rewards — non-immediate rewards | Main quest rewards come at chapter end |
+| **R**andom | Random rewards — variable ratio reinforcement | Loot probability systems |
+| **I**ntrinsic | Intrinsic rewards — story, character growth | Emotional cutscenes, relationship changes |
+| **P**rogressive | Progressive rewards — cumulative achievement | Achievements, titles, skill trees |
 
-| 진행도 | 메인 퀘스트 | 사이드 퀘스트 역할 |
-|--------|-----------|-----------------|
-| 0~20% | 튜토리얼 + 세계 소개 | 기본 메카닉 학습 |
-| 20~40% | 첫 번째 위기 | 세력/인물 깊이 추가 |
-| 40~60% | 반전 + 새로운 목표 | 숨겨진 서사 발견 |
-| 60~80% | 최종 준비 | 핵심 아이템/동맹 확보 |
-| 80~100% | 클라이맥스 + 엔딩 | 후일담, 히든 콘텐츠 |
-
-## 퀘스트 문서 템플릿
+### Reward Balance Formula
 
 ```
-### 퀘스트: [제목]
-- **ID**: Q_[챕터]_[번호]
-- **유형**: 메인 / 사이드 / 히든
-- **아키타입**: [12가지 중 선택]
-- **선행 퀘스트**: Q_XX_XX
-- **추천 레벨**: Lv.XX
+Quest Reward Value = (Time Required x Base Reward Rate) x Difficulty Coefficient x Choice Bonus
 
-#### 개요
-[1~2문장 요약]
+- Base Reward Rate: Baseline experience/gold per minute
+- Difficulty Coefficient: Easy(0.8), Normal(1.0), Hard(1.5), Hidden(2.0)
+- Choice Bonus: 1.2x-1.5x for completing bonus objectives/moral choices
+```
 
-#### 트리거 조건
-[퀘스트 시작 조건]
+## Difficulty Curve Design
 
-#### 스텝
-1. [행동] — [게임 메카닉] — [서사 기능]
+### Ideal Difficulty Curve: Sawtooth Pattern
+
+```
+Difficulty
+  ^
+  |    /\      /\        /\
+  |   /  \    /  \      /  \
+  |  /    \  /    \    /    \    <- Each tooth = quest chain
+  | /      \/      \  /      \
+  |/                \/        \
+  +----------------------------> Progress
+```
+
+- Each tooth's **peak**: Boss battle or key branching point
+- Each tooth's **valley**: Recovery quests, story development, exploration
+- **Overall slope**: Gradual increase — Chapter 1's highest difficulty < Chapter 3's lowest difficulty
+
+### Main vs. Side Quest Placement
+
+| Progress | Main Quest | Side Quest Role |
+|----------|-----------|-----------------|
+| 0-20% | Tutorial + World introduction | Basic mechanics learning |
+| 20-40% | First crisis | Adding depth to factions/characters |
+| 40-60% | Twist + New objective | Discovering hidden narratives |
+| 60-80% | Final preparation | Securing key items/alliances |
+| 80-100% | Climax + Ending | Epilogue, hidden content |
+
+## Quest Document Template
+
+```
+### Quest: [Title]
+- **ID**: Q_[Chapter]_[Number]
+- **Type**: Main / Side / Hidden
+- **Archetype**: [Choose from the 12 archetypes]
+- **Prerequisite Quest**: Q_XX_XX
+- **Recommended Level**: Lv.XX
+
+#### Overview
+[1-2 sentence summary]
+
+#### Trigger Conditions
+[Quest start conditions]
+
+#### Steps
+1. [Action] — [Game Mechanic] — [Narrative Function]
 2. ...
 
-#### 분기
-- 선택 A: [결과] → [후속 영향]
-- 선택 B: [결과] → [후속 영향]
+#### Branches
+- Choice A: [Result] -> [Subsequent impact]
+- Choice B: [Result] -> [Subsequent impact]
 
-#### 보상
-- 경험치: X / 골드: X / 아이템: [이름]
-- 서사 보상: [관계 변화, 새로운 정보]
+#### Rewards
+- Experience: X / Gold: X / Item: [Name]
+- Narrative Reward: [Relationship changes, new information]
 
-#### 플래그 변경
+#### Flag Changes
 - SET: [flag_name] = [value]
 ```

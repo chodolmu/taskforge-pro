@@ -1,110 +1,110 @@
 ---
 name: competency-model
-description: "역량 모델 설계 프레임워크. jd-writer와 screening-expert 에이전트가 직무별 핵심 역량을 정의하고 평가 기준을 수립할 때 참조. '역량 모델', '직무 역량', '스킬 매트릭스' 요청 시 사용. 단, 인사 평가 시스템 구축이나 급여 체계 설계는 범위 밖."
+description: "competency model design framework. jd-writer and screening-expert agent jobby core competency definitionand assessment standard establishto do when reference. 'competency model', 'job competency', 'skill matrix' request when usage. However, personcompany assessment whensystem building grade total design scope outside."
 ---
 
-# Competency Model — 역량 모델 설계
+# Competency Model — competency model design
 
-jd-writer / screening-expert 에이전트의 역량 기반 채용 설계 역량 강화.
+jd-writer / screening-expert agent competency based hiring design competency .
 
-## 역량 모델 구조
+## competency model structure
 
-### 3계층 역량 프레임워크
+### 3total competency framework
 
-| 계층 | 설명 | 예시 |
+| total | description | examplewhen |
 |------|------|------|
-| 핵심 역량 (Core) | 전사 공통 | 고객 중심, 협업, 윤리 |
-| 리더십 역량 | 관리자 이상 | 비전 제시, 코칭, 의사결정 |
-| 직무 역량 (Functional) | 직무 특화 | 프로그래밍, 데이터 분석, 디자인 |
+| core competency (Core) | beforecompany | client during, , |
+| leadership competency | managementspecialist or more | vision present, , decision-making |
+| job competency (Functional) | job | , data analysis, specialistperson |
 
-### 역량 수준 정의 (Proficiency Level)
+### competency level (Proficiency Level)
 
-| 수준 | 명칭 | 설명 | 적합 직급 |
+| level | people | description | quality grade |
 |------|------|------|----------|
-| L1 | 기초 | 감독 하에 수행, 기본 이해 | 신입/인턴 |
-| L2 | 실행 | 독립 수행, 표준 업무 | 주니어 |
-| L3 | 숙련 | 복합 상황 대응, 지도 가능 | 시니어 |
-| L4 | 전문 | 조직 수준 영향, 혁신 | 리드/매니저 |
-| L5 | 마스터 | 업계 수준 전문성, 전략 | 디렉터+ |
+| L1 | basis | perform, basic | /person |
+| L2 | execution | perform, tablelevel work | week |
+| L3 | | situation response, degree also possible | when |
+| L4 | specialist | level impact, | / |
+| L5 | | total level specialistnature, strategy | + |
 
-### 역량 정의 카드 템플릿
+### competency template
 
 ```markdown
-## 역량: [역량명]
+## competency: [competencypeople]
 
-### 정의
-[한 문장 정의]
+### definition
+[Korean sentence definition]
 
-### 행동 지표 (Behavioral Indicator)
+### action indicator (Behavioral Indicator)
 
-**L1 (기초)**
-- [관찰 가능한 행동 1]
-- [관찰 가능한 행동 2]
+**L1 (basis)**
+- [ possibleKorean action 1]
+- [ possibleKorean action 2]
 
-**L2 (실행)**
-- [관찰 가능한 행동 1]
-- [관찰 가능한 행동 2]
+**L2 (execution)**
+- [ possibleKorean action 1]
+- [ possibleKorean action 2]
 
-**L3 (숙련)**
-- [관찰 가능한 행동 1]
-- [관찰 가능한 행동 2]
+**L3 **
+- [ possibleKorean action 1]
+- [ possibleKorean action 2]
 
-### 평가 방법
-- 면접 질문: [구조화 질문]
-- 과제: [실기 과제]
-- 레퍼런스: [확인 포인트]
+### assessment method
+- interview question: [structure question]
+- task: [actualbasis task]
+- reference: [confirm point]
 ```
 
-## 직무별 역량 매핑 예시
+## jobby competency mapping examplewhen
 
-### 소프트웨어 엔지니어
+### degree
 
-| 역량 | 주니어(L2) | 시니어(L3) | 리드(L4) |
+| competency | week(L2) | when(L3) | (L4) |
 |------|----------|----------|---------|
-| 코딩 능력 | ★★★ 필수 | ★★★ 필수 | ★★★ 필수 |
-| 시스템 설계 | ★ 기초 | ★★★ 필수 | ★★★ 필수 |
-| 코드 리뷰 | ★ 수동 | ★★★ 능동 | ★★★ 리드 |
-| 멘토링 | - | ★★ 우대 | ★★★ 필수 |
-| 기술 전략 | - | ★ 참여 | ★★★ 주도 |
+| capability | ★★★ required | ★★★ required | ★★★ required |
+| whensystem design | ★ basis | ★★★ required | ★★★ required |
+| code review | ★ number | ★★★ | ★★★ |
+| | - | ★★ preferred | ★★★ required |
+| technical strategy | - | ★ | ★★★ week also |
 
-## JD 작성 역량 연계
+## JD writing competency annualtotal
 
-### STAR 기반 자격 요건
+### STAR based qualification requirement
 
 ```markdown
-## 자격 요건
+## qualification requirement
 
-### 필수 (Must-have)
-- [역량 1] L3 이상: [구체적 경험/성과 기준]
-  예: "대규모 트래픽(DAU 100만+) 시스템 운영 경험 2년 이상"
-- [역량 2] L2 이상: [구체적 기준]
+### required (Must-have)
+- [competency 1] L3 or more: [specific /performance standard]
+ example: "versusscale (DAU 100+) whensystem operations 2year or more"
+- [competency 2] L2 or more: [specific standard]
 
-### 우대 (Nice-to-have)  
-- [역량 3]: [구체적 기준]
-- [역량 4]: [구체적 기준]
+### preferred (Nice-to-have) 
+- [competency 3]: [specific standard]
+- [competency 4]: [specific standard]
 
-### 이런 분을 찾습니다 (행동 기술)
-- [역량 1의 L3 행동 지표를 자연스럽게 기술]
-- [역량 2의 L3 행동 지표를 자연스럽게 기술]
+### minute (action technical)
+- [competency 1 L3 action indicator specialistannual technical]
+- [competency 2 L3 action indicator specialistannual technical]
 ```
 
-## 스크리닝 매트릭스
+## screening matrix
 
-| 평가 항목 | 배점 | PASS 기준 | 확인 방법 |
+| assessment item | point | PASS standard | confirm method |
 |----------|------|----------|----------|
-| 필수 역량 A | 30 | 21점+ | 이력서 + 과제 |
-| 필수 역량 B | 25 | 18점+ | 이력서 + 면접 |
-| 우대 역량 C | 15 | - | 이력서 |
-| 문화 적합성 | 15 | 10점+ | 면접 |
-| 성장 잠재력 | 15 | 10점+ | 면접 |
-| **합계** | **100** | **70점+** | |
+| required competency A | 30 | 21point+ | capabilityfrom + task |
+| required competency B | 25 | 18point+ | capabilityfrom + interview |
+| preferred competency C | 15 | - | capabilityfrom |
+| document qualitynature | 15 | 10point+ | interview |
+| nature re-capability | 15 | 10point+ | interview |
+| **total** | **100** | **70point+** | |
 
-## 품질 체크리스트
+## quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| 역량 수 | 직무당 5~8개 |
-| 수준 정의 | L1~L5 행동 지표 구체적 |
-| 필수/우대 | 필수 3~4개, 우대 2~3개 |
-| 평가 방법 | 역량별 1개 이상 |
-| 편향 방지 | 성별/연령 중립적 표현 |
+| competency number | job 5~8items |
+| level | L1~L5 action indicator specific |
+| required/preferred | required 3~4items, preferred 2~3items |
+| assessment method | competencyby 1items or more |
+| degree | natureby/annual duringquality tablecurrent |

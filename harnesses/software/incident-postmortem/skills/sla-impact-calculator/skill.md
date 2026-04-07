@@ -1,147 +1,147 @@
 ---
 name: sla-impact-calculator
-description: "SLA/SLO 기반 장애 영향도를 정량적으로 산정하는 계산 모델과 비즈니스 영향 매트릭스. 'SLA 영향', 'SLO 위반', '영향도 산정', '매출 손실 추정', '에러 버짓', '가용성 계산', '장애 비용 산정' 등 장애의 비즈니스 영향을 정량화할 때 이 스킬을 사용한다. impact-assessor의 영향도 산정 역량을 강화한다. 단, 장애 원인 분석이나 재발방지 대책은 이 스킬의 범위가 아니다."
+description: "Calculation models and business impact matrices for quantitatively assessing incident impact based on SLA/SLO. Use this skill for 'SLA impact', 'SLO violation', 'impact assessment', 'revenue loss estimation', 'error budget', 'availability calculation', 'incident cost assessment', and other tasks quantifying the business impact of incidents. Enhances the impact assessment capabilities of impact-assessor. Note: incident cause analysis and remediation planning are outside the scope of this skill."
 ---
 
-# SLA Impact Calculator — SLA/SLO 기반 영향도 산정 가이드
+# SLA Impact Calculator — SLA/SLO-based Impact Assessment Guide
 
-장애의 비즈니스 영향을 정량적으로 측정하고 보고하는 프레임워크.
+A framework for quantitatively measuring and reporting the business impact of incidents.
 
-## SLA/SLO/SLI 체계
-
-```
-SLI (Service Level Indicator): 측정 지표
-  예: 요청 성공률 = 성공 요청 / 전체 요청
-
-SLO (Service Level Objective): 내부 목표
-  예: 요청 성공률 ≥ 99.95% (30일 기준)
-
-SLA (Service Level Agreement): 외부 계약
-  예: 가용성 ≥ 99.9% 미달 시 크레딧 10% 환불
-```
-
-## 가용성 수준별 허용 다운타임
-
-| 가용성 | 연간 다운타임 | 월간 | 주간 | 일간 |
-|--------|------------|------|------|------|
-| 99% | 3일 15시간 | 7시간 18분 | 1시간 41분 | 14분 24초 |
-| 99.5% | 1일 19시간 | 3시간 39분 | 50분 24초 | 7분 12초 |
-| 99.9% | 8시간 46분 | 43분 50초 | 10분 5초 | 1분 26초 |
-| 99.95% | 4시간 23분 | 21분 55초 | 5분 2초 | 43초 |
-| 99.99% | 52분 36초 | 4분 23초 | 1분 | 8.6초 |
-| 99.999% | 5분 16초 | 26초 | 6초 | 0.86초 |
-
-## 에러 버짓 소진 계산
+## SLA/SLO/SLI Framework
 
 ```
-월간 에러 버짓 = (1 - SLO) × 30일 × 24시간 × 60분
+SLI (Service Level Indicator): Measurement metric
+  e.g.: Request success rate = Successful requests / Total requests
 
-예: SLO = 99.95%
-에러 버짓 = 0.0005 × 30 × 24 × 60 = 21.6분/월
+SLO (Service Level Objective): Internal target
+  e.g.: Request success rate >= 99.95% (30-day basis)
 
-장애 30분 발생 시:
-├── 에러 버짓 초과: 30분 - 21.6분 = 8.4분 초과
-├── 소진율: 30 / 21.6 = 138.9% (초과!)
-└── 잔여 버짓: -8.4분 (남은 기간 동안 추가 장애 불가)
+SLA (Service Level Agreement): External contract
+  e.g.: Availability < 99.9% -> 10% credit refund on monthly fee
 ```
 
-## 비즈니스 영향 매트릭스
+## Allowed Downtime by Availability Level
 
-### 매출 손실 추정
+| Availability | Annual Downtime | Monthly | Weekly | Daily |
+|-------------|----------------|---------|--------|-------|
+| 99% | 3d 15h | 7h 18m | 1h 41m | 14m 24s |
+| 99.5% | 1d 19h | 3h 39m | 50m 24s | 7m 12s |
+| 99.9% | 8h 46m | 43m 50s | 10m 5s | 1m 26s |
+| 99.95% | 4h 23m | 21m 55s | 5m 2s | 43s |
+| 99.99% | 52m 36s | 4m 23s | 1m | 8.6s |
+| 99.999% | 5m 16s | 26s | 6s | 0.86s |
 
-```
-분당 매출 손실 = 일 평균 매출 / (24 × 60)
-
-예: 일 평균 매출 = 1억원
-분당 매출 손실 = 100,000,000 / 1,440 = 69,444원/분
-
-30분 장애:
-├── 직접 손실: 69,444 × 30 = 2,083,333원
-├── 피크 시간 보정: × 2.5 (피크 시간대라면)
-│   → 5,208,333원
-├── 이탈 추정 (장애 경험 고객 5% 이탈):
-│   영향 고객 × 5% × 고객 생애 가치(CLV)
-└── 총 추정 손실: 직접 + 이탈 + 복구 비용
-```
-
-### 영향 심각도 등급
-
-| 등급 | 기준 | 예시 | 에스컬레이션 |
-|------|------|------|------------|
-| **SEV-1** (Critical) | 핵심 서비스 전면 장애 | 결제 불가, 전체 사이트 다운 | 즉시 → C-level |
-| **SEV-2** (Major) | 핵심 기능 부분 장애 | 특정 결제 수단 불가 | 30분 내 → VP |
-| **SEV-3** (Minor) | 비핵심 기능 장애 | 추천 시스템 오작동 | 1시간 내 → Manager |
-| **SEV-4** (Low) | 사용자 경험 저하 | 페이지 로딩 느림 | 다음 업무일 |
-
-### 사용자 영향 범위 계산
+## Error Budget Consumption Calculation
 
 ```
-영향 받은 사용자 수 추정:
-1. 장애 시간대 일반 트래픽: DAU × (장애시간/24)
-2. 에러 로그 기반: 5xx 응답 받은 고유 사용자
-3. 기능별 사용률: 해당 기능 DAU 비율
+Monthly error budget = (1 - SLO) x 30 days x 24 hours x 60 minutes
 
-예:
+Example: SLO = 99.95%
+Error budget = 0.0005 x 30 x 24 x 60 = 21.6 minutes/month
+
+When a 30-minute incident occurs:
++-- Budget exceeded: 30 min - 21.6 min = 8.4 min over
++-- Consumption rate: 30 / 21.6 = 138.9% (exceeded!)
++-- Remaining budget: -8.4 min (no additional incidents allowed for the rest of the period)
+```
+
+## Business Impact Matrix
+
+### Revenue Loss Estimation
+
+```
+Per-minute revenue loss = Daily average revenue / (24 x 60)
+
+Example: Daily average revenue = $100,000
+Per-minute revenue loss = 100,000 / 1,440 = $69.44/min
+
+30-minute incident:
++-- Direct loss: $69.44 x 30 = $2,083
++-- Peak hour adjustment: x 2.5 (if during peak hours)
+|   -> $5,208
++-- Churn estimate (5% of affected customers churn):
+|   Affected customers x 5% x Customer Lifetime Value (CLV)
++-- Total estimated loss: Direct + Churn + Recovery costs
+```
+
+### Impact Severity Levels
+
+| Level | Criteria | Example | Escalation |
+|-------|---------|---------|-----------|
+| **SEV-1** (Critical) | Core service complete outage | Payments down, entire site down | Immediate -> C-level |
+| **SEV-2** (Major) | Core feature partial outage | Specific payment method unavailable | Within 30 min -> VP |
+| **SEV-3** (Minor) | Non-core feature outage | Recommendation system malfunction | Within 1 hour -> Manager |
+| **SEV-4** (Low) | User experience degradation | Slow page loading | Next business day |
+
+### User Impact Scope Calculation
+
+```
+Estimating affected users:
+1. Normal traffic for the incident timeframe: DAU x (incident_hours/24)
+2. Based on error logs: Unique users receiving 5xx responses
+3. Feature usage rate: DAU percentage for the affected feature
+
+Example:
 DAU = 100,000
-장애 시간 = 14:00~14:30 (피크)
-시간대 비율 = 8% (피크 시간 보정)
-영향 사용자 ≈ 100,000 × 0.08 × (30/60) = 4,000명
+Incident time = 14:00-14:30 (peak)
+Time window ratio = 8% (peak hour adjustment)
+Affected users = 100,000 x 0.08 x (30/60) = 4,000
 ```
 
-## SLA 위반 시 재무 영향
+## Financial Impact of SLA Violations
 
 ```
-SLA 위약금 계산:
+SLA penalty calculation:
 
-기본 구조:
-├── Tier 1: 가용성 < SLA 0.1%p 미달 → 월 요금의 10% 크레딧
-├── Tier 2: 가용성 < SLA 1.0%p 미달 → 월 요금의 25% 크레딧
-└── Tier 3: 가용성 < SLA 5.0%p 미달 → 월 요금의 50% 크레딧
+Basic structure:
++-- Tier 1: Availability < SLA by 0.1%p -> 10% credit on monthly fee
++-- Tier 2: Availability < SLA by 1.0%p -> 25% credit on monthly fee
++-- Tier 3: Availability < SLA by 5.0%p -> 50% credit on monthly fee
 
-예: 월 계약 1,000만원, SLA 99.9%, 실제 99.5%
-미달: 0.4%p → Tier 1
-크레딧: 1,000만 × 10% = 100만원
+Example: Monthly contract $10,000, SLA 99.9%, actual 99.5%
+Shortfall: 0.4%p -> Tier 1
+Credit: $10,000 x 10% = $1,000
 ```
 
-## 복합 SLA 계산
+## Composite SLA Calculation
 
 ```
-직렬 시스템: SLA_total = SLA_A × SLA_B × SLA_C
-  예: 99.9% × 99.9% × 99.9% = 99.7% (0.3% = 월 2시간 11분)
+Serial system: SLA_total = SLA_A x SLA_B x SLA_C
+  e.g.: 99.9% x 99.9% x 99.9% = 99.7% (0.3% = 2h 11m/month)
 
-병렬 시스템: SLA_total = 1 - (1-SLA_A) × (1-SLA_B)
-  예: 1 - (0.001 × 0.001) = 99.9999%
+Parallel system: SLA_total = 1 - (1-SLA_A) x (1-SLA_B)
+  e.g.: 1 - (0.001 x 0.001) = 99.9999%
 
-실제 시스템:
-API Gateway(99.99%) → [App Server(99.95%) ∥ App Server(99.95%)] → DB(99.99%)
-= 99.99% × (1-(0.0005)²) × 99.99%
-= 99.99% × 99.99975% × 99.99%
-≈ 99.97%
+Real system:
+API Gateway(99.99%) -> [App Server(99.95%) || App Server(99.95%)] -> DB(99.99%)
+= 99.99% x (1-(0.0005)^2) x 99.99%
+= 99.99% x 99.99975% x 99.99%
+~ 99.97%
 ```
 
-## 보고서 템플릿
+## Report Template
 
 ```markdown
-# 장애 영향도 산정 보고서
+# Incident Impact Assessment Report
 
-## 요약
-| 항목 | 값 |
-|------|-----|
-| 장애 시간 | YYYY-MM-DD HH:MM ~ HH:MM (N분) |
-| 심각도 등급 | SEV-N |
-| 영향 사용자 | 약 N명 |
-| SLA 위반 여부 | 위반/미위반 |
-| 에러 버짓 소진율 | N% |
-| 추정 매출 손실 | N원 |
+## Summary
+| Item | Value |
+|------|-------|
+| Incident Time | YYYY-MM-DD HH:MM ~ HH:MM (N min) |
+| Severity Level | SEV-N |
+| Affected Users | Approx. N |
+| SLA Violation | Yes/No |
+| Error Budget Consumption | N% |
+| Estimated Revenue Loss | $N |
 
-## 상세 산정
-### SLI/SLO 영향
-### 사용자 영향
-### 재무 영향
-### 평판 영향
+## Detailed Assessment
+### SLI/SLO Impact
+### User Impact
+### Financial Impact
+### Reputation Impact
 
-## 복구 비용
-- 엔지니어링 시간: N인·시
-- 인프라 비용: N원
-- 외부 벤더 비용: N원
+## Recovery Cost
+- Engineering hours: N person-hours
+- Infrastructure cost: $N
+- External vendor cost: $N
 ```

@@ -1,38 +1,37 @@
 # Academic Paper Harness
 
-학술 논문 작성의 연구설계→실험→분석→집필→투고준비를 에이전트 팀이 협업하여 생성하는 하네스.
+An academic paper writing harness. An agent team collaborates to produce research design, experiment management, statistical analysis, paper writing, and submission preparation.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── research-designer.md    — 연구 설계자 (연구 질문, 가설, 방법론)
-│   ├── experiment-manager.md   — 실험 관리자 (프로토콜, 데이터 수집)
-│   ├── statistical-analyst.md  — 통계 분석가 (분석, 시각화, 해석)
-│   ├── paper-writer.md         — 논문 작성자 (구조, 집필, 레퍼런스)
-│   └── submission-preparer.md  — 투고 준비자 (저널 선정, 포맷팅)
+│   ├── research-designer.md      — Research design (hypothesis, methodology, variables)
+│   ├── experiment-manager.md     — Experiment management (protocol, data collection, quality control)
+│   ├── statistical-analyst.md    — Statistical analysis (descriptive/inferential statistics, visualization)
+│   ├── paper-writer.md           — Paper writing (IMRaD structure, academic writing)
+│   └── submission-preparer.md    — Submission preparation (journal selection, formatting, cover letter)
 ├── skills/
 │   ├── academic-paper/
-│   │   └── skill.md            — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md              — Orchestrator (team coordination, workflow, error handling)
 │   ├── research-methodology/
-│   │   └── skill.md            — 연구 방법론 가이드 (research-designer 확장)
+│   │   └── skill.md              — Research methodology (research-designer extension)
 │   └── citation-standards/
-│       └── skill.md            — 학술 인용 표준 (paper-writer 확장)
-└── CLAUDE.md                   — 이 파일
+│       └── skill.md              — Citation standards (paper-writer extension)
+└── CLAUDE.md                     — This file
 ```
 
-## 사용법
+## Usage
 
-`/academic-paper` 스킬을 트리거하거나, "학술 논문 작성해줘" 같은 자연어로 요청한다.
+Trigger the `/academic-paper` skill, or make a natural language request such as "Help me write a research paper."
 
-## 산출물
+## Outputs
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_research_design.md` — 연구 설계서
-- `02_experiment_protocol.md` — 실험 프로토콜
-- `03_analysis_report.md` — 분석 보고서
-- `04_manuscript.md` — 논문 원고
-- `05_submission_package.md` — 투고 패키지
-- `06_review_report.md` — 통합 리뷰 보고서
+All outputs are saved to the `_workspace/` directory:
+- `00_input.md` — Research topic and conditions
+- `01_research_design.md` — Research design document
+- `02_experiment_protocol.md` — Experiment protocol
+- `03_statistical_analysis.md` — Statistical analysis results
+- `04_paper_draft.md` — Paper draft
+- `05_submission_package.md` — Submission preparation package

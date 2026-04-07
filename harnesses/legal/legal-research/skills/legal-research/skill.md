@@ -1,119 +1,121 @@
+```markdown
 ---
 name: legal-research
-description: "법률 리서치 풀 파이프라인. 판례검색→법리분석→의견서→전략수립을 에이전트 팀이 협업하여 한 번에 수행한다. '법률 리서치', '판례 검색', '법리 분석', '법률 의견서', '소송 전략', '법적 쟁점 분석', '법률 검토', '분쟁 대응 전략', '법적 리스크 분석', '법률 자문 자료' 등 법률 리서치 전반에 이 스킬을 사용한다. 단, 실제 법률 자문(변호사 의견서), 소송/심판 대리, 법률 데이터베이스(종합법률정보) 직접 연동, 법률 문서 공증은 이 스킬의 범위가 아니다."
+description: "Full legal research pipeline. An agent team collaborates to perform case search → legal doctrine analysis → opinion drafting → strategy formulation in one pass. Use this skill for all legal research tasks including 'legal research', 'case search', 'legal doctrine analysis', 'legal opinion', 'litigation strategy', 'legal issue analysis', 'legal review', 'dispute response strategy', 'legal risk analysis', 'legal advisory materials', etc. However, actual legal advice (attorney opinion letters), litigation/arbitration representation, direct integration with legal databases (comprehensive legal information systems), and notarization of legal documents are outside the scope of this skill."
 ---
 
-# Legal Research — 법률 리서치 파이프라인
+# Legal Research — Legal Research Pipeline
 
-법률 이슈에 대한 판례 검색, 법리 분석, 의견서 작성, 전략 수립을 체계적으로 수행한다.
+Systematically performs case search, legal doctrine analysis, opinion drafting, and strategy formulation for legal issues.
 
-## 실행 모드
+## Execution Modes
 
-**에이전트 팀** — 4명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 4 agents communicate directly via SendMessage and perform cross-validation.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| Agent | File | Role | Type |
 |---------|------|------|------|
-| case-searcher | `.claude/agents/case-searcher.md` | 판례 검색, 동향 분석 | general-purpose |
-| legal-analyst | `.claude/agents/legal-analyst.md` | 쟁점 도출, 법리 분석 | general-purpose |
-| opinion-writer | `.claude/agents/opinion-writer.md` | 법률 의견서 작성 | general-purpose |
-| strategy-advisor | `.claude/agents/strategy-advisor.md` | 전략 수립, 리스크 평가 | general-purpose |
+| case-searcher | `.claude/agents/case-searcher.md` | Case search, trend analysis | general-purpose |
+| legal-analyst | `.claude/agents/legal-analyst.md` | Issue identification, legal doctrine analysis | general-purpose |
+| opinion-writer | `.claude/agents/opinion-writer.md` | Legal opinion drafting | general-purpose |
+| strategy-advisor | `.claude/agents/strategy-advisor.md` | Strategy formulation, risk assessment | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Orchestrator performs directly)
 
-1. 사용자 입력에서 추출한다:
-    - **법률 이슈**: 구체적 법적 질문 또는 분쟁 상황
-    - **사실관계**: 관련 사건의 사실관계
-    - **관련 법 분야**: 민사, 형사, 행정, 노동, 지식재산 등
-    - **의뢰인 입장**: 원고/피고/피해자/기타
-    - **기존 자료** (선택): 계약서, 증거 자료, 기존 의견서 등
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Legal Issue**: Specific legal question or dispute situation
+    - **Facts**: Facts of the relevant case
+    - **Relevant Legal Domain**: Civil, criminal, administrative, labor, intellectual property, etc.
+    - **Client Position**: Plaintiff / defendant / victim / other
+    - **Existing Materials** (optional): Contracts, evidence, prior opinions, etc.
+2. Create `_workspace/` directory at the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. **Determine execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| Order | Task | Assigned To | Dependencies | Output |
 |------|------|------|------|--------|
-| 1 | 판례 검색 | case-searcher | 없음 | `_workspace/01_case_search.md` |
-| 2 | 법리 분석 | legal-analyst | 작업 1 | `_workspace/02_legal_analysis.md` |
-| 3 | 의견서 작성 | opinion-writer | 작업 1, 2 | `_workspace/03_legal_opinion.md` |
-| 4 | 전략 수립 | strategy-advisor | 작업 2, 3 | `_workspace/04_legal_strategy.md` |
+| 1 | Case search | case-searcher | None | `_workspace/01_case_search.md` |
+| 2 | Legal doctrine analysis | legal-analyst | Task 1 | `_workspace/02_legal_analysis.md` |
+| 3 | Opinion drafting | opinion-writer | Tasks 1, 2 | `_workspace/03_legal_opinion.md` |
+| 4 | Strategy formulation | strategy-advisor | Tasks 2, 3 | `_workspace/04_legal_strategy.md` |
 
-**팀원 간 소통 흐름:**
-- case-searcher 완료 → legal-analyst에게 핵심 판례·쟁점별 분류 전달
-- legal-analyst 완료 → opinion-writer에게 쟁점 구조도·법리 분석 결과 전달, strategy-advisor에게 승소 가능성 평가 전달
-- opinion-writer 완료 → strategy-advisor에게 의견서 결론·확실성 수준 전달
-- strategy-advisor는 최종 보고서 작성 시 전체 산출물의 논리적 일관성을 교차 검증한다
+**Inter-team Communication Flow:**
+- case-searcher completes → delivers key cases and issue-by-issue classification to legal-analyst
+- legal-analyst completes → delivers issue structure map and legal doctrine analysis to opinion-writer; delivers win probability assessment to strategy-advisor
+- opinion-writer completes → delivers opinion conclusions and certainty level to strategy-advisor
+- strategy-advisor cross-validates logical consistency across all outputs when drafting the final report
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 판례→법리→의견서→전략 간 논리적 일관성을 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 판례 검색 보고서 — `01_case_search.md`
-    - 법리 분석 보고서 — `02_legal_analysis.md`
-    - 법률 의견서 — `03_legal_opinion.md`
-    - 전략 수립 보고서 — `04_legal_strategy.md`
+1. Review all files in `_workspace/`
+2. Verify logical consistency across case search → legal doctrine → opinion → strategy
+3. Report final summary to the user:
+    - Case Search Report — `01_case_search.md`
+    - Legal Doctrine Analysis Report — `02_legal_analysis.md`
+    - Legal Opinion — `03_legal_opinion.md`
+    - Strategy Formulation Report — `04_legal_strategy.md`
 
-## 작업 규모별 모드
+## Modes by Task Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| User Request Pattern | Execution Mode | Agents Deployed |
 |----------------|----------|-------------|
-| "법률 리서치 전체", "법적 쟁점 종합 분석" | **풀 파이프라인** | 4명 전원 |
-| "관련 판례만 찾아줘" | **판례 검색 모드** | case-searcher 단독 |
-| "이 쟁점의 법리를 분석해줘" | **법리 분석 모드** | case-searcher + legal-analyst |
-| "법률 의견서만 작성해줘" (분석 결과 있음) | **의견서 모드** | opinion-writer |
-| "소송 전략만 세워줘" (의견서 있음) | **전략 모드** | strategy-advisor |
+| "Full legal research", "Comprehensive legal issue analysis" | **Full Pipeline** | All 4 agents |
+| "Just find relevant cases" | **Case Search Mode** | case-searcher only |
+| "Analyze the legal doctrine for this issue" | **Legal Doctrine Analysis Mode** | case-searcher + legal-analyst |
+| "Just draft the legal opinion" (analysis already available) | **Opinion Mode** | opinion-writer |
+| "Just formulate the litigation strategy" (opinion already available) | **Strategy Mode** | strategy-advisor |
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
+| Strategy | Method | Purpose |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
+| File-based | `_workspace/` directory | Storing and sharing major deliverables |
+| Message-based | SendMessage | Real-time delivery of key information, revision requests |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{sequence}_{agent}_{deliverable}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
+| Error Type | Strategy |
 |----------|------|
-| 웹 검색 실패 | 판례 검색자가 일반 법률 지식으로 작업, "판례DB 미조회" 명시 |
-| 사실관계 부족 | 추가 질문 후 작업, 최소 정보로 일반론 분석 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 최종 보고서에 누락 명시 |
-| 법률 판단 불확실 | 복수 해석 가능성 병기, "전문 법률 자문 권고" 명시 |
-| 산출물 간 논리 불일치 | strategy-advisor가 불일치 식별, 재검토 요청 |
+| Web search failure | Case searcher proceeds with general legal knowledge, notes "case DB not queried" |
+| Insufficient facts | Ask follow-up questions before proceeding; perform general analysis with minimal information |
+| Agent failure | Retry once → if still failing, proceed without that deliverable; note omission in final report |
+| Legal judgment uncertainty | Present multiple interpretations, note "professional legal counsel recommended" |
+| Logical inconsistency between outputs | strategy-advisor identifies inconsistency and requests re-review |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "온라인 쇼핑몰에서 배송 지연으로 소비자에게 손해가 발생한 경우, 판매자의 손해배상 책임에 대해 법률 리서치 해줘"
-**기대 결과**:
-- 판례 검색: 전자상거래 배송 지연 손배 관련 판례 5건 이상
-- 법리 분석: 채무불이행, 소비자보호법, 전자상거래법 쟁점 분석
-- 의견서: IRAC 구조, 확실성 수준 명시, 면책 조항 포함
-- 전략: 소송/조정/협상 옵션 비교, 비용-편익 분석
+### Normal Flow
+**Prompt**: "When a consumer suffers damages due to delayed delivery from an online shopping mall, please conduct legal research on the seller's liability for damages."
+**Expected Results**:
+- Case search: 5+ cases related to e-commerce delivery delay damages
+- Legal doctrine analysis: Analysis of issues under breach of contract, Consumer Protection Act, and E-Commerce Act
+- Opinion: IRAC structure, certainty level noted, disclaimer included
+- Strategy: Comparison of litigation / mediation / negotiation options, cost-benefit analysis
 
-### 부분 흐름
-**프롬프트**: "근로기준법상 해고 관련 판례를 찾아줘"
-**기대 결과**:
-- 판례 검색 모드로 전환 (case-searcher 단독)
-- 부당해고 관련 대법원 판례 목록, 쟁점별 분류
+### Partial Flow
+**Prompt**: "Find cases related to dismissal under the Labor Standards Act."
+**Expected Results**:
+- Switches to Case Search Mode (case-searcher only)
+- List of Supreme Court cases on unfair dismissal, classified by issue
 
-### 에러 흐름
-**프롬프트**: "법적으로 문제가 될 수 있는지 알려줘, 상세한 건 말하기 어려워"
-**기대 결과**:
-- 사실관계 부족으로 추가 질문
-- 최소 정보로 일반론 분석, "사실관계 보완 시 재분석 권고"
-- 면책 조항 강조, "전문 법률 자문 필수" 명시
+### Error Flow
+**Prompt**: "Let me know if there could be any legal issues — I can't share much detail."
+**Expected Results**:
+- Follow-up questions due to insufficient facts
+- General analysis with minimal information, "recommend re-analysis once facts are supplemented"
+- Disclaimer emphasized, "professional legal counsel required" noted
 
-## 에이전트별 확장 스킬
+## Agent-Specific Extended Skills
 
-| 에이전트 | 확장 스킬 | 용도 |
+| Agent | Extended Skill | Purpose |
 |---------|----------|------|
-| case-searcher, legal-analyst | `case-analysis-framework` | IRAC 프레임워크, 판례 분석 매트릭스 |
-| opinion-writer, strategy-advisor | `legal-writing-methodology` | 법률 의견서 구조, 논증 기법, 전략 프레임워크 |
+| case-searcher, legal-analyst | `case-analysis-framework` | IRAC framework, case analysis matrix |
+| opinion-writer, strategy-advisor | `legal-writing-methodology` | Legal opinion structure, argumentation techniques, strategy frameworks |
+```

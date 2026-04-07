@@ -1,98 +1,96 @@
 ---
 name: deliverability-optimization
-description: "편집장(editor-in-chief)과 분석가(analyst)가 사용하는 이메일 도달률 최적화 스킬. 스팸 필터 회피, 기술적 인증, 콘텐츠 필터링 규칙, 리스트 위생 관리 방법론을 제공한다. '도달률', '스팸 필터', '이메일 인증', '발송 최적화' 등에 활용한다."
+description: "Email deliverability optimization skill used by the Editor-in-Chief and analyst agents. Provides spam filter avoidance, technical authentication, content filtering rules, and list hygiene management methodologies. Use for 'deliverability,' 'spam filters,' 'email authentication,' 'send optimization,' and similar requests."
 ---
 
-# Deliverability Optimization — 이메일 도달률 최적화 방법론
+# Deliverability Optimization — Email Deliverability Optimization Methodology
 
-editor-in-chief와 analyst 에이전트가 최종 편집과 발송 전략을 설계할 때 활용하는 기술적 도달률 전문 지식.
+Technical deliverability expertise used by the editor-in-chief and analyst agents when designing final edits and send strategies.
 
-## 왜 도달률이 중요한가
+## Why Deliverability Matters
 
-아무리 완벽한 뉴스레터를 만들어도 **받은편지함에 도달하지 못하면** 모든 노력이 무의미하다. 평균적으로 이메일의 15~20%는 스팸함이나 프로모션 탭에 빠진다.
+No matter how perfect your newsletter is, **if it doesn't reach the inbox**, all effort is wasted. On average, 15–20% of emails land in spam folders or promotional tabs.
 
-## 스팸 필터 트리거 회피 가이드
+## Spam Filter Trigger Avoidance Guide
 
-### 제목줄 스팸 트리거 단어
+### Subject Line Spam Trigger Words
 
-| 위험도 | 단어/패턴 | 대안 |
-|--------|---------|------|
-| **높음** | 무료, FREE, 100% 할인, 당첨 | "비용 없이", "선물", "특별 혜택" |
-| **높음** | !!!, ???, 전체 대문자 | 느낌표 1개 이하, 문장 케이스 |
-| **중간** | 지금 바로, 긴급, 마감임박 | "이번 주까지", "한정 기간" |
-| **중간** | 클릭하세요, 여기를 누르세요 | "확인해보세요", "살펴보세요" |
-| **낮음** | Re:, Fwd: (거짓 답장/전달) | 절대 금지 — 신뢰 파괴 |
+| Risk Level | Word/Pattern | Alternative |
+|-----------|-------------|-------------|
+| **High** | Free, FREE, 100% off, Winner | "Complimentary," "Gift," "Special offer" |
+| **High** | !!!, ???, ALL CAPS | One exclamation max, sentence case |
+| **Medium** | Act now, Urgent, Deadline | "By this week," "Limited time" |
+| **Medium** | Click here, Click now | "Check it out," "Take a look" |
+| **Low** | Re:, Fwd: (fake reply/forward) | Absolutely prohibited — destroys trust |
 
-### 본문 콘텐츠 필터링 규칙
+### Body Content Filtering Rules
 
-1. **이미지 대 텍스트 비율**: 이미지 40% 이하, 텍스트 60% 이상 유지
-2. **링크 수**: 본문당 5~7개가 적정, 15개 이상은 스팸 판정 위험
-3. **단축 URL**: bit.ly 등 단축 URL은 스팸 필터 트리거 — 원본 URL 사용
-4. **HTML 코드 품질**: 깨진 태그, 과도한 인라인 스타일 금지
-5. **언서브스크라이브 링크**: 반드시 하단에 명확히 포함 (법적 의무 + 스팸 방지)
+1. **Image-to-text ratio**: Keep images at 40% or less, text at 60% or more
+2. **Link count**: 5–7 per email is optimal; 15+ risks spam classification
+3. **Shortened URLs**: Shortened URLs (bit.ly, etc.) trigger spam filters — use original URLs
+4. **HTML code quality**: No broken tags or excessive inline styles
+5. **Unsubscribe link**: Must be clearly included at the bottom (legal obligation + spam prevention)
 
-### 발신자 평판 관리
+### Sender Reputation Management
 
-| 요소 | 최적 상태 | 관리 방법 |
-|------|---------|----------|
-| **바운스율** | 2% 미만 | 하드 바운스 즉시 제거, 소프트 바운스 3회 후 제거 |
-| **스팸 신고율** | 0.01% 미만 | 콘텐츠 품질 유지, 쉬운 구독 해지 |
-| **인증 설정** | SPF + DKIM + DMARC 완료 | 도메인 관리자와 협력 |
-| **전용 IP** | 월 발송 10만+ 시 전용 IP | 공유 IP는 타인의 평판에 영향 받음 |
-| **IP 워밍업** | 신규 IP는 2~4주 단계적 증가 | 첫날 50통 → 매일 2배 → 목표량 |
+| Factor | Optimal State | Management Method |
+|--------|-------------|-------------------|
+| **Bounce Rate** | Below 2% | Remove hard bounces immediately, soft bounces after 3 |
+| **Spam Complaint Rate** | Below 0.01% | Maintain content quality, make unsubscribing easy |
+| **Authentication** | SPF + DKIM + DMARC configured | Coordinate with domain administrator |
+| **Dedicated IP** | When sending 100K+/month | Shared IPs are affected by others' reputation |
+| **IP Warm-up** | Gradual increase over 2–4 weeks for new IPs | Day 1: 50 emails → double daily → target volume |
 
-## 이메일 클라이언트별 렌더링 체크
+## Email Client Rendering Checks
 
-뉴스레터 편집 시 반드시 확인해야 할 렌더링 이슈:
+Rendering issues that must be verified during newsletter editing:
 
-| 클라이언트 | 주의사항 |
-|-----------|---------|
-| **Gmail** | 프로모션 탭 분류 방지 — 이미지 줄이고 텍스트 늘리기, 개인적 톤 사용 |
-| **Outlook** | CSS 지원 제한 — 복잡한 레이아웃 금지, 테이블 기반 레이아웃 권장 |
-| **Apple Mail** | 다크모드 대응 — 투명 배경 이미지 사용, 색상 반전 테스트 |
-| **모바일 전체** | 단일 컬럼 레이아웃, 버튼 최소 44x44px, 폰트 14px+ |
+| Client | Considerations |
+|--------|---------------|
+| **Gmail** | Prevent Promotions tab classification — reduce images, increase text, use personal tone |
+| **Outlook** | Limited CSS support — avoid complex layouts, use table-based layouts |
+| **Apple Mail** | Dark mode support — use transparent background images, test color inversion |
+| **All Mobile** | Single-column layout, buttons minimum 44x44px, font 14px+ |
 
-### Gmail 프로모션 탭 회피 전략
+### Gmail Promotions Tab Avoidance Strategy
 
-1. **개인적 톤**: "안녕하세요, [이름]님" — 마케팅 톤 최소화
-2. **이미지 최소화**: 텍스트 중심, 이미지는 1~2개
-3. **링크 최소화**: 핵심 링크 2~3개만
-4. **답장 유도**: "이 이메일에 답장해주세요" — 양방향 소통 신호
-5. **발신자 이름**: 브랜드명보다 개인 이름 (예: "홍길동 from 뉴스레터명")
+1. **Personal tone**: "Hi [Name]" — minimize marketing-speak
+2. **Minimize images**: Text-centric, limit to 1–2 images
+3. **Minimize links**: Keep to 2–3 essential links only
+4. **Encourage replies**: "Reply to this email" — signals two-way communication
+5. **Sender name**: Personal name over brand name (e.g., "Jane from [Newsletter Name]")
 
-## 법적 컴플라이언스 체크리스트
+## Legal Compliance Checklist
 
-뉴스레터 발행 시 반드시 확인해야 할 법적 요구사항:
+Legal requirements that must be verified when publishing a newsletter:
 
-### 한국 (정보통신망법)
-- [ ] 수신 동의 확인 (opt-in)
-- [ ] 발신자 정보 명시 (상호, 연락처)
-- [ ] 수신 거부 방법 명시 (하단 링크)
-- [ ] 수신 거부 처리 10일 이내 완료
-- [ ] 광고성 이메일은 제목에 "(광고)" 표기
+### CAN-SPAM (US)
+- [ ] Physical mailing address included
+- [ ] Unsubscribe processed within 10 business days
+- [ ] No deceptive subject lines
 
-### GDPR (유럽 대상 시)
-- [ ] 명시적 동의 (사전 체크박스 금지)
-- [ ] 데이터 처리 목적 명시
-- [ ] 데이터 삭제 요청 대응 체계
-- [ ] 개인정보처리방침 링크
+### GDPR (EU)
+- [ ] Explicit consent (no pre-checked boxes)
+- [ ] Data processing purpose stated
+- [ ] Data deletion request handling system
+- [ ] Privacy policy link
 
-### CAN-SPAM (미국 대상 시)
-- [ ] 물리적 주소 포함
-- [ ] 수신 거부 10영업일 이내 처리
-- [ ] 기만적 제목줄 금지
+### CASL (Canada)
+- [ ] Express or implied consent obtained
+- [ ] Sender identification included
+- [ ] Unsubscribe mechanism provided
 
-## 편집장을 위한 최종 발송 전 체크리스트
+## Editor-in-Chief's Pre-Send Checklist
 
-| # | 항목 | 확인 |
-|---|------|------|
-| 1 | 제목줄 스팸 트리거 단어 없음 | [ ] |
-| 2 | 프리헤더 텍스트 설정됨 | [ ] |
-| 3 | 모든 링크 작동 확인 | [ ] |
-| 4 | 이미지 alt 텍스트 입력 | [ ] |
-| 5 | 모바일 렌더링 테스트 완료 | [ ] |
-| 6 | 구독 해지 링크 작동 | [ ] |
-| 7 | 발신자 정보 정확 | [ ] |
-| 8 | A/B 테스트 설정 확인 | [ ] |
-| 9 | 발송 시간 세그먼트별 최적화 | [ ] |
-| 10 | 테스트 발송 → 수신 확인 | [ ] |
+| # | Item | Check |
+|---|------|-------|
+| 1 | No spam trigger words in subject line | [ ] |
+| 2 | Preheader text configured | [ ] |
+| 3 | All links verified working | [ ] |
+| 4 | Image alt text entered | [ ] |
+| 5 | Mobile rendering tested | [ ] |
+| 6 | Unsubscribe link working | [ ] |
+| 7 | Sender information accurate | [ ] |
+| 8 | A/B test setup confirmed | [ ] |
+| 9 | Send time optimized per segment | [ ] |
+| 10 | Test send → receipt confirmed | [ ] |

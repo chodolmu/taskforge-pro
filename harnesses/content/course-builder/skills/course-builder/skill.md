@@ -1,132 +1,125 @@
 ---
 name: course-builder
-description: "온라인 강의 과정의 커리큘럼 설계, 교안 작성, 퀴즈 출제, 실습과제 설계를 에이전트 팀이 협업하여 한 번에 생성하는 풀 프로덕션 파이프라인. '온라인 강의 만들어줘', '커리큘럼 설계해줘', '강의 교안 작성', '과정 설계', '수업 계획서', '학습 코스 개발', '교육과정 개발', '강좌 설계', '실습과제 만들어줘' 등 교육과정 개발 전반에 이 스킬을 사용한다. 기존 커리큘럼이 있는 경우에도 교안 작성이나 퀴즈 출제를 지원한다. 단, 실제 LMS(학습관리시스템) 구축, 동영상 촬영·편집, 수강생 관리, 수료증 발급은 이 스킬의 범위가 아니다."
+description: "A full production pipeline where an agent team collaborates to design online courses all at once — curriculum, lesson plans, quizzes, and hands-on labs. Use this skill for 'create an online course,' 'design a curriculum,' 'write lesson plans,' 'course design,' 'syllabus,' 'learning course development,' 'curriculum development,' 'course design,' 'create lab assignments,' and all other course development tasks. Also supports lesson plan writing or quiz creation when an existing curriculum is provided. Note: actual LMS construction, video recording/editing, student management, and certificate issuance are outside this skill's scope."
 ---
 
-# Course Builder — 온라인 강의 풀 프로덕션 파이프라인
+# Course Builder — Online Course Full Production Pipeline
 
-온라인 강의의 커리큘럼→교안→퀴즈→실습과제를 에이전트 팀이 협업하여 한 번에 생성한다.
+Collaboratively produce an online course's curriculum, lesson plans, quizzes, and hands-on labs through an agent team, all in one pass.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — Five agents communicate directly via SendMessage and cross-validate each other's work.
 
-## 에이전트 구성
+## Agent Roster
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| curriculum-designer | `.claude/agents/curriculum-designer.md` | 학습목표, 커리큘럼 구조 설계 | general-purpose |
-| content-writer | `.claude/agents/content-writer.md` | 교안, 슬라이드, 강사노트 | general-purpose |
-| quiz-maker | `.claude/agents/quiz-maker.md` | 형성평가, 총괄평가, 피드백 | general-purpose |
-| lab-designer | `.claude/agents/lab-designer.md` | 실습과제, 프로젝트, 루브릭 | general-purpose |
-| course-reviewer | `.claude/agents/course-reviewer.md` | 학습목표 정렬, 커버리지 검증 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| curriculum-designer | `.claude/agents/curriculum-designer.md` | Learning objectives, curriculum structure | general-purpose |
+| content-writer | `.claude/agents/content-writer.md` | Lesson plans, slides, instructor notes | general-purpose |
+| quiz-maker | `.claude/agents/quiz-maker.md` | Formative assessment, summative assessment, feedback | general-purpose |
+| lab-designer | `.claude/agents/lab-designer.md` | Hands-on labs, projects, rubrics | general-purpose |
+| course-reviewer | `.claude/agents/course-reviewer.md` | Learning objective alignment, coverage validation | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Performed Directly by the Orchestrator)
 
-1. 사용자 입력에서 추출한다:
-   - **과정 주제**: 강의가 다룰 주제/분야
-   - **대상 학습자**: 초급/중급/고급, 배경지식
-   - **과정 규모**: 총 학습 시간, 모듈 수
-   - **실습 환경** (선택): 사용할 도구, 언어, 플랫폼
-   - **기존 파일** (선택): 커리큘럼, 교안 등
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다 (아래 "작업 규모별 모드" 참조)
+1. Extract from user input:
+   - **Course Topic**: Subject/field the course covers
+   - **Target Learner**: Beginner/Intermediate/Advanced, background knowledge
+   - **Course Scale**: Total learning time, number of modules
+   - **Lab Environment** (optional): Tools, languages, platforms to use
+   - **Existing Files** (optional): Curriculum, lesson plans, etc.
+2. Create the `_workspace/` directory at the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. If existing files are available, copy to `_workspace/` and skip the corresponding phase
+5. Determine execution mode based on scope
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 커리큘럼 설계 | curriculum-designer | 없음 | `_workspace/01_curriculum.md` |
-| 2a | 교안 작성 | content-writer | 작업 1 | `_workspace/02_lesson_plans.md` |
-| 2b | 퀴즈 출제 | quiz-maker | 작업 1 | `_workspace/03_quizzes.md` |
-| 2c | 실습 설계 | lab-designer | 작업 1 | `_workspace/04_labs.md` |
-| 3 | 과정 검증 | course-reviewer | 작업 2a, 2b, 2c | `_workspace/05_review_report.md` |
+| Order | Task | Owner | Dependency | Deliverable |
+|-------|------|-------|------------|-------------|
+| 1 | Curriculum design | curriculum-designer | None | `_workspace/01_curriculum.md` |
+| 2a | Lesson plan writing | content-writer | Task 1 | `_workspace/02_lesson_plans.md` |
+| 2b | Quiz creation | quiz-maker | Task 1 | `_workspace/03_quizzes.md` |
+| 2c | Lab design | lab-designer | Task 1 | `_workspace/04_labs.md` |
+| 3 | Course review | course-reviewer | Tasks 2a, 2b, 2c | `_workspace/05_review_report.md` |
 
-작업 2a(교안), 2b(퀴즈), 2c(실습)는 **병렬 실행**한다. 모두 작업 1(커리큘럼)에만 의존한다.
+Tasks 2a (lessons), 2b (quizzes), and 2c (labs) run **in parallel**. All depend only on Task 1 (curriculum).
 
-**팀원 간 소통 흐름:**
-- curriculum-designer 완료 → content-writer에게 레슨별 목표·개념 전달, quiz-maker에게 블룸 수준별 비율 전달, lab-designer에게 실습 환경·시나리오 전달
-- content-writer 완료 → quiz-maker에게 핵심 개념·예시 전달 (문항 소재), lab-designer에게 레슨 내용 전달 (실습 연계)
-- course-reviewer는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**Inter-agent communication flow:**
+- curriculum-designer completes -> delivers per-lesson objectives and concepts to content-writer; Bloom's level ratios to quiz-maker; lab environment and scenarios to lab-designer
+- content-writer completes -> delivers key concepts and examples to quiz-maker (as item material); lesson content to lab-designer (for lab alignment)
+- course-reviewer cross-validates all deliverables. On RED Must Fix findings, sends revision requests -> rework -> re-validate (up to 2 cycles)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 리뷰 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-   - 커리큘럼 — `01_curriculum.md`
-   - 교안 — `02_lesson_plans.md`
-   - 퀴즈 — `03_quizzes.md`
-   - 실습과제 — `04_labs.md`
-   - 리뷰 보고서 — `05_review_report.md`
+1. Verify all files in `_workspace/`
+2. Confirm all RED Must Fix items have been addressed
+3. Report final summary to user
 
-## 작업 규모별 모드
+## Execution Modes by Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "온라인 강의 만들어줘", "풀 과정 설계" | **풀 파이프라인** | 5명 전원 |
-| "커리큘럼만 짜줘" | **커리큘럼 모드** | curriculum-designer + reviewer |
-| "이 커리큘럼으로 교안 써줘" (기존 파일) | **교안 모드** | content-writer + reviewer |
-| "퀴즈만 만들어줘" | **퀴즈 모드** | quiz-maker + reviewer |
-| "실습과제만 설계해줘" | **실습 모드** | lab-designer + reviewer |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|----------------|
+| "Create an online course," "full course design" | **Full Pipeline** | All 5 agents |
+| "Just design the curriculum" | **Curriculum Mode** | curriculum-designer + reviewer |
+| "Write lesson plans for this curriculum" (existing file) | **Lesson Plan Mode** | content-writer + reviewer |
+| "Just create quizzes" | **Quiz Mode** | quiz-maker + reviewer |
+| "Just design lab assignments" | **Lab Mode** | lab-designer + reviewer |
 
-**기존 파일 활용**: 사용자가 커리큘럼, 교안 등을 제공하면, 해당 파일을 `_workspace/`의 적절한 위치에 복사하고 해당 에이전트는 건너뛴다.
+**Using Existing Files**: If the user provides a curriculum, lesson plans, etc., copy to `_workspace/` and skip the corresponding agent.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| Strategy | Method | Use Case |
+|----------|--------|----------|
+| File-based | `_workspace/` directory | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information delivery, revision requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{산출물명}.{확장자}`
+File naming convention: `{order_number}_{deliverable}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 주제 전문성 부족 | 웹 검색으로 보충, 보고서에 "외부 검증 필요" 명시 |
-| 실습 환경 불명확 | 무료 클라우드 도구(Google Colab 등) 기본 제안 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰 보고서에 누락 명시 |
-| 리뷰에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
-| 학습목표 누락 발견 | 해당 에이전트에게 보충 작성 요청 |
+| Error Type | Strategy |
+|-----------|----------|
+| Insufficient domain expertise | Supplement with web search; note "External verification recommended" in report |
+| Lab environment unclear | Default to free cloud tools (Google Colab, etc.) |
+| Agent failure | Retry once -> proceed without that deliverable; note in review report |
+| RED found in review | Send revision request -> rework -> re-validate (up to 2 cycles) |
+| Learning objective gap discovered | Request supplementary content from the relevant agent |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "Python 웹 개발 초급자를 위한 10시간짜리 온라인 강의를 설계해줘. Flask 프레임워크 중심으로."
-**기대 결과**:
-- 커리큘럼: 3~4모듈, 모듈당 3~5레슨, 블룸 분류학 기반 학습목표
-- 교안: 레슨별 강의 흐름, 슬라이드 구성안, 코드 예시
-- 퀴즈: 형성평가(레슨별 3~5문항) + 총괄평가(모듈별 10문항)
-- 실습: 레슨별 코딩 실습 + 캡스톤 프로젝트(간단 웹앱 개발)
-- 리뷰: 학습목표 커버리지 매트릭스 완전 매핑
+### Normal Flow
+**Prompt**: "Design a 10-hour online course for Python web development beginners, focused on the Flask framework."
+**Expected Result**:
+- Curriculum: 3-4 modules, 3-5 lessons each, Bloom's-based learning objectives
+- Lesson plans: Per-lesson teaching flow, slide outlines, code examples
+- Quizzes: Formative (3-5 items per lesson) + Summative (10 items per module)
+- Labs: Per-lesson coding labs + Capstone project (simple web app)
+- Review: Learning objective coverage matrix with full mapping
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 커리큘럼으로 퀴즈랑 실습과제만 만들어줘" + 커리큘럼 파일 첨부
-**기대 결과**:
-- 기존 커리큘럼을 `_workspace/01_curriculum.md`로 복사
-- 퀴즈 모드 + 실습 모드 병합: quiz-maker + lab-designer + reviewer 투입
-- curriculum-designer, content-writer는 건너뜀
+### Existing File Flow
+**Prompt**: "Create quizzes and lab assignments from this curriculum" + attached curriculum file
+**Expected Result**:
+- Copy existing curriculum to `_workspace/01_curriculum.md`
+- Combined quiz + lab mode: deploy quiz-maker + lab-designer + reviewer
+- Skip curriculum-designer and content-writer
 
-### 에러 흐름
-**프롬프트**: "강의 커리큘럼만 빨리 짜줘, 주제는 데이터 분석"
-**기대 결과**:
-- 커리큘럼 모드로 전환 (curriculum-designer + reviewer)
-- 대상 학습자 불분명하므로 "초급(비전공자)" 기본값 적용, 보고서에 명시
-- 리뷰 보고서에 "교안/퀴즈/실습 미생성" 명시
+### Error Flow
+**Prompt**: "Just design a quick curriculum on data analysis"
+**Expected Result**:
+- Switch to curriculum mode (curriculum-designer + reviewer)
+- Target learner unclear; default to "beginner (non-specialist)" and note in report
+- Review report notes "Lesson plans/quizzes/labs not generated"
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-각 에이전트는 다음 확장 스킬의 전문 지식을 활용하여 산출물의 품질을 높인다:
-
-| 에이전트 | 확장 스킬 | 제공 지식 |
-|---------|----------|----------|
-| curriculum-designer, content-writer | `/learning-design` | 블룸 분류학, 역방향 설계, 가네 9단계, 인지 부하 이론 |
-| quiz-maker | `/assessment-engineering` | 문항 유형별 설계, 오답지 심리학, 루브릭 구축, 피드백 공식 |
-| lab-designer | `/lab-scaffolding` | 5단계 피라미드, 스타터 코드 설계, 캡스톤 구조, 힌트 시스템 |
+| Agent | Extension Skill | Knowledge Provided |
+|-------|----------------|-------------------|
+| curriculum-designer, content-writer | `/learning-design` | Bloom's Taxonomy, Backward Design, Gagne's 9 Events, Cognitive Load Theory |
+| quiz-maker | `/assessment-engineering` | Item type design, distractor psychology, rubric construction, feedback formulas |
+| lab-designer | `/lab-scaffolding` | 5-level pyramid, starter code design, capstone structure, hint systems |

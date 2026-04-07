@@ -1,125 +1,125 @@
 ---
 name: ghg-protocol
-description: "GHG Protocol 상세 가이드. environmental-analyst 에이전트가 온실가스 배출량을 산출하고 보고할 때 참조. 'GHG Protocol', '탄소 배출', 'Scope 1/2/3', '탄소 발자국' 요청 시 사용. 단, 탄소 배출권 거래나 CDM 사업 수행은 범위 밖."
+description: "GHG Protocol detailed guide. Referenced by the environmental-analyst agent when calculating and reporting greenhouse gas emissions. Use for 'GHG Protocol', 'carbon emissions', 'Scope 1/2/3', or 'carbon footprint' requests. Carbon credit trading and CDM project execution are out of scope."
 ---
 
-# GHG Protocol — 온실가스 프로토콜 가이드
+# GHG Protocol — Greenhouse Gas Protocol Guide
 
-environmental-analyst 에이전트의 탄소 배출 분석 역량 강화.
+Enhances the environmental-analyst agent's carbon emission analysis capabilities.
 
-## Scope 1/2/3 분류 체계
+## Scope 1/2/3 Classification System
 
-### Scope 1: 직접 배출
+### Scope 1: Direct Emissions
 
-| 배출원 | 예시 | 산출 방법 |
-|--------|------|----------|
-| 고정 연소 | 보일러, 발전기 | 연료 사용량 × 배출계수 |
-| 이동 연소 | 사용 차량 | 연료 사용량 × 배출계수 |
-| 공정 배출 | 화학 반응, 제조 | 공정별 배출계수 |
-| 비산 배출 | 냉매 누출, 메탄 | 충전/보충량 × GWP |
+| Emission Source | Examples | Calculation Method |
+|----------------|---------|-------------------|
+| Stationary Combustion | Boilers, generators | Fuel consumption x Emission factor |
+| Mobile Combustion | Company vehicles | Fuel consumption x Emission factor |
+| Process Emissions | Chemical reactions, manufacturing | Process-specific emission factor |
+| Fugitive Emissions | Refrigerant leaks, methane | Charge/refill amount x GWP |
 
-### Scope 2: 간접 배출 (전력)
-
-```
-시장 기반 (Market-based):
-  배출량 = 전력 소비량(MWh) × 공급사 배출계수
-
-위치 기반 (Location-based):
-  배출량 = 전력 소비량(MWh) × 그리드 평균 배출계수
-
-한국 그리드 배출계수 (2024):
-  0.4594 tCO2eq/MWh (환경부 고시)
-```
-
-### Scope 3: 기타 간접 배출
-
-| 카테고리 | 설명 | 데이터 소스 |
-|---------|------|-----------|
-| 1. 구매 상품/서비스 | 원자재, 용역 | 공급망 데이터, 산업 평균 |
-| 2. 자본재 | 설비, 건물 | 구매 기록, LCA 데이터 |
-| 3. 에너지 관련 | 전력 손실, 연료 운송 | 전력사 데이터 |
-| 4. 물류 (상류) | 원자재 운송 | 운송 거리 × 모드별 계수 |
-| 5. 폐기물 | 사업장 폐기물 | 폐기물량 × 처리방식별 계수 |
-| 6. 출장 | 항공, 철도, 숙박 | 거리/횟수 × 모드별 계수 |
-| 7. 통근 | 직원 출퇴근 | 직원 수 × 거리 × 모드 |
-| 8~15. 기타 | 임대, 투자, 제품사용 등 | 다양 |
-
-## 배출량 산출 공식
-
-### 기본 공식
+### Scope 2: Indirect Emissions (Electricity)
 
 ```
-배출량(tCO2eq) = 활동 데이터 × 배출계수 × GWP
+Market-based:
+  Emissions = Electricity consumption (MWh) x Supplier emission factor
 
-주요 GWP (AR6, 100년 기준):
+Location-based:
+  Emissions = Electricity consumption (MWh) x Grid average emission factor
+
+Example grid emission factor:
+  0.4594 tCO2eq/MWh (varies by country and region)
+```
+
+### Scope 3: Other Indirect Emissions
+
+| Category | Description | Data Source |
+|----------|------------|------------|
+| 1. Purchased Goods/Services | Raw materials, services | Supply chain data, industry average |
+| 2. Capital Goods | Equipment, buildings | Purchase records, LCA data |
+| 3. Fuel/Energy Related | Grid losses, fuel transport | Utility data |
+| 4. Upstream Transportation | Raw material transport | Distance x Mode-specific factor |
+| 5. Waste | Operational waste | Waste volume x Disposal method factor |
+| 6. Business Travel | Air, rail, hotel | Distance/trips x Mode-specific factor |
+| 7. Employee Commuting | Daily commute | Headcount x Distance x Mode |
+| 8-15. Other | Leased assets, investments, product use, etc. | Various |
+
+## Emission Calculation Formulas
+
+### Basic Formula
+
+```
+Emissions (tCO2eq) = Activity Data x Emission Factor x GWP
+
+Key GWP values (AR6, 100-year basis):
   CO2: 1
   CH4: 27.9
   N2O: 273
-  HFCs: 4~14,800
+  HFCs: 4-14,800
   SF6: 25,200
 ```
 
-### 주요 배출계수 (한국)
+### Common Emission Factors
 
-| 연료 | 단위 | 배출계수 (kgCO2/단위) |
-|------|------|---------------------|
-| 경유 | L | 2.58 |
-| 휘발유 | L | 2.17 |
-| LNG | Nm³ | 2.23 |
+| Fuel | Unit | Emission Factor (kgCO2/unit) |
+|------|------|------------------------------|
+| Diesel | L | 2.58 |
+| Gasoline | L | 2.17 |
+| Natural Gas (LNG) | Nm3 | 2.23 |
 | LPG | kg | 3.00 |
-| 전력 | kWh | 0.4594 |
+| Electricity | kWh | Varies by grid (see regional factors) |
 
-### 출장 배출계수
+### Business Travel Emission Factors
 
-| 운송 수단 | 배출계수 (kgCO2/인·km) |
-|----------|----------------------|
-| 국내선 항공 | 0.255 |
-| 국제선 항공 (이코노미) | 0.171 |
-| KTX | 0.012 |
-| 자가용 | 0.210 |
-| 시내버스 | 0.027 |
+| Transport Mode | Emission Factor (kgCO2/person-km) |
+|---------------|----------------------------------|
+| Domestic Flight | 0.255 |
+| International Flight (Economy) | 0.171 |
+| High-Speed Rail | 0.012 |
+| Personal Vehicle | 0.210 |
+| City Bus | 0.027 |
 
-## 보고 프레임워크 연계
+## Reporting Framework Alignment
 
-### 주요 프레임워크
+### Major Frameworks
 
-| 프레임워크 | 목적 | GHG 관련 지표 |
-|----------|------|-------------|
-| GRI 305 | 일반 보고 | 305-1~5 (Scope별 배출) |
-| TCFD | 기후 재무 공시 | 전략, 리스크, 목표 |
-| SBTi | 감축 목표 | 1.5°C/2°C 경로 |
-| CDP | 투자자 공시 | 전 Scope 배출 + 전략 |
-| ISSB S2 | 재무 공시 | Scope 1/2/3 + 리스크 |
+| Framework | Purpose | GHG-Related Indicators |
+|-----------|---------|----------------------|
+| GRI 305 | General reporting | 305-1 through 305-5 (emissions by scope) |
+| TCFD | Climate financial disclosure | Strategy, risk, targets |
+| SBTi | Reduction targets | 1.5C / 2C pathways |
+| CDP | Investor disclosure | All-scope emissions + strategy |
+| ISSB S2 | Financial disclosure | Scope 1/2/3 + risks |
 
-### 감축 목표 설정 (SBTi)
+### Reduction Target Setting (SBTi)
 
 ```
-목표 유형:
-- 절대 감축: 기준연도 대비 배출량 감축 (예: 2030년까지 42% 감축)
-- 원단위 감축: 매출/생산 단위당 감축 (예: tCO2/억원)
+Target types:
+- Absolute reduction: Reduce emissions vs base year (e.g., 42% reduction by 2030)
+- Intensity reduction: Reduce per unit of revenue/production (e.g., tCO2/revenue unit)
 
-1.5°C 경로: 연 4.2% 감축
-2°C 경로: 연 2.5% 감축
+1.5C pathway: 4.2% annual reduction
+2C pathway: 2.5% annual reduction
 
-기준연도: 최근 2년 중 선택 (데이터 완전성 확보)
+Base year: Select from most recent 2 years (ensure data completeness)
 ```
 
-## 데이터 품질 등급
+## Data Quality Ratings
 
-| 등급 | 설명 | 예시 |
-|------|------|------|
-| 1등급 | 실측 데이터 | 계측기 직접 측정 |
-| 2등급 | 1차 활동 데이터 + 공인 배출계수 | 연료 구매 기록 × 국가 계수 |
-| 3등급 | 2차 데이터, 산업 평균 | 매출 기반 추정 |
-| 4등급 | 추정/가정 | 유사 산업 평균 적용 |
+| Rating | Description | Example |
+|--------|------------|---------|
+| Grade 1 | Measured data | Direct instrument measurement |
+| Grade 2 | Primary activity data + certified emission factors | Fuel purchase records x National factors |
+| Grade 3 | Secondary data, industry averages | Revenue-based estimates |
+| Grade 4 | Estimates/assumptions | Similar industry average applied |
 
-## 보고서 산출 체크리스트
+## Reporting Checklist
 
-| 항목 | 기준 |
-|------|------|
-| Scope 커버리지 | Scope 1, 2 필수 + Scope 3 주요 카테고리 |
-| 기준연도 | 명시 + 재산정 정책 |
-| 배출계수 | 출처 명시 |
-| 데이터 품질 | 등급 표시 |
-| 조직 경계 | 지분/통제 기준 명시 |
-| 검증 | 제3자 검증 여부/계획 |
+| Item | Criteria |
+|------|----------|
+| Scope Coverage | Scope 1, 2 required + Scope 3 key categories |
+| Base Year | Specified + Recalculation policy |
+| Emission Factors | Sources cited |
+| Data Quality | Ratings indicated |
+| Organizational Boundary | Equity/control approach specified |
+| Verification | Third-party verification status/plan |

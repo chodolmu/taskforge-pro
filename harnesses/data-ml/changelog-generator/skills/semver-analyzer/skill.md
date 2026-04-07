@@ -1,98 +1,98 @@
 ---
 name: semver-analyzer
-description: "시맨틱 버저닝(SemVer) 규칙에 따라 변경사항을 분석하고 적절한 버전 번호를 결정하는 방법론. 'SemVer 분석', '버전 번호 결정', 'Breaking Change 판정', '버전 범프 결정' 등 버전 관리 시 사용한다. 단, git 태그 자동 생성, CI/CD 릴리스 실행은 이 스킬의 범위가 아니다."
+description: "Methodology for analyzing changes according to Semantic Versioning (SemVer) rules and determining the appropriate version number. Use this skill for 'SemVer analysis', 'version number determination', 'Breaking Change assessment', 'version bump decisions', and other version management tasks. Note: automatic git tag creation and CI/CD release execution are outside the scope of this skill."
 ---
 
-# SemVer Analyzer — 시맨틱 버저닝 분석 방법론
+# SemVer Analyzer — Semantic Versioning Analysis Methodology
 
-change-classifier와 release-note-writer의 버전 결정 역량을 강화하는 스킬.
+A skill that enhances version determination capabilities for the change-classifier and release-note-writer.
 
-## 대상 에이전트
+## Target Agents
 
-- **change-classifier** — 변경사항의 SemVer 영향도를 판정한다
-- **release-note-writer** — 버전 번호와 하이라이트를 결정한다
+- **change-classifier** — Determines the SemVer impact of changes
+- **release-note-writer** — Determines version numbers and highlights
 
-## SemVer 2.0.0 핵심 규칙
+## SemVer 2.0.0 Core Rules
 
 ```
 MAJOR.MINOR.PATCH[-prerelease][+build]
 
-MAJOR: 호환되지 않는 API 변경 (Breaking Change)
-MINOR: 하위 호환 기능 추가
-PATCH: 하위 호환 버그 수정
+MAJOR: Incompatible API changes (Breaking Change)
+MINOR: Backward-compatible feature additions
+PATCH: Backward-compatible bug fixes
 ```
 
-## Breaking Change 판정 매트릭스
+## Breaking Change Assessment Matrix
 
-### API/라이브러리
+### API/Library
 
-| 변경 유형 | Breaking? | 예시 |
-|----------|-----------|------|
-| 공개 함수 삭제 | YES | `remove_user()` 삭제 |
-| 공개 함수 시그니처 변경 | YES | 필수 매개변수 추가/제거 |
-| 반환 타입 변경 | YES | `dict` → `list` |
-| 예외 타입 변경 | YES | `ValueError` → `TypeError` |
-| 기본값 변경 | MAYBE | 동작 변경 여부에 따라 |
-| 새 선택 매개변수 추가 | NO | `def func(x, new=None)` |
-| 새 공개 함수 추가 | NO | 기존 코드 영향 없음 |
-| 내부 함수 변경 | NO | `_private_func()` |
-| 성능 개선 | NO | 동작 동일 |
+| Change Type | Breaking? | Example |
+|------------|-----------|---------|
+| Public function removed | YES | `remove_user()` deleted |
+| Public function signature changed | YES | Required parameter added/removed |
+| Return type changed | YES | `dict` to `list` |
+| Exception type changed | YES | `ValueError` to `TypeError` |
+| Default value changed | MAYBE | Depends on behavioral change |
+| New optional parameter added | NO | `def func(x, new=None)` |
+| New public function added | NO | No impact on existing code |
+| Internal function changed | NO | `_private_func()` |
+| Performance improvement | NO | Behavior unchanged |
 
-### 웹 API (REST/GraphQL)
+### Web API (REST/GraphQL)
 
-| 변경 유형 | Breaking? |
-|----------|-----------|
-| 엔드포인트 삭제/이동 | YES |
-| 필수 필드 추가 (요청) | YES |
-| 응답 필드 삭제 | YES |
-| 응답 구조 변경 | YES |
-| 인증 방식 변경 | YES |
-| 새 선택 필드 추가 (요청) | NO |
-| 새 응답 필드 추가 | NO |
-| 새 엔드포인트 추가 | NO |
+| Change Type | Breaking? |
+|------------|-----------|
+| Endpoint removed/moved | YES |
+| Required field added (request) | YES |
+| Response field removed | YES |
+| Response structure changed | YES |
+| Authentication method changed | YES |
+| New optional field added (request) | NO |
+| New response field added | NO |
+| New endpoint added | NO |
 
-### 데이터베이스
+### Database
 
-| 변경 유형 | Breaking? |
-|----------|-----------|
-| 테이블/컬럼 삭제 | YES |
-| NOT NULL 제약 추가 | YES |
-| 컬럼 타입 변경 | YES |
-| 새 nullable 컬럼 추가 | NO |
-| 새 인덱스 추가 | NO |
+| Change Type | Breaking? |
+|------------|-----------|
+| Table/column removed | YES |
+| NOT NULL constraint added | YES |
+| Column type changed | YES |
+| New nullable column added | NO |
+| New index added | NO |
 
-## 버전 범프 결정 알고리즘
+## Version Bump Decision Algorithm
 
 ```
-입력: 변경사항 목록
+Input: List of changes
 
-1. Breaking Change 있음? → MAJOR 범프
-2. 새 기능 있음? → MINOR 범프
-3. 버그 수정만? → PATCH 범프
+1. Breaking Change present? -> MAJOR bump
+2. New features present? -> MINOR bump
+3. Bug fixes only? -> PATCH bump
 
-특수 규칙:
-- MAJOR = 0 (개발 중): Breaking Change도 MINOR로 허용
-- pre-release 붙은 경우: 0.x.y-alpha.1 → 정식 릴리스 시 MAJOR
-- 여러 유형 혼합 시: 가장 높은 수준 적용
+Special rules:
+- MAJOR = 0 (in development): Breaking Changes allowed as MINOR
+- Pre-release versions: 0.x.y-alpha.1 -> MAJOR on stable release
+- Mixed types: Apply the highest level
 ```
 
-## Conventional Commits 매핑
+## Conventional Commits Mapping
 
-| 접두사 | SemVer 영향 | 릴리스 노트 섹션 |
-|--------|-----------|----------------|
-| `feat:` | MINOR | Added (추가) |
-| `fix:` | PATCH | Fixed (수정) |
+| Prefix | SemVer Impact | Release Notes Section |
+|--------|-------------|----------------------|
+| `feat:` | MINOR | Added |
+| `fix:` | PATCH | Fixed |
 | `feat!:` / `BREAKING CHANGE:` | MAJOR | Breaking Changes |
-| `perf:` | PATCH | Performance (성능) |
-| `refactor:` | - | Changed (변경) |
+| `perf:` | PATCH | Performance |
+| `refactor:` | - | Changed |
 | `docs:` | - | Documentation |
-| `test:` | - | - (노트 제외 가능) |
-| `chore:` | - | - (노트 제외 가능) |
-| `ci:` | - | - (노트 제외 가능) |
-| `style:` | - | - (노트 제외 가능) |
+| `test:` | - | - (may exclude from notes) |
+| `chore:` | - | - (may exclude from notes) |
+| `ci:` | - | - (may exclude from notes) |
+| `style:` | - | - (may exclude from notes) |
 | `deps:` | PATCH~MAJOR | Dependencies |
 
-## Keep a Changelog 형식
+## Keep a Changelog Format
 
 ```markdown
 # Changelog
@@ -102,34 +102,34 @@ PATCH: 하위 호환 버그 수정
 ## [2.0.0] - 2025-01-15
 
 ### Breaking Changes
-- `createUser()` API가 `registerUser()`로 이름 변경 (#123)
+- `createUser()` API renamed to `registerUser()` (#123)
 
 ### Added
-- 팀 관리 기능 추가 (#456)
-- 다크모드 지원 (#789)
+- Team management feature (#456)
+- Dark mode support (#789)
 
 ### Changed
-- 로그인 화면 UI 개선 (#234)
+- Login screen UI improvements (#234)
 
 ### Deprecated
-- `v1` API 엔드포인트 (v3.0에서 제거 예정)
+- `v1` API endpoints (will be removed in v3.0)
 
 ### Fixed
-- 비밀번호 재설정 이메일 미발송 문제 (#567)
+- Password reset email not sending (#567)
 
 ### Security
-- XSS 취약점 패치 (#890)
+- XSS vulnerability patch (#890)
 ```
 
-## 프리릴리스 버전 체계
+## Pre-Release Version System
 
 ```
-1.0.0-alpha.1 → 초기 알파
-1.0.0-alpha.2 → 알파 수정
-1.0.0-beta.1  → 베타 진입
-1.0.0-beta.2  → 베타 수정
-1.0.0-rc.1    → 릴리스 후보
-1.0.0         → 정식 릴리스
+1.0.0-alpha.1 -> Initial alpha
+1.0.0-alpha.2 -> Alpha fix
+1.0.0-beta.1  -> Beta entry
+1.0.0-beta.2  -> Beta fix
+1.0.0-rc.1    -> Release candidate
+1.0.0         -> Stable release
 
-우선순위: alpha < beta < rc < release
+Precedence: alpha < beta < rc < release
 ```

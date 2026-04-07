@@ -1,187 +1,187 @@
 ---
 name: diagram-patterns
-description: "Mermaid 다이어그램 패턴 라이브러리. diagram-maker 에이전트가 기술 문서용 다이어그램을 작성할 때 참조하는 검증된 패턴 모음. '다이어그램 패턴', 'Mermaid 템플릿', '아키텍처 다이어그램 패턴' 요청 시 사용. 단, 실제 이미지 렌더링이나 디자인 도구 조작은 범위 밖."
+description: "Mermaid diagram pattern library. diagram-maker agent technical document diagram writingto do when reference verifydone pattern . 'diagram pattern', 'Mermaid template', ' diagram pattern' request when usage. However, actual un-degree specialistperson tool work scope outside."
 ---
 
-# Diagram Patterns — Mermaid 다이어그램 패턴 라이브러리
+# Diagram Patterns — Mermaid diagram pattern library
 
-diagram-maker 에이전트의 다이어그램 품질을 높이는 검증된 패턴 모음.
+diagram-maker agent diagram quality verifydone pattern .
 
-## 아키텍처 다이어그램 패턴
+## diagram pattern
 
-### 패턴 1: 계층형 아키텍처 (Layered Architecture)
+### pattern 1: total (Layered Architecture)
 
 ```mermaid
 graph TD
-    subgraph Presentation["프레젠테이션 계층"]
-        UI[웹 UI]
-        API_GW[API Gateway]
-    end
-    subgraph Business["비즈니스 계층"]
-        SVC1[서비스 A]
-        SVC2[서비스 B]
-    end
-    subgraph Data["데이터 계층"]
-        DB[(데이터베이스)]
-        CACHE[(캐시)]
-    end
-    UI --> API_GW
-    API_GW --> SVC1 & SVC2
-    SVC1 --> DB
-    SVC2 --> CACHE --> DB
+ subgraph Presentation["presentation total"]
+ UI[web UI]
+ API_GW[API Gateway]
+ end
+ subgraph Business[" total"]
+ SVC1[service A]
+ SVC2[service B]
+ end
+ subgraph Data["data total"]
+ DB[(data)]
+ CACHE[(when)]
+ end
+ UI --> API_GW
+ API_GW --> SVC1 & SVC2
+ SVC1 --> DB
+ SVC2 --> CACHE --> DB
 ```
 
-**사용 시점**: 모놀리식/계층 분리 시스템
-**핵심 규칙**: subgraph로 계층 구분, TD 방향, 계층당 3-4 노드 이내
+**usage timing**: /total minute whensystem
+**core rule**: subgraph total minute, TD direction, total 3-4 within
 
-### 패턴 2: 마이크로서비스 통신
+### pattern 2: service communication
 
 ```mermaid
 graph LR
-    CLIENT --> GW[API Gateway]
-    GW --> AUTH[인증]
-    GW --> USER[사용자]
-    GW --> ORDER[주문]
-    ORDER --> PAYMENT[결제]
-    ORDER -.->|이벤트| MQ[메시지 큐]
-    MQ -.-> NOTIFY[알림]
-    style MQ fill:#f9f,stroke:#333
+ CLIENT --> GW[API Gateway]
+ GW --> AUTH[authentication]
+ GW --> USER[user]
+ GW --> ORDER[weekdocument]
+ ORDER --> PAYMENT
+ ORDER -.->|event| MQ[message ]
+ MQ -.-> NOTIFY
+ style MQ fill:#f9f,stroke:#333
 ```
 
-**핵심 규칙**: 동기=실선, 비동기=점선, 메시지 큐 색상 강조
+**core rule**: basis=actual, basis=point, message 
 
-### 패턴 3: 클라우드 인프라 토폴로지
+### pattern 3: person degree
 
 ```mermaid
 graph TD
-    subgraph VPC["VPC (10.0.0.0/16)"]
-        subgraph Public["퍼블릭 서브넷"]
-            ALB[ALB]
-            NAT[NAT GW]
-        end
-        subgraph Private["프라이빗 서브넷"]
-            ECS[ECS]
-            RDS[(RDS)]
-        end
-    end
-    INTERNET((인터넷)) --> ALB --> ECS --> RDS
+ subgraph VPC["VPC (10.0.0.0/16)"]
+ subgraph Public[" from"]
+ ALB[ALB]
+ NAT[NAT GW]
+ end
+ subgraph Private[" from"]
+ ECS[ECS]
+ RDS[(RDS)]
+ end
+ end
+ INTERNET((person)) --> ALB --> ECS --> RDS
 ```
 
-**핵심 규칙**: 중첩 subgraph=네트워크 경계, 원형 노드=외부
+**core rule**: during subgraph= total, KRW =external
 
-## 시퀀스 다이어그램 패턴
+## when diagram pattern
 
-### 패턴 4: API 호출 (Happy Path + Error)
+### pattern 4: API (Happy Path + Error)
 
 ```mermaid
 sequenceDiagram
-    actor User
-    participant FE as 프론트엔드
-    participant API as API 서버
-    participant DB as 데이터베이스
-    User->>FE: 요청
-    FE->>API: POST /resource
-    API->>DB: INSERT
-    alt 성공
-        DB-->>API: OK
-        API-->>FE: 201
-    else 실패
-        DB-->>API: Error
-        API-->>FE: 500
-    end
+ actor User
+ participant FE as 
+ participant API as API from
+ participant DB as data
+ User->>FE: request
+ FE->>API: POST /resource
+ API->>DB: INSERT
+ alt nature
+ DB-->>API: OK
+ API-->>FE: 201
+ else failure
+ DB-->>API: Error
+ API-->>FE: 500
+ end
 ```
 
-**핵심 규칙**: alt/else 분기, 요청=실선, 응답=점선
+**core rule**: alt/else minutebasis, request=actual, =point
 
-### 패턴 5: OAuth 2.0 인증 흐름
+### pattern 5: OAuth 2.0 authentication flow
 
 ```mermaid
 sequenceDiagram
-    Client->>Auth: 1. 인증 요청
-    Auth-->>Client: 2. Access + Refresh Token
-    Client->>Resource: 3. API 요청 (Bearer)
-    Resource->>Auth: 4. 토큰 검증
-    Auth-->>Resource: 5. 유효
-    Resource-->>Client: 6. 응답
-    Note over Client,Auth: 토큰 만료 시
-    Client->>Auth: 7. Refresh
-    Auth-->>Client: 8. 새 Token
+ Client->>Auth: 1. authentication request
+ Auth-->>Client: 2. Access + Refresh Token
+ Client->>Resource: 3. API request (Bearer)
+ Resource->>Auth: 4. verify
+ Auth-->>Resource: 5. 
+ Resource-->>Client: 6. 
+ Note over Client,Auth: when
+ Client->>Auth: 7. Refresh
+ Auth-->>Client: 8. Token
 ```
 
-## 플로차트 패턴
+## flowchart pattern
 
-### 패턴 6: 의사결정 흐름도
+### pattern 6: decision-making flow
 
 ```mermaid
 flowchart TD
-    START([시작]) --> CHECK{조건 확인}
-    CHECK -->|A| PA[처리 A]
-    CHECK -->|B| PB[처리 B]
-    PA & PB --> VALIDATE{검증}
-    VALIDATE -->|통과| DONE([완료])
-    VALIDATE -->|실패| RETRY{재시도?}
-    RETRY -->|예| CHECK
-    RETRY -->|아니오| ERROR([에러])
+ START([whenwork]) --> CHECK{condition confirm}
+ CHECK -->|A| PA[processing A]
+ CHECK -->|B| PB[processing B]
+ PA & PB --> VALIDATE{verify}
+ VALIDATE -->|| DONE([complete])
+ VALIDATE -->|failure| RETRY{re-when?}
+ RETRY -->|example| CHECK
+ RETRY -->|| ERROR([error])
 ```
 
-**핵심 규칙**: 다이아몬드=판단, 둥근 사각형=시작/종료, 루프=순환 화살표
+**core rule**: =However, companyeach=whenwork/, =exchange table
 
-### 패턴 7: CI/CD 파이프라인
+### pattern 7: CI/CD pipeline
 
 ```mermaid
 flowchart LR
-    COMMIT --> BUILD --> TEST --> SCAN --> STAGING --> APPROVE{승인}
-    APPROVE -->|O| PROD[배포]
-    APPROVE -->|X| ROLLBACK
-    style PROD fill:#2d5
-    style ROLLBACK fill:#d52
+ COMMIT --> BUILD --> TEST --> SCAN --> STAGING --> APPROVE{person}
+ APPROVE -->|O| PROD[deployment]
+ APPROVE -->|X| ROLLBACK
+ style PROD fill:#2d5
+ style ROLLBACK fill:#d52
 ```
 
-## ER 다이어그램 패턴
+## ER diagram pattern
 
-### 패턴 8: 데이터 모델
+### pattern 8: data model
 
 ```mermaid
 erDiagram
-    USER ||--o{ ORDER : places
-    ORDER ||--|{ ORDER_ITEM : contains
-    ORDER_ITEM }o--|| PRODUCT : "refers to"
-    USER { int id PK; string email UK; string name }
-    ORDER { int id PK; int user_id FK; string status }
+ USER ||--o{ ORDER : places
+ ORDER ||--|{ ORDER_ITEM : contains
+ ORDER_ITEM }o--|| PRODUCT : "refers to"
+ USER { int id PK; string email UK; string name }
+ ORDER { int id PK; int user_id FK; string status }
 ```
 
-## 상태 다이어그램 패턴
+## status diagram pattern
 
-### 패턴 9: 상태 전이
+### pattern 9: status before
 
 ```mermaid
 stateDiagram-v2
-    [*] --> 접수
-    접수 --> 결제대기: 확인
-    결제대기 --> 결제완료: 성공
-    결제대기 --> 취소: 실패
-    결제완료 --> 배송중: 출고
-    배송중 --> 완료: 수령
-    완료 --> [*]
-    취소 --> [*]
+ [*] --> number
+ number --> versusbasis: confirm
+ versusbasis --> complete: nature
+ versusbasis --> : failure
+ complete --> during: 
+ during --> complete: number
+ complete --> [*]
+ --> [*]
 ```
 
-## 다이어그램 품질 체크리스트
+## diagram quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| 노드 수 | 10개 이내 |
-| 레이블 | 3~5단어 |
-| 화살표 교차 | 0개 |
-| 범례/캡션 | 모든 다이어그램에 포함 |
-| 색상 | 의미 있는 구분에만, 최대 3색 |
-| subgraph 깊이 | 최대 2단계 |
+| number | 10items within |
+| | 3~5 |
+| table gap | 0items |
+| /caption | all diagram included |
+| | un- minute, versus 3 |
+| subgraph | versus 2stage |
 
-## 안티패턴
+## planpattern
 
-| 안티패턴 | 해결책 |
+| planpattern | |
 |---------|--------|
-| 스파게티 (화살표 교차) | 노드 재배치, subgraph 분리 |
-| 과도한 세부사항 | 추상화 수준 통일 |
-| 레이블 없는 화살표 | 모든 관계에 동사형 레이블 |
-| 일관성 없는 노드 모양 | 유형별 통일 |
+| (table gap) | re-arrangement, subgraph minute |
+| Korean taxdepartmentmatters | level day |
+| table | all total company |
+| consistency | typeby day |

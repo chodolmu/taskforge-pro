@@ -1,184 +1,184 @@
 ---
 name: wedding-budget-optimizer
-description: "결혼 예산의 항목별 배분과 비용 절감 전략을 최적화하는 예산 관리 도구. 'budget-controller'와 'wedding-reviewer' 에이전트가 예산을 배분하고 비용을 검증할 때 이 스킬의 예산 배분 공식, 비용 기준표, 절약 전략을 반드시 활용해야 한다. '결혼 예산 배분', '비용 절감', '예산 시뮬레이션' 등에 사용한다. 단, 업체 비교나 타임라인 설계는 이 스킬의 범위가 아니다."
+description: "wedding budget itemby allocation and cost reduction strategy optimization budget management tool. 'budget-controller' and 'wedding-reviewer' agent budget allocationand cost verifyto do when this skill's budget allocation official, cost standardtable, approx. strategy must be utilized. 'wedding budget allocation', 'cost reduction', 'budget simulation' etc. However, vendor comparison timeline design is outside this skill's scope."
 ---
 
-# Wedding Budget Optimizer — 결혼 예산 최적화 도구
+# Wedding Budget Optimizer — wedding budget optimization tool
 
-결혼 예산의 항목별 배분 비율, 비용 기준, 절약 전략을 제공한다.
+wedding budget itemby allocation ratio, cost standard, approx. strategy provide.
 
-## 결혼 비용 구조 (한국 2024-2025)
+## wedding cost structure (Korean 2024-2025)
 
-### 전체 비용 평균
+### overall cost pyeongbalanced
 
 ```
-한국 평균 결혼 비용 (2024):
-  총비용: 약 2.5-3.5억원 (양가 합산)
-  
-구성:
-  주거비(전세/매매): 1.5-2.5억원 (50-70%)
-  예식·파티: 2,000-5,000만원 (10-15%)
-  예물·예단: 1,000-3,000만원 (5-10%)
-  혼수: 1,000-2,000만원 (3-7%)
-  허니문: 200-600만원 (2-3%)
+Korean pyeongbalanced wedding cost (2024):
+ totalcost: approx. 2.5-3.500M KRW (both families )
+ 
+composition:
+ week(beforetax/): 1.5-2.500M KRW (50-70%)
+ ceremony·: 2,000-5,0000,000 KRW (10-15%)
+ wedding gifts·betrothal gifts: 1,000-3,0000,000 KRW (5-10%)
+ trousseau: 1,000-2,0000,000 KRW (3-7%)
+ honeymoon: 200-6000,000 KRW (2-3%)
 ```
 
-### 예식 비용 세부 배분 (예식 3,000만원 기준)
+### ceremony cost taxdepartment allocation (ceremony 3,0000,000 KRW standard)
 
-| 항목 | 비율 | 금액 | 비고 |
+| item | ratio | amount | notes |
 |------|------|------|------|
-| 식대 (식사) | 40-50% | 1,200-1,500만원 | 200명 × 6-7.5만원 |
-| 스드메 | 15-25% | 450-750만원 | 스튜디오+드레스+메이크업 |
-| 예식장 | 5-10% | 150-300만원 | 대관료 (식대 별도 시) |
-| 청첩장 | 2-3% | 60-90만원 | 250장 기준 |
-| 사회·축가 | 1-3% | 30-90만원 | |
-| 꽃·장식 | 3-5% | 90-150만원 | 부케, 식장 꽃장식 |
-| 답례품 | 2-3% | 60-90만원 | 하객 답례 |
-| 폐백 | 1-2% | 30-60만원 | 폐백음식, 의상 대여 |
-| 예비비 | 5-10% | 150-300만원 | 비상금 |
+| catering cost (company) | 40-50% | 1,200-1,5000,000 KRW | 200people × 6-7.50,000 KRW |
+| studio/dress/makeup | 15-25% | 450-7500,000 KRW | ++ |
+| ceremony | 5-10% | 150-3000,000 KRW | versus (catering cost by also when) |
+| invitation | 2-3% | 60-900,000 KRW | 250 standard |
+| company·congratulatory song | 1-3% | 30-900,000 KRW | |
+| ·decoration | 3-5% | 90-1500,000 KRW | department, decoration |
+| return gifts | 2-3% | 60-900,000 KRW | guest |
+| traditional ceremony | 1-2% | 30-600,000 KRW | traditional ceremony, versus |
+| example | 5-10% | 150-3000,000 KRW | |
 
-## 예산 배분 공식
+## budget allocation official
 
-### 하객 수 기반 식대 산출
-
-```
-식대 총액 = 예상 하객 × 1인 식대 × (1 + VAT율)
-
-보정 계수:
-  초대 200명 → 실 참석 예상: 160-180명 (80-90%)
-  초대 300명 → 실 참석 예상: 230-260명 (77-87%)
-
-안전 마진: 보증인원 = 실 참석 예상 × 0.9 (하향 안전)
-```
-
-### 축의금 예측
+### guest number based catering cost calculation
 
 ```
-예상 축의금 = Σ(관계별 인원 × 예상 금액)
+catering cost total = expected guest × 1person catering cost × (1 + VAT)
 
-관계별 평균 축의금 (2024):
-  친인척: 10-30만원
-  직장 동료: 5-10만원
-  친구: 5-7만원
-  지인: 3-5만원
+report totalnumber:
+ versus 200people → actual expected: 160-180people (80-90%)
+ versus 300people → actual expected: 230-260people (77-87%)
 
-축의금 커버율 = 축의금 / 식대 총액
-  일반적: 60-80%
-  하객 많으면: 80-100% (식대 상쇄 가능)
+planbefore : guaranteed headcount = actual expected × 0.9 ( planbefore)
 ```
 
-## 비용 절감 전략 TOP 10
-
-### 큰 절약 (100만원+ 절감)
+### congratulatory money example
 
 ```
-1. 비수기·주말 오전 예식 (식대 10-15% 할인 + 대관료 절감)
-   절감: 150-300만원
+expected congratulatory money = Σ(totalby personKRW × expected amount)
 
-2. 스드메 개별 계약 (패키지 대비 가성비 비교)
-   절감: 100-200만원 (상황별)
+totalby pyeongbalanced congratulatory money (2024):
+ person: 10-300,000 KRW
+ : 5-100,000 KRW
+ : 5-70,000 KRW
+ degreeperson: 3-50,000 KRW
 
-3. 하객 수 최적화 (불필요 초대 줄이기)
-   절감: 초대 50명 감소 × 7만원 = 350만원
-
-4. 셀프 웨딩 요소 도입 (부분 DIY)
-   - 청첩장: 모바일 청첩장 (80-90% 절감)
-   - 답례품: 직접 구매 (50% 절감)
-   - 영상: 지인 촬영 (100만원 절감)
+congratulatory money = congratulatory money / catering cost total
+ general: 60-80%
+ guest : 80-100% (catering cost possible)
 ```
 
-### 중간 절약 (30-100만원 절감)
+## cost reduction strategy TOP 10
+
+### approx. (1000,000 KRW+ reduction)
 
 ```
-5. 웨딩박람회 계약 할인 (10-20% 특별가)
-   절감: 50-100만원
+1. off-season·week before ceremony (catering cost 10-15% to doperson + versus reduction)
+ reduction: 150-3000,000 KRW
 
-6. 지인 소개 할인 (이미 결혼한 친구 통해)
-   절감: 30-50만원
+2. studio/dress/makeup individual totalapprox. (package versus nature comparison)
+ reduction: 100-2000,000 KRW (situationby)
 
-7. 제철 꽃 사용 (수입 꽃 대신)
-   절감: 30-50만원
+3. guest number optimization (needed versus basis)
+ reduction: versus 50people decrease × 70,000 KRW = 3500,000 KRW
 
-8. 답례품 온라인 직구
-   절감: 20-40만원
+4. element (departmentminute DIY)
+ - invitation: day invitation (80-90% reduction)
+ - return gifts: directly (50% reduction)
+ - : degreeperson (1000,000 KRW reduction)
 ```
 
-### 작은 절약 (30만원 이하)
+### duringbetween approx. (30-1000,000 KRW reduction)
 
 ```
-9. 모바일 청첩장 (종이 대체)
-   절감: 20-30만원
+5. totalapprox. to doperson (10-20% by)
+ reduction: 50-1000,000 KRW
 
-10. 폐백 음식 직접 준비 (가족 도움)
-    절감: 15-25만원
+6. degreeperson items to doperson (un- weddingKorean through)
+ reduction: 30-500,000 KRW
+
+7. usage (income versus)
+ reduction: 30-500,000 KRW
+
+8. return gifts person 
+ reduction: 20-400,000 KRW
 ```
 
-## 예산 수준별 시나리오
-
-### 절약형 (2,000만원)
+### work approx. (300,000 KRW or less)
 
 ```
-식대: 150명 × 6만원 = 900만원
-스드메: 150만원 (중저가 패키지)
-예식장: 100만원 (일반 웨딩홀 비수기)
-청첩장: 10만원 (모바일)
-꽃·장식: 50만원
-기타: 150만원
-예비비: 140만원
-→ 축의금으로 식대 상당 부분 상쇄 가능
+9. day invitation ( versus)
+ reduction: 20-300,000 KRW
+
+10. traditional ceremony directly preparation 
+ reduction: 15-250,000 KRW
 ```
 
-### 표준형 (3,500만원)
+## budget levelby scenario
+
+### approx. (2,0000,000 KRW)
 
 ```
-식대: 200명 × 8만원 = 1,600만원
-스드메: 400만원 (중급 패키지)
-예식장: 200만원
-청첩장: 50만원 (인쇄+모바일)
-꽃·장식: 100만원
-사회·축가: 50만원
-답례품: 50만원
-폐백: 40만원
-영상: 80만원
-예비비: 330만원
+catering cost: 150people × 60,000 KRW = 9000,000 KRW
+studio/dress/makeup: 1500,000 KRW (during package)
+ceremony: 1000,000 KRW (day wedding hall off-season)
+invitation: 100,000 KRW (day)
+·decoration: 500,000 KRW
+basis: 1500,000 KRW
+example: 1400,000 KRW
+→ congratulatory moneyas catering cost departmentminute possible
 ```
 
-### 프리미엄형 (5,000만원)
+### tablelevel (3,5000,000 KRW)
 
 ```
-식대: 250명 × 12만원 = 3,000만원 (호텔)
-스드메: 700만원 (프리미엄)
-예식장: 300만원 (호텔 대관)
-청첩장: 80만원
-꽃·장식: 200만원
-사회: 80만원
-답례품: 80만원
-영상(감독): 150만원
-기타: 200만원
-예비비: 210만원
+catering cost: 200people × 80,000 KRW = 1,6000,000 KRW
+studio/dress/makeup: 4000,000 KRW (duringgrade package)
+ceremony: 2000,000 KRW
+invitation: 500,000 KRW (person+day)
+·decoration: 1000,000 KRW
+company·congratulatory song: 500,000 KRW
+return gifts: 500,000 KRW
+traditional ceremony: 400,000 KRW
+: 800,000 KRW
+example: 3300,000 KRW
 ```
 
-## 예산 관리 추적표
+### premium (5,0000,000 KRW)
+
+```
+catering cost: 250people × 120,000 KRW = 3,0000,000 KRW 
+studio/dress/makeup: 7000,000 KRW (premium)
+ceremony: 3000,000 KRW ( versus)
+invitation: 800,000 KRW
+·decoration: 2000,000 KRW
+company: 800,000 KRW
+return gifts: 800,000 KRW
+: 1500,000 KRW
+basis: 2000,000 KRW
+example: 2100,000 KRW
+```
+
+## budget management trackingtable
 
 ```markdown
-## 결혼 예산 추적표
+## wedding budget trackingtable
 
-**총 예산**: X만원 | **집행**: X만원 | **잔액**: X만원 | **진행률**: X%
+**total budget**: X0,000 KRW | ****: X0,000 KRW | ****: X0,000 KRW | **progressrate**: X%
 
-| 항목 | 예산 | 계약금 | 잔금 | 집행합계 | 상태 |
+| item | budget | deposit | final payment | total | status |
 |------|------|--------|------|---------|------|
-| 웨딩홀 | X만원 | X만원 | X만원 | X만원 | ✅ 계약 |
-| 스드메 | X만원 | - | - | - | 🔍 비교 중 |
-| 허니문 | X만원 | - | - | - | ⏳ 미착수 |
+| wedding hall | X0,000 KRW | X0,000 KRW | X0,000 KRW | X0,000 KRW | ✅ totalapprox. |
+| studio/dress/makeup | X0,000 KRW | - | - | - | 🔍 comparison during |
+| honeymoon | X0,000 KRW | - | - | - | ⏳ un-number |
 
-### 납부 일정
-| 일자 | 업체 | 금액 | 유형 | 메모 |
+### department schedule
+| dayspecialist | vendor | amount | type | |
 |------|------|------|------|------|
-| D-180 | 웨딩홀 | X만원 | 계약금 | |
-| D-30 | 웨딩홀 | X만원 | 잔금 | 하객 수 확정 후 |
+| D-180 | wedding hall | X0,000 KRW | deposit | |
+| D-30 | wedding hall | X0,000 KRW | final payment | guest number after |
 ```
 
-## 참고
+## reference
 
-- 한국 웨딩 시장 2024-2025 기준
-- 상세 비용 데이터: `references/wedding-cost-data.md` 참조
+- Korean market 2024-2025 standard
+- detailed cost data: `references/wedding-cost-data.md` reference

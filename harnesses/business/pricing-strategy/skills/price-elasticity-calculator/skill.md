@@ -1,176 +1,176 @@
 ---
 name: price-elasticity-calculator
-description: "가격 탄력성을 계산하고 최적 가격을 도출하는 방법론. '가격 탄력성', '수요 탄력성', '가격 변경 영향', '최적 가격 도출', '가격 인상 시뮬레이션' 등 가격 변경 분석 시 사용한다. 단, 계량경제학 모델 구축, 실시간 동적 가격 엔진은 이 스킬의 범위가 아니다."
+description: "A methodology for calculating price elasticity and deriving optimal pricing. Use this skill for 'price elasticity', 'demand elasticity', 'price change impact', 'optimal price derivation', 'price increase simulation', and other price change analysis needs. However, econometric model construction and real-time dynamic pricing engines are outside the scope of this skill."
 ---
 
-# Price Elasticity Calculator — 가격 탄력성 분석 + 최적 가격
+# Price Elasticity Calculator — Price Elasticity Analysis + Optimal Pricing
 
-pricing-simulator와 competitive-analyst의 가격 분석을 강화하는 스킬.
+A skill that enhances the pricing analysis capabilities of pricing-simulator and competitive-analyst.
 
-## 대상 에이전트
+## Target Agents
 
-- **pricing-simulator** — 가격 변경 시나리오의 영향을 정량 분석한다
-- **competitive-analyst** — 경쟁사 가격 변동의 교차 탄력성을 분석한다
+- **pricing-simulator** — Quantitatively analyzes the impact of price change scenarios
+- **competitive-analyst** — Analyzes cross-price elasticity of competitor price changes
 
-## 가격 탄력성 기본 공식
+## Price Elasticity Core Formulas
 
-### 수요의 가격 탄력성 (PED)
+### Price Elasticity of Demand (PED)
 
 ```
-PED = (수요량 변화율) / (가격 변화율)
-    = (ΔQ/Q) / (ΔP/P)
+PED = (% Change in Quantity Demanded) / (% Change in Price)
+    = (dQ/Q) / (dP/P)
 
-중간점 공식 (더 정확):
+Midpoint Formula (more accurate):
 PED = [(Q2-Q1)/((Q1+Q2)/2)] / [(P2-P1)/((P1+P2)/2)]
 
-해석:
-  |PED| > 1: 탄력적 — 가격 변화에 수요 민감
-  |PED| = 1: 단위탄력적 — 매출 변화 없음
-  |PED| < 1: 비탄력적 — 가격 변화에 수요 둔감
+Interpretation:
+  |PED| > 1: Elastic — demand is sensitive to price changes
+  |PED| = 1: Unit elastic — no change in revenue
+  |PED| < 1: Inelastic — demand is insensitive to price changes
 
-예시:
-  가격 10% 인상, 수요 15% 감소
-  PED = -15% / 10% = -1.5 (탄력적)
+Example:
+  10% price increase, 15% demand decrease
+  PED = -15% / 10% = -1.5 (elastic)
 ```
 
-### 교차 탄력성 (Cross-Price Elasticity)
+### Cross-Price Elasticity (XED)
 
 ```
-XED = (자사 수요량 변화율) / (경쟁사 가격 변화율)
+XED = (% Change in Own Demand) / (% Change in Competitor Price)
 
-해석:
-  XED > 0: 대체재 관계 (경쟁사 가격↑ → 자사 수요↑)
-  XED < 0: 보완재 관계
-  XED ≈ 0: 무관
+Interpretation:
+  XED > 0: Substitute relationship (competitor price up → own demand up)
+  XED < 0: Complement relationship
+  XED ≈ 0: Unrelated
 
-예시:
-  경쟁사 가격 20% 인상, 자사 수요 10% 증가
-  XED = 10% / 20% = 0.5 (약한 대체재)
+Example:
+  Competitor price increase 20%, own demand increase 10%
+  XED = 10% / 20% = 0.5 (weak substitute)
 ```
 
-## 산업별 탄력성 벤치마크
+## Industry Elasticity Benchmarks
 
-| 산업/제품 | PED 범위 | 특성 |
-|----------|---------|------|
-| SaaS (기업용) | -0.5 ~ -1.0 | 비탄력적 (전환비용 높음) |
-| SaaS (개인용) | -1.0 ~ -2.0 | 탄력적 (대안 많음) |
-| 이커머스 (일반) | -1.5 ~ -2.5 | 탄력적 (가격비교 용이) |
-| 이커머스 (럭셔리) | -0.5 ~ -1.0 | 비탄력적 (브랜드 충성) |
-| 식료품 (필수) | -0.1 ~ -0.5 | 매우 비탄력적 |
-| 외식 | -1.0 ~ -2.0 | 탄력적 |
-| 모바일 앱 | -2.0 ~ -3.0 | 매우 탄력적 |
+| Industry/Product | PED Range | Characteristics |
+|-----------------|-----------|-----------------|
+| SaaS (Enterprise) | -0.5 to -1.0 | Inelastic (high switching costs) |
+| SaaS (Consumer) | -1.0 to -2.0 | Elastic (many alternatives) |
+| E-commerce (General) | -1.5 to -2.5 | Elastic (easy price comparison) |
+| E-commerce (Luxury) | -0.5 to -1.0 | Inelastic (brand loyalty) |
+| Groceries (Essentials) | -0.1 to -0.5 | Very inelastic |
+| Dining Out | -1.0 to -2.0 | Elastic |
+| Mobile Apps | -2.0 to -3.0 | Very elastic |
 
-## 최적 가격 도출
+## Optimal Price Derivation
 
-### 수익 최대화 가격
-
-```
-수익 R = P × Q(P)
-수요 함수: Q(P) = a - b×P  (선형 가정)
-
-최적 가격 P* = a / (2b)
-
-예시:
-  Q = 10,000 - 50P (월간 수요)
-  P* = 10,000 / (2×50) = 100 (원)
-  Q* = 10,000 - 50×100 = 5,000
-  R* = 100 × 5,000 = 500,000
-```
-
-### 이익 최대화 가격
+### Revenue-Maximizing Price
 
 ```
-이익 π = (P - C) × Q(P)
-  C = 단위 변동비
+Revenue R = P x Q(P)
+Demand function: Q(P) = a - b*P  (linear assumption)
 
-최적 가격 P* = (a + b×C) / (2b)
+Optimal price P* = a / (2b)
 
-예시:
-  Q = 10,000 - 50P, 단위 변동비 C = 30
-  P* = (10,000 + 50×30) / (2×50) = 115
-  Q* = 10,000 - 50×115 = 4,250
-  π* = (115-30) × 4,250 = 361,250
+Example:
+  Q = 10,000 - 50P (monthly demand)
+  P* = 10,000 / (2x50) = 100
+  Q* = 10,000 - 50x100 = 5,000
+  R* = 100 x 5,000 = 500,000
 ```
 
-## 가격 변경 시뮬레이션
-
-### 시나리오 분석 템플릿
+### Profit-Maximizing Price
 
 ```
-현재 상태:
-  가격: P₀ = 10,000원
-  수요: Q₀ = 5,000건/월
-  매출: R₀ = 5,000만원/월
-  탄력성: PED = -1.5
+Profit pi = (P - C) x Q(P)
+  C = unit variable cost
 
-시나리오 1: 10% 인상
-  새 가격: 11,000원
-  수요 변화: -15% → 4,250건
-  새 매출: 4,675만원 (-6.5%)
-  순이익 변화: [마진 고려 계산]
+Optimal price P* = (a + b*C) / (2b)
 
-시나리오 2: 10% 인하
-  새 가격: 9,000원
-  수요 변화: +15% → 5,750건
-  새 매출: 5,175만원 (+3.5%)
-  순이익 변화: [마진 고려 계산]
+Example:
+  Q = 10,000 - 50P, unit variable cost C = 30
+  P* = (10,000 + 50x30) / (2x50) = 115
+  Q* = 10,000 - 50x115 = 4,250
+  pi* = (115-30) x 4,250 = 361,250
+```
 
-시나리오 3: 20% 인상 + 기능 추가
-  새 가격: 12,000원
-  예상 탄력성: -1.0 (가치 증가로 둔화)
-  수요 변화: -20% × (-1.0/−1.5) = -13.3%
+## Price Change Simulation
+
+### Scenario Analysis Template
+
+```
+Current State:
+  Price: P0 = $100
+  Demand: Q0 = 5,000 units/month
+  Revenue: R0 = $500,000/month
+  Elasticity: PED = -1.5
+
+Scenario 1: 10% Increase
+  New Price: $110
+  Demand Change: -15% → 4,250 units
+  New Revenue: $467,500 (-6.5%)
+  Net Profit Change: [Calculate with margin]
+
+Scenario 2: 10% Decrease
+  New Price: $90
+  Demand Change: +15% → 5,750 units
+  New Revenue: $517,500 (+3.5%)
+  Net Profit Change: [Calculate with margin]
+
+Scenario 3: 20% Increase + Feature Addition
+  New Price: $120
+  Expected Elasticity: -1.0 (dampened by increased value)
+  Demand Change: -20% x (-1.0/-1.5) = -13.3%
   ...
 ```
 
-### P&L 영향 분석
+### P&L Impact Analysis
 
 ```
-| 항목 | 현재 | 시나리오1 | 시나리오2 | 시나리오3 |
-|------|------|----------|----------|----------|
-| 가격 | 10,000 | 11,000 | 9,000 | 12,000 |
-| 수요 | 5,000 | 4,250 | 5,750 | 4,333 |
-| 매출 | 5,000만 | 4,675만 | 5,175만 | 5,200만 |
-| 변동비 | 1,500만 | 1,275만 | 1,725만 | 1,300만 |
-| 공헌이익 | 3,500만 | 3,400만 | 3,450만 | 3,900만 |
-| 고정비 | 2,000만 | 2,000만 | 2,000만 | 2,200만 |
-| 순이익 | 1,500만 | 1,400만 | 1,450만 | 1,700만 |
+| Item | Current | Scenario 1 | Scenario 2 | Scenario 3 |
+|------|---------|-----------|-----------|-----------|
+| Price | $100 | $110 | $90 | $120 |
+| Demand | 5,000 | 4,250 | 5,750 | 4,333 |
+| Revenue | $500K | $467.5K | $517.5K | $520K |
+| Variable Cost | $150K | $127.5K | $172.5K | $130K |
+| Contribution Margin | $350K | $340K | $345K | $390K |
+| Fixed Cost | $200K | $200K | $200K | $220K |
+| Net Profit | $150K | $140K | $145K | $170K |
 ```
 
-## 가격 인상 실행 전략
+## Price Increase Execution Strategy
 
 ```
-1. 단계적 인상 (Gradual)
-   - 연 2-3회 소폭 인상 (5-10%)
-   - 고객 저항 최소화
-   - 기존 고객 할인 유지 기간 설정
+1. Gradual Increase
+   - 2-3 small increases per year (5-10%)
+   - Minimize customer resistance
+   - Set grace period for existing customer discounts
 
-2. 가치 기반 인상 (Value-based)
-   - 새 기능 추가와 동시에 인상
-   - "더 많은 가치를 제공합니다" 메시지
-   - 기존 플랜 유지 + 프리미엄 플랜 추가
+2. Value-Based Increase
+   - Increase simultaneously with new feature launch
+   - Message: "We are delivering more value"
+   - Maintain existing plans + add premium plan
 
-3. 세분화 인상 (Segmented)
-   - 신규 고객부터 적용
-   - 기존 고객 6-12개월 유예
-   - 가격 민감 세그먼트 별도 관리
+3. Segmented Increase
+   - Apply to new customers first
+   - 6-12 month grace period for existing customers
+   - Separate management for price-sensitive segments
 
-4. 할인 축소 (Discount reduction)
-   - 정가 유지, 할인 폭 축소
-   - 인상이 아닌 "할인 정상화"
+4. Discount Reduction
+   - Maintain list price, reduce discount depth
+   - Positioned as "discount normalization" rather than price increase
 ```
 
-## 가격 전쟁 대응
+## Price War Response
 
 ```
-경쟁사 가격 인하 시 의사결정 트리:
+Decision tree when competitor cuts price:
 
-1. 교차 탄력성 높음 (XED > 0.5)?
-   ├── Yes → 고객 이탈 리스크 높음
-   │   ├── 우리가 원가 우위? → 가격 매칭
-   │   └── 아닌 경우 → 가치 차별화 강화
-   └── No → 무시 가능, 가격 유지
+1. High cross-elasticity (XED > 0.5)?
+   +-- Yes → High churn risk
+   |   +-- Do we have cost advantage? → Price matching
+   |   +-- If not → Strengthen value differentiation
+   +-- No → Can ignore, maintain price
 
-2. 경쟁사 인하가 지속 가능한가?
-   ├── 일시적 (프로모션) → 무시 또는 한정 프로모션
-   └── 구조적 (비용 우위) → 가격 외 경쟁 전략
+2. Is competitor's cut sustainable?
+   +-- Temporary (promotion) → Ignore or limited-time promotion
+   +-- Structural (cost advantage) → Compete on non-price factors
 ```

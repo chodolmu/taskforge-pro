@@ -1,135 +1,135 @@
 ---
 name: design-system
-description: "UI 디자인 시스템을 체계적으로 구축하는 풀 파이프라인. 디자인 토큰 설계, React/Vue 컴포넌트 라이브러리, 스토리북, 접근성(WCAG) 검증, 문서화를 에이전트 팀이 협업하여 생성한다. '디자인 시스템 만들어줘', '컴포넌트 라이브러리', 'UI 키트', '디자인 토큰', '스토리북 구축', '접근성 검증', 'WCAG 검증', 'UI 컴포넌트', '버튼 컴포넌트 만들어줘' 등 디자인 시스템 구축 전반에 이 스킬을 사용한다. 단, Figma 플러그인 개발, 디자인 시스템 SaaS 구축, 네이티브 앱 컴포넌트(SwiftUI/Jetpack Compose)는 이 스킬의 범위가 아니다."
+description: "Full pipeline for systematically building a UI design system. An agent team collaborates to create design tokens, React/Vue component libraries, Storybook, WCAG accessibility verification, and documentation. Use this skill for requests like 'build a design system', 'component library', 'UI kit', 'design tokens', 'Storybook setup', 'accessibility verification', 'WCAG verification', 'UI components', 'create a button component', etc. Note: Figma plugin development, design system SaaS construction, and native app components (SwiftUI/Jetpack Compose) are outside the scope of this skill."
 ---
 
-# Design System — UI 디자인 시스템 풀 파이프라인
+# Design System — UI Design System Full Pipeline
 
-디자인토큰→컴포넌트→스토리북→접근성→문서를 에이전트 팀이 협업하여 구축한다.
+An agent team collaborates to build design tokens, components, Storybook, accessibility verification, and documentation.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — Five agents communicate directly via SendMessage and perform cross-validation.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| token-designer | `.claude/agents/token-designer.md` | 디자인 토큰 설계 | general-purpose |
-| component-developer | `.claude/agents/component-developer.md` | 컴포넌트 개발 | general-purpose |
-| a11y-auditor | `.claude/agents/a11y-auditor.md` | 접근성 검증 | general-purpose |
-| storybook-builder | `.claude/agents/storybook-builder.md` | 스토리북 구축 | general-purpose |
-| doc-writer | `.claude/agents/doc-writer.md` | 문서 작성 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| token-designer | `.claude/agents/token-designer.md` | Design token design | general-purpose |
+| component-developer | `.claude/agents/component-developer.md` | Component development | general-purpose |
+| a11y-auditor | `.claude/agents/a11y-auditor.md` | Accessibility verification | general-purpose |
+| storybook-builder | `.claude/agents/storybook-builder.md` | Storybook setup | general-purpose |
+| doc-writer | `.claude/agents/doc-writer.md` | Documentation | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (performed directly by the orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **브랜드 정보**: 브랜드 색상, 로고, 톤앤매너
-    - **프레임워크**: React/Vue/Angular/Web Components
-    - **컴포넌트 범위**: 필요한 컴포넌트 목록 (또는 "전체")
-    - **접근성 수준**: WCAG AA(기본) / AAA
-    - **기존 시스템** (선택): 마이그레이션 대상 기존 디자인 시스템
-2. `_workspace/` 디렉토리와 하위 디렉토리를 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract the following from user input:
+    - **Brand information**: Brand colors, logo, tone and manner
+    - **Framework**: React/Vue/Angular/Web Components
+    - **Component scope**: Required component list (or "all")
+    - **Accessibility level**: WCAG AA (default) / AAA
+    - **Existing system** (optional): Existing design system to migrate from
+2. Create the `_workspace/` directory and subdirectories
+3. Organize the input and save it to `_workspace/00_input.md`
+4. If pre-existing files are available, copy them to `_workspace/` and skip the corresponding phase
+5. **Determine the execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 토큰 설계 | token-designer | 없음 | `01_design_tokens/` |
-| 2 | 컴포넌트 개발 | component-developer | 작업 1 | `02_components/` |
-| 3a | 스토리북 구축 | storybook-builder | 작업 1, 2 | `03_storybook/` |
-| 3b | 접근성 검증 | a11y-auditor | 작업 1, 2 | `04_a11y_report.md` |
-| 4 | 문서 작성 | doc-writer | 작업 1, 2, 3a, 3b | `05_docs/` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1 | Token design | token-designer | None | `01_design_tokens/` |
+| 2 | Component development | component-developer | Task 1 | `02_components/` |
+| 3a | Storybook setup | storybook-builder | Tasks 1, 2 | `03_storybook/` |
+| 3b | Accessibility verification | a11y-auditor | Tasks 1, 2 | `04_a11y_report.md` |
+| 4 | Documentation | doc-writer | Tasks 1, 2, 3a, 3b | `05_docs/` |
 
-작업 3a(스토리북)와 3b(접근성)는 **병렬 실행**한다.
+Tasks 3a (Storybook) and 3b (accessibility) run **in parallel**.
 
-**팀원 간 소통 흐름:**
-- token-designer 완료 → component-developer에게 토큰 임포트 방법 전달, a11y-auditor에게 대비비 검증 전달
-- component-developer 완료 → storybook-builder에게 props 타입 전달, a11y-auditor에게 ARIA 현황 전달
-- a11y-auditor → P0/P1 이슈 발견 시 component-developer에게 수정 요청 (최대 2회)
-- storybook-builder 완료 → doc-writer에게 스토리북 구조 전달
-- a11y-auditor 완료 → doc-writer에게 접근성 가이드 전달
-- doc-writer는 모든 산출물의 정합성을 최종 검증
+**Inter-agent communication flow:**
+- token-designer completes > passes token import methods to component-developer, contrast verification to a11y-auditor
+- component-developer completes > passes props types to storybook-builder, ARIA status to a11y-auditor
+- a11y-auditor > requests fixes from component-developer for P0/P1 issues (up to 2 rounds)
+- storybook-builder completes > passes Storybook structure to doc-writer
+- a11y-auditor completes > passes accessibility guide to doc-writer
+- doc-writer performs final consistency verification across all deliverables
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 접근성 P0 이슈가 모두 해결되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 토큰 시스템 — `01_design_tokens/`
-    - 컴포넌트 — `02_components/`
-    - 스토리북 — `03_storybook/`
-    - 접근성 보고서 — `04_a11y_report.md`
-    - 문서 — `05_docs/`
+1. Verify all files in `_workspace/`
+2. Confirm all accessibility P0 issues are resolved
+3. Present the final summary to the user:
+    - Token system — `01_design_tokens/`
+    - Components — `02_components/`
+    - Storybook — `03_storybook/`
+    - Accessibility report — `04_a11y_report.md`
+    - Documentation — `05_docs/`
 
-## 작업 규모별 모드
+## Execution Modes by Request Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "디자인 시스템 전체 구축" | **풀 파이프라인** | 5명 전원 |
-| "토큰만 설계해줘" | **토큰 모드** | token-designer 단독 |
-| "이 토큰으로 컴포넌트 만들어줘" | **컴포넌트 모드** | component-developer + storybook-builder |
-| "접근성 검증만 해줘" | **검증 모드** | a11y-auditor 단독 |
-| "스토리북만 추가해줘" | **스토리북 모드** | storybook-builder 단독 |
-| "문서만 작성해줘" | **문서 모드** | doc-writer 단독 |
-| "Button 컴포넌트만 추가" | **단일 컴포넌트** | component-developer + a11y-auditor + storybook-builder |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|----------------|
+| "Build a complete design system" | **Full pipeline** | All 5 agents |
+| "Just design tokens" | **Token mode** | token-designer only |
+| "Build components from these tokens" | **Component mode** | component-developer + storybook-builder |
+| "Accessibility verification only" | **Verification mode** | a11y-auditor only |
+| "Just add Storybook" | **Storybook mode** | storybook-builder only |
+| "Just write documentation" | **Doc mode** | doc-writer only |
+| "Add just a Button component" | **Single component** | component-developer + a11y-auditor + storybook-builder |
 
-**기존 시스템 활용**: 기존 토큰이 있으면 token-designer를 건너뛴다. 기존 컴포넌트에 스토리북만 추가하는 경우 storybook-builder만 투입한다.
+**Reusing existing systems**: If existing tokens are available, skip token-designer. If only adding Storybook to existing components, deploy storybook-builder only.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 코드, 설정, 문서 |
-| 메시지 기반 | SendMessage | 핵심 정보, 수정 요청, 검증 결과 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Code, configuration, documentation |
+| Message-based | SendMessage | Key information, fix requests, verification results |
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 브랜드 색상 미제공 | 중립 팔레트(slate)로 시작, 사용자에게 색상 요청 |
-| 프레임워크 미지정 | React + TypeScript 기본, 사용자 확인 후 변경 |
-| 대비비 미충족 | 자동 조정 후 원본/조정값 함께 보고 |
-| 접근성 P0 미해결 | 릴리스 차단, component-developer에 재수정 요청 |
-| 에이전트 실패 | 1회 재시도 후 해당 산출물 없이 진행 |
+| Error Type | Strategy |
+|-----------|----------|
+| Brand color not provided | Start with neutral palette (slate); request colors from user |
+| Framework unspecified | Default to React + TypeScript; change after user confirmation |
+| Contrast ratio not met | Auto-adjust and report both original and adjusted values |
+| Accessibility P0 unresolved | Block release; request re-fix from component-developer |
+| Agent failure | Retry once; if still failing, proceed without that deliverable |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "파란색 브랜드 색상의 React 디자인 시스템을 만들어줘. Button, Input, Card, Modal이 필요해"
-**기대 결과**:
-- 토큰: 파란색 기반 color scale, 시맨틱 색상, 타이포, 간격, 다크모드
-- 컴포넌트: Button(4 variant, 3 size), Input(text/password/search), Card, Modal + 공유 훅
-- 스토리북: 토큰 시각화, 컴포넌트별 Default/AllVariants/Playground 스토리
-- 접근성: WCAG AA 준수 검증, 키보드 테스트, 대비비 매트릭스
-- 문서: 설계 원칙, 시작 가이드, 컴포넌트별 Do/Don't, 기여 가이드
+### Normal Flow
+**Prompt**: "Build a React design system with blue brand colors. I need Button, Input, Card, and Modal"
+**Expected result**:
+- Tokens: Blue-based color scale, semantic colors, typography, spacing, dark mode
+- Components: Button (4 variants, 3 sizes), Input (text/password/search), Card, Modal + shared hooks
+- Storybook: Token visualization, Default/AllVariants/Playground stories per component
+- Accessibility: WCAG AA compliance verification, keyboard tests, contrast matrix
+- Documentation: Design principles, getting started guide, per-component Do/Don't, contribution guide
 
-### 기존 파일 활용 흐름
-**프롬프트**: "기존 디자인 시스템에 DatePicker 컴포넌트를 추가해줘"
-**기대 결과**:
-- component-developer가 기존 토큰 기반 DatePicker 구현
-- a11y-auditor가 날짜 선택 접근성 (키보드, 스크린리더) 검증
-- storybook-builder가 DatePicker 스토리 추가
-- token-designer, doc-writer는 최소 투입
+### Existing File Reuse Flow
+**Prompt**: "Add a DatePicker component to the existing design system"
+**Expected result**:
+- component-developer implements DatePicker using existing tokens
+- a11y-auditor verifies date picker accessibility (keyboard, screen reader)
+- storybook-builder adds DatePicker stories
+- token-designer and doc-writer have minimal involvement
 
-### 에러 흐름
-**프롬프트**: "디자인 시스템 만들어줘" (색상, 프레임워크 미지정)
-**기대 결과**:
-- token-designer가 중립 팔레트로 시작하되 사용자에게 브랜드 색상 확인 요청
-- component-developer가 React + TypeScript 기본 채택
-- a11y-auditor가 기본 팔레트의 대비비 검증
-- doc-writer가 커스터마이징 가이드(색상 변경 방법) 강조
+### Error Flow
+**Prompt**: "Build a design system" (no colors or framework specified)
+**Expected result**:
+- token-designer starts with a neutral palette while requesting brand colors from user
+- component-developer defaults to React + TypeScript
+- a11y-auditor verifies contrast ratios of the default palette
+- doc-writer emphasizes the customization guide (how to change colors)
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-에이전트의 도메인 전문성을 강화하는 확장 스킬:
+Skills that enhance each agent's domain expertise:
 
-| 스킬 | 파일 | 대상 에이전트 | 역할 |
-|------|------|-------------|------|
-| wcag-checker | `.claude/skills/wcag-checker/skill.md` | a11y-auditor, component-developer | WCAG 2.1 접근성 검증 체크리스트, 대비비 계산, ARIA 패턴, 키보드 매트릭스 |
-| token-generator | `.claude/skills/token-generator/skill.md` | token-designer, component-developer | 디자인 토큰 3-tier 구조, 색상 스케일 알고리즘, 타이포/간격/모션 체계 |
+| Skill | File | Target Agent | Role |
+|-------|------|-------------|------|
+| wcag-checker | `.claude/skills/wcag-checker/skill.md` | a11y-auditor, component-developer | WCAG 2.1 accessibility checklist, contrast calculation, ARIA patterns, keyboard matrix |
+| token-generator | `.claude/skills/token-generator/skill.md` | token-designer, component-developer | Design token 3-tier structure, color scale algorithm, typography/spacing/motion system |

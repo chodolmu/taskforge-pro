@@ -1,140 +1,140 @@
 ---
 name: interview-design
-description: "인터뷰어(interviewer)가 사용하는 다큐멘터리 인터뷰 설계 전문 스킬. 인터뷰 대상 선정, 질문 시퀀스 설계, 감정 유도 기법, 윤리적 인터뷰 원칙을 제공한다. '인터뷰 질문', '인터뷰 대상', '증언 수집', '인터뷰 설계' 등에 활용한다."
+description: "A specialized skill for the interviewer agent covering documentary interview design. Provides interviewee selection, question sequence design, emotional elicitation techniques, and ethical interview principles. Use for 'interview questions,' 'interview subjects,' 'testimony collection,' 'interview design,' and similar topics."
 ---
 
-# Interview Design — 다큐멘터리 인터뷰 설계 방법론
+# Interview Design — Documentary Interview Design Methodology
 
-interviewer 에이전트가 인터뷰 대상을 선정하고 질문을 설계할 때 활용하는 전문 지식.
+Specialized knowledge used by the interviewer agent when selecting interview subjects and designing questions.
 
-## 왜 인터뷰 설계가 중요한가
+## Why Interview Design Matters
 
-다큐멘터리에서 인터뷰는 **인간의 목소리로 사실에 생명을 불어넣는** 핵심 장치다. 통계는 머리로 이해하지만, 당사자의 한마디는 가슴에 꽂힌다.
+In documentaries, interviews are the **core device that breathes life into facts through human voices**. Statistics are understood with the mind, but one word from a firsthand witness strikes the heart.
 
-## 인터뷰 대상 선정: VOICE 매트릭스
+## Interviewee Selection: VOICE Matrix
 
-| 역할 | 왜 필요한가 | 찾는 방법 | 인원 |
-|------|-----------|----------|------|
-| **V**ictim/주인공 | 주제의 직접 당사자, 감정적 핵심 | 커뮤니티, 지원 단체 | 1~3명 |
-| **O**bserver/관찰자 | 객관적 시각, 현장 증인 | 주변인, 이웃, 동료 | 1~2명 |
-| **I**nstitution/기관 | 공식 입장, 정책 맥락 | 정부, 기업, NGO | 1~2명 |
-| **C**ritic/비평가 | 반대/대안적 시각 | 학계, 반대 진영 | 1명 |
-| **E**xpert/전문가 | 지식적 깊이, 맥락 해석 | 대학, 연구소, 저자 | 1~2명 |
+| Role | Why Needed | How to Find | Count |
+|------|-----------|-------------|-------|
+| **V**ictim/Protagonist | Direct party to the subject, emotional core | Communities, support organizations | 1-3 |
+| **O**bserver | Objective perspective, eyewitness | Neighbors, colleagues, bystanders | 1-2 |
+| **I**nstitution | Official position, policy context | Government, corporations, NGOs | 1-2 |
+| **C**ritic | Opposing/alternative perspective | Academia, opposing side | 1 |
+| **E**xpert | Intellectual depth, contextual interpretation | Universities, research institutes, authors | 1-2 |
 
-### 인물 다양성 체크
+### Diversity Check
 
-- [ ] 성별, 연령, 지역이 편중되지 않았는가?
-- [ ] 다양한 사회경제적 배경이 포함되었는가?
-- [ ] 찬반 양쪽 의견이 공정하게 대표되는가?
-- [ ] 직접 경험자(당사자)가 반드시 포함되었는가?
+- [ ] Is there no bias in gender, age, or region?
+- [ ] Are diverse socioeconomic backgrounds included?
+- [ ] Are both supporting and opposing opinions fairly represented?
+- [ ] Is at least one directly affected person (firsthand party) included?
 
-## 질문 시퀀스 설계: 깔때기 모델
-
-```
-[넓은 질문] "이 분야에서 일하시게 된 계기는?"
-     ↓
-[탐색 질문] "그때 가장 기억에 남는 순간은?"
-     ↓
-[핵심 질문] "이 문제의 진짜 원인이 뭐라고 보세요?"
-     ↓
-[도전 질문] "반대 의견에 대해서는 어떻게 생각하세요?"
-     ↓
-[성찰 질문] "10년 뒤에는 어떻게 달라져 있을까요?"
-```
-
-### 질문 유형별 설계
-
-| 유형 | 목적 | 패턴 | 사용 시점 |
-|------|------|------|---------|
-| **개방형** | 스토리 유도 | "~에 대해 이야기해주세요" | 시작, 전환 |
-| **구체화** | 디테일 추출 | "그때 정확히 뭐라고 하셨어요?" | 탐색 단계 |
-| **감정 접근** | 감정 표현 유도 | "그때 기분이 어떠셨어요?" | 감정 씬 |
-| **대비** | 변화/차이 파악 | "전과 후, 가장 달라진 건?" | 분석 단계 |
-| **가정** | 통찰 유도 | "만약 ~했다면?" | 성찰 단계 |
-| **침묵** | 추가 발언 유도 | [5초 침묵 유지] | 답변 직후 |
-
-## 인터뷰 유형별 전략
-
-### 전문가 인터뷰
-
-| 속성 | 전략 |
-|------|------|
-| 목적 | 지식, 맥락, 해석 |
-| 톤 | 지적 존중 + 핵심 질문 |
-| 준비 | 저서/논문 사전 학습 필수 |
-| 주의 | 전문용어 → 일반인 언어로 "쉽게 말씀해주시면" |
-| 시간 | 30~45분 |
-
-### 당사자 인터뷰
-
-| 속성 | 전략 |
-|------|------|
-| 목적 | 경험, 감정, 개인 서사 |
-| 톤 | 공감적, 안전한 공간 조성 |
-| 준비 | 민감한 주제 사전 동의, 중단 권리 안내 |
-| 주의 | 재트라우마 방지 — 너무 깊이 들어가지 않을 타이밍 판단 |
-| 시간 | 45~60분 (여유 있게) |
-
-### 기관/공식 인터뷰
-
-| 속성 | 전략 |
-|------|------|
-| 목적 | 공식 입장, 정책, 대응 |
-| 톤 | 정중하되 날카로운 후속 질문 |
-| 준비 | 공식 발표문/보도자료 숙지 |
-| 주의 | 준비된 답변만 하려 할 것 — "구체적으로 말씀해주시면" |
-| 시간 | 20~30분 (시간 제한 많음) |
-
-## 인터뷰 가이드 문서 포맷
+## Question Sequence Design: Funnel Model
 
 ```
-## 인터뷰 가이드: [대상자 이름/유형]
-
-### 인터뷰 정보
-- 대상: [이름, 직함]
-- 역할: [VOICE 매트릭스 분류]
-- 관련 씬: [구성안의 씬 번호]
-- 예상 시간: XX분
-- 인터뷰 형식: 대면 / 화상 / 전화
-
-### 배경 조사
-- [대상자에 대해 파악한 정보 요약]
-- [다큐 주제와의 연관성]
-
-### 질문 시퀀스
-
-#### 워밍업 (5분)
-1. [편안한 도입 질문]
-2. [배경 질문]
-
-#### 핵심 (15~20분)
-3. [핵심 질문 1 — 경험/사실]
-4. [핵심 질문 2 — 원인/분석]
-5. [핵심 질문 3 — 감정/반응]
-   → 후속: [예상 답변에 따른 추가 질문]
-
-#### 도전 (5~10분)
-6. [반대 의견 제시 후 반응]
-7. [가장 어려운 질문]
-
-#### 마무리 (5분)
-8. [성찰/미래 질문]
-9. "마지막으로 꼭 하고 싶은 말씀이 있으시면?"
-
-### 필수 인용 목표
-- 이 인터뷰에서 반드시 얻어야 하는 발언: [핵심 주제]
-- 구성안 [씬 X]에 사용할 코멘트
-
-### 윤리 체크
-- [ ] 촬영/녹음 동의서 준비
-- [ ] 민감 주제 사전 안내
-- [ ] 인터뷰 중단 권리 고지
+[Broad question] "What led you to work in this field?"
+     |
+[Exploratory question] "What moment stands out most in your memory?"
+     |
+[Core question] "What do you think is the real cause of this problem?"
+     |
+[Challenge question] "What do you think about the opposing view?"
+     |
+[Reflective question] "How do you think things will be different in 10 years?"
 ```
 
-## 다큐멘터리 인터뷰 윤리 원칙
+### Question Type Design
 
-1. **인폼드 컨센트**: 인터뷰 목적, 사용 범위, 공개 방식을 사전에 명확히 설명
-2. **취약 계층 보호**: 미성년자, 피해자, 정신건강 이슈가 있는 대상은 특별 주의
-3. **편집 공정성**: 발언을 맥락에서 분리하여 왜곡하지 않는다
-4. **사후 확인권**: 민감한 주제는 방영 전 인터뷰이에게 확인 기회 제공 권장
-5. **익명성 존중**: 요청 시 얼굴 모자이크, 음성 변조 등 보호 조치
+| Type | Purpose | Pattern | When to Use |
+|------|---------|---------|-------------|
+| **Open-ended** | Elicit stories | "Tell me about..." | Opening, transitions |
+| **Specificity** | Extract details | "What exactly did they say then?" | Exploration stage |
+| **Emotional Access** | Elicit emotional expression | "How did you feel at that moment?" | Emotional scenes |
+| **Contrast** | Identify changes/differences | "What changed the most before and after?" | Analysis stage |
+| **Hypothetical** | Elicit insight | "What if...?" | Reflection stage |
+| **Silence** | Elicit additional remarks | [Maintain 5-second silence] | Right after a response |
+
+## Interview Type Strategies
+
+### Expert Interview
+
+| Attribute | Strategy |
+|-----------|----------|
+| Purpose | Knowledge, context, interpretation |
+| Tone | Intellectual respect + core questions |
+| Preparation | Must study their books/papers beforehand |
+| Caution | Technical jargon -> "Could you put that in simpler terms?" |
+| Duration | 30-45 minutes |
+
+### Firsthand Party Interview
+
+| Attribute | Strategy |
+|-----------|----------|
+| Purpose | Experience, emotions, personal narrative |
+| Tone | Empathetic, create a safe space |
+| Preparation | Prior consent for sensitive topics, inform of right to stop |
+| Caution | Prevent re-traumatization — judge when not to probe too deeply |
+| Duration | 45-60 minutes (with plenty of time) |
+
+### Institutional/Official Interview
+
+| Attribute | Strategy |
+|-----------|----------|
+| Purpose | Official position, policy, response |
+| Tone | Polite but with sharp follow-up questions |
+| Preparation | Review official statements/press releases |
+| Caution | They will try to give prepared answers only — "Could you be more specific?" |
+| Duration | 20-30 minutes (often time-limited) |
+
+## Interview Guide Document Format
+
+```
+## Interview Guide: [Subject Name/Type]
+
+### Interview Information
+- Subject: [Name, Title]
+- Role: [VOICE matrix classification]
+- Related Scene: [Scene number from treatment]
+- Estimated Time: XX minutes
+- Interview Format: In-person / Video / Phone
+
+### Background Research
+- [Summary of information gathered about the subject]
+- [Connection to documentary topic]
+
+### Question Sequence
+
+#### Warm-Up (5 min)
+1. [Comfortable introductory question]
+2. [Background question]
+
+#### Core (15-20 min)
+3. [Core question 1 — Experience/Facts]
+4. [Core question 2 — Cause/Analysis]
+5. [Core question 3 — Emotion/Reaction]
+   -> Follow-up: [Additional questions based on anticipated response]
+
+#### Challenge (5-10 min)
+6. [Present opposing view and observe reaction]
+7. [The most difficult question]
+
+#### Closing (5 min)
+8. [Reflection/Future question]
+9. "Is there anything you'd really like to say that I haven't asked about?"
+
+### Required Quote Targets
+- Essential statement to obtain from this interview: [Core topic]
+- Comment to use in treatment [Scene X]
+
+### Ethics Check
+- [ ] Filming/recording consent form prepared
+- [ ] Sensitive topics communicated in advance
+- [ ] Right to stop the interview communicated
+```
+
+## Documentary Interview Ethics Principles
+
+1. **Informed Consent**: Clearly explain the interview's purpose, scope of use, and disclosure method in advance
+2. **Vulnerable Group Protection**: Exercise special care with minors, victims, and subjects with mental health issues
+3. **Editing Fairness**: Do not distort statements by separating them from their context
+4. **Post-Review Rights**: For sensitive topics, it is recommended to give the interviewee an opportunity to review before broadcast
+5. **Anonymity Respect**: Provide protective measures such as face blurring and voice alteration when requested

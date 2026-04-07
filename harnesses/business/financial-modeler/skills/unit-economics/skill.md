@@ -1,147 +1,147 @@
 ---
 name: unit-economics
-description: "단위 경제학(Unit Economics) 분석 프레임워크를 제공하는 전문 스킬. revenue-modeler 에이전트가 수익 모델을 설계하고 LTV, CAC, 공헌이익을 산출할 때 활용한다. '단위 경제학', 'unit economics', 'LTV/CAC', '공헌이익', '코호트 분석', 'payback period' 등의 맥락에서 자동 적용한다. 단, CRM 데이터 직접 추출이나 실시간 고객 분석은 이 스킬의 범위가 아니다."
+description: "A specialized skill providing a Unit Economics analysis framework. Used by the revenue-modeler agent when designing revenue models and calculating LTV, CAC, and contribution margin. Automatically applied in contexts such as 'unit economics', 'LTV/CAC', 'contribution margin', 'cohort analysis', 'payback period'. However, direct CRM data extraction and real-time customer analytics are outside the scope of this skill."
 ---
 
-# Unit Economics — 단위 경제학 분석 프레임워크
+# Unit Economics — Unit Economics Analysis Framework
 
-revenue-modeler 에이전트의 수익 모델 설계 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the revenue model design capabilities of the revenue-modeler agent.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **revenue-modeler** — 수익원 정의, 단위 경제학, LTV/CAC 분석
+- **revenue-modeler** — Revenue stream definition, unit economics, LTV/CAC analysis
 
-## 핵심 단위 경제학 메트릭
+## Core Unit Economics Metrics
 
 ### LTV (Customer Lifetime Value)
 
-**기본 공식:**
+**Basic Formula:**
 ```
-LTV = ARPA × Gross Margin / Monthly Churn Rate
-```
-
-**코호트 기반 LTV (더 정확):**
-```
-LTV = Σ(t=1→∞) [ARPA_t × GM × Retention_t / (1+d)^t]
-
-ARPA_t = 월 t의 고객당 평균 매출 (확장/축소 반영)
-GM = 매출총이익률
-Retention_t = 월 t의 잔존율
-d = 월간 할인율
+LTV = ARPA x Gross Margin / Monthly Churn Rate
 ```
 
-**사업 모델별 LTV 계산 변형:**
+**Cohort-Based LTV (More Accurate):**
+```
+LTV = Sum(t=1→inf) [ARPA_t x GM x Retention_t / (1+d)^t]
 
-| 모델 | LTV 공식 | 핵심 변수 |
-|------|----------|----------|
-| SaaS 구독 | ARPA × GM / Churn | 이탈률, NRR |
-| 이커머스 | AOV × 연간주문수 × GM × 고객수명 | 재구매율, AOV |
-| 마켓플레이스 | GMV × Take Rate × GM × 고객수명 | GMV, Take Rate |
-| 게임 | ARPPU × 결제율 × GM / Churn | ARPPU, 결제율 |
+ARPA_t = Average revenue per account at month t (reflecting expansion/contraction)
+GM = Gross Margin
+Retention_t = Retention rate at month t
+d = Monthly discount rate
+```
+
+**LTV Calculation Variants by Business Model:**
+
+| Model | LTV Formula | Key Variables |
+|-------|-------------|---------------|
+| SaaS Subscription | ARPA x GM / Churn | Churn rate, NRR |
+| E-commerce | AOV x Annual Orders x GM x Customer Lifespan | Repeat rate, AOV |
+| Marketplace | GMV x Take Rate x GM x Customer Lifespan | GMV, Take Rate |
+| Gaming | ARPPU x Conversion Rate x GM / Churn | ARPPU, Conversion Rate |
 
 ### CAC (Customer Acquisition Cost)
 
 ```
-CAC = (마케팅비 + 영업비) / 신규 고객 수
+CAC = (Marketing Cost + Sales Cost) / New Customers
 
-Blended CAC = 총 S&M / 총 신규고객
-Paid CAC = 유료 채널 비용 / 유료 채널 신규고객
-Organic CAC = 간접비 배분 / 오가닉 신규고객
+Blended CAC = Total S&M / Total New Customers
+Paid CAC = Paid Channel Cost / Paid Channel New Customers
+Organic CAC = Overhead Allocation / Organic New Customers
 ```
 
 ### CAC Payback Period
 
 ```
-CAC Payback (월) = CAC / (ARPA × Gross Margin)
+CAC Payback (months) = CAC / (ARPA x Gross Margin)
 ```
 
-| 기준 | 벤치마크 |
-|------|----------|
-| 우수 | < 12개월 |
-| 양호 | 12-18개월 |
-| 주의 | 18-24개월 |
-| 위험 | > 24개월 |
+| Rating | Benchmark |
+|--------|-----------|
+| Excellent | < 12 months |
+| Good | 12-18 months |
+| Caution | 18-24 months |
+| At Risk | > 24 months |
 
-### LTV/CAC 비율
+### LTV/CAC Ratio
 
 ```
 LTV/CAC = LTV / CAC
 ```
 
-| 비율 | 해석 |
-|------|------|
-| < 1x | 고객 획득할수록 손실 — 즉시 개선 필요 |
-| 1-3x | 지속 가능하지 않음 — CAC 절감 또는 LTV 개선 |
-| 3-5x | 건전 — 성장에 투자 가능 |
-| > 5x | 과소 투자 가능성 — 더 공격적으로 성장 가능 |
+| Ratio | Interpretation |
+|-------|---------------|
+| < 1x | Losing money on each customer acquired — immediate improvement needed |
+| 1-3x | Not sustainable — reduce CAC or improve LTV |
+| 3-5x | Healthy — can invest in growth |
+| > 5x | Potentially under-investing — can grow more aggressively |
 
-## 공헌이익 분석 (Contribution Margin)
+## Contribution Margin Analysis
 
-### 3-Layer 마진 구조
+### 3-Layer Margin Structure
 
 ```
-매출 100%
-  (-) 변동비 (COGS, 배송비, 거래수수료)
-  = 공헌이익 1 (CM1) — 거래 단위 수익성
-  (-) 변동 마케팅비 (퍼포먼스 마케팅)
-  = 공헌이익 2 (CM2) — 마케팅 효율 포함 수익성
-  (-) 고정비 배분 (인건비, 인프라, 기타)
-  = 공헌이익 3 (CM3) — 사업 단위 수익성
+Revenue 100%
+  (-) Variable Costs (COGS, shipping, transaction fees)
+  = Contribution Margin 1 (CM1) — Per-transaction profitability
+  (-) Variable Marketing (performance marketing)
+  = Contribution Margin 2 (CM2) — Profitability including marketing efficiency
+  (-) Fixed Cost Allocation (labor, infrastructure, other)
+  = Contribution Margin 3 (CM3) — Business unit profitability
 ```
 
-### 제품/채널/세그먼트별 CM 분석
+### CM Analysis by Product/Channel/Segment
 
-| 분석 축 | 목적 | 행동 |
-|---------|------|------|
-| 제품별 CM | 어떤 제품이 수익에 기여? | 저마진 제품 가격 조정/중단 |
-| 채널별 CM | 어떤 채널이 효율적? | 고효율 채널 예산 재배분 |
-| 고객 세그먼트별 CM | 어떤 고객이 가치 있? | 고가치 세그먼트 집중 |
+| Analysis Dimension | Purpose | Action |
+|-------------------|---------|--------|
+| Per-Product CM | Which products contribute to profit? | Price adjust/discontinue low-margin products |
+| Per-Channel CM | Which channels are efficient? | Reallocate budget to high-efficiency channels |
+| Per-Customer Segment CM | Which customers are valuable? | Focus on high-value segments |
 
-## 코호트 분석 프레임워크
+## Cohort Analysis Framework
 
-### 매출 코호트 테이블
+### Revenue Cohort Table
 
 ```markdown
-| 가입월 | M0 | M1 | M2 | M3 | M6 | M12 |
-|--------|-----|-----|-----|-----|-----|------|
+| Sign-up Month | M0 | M1 | M2 | M3 | M6 | M12 |
+|--------------|-----|-----|-----|-----|-----|------|
 | 2024-01 | 100% | 85% | 78% | 73% | 62% | 48% |
 | 2024-04 | 100% | 88% | 82% | 77% | 68% | - |
 | 2024-07 | 100% | 90% | 85% | 80% | - | - |
 ```
 
-### 분석 포인트
+### Analysis Points
 
-1. **시간에 따른 잔존율 패턴**: 안정화 시점 파악
-2. **코호트 간 비교**: 최신 코호트가 개선되고 있는가?
-3. **NDR/NRR 분해**: 확장 vs 축소 vs 이탈 각각 추적
-4. **LTV 수렴값 추정**: 코호트 데이터로 실제 LTV 추정
+1. **Retention Pattern Over Time**: Identify stabilization point
+2. **Cross-Cohort Comparison**: Are newer cohorts improving?
+3. **NDR/NRR Decomposition**: Track expansion vs. contraction vs. churn separately
+4. **LTV Convergence Estimation**: Estimate actual LTV from cohort data
 
-## Bottom-Up 매출 추정
+## Bottom-Up Revenue Estimation
 
-### 단계적 추정 공식
+### Step-by-Step Estimation Formula
 
 ```
-매출 = 타깃 시장 규모 (SAM)
-     × 도달 가능 비율
-     × 전환율
-     × 객단가
-     × 반복 구매 빈도
+Revenue = Target Market Size (SAM)
+        x Reachable Ratio
+        x Conversion Rate
+        x Average Order Value
+        x Repeat Purchase Frequency
 ```
 
-| 단계 | 추정 방법 | 검증 |
-|------|----------|------|
-| TAM | 산업 리포트 + 정부 통계 | 복수 소스 교차 확인 |
-| SAM | TAM × 접근 가능 세그먼트 비율 | 실제 타깃 명확히 정의 |
-| SOM | SAM × 현실적 점유율 | 유사 기업 초기 점유율 참조 |
+| Step | Estimation Method | Validation |
+|------|------------------|------------|
+| TAM | Industry reports + government statistics | Cross-check multiple sources |
+| SAM | TAM x Accessible segment ratio | Clearly define actual target |
+| SOM | SAM x Realistic share | Reference similar companies' initial share |
 
-## 단위 경제학 건전성 스코어카드
+## Unit Economics Health Scorecard
 
-| 메트릭 | 위험 | 주의 | 양호 | 우수 |
-|--------|------|------|------|------|
+| Metric | At Risk | Caution | Good | Excellent |
+|--------|---------|---------|------|-----------|
 | LTV/CAC | <1x | 1-3x | 3-5x | >5x |
 | CAC Payback | >24M | 18-24M | 12-18M | <12M |
 | Gross Margin | <40% | 40-60% | 60-75% | >75% |
 | NDR | <90% | 90-100% | 100-115% | >115% |
-| CM2 | 음(-) | 0-10% | 10-20% | >20% |
+| CM2 | Negative | 0-10% | 10-20% | >20% |
 
-revenue-modeler는 이 스코어카드로 모델 건전성을 자체 진단한다.
+The revenue-modeler uses this scorecard to self-diagnose model health.

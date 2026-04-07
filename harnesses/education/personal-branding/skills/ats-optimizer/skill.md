@@ -1,130 +1,130 @@
 ---
 name: ats-optimizer
-description: "ATS(지원자추적시스템) 통과 최적화를 위한 이력서 키워드 전략과 형식 가이드를 제공하는 전문 스킬. resume-writer 에이전트가 ATS 친화적인 이력서를 작성하고 JD 매칭률을 극대화할 때 활용한다. 'ATS 최적화', '이력서 키워드', 'JD 매칭', '이력서 형식', 'applicant tracking system', '서류 통과율' 등의 맥락에서 자동 적용한다. 단, ATS 소프트웨어(Workday, Greenhouse) 직접 접속이나 실제 채용 프로세스 대행은 이 스킬의 범위가 아니다."
+description: "A specialized skill that provides resume keyword strategies and formatting guidelines for passing ATS (Applicant Tracking Systems). Used by the resume-writer agent to create ATS-friendly resumes and maximize JD matching rates. Automatically applied in contexts such as 'ATS optimization', 'resume keywords', 'JD matching', 'resume format', 'applicant tracking system', 'application pass rate', etc. Note: Directly accessing ATS software (Workday, Greenhouse) or handling actual recruitment processes is outside the scope of this skill."
 ---
 
-# ATS Optimizer — ATS 통과 최적화 도구
+# ATS Optimizer — ATS Pass Optimization Tool
 
-resume-writer 에이전트의 ATS 최적화 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the resume-writer agent's ATS optimization capabilities.
 
-## 적용 대상 에이전트
+## Target Agents
 
-- **resume-writer** — ATS 친화적 이력서 작성, 키워드 최적화
+- **resume-writer** — ATS-friendly resume writing, keyword optimization
 
-## ATS 파싱 원리
+## ATS Parsing Principles
 
-### ATS가 읽는 방식
-
-```
-1. 텍스트 추출 (PDF/DOCX → Plain Text)
-2. 섹션 인식 (경력, 학력, 기술 등)
-3. 키워드 추출 + 빈도 분석
-4. JD 키워드와 매칭 스코어 산출
-5. 순위화하여 채용 담당자에게 제출
-```
-
-### ATS 호환 형식 규칙
-
-| 항목 | 권장 | 비권장 |
-|------|------|--------|
-| 파일 형식 | DOCX > PDF | 이미지 PDF, HTML |
-| 레이아웃 | 단일 컬럼 | 다중 컬럼, 표 기반 |
-| 글꼴 | Arial, Calibri, Georgia | 특수 글꼴 |
-| 헤더 | 텍스트 헤더 | 이미지/아이콘 헤더 |
-| 불릿 | 표준 불릿(•, -, *) | 커스텀 그래픽 불릿 |
-| 섹션명 | 표준 명칭 사용 | 창의적 명칭 |
-
-### 표준 섹션명 (ATS 인식률 높은 순)
+### How ATS Reads Documents
 
 ```
-- 경력사항 / Work Experience / Professional Experience
-- 학력 / Education
-- 기술 / Skills / Technical Skills
-- 자격증 / Certifications
-- 프로젝트 / Projects
-- 수상 / Awards
+1. Text extraction (PDF/DOCX -> Plain Text)
+2. Section recognition (Experience, Education, Skills, etc.)
+3. Keyword extraction + frequency analysis
+4. Matching score calculation against JD keywords
+5. Ranking and submission to recruiter
 ```
 
-## 키워드 최적화 전략
+### ATS-Compatible Formatting Rules
 
-### JD 키워드 추출 프로세스
+| Item | Recommended | Not Recommended |
+|------|-------------|-----------------|
+| File Format | DOCX > PDF | Image PDF, HTML |
+| Layout | Single column | Multi-column, table-based |
+| Font | Arial, Calibri, Georgia | Special fonts |
+| Headers | Text headers | Image/icon headers |
+| Bullets | Standard bullets (-, *) | Custom graphic bullets |
+| Section Names | Use standard names | Creative names |
 
-```
-1. JD 전문을 복사한다
-2. 다음 유형의 키워드를 추출한다:
-   - Hard Skills: 프로그래밍 언어, 도구, 프레임워크
-   - Soft Skills: 리더십, 커뮤니케이션, 문제해결
-   - Industry Terms: 도메인 전문 용어
-   - Action Verbs: 설계, 구축, 최적화, 리드
-   - Qualifications: 학위, 자격증, 경력 연수
-3. 빈도를 세어 우선순위를 매긴다
-4. 이력서에 자연스럽게 반영한다
-```
-
-### 키워드 밀도 가이드
-
-| 키워드 유형 | 권장 횟수 | 배치 위치 |
-|-----------|---------|----------|
-| JD 핵심 키워드 (3-5개) | 2-3회 | 요약, 경력, 기술 |
-| JD 보조 키워드 (5-10개) | 1-2회 | 경력, 프로젝트 |
-| 산업 용어 | 1회 | 자연스럽게 분산 |
-
-### 키워드 매칭 방법
-
-| JD 표현 | 이력서 반영 | 원칙 |
-|--------|-----------|------|
-| "Python 경험 필수" | "Python으로 데이터 파이프라인 구축" | 행동+결과 |
-| "팀 리딩 경험" | "5명 개발팀 리드, 프로젝트 3건 완수" | 정량화 |
-| "CI/CD 경험" | "Jenkins/GitHub Actions 기반 CI/CD 파이프라인 구축 및 운영" | 구체적 도구 |
-
-## 성과 정량화 공식 (STAR-Q)
-
-### 정량화 패턴
+### Standard Section Names (Ordered by ATS Recognition Rate)
 
 ```
-[Action Verb] + [구체적 활동] + [정량적 결과]
-
-예시:
-- "설계 및 구축한 API 서버로 응답 시간 40% 단축, 일일 처리량 100만 건 달성"
-- "코드 리뷰 프로세스 도입으로 배포 후 버그 60% 감소"
-- "5명 규모 팀 리드하여 3개월 내 MVP 출시, 사용자 5,000명 확보"
+- Work Experience / Professional Experience
+- Education
+- Skills / Technical Skills
+- Certifications
+- Projects
+- Awards
 ```
 
-### 정량화 가능한 지표 유형
+## Keyword Optimization Strategy
 
-| 카테고리 | 지표 예시 |
-|---------|----------|
-| 성능 | 응답시간, 처리량, 에러율, 가용성 |
-| 효율 | 시간 절감, 비용 절감, 자동화율 |
-| 규모 | 사용자 수, 트래픽, 데이터 크기 |
-| 팀 | 팀 규모, 멘토링 인원 |
-| 비즈니스 | 매출 기여, 고객 유치, 전환율 |
-
-## 이력서 섹션별 ATS 최적화
-
-### Professional Summary (3-4줄)
+### JD Keyword Extraction Process
 
 ```
-[직함/역할] + [핵심 경력] + [차별화 역량] + [정량 실적]
+1. Copy the full JD text
+2. Extract the following types of keywords:
+   - Hard Skills: Programming languages, tools, frameworks
+   - Soft Skills: Leadership, communication, problem-solving
+   - Industry Terms: Domain-specific terminology
+   - Action Verbs: Designed, built, optimized, led
+   - Qualifications: Degrees, certifications, years of experience
+3. Count frequency and prioritize
+4. Naturally incorporate into the resume
+```
 
-예시:
-"7년차 백엔드 개발자로 대규모 트래픽 처리 시스템 설계 및 운영 경험.
-Java/Spring Boot 기반 마이크로서비스 아키텍처 설계,
-일일 1억 건 트랜잭션 처리 시스템 구축.
-AWS 기반 인프라 최적화로 운영 비용 35% 절감."
+### Keyword Density Guide
+
+| Keyword Type | Recommended Count | Placement |
+|-------------|-------------------|-----------|
+| JD Core Keywords (3-5) | 2-3 times | Summary, Experience, Skills |
+| JD Supporting Keywords (5-10) | 1-2 times | Experience, Projects |
+| Industry Terms | 1 time | Distributed naturally |
+
+### Keyword Matching Methods
+
+| JD Expression | Resume Reflection | Principle |
+|--------------|-------------------|-----------|
+| "Python experience required" | "Built data pipelines using Python" | Action + Result |
+| "Team leading experience" | "Led a 5-person dev team, completed 3 projects" | Quantification |
+| "CI/CD experience" | "Built and operated CI/CD pipelines using Jenkins/GitHub Actions" | Specific tools |
+
+## Achievement Quantification Formula (STAR-Q)
+
+### Quantification Patterns
+
+```
+[Action Verb] + [Specific Activity] + [Quantitative Result]
+
+Examples:
+- "Designed and built an API server, reducing response time by 40% and achieving 1M daily transactions"
+- "Introduced code review process, reducing post-deployment bugs by 60%"
+- "Led a 5-person team to launch MVP within 3 months, acquiring 5,000 users"
+```
+
+### Quantifiable Metric Types
+
+| Category | Example Metrics |
+|----------|----------------|
+| Performance | Response time, throughput, error rate, availability |
+| Efficiency | Time savings, cost savings, automation rate |
+| Scale | User count, traffic, data size |
+| Team | Team size, mentees |
+| Business | Revenue contribution, customer acquisition, conversion rate |
+
+## Section-by-Section ATS Optimization
+
+### Professional Summary (3-4 lines)
+
+```
+[Title/Role] + [Core Experience] + [Differentiating Competency] + [Quantitative Achievement]
+
+Example:
+"Backend developer with 7 years of experience designing and operating large-scale traffic processing systems.
+Designed microservice architectures based on Java/Spring Boot,
+built systems handling 100M daily transactions.
+Reduced operational costs by 35% through AWS infrastructure optimization."
 ```
 
 ### Work Experience
 
 ```
-[회사명] | [직함] | [기간]
+[Company] | [Title] | [Duration]
 
-• [Action Verb] [구체적 활동]하여 [정량적 결과] 달성
-• [JD 키워드 포함] [성과 기술]
-• [기술 스택 언급] [프로젝트 규모/영향]
+- [Action Verb] [Specific activity] achieving [Quantitative result]
+- [Include JD keywords] [Achievement description]
+- [Mention tech stack] [Project scale/impact]
 ```
 
-### Skills 섹션
+### Skills Section
 
 ```
 Technical Skills:
@@ -133,18 +133,18 @@ Technical Skills:
 - Infrastructure: AWS (EC2, RDS, Lambda), Docker, Kubernetes
 - Tools: Git, Jenkins, Grafana, Jira
 
-(JD에 나온 기술을 정확한 표기로 나열)
+(List technologies from the JD using exact notation)
 ```
 
-## ATS 스코어 자체 진단
+## ATS Score Self-Assessment
 
-| 체크 항목 | 가중치 | 확인 |
-|----------|--------|------|
-| JD 핵심 키워드 80%+ 포함 | 30% | [ ] |
-| 표준 섹션명 사용 | 15% | [ ] |
-| 단일 컬럼 레이아웃 | 10% | [ ] |
-| 성과 정량화 (경력당 2개+) | 20% | [ ] |
-| ATS 호환 파일 형식 | 10% | [ ] |
-| 표준 글꼴, 표 미사용 | 5% | [ ] |
-| 약어 풀네임 병기 | 5% | [ ] |
-| 맞춤법/문법 오류 없음 | 5% | [ ] |
+| Check Item | Weight | Status |
+|-----------|--------|--------|
+| 80%+ of JD core keywords included | 30% | [ ] |
+| Standard section names used | 15% | [ ] |
+| Single-column layout | 10% | [ ] |
+| Achievements quantified (2+ per role) | 20% | [ ] |
+| ATS-compatible file format | 10% | [ ] |
+| Standard fonts, no tables | 5% | [ ] |
+| Abbreviations written with full names | 5% | [ ] |
+| No spelling/grammar errors | 5% | [ ] |

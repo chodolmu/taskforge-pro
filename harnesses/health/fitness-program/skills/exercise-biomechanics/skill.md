@@ -1,140 +1,142 @@
+```markdown
 ---
 name: exercise-biomechanics
-description: "운동 동작의 생체역학 분석과 안전한 수행 가이드. 'exercise-guide' 에이전트가 운동 동작을 설명하고 대체 운동을 제시할 때 이 스킬의 근육 활성화 데이터, 관절 부하 분석, 부상 예방 가이드를 반드시 활용해야 한다. '운동 폼 가이드', '근육 활성화', '부상 예방', '대체 운동' 등에 사용한다. 단, 프로그램 설계나 영양 전략은 이 스킬의 범위가 아니다."
+description: "Biomechanical analysis of exercise movements and safe execution guides. When the 'exercise-guide' agent explains exercise movements and presents alternative exercises, it must utilize the muscle activation data, joint load analysis, and injury prevention guides from this skill. Use for 'exercise form guide', 'muscle activation', 'injury prevention', 'alternative exercises', etc. However, program design and nutrition strategy are outside the scope of this skill."
 ---
 
-# Exercise Biomechanics — 운동 생체역학 가이드
+# Exercise Biomechanics — Exercise Biomechanics Guide
 
-주요 운동의 근육 활성화, 관절 부하, 올바른 폼, 대체 운동을 분석한다.
+Analyzes muscle activation, joint load, correct form, and alternative exercises for major movements.
 
-## 주요 근력 운동 분석
+## Major Strength Exercise Analysis
 
-### 스쿼트 (Squat)
-
-```
-주동근: 대퇴사두근, 대둔근
-보조근: 햄스트링, 내전근, 척추기립근, 복근
-
-관절 부하:
-  무릎: 높음 (슬개건 응력)
-  허리: 중~높음 (전단력)
-  고관절: 중간
-
-올바른 폼:
-  - 발 너비: 어깨 너비 또는 약간 넓게
-  - 무릎 방향: 발가락 방향과 일치 (약간 외회전)
-  - 깊이: 대퇴골 최소 수평 (고관절 접힘 기준)
-  - 등: 중립 척추 유지, 과도한 전방 경사 금지
-  - 시선: 정면 약간 위
-
-금지 동작:
-  ✗ 무릎 내측 붕괴 (valgus collapse)
-  ✗ 과도한 전방 경사 (butt wink)
-  ✗ 발뒤꿈치 들림
-  ✗ 무릎이 발끝을 과도하게 넘어감
-```
-
-**부상 이력별 대체 운동**:
-
-| 부상 부위 | 대체 운동 | 이유 |
-|----------|----------|------|
-| 무릎 | 레그프레스(얕은 각도), 힙 쓰러스트 | 슬개건 부하 감소 |
-| 허리 | 고블릿 스쿼트, 벨트 스쿼트 | 척추 부하 감소 |
-| 어깨 | 프론트 스쿼트, 세이프티바 | 어깨 가동성 불요 |
-| 고관절 | 박스 스쿼트 (깊이 제한) | ROM 제한 |
-
-### 데드리프트 (Deadlift)
+### Squat
 
 ```
-주동근: 척추기립근, 대둔근, 햄스트링
-보조근: 승모근, 광배근, 전완근, 대퇴사두근
+Primary movers: Quadriceps, gluteus maximus
+Synergists: Hamstrings, adductors, erector spinae, abdominals
 
-관절 부하:
-  허리: 매우 높음 (압축+전단)
-  고관절: 높음
-  무릎: 중간
+Joint load:
+  Knee: High (patellar tendon stress)
+  Lower back: Medium~High (shear force)
+  Hip: Medium
 
-변형별 특성:
-| 변형 | 허리 부하 | 주요 타깃 | 적합 대상 |
-|------|----------|----------|----------|
-| 컨벤셔널 | 높음 | 후면사슬 전체 | 중급+ |
-| 스모 | 중간 | 내전근+대둔근 | 긴 상체 |
-| 루마니안(RDL) | 중간 | 햄스트링 | 초보+ |
-| 트랩바 | 낮음 | 전체 고르게 | 초보 권장 |
-| 랙풀 | 낮음 | 상부 등 | 허리 보호 |
+Correct form:
+  - Foot width: Shoulder-width or slightly wider
+  - Knee direction: Aligned with toe direction (slight external rotation)
+  - Depth: Femur minimum parallel (based on hip crease)
+  - Back: Maintain neutral spine, avoid excessive forward lean
+  - Gaze: Slightly above horizontal
+
+Prohibited movements:
+  ✗ Knee valgus collapse
+  ✗ Excessive forward lean (butt wink)
+  ✗ Heel rise
+  ✗ Knees excessively tracking past toes
 ```
 
-### 벤치프레스 (Bench Press)
+**Alternative exercises by injury history**:
+
+| Injury site | Alternative exercise | Reason |
+|-------------|---------------------|--------|
+| Knee | Leg press (shallow angle), hip thrust | Reduces patellar tendon load |
+| Lower back | Goblet squat, belt squat | Reduces spinal load |
+| Shoulder | Front squat, safety bar | No shoulder mobility required |
+| Hip | Box squat (depth limited) | ROM restriction |
+
+### Deadlift
 
 ```
-주동근: 대흉근
-보조근: 전면 삼각근, 삼두근
+Primary movers: Erector spinae, gluteus maximus, hamstrings
+Synergists: Trapezius, latissimus dorsi, forearms, quadriceps
 
-관절 부하:
-  어깨: 높음 (회전근개)
-  손목: 중간
-  흉추: 낮음
+Joint load:
+  Lower back: Very high (compression + shear)
+  Hip: High
+  Knee: Medium
 
-그립 너비별 차이:
-  좁은 그립: 삼두근 강조, 어깨 부하 감소
-  중간 그립: 균형잡힌 활성화
-  넓은 그립: 대흉근 강조, 어깨 부하 증가
-
-어깨 보호 폼:
-  - 견갑골 후인·하강 (shoulder blade squeeze)
-  - 팔꿈치 각도 45-75도 (90도 금지)
-  - 아치: 자연스러운 흉추 아치
-  - 바 경로: 쇄골 → 하흉부 대각선
+Variation characteristics:
+| Variation | Lower back load | Primary target | Suitable for |
+|-----------|----------------|----------------|--------------|
+| Conventional | High | Full posterior chain | Intermediate+ |
+| Sumo | Medium | Adductors + glutes | Long torso |
+| Romanian (RDL) | Medium | Hamstrings | Beginner+ |
+| Trap bar | Low | Evenly distributed | Beginner recommended |
+| Rack pull | Low | Upper back | Lower back protection |
 ```
 
-## 부위별 운동 선택 가이드
-
-### 상체
-
-| 부위 | 초보 | 중급 | 고급 | 장비 제한 시 |
-|------|------|------|------|-----------|
-| 가슴 | 머신 체스트프레스 | 벤치프레스 | 인클라인DB프레스 | 푸시업 변형 |
-| 등 | 랫풀다운 | 바벨로우 | 풀업(가중) | 인버티드로우 |
-| 어깨 | 머신 숄더프레스 | DB 숄더프레스 | 밀리터리프레스 | 파이크 푸시업 |
-| 이두 | 머신 컬 | 바벨 컬 | 인클라인 DB 컬 | 턱걸이(역수) |
-| 삼두 | 케이블 푸시다운 | 딥스 | 클로즈그립 벤치 | 다이아몬드 푸시업 |
-
-### 하체
-
-| 부위 | 초보 | 중급 | 고급 | 장비 제한 시 |
-|------|------|------|------|-----------|
-| 대퇴사두 | 레그프레스 | 바벨 스쿼트 | 프론트 스쿼트 | 불가리안 스플릿 |
-| 햄스트링 | 레그컬 | RDL | 노르딕 컬 | 슬라이딩 레그컬 |
-| 대둔근 | 힙 쓰러스트(맨몸) | 바벨 힙쓰러스트 | 싱글레그 RDL | 글루트브릿지 |
-| 종아리 | 카프레이즈(맨몸) | 스탠딩 카프레이즈 | 시티드 카프레이즈 | 계단 카프레이즈 |
-
-## 워밍업·쿨다운 프로토콜
-
-### 운동 전 동적 워밍업 (5-10분)
+### Bench Press
 
 ```
-1. 전신: 조깅/로프점프 (2분)
-2. 고관절: 레그스윙 전후/좌우 (각 10회)
-3. 흉추: 쏘라식 로테이션 (각 8회)
-4. 어깨: 암서클 + 밴드풀어파트 (각 10회)
-5. 무릎: 바디웨이트 스쿼트 (10회)
-6. 활성화: 해당 운동 50% 중량 2세트
+Primary movers: Pectoralis major
+Synergists: Anterior deltoid, triceps
+
+Joint load:
+  Shoulder: High (rotator cuff)
+  Wrist: Medium
+  Thoracic spine: Low
+
+Differences by grip width:
+  Narrow grip: Triceps emphasis, reduced shoulder load
+  Medium grip: Balanced activation
+  Wide grip: Chest emphasis, increased shoulder load
+
+Shoulder protection form:
+  - Scapular retraction and depression (shoulder blade squeeze)
+  - Elbow angle 45-75 degrees (90 degrees prohibited)
+  - Arch: Natural thoracic arch
+  - Bar path: Diagonal from clavicle to lower chest
 ```
 
-### 운동 후 정적 스트레칭 (5-10분)
+## Exercise Selection Guide by Muscle Group
+
+### Upper Body
+
+| Muscle | Beginner | Intermediate | Advanced | Equipment limited |
+|--------|----------|--------------|----------|-------------------|
+| Chest | Machine chest press | Bench press | Incline DB press | Push-up variations |
+| Back | Lat pulldown | Barbell row | Weighted pull-up | Inverted row |
+| Shoulder | Machine shoulder press | DB shoulder press | Military press | Pike push-up |
+| Biceps | Machine curl | Barbell curl | Incline DB curl | Chin-up (supinated) |
+| Triceps | Cable pushdown | Dips | Close-grip bench | Diamond push-up |
+
+### Lower Body
+
+| Muscle | Beginner | Intermediate | Advanced | Equipment limited |
+|--------|----------|--------------|----------|-------------------|
+| Quadriceps | Leg press | Barbell squat | Front squat | Bulgarian split squat |
+| Hamstrings | Leg curl | RDL | Nordic curl | Sliding leg curl |
+| Glutes | Bodyweight hip thrust | Barbell hip thrust | Single-leg RDL | Glute bridge |
+| Calves | Bodyweight calf raise | Standing calf raise | Seated calf raise | Stair calf raise |
+
+## Warm-up & Cool-down Protocol
+
+### Pre-workout Dynamic Warm-up (5–10 min)
 
 ```
-각 부위 20-30초 유지, 통증 없는 범위
-
-가슴: 도어프레임 스트레칭
-등: 차일드포즈
-어깨: 크로스바디 스트레칭
-대퇴: 스탠딩 쿼드 스트레칭
-햄스트링: 시티드 포워드폴드
-고관절: 피전 스트레칭
+1. Full body: Jogging / jump rope (2 min)
+2. Hip: Leg swings front/back and side/side (10 reps each)
+3. Thoracic spine: Thoracic rotation (8 reps each side)
+4. Shoulder: Arm circles + band pull-apart (10 reps each)
+5. Knee: Bodyweight squat (10 reps)
+6. Activation: 2 sets at 50% of working weight for target exercise
 ```
 
-## 참고
+### Post-workout Static Stretching (5–10 min)
 
-- NSCA, ACSM 가이드라인 기반
-- 상세 동작 분석: `references/exercise-details.md` 참조
+```
+Hold each position 20–30 seconds, within pain-free range
+
+Chest: Doorframe stretch
+Back: Child's pose
+Shoulder: Cross-body stretch
+Quadriceps: Standing quad stretch
+Hamstrings: Seated forward fold
+Hip: Pigeon stretch
+```
+
+## References
+
+- Based on NSCA and ACSM guidelines
+- Detailed movement analysis: See `references/exercise-details.md`
+```

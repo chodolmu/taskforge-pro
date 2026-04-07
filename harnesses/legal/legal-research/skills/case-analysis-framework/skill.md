@@ -1,143 +1,145 @@
+```markdown
 ---
 name: case-analysis-framework
-description: "판례 분석의 체계적 프레임워크와 쟁점 구조화 방법론. 'case-searcher'와 'legal-analyst' 에이전트가 판례를 검색·분석하고 법리를 도출할 때 이 스킬의 IRAC 프레임워크, 판례 분석 매트릭스, 쟁점 구조화 기법을 반드시 활용해야 한다. '판례 분석', '쟁점 정리', '법리 도출' 등에 사용한다. 단, 의견서 작성이나 전략 수립은 이 스킬의 범위가 아니다."
+description: "A systematic framework for case analysis and issue structuring methodology. The 'case-searcher' and 'legal-analyst' agents must use this skill's IRAC framework, case analysis matrix, and issue structuring techniques when searching, analyzing cases, and deriving legal principles. Used for 'case analysis', 'issue organization', 'legal principle derivation', etc. However, drafting opinions or developing strategy is outside the scope of this skill."
 ---
 
-# Case Analysis Framework — 판례 분석 프레임워크
+# Case Analysis Framework
 
-판례를 체계적으로 분석하고, 법적 쟁점을 구조화하며, 선례 가치를 평가하는 방법론.
+A methodology for systematically analyzing cases, structuring legal issues, and evaluating precedential value.
 
-## IRAC 분석 프레임워크
+## IRAC Analysis Framework
 
-### 구조
+### Structure
 
 ```
-I — Issue (쟁점)
-  "이 사건의 법적 쟁점은 ~인지 여부이다"
+I — Issue
+  "The legal issue in this case is whether ~"
 
-R — Rule (법규범)
-  관련 법조문 + 판례 법리 + 학설
+R — Rule
+  Relevant statutory provisions + case law principles + academic doctrine
 
-A — Application (적용)
-  법규범을 사건 사실관계에 구체적 적용
+A — Application
+  Concrete application of legal rules to the facts of the case
 
-C — Conclusion (결론)
-  법리 적용 결과 + 확실성 수준
+C — Conclusion
+  Result of legal analysis + confidence level
 ```
 
-### 확실성 수준 등급
+### Confidence Level Scale
 
-| 등급 | 표현 | 의미 |
-|------|------|------|
-| L5 | "~이 확립되어 있다" | 대법원 확립 판례 |
-| L4 | "~으로 판단될 가능성이 높다" | 다수 하급심 일치 |
-| L3 | "~으로 볼 여지가 있다" | 일부 판례 지지 |
-| L2 | "~여부가 불분명하다" | 판례 엇갈림 |
-| L1 | "~에 관한 선례가 부재하다" | 미답 영역 |
+| Level | Expression | Meaning |
+|-------|-----------|---------|
+| L5 | "~ is well-established" | Established Supreme Court precedent |
+| L4 | "~ is likely to be held" | Majority of lower courts agree |
+| L3 | "~ may be arguable" | Some case law supports |
+| L2 | "~ is unclear" | Conflicting case law |
+| L1 | "~ has no precedent" | Uncharted territory |
 
-## 판례 분석 매트릭스
+## Case Analysis Matrix
 
-### 개별 판례 분석 카드
+### Individual Case Analysis Card
 
 ```markdown
-### [사건번호] — [판결 요지 한 줄]
+### [Case Number] — [One-line holding summary]
 
-**법원/선고일**: [대법원/고등법원/지방법원] [YYYY.MM.DD]
-**사건유형**: [민사/형사/행정]
-**결과**: [원고 승/패, 상고 기각/파기환송]
+**Court/Decision Date**: [Supreme Court/High Court/District Court] [YYYY.MM.DD]
+**Case Type**: [Civil/Criminal/Administrative]
+**Outcome**: [Plaintiff won/lost, appeal dismissed/remanded]
 
-**핵심 쟁점**: [한 문장]
+**Key Issue**: [One sentence]
 
-**사실관계 요약**:
-- [핵심 사실 1]
-- [핵심 사실 2]
+**Summary of Facts**:
+- [Key fact 1]
+- [Key fact 2]
 
-**판시사항** (법원의 판단):
-> "[판결문 핵심 문구 직접 인용]"
+**Holding** (Court's determination):
+> "[Direct quote of key passage from opinion]"
 
-**법리 추출**:
-- 일반 법리: [보편적 원칙]
-- 적용 기준: [구체적 판단 기준]
-- 예외/제한: [법리의 적용 한계]
+**Legal Principles Extracted**:
+- General principle: [Universal rule]
+- Application standard: [Specific criteria for judgment]
+- Exceptions/Limitations: [Limits on application of the rule]
 
-**선례 가치**: [L1-L5] — [이유]
-**본 사건 관련성**: [상/중/하] — [관련 이유]
+**Precedential Value**: [L1-L5] — [Reason]
+**Relevance to This Case**: [High/Medium/Low] — [Reason for relevance]
 ```
 
-### 판례 비교 매트릭스
+### Case Comparison Matrix
 
 ```
-| 비교 항목 | 판례 A | 판례 B | 판례 C | 본 사건 |
-|----------|--------|--------|--------|--------|
-| 사실관계 유사도 | - | - | - | 기준 |
-| 법적 쟁점 | - | - | - | - |
-| 법원의 판단 | - | - | - | (예측) |
-| 결론 | - | - | - | (예측) |
-| 구별 가능성 | - | - | - | - |
+| Comparison Item | Case A | Case B | Case C | This Case |
+|----------------|--------|--------|--------|-----------|
+| Factual similarity | - | - | - | Baseline |
+| Legal issue | - | - | - | - |
+| Court's holding | - | - | - | (predicted) |
+| Conclusion | - | - | - | (predicted) |
+| Distinguishability | - | - | - | - |
 ```
 
-## 쟁점 구조화 기법
+## Issue Structuring Techniques
 
-### 쟁점 트리 (Issue Tree)
-
-```
-대쟁점: [계약 위반에 따른 손해배상 청구의 인용 여부]
-├── 소쟁점 1: 계약의 성립 여부
-│   ├── 세부 1-1: 청약의 유효성
-│   └── 세부 1-2: 승낙의 존재
-├── 소쟁점 2: 채무불이행의 존재 여부
-│   ├── 세부 2-1: 이행기의 도래
-│   └── 세부 2-2: 귀책사유
-├── 소쟁점 3: 손해의 범위
-│   ├── 세부 3-1: 통상손해
-│   └── 세부 3-2: 특별손해 (예견가능성)
-└── 소쟁점 4: 과실상계·손익상계
-```
-
-### 쟁점별 강도 평가
+### Issue Tree
 
 ```
-쟁점 강도 = 법적_근거(1-5) × 사실_기반(1-5) × 판례_지지(1-5)
-
-법적 근거: 5=명문 규정 4=유추적용 3=학설 지지 2=소수설 1=근거 미약
-사실 기반: 5=증거 충분 4=대부분 확보 3=부분적 2=추정 의존 1=증거 부재
-판례 지지: 5=대법원 확립 4=다수 일치 3=일부 지지 2=엇갈림 1=선례 없음
-
-결과:
-  75-125: 🟢 매우 유리
-  40-74: 🟡 유리하나 불확실성 존재
-  15-39: 🟠 불확실, 양 방향 가능
-  1-14: 🔴 불리
+Main Issue: [Whether a claim for damages arising from breach of contract should be granted]
+├── Sub-issue 1: Whether a contract was formed
+│   ├── Detail 1-1: Validity of the offer
+│   └── Detail 1-2: Existence of acceptance
+├── Sub-issue 2: Whether a breach of obligation exists
+│   ├── Detail 2-1: Whether the performance date has arrived
+│   └── Detail 2-2: Attributable fault
+├── Sub-issue 3: Scope of damages
+│   ├── Detail 3-1: General damages
+│   └── Detail 3-2: Special damages (foreseeability)
+└── Sub-issue 4: Comparative negligence / set-off of benefits
 ```
 
-## 법률 분야별 핵심 법리 패턴
+### Issue Strength Assessment
 
-### 민사 — 계약 분쟁
+```
+Issue Strength = Legal_Basis(1-5) × Factual_Support(1-5) × Case_Law_Support(1-5)
 
-| 쟁점 유형 | 핵심 법리 | 근거 |
-|----------|----------|------|
-| 계약 해석 | 문언, 당사자 의사, 거래 관행 종합 | 민법 제105조 |
-| 채무불이행 | 귀책사유 + 위법성 + 인과관계 + 손해 | 민법 제390조 |
-| 손해배상 범위 | 통상손해 + 특별손해(예견가능) | 민법 제393조 |
-| 과실상계 | 피해자 과실 비율 공제 | 민법 제396조 |
+Legal Basis:    5=Express statutory provision  4=Analogous application  3=Doctrinal support  2=Minority view  1=Weak basis
+Factual Support: 5=Sufficient evidence  4=Mostly secured  3=Partial  2=Relies on inference  1=No evidence
+Case Law Support: 5=Established Supreme Court  4=Majority agree  3=Some support  2=Conflicting  1=No precedent
 
-### 민사 — 불법행위
+Results:
+  75-125: 🟢 Very favorable
+  40-74:  🟡 Favorable but uncertainty exists
+  15-39:  🟠 Uncertain, outcome could go either way
+  1-14:   🔴 Unfavorable
+```
 
-| 쟁점 유형 | 핵심 법리 | 근거 |
-|----------|----------|------|
-| 일반 불법행위 | 고의·과실 + 위법행위 + 인과관계 + 손해 | 민법 제750조 |
-| 사용자 책임 | 사무집행 관련성 | 민법 제756조 |
-| 위자료 | 정신적 고통의 객관적 인정 | 민법 제751조 |
+## Key Legal Principle Patterns by Area of Law
 
-### 노동 — 해고 분쟁
+### Civil — Contract Disputes
 
-| 쟁점 유형 | 핵심 법리 | 근거 |
-|----------|----------|------|
-| 정당한 이유 | 사회통념상 고용관계 유지 불가 | 근기법 제23조 |
-| 해고 절차 | 30일 전 예고 또는 수당 | 근기법 제26조 |
-| 부당해고 구제 | 원직복직 + 임금상당액 | 근기법 제30조 |
+| Issue Type | Key Legal Principle | Authority |
+|-----------|-------------------|-----------|
+| Contract interpretation | Comprehensive consideration of text, party intent, and trade custom | Civil Act Art. 105 |
+| Breach of obligation | Attributable fault + illegality + causation + damages | Civil Act Art. 390 |
+| Scope of damages | General damages + special damages (foreseeable) | Civil Act Art. 393 |
+| Comparative negligence | Deduction for victim's proportionate fault | Civil Act Art. 396 |
 
-## 참고
+### Civil — Torts
 
-- 대법원 종합법률정보, 법제처 국가법령정보센터 활용
-- 상세 법리 패턴: `references/legal-doctrine-patterns.md` 참조
+| Issue Type | Key Legal Principle | Authority |
+|-----------|-------------------|-----------|
+| General tort | Intent/negligence + unlawful act + causation + damages | Civil Act Art. 750 |
+| Employer liability | Relation to scope of employment | Civil Act Art. 756 |
+| Consolation damages | Objective recognition of mental distress | Civil Act Art. 751 |
+
+### Labor — Wrongful Termination Disputes
+
+| Issue Type | Key Legal Principle | Authority |
+|-----------|-------------------|-----------|
+| Just cause | Impossibility of maintaining employment relationship by social norms | Labor Standards Act Art. 23 |
+| Termination procedure | 30-day advance notice or pay in lieu | Labor Standards Act Art. 26 |
+| Remedy for unfair dismissal | Reinstatement + back pay equivalent | Labor Standards Act Art. 30 |
+
+## References
+
+- Utilize the Supreme Court Comprehensive Legal Information system and the Ministry of Government Legislation's National Law Information Center
+- Detailed legal principle patterns: see `references/legal-doctrine-patterns.md`
+```

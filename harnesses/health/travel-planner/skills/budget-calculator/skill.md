@@ -1,144 +1,144 @@
 ---
 name: budget-calculator
-description: "여행 예산을 항목별로 산출하고 절약 전략을 제시하는 예산 계산기. 'budget-manager' 에이전트가 여행 비용을 산출하고 예산을 배분할 때 이 스킬의 비용 기준표, 예산 배분 공식, 절약 팁을 반드시 활용해야 한다. '여행 예산 산출', '비용 비교', '절약 팁' 등에 사용한다. 단, 일정 설계나 현지 정보는 이 스킬의 범위가 아니다."
+description: "A budget calculator that itemizes travel costs and presents savings strategies. The 'budget-manager' agent must use this skill's cost reference tables, budget allocation formulas, and savings tips when calculating travel expenses and allocating budgets. Used for 'travel budget calculation', 'cost comparison', 'savings tips', etc. Itinerary design and local information are outside this skill's scope."
 ---
 
-# Budget Calculator — 여행 예산 계산기
+# Budget Calculator — Travel Budget Calculator
 
-여행 비용을 항목별로 산출하고, 예산 수준별 시나리오를 비교한다.
+Itemizes travel costs and compares budget scenarios by spending level.
 
-## 예산 배분 공식
+## Budget Allocation Formula
 
-### 표준 배분 비율
-
-```
-총 예산 배분:
-  항공: 25-35%
-  숙소: 25-30%
-  식비: 15-25%
-  교통(현지): 5-10%
-  관광·입장: 5-10%
-  쇼핑·기타: 5-10%
-  예비비: 5-10%
-```
-
-### 여행 유형별 조정
-
-| 유형 | 항공 | 숙소 | 식비 | 관광 | 기타 |
-|------|------|------|------|------|------|
-| 배낭여행 | 35% | 15% | 20% | 10% | 20% |
-| 일반 관광 | 30% | 25% | 20% | 10% | 15% |
-| 럭셔리 | 25% | 35% | 20% | 10% | 10% |
-| 미식 여행 | 25% | 20% | 35% | 5% | 15% |
-| 가족 여행 | 30% | 25% | 20% | 15% | 10% |
-
-## 주요 도시별 일일 비용 기준
-
-### 아시아
-
-| 도시 | 절약 (1인/일) | 보통 | 럭셔리 | 통화 |
-|------|-------------|------|--------|------|
-| 도쿄 | 8만원 | 15만원 | 35만원 | JPY |
-| 오사카 | 7만원 | 13만원 | 30만원 | JPY |
-| 방콕 | 3만원 | 7만원 | 20만원 | THB |
-| 하노이 | 2.5만원 | 5만원 | 15만원 | VND |
-| 싱가포르 | 8만원 | 15만원 | 40만원 | SGD |
-| 대만(타이베이) | 4만원 | 8만원 | 20만원 | TWD |
-
-### 유럽
-
-| 도시 | 절약 (1인/일) | 보통 | 럭셔리 | 통화 |
-|------|-------------|------|--------|------|
-| 파리 | 10만원 | 20만원 | 50만원 | EUR |
-| 런던 | 12만원 | 22만원 | 55만원 | GBP |
-| 로마 | 8만원 | 15만원 | 40만원 | EUR |
-| 바르셀로나 | 8만원 | 15만원 | 40만원 | EUR |
-| 프라하 | 5만원 | 10만원 | 25만원 | CZK |
-
-### 미주·오세아니아
-
-| 도시 | 절약 (1인/일) | 보통 | 럭셔리 | 통화 |
-|------|-------------|------|--------|------|
-| 뉴욕 | 15만원 | 25만원 | 60만원 | USD |
-| LA | 12만원 | 20만원 | 50만원 | USD |
-| 시드니 | 12만원 | 20만원 | 50만원 | AUD |
-| 하와이 | 12만원 | 22만원 | 55만원 | USD |
-
-## 항목별 비용 산출
-
-### 항공권 시즌별 가격 범위 (인천 출발)
-
-| 노선 | 비수기 | 준성수기 | 성수기 | 최성수기 |
-|------|--------|---------|--------|---------|
-| 일본 | 15-25만 | 25-40만 | 40-60만 | 60-100만 |
-| 동남아 | 20-35만 | 35-50만 | 50-80만 | 80-120만 |
-| 유럽 | 60-90만 | 90-130만 | 130-180만 | 180-250만 |
-| 미국 | 70-100만 | 100-140만 | 140-200만 | 200-300만 |
-
-### 숙소 유형별 가격 범위
-
-| 유형 | 가격대(1박) | 적합 대상 | 비고 |
-|------|-----------|----------|------|
-| 호스텔(도미) | 1-4만원 | 1인 배낭 | 공용 시설 |
-| 게스트하우스 | 3-8만원 | 1-2인 | 현지 경험 |
-| 비즈니스호텔 | 8-15만원 | 출장/커플 | 편의시설 |
-| 에어비앤비 | 5-20만원 | 그룹/장기 | 자취형 |
-| 4성 호텔 | 15-30만원 | 가족/커플 | 서비스 |
-| 5성 리조트 | 30-100만원+ | 럭셔리 | 풀서비스 |
-
-## 절약 전략
-
-### 항공 절약
+### Standard Allocation Ratios
 
 ```
-1. 2-3개월 전 예약 (최저가 구간)
-2. 화~목 출발/일~화 귀국
-3. 경유편 활용 (직항 대비 20-40% 저렴)
-4. LCC + 기내수하물만 (짧은 여행)
-5. 마일리지 발권 (평소 적립)
+Total Budget Allocation:
+  Flights: 25-35%
+  Accommodation: 25-30%
+  Meals: 15-25%
+  Local Transport: 5-10%
+  Sightseeing/Admission: 5-10%
+  Shopping/Other: 5-10%
+  Reserve: 5-10%
 ```
 
-### 숙소 절약
+### Adjustments by Travel Type
+
+| Type | Flights | Accommodation | Meals | Sightseeing | Other |
+|------|---------|---------------|-------|-------------|-------|
+| Backpacking | 35% | 15% | 20% | 10% | 20% |
+| General Tourism | 30% | 25% | 20% | 10% | 15% |
+| Luxury | 25% | 35% | 20% | 10% | 10% |
+| Food Tourism | 25% | 20% | 35% | 5% | 15% |
+| Family Travel | 30% | 25% | 20% | 15% | 10% |
+
+## Daily Cost Reference by Major City
+
+### Asia
+
+| City | Budget (per person/day) | Standard | Luxury | Currency |
+|------|------------------------|----------|--------|----------|
+| Tokyo | $60 | $120 | $280 | JPY |
+| Osaka | $55 | $100 | $240 | JPY |
+| Bangkok | $25 | $55 | $160 | THB |
+| Hanoi | $20 | $40 | $120 | VND |
+| Singapore | $65 | $120 | $320 | SGD |
+| Taipei | $30 | $65 | $160 | TWD |
+
+### Europe
+
+| City | Budget (per person/day) | Standard | Luxury | Currency |
+|------|------------------------|----------|--------|----------|
+| Paris | $80 | $160 | $400 | EUR |
+| London | $95 | $175 | $440 | GBP |
+| Rome | $65 | $120 | $320 | EUR |
+| Barcelona | $65 | $120 | $320 | EUR |
+| Prague | $40 | $80 | $200 | CZK |
+
+### Americas & Oceania
+
+| City | Budget (per person/day) | Standard | Luxury | Currency |
+|------|------------------------|----------|--------|----------|
+| New York | $120 | $200 | $480 | USD |
+| Los Angeles | $95 | $160 | $400 | USD |
+| Sydney | $95 | $160 | $400 | AUD |
+| Hawaii | $95 | $175 | $440 | USD |
+
+## Itemized Cost Calculation
+
+### Seasonal Airfare Ranges (International)
+
+| Route | Off-Season | Shoulder | Peak | Ultra-Peak |
+|-------|-----------|----------|------|-----------|
+| Domestic-Japan | $120-200 | $200-320 | $320-480 | $480-800 |
+| Domestic-SE Asia | $160-280 | $280-400 | $400-640 | $640-960 |
+| Domestic-Europe | $480-720 | $720-1040 | $1040-1440 | $1440-2000 |
+| Domestic-USA | $560-800 | $800-1120 | $1120-1600 | $1600-2400 |
+
+### Accommodation Price Ranges by Type
+
+| Type | Price Range (per night) | Best For | Notes |
+|------|----------------------|----------|-------|
+| Hostel (dorm) | $8-32 | Solo backpacker | Shared facilities |
+| Guesthouse | $24-64 | 1-2 persons | Local experience |
+| Business Hotel | $64-120 | Business/Couples | Amenities |
+| Airbnb | $40-160 | Groups/Long-term | Self-catering |
+| 4-Star Hotel | $120-240 | Family/Couples | Service |
+| 5-Star Resort | $240-800+ | Luxury | Full service |
+
+## Savings Strategies
+
+### Flight Savings
 
 ```
-1. 에어비앤비 장기 할인 (7일+ 10-20% 할인)
-2. 비수기 평일 예약
-3. 도심 외곽 (교통비와 트레이드오프 계산)
-4. 호스텔 개인실 (호텔 대비 50% 저렴)
-5. 호텔 비교 사이트 최저가 보장
+1. Book 2-3 months ahead (lowest price window)
+2. Depart Tue-Thu / Return Sun-Tue
+3. Use layover flights (20-40% cheaper than direct)
+4. LCC + carry-on only (short trips)
+5. Use airline miles (accumulated over time)
 ```
 
-### 식비 절약
+### Accommodation Savings
 
 ```
-1. 점심에 런치 세트 (저녁 대비 30-50% 저렴)
-2. 편의점·마트 활용 (아침/간식)
-3. 현지 로컬 식당 (관광지 대비 40% 저렴)
-4. 숙소 조식 포함 옵션
-5. 물가 저렴한 지역에서 큰 식사
+1. Airbnb long-term discounts (7+ days: 10-20% off)
+2. Off-season weekday bookings
+3. Outside city center (calculate transport cost tradeoff)
+4. Hostel private room (50% cheaper than hotel)
+5. Hotel comparison site price guarantees
 ```
 
-## 예산 계획표 출력 형식
+### Meal Savings
+
+```
+1. Lunch set menus (30-50% cheaper than dinner)
+2. Use convenience stores/supermarkets (breakfast/snacks)
+3. Local restaurants (40% cheaper than tourist area)
+4. Accommodation with breakfast included
+5. Eat big meals in cheaper areas
+```
+
+## Budget Plan Output Format
 
 ```markdown
-## 여행 예산 계획서
+## Travel Budget Plan
 
-**여행지**: [도시] | **기간**: [X박Y일] | **인원**: [N명]
+**Destination**: [City] | **Duration**: [X nights Y days] | **Party**: [N people]
 
-| 항목 | 단가 | 수량 | 소계 | 비고 |
-|------|------|------|------|------|
-| 항공 | X만원 | 2매 | X만원 | 직항/경유 |
-| 숙소 | X만원/박 | X박 | X만원 | 호텔/에어비앤비 |
-| 식비 | X만원/일 | X일 | X만원 | 3끼+간식 |
-| 교통 | X만원/일 | X일 | X만원 | 패스/택시 |
-| 관광 | X만원 | X건 | X만원 | 입장료 |
-| 쇼핑 | X만원 | - | X만원 | 예상 |
-| 예비비 | - | - | X만원 | 총액 10% |
-| **합계** | | | **X만원** | |
-| 1인당 | | | **X만원** | |
+| Item | Unit Cost | Quantity | Subtotal | Notes |
+|------|----------|---------|----------|-------|
+| Flights | $X | 2 tickets | $X | Direct/Layover |
+| Accommodation | $X/night | X nights | $X | Hotel/Airbnb |
+| Meals | $X/day | X days | $X | 3 meals+snacks |
+| Transport | $X/day | X days | $X | Pass/Taxi |
+| Sightseeing | $X | X items | $X | Admission |
+| Shopping | $X | - | $X | Estimated |
+| Reserve | - | - | $X | 10% of total |
+| **Total** | | | **$X** | |
+| Per Person | | | **$X** | |
 ```
 
-## 참고
+## Notes
 
-- 각 도시 물가는 시즌·환율에 따라 변동
-- 상세 도시별 비용: `references/city-cost-guide.md` 참조
+- City costs vary by season and exchange rates
+- Detailed city-specific costs: see `references/city-cost-guide.md`

@@ -1,103 +1,103 @@
 ---
 name: sentiment-scoring
-description: "감성 분석 스코어링 프레임워크. sentiment-analyst 에이전트가 텍스트 데이터의 감성을 체계적으로 분류하고 점수화할 때 참조. '감성 분석', '감정 스코어', 'NPS 분석' 요청 시 사용. 단, ML 모델 학습이나 NLP 파이프라인 구축은 범위 밖."
+description: "Sentiment analysis scoring framework. Referenced by the sentiment-analyst agent for systematic sentiment classification and scoring of text data. Used for 'sentiment analysis', 'emotion score', 'NPS analysis' requests. Note: ML model training and NLP pipeline development are out of scope."
 ---
 
-# Sentiment Scoring — 감성 분석 스코어링
+# Sentiment Scoring
 
-sentiment-analyst 에이전트의 감성 분류 및 점수화 역량 강화.
+Enhances the sentiment-analyst agent's sentiment classification and scoring capabilities.
 
-## 감성 분류 체계
+## Sentiment Classification System
 
-### 3단계 기본 분류
+### 3-Level Basic Classification
 
-| 분류 | 점수 범위 | 신호 단어 |
-|------|----------|----------|
-| 긍정 | +0.5 ~ +1.0 | 좋다, 만족, 추천, 편리, 최고 |
-| 중립 | -0.5 ~ +0.5 | 보통, 괜찮다, 그저그렇다 |
-| 부정 | -1.0 ~ -0.5 | 불만, 실망, 최악, 불편, 느리다 |
+| Classification | Score Range | Signal Words |
+|---------------|------------|--------------|
+| Positive | +0.5 to +1.0 | good, satisfied, recommend, convenient, best |
+| Neutral | -0.5 to +0.5 | average, okay, so-so |
+| Negative | -1.0 to -0.5 | dissatisfied, disappointed, worst, inconvenient, slow |
 
-### 5단계 상세 분류
+### 5-Level Detailed Classification
 
-| 분류 | 점수 | 표현 예시 |
-|------|------|----------|
-| 매우 긍정 | +0.8~+1.0 | "정말 최고입니다!", "강력 추천" |
-| 긍정 | +0.3~+0.7 | "괜찮은 편이에요", "만족합니다" |
-| 중립 | -0.2~+0.2 | "보통이에요", "나쁘지 않아요" |
-| 부정 | -0.7~-0.3 | "좀 불편해요", "기대 이하" |
-| 매우 부정 | -1.0~-0.8 | "절대 다시 안 써요", "최악" |
+| Classification | Score | Expression Examples |
+|---------------|-------|-------------------|
+| Very Positive | +0.8 to +1.0 | "Absolutely the best!", "Highly recommend" |
+| Positive | +0.3 to +0.7 | "Pretty good", "Satisfied" |
+| Neutral | -0.2 to +0.2 | "It's average", "Not bad" |
+| Negative | -0.7 to -0.3 | "Somewhat inconvenient", "Below expectations" |
+| Very Negative | -1.0 to -0.8 | "Never using this again", "Worst ever" |
 
-## 감성 분석 방법론
+## Sentiment Analysis Methodology
 
-### 규칙 기반 분석
-
-```
-1. 토큰화: 문장 → 단어/구 분리
-2. 감성 사전 매칭:
-   - 긍정어 (+1): 만족, 좋다, 편리, 추천...
-   - 부정어 (-1): 불만, 실망, 불편, 느리다...
-   - 강화어 (×1.5): 매우, 정말, 너무, 완전...
-   - 부정어 (×-1): 안, 없다, 못, 아니...
-3. 문장 점수 = Σ(단어 점수) / 단어 수
-4. 문서 점수 = Σ(문장 점수) / 문장 수
-```
-
-### 맥락 보정 규칙
-
-| 패턴 | 처리 | 예시 |
-|------|------|------|
-| 긍정 + "하지만" + 부정 | 후반부 가중 | "좋은데 비싸요" → -0.3 |
-| 부정 + "하지만" + 긍정 | 후반부 가중 | "비싸지만 좋아요" → +0.3 |
-| 반어법 | 반전 | "정말 대단하시네요 (비꼼)" → -0.5 |
-| 비교 | 상대 평가 | "A보다 나은 B" → B 긍정 |
-| 조건부 | 약화 | "~하면 좋을 텐데" → -0.2 |
-
-## NPS (Net Promoter Score) 분석
-
-### NPS 산출
+### Rule-based Analysis
 
 ```
-NPS 질문: "이 제품을 추천하시겠습니까?" (0~10점)
-
-추천자 (Promoter): 9~10점
-중립자 (Passive): 7~8점
-비추천자 (Detractor): 0~6점
-
-NPS = 추천자% - 비추천자%
-범위: -100 ~ +100
+1. Tokenize: Sentence → word/phrase segmentation
+2. Sentiment dictionary matching:
+   - Positive words (+1): satisfied, good, convenient, recommend...
+   - Negative words (-1): dissatisfied, disappointed, inconvenient, slow...
+   - Intensifiers (×1.5): very, really, extremely, totally...
+   - Negators (×-1): not, no, cannot, never...
+3. Sentence score = Σ(word scores) / word count
+4. Document score = Σ(sentence scores) / sentence count
 ```
 
-### NPS 벤치마크
+### Context Correction Rules
 
-| NPS 범위 | 평가 | 해석 |
-|---------|------|------|
-| 70+ | 세계적 수준 | Apple, Tesla급 |
-| 50~69 | 우수 | 업계 리더 |
-| 30~49 | 양호 | 평균 이상 |
-| 0~29 | 개선 필요 | 평균 수준 |
-| 0 미만 | 위험 | 즉시 개선 |
+| Pattern | Handling | Example |
+|---------|----------|---------|
+| Positive + "but" + Negative | Weight latter part | "Good but expensive" → -0.3 |
+| Negative + "but" + Positive | Weight latter part | "Expensive but good" → +0.3 |
+| Sarcasm | Invert | "Really impressive (sarcastic)" → -0.5 |
+| Comparison | Relative evaluation | "B is better than A" → B positive |
+| Conditional | Weaken | "It would be nice if..." → -0.2 |
 
-## 감성 트렌드 분석
+## NPS (Net Promoter Score) Analysis
 
-### 시계열 감성 추이
+### NPS Calculation
 
 ```
-월별 감성 점수 변화:
-  1월: +0.45 (긍정 우세)
-  2월: +0.38 (소폭 하락)
-  3월: -0.12 (부정 전환) ← 이벤트 확인 필요
-  4월: +0.22 (회복 중)
+NPS Question: "Would you recommend this product?" (0-10 scale)
 
-이상 탐지 기준:
-  전월 대비 ±0.3 이상 변화 → 원인 분석 필수
+Promoter: 9-10
+Passive: 7-8
+Detractor: 0-6
+
+NPS = Promoter% - Detractor%
+Range: -100 to +100
 ```
 
-## 품질 체크리스트
+### NPS Benchmark
 
-| 항목 | 기준 |
-|------|------|
-| 분류 체계 | 3단계 또는 5단계 일관 적용 |
-| 맥락 보정 | 반전/강화/조건부 처리 |
-| 신뢰 구간 | 애매한 케이스 중립 처리 |
-| NPS 산출 | 표준 공식 적용 |
-| 트렌드 | 시계열 추이 + 이상 탐지 |
+| NPS Range | Rating | Interpretation |
+|-----------|--------|----------------|
+| 70+ | World-class | Apple, Tesla tier |
+| 50-69 | Excellent | Industry leader |
+| 30-49 | Good | Above average |
+| 0-29 | Needs improvement | Average level |
+| Below 0 | At risk | Immediate action needed |
+
+## Sentiment Trend Analysis
+
+### Time-series Sentiment Tracking
+
+```
+Monthly sentiment score changes:
+  Jan: +0.45 (positive-dominant)
+  Feb: +0.38 (slight decline)
+  Mar: -0.12 (negative shift) ← event investigation needed
+  Apr: +0.22 (recovering)
+
+Anomaly detection threshold:
+  ±0.3 or greater change from previous month → root cause analysis required
+```
+
+## Quality Checklist
+
+| Item | Criteria |
+|------|----------|
+| Classification system | Consistent 3-level or 5-level application |
+| Context correction | Inversion/intensification/conditional handling |
+| Confidence interval | Ambiguous cases treated as neutral |
+| NPS calculation | Standard formula applied |
+| Trend | Time-series tracking + anomaly detection |

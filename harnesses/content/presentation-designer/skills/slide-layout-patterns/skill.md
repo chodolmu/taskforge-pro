@@ -1,165 +1,165 @@
 ---
 name: slide-layout-patterns
-description: "프레젠테이션 슬라이드 레이아웃 패턴 라이브러리. 타이틀/콘텐츠/데이터/비교/타임라인 등 20가지 슬라이드 유형별 최적 레이아웃, 여백/그리드 규칙, 색상/타이포 시스템을 제공하는 visual-designer 확장 스킬. '슬라이드 레이아웃', '슬라이드 패턴', '디자인 시스템', '그리드', '타이포그래피', '색상 팔레트' 등 슬라이드 비주얼 설계 시 사용한다. 단, 실제 PPT/Keynote 파일 생성이나 애니메이션은 이 스킬의 범위가 아니다."
+description: " Slide Layout Pattern Library. ///comparison/line etc. 20 Slide typeper optimal Layout, margins/grid , Color/ system visual-designer Extended Skill. 'Slide Layout', 'Slide Pattern', 'design system', 'grid', 'Typography', 'Color ' etc. Slide Visual Design when . , PPT/Keynote File of ."
 ---
 
-# Slide Layout Patterns — 슬라이드 레이아웃 패턴 라이브러리
+# Slide Layout Patterns — Slide Layout Pattern Library
 
-visual-designer 에이전트가 슬라이드 덱 제작 시 활용하는 레이아웃 패턴, 그리드 시스템, 디자인 토큰 레퍼런스.
+Layout patterns, grid systems, and design token references used by the visual-designer agent when producing slide decks.
 
-## 대상 에이전트
+## subject Agent
 
-`visual-designer` — 이 스킬의 레이아웃 패턴과 디자인 토큰을 슬라이드 설계에 직접 적용한다.
+`visual-designer` — of Layout Patternand Slide Designin apply.
 
-## 그리드 시스템
+## grid system
 
-### 기본 그리드 (16:9 = 1920x1080px 기준)
-- **마진**: 상하좌우 80px
-- **컬럼**: 12컬럼 (각 127px, 거터 20px)
-- **행**: 6행 (각 153px, 거터 20px)
-- **세이프존**: 안쪽 120px (프로젝터 잘림 방지)
+### grid (16:9 = 1920x1080px )
+- ****: 80px
+- ****: 12 ( 127px, 20px)
+- ****: 6 ( 153px, 20px)
+- ****: 120px (to )
 
-### 콘텐츠 영역 배분
-| 요소 | 위치 | 높이 |
+### allocation
+| element | | |
 |------|------|------|
-| 제목 영역 | 상단 80~230px | 150px |
-| 콘텐츠 영역 | 중앙 250~880px | 630px |
-| 하단 바 | 하단 900~1000px | 100px (페이지 번호, 로고) |
+| | 80~230px | 150px |
+| | during 250~880px | 630px |
+| | 900~1000px | 100px (page , to) |
 
-## 20가지 슬라이드 레이아웃 패턴
+## 20 Slide Layout Pattern
 
-### 1. 타이틀 슬라이드
-- 중앙 정렬, 타이틀 56~72px, 서브타이틀 24~32px
-- 배경: 단색/그라데이션/풀블리드 이미지 + 오버레이
-- 로고: 좌하단 또는 우하단
+### 1. Slide
+- during , 56~72px, 24~32px
+- background: // Image + 
+- to: 
 
-### 2. 섹션 디바이더
-- 섹션명 중앙 48~56px, 섹션 번호 좌상단 120px 숫자
-- 배경: 브랜드 포인트 컬러 또는 이미지
+### 2. 
+- during 48~56px, 120px number
+- background: Brand Image
 
-### 3. 텍스트 전용 (Big Idea)
-- 한 문장 중앙 정렬 36~48px
-- 여백 최대화, 폰트 무게감으로 임팩트
-- 최대 20단어 이내
+### 3. Text before (Big Idea)
+- one sentence during 36~48px
+- margins vs, to 
+- vs 20 within
 
-### 4. 텍스트 + 이미지 (좌우 분할)
-- 좌 6컬럼 텍스트 + 우 6컬럼 이미지 (또는 반대)
-- 이미지: 풀하이트, 코너에 맞닿음
-- 텍스트: 수직 중앙 정렬
+### 4. Text + Image ( )
+- 6 Text + 6 Image ( vs)
+- Image: , in 
+- Text: during 
 
-### 5. 불릿 리스트
-- 제목 + 3~5개 불릿 (7개 초과 금지)
-- 각 불릿: 아이콘(24px) + 제목(20px bold) + 설명(16px regular)
-- 행간: 1.6~1.8
+### 5. st
+- + 3~5 (7 secondsand )
+- : icon(24px) + (20px bold) + description(16px regular)
+- between: 1.6~1.8
 
-### 6. 숫자 하이라이트 (Key Metric)
-- 1~3개 핵심 숫자를 대형 타이포로 (80~120px)
-- 단위/컨텍스트는 작은 글씨(18px)로 아래에
-- 배경 컬러로 강조
+### 6. number (Key Metric)
+- 1~3 core number vs to (80~120px)
+- /Text (18px)to in
+- background to 
 
-### 7. 2분할 비교
-- 좌우 또는 상하 분할, 동일 구조 대칭
-- vs 아이콘 또는 구분선 중앙
-- Before/After, 경쟁사 비교에 적합
+### 7. 2 comparison
+- , Structure vs
+- vs icon during
+- Before/After, Competitive comparisonin 
 
-### 8. 3컬럼 카드
-- 3개 동일 크기 카드 (각 4컬럼)
-- 카드: 아이콘/이미지 상단 + 제목 + 설명
-- 기능 소개, 팀 소개에 적합
+### 8. 3 
+- 3 ( 4)
+- : icon/Image + + description
+- , in 
 
-### 9. 타임라인 (수평)
-- 수평선 + 3~6개 노드
-- 노드: 날짜/단계 + 설명
-- 좌→우 시간 흐름
+### 9. line ()
+- + 3~6 
+- : Date/ + description
+- → whenbetween Flow
 
-### 10. 프로세스 흐름
-- 화살표 연결 3~5단계
-- 각 단계: 번호 + 아이콘 + 제목
-- 선형 또는 순환 구조
+### 10. process Flow
+- 3~5
+- : + icon + 
+- Structure
 
-### 11. 매트릭스 (2x2)
-- 4사분면, X/Y축 라벨
-- 각 사분면에 아이템 배치
-- 포지셔닝 맵, 우선순위 매트릭스
+### 11. matrix (2x2)
+- 4, X/Y 
+- in placement
+- , matrix
 
-### 12. 풀블리드 이미지 + 텍스트 오버레이
-- 이미지 100%, 반투명 오버레이 (40~60% opacity)
-- 텍스트: 좌하단 또는 중앙, 흰색
+### 12. Image + Text 
+- Image 100%, (40~60% opacity)
+- Text: during, 
 
-### 13. 인용/증언
-- 큰따옴표 아이콘 (60px)
-- 인용문 28~36px italic
-- 출처: 이름, 직함, 기업 (16px)
+### 13. /
+- icon (60px)
+- 28~36px italic
+- : name, , (16px)
 
-### 14. 데이터 테이블
-- 최대 5열 x 7행
-- 헤더행 배경색 강조
-- 셀 패딩 12px, 좌정렬 (숫자는 우정렬)
+### 14. 
+- vs 5 x 7
+- background 
+- 12px, (number )
 
-### 15. 아젠다/목차
-- 번호 + 섹션명, 하이라이트로 현재 섹션 표시
-- 좌측 세로 리스트 또는 중앙 그리드
+### 15. /
+- + , to Current when
+- to st during grid
 
-### 16. 아이콘 그리드
-- 4~9개 아이콘+라벨 그리드 (2x2, 3x3)
-- 아이콘 크기 통일 (48~64px)
-- 기능 overview, 서비스 라인업
+### 16. icon grid
+- 4~9 icon+ grid (2x2, 3x3)
+- icon (48~64px)
+- overview, line
 
-### 17. 피라미드/계층
-- 3~5단계 피라미드 도형
-- 상단: 좁은 핵심 → 하단: 넓은 기반
-- 전략 계층, 프레임워크
+### 17. /Hierarchy
+- 3~5 
+- : core → : 
+- Strategy Hierarchy, Framework
 
-### 18. 클로징/CTA
-- 핵심 메시지 중앙 정렬
-- 연락처/URL/QR코드 하단
+### 18. to/CTA
+- core Message during 
+- /URL/QR 
 - Thank you + Next Steps
 
-### 19. 앱 UI/목업 쇼케이스
-- 중앙에 디바이스 목업 (폰/태블릿/노트북)
-- 좌우에 기능 콜아웃 화살표
+### 19. UI/ 
+- duringin (//)
+- in 
 
-### 20. 로드맵
-- 수평 또는 사선 타임라인
-- 과거(회색) → 현재(포인트컬러) → 미래(점선)
-- 분기별 마일스톤 표기
+### 20. to
+- line
+- and() → Current() → ()
+- per 
 
-## 디자인 토큰 시스템
+## system
 
-### 타이포그래피 스케일
-| 역할 | 크기 | 무게 | 행간 |
+### Typography scale
+| Role | | | between |
 |------|------|------|------|
-| 슬라이드 제목 | 36~44px | Bold | 1.2 |
-| 섹션 제목 | 28~32px | SemiBold | 1.3 |
-| 본문 | 18~22px | Regular | 1.6 |
-| 캡션/주석 | 14~16px | Light | 1.4 |
-| 데이터 숫자 | 72~120px | Bold | 1.0 |
+| Slide | 36~44px | Bold | 1.2 |
+| | 28~32px | SemiBold | 1.3 |
+| Body text | 18~22px | Regular | 1.6 |
+| Caption/ | 14~16px | Light | 1.4 |
+| number | 72~120px | Bold | 1.0 |
 
-### 폰트 추천
-| 용도 | 한글 | 영문 |
+### 
+| | | |
 |------|------|------|
-| 제목 | Pretendard Bold | Inter Bold |
-| 본문 | Pretendard Regular | Inter Regular |
-| 데이터 | Pretendard Bold | DM Sans Bold |
-| 코드 | D2Coding | JetBrains Mono |
+| | Pretendard Bold | Inter Bold |
+| Body text | Pretendard Regular | Inter Regular |
+| | Pretendard Bold | DM Sans Bold |
+| | D2Coding | JetBrains Mono |
 
-### 색상 시스템
-| 역할 | 토큰 | 예시 |
+### Color system
+| Role | | when |
 |------|------|------|
-| Primary | 브랜드 주색 | 메인 강조, CTA |
-| Secondary | 보조색 | 섹션 구분, 아이콘 |
-| Neutral-900 | 거의 검정 | 제목 텍스트 |
-| Neutral-600 | 중간 회색 | 본문 텍스트 |
-| Neutral-200 | 밝은 회색 | 배경, 구분선 |
-| Success | 초록 계열 | 긍정 데이터 |
-| Warning | 주황 계열 | 주의 데이터 |
-| Danger | 빨강 계열 | 부정 데이터 |
+| Primary | Brand | , CTA |
+| Secondary | | , icon |
+| Neutral-900 | of | Text |
+| Neutral-600 | duringbetween | Body text Text |
+| Neutral-200 | | background, |
+| Success | seconds | |
+| Warning | | of |
+| Danger | | |
 
-### 슬라이드 밀도 규칙
-| 규칙 | 기준 |
+### Slide 
+| | |
 |------|------|
-| 텍스트 | 슬라이드당 최대 40단어 (6줄) |
-| 불릿 | 최대 5개, 한 줄에 한 개념 |
-| 색상 | 슬라이드당 최대 3색 (primary + neutral + accent) |
-| 폰트 크기 | 최소 16px (뒷줄 가독성 보장) |
-| 여백 | 콘텐츠 면적 60%, 여백 40% |
+| Text | Slide vs 40 (6) |
+| | vs 5, one linein concept |
+| Color | Slide vs 3 (primary + neutral + accent) |
+| | 16px ( ) |
+| margins | 60%, margins 40% |

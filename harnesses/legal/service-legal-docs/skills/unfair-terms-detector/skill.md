@@ -1,113 +1,115 @@
+```markdown
 ---
 name: unfair-terms-detector
-description: "불공정 약관 조항을 감지하고 수정안을 제시하는 전문 도구. 'tos-specialist'와 'consistency-reviewer' 에이전트가 이용약관을 작성하거나 검증할 때 이 스킬의 불공정약관 판단 기준과 수정 패턴을 반드시 활용해야 한다. '불공정 약관 검출', '약관법 위반 점검', '공정위 기준 적용' 등에 사용한다. 단, 개인정보처리방침이나 쿠키정책 작성은 이 스킬의 범위가 아니다."
+description: "A specialized tool for detecting unfair contract terms and suggesting revisions. The 'tos-specialist' and 'consistency-reviewer' agents MUST use this skill's judgment criteria and revision patterns when drafting or validating terms of service. Use for 'unfair terms detection', 'terms of service law violation checks', 'FTC standard application', and similar tasks. Note: drafting privacy policies or cookie policies is outside the scope of this skill."
 ---
 
-# Unfair Terms Detector — 불공정 약관 감지·수정 도구
+# Unfair Terms Detector — Detection & Revision Tool
 
-약관의 규제에 관한 법률(약관법) 기반으로 불공정 조항을 자동 감지하고 공정한 대안을 제시한다.
+Automatically detects unfair clauses based on the Act on the Regulation of Terms and Conditions (Terms Act) and suggests fair alternatives.
 
-## 불공정약관 유형 분류 (약관법 기준)
+## Classification of Unfair Terms Types (Terms Act Standards)
 
-### 면책 조항 (제7조)
+### Liability Exemption Clauses (Article 7)
 
-| 위반 유형 | 설명 | 불공정 예시 | 공정 수정안 |
+| Violation Type | Description | Unfair Example | Fair Revision |
 |----------|------|-----------|-----------|
-| 고의·과실 면책 | 사업자 귀책 면책 | "당사의 과실로 인한 손해에 대해 책임지지 않습니다" | "당사의 고의 또는 과실로 인한 손해에 대해 관련 법령에 따라 배상합니다" |
-| 데이터 손실 면책 | 이용자 데이터 멸실 | "서비스 중단으로 인한 데이터 손실에 책임 없음" | "당사 귀책으로 인한 데이터 손실 시 복구 노력 및 손해배상 제공" |
-| 서비스 품질 면책 | 서비스 하자 전면 면책 | "서비스는 있는 그대로 제공됩니다" | "합리적 수준의 서비스 품질을 유지하며, 중대 하자 시 시정합니다" |
+| Exemption for intent/negligence | Exemption from operator's own liability | "We are not responsible for damages caused by our negligence" | "We will compensate for damages caused by our intentional misconduct or negligence in accordance with applicable laws" |
+| Data loss exemption | Loss of user data | "We are not responsible for data loss due to service interruption" | "In the event of data loss caused by our fault, we will make recovery efforts and provide compensation" |
+| Service quality exemption | Full exemption from service defects | "The service is provided as-is" | "We maintain a reasonable level of service quality and will remedy any significant defects" |
 
-### 해제·해지 (제9조)
+### Termination & Cancellation (Article 9)
 
-| 위반 유형 | 불공정 예시 | 공정 수정안 |
+| Violation Type | Unfair Example | Fair Revision |
 |----------|-----------|-----------|
-| 일방적 해지 | "당사는 사전 통지 없이 계정을 삭제할 수 있습니다" | "약관 위반 시 사전 경고 후 14일 이내 시정되지 않으면 서비스를 제한합니다" |
-| 해지 시 불이익 | "해지 시 기 납부한 요금은 환불하지 않습니다" | "해지 시 잔여 기간 요금을 일할 계산하여 환불합니다" |
-| 해지 절차 난해 | "해지는 고객센터 전화로만 가능" | "온라인 계정 설정에서 직접 해지 가능" |
+| Unilateral termination | "We may delete your account without prior notice" | "In the event of a terms violation, we will restrict service if not remedied within 14 days after a prior warning" |
+| Disadvantage upon termination | "Fees already paid will not be refunded upon termination" | "Upon termination, fees for the remaining period will be prorated and refunded" |
+| Difficult termination process | "Termination is only available by calling customer support" | "Termination can be done directly from online account settings" |
 
-### 손해배상 (제7조, 제8조)
+### Damages (Articles 7 & 8)
 
-| 위반 유형 | 불공정 예시 | 공정 수정안 |
+| Violation Type | Unfair Example | Fair Revision |
 |----------|-----------|-----------|
-| 과도한 위약금 | "중도 해지 시 잔여 기간 요금 100% 위약금" | "중도 해지 시 잔여 기간 요금의 10% 위약금" |
-| 배상 불균형 | "이용자의 약관 위반 시 손해 전액 배상" (사업자 면책과 병존) | "양 당사자 동일 기준의 손해배상 책임" |
+| Excessive penalty | "Early termination incurs a penalty of 100% of remaining period fees" | "Early termination incurs a penalty of 10% of remaining period fees" |
+| Imbalanced compensation | "User shall compensate for all damages in the event of a terms violation" (coexisting with operator exemption) | "Both parties are subject to the same standard of liability for damages" |
 
-### 의사표시 의제 (제10조)
+### Implied Consent (Article 10)
 
-| 위반 유형 | 불공정 예시 | 공정 수정안 |
+| Violation Type | Unfair Example | Fair Revision |
 |----------|-----------|-----------|
-| 묵시적 동의 | "30일 내 거부 없으면 약관 변경에 동의한 것으로 봅니다" | "중요 변경 시 별도 동의를 구하며, 동의 거부 시 이전 조건 유지 또는 계약 해지" |
+| Implied consent | "Failure to object within 30 days will be deemed consent to the terms change" | "Separate consent will be sought for material changes; if consent is refused, the previous terms will be maintained or the contract may be terminated" |
 
-## 자동 감지 키워드 패턴
+## Automatic Detection Keyword Patterns
 
-### 고위험 키워드 (즉시 점검)
-
-```
-- "일체의 책임을 지지 않"
-- "어떠한 경우에도"
-- "사전 통지 없이"
-- "환불 불가"
-- "있는 그대로(as-is)"
-- "이의를 제기할 수 없"
-- "동의한 것으로 간주"
-- "임의로 변경"
-- "재량에 따라"
-```
-
-### 중위험 키워드 (검토 필요)
+### High-Risk Keywords (Immediate Review Required)
 
 ```
-- "부득이한 사유"
-- "합리적 범위 내" (기준 불명확)
-- "통상적인" (정의 부재)
-- "필요한 경우" (요건 불명확)
-- "관련 법령에 따라" (구체적 조항 미특정)
+- "shall bear no responsibility whatsoever"
+- "under any circumstances"
+- "without prior notice"
+- "non-refundable"
+- "as-is"
+- "may not raise any objection"
+- "deemed to have consented"
+- "may change at discretion"
+- "at our sole discretion"
 ```
 
-## 점검 스코어링
+### Medium-Risk Keywords (Review Recommended)
 
 ```
-불공정도 = Σ(조항별 위반 심각도) / 총 조항 수
-
-심각도:
-  5: 약관법 위반 확실 (공정위 시정명령 대상)
-  4: 위반 가능성 높음
-  3: 위반 여지 있음
-  2: 개선 권고
-  1: 모범 사례
-
-등급:
-  A(1.0-1.5): 공정 약관
-  B(1.6-2.5): 양호 (일부 개선)
-  C(2.6-3.5): 미흡 (개선 필요)
-  D(3.6-4.5): 부진 (시급 개선)
-  F(4.6-5.0): 위험 (법적 리스크)
+- "unavoidable reasons"
+- "within reasonable scope" (criteria unclear)
+- "customary" (undefined)
+- "when necessary" (requirements unclear)
+- "in accordance with applicable laws" (no specific provisions cited)
 ```
 
-## 서비스 유형별 필수 포함 조항
+## Review Scoring
 
-### SaaS 서비스
+```
+Unfairness Score = Σ(severity of violation per clause) / total number of clauses
 
-- [ ] SLA(서비스 수준 합의) 명시
-- [ ] 데이터 소유권·이관 조항
-- [ ] 자동갱신·해지 조건
-- [ ] 가격 변경 고지 의무
+Severity:
+  5: Definite Terms Act violation (subject to FTC corrective order)
+  4: High likelihood of violation
+  3: Potential for violation
+  2: Improvement recommended
+  1: Best practice
 
-### 이커머스
+Grade:
+  A (1.0–1.5): Fair terms
+  B (1.6–2.5): Good (minor improvements needed)
+  C (2.6–3.5): Insufficient (improvement needed)
+  D (3.6–4.5): Poor (urgent improvement required)
+  F (4.6–5.0): Dangerous (legal risk)
+```
 
-- [ ] 청약 철회(7일) 명시
-- [ ] 배송·반품·교환 절차
-- [ ] 미성년자 계약 취소
-- [ ] 전자상거래법 표시·광고 의무
+## Required Clauses by Service Type
 
-### 플랫폼/마켓플레이스
+### SaaS Services
 
-- [ ] 통신판매중개자 책임 범위
-- [ ] 분쟁해결 절차
-- [ ] 판매자·구매자 보호 정책
-- [ ] 수수료 변경 고지
+- [ ] SLA (Service Level Agreement) specified
+- [ ] Data ownership and portability clause
+- [ ] Auto-renewal and cancellation conditions
+- [ ] Price change notification obligation
 
-## 참고
+### E-Commerce
 
-- 약관의 규제에 관한 법률, 공정거래위원회 심사지침 기반
-- 상세 판례: `references/unfair-terms-cases.md` 참조
+- [ ] Right of withdrawal (7 days) specified
+- [ ] Shipping, return, and exchange procedures
+- [ ] Minor's contract cancellation right
+- [ ] E-Commerce Act display and advertising obligations
+
+### Platforms / Marketplaces
+
+- [ ] Scope of liability as online marketplace intermediary
+- [ ] Dispute resolution procedures
+- [ ] Seller and buyer protection policies
+- [ ] Commission change notification
+
+## References
+
+- Based on the Act on the Regulation of Terms and Conditions and the Fair Trade Commission review guidelines
+- Detailed case law: see `references/unfair-terms-cases.md`
+```

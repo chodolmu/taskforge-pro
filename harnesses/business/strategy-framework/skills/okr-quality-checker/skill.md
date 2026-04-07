@@ -1,174 +1,174 @@
 ---
 name: okr-quality-checker
-description: "OKR(Objectives and Key Results)의 품질을 체계적으로 검증하는 방법론. 'OKR 검증', 'OKR 품질 체크', 'KR 측정 가능성', 'OKR 정렬 확인', 'Objective 품질' 등 OKR 검증 시 사용한다. 단, OKR 소프트웨어 설정, 인사평가 연동은 이 스킬의 범위가 아니다."
+description: "A methodology for systematically verifying OKR (Objectives and Key Results) quality. Used for 'OKR verification,' 'OKR quality check,' 'KR measurability,' 'OKR alignment check,' and 'Objective quality' when validating OKRs. Note: OKR software configuration and performance review integration are outside the scope of this skill."
 ---
 
-# OKR Quality Checker — OKR 품질 검증 체크리스트
+# OKR Quality Checker
 
-okr-designer와 strategy-reviewer의 OKR 품질 검증을 강화하는 스킬.
+A skill that enhances OKR quality verification for okr-designer and strategy-reviewer.
 
-## 대상 에이전트
+## Target Agents
 
-- **okr-designer** — 설계한 OKR의 품질을 자가 검증한다
-- **strategy-reviewer** — OKR의 전략적 정합성을 확인한다
+- **okr-designer** — Self-verifies the quality of designed OKRs
+- **strategy-reviewer** — Confirms the strategic alignment of OKRs
 
-## Objective 품질 기준 (QSIM)
+## Objective Quality Criteria (QSIM)
 
-| 기준 | 설명 | 통과 조건 |
-|------|------|----------|
-| **Q**ualitative | 정성적이고 영감을 주는가? | 숫자 없이 방향 제시 |
-| **S**trategic | 전략과 연결되는가? | 상위 목표와 명확한 연결 |
-| **I**nspiring | 팀에 동기부여가 되는가? | 도전적이지만 달성 가능 |
-| **M**emorable | 기억하기 쉬운가? | 한 문장, 명확한 언어 |
+| Criterion | Description | Pass Condition |
+|-----------|-----------|----------------|
+| **Q**ualitative | Is it qualitative and inspiring? | Provides direction without numbers |
+| **S**trategic | Is it connected to strategy? | Clear link to higher-level goals |
+| **I**nspiring | Does it motivate the team? | Challenging yet achievable |
+| **M**emorable | Is it easy to remember? | One sentence, clear language |
 
 ### Objective BAD vs GOOD
 
 ```
 BAD:
-  "매출을 늘린다" → 너무 모호
-  "NPS 70점 달성" → KR이지 O가 아님
-  "시스템을 안정화한다" → 영감 없음
+  "Increase revenue" → Too vague
+  "Achieve NPS score of 70" → This is a KR, not an O
+  "Stabilize systems" → Not inspiring
 
 GOOD:
-  "고객이 사랑하는 제품으로 만든다"
-  "국내 1위 브랜드 인지도를 확보한다"
-  "개발팀이 자랑스러워하는 코드 품질을 달성한다"
+  "Build a product that customers love"
+  "Establish leading brand recognition in our market"
+  "Achieve code quality that the engineering team is proud of"
 ```
 
-## Key Result 품질 기준 (SMART-V)
+## Key Result Quality Criteria (SMART-V)
 
-| 기준 | 설명 | 통과 조건 |
-|------|------|----------|
-| **S**pecific | 구체적인가? | 무엇을, 어디서, 어떻게 |
-| **M**easurable | 측정 가능한가? | 숫자로 표현 |
-| **A**chievable | 달성 가능한가? | 60-70% 달성 확률 |
-| **R**elevant | O와 관련되는가? | O 달성에 직접 기여 |
-| **T**ime-bound | 기한이 있는가? | 분기/반기 단위 |
-| **V**erifiable | 검증 가능한가? | 데이터 소스 존재 |
+| Criterion | Description | Pass Condition |
+|-----------|-----------|----------------|
+| **S**pecific | Is it specific? | What, where, how |
+| **M**easurable | Is it measurable? | Expressed numerically |
+| **A**chievable | Is it achievable? | 60-70% probability of achievement |
+| **R**elevant | Is it relevant to the O? | Directly contributes to O achievement |
+| **T**ime-bound | Does it have a deadline? | Quarterly/semi-annual cadence |
+| **V**erifiable | Is it verifiable? | Data source exists |
 
-### KR 유형
+### KR Types
 
 ```
-1. 수치형 (Metric): "NPS 점수를 40에서 60으로 향상"
-2. 마일스톤형 (Milestone): "MVP 출시 완료"
-3. 바이너리형 (Binary): "ISO 인증 획득" (가급적 피함)
+1. Metric-based: "Improve NPS score from 40 to 60"
+2. Milestone-based: "Complete MVP launch"
+3. Binary: "Obtain ISO certification" (avoid when possible)
 
-권장 비율: 수치형 70%, 마일스톤형 30%, 바이너리형 0%
+Recommended ratio: Metric 70%, Milestone 30%, Binary 0%
 ```
 
 ### KR BAD vs GOOD
 
 ```
 BAD:
-  "고객 만족도 향상" → 측정 불가
-  "버그 0개" → 비현실적
-  "마케팅 캠페인 실행" → 활동(Activity)이지 결과(Result)가 아님
+  "Improve customer satisfaction" → Not measurable
+  "Zero bugs" → Unrealistic
+  "Execute marketing campaign" → An activity, not a result
 
 GOOD:
-  "NPS 점수를 40에서 60으로 향상 (월간 설문)"
-  "P0 버그 평균 해결 시간을 48시간에서 12시간으로 단축"
-  "오가닉 트래픽을 월 10만에서 25만으로 증가"
+  "Improve NPS score from 40 to 60 (monthly survey)"
+  "Reduce average P0 bug resolution time from 48 hours to 12 hours"
+  "Increase organic traffic from 100K to 250K per month"
 ```
 
-## OKR 구조 검증
+## OKR Structure Verification
 
-### 수량 기준
-
-```
-회사 레벨:
-  Objectives: 3-5개
-  Key Results per O: 3-5개
-
-부서 레벨:
-  Objectives: 2-4개
-  Key Results per O: 2-4개
-
-개인 레벨:
-  Objectives: 2-3개
-  Key Results per O: 2-3개
-
-총 KR 수: 팀당 최대 15개 (초과 시 집중도 저하)
-```
-
-### 정렬 검증
+### Quantity Guidelines
 
 ```
-수직 정렬 (Cascade):
-  회사 O → 부서 O → 팀 KR
+Company level:
+  Objectives: 3-5
+  Key Results per O: 3-5
 
-  검증 방법:
-  1. 모든 부서 KR이 달성되면 회사 KR이 달성되는가?
-  2. 회사 KR 중 어떤 부서에도 연결되지 않는 것이 있는가?
-  3. 부서 KR 중 회사 목표와 무관한 것이 있는가?
+Department level:
+  Objectives: 2-4
+  Key Results per O: 2-4
 
-수평 정렬 (Cross-functional):
-  - 부서 간 의존성이 KR에 반영되어 있는가?
-  - 상충하는 KR이 없는가?
-    예: 마케팅 "신규 리드 2배" vs CS "응답 시간 50% 단축"
-    → 리드 증가 시 CS 부하 증가 고려 필요
+Individual level:
+  Objectives: 2-3
+  Key Results per O: 2-3
+
+Total KR count: Maximum 15 per team (exceeding this dilutes focus)
 ```
 
-## 채점 시스템
-
-### Google 방식 (0.0 ~ 1.0)
+### Alignment Verification
 
 ```
-0.0-0.3: 실패 — 의미 있는 진전 없음
-0.4-0.6: 진전 — 상당한 노력, 일부 달성
-0.7: 성공 — 도전적 목표의 기대 달성 수준
-0.8-1.0: 초과 달성 — 목표가 너무 쉬웠을 수 있음
+Vertical alignment (Cascade):
+  Company O → Department O → Team KR
 
-건강한 평균: 0.6-0.7 (매 분기 1.0이면 목표가 너무 낮음)
+  Verification method:
+  1. If all department KRs are achieved, does the company KR get achieved?
+  2. Are there company KRs not linked to any department?
+  3. Are there department KRs unrelated to company goals?
+
+Horizontal alignment (Cross-functional):
+  - Are inter-department dependencies reflected in the KRs?
+  - Are there conflicting KRs?
+    Example: Marketing "Double new leads" vs CS "Cut response time by 50%"
+    → Must account for increased CS load when leads increase
 ```
 
-### KR 진척도 계산
+## Scoring System
+
+### Google Method (0.0 - 1.0)
 
 ```
-수치형:
-  진척도 = (현재값 - 시작값) / (목표값 - 시작값)
-  예: NPS 40→60 목표, 현재 52 → (52-40)/(60-40) = 0.6
+0.0-0.3: Failure — No meaningful progress
+0.4-0.6: Progress — Significant effort, partial achievement
+0.7: Success — Expected achievement level for a stretch goal
+0.8-1.0: Over-achievement — Goal may have been too easy
 
-마일스톤형:
-  0.0: 미착수
-  0.3: 진행 중 (초기)
-  0.5: 진행 중 (중간)
-  0.7: 거의 완료
-  1.0: 완료
+Healthy average: 0.6-0.7 (scoring 1.0 every quarter means goals are too low)
 ```
 
-## OKR 안티패턴
+### KR Progress Calculation
 
 ```
-1. 🚫 KPI를 OKR로 포장
-   "이탈률 5% 이하 유지" → BAU 지표, OKR 아님
+Metric-based:
+  Progress = (Current - Start) / (Target - Start)
+  Example: NPS 40→60 target, currently 52 → (52-40)/(60-40) = 0.6
 
-2. 🚫 Activity를 KR로 설정
-   "마케팅 캠페인 3회 실행" → 결과가 아닌 활동
-
-3. 🚫 Sandbagging (일부러 낮은 목표)
-   매번 1.0 달성 → 도전적이지 않음
-
-4. 🚫 너무 많은 OKR
-   O 6개 × KR 5개 = 30개 → 집중 불가
-
-5. 🚫 OKR = 성과평가
-   OKR 달성률로 보너스 결정 → sandbagging 유도
+Milestone-based:
+  0.0: Not started
+  0.3: In progress (early)
+  0.5: In progress (midway)
+  0.7: Nearly complete
+  1.0: Complete
 ```
 
-## 검증 보고서 템플릿
+## OKR Anti-Patterns
+
+```
+1. Disguising KPIs as OKRs
+   "Maintain churn rate below 5%" → BAU metric, not an OKR
+
+2. Setting activities as KRs
+   "Execute 3 marketing campaigns" → An activity, not a result
+
+3. Sandbagging (deliberately low targets)
+   Scoring 1.0 every time → Not challenging enough
+
+4. Too many OKRs
+   6 Os x 5 KRs = 30 items → Impossible to focus
+
+5. OKR = Performance evaluation
+   Tying bonuses to OKR achievement rates → Incentivizes sandbagging
+```
+
+## Verification Report Template
 
 ```markdown
-## OKR 품질 검증 보고서
+## OKR Quality Verification Report
 
-### O별 품질 점수
-| O | QSIM 점수 | KR 수 | KR SMART-V | 정렬 |
+### Quality Score by Objective
+| O | QSIM Score | KR Count | KR SMART-V | Alignment |
 
-### 구조 검증
-- 총 O 수: [N] (권장 3-5)
-- 총 KR 수: [N] (권장 최대 15)
-- 수직 정렬: [통과/미통과]
-- 수평 충돌: [없음/있음]
+### Structure Verification
+- Total Os: [N] (recommended 3-5)
+- Total KRs: [N] (recommended max 15)
+- Vertical alignment: [Pass/Fail]
+- Horizontal conflicts: [None/Found]
 
-### 개선 권고
-| # | 현재 KR | 문제 | 개선안 |
+### Improvement Recommendations
+| # | Current KR | Issue | Proposed Improvement |
 ```

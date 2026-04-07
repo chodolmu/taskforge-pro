@@ -1,32 +1,32 @@
 ---
 name: sdk-design-patterns
-description: "SDK/API 클라이언트 설계 패턴: 빌더 패턴, 인터셉터 체인, 재시도 전략, 타입 안전 설계, 에러 핸들링, 페이지네이션 래퍼 가이드. 'SDK 설계', '클라이언트 패턴', '재시도 전략', '인터셉터', '빌더 패턴', 'SDK 에러 처리', '타입 안전', 'SDK 아키텍처' 등 SDK 구조 설계 시 이 스킬을 사용한다. sdk-developer의 SDK 설계 역량을 강화한다. 단, API 스펙 파싱이나 테스트/문서 작성은 이 스킬의 범위가 아니다."
+description: "SDK/API client design patterns: builder pattern, interceptor chain, retry strategy, type-safe design, error handling, and pagination wrapper guide. Use this skill for requests involving 'SDK design', 'client patterns', 'retry strategy', 'interceptor', 'builder pattern', 'SDK error handling', 'type safety', 'SDK architecture', etc. Enhances sdk-developer's SDK design capabilities. Note: API spec parsing, test authoring, and documentation are outside the scope of this skill."
 ---
 
-# SDK Design Patterns — SDK 설계 패턴 가이드
+# SDK Design Patterns — SDK Design Patterns Guide
 
-타입 안전하고 사용하기 쉬운 API 클라이언트 SDK를 설계하는 패턴 카탈로그.
+A pattern catalog for designing type-safe, developer-friendly API client SDKs.
 
-## SDK 아키텍처
+## SDK Architecture
 
 ```
-┌─────────────────────────────────────────┐
-│              SDK Public API              │
-│  client.users.list()                     │
-│  client.orders.create({...})             │
-├─────────────────────────────────────────┤
-│           Resource Clients               │
-│  UsersClient, OrdersClient, ...          │
-├─────────────────────────────────────────┤
-│           Middleware Chain                │
-│  Auth → Retry → RateLimit → Logger       │
-├─────────────────────────────────────────┤
-│           HTTP Transport                 │
-│  fetch / axios / httpx                   │
-└─────────────────────────────────────────┘
++------------------------------------------+
+|              SDK Public API               |
+|  client.users.list()                      |
+|  client.orders.create({...})              |
++------------------------------------------+
+|           Resource Clients                |
+|  UsersClient, OrdersClient, ...           |
++------------------------------------------+
+|           Middleware Chain                 |
+|  Auth -> Retry -> RateLimit -> Logger     |
++------------------------------------------+
+|           HTTP Transport                  |
+|  fetch / axios / httpx                    |
++------------------------------------------+
 ```
 
-## 빌더 패턴 (Client 초기화)
+## Builder Pattern (Client Initialization)
 
 ### TypeScript
 
@@ -36,15 +36,15 @@ const client = new ApiClient({
   apiKey: process.env.API_KEY,
   timeout: 30000,
   retries: 3,
-  // 선택적 커스텀
+  // Optional customization
   fetch: customFetch,
   headers: { 'X-Custom': 'value' },
 });
 
-// 리소스 접근
+// Resource access
 const users = await client.users.list({ page: 1, perPage: 20 });
 const user = await client.users.get('user_123');
-const newUser = await client.users.create({ name: '홍길동', email: 'hong@test.com' });
+const newUser = await client.users.create({ name: 'John Doe', email: 'john@test.com' });
 ```
 
 ### Python
@@ -57,22 +57,22 @@ client = ApiClient(
     max_retries=3,
 )
 
-# Context Manager 지원
+# Context manager support
 async with ApiClient(api_key="...") as client:
     users = await client.users.list(page=1, per_page=20)
 ```
 
-## 인터셉터/미들웨어 체인
+## Interceptor / Middleware Chain
 
 ```typescript
-// 인터셉터 인터페이스
+// Interceptor interface
 interface Interceptor {
   beforeRequest(config: RequestConfig): Promise<RequestConfig>;
   afterResponse(response: Response): Promise<Response>;
   onError(error: Error): Promise<never>;
 }
 
-// 인증 인터셉터
+// Authentication interceptor
 class AuthInterceptor implements Interceptor {
   async beforeRequest(config) {
     config.headers['Authorization'] = `Bearer ${this.token}`;
@@ -87,7 +87,7 @@ class AuthInterceptor implements Interceptor {
   }
 }
 
-// 재시도 인터셉터
+// Retry interceptor
 class RetryInterceptor implements Interceptor {
   async onError(error) {
     if (this.shouldRetry(error) && this.attempt < this.maxRetries) {
@@ -99,7 +99,7 @@ class RetryInterceptor implements Interceptor {
 }
 ```
 
-## 재시도 전략
+## Retry Strategy
 
 ```typescript
 class RetryStrategy {
@@ -107,29 +107,29 @@ class RetryStrategy {
   private baseDelay = 1000; // ms
 
   shouldRetry(error: ApiError): boolean {
-    // 재시도 가능한 에러만
+    // Only retry on retryable errors
     return [408, 429, 500, 502, 503, 504].includes(error.status);
   }
 
   getDelay(attempt: number, error: ApiError): number {
-    // 429: Retry-After 헤더 우선
+    // 429: Retry-After header takes priority
     if (error.status === 429 && error.headers['retry-after']) {
       return parseInt(error.headers['retry-after']) * 1000;
     }
-    // 지수 백오프 + 지터
+    // Exponential backoff + jitter
     const exponential = this.baseDelay * Math.pow(2, attempt);
     const jitter = Math.random() * this.baseDelay;
-    return Math.min(exponential + jitter, 60000); // 최대 60초
+    return Math.min(exponential + jitter, 60000); // Max 60 seconds
   }
 }
 ```
 
-## 타입 안전 설계
+## Type-Safe Design
 
-### TypeScript 제네릭 활용
+### TypeScript Generic Usage
 
 ```typescript
-// 리소스 타입 정의
+// Resource type definitions
 interface User {
   id: string;
   name: string;
@@ -149,7 +149,7 @@ interface ListUsersParams {
   order?: 'asc' | 'desc';
 }
 
-// 제네릭 리소스 클라이언트
+// Generic resource client
 class ResourceClient<T, CreateT, UpdateT, ListParams> {
   async list(params?: ListParams): Promise<PaginatedResponse<T>> { ... }
   async get(id: string): Promise<T> { ... }
@@ -158,14 +158,14 @@ class ResourceClient<T, CreateT, UpdateT, ListParams> {
   async delete(id: string): Promise<void> { ... }
 }
 
-// 구체적 클라이언트
+// Concrete client
 class UsersClient extends ResourceClient<User, CreateUserRequest, UpdateUserRequest, ListUsersParams> {
-  // 추가 메서드
+  // Additional methods
   async listOrders(userId: string): Promise<Order[]> { ... }
 }
 ```
 
-### Python Pydantic 모델
+### Python Pydantic Models
 
 ```python
 from pydantic import BaseModel, Field
@@ -185,16 +185,16 @@ class CreateUserRequest(BaseModel):
     email: str
 ```
 
-## 페이지네이션 래퍼
+## Pagination Wrapper
 
 ```typescript
-// 자동 페이지 순회
+// Auto page traversal
 class PaginatedResponse<T> {
   data: T[];
   hasMore: boolean;
   nextCursor?: string;
 
-  // 이터레이터 지원
+  // Iterator support
   async *[Symbol.asyncIterator](): AsyncIterator<T> {
     let response: PaginatedResponse<T> = this;
     while (true) {
@@ -207,19 +207,19 @@ class PaginatedResponse<T> {
   }
 }
 
-// 사용법
+// Usage
 for await (const user of client.users.list()) {
-  console.log(user.name);  // 모든 페이지를 자동 순회
+  console.log(user.name);  // Auto-traverses all pages
 }
 
-// 특정 페이지만
+// Specific page only
 const page1 = await client.users.list({ perPage: 20 });
 ```
 
-## 에러 핸들링
+## Error Handling
 
 ```typescript
-// 에러 계층 구조
+// Error class hierarchy
 class ApiError extends Error {
   status: number;
   code: string;
@@ -235,37 +235,37 @@ class RateLimitError extends ApiError {
 }
 class InternalError extends ApiError { status = 500; }
 
-// 사용
+// Usage
 try {
   const user = await client.users.get('invalid_id');
 } catch (e) {
   if (e instanceof NotFoundError) {
-    console.log('사용자를 찾을 수 없습니다');
+    console.log('User not found');
   } else if (e instanceof RateLimitError) {
-    console.log(`${e.retryAfter}초 후 재시도하세요`);
+    console.log(`Retry after ${e.retryAfter} seconds`);
   }
 }
 ```
 
-## SDK 품질 체크리스트
+## SDK Quality Checklist
 
 ```markdown
-### 사용성
-- [ ] 3줄 이내로 시작 가능 (Quick Start)
-- [ ] IDE 자동완성 100% 지원 (타입 완전)
-- [ ] 에러 메시지가 해결 방법을 안내
-- [ ] 동기/비동기 모두 지원
+### Usability
+- [ ] Can get started in 3 lines or fewer (Quick Start)
+- [ ] 100% IDE autocomplete support (fully typed)
+- [ ] Error messages guide toward resolution
+- [ ] Supports both sync and async
 
-### 견고성
-- [ ] 재시도 + 지수 백오프
-- [ ] 토큰 자동 갱신
-- [ ] Rate Limit 자동 대기
-- [ ] 타임아웃 설정 가능
-- [ ] 커스텀 HTTP 클라이언트 주입 가능
+### Robustness
+- [ ] Retry + exponential backoff
+- [ ] Auto token refresh
+- [ ] Auto rate limit wait
+- [ ] Configurable timeouts
+- [ ] Custom HTTP client injection supported
 
-### 테스트
-- [ ] 모든 공개 API 단위 테스트
-- [ ] Mock 서버 통합 테스트
-- [ ] 에러 시나리오 테스트
-- [ ] 페이지네이션 테스트
+### Testing
+- [ ] Unit tests for all public APIs
+- [ ] Mock server integration tests
+- [ ] Error scenario tests
+- [ ] Pagination tests
 ```

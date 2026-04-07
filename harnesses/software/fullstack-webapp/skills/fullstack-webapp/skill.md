@@ -1,138 +1,138 @@
 ---
 name: fullstack-webapp
-description: "풀스택 웹앱의 요구사항 분석, 설계, 프론트엔드, 백엔드, 테스트, 배포를 에이전트 팀이 협업하여 개발하는 풀 개발 파이프라인. '웹앱 만들어줘', '웹 서비스 개발', 'SaaS 개발', 'CRUD 앱', '대시보드 만들어줘', '관리자 페이지', '회원가입/로그인 기능', 'REST API 개발', '풀스택 프로젝트', 'Next.js 앱' 등 웹 애플리케이션 개발 전반에 이 스킬을 사용한다. 기존 코드가 있는 경우에도 기능 추가나 리팩토링을 지원한다. 단, 모바일 앱(React Native/Flutter), 데스크톱 앱(Electron), 게임 개발, ML/AI 모델 학습은 이 스킬의 범위가 아니다."
+description: "A full development pipeline where an agent team collaborates to develop fullstack web apps through requirements analysis, design, frontend, backend, testing, and deployment. Use this skill for requests like 'build me a web app', 'web service development', 'SaaS development', 'CRUD app', 'build a dashboard', 'admin page', 'signup/login feature', 'REST API development', 'fullstack project', 'Next.js app', and other general web application development. Also supports feature additions and refactoring for existing codebases. However, mobile apps (React Native/Flutter), desktop apps (Electron), game development, and ML/AI model training are outside this skill's scope."
 ---
 
-# Fullstack Web App — 풀스택 웹앱 개발 파이프라인
+# Fullstack Web App — Fullstack Web App Development Pipeline
 
-웹앱의 요구사항→설계→프론트엔드→백엔드→테스트→배포를 에이전트 팀이 협업하여 개발한다.
+An agent team collaborates to develop web apps through the pipeline of requirements → design → frontend → backend → testing → deployment.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 agents communicate directly via SendMessage and cross-verify.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| architect | `.claude/agents/architect.md` | 요구사항, 아키텍처, DB, API 설계 | general-purpose |
-| frontend-dev | `.claude/agents/frontend-dev.md` | React/Next.js 프론트엔드 구현 | general-purpose |
-| backend-dev | `.claude/agents/backend-dev.md` | API, DB, 인증, 비즈니스 로직 | general-purpose |
-| qa-engineer | `.claude/agents/qa-engineer.md` | 테스트 전략, 테스트 코드, 코드 리뷰 | general-purpose |
-| devops-engineer | `.claude/agents/devops-engineer.md` | CI/CD, 인프라, 배포, 모니터링 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| architect | `.claude/agents/architect.md` | Requirements, architecture, DB, API design | general-purpose |
+| frontend-dev | `.claude/agents/frontend-dev.md` | React/Next.js frontend implementation | general-purpose |
+| backend-dev | `.claude/agents/backend-dev.md` | API, DB, auth, business logic | general-purpose |
+| qa-engineer | `.claude/agents/qa-engineer.md` | Test strategy, test code, code review | general-purpose |
+| devops-engineer | `.claude/agents/devops-engineer.md` | CI/CD, infrastructure, deployment, monitoring | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (performed directly by the orchestrator)
 
-1. 사용자 입력에서 추출한다:
-   - **앱 설명**: 만들려는 웹앱의 목적과 핵심 기능
-   - **기술 스택** (선택): 선호하는 프레임워크/라이브러리
-   - **규모** (선택): MVP/소규모/중규모/대규모
-   - **기존 코드** (선택): 확장할 기존 프로젝트
-   - **배포 플랫폼** (선택): Vercel/AWS/Docker 등
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 코드가 있으면 분석하고 해당 단계를 조정한다
-5. 요청 범위에 따라 **실행 모드를 결정**한다 (아래 "작업 규모별 모드" 참조)
+1. Extract from user input:
+   - **App Description**: Purpose and core features of the web app to build
+   - **Technology Stack** (optional): Preferred frameworks/libraries
+   - **Scale** (optional): MVP/small/medium/large
+   - **Existing Code** (optional): Existing project to extend
+   - **Deployment Platform** (optional): Vercel/AWS/Docker, etc.
+2. Create `_workspace/` directory at the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. If existing code is provided, analyze it and adjust relevant phases
+5. Determine **execution mode** based on request scope (see "Scale-Based Modes" below)
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-팀을 구성하고 작업을 할당한다. 작업 간 의존 관계는 다음과 같다:
+Assemble the team and assign tasks. Task dependencies are as follows:
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 아키텍처 설계 | architect | 없음 | `01_architecture.md`, `02_api_spec.md`, `03_db_schema.md` |
-| 2a | 프론트엔드 개발 | frontend | 작업 1 | `src/` 프론트엔드 코드 |
-| 2b | 백엔드 개발 | backend | 작업 1 | `src/` 백엔드 코드 |
-| 2c | 배포 설정 | devops | 작업 1 | `05_deploy_guide.md`, CI/CD 설정 |
-| 3 | 테스트 & 리뷰 | qa | 작업 2a, 2b | `04_test_plan.md`, `06_review_report.md`, 테스트 코드 |
+| Order | Task | Owner | Dependencies | Deliverables |
+|-------|------|-------|-------------|--------------|
+| 1 | Architecture Design | architect | None | `01_architecture.md`, `02_api_spec.md`, `03_db_schema.md` |
+| 2a | Frontend Development | frontend | Task 1 | `src/` frontend code |
+| 2b | Backend Development | backend | Task 1 | `src/` backend code |
+| 2c | Deployment Setup | devops | Task 1 | `05_deploy_guide.md`, CI/CD config |
+| 3 | Testing & Review | qa | Tasks 2a, 2b | `04_test_plan.md`, `06_review_report.md`, test code |
 
-작업 2a(프론트), 2b(백엔드), 2c(DevOps)는 **병렬 실행**한다. 모두 작업 1(설계)에만 의존한다.
+Tasks 2a (frontend), 2b (backend), and 2c (DevOps) run **in parallel**. All depend only on Task 1 (design).
 
-**팀원 간 소통 흐름:**
-- architect 완료 → frontend에게 컴포넌트 구조·라우팅 전달, backend에게 API·DB·인증 전달, devops에게 인프라 요구사항 전달, qa에게 기능 요구사항 전달
-- frontend ↔ backend: API 연동 중 실시간 소통 (엔드포인트 변경, 에러 형식 등)
-- devops 완료 → 전체에게 환경변수, 배포 URL 공유
-- qa는 모든 코드를 리뷰하고 테스트. 🔴 필수 수정 발견 시 해당 개발자에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**Inter-team Communication Flow:**
+- architect completes → delivers component structure/routing to frontend, API/DB/auth to backend, infrastructure requirements to devops, functional requirements to qa
+- frontend ↔ backend: Real-time communication during API integration (endpoint changes, error formats, etc.)
+- devops completes → shares environment variables and deployment URLs with all
+- qa reviews all code and tests. On 🔴 required fix: requests fix from the relevant developer → rework → re-verify (max 2 rounds)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-QA의 리뷰를 기반으로 최종 산출물을 정리한다:
+Organize final deliverables based on the QA review:
 
-1. 모든 코드와 문서를 확인한다
-2. 리뷰의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-   - 아키텍처 설계 — `_workspace/01_architecture.md`
-   - API 명세 — `_workspace/02_api_spec.md`
-   - DB 스키마 — `_workspace/03_db_schema.md`
-   - 테스트 계획 — `_workspace/04_test_plan.md`
-   - 배포 가이드 — `_workspace/05_deploy_guide.md`
-   - 리뷰 보고서 — `_workspace/06_review_report.md`
-   - 소스 코드 — `src/` 디렉토리
+1. Verify all code and documents
+2. Confirm all 🔴 required fixes from the review have been addressed
+3. Report final summary to the user:
+   - Architecture Design — `_workspace/01_architecture.md`
+   - API Specification — `_workspace/02_api_spec.md`
+   - DB Schema — `_workspace/03_db_schema.md`
+   - Test Plan — `_workspace/04_test_plan.md`
+   - Deployment Guide — `_workspace/05_deploy_guide.md`
+   - Review Report — `_workspace/06_review_report.md`
+   - Source Code — `src/` directory
 
-## 작업 규모별 모드
+## Scale-Based Modes
 
-사용자 요청의 범위에 따라 투입 에이전트를 조절한다:
+Adjust the agents deployed based on the scope of the user's request:
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "웹앱 만들어줘", "풀스택 개발" | **풀 파이프라인** | 5명 전원 |
-| "API만 만들어줘" | **백엔드 모드** | architect + backend + qa |
-| "프론트엔드만 만들어줘" (API 있음) | **프론트 모드** | architect + frontend + qa |
-| "이 코드 리팩토링해줘" | **리팩토링 모드** | architect + 해당 개발자 + qa |
-| "배포 설정만 해줘" | **DevOps 모드** | devops 단독 |
+| Request Pattern | Execution Mode | Deployed Agents |
+|----------------|---------------|----------------|
+| "Build me a web app", "fullstack development" | **Full Pipeline** | All 5 |
+| "Just build the API" | **Backend Mode** | architect + backend + qa |
+| "Just build the frontend" (API exists) | **Frontend Mode** | architect + frontend + qa |
+| "Refactor this code" | **Refactoring Mode** | architect + relevant developer + qa |
+| "Just set up deployment" | **DevOps Mode** | devops alone |
 
-**기존 코드 활용**: 사용자가 기존 코드를 제공하면, 아키텍트가 코드를 분석하여 확장 지점을 파악하고 필요한 에이전트만 투입한다.
+**Leveraging Existing Code**: If the user provides existing code, the architect analyzes it to identify extension points and deploys only the necessary agents.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` + `src/` | 설계 문서 + 소스 코드 |
-| 메시지 기반 | SendMessage | API 연동 이슈, 코드 리뷰, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` + `src/` | Design documents + source code |
+| Message-based | SendMessage | API integration issues, code review, fix requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 요구사항 모호 | 가장 일반적인 CRUD 패턴 적용, 가정 사항 문서화 |
-| 기술 스택 미지정 | 규모별 기본 스택 적용 (MVP: Next.js + SQLite) |
-| 빌드 에러 | 에러 로그 분석 → 해당 개발자가 수정 → QA 재검증 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰에 명시 |
-| 리뷰에서 🔴 발견 | 해당 개발자에 수정 요청 → 재작업 → 재검증 (최대 2회) |
+| Error Type | Strategy |
+|-----------|----------|
+| Ambiguous requirements | Apply the most common CRUD pattern, document assumptions |
+| Unspecified tech stack | Apply default stack by scale (MVP: Next.js + SQLite) |
+| Build errors | Analyze error logs → relevant developer fixes → QA re-verifies |
+| Agent failure | Retry once → proceed without that deliverable if failed, note in review |
+| 🔴 found in review | Request fix from relevant developer → rework → re-verify (max 2 rounds) |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "할 일 관리 웹앱을 만들어줘. 회원가입/로그인, 할 일 CRUD, 카테고리 분류 기능"
-**기대 결과**:
-- 아키텍처: Next.js + Prisma + SQLite, ERD(users, todos, categories), API 명세 10개 이상
-- 프론트: 로그인/회원가입 페이지, 대시보드, 할 일 CRUD UI, 반응형
-- 백엔드: 인증 API, CRUD API, 입력 검증, 에러 처리
-- 테스트: 인증+CRUD 테스트 시나리오, 커버리지 80% 목표
-- 배포: Vercel 배포 가이드, GitHub Actions CI/CD
+### Normal Flow
+**Prompt**: "Build me a to-do management web app. I need signup/login, to-do CRUD, and category classification features."
+**Expected Result**:
+- Architecture: Next.js + Prisma + SQLite, ERD (users, todos, categories), 10+ API specs
+- Frontend: Login/signup pages, dashboard, to-do CRUD UI, responsive
+- Backend: Auth API, CRUD API, input validation, error handling
+- Tests: Auth + CRUD test scenarios, 80% coverage target
+- Deployment: Vercel deployment guide, GitHub Actions CI/CD
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 Next.js 프로젝트에 결제 기능을 추가해줘" + 기존 코드
-**기대 결과**:
-- architect가 기존 코드 분석, 결제 관련 API/DB 설계
-- backend가 결제 API 추가, frontend가 결제 UI 추가
-- qa가 결제 플로우 테스트
+### Existing Code Flow
+**Prompt**: "Add payment functionality to this Next.js project" + existing code
+**Expected Result**:
+- architect analyzes existing code, designs payment-related API/DB
+- backend adds payment API, frontend adds payment UI
+- qa tests payment flow
 
-### 에러 흐름
-**프롬프트**: "간단한 웹앱 만들어줘"
-**기대 결과**:
-- 요구사항 모호 → architect가 기본 CRUD 앱(메모/노트) 제안
-- MVP 규모 기본 스택(Next.js + SQLite) 적용
-- 리뷰 보고서에 "요구사항 가정 적용" 명시
+### Error Flow
+**Prompt**: "Build me a simple web app"
+**Expected Result**:
+- Ambiguous requirements → architect proposes a basic CRUD app (memos/notes)
+- MVP scale default stack (Next.js + SQLite) applied
+- Review report notes "assumptions applied due to vague requirements"
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-개별 에이전트의 도메인 전문성을 강화하는 확장 스킬:
+Extension skills that enhance each agent's domain expertise:
 
-| 스킬 | 대상 에이전트 | 역할 |
-|------|-------------|------|
-| `component-patterns` | frontend-dev | React/Next.js 컴포넌트 패턴, 상태관리 전략, 폴더 구조 |
-| `api-security-checklist` | backend-dev | OWASP Top 10, 인증/인가 패턴, 보안 헤더, Rate Limiting |
+| Skill | Target Agent | Role |
+|-------|-------------|------|
+| `component-patterns` | frontend-dev | React/Next.js component patterns, state management strategies, folder structure |
+| `api-security-checklist` | backend-dev | OWASP Top 10, auth patterns, security headers, Rate Limiting |

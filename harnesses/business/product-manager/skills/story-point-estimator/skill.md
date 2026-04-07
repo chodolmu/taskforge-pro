@@ -1,169 +1,169 @@
 ---
 name: story-point-estimator
-description: "유저스토리의 스토리 포인트를 체계적으로 추정하는 방법론. '스토리 포인트 추정', 'SP 산정', '공수 추정', '벨로시티 계산', '플래닝 포커' 등 스프린트 계획 시 사용한다. 단, 실제 Jira 티켓 업데이트, 팀 미팅 진행은 이 스킬의 범위가 아니다."
+description: "A methodology for systematically estimating user story points. Used during sprint planning for tasks such as 'story point estimation,' 'SP calculation,' 'effort estimation,' 'velocity calculation,' and 'planning poker.' Note: Updating actual Jira tickets or facilitating team meetings is outside the scope of this skill."
 ---
 
-# Story Point Estimator — 스토리 포인트 추정 방법론
+# Story Point Estimator
 
-sprint-planner와 story-writer의 공수 추정 역량을 강화하는 스킬.
+A skill that enhances the effort estimation capabilities of sprint-planner and story-writer.
 
-## 대상 에이전트
+## Target Agents
 
-- **sprint-planner** — 스프린트 용량과 스토리 배분을 계획한다
-- **story-writer** — 유저스토리 작성 시 복잡도를 평가한다
+- **sprint-planner** — Plans sprint capacity and story allocation
+- **story-writer** — Evaluates complexity when writing user stories
 
-## 피보나치 스케일 기준표
+## Fibonacci Scale Reference
 
-| SP | 복잡도 | 불확실성 | 노력 | 기준 예시 |
-|----|--------|---------|------|----------|
-| 1 | 매우 낮음 | 없음 | 수시간 | 텍스트 변경, 설정값 수정 |
-| 2 | 낮음 | 매우 낮음 | 반나절 | 간단한 UI 컴포넌트 추가 |
-| 3 | 보통 | 낮음 | 1일 | CRUD API 1개, 간단한 화면 |
-| 5 | 중간 | 보통 | 2-3일 | 복잡한 비즈니스 로직, 외부 API 연동 |
-| 8 | 높음 | 높음 | 1주 | 새 기능 모듈, 인증 시스템 |
-| 13 | 매우 높음 | 매우 높음 | 1-2주 | 아키텍처 변경, 대규모 리팩토링 |
-| 21+ | 분해 필요 | - | - | 스토리가 너무 큼 → 분해 필수 |
+| SP | Complexity | Uncertainty | Effort | Example |
+|----|-----------|-------------|--------|---------|
+| 1 | Very Low | None | A few hours | Text change, config value update |
+| 2 | Low | Very Low | Half a day | Simple UI component addition |
+| 3 | Moderate | Low | 1 day | Single CRUD API, simple screen |
+| 5 | Medium | Moderate | 2-3 days | Complex business logic, external API integration |
+| 8 | High | High | 1 week | New feature module, authentication system |
+| 13 | Very High | Very High | 1-2 weeks | Architecture change, large-scale refactoring |
+| 21+ | Needs Decomposition | - | - | Story is too large — decomposition required |
 
-## 복잡도 평가 차원
+## Complexity Assessment Dimensions
 
-### 3차원 평가 모델
-
-```
-최종 SP = max(기술 복잡도, 도메인 복잡도, 불확실성)
-
-1. 기술 복잡도
-   - 코드 변경 범위 (파일 수, 레이어 수)
-   - 기술 난이도 (알고리즘, 동시성, 보안)
-   - 테스트 난이도 (엣지 케이스, 통합 테스트)
-
-2. 도메인 복잡도
-   - 비즈니스 규칙 수
-   - 예외 처리 시나리오
-   - 이해관계자 승인 필요 여부
-
-3. 불확실성
-   - 기술 스파이크 필요 여부
-   - 외부 의존성 (API, 라이브러리, 인프라)
-   - 요구사항 명확성
-```
-
-## 벨로시티 계산
+### Three-Dimensional Assessment Model
 
 ```
-벨로시티 = 스프린트에서 완료한 SP 합계
+Final SP = max(Technical Complexity, Domain Complexity, Uncertainty)
 
-안정적 벨로시티 산출:
-  - 최근 3-5 스프린트 평균
-  - 이상치(극단값) 제거 후 평균
-  - 또는 중앙값 사용
+1. Technical Complexity
+   - Scope of code changes (number of files, number of layers)
+   - Technical difficulty (algorithms, concurrency, security)
+   - Testing difficulty (edge cases, integration tests)
 
-예시:
+2. Domain Complexity
+   - Number of business rules
+   - Exception handling scenarios
+   - Whether stakeholder approval is required
+
+3. Uncertainty
+   - Whether a technical spike is needed
+   - External dependencies (APIs, libraries, infrastructure)
+   - Clarity of requirements
+```
+
+## Velocity Calculation
+
+```
+Velocity = Total SP completed in a sprint
+
+Stable velocity calculation:
+  - Average of the last 3-5 sprints
+  - Average after removing outliers (extreme values)
+  - Or use the median
+
+Example:
   Sprint 1: 32 SP
   Sprint 2: 28 SP
   Sprint 3: 35 SP
-  Sprint 4: 15 SP (휴가 등 이상치)
+  Sprint 4: 15 SP (outlier due to vacations, etc.)
   Sprint 5: 30 SP
 
-  평균(이상치 제거): (32+28+35+30)/4 = 31.25 SP
+  Average (outliers removed): (32+28+35+30)/4 = 31.25 SP
 ```
 
-## 스프린트 용량 계산
+## Sprint Capacity Calculation
 
 ```
-스프린트 용량 = 벨로시티 × 가용률
+Sprint Capacity = Velocity x Availability Rate
 
-가용률 계산:
-  총 인일 = 팀원 수 × 스프린트 일수
-  비가용 = 휴가 + 교육 + 회의 + 온콜
-  가용 인일 = 총 인일 - 비가용
+Availability rate calculation:
+  Total person-days = Team size x Sprint days
+  Unavailable = Vacations + Training + Meetings + On-call
+  Available person-days = Total person-days - Unavailable
 
-  가용률 = 가용 인일 / 총 인일
+  Availability rate = Available person-days / Total person-days
 
-예시:
-  팀 5명 × 10일 = 50 인일
-  휴가 3일 + 회의 5일 = 8일
-  가용: 42일 → 가용률 84%
-  
-  용량 = 31 SP × 0.84 ≈ 26 SP
+Example:
+  5 team members x 10 days = 50 person-days
+  3 vacation days + 5 meeting days = 8 days
+  Available: 42 days → Availability rate 84%
 
-버퍼:
-  안정된 팀: 용량의 80% 계획 (20% 버퍼)
-  새 팀/불확실: 용량의 70% 계획 (30% 버퍼)
+  Capacity = 31 SP x 0.84 ≈ 26 SP
+
+Buffer:
+  Stable team: Plan 80% of capacity (20% buffer)
+  New team/uncertain: Plan 70% of capacity (30% buffer)
 ```
 
-## 유저스토리 분해 기준
+## User Story Decomposition Criteria
 
 ```
-13 SP 이상이면 분해 필수:
+Decomposition is mandatory for stories of 13 SP or more:
 
-분해 전략:
-1. 워크플로우 단계별 분해
-   "사용자가 결제한다" →
-   - 결제 수단 선택
-   - 결제 정보 입력
-   - 결제 처리
-   - 결제 확인
+Decomposition strategies:
+1. By workflow stage
+   "User makes a payment" →
+   - Select payment method
+   - Enter payment information
+   - Process payment
+   - Confirm payment
 
-2. 데이터 변형별 분해
-   "다양한 형식 지원" →
-   - JSON 지원
-   - CSV 지원
-   - XML 지원
+2. By data variation
+   "Support multiple formats" →
+   - JSON support
+   - CSV support
+   - XML support
 
-3. 사용자 유형별 분해
-   "사용자가 로그인한다" →
-   - 이메일 로그인
-   - 소셜 로그인
-   - SSO 로그인
+3. By user type
+   "User logs in" →
+   - Email login
+   - Social login
+   - SSO login
 
-4. CRUD별 분해
-   "상품 관리" →
-   - 상품 목록 조회
-   - 상품 등록
-   - 상품 수정
-   - 상품 삭제
+4. By CRUD operation
+   "Product management" →
+   - List products
+   - Create product
+   - Update product
+   - Delete product
 
-5. Happy/Sad Path 분해
-   - 정상 흐름
-   - 에러 처리
-   - 엣지 케이스
+5. By Happy/Sad path
+   - Normal flow
+   - Error handling
+   - Edge cases
 ```
 
-## 추정 편향 방지
+## Estimation Bias Prevention
 
 ```
-1. 앵커링 효과 방지
-   → 동시 공개 (플래닝 포커 방식)
-   → 가장 높은/낮은 추정자가 근거 설명
+1. Anchoring effect prevention
+   → Simultaneous reveal (planning poker style)
+   → Highest/lowest estimators explain their rationale
 
-2. 낙관 편향 방지
-   → "최악의 경우" 시나리오 고려
-   → 테스트/리뷰/배포 시간 포함
+2. Optimism bias prevention
+   → Consider "worst case" scenarios
+   → Include time for testing/review/deployment
 
-3. 파킨슨 법칙 방지
-   → SP는 시간이 아닌 복잡도
-   → "2일"이 아닌 "3 SP"
+3. Parkinson's Law prevention
+   → SP measures complexity, not time
+   → "3 SP" not "2 days"
 
-4. 기준점 정렬
-   → 팀 공통 기준 스토리 유지
-   → "로그인 API = 3 SP" 같은 앵커
+4. Reference point alignment
+   → Maintain team-wide reference stories
+   → Anchors like "Login API = 3 SP"
 ```
 
-## 산출물 템플릿
+## Deliverable Template
 
 ```markdown
-## 스토리 포인트 추정 결과
+## Story Point Estimation Results
 
-### 벨로시티: [N] SP/스프린트
-### 가용 용량: [N] SP (버퍼 [M]% 포함)
+### Velocity: [N] SP/sprint
+### Available Capacity: [N] SP (including [M]% buffer)
 
-### 추정 결과
-| 스토리 | 기술 | 도메인 | 불확실 | SP | 비고 |
-|--------|------|--------|--------|-----|------|
+### Estimation Results
+| Story | Technical | Domain | Uncertainty | SP | Notes |
+|-------|-----------|--------|-------------|-----|-------|
 
-### 스프린트 배분
-| 스프린트 | SP 합계 | 스토리 목록 |
-|---------|---------|------------|
-| Sprint 1 | 26/31 | [목록] |
-| Sprint 2 | 28/31 | [목록] |
+### Sprint Allocation
+| Sprint | Total SP | Story List |
+|--------|----------|------------|
+| Sprint 1 | 26/31 | [list] |
+| Sprint 2 | 28/31 | [list] |
 ```

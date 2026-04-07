@@ -1,83 +1,83 @@
 ---
 name: learning-path-design
-description: "학습 경로 설계 프레임워크. training-builder와 onboarding-architect 에이전트가 신규입사자의 학습 커리큘럼을 설계할 때 참조. '학습 경로', '커리큘럼 설계', '교육 프로그램' 요청 시 사용. 단, LMS 시스템 구축이나 e-Learning 콘텐츠 제작은 범위 밖."
+description: "Learning path design framework. Referenced by training-builder and onboarding-architect agents when designing new hire learning curricula. Used for 'learning path', 'curriculum design', 'training program' requests. Note: LMS system development and e-learning content production are out of scope."
 ---
 
-# Learning Path Design — 학습 경로 설계
+# Learning Path Design
 
-training-builder / onboarding-architect 에이전트의 커리큘럼 설계 역량 강화.
+Enhances the curriculum design capabilities of training-builder / onboarding-architect agents.
 
-## 학습 경로 설계 원칙
+## Learning Path Design Principles
 
-### ADDIE 모델 적용
+### ADDIE Model Application
 
-| 단계 | 온보딩 적용 | 산출물 |
-|------|-----------|--------|
-| Analysis | 직무 역량 갭 분석 | 역량 갭 매트릭스 |
-| Design | 학습 목표 + 경로 설계 | 커리큘럼 맵 |
-| Development | 교육 콘텐츠 개발 | 교안, 퀴즈, 실습 |
-| Implementation | 교육 실행 | 일정표, 진도표 |
-| Evaluation | 효과 측정 | Kirkpatrick 4단계 |
+| Phase | Onboarding Application | Deliverable |
+|-------|----------------------|-------------|
+| Analysis | Job competency gap analysis | Competency gap matrix |
+| Design | Learning objectives + path design | Curriculum map |
+| Development | Training content development | Lesson plans, quizzes, labs |
+| Implementation | Training execution | Schedule, progress tracker |
+| Evaluation | Effectiveness measurement | Kirkpatrick 4 levels |
 
-### 70-20-10 학습 모델
+### 70-20-10 Learning Model
 
-| 비율 | 유형 | 온보딩 활동 |
-|------|------|-----------|
-| 70% | 경험 학습 (OJT) | 실무 프로젝트, 짝 프로그래밍, 고객 미팅 동석 |
-| 20% | 사회적 학습 | 멘토링, 1:1 미팅, 피어 리뷰, 팀 회고 |
-| 10% | 공식 학습 | 교육 세션, 문서 학습, 온라인 코스 |
+| Ratio | Type | Onboarding Activities |
+|-------|------|----------------------|
+| 70% | Experiential learning (OJT) | Hands-on projects, pair programming, client meeting observation |
+| 20% | Social learning | Mentoring, 1:1 meetings, peer review, team retrospectives |
+| 10% | Formal learning | Training sessions, documentation study, online courses |
 
-## 30-60-90일 학습 경로 템플릿
+## 30-60-90 Day Learning Path Template
 
-### Day 1~30: 기초 (Foundation)
+### Days 1-30: Foundation
 
-| 주차 | 학습 목표 | 활동 | 확인 방법 |
-|------|----------|------|----------|
-| W1 | 조직/문화 이해 | 오리엔테이션, 팀 소개, 시스템 셋업 | 셋업 체크리스트 |
-| W2 | 업무 프로세스 이해 | 문서 학습, 워크스루, 관찰 | 프로세스 맵 작성 |
-| W3 | 도구/시스템 활용 | 핸즈온 실습, 튜토리얼 | 실습 과제 제출 |
-| W4 | 기초 업무 수행 | 가이드 있는 업무 수행 | 30일 체크인 미팅 |
+| Week | Learning Goal | Activities | Verification |
+|------|--------------|------------|--------------|
+| W1 | Organization/culture understanding | Orientation, team introductions, system setup | Setup checklist |
+| W2 | Work process understanding | Documentation study, walkthroughs, observation | Process map creation |
+| W3 | Tools/systems proficiency | Hands-on labs, tutorials | Lab assignment submission |
+| W4 | Basic task execution | Guided task execution | 30-day check-in meeting |
 
-### Day 31~60: 실행 (Execution)
+### Days 31-60: Execution
 
-| 주차 | 학습 목표 | 활동 | 확인 방법 |
-|------|----------|------|----------|
-| W5~6 | 독립적 업무 수행 | 담당 업무 시작, 피드백 루프 | 주간 1:1 |
-| W7~8 | 업무 범위 확장 | 크로스 펑셔널 참여, 프로젝트 | 60일 리뷰 |
+| Week | Learning Goal | Activities | Verification |
+|------|--------------|------------|--------------|
+| W5-6 | Independent work execution | Start assigned tasks, feedback loop | Weekly 1:1 |
+| W7-8 | Expanding scope | Cross-functional participation, projects | 60-day review |
 
-### Day 61~90: 성과 (Performance)
+### Days 61-90: Performance
 
-| 주차 | 학습 목표 | 활동 | 확인 방법 |
-|------|----------|------|----------|
-| W9~10 | 자기 주도 업무 | 독립 프로젝트, 개선 제안 | 성과 평가 |
-| W11~12 | 팀 기여 | 지식 공유, 프로세스 개선 | 90일 종합 리뷰 |
+| Week | Learning Goal | Activities | Verification |
+|------|--------------|------------|--------------|
+| W9-10 | Self-directed work | Independent projects, improvement proposals | Performance evaluation |
+| W11-12 | Team contribution | Knowledge sharing, process improvement | 90-day comprehensive review |
 
-## 학습 목표 설계 (Bloom's Taxonomy)
+## Learning Objective Design (Bloom's Taxonomy)
 
-| 수준 | 동사 | 예시 | 평가 방법 |
-|------|------|------|----------|
-| 기억 | 열거, 정의 | "팀의 핵심 KPI 5가지를 열거" | 퀴즈 |
-| 이해 | 설명, 비교 | "우리 제품과 경쟁사 차이점 설명" | 보고서 |
-| 적용 | 사용, 실행 | "CRM 시스템으로 고객 등록 수행" | 실습 |
-| 분석 | 분류, 원인 | "고객 이탈 원인 분석" | 사례 분석 |
-| 평가 | 판단, 추천 | "개선안 3개 중 최적안 선택 근거" | 프레젠테이션 |
-| 창조 | 설계, 제안 | "신규 프로세스 개선안 제안" | 프로젝트 |
+| Level | Verbs | Example | Assessment Method |
+|-------|-------|---------|-------------------|
+| Remember | List, define | "List the team's 5 key KPIs" | Quiz |
+| Understand | Explain, compare | "Explain differences between our product and competitors" | Report |
+| Apply | Use, execute | "Register a customer using the CRM system" | Lab |
+| Analyze | Classify, identify causes | "Analyze causes of customer churn" | Case study |
+| Evaluate | Judge, recommend | "Select the best option from 3 proposals with justification" | Presentation |
+| Create | Design, propose | "Propose a new process improvement" | Project |
 
-## 평가 체계 (Kirkpatrick 4단계)
+## Assessment Framework (Kirkpatrick 4 Levels)
 
-| 단계 | 측정 대상 | 방법 | 시점 |
-|------|----------|------|------|
-| L1 반응 | 만족도, 참여도 | 설문조사 | 교육 직후 |
-| L2 학습 | 지식/스킬 습득 | 테스트, 실습 | 교육 직후 |
-| L3 행동 | 업무 적용 | 관찰, 360 피드백 | 60~90일 |
-| L4 결과 | 비즈니스 성과 | KPI, 생산성 | 90일+ |
+| Level | Measures | Method | Timing |
+|-------|----------|--------|--------|
+| L1 Reaction | Satisfaction, engagement | Survey | Immediately after training |
+| L2 Learning | Knowledge/skill acquisition | Test, lab | Immediately after training |
+| L3 Behavior | On-the-job application | Observation, 360 feedback | Days 60-90 |
+| L4 Results | Business outcomes | KPIs, productivity | Day 90+ |
 
-## 품질 체크리스트
+## Quality Checklist
 
-| 항목 | 기준 |
-|------|------|
-| 70-20-10 | 경험/사회/공식 학습 균형 |
-| 학습 목표 | Bloom 동사 사용, 측정 가능 |
-| 마일스톤 | 30/60/90일 체크포인트 |
-| 평가 | Kirkpatrick 4단계 중 2단계 이상 |
-| 피드백 루프 | 주간 1:1 + 월간 리뷰 |
+| Item | Criteria |
+|------|----------|
+| 70-20-10 | Balance of experiential/social/formal learning |
+| Learning objectives | Uses Bloom's verbs, measurable |
+| Milestones | 30/60/90-day checkpoints |
+| Assessment | At least 2 of Kirkpatrick's 4 levels |
+| Feedback loop | Weekly 1:1 + monthly review |

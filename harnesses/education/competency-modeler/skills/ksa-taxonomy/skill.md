@@ -1,126 +1,126 @@
 ---
 name: ksa-taxonomy
-description: "직무 분석에서 KSA(Knowledge, Skill, Ability) 체계를 구축하고 NCS/O*NET 표준과 매핑하는 전문 스킬. job-analyst와 competency-architect가 직무기술서를 작성하고 역량을 체계적으로 분류할 때 활용한다. 'KSA 분석', '직무기술서', 'NCS', 'O*NET', '과업 분석', '역량 분류 체계' 등의 맥락에서 자동 적용한다. 단, 실제 NCS 시스템 접속이나 인사 시스템 데이터 연동은 이 스킬의 범위가 아니다."
+description: "A specialized skill for building KSA (Knowledge, Skill, Ability) taxonomies in job analysis and mapping them to NCS/O*NET standards. Used by the job-analyst and competency-architect agents when writing job descriptions and systematically classifying competencies. Automatically applied in contexts involving 'KSA analysis,' 'job description,' 'NCS,' 'O*NET,' 'task analysis,' or 'competency classification system.' Note: actual NCS system access or HR system data integration is outside the scope of this skill."
 ---
 
-# KSA Taxonomy — KSA 분류 체계 및 표준 매핑 도구
+# KSA Taxonomy — KSA Classification System and Standards Mapping Tool
 
-job-analyst, competency-architect 에이전트의 직무분석 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the job analysis capabilities of the job-analyst and competency-architect agents.
 
-## 적용 대상 에이전트
+## Target Agents
 
-- **job-analyst** — 직무 분석, KSA 도출
-- **competency-architect** — 역량 정의, 분류 체계 구축
+- **job-analyst** — Job analysis, KSA extraction
+- **competency-architect** — Competency definition, classification system design
 
-## KSA 프레임워크
+## KSA Framework
 
-### K-S-A-O 정의
+### K-S-A-O Definitions
 
-| 구분 | 정의 | 예시 |
-|------|------|------|
-| **K**nowledge (지식) | 직무 수행에 필요한 이론적/사실적 이해 | 프로그래밍 언어 문법, 회계 원칙 |
-| **S**kill (기술) | 훈련을 통해 습득한 실행 능력 | 코드 디버깅, 재무제표 작성 |
-| **A**bility (역량/능력) | 타고난 또는 장기 개발된 인지적/신체적 능력 | 논리적 사고, 의사소통 능력 |
-| **O**ther (기타 특성) | 성격, 가치관, 동기 등 | 성실성, 스트레스 내성 |
+| Category | Definition | Examples |
+|----------|-----------|----------|
+| **K**nowledge | Theoretical and factual understanding required for the job | Programming language syntax, accounting principles |
+| **S**kill | Execution abilities acquired through training | Code debugging, financial statement preparation |
+| **A**bility | Cognitive or physical capacities that are innate or developed over time | Logical thinking, communication ability |
+| **O**ther Characteristics | Personality, values, motivation, etc. | Conscientiousness, stress tolerance |
 
-### 직무기술서(JD) 표준 구조
+### Job Description (JD) Standard Structure
 
 ```markdown
-## 직무기술서
+## Job Description
 
-### 기본 정보
-- 직무명:
-- 직군/직렬:
-- 직급 범위:
-- 보고 체계:
+### Basic Information
+- Job Title:
+- Job Family/Track:
+- Grade Range:
+- Reporting Structure:
 
-### 직무 목적
-[1-2문장으로 직무의 존재 이유]
+### Job Purpose
+[1-2 sentences describing why this job exists]
 
-### 핵심 과업 (Key Tasks)
-1. [과업명] — [빈도] [중요도 H/M/L]
-2. [과업명] — [빈도] [중요도]
+### Key Tasks
+1. [Task name] — [Frequency] [Importance H/M/L]
+2. [Task name] — [Frequency] [Importance]
 ...
 
-### 필수 KSA
+### Required KSAs
 #### Knowledge
-- [지식 항목] — [수준: 기본/중급/전문]
+- [Knowledge item] — [Level: Basic/Intermediate/Expert]
 
 #### Skill
-- [기술 항목] — [수준: 기본/중급/전문]
+- [Skill item] — [Level: Basic/Intermediate/Expert]
 
 #### Ability
-- [능력 항목] — [수준: 기본/중급/전문]
+- [Ability item] — [Level: Basic/Intermediate/Expert]
 
-### 자격 요건
-- 학력:
-- 경력:
-- 자격증/인증:
+### Qualifications
+- Education:
+- Experience:
+- Certifications/Licenses:
 ```
 
-## 역량 분류 체계
+## Competency Classification System
 
-### 3-Layer 역량 구조
-
-```
-[공통 역량] — 전 직무 공통
-  예: 의사소통, 문제해결, 팀워크, 윤리의식
-      │
-[직군 역량] — 직군별 공유
-  예: (개발 직군) 코드 품질, 기술 트렌드 파악
-      │
-[직무 역량] — 특정 직무 고유
-  예: (백엔드 개발) API 설계, DB 최적화, 시스템 아키텍처
-```
-
-### 역량 수준 체계 (5단계)
-
-| 수준 | 명칭 | 정의 | 직급 매핑 (예시) |
-|------|------|------|----------------|
-| L1 | 입문 | 지시에 따라 수행 | 사원 |
-| L2 | 실행 | 독립적으로 수행 | 주임/대리 |
-| L3 | 숙련 | 비정형 상황도 해결 | 과장/차장 |
-| L4 | 전문 | 조직에 기여, 타인 지도 | 부장/팀장 |
-| L5 | 마스터 | 혁신, 전략적 의사결정 | 임원급 |
-
-## NCS(국가직무능력표준) 매핑
-
-### NCS 분류 체계
+### 3-Layer Competency Structure
 
 ```
-대분류 (24개) → 중분류 (80개) → 소분류 (257개) → 세분류 (1,022개)
-예: 정보통신 → 정보기술 → 정보기술개발 → 응용SW엔지니어링
+[Core Competencies] — Common across all roles
+  e.g., Communication, Problem-solving, Teamwork, Ethics
+      |
+[Job Family Competencies] — Shared within a job family
+  e.g., (Engineering Family) Code quality, Technology trend awareness
+      |
+[Job-Specific Competencies] — Unique to the specific role
+  e.g., (Backend Developer) API design, DB optimization, System architecture
 ```
 
-### NCS 능력단위 구조
+### Proficiency Level Framework (5 Levels)
 
-| 구성요소 | 설명 |
-|---------|------|
-| 능력단위 | 직무 수행에 필요한 단위 역량 |
-| 능력단위요소 | 능력단위의 하위 구성 요소 |
-| 수행준거 | 각 요소의 성공적 수행 기준 |
-| 지식/기술/태도 | KSA에 해당하는 세부 항목 |
-| 적용범위 및 조건 | 수행 환경 |
+| Level | Label | Definition | Grade Mapping (Example) |
+|-------|-------|-----------|------------------------|
+| L1 | Novice | Performs tasks as directed | Staff |
+| L2 | Practitioner | Performs tasks independently | Associate/Senior Associate |
+| L3 | Skilled | Resolves non-routine situations | Manager/Senior Manager |
+| L4 | Expert | Contributes to the organization, mentors others | Director/Team Lead |
+| L5 | Master | Drives innovation, makes strategic decisions | Executive level |
 
-## O*NET 매핑 (글로벌 기준)
+## NCS (National Competency Standards) Mapping
 
-### O*NET Content Model 주요 카테고리
+### NCS Classification System
 
-| 카테고리 | 하위 항목 | 용도 |
-|---------|----------|------|
-| Worker Characteristics | Abilities, Interests, Values | 적합성 평가 |
-| Worker Requirements | Skills, Knowledge, Education | 자격 요건 |
-| Experience Requirements | Experience, Training, Licensing | 채용 기준 |
-| Occupational Requirements | Work Activities, Work Context | 직무 환경 |
+```
+Major Category (24) > Middle Category (80) > Minor Category (257) > Sub-category (1,022)
+Example: Information & Communication > Information Technology > IT Development > Application SW Engineering
+```
 
-### 범용 역량 사전 (참조용)
+### NCS Competency Unit Structure
 
-| 역량 | 정의 | 행동 지표 예시 |
-|------|------|-------------|
-| 분석적 사고 | 복잡한 문제를 구성요소로 분해하여 해결 | 데이터 기반 의사결정, 근본원인 분석 |
-| 의사소통 | 정보를 명확하고 효과적으로 전달 | 문서 작성, 프레젠테이션, 경청 |
-| 협업 | 타인과 효과적으로 함께 일하는 능력 | 갈등 해결, 피드백, 역할 분담 |
-| 고객 지향 | 고객 니즈를 파악하고 충족 | 공감, 서비스 품질, 불만 처리 |
-| 혁신 | 새로운 아이디어를 생성하고 실행 | 개선 제안, 실험, 변화 수용 |
-| 리더십 | 방향을 제시하고 타인을 이끄는 능력 | 비전, 동기부여, 권한위임 |
-| 자기 개발 | 지속적으로 학습하고 성장 | 피드백 수용, 학습 계획, 성찰 |
+| Component | Description |
+|-----------|-------------|
+| Competency Unit | A unit-level competency required for job performance |
+| Competency Unit Element | Sub-components of a competency unit |
+| Performance Criteria | Success criteria for each element |
+| Knowledge/Skills/Attitudes | Detailed KSA items |
+| Scope and Conditions | Performance environment |
+
+## O*NET Mapping (Global Standard)
+
+### O*NET Content Model Key Categories
+
+| Category | Sub-items | Purpose |
+|----------|-----------|---------|
+| Worker Characteristics | Abilities, Interests, Values | Fit assessment |
+| Worker Requirements | Skills, Knowledge, Education | Qualification requirements |
+| Experience Requirements | Experience, Training, Licensing | Hiring criteria |
+| Occupational Requirements | Work Activities, Work Context | Work environment |
+
+### General Competency Dictionary (Reference)
+
+| Competency | Definition | Behavioral Indicator Examples |
+|-----------|-----------|------------------------------|
+| Analytical Thinking | Decomposes complex problems into components for resolution | Data-driven decision-making, root cause analysis |
+| Communication | Conveys information clearly and effectively | Writing, presentations, active listening |
+| Collaboration | Works effectively with others | Conflict resolution, feedback, role allocation |
+| Customer Orientation | Identifies and fulfills customer needs | Empathy, service quality, complaint handling |
+| Innovation | Generates and implements new ideas | Improvement proposals, experimentation, change acceptance |
+| Leadership | Sets direction and guides others | Vision, motivation, delegation |
+| Self-Development | Continuously learns and grows | Feedback acceptance, learning plans, reflection |

@@ -1,125 +1,125 @@
 ---
 name: hook-writing
-description: "YouTube 영상 훅(도입부) 작성 전문 스킬. 15가지 훅 패턴, 시청 유지율 심리학, 클릭-시청 전환 공식을 제공한다. 대본작가(scriptwriter)가 영상 도입부를 설계할 때 이 스킬을 참조하여 시청자 이탈을 최소화하는 훅을 작성한다. 단독으로 '훅 패턴 알려줘', '도입부 잘 쓰는 법' 요청에도 사용한다. 전체 대본 작성이나 SEO 최적화는 youtube-production 스킬의 영역이다."
+description: "YouTube video hook (opening) writing skill. Provides 15 hook patterns, viewer retention psychology, and click-to-watch conversion formulas. Referenced by the scriptwriter agent when designing video openings to minimize viewer drop-off. Also used standalone for requests like 'show me hook patterns' or 'how to write great openings.' Full script writing and SEO optimization fall under the youtube-production skill."
 ---
 
-# Hook Writing — YouTube 훅 작성 전문 가이드
+# Hook Writing — YouTube Hook Specialist Guide
 
-시청자의 첫 5~10초를 사로잡는 훅을 설계하는 방법론. scriptwriter 에이전트의 훅 작성 능력을 확장한다.
+A methodology for designing hooks that capture the viewer within the first 5–10 seconds. Extends the scriptwriter agent's hook-crafting capabilities.
 
-## 훅의 심리학
+## The Psychology of Hooks
 
-시청자는 평균 **3초** 안에 시청 지속 여부를 결정한다. 첫 30초 시청 유지율이 70% 이상이면 알고리즘 추천 확률이 급격히 상승한다.
+Viewers decide whether to keep watching within an average of **3 seconds**. When the first-30-second retention rate exceeds 70%, the probability of algorithmic recommendation increases dramatically.
 
-**핵심 원리**: 훅은 **호기심 갭**(Curiosity Gap)을 만들어야 한다 — 시청자가 "알고 싶은 것"과 "아직 모르는 것" 사이의 긴장감.
+**Core Principle**: A hook must create a **Curiosity Gap** — the tension between what the viewer "wants to know" and what they "don't yet know."
 
-## 15가지 훅 패턴
+## 15 Hook Patterns
 
-### 1. 충격 통계 (Shocking Stat)
-"한국인의 87%가 이것을 모르고 있습니다"
-- **작동 원리**: 인지 부조화 — "나도 모르는 건 아닐까?"
-- **적합한 영상**: 교육, 정보, 건강
+### 1. Shocking Stat
+"87% of people don't know about this"
+- **How it works**: Cognitive dissonance — "Am I one of them?"
+- **Best for**: Education, informational, health videos
 
-### 2. 반직관 선언 (Contrarian Statement)
-"운동을 많이 하면 오히려 살이 찝니다"
-- **작동 원리**: 기존 믿음에 도전 → 반박 근거를 확인하고 싶음
-- **적합한 영상**: 과학, 라이프스타일, 비즈니스
+### 2. Contrarian Statement
+"Exercising too much actually makes you gain weight"
+- **How it works**: Challenges existing beliefs → viewer wants to see the evidence
+- **Best for**: Science, lifestyle, business videos
 
-### 3. 결과 먼저 (Result First)
-"이 방법으로 월 매출이 3배가 되었습니다. 어떻게 했는지 보여드리겠습니다"
-- **작동 원리**: 증거를 먼저 보여주면 방법론에 대한 신뢰가 생긴다
-- **적합한 영상**: 튜토리얼, 후기, 비즈니스
+### 3. Result First
+"This method tripled my monthly revenue. Let me show you how"
+- **How it works**: Showing proof first builds trust in the methodology
+- **Best for**: Tutorials, testimonials, business videos
 
-### 4. 타임 프레셔 (Time Pressure)
-"이 영상을 보기 전에 절대 ~하지 마세요"
-- **작동 원리**: 손실 회피 — 놓칠 수 있다는 두려움
-- **적합한 영상**: 경고, 팁, 뉴스
+### 4. Time Pressure
+"Do NOT do this before watching this video"
+- **How it works**: Loss aversion — fear of missing out
+- **Best for**: Warnings, tips, news videos
 
-### 5. 스토리 오프닝 (Story Opening)
-"3년 전, 저는 전 재산을 잃었습니다"
-- **작동 원리**: 서사적 긴장 — "그 다음에 어떻게 됐지?"
-- **적합한 영상**: 브이로그, 다큐, 인터뷰
+### 5. Story Opening
+"Three years ago, I lost everything"
+- **How it works**: Narrative tension — "What happened next?"
+- **Best for**: Vlogs, documentaries, interview videos
 
-### 6. 질문 유발 (Provocative Question)
-"왜 부자들은 절대 이것을 사지 않을까요?"
-- **작동 원리**: 자기참조 효과 — "나는 어떤가?" 자문
-- **적합한 영상**: 라이프스타일, 재테크, 심리
+### 6. Provocative Question
+"Why do rich people never buy this?"
+- **How it works**: Self-reference effect — "What about me?"
+- **Best for**: Lifestyle, finance, psychology videos
 
-### 7. 비교 대조 (Before/After)
-"[비포 화면] → [애프터 화면] 단 30일 만에 이렇게 바뀌었습니다"
-- **작동 원리**: 시각적 증거의 즉각적 설득력
-- **적합한 영상**: 변화, 리뷰, DIY
+### 7. Before/After
+"[Before shot] → [After shot] This transformation took just 30 days"
+- **How it works**: Visual proof provides instant persuasion
+- **Best for**: Transformation, review, DIY videos
 
-### 8. 도전 선언 (Challenge)
-"이 영상을 끝까지 보면 당신의 코딩 실력이 한 단계 올라갑니다"
-- **작동 원리**: 게이미피케이션 — 완수 동기
-- **적합한 영상**: 교육, 스킬
+### 8. Challenge
+"If you watch this video to the end, your coding skills will level up"
+- **How it works**: Gamification — completion motivation
+- **Best for**: Education, skill-building videos
 
-### 9. 비밀 공개 (Secret Reveal)
-"업계에서 절대 알려주지 않는 3가지 비밀"
-- **작동 원리**: 정보 비대칭 해소 욕구
-- **적합한 영상**: 폭로, 인사이더, 전문가
+### 9. Secret Reveal
+"3 secrets the industry will never tell you"
+- **How it works**: Desire to resolve information asymmetry
+- **Best for**: Exposés, insider knowledge, expert videos
 
-### 10. 공감 유도 (Empathy Hook)
-"혹시 이런 경험 있으신가요? [구체적 상황 묘사]"
-- **작동 원리**: 자기 동일시 — "이 영상은 나를 위한 거다"
-- **적합한 영상**: 문제 해결, 라이프스타일
+### 10. Empathy Hook
+"Have you ever experienced this? [Specific situation description]"
+- **How it works**: Self-identification — "This video is for me"
+- **Best for**: Problem-solving, lifestyle videos
 
-### 11. 리스트 티저 (List Teaser)
-"5가지를 알려드릴 건데, 3번째가 가장 중요합니다"
-- **작동 원리**: 호기심 + 구조화된 기대감
-- **적합한 영상**: 리스트, 랭킹
+### 11. List Teaser
+"I'll share 5 things, but #3 is the most important"
+- **How it works**: Curiosity + structured anticipation
+- **Best for**: Listicles, ranking videos
 
-### 12. 권위 인용 (Authority Quote)
-"하버드 연구진이 20년간 추적한 결과..."
-- **작동 원리**: 권위에 대한 신뢰 전이
-- **적합한 영상**: 과학, 건강, 교육
+### 12. Authority Quote
+"Harvard researchers tracked this for 20 years..."
+- **How it works**: Trust transfer from an authority figure
+- **Best for**: Science, health, education videos
 
-### 13. 논쟁 제기 (Debate Starter)
-"이것은 천재적인 발명인가, 사기인가?"
-- **작동 원리**: 양극화된 관점 → 자기 입장 확인 욕구
-- **적합한 영상**: 리뷰, 트렌드, 논쟁
+### 13. Debate Starter
+"Is this a genius invention or a scam?"
+- **How it works**: Polarized viewpoints → desire to confirm one's own stance
+- **Best for**: Reviews, trends, debate videos
 
-### 14. 미래 예고 (Future Preview)
-"5분 후, 여러분은 ~를 완벽하게 할 수 있게 됩니다"
-- **작동 원리**: 기대 가치 명시 → 투자 대비 보상 확인
-- **적합한 영상**: 튜토리얼, 스킬
+### 14. Future Preview
+"In 5 minutes, you'll be able to do this perfectly"
+- **How it works**: Explicit expected value → return on time investment confirmed
+- **Best for**: Tutorials, skill-building videos
 
-### 15. 실수 경고 (Mistake Warning)
-"이 실수를 하고 있다면, 지금 당장 멈추세요"
-- **작동 원리**: 손실 회피 + 자기 점검
-- **적합한 영상**: 팁, 가이드, 경고
+### 15. Mistake Warning
+"If you're making this mistake, stop right now"
+- **How it works**: Loss aversion + self-check
+- **Best for**: Tips, guides, warning videos
 
-## 훅 조합 공식
+## Hook Combination Formula
 
-최고의 훅은 단일 패턴이 아닌 **2개 패턴의 조합**:
+The best hooks combine **2 patterns**:
 
-    [충격 통계] + [비밀 공개]
-    → "한국인의 92%가 모르는, 돈을 버는 3가지 비밀"
+    [Shocking Stat] + [Secret Reveal]
+    → "A fact that 92% of people don't know: 3 secrets to making money"
 
-    [결과 먼저] + [타임 프레셔]
-    → "이 방법으로 3배 성장했습니다. 이 정보가 공개되기 전에 꼭 보세요"
+    [Result First] + [Time Pressure]
+    → "This method grew my business 3x. Watch before this information goes away"
 
-    [공감 유도] + [도전 선언]
-    → "밤마다 불안해서 잠 못 드시나요? 이 영상 하나로 해결됩니다"
+    [Empathy Hook] + [Challenge]
+    → "Can't sleep because of anxiety every night? This one video will fix it"
 
-## 훅-썸네일-제목 삼각 정합성
+## Hook–Thumbnail–Title Triangle Alignment
 
-훅의 효과는 단독이 아닌 **삼각 구조**에서 극대화된다:
+A hook's effectiveness is maximized within a **triangular structure**, not in isolation:
 
-| 요소 | 역할 | 정합성 규칙 |
-|------|------|------------|
-| 썸네일 | 시각적 호기심 유발 | 훅의 감정 톤과 일치해야 함 |
-| 제목 | 클릭 유도 | 훅이 약속한 가치의 키워드 버전 |
-| 훅(첫 5초) | 시청 지속 결정 | 썸네일+제목의 약속을 즉시 이행/확장 |
+| Element | Role | Alignment Rule |
+|---------|------|---------------|
+| Thumbnail | Visual curiosity trigger | Must match the hook's emotional tone |
+| Title | Click driver | A keyword-optimized version of the hook's value promise |
+| Hook (first 5 sec) | Watch-or-leave decision | Must immediately deliver/expand on the thumbnail + title promise |
 
-**금지**: 썸네일/제목의 약속을 훅에서 무시하면 "클릭베이트"로 인식되어 시청 유지율 급락.
+**Prohibited**: If the hook ignores the thumbnail/title promise, viewers perceive "clickbait" and retention plummets.
 
-## 시청 유지율 벤치마크
+## Retention Rate Benchmarks
 
-| 구간 | 목표 유지율 | 이탈 시 원인 |
-|------|-----------|-------------|
-| 0~5초 | 90%+ | 훅 부재 또는 채널 인트로 과다 |
-| 5~30초 | 75%+ | 훅이 약속한 가치 미이행 |
-| 30초~2분 | 65%+ | 첫 세그먼트 밀도 부족 |
-| 2분~ | 50%+ | 패턴 인터럽트 부재 |
+| Segment | Target Retention | Drop-off Cause |
+|---------|-----------------|----------------|
+| 0–5 sec | 90%+ | No hook or excessive channel intro |
+| 5–30 sec | 75%+ | Hook's value promise not delivered |
+| 30 sec–2 min | 65%+ | Insufficient density in the first segment |
+| 2 min+ | 50%+ | No pattern interrupts |

@@ -1,139 +1,139 @@
 ---
 name: advertising-campaign
-description: "광고 캠페인의 타깃분석, 카피라이팅, 크리에이티브 설계, 미디어 플래닝을 에이전트 팀이 협업하여 한 번에 생성하는 풀 캠페인 파이프라인. '광고 캠페인 기획해줘', '광고 카피 써줘', '미디어 플랜 짜줘', '배너 광고 만들어줘', '페이스북 광고 기획', '검색 광고 세팅', '타깃 분석해줘', '광고 크리에이티브', 'SNS 광고 전략' 등 광고 캠페인 제작 전반에 이 스킬을 사용한다. 기존 카피나 크리에이티브가 있는 경우에도 미디어 플래닝이나 리뷰를 지원한다. 단, 실제 광고 플랫폼(Google Ads, Meta Business Suite) API 연동, 실시간 성과 대시보드 구축, 광고 소재 최종 제작(포토샵/일러스트레이터)은 이 스킬의 범위가 아니다."
+description: "ad Campaignof TargetAnalysis, Copy, Creative Design, an agent team collaborates to in Campaign line. 'ad Campaign Planning', 'ad Copy ', ' ', 'banner ad ', ' ad Planning', 'search ad ', 'Target Analysis', 'ad Creative', 'SNS ad Strategy' etc. ad Campaign production beforein . Copy Creative casein Review . , ad Platform(Google Ads, Meta Business Suite) API , whenbetween and vswhen , ad production(/illustration) of ."
 ---
 
-# Advertising Campaign — 광고 캠페인 풀 프로덕션 파이프라인
+# Advertising Campaign — Advertising Campaign Full Production Pipeline
 
-광고 캠페인의 타깃분석→카피→크리에이티브→미디어플랜을 에이전트 팀이 협업하여 한 번에 생성한다.
+An agent team collaborates to generate advertising campaign target analysis, copy, creative, and media plans all at once.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 members communicate directly via SendMessage and cross-validate each other's work.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| Agent | File | Role | Type |
 |---------|------|------|------|
-| market-analyst | `.claude/agents/market-analyst.md` | 타깃 세분화, 경쟁 분석, 인사이트 도출 | general-purpose |
-| copywriter | `.claude/agents/copywriter.md` | 헤드라인, 바디카피, CTA 작성 | general-purpose |
-| creative-director | `.claude/agents/creative-director.md` | 비주얼 컨셉, 스토리보드, 이미지 생성 | general-purpose |
-| media-planner | `.claude/agents/media-planner.md` | 채널 선정, 예산 배분, 일정 수립 | general-purpose |
-| campaign-reviewer | `.claude/agents/campaign-reviewer.md` | 교차 검증, 정합성 확인 | general-purpose |
+| market-analyst | `.claude/agents/market-analyst.md` | Target Segmentation, Competitive Analysis, Insight Extraction | general-purpose |
+| copywriter | `.claude/agents/copywriter.md` | line, Copy, CTA Writing | general-purpose |
+| creative-director | `.claude/agents/creative-director.md` | Visual Concept, Storyboard, Image | general-purpose |
+| media-planner | `.claude/agents/media-planner.md` | channel , Budget allocation, Schedule | general-purpose |
+| campaign-reviewer | `.claude/agents/campaign-reviewer.md` | cross-validate, Verification | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Performed Directly by the Orchestrator)
 
-1. 사용자 입력에서 추출한다:
-   - **제품/서비스**: 광고할 대상
-   - **캠페인 목표**: 인지도/고려도/전환/리텐션
-   - **예산** (선택): 총 예산 또는 월 예산
-   - **기간** (선택): 캠페인 기간
-   - **채널** (선택): 선호 채널
-   - **기존 파일** (선택): 사용자가 제공한 카피, 브랜드 가이드 등
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다 (아래 "작업 규모별 모드" 참조)
+1. Extract from user input:
+ - **/**: ad subject
+ - **Campaign goal**: //before/
+ - **Budget** (Selection): Budget Budget
+ - **between** (Selection): Campaign between
+ - **channel** (Selection): channel
+ - ** File** (Selection): Copy, Brand Guide etc.
+2. `_workspace/` to in generate
+3. Organize input and save to `_workspace/00_input.md`in save
+4. If existing files are present `_workspace/`, copy to _workspace/ and skip the corresponding Phase
+5. Based on the scope of the request **determine the execution mode** ( " per mode" )
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-팀을 구성하고 작업을 할당한다. 작업 간 의존 관계는 다음과 같다:
+ compositionand . between of relationship and :
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| sequence | | | of | |
 |------|------|------|------|--------|
-| 1 | 시장·타깃 분석 | analyst | 없음 | `_workspace/01_market_analysis.md` |
-| 2 | 광고 카피 작성 | copywriter | 작업 1 | `_workspace/02_ad_copy.md` |
-| 3a | 크리에이티브 설계 | creative | 작업 1, 2 | `_workspace/03_creative_concept.md` |
-| 3b | 미디어 플랜 수립 | planner | 작업 1, 2 | `_workspace/04_media_plan.md` |
-| 4 | 캠페인 리뷰 | reviewer | 작업 2, 3a, 3b | `_workspace/05_review_report.md` |
+| 1 | market·Target Analysis | analyst | None | `_workspace/01_market_analysis.md` |
+| 2 | ad Copy Writing | copywriter | 1 | `_workspace/02_ad_copy.md` |
+| 3a | Creative Design | creative | 1, 2 | `_workspace/03_creative_concept.md` |
+| 3b | | planner | 1, 2 | `_workspace/04_media_plan.md` |
+| 4 | Campaign Review | reviewer | 2, 3a, 3b | `_workspace/05_review_report.md` |
 
-작업 3a(크리에이티브)와 3b(미디어플랜)는 **병렬 실행**한다. 둘 다 작업 1(분석)과 2(카피)에 의존하므로 카피 완료 후 동시에 시작할 수 있다.
+ 3a(Creative)and 3b() **executed in parallel**. 1(Analysis)and 2(Copy)in ofto Copy after whenin when .
 
-**팀원 간 소통 흐름:**
-- analyst 완료 → copywriter에게 타깃 인사이트·USP 전달, creative에게 시각적 선호 전달, planner에게 미디어 소비 패턴 전달
-- copywriter 완료 → creative에게 헤드라인·슬로건 전달 (카피-비주얼 통합), planner에게 채널별 카피 전달
-- creative 완료 → planner에게 소재 사이즈·포맷 정보 전달
-- reviewer는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**Inter-team communication flow:**
+- analyst complete -> copywriterTo Target Insight·USP before, creativeTo Visual before, plannerTo consumption Pattern before
+- copywriter complete -> creativeTo line·to before (Copy-Visual Integration), plannerTo Per-channel Copy before
+- creative complete -> plannerTo · Information before
+- reviewer cross-validate. 🔴 Must Fix when AgentTo → → Verification (vs 2)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-리뷰어의 보고서를 기반으로 최종 산출물을 정리한다:
+Reviewof based on :
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 리뷰 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-   - 시장·타깃 분석 — `01_market_analysis.md`
-   - 광고 카피 세트 — `02_ad_copy.md`
-   - 크리에이티브 컨셉 — `03_creative_concept.md`
-   - 미디어 플랜 — `04_media_plan.md`
-   - 리뷰 보고서 — `05_review_report.md`
+1. `_workspace/` within File verify
+2. from the review report 🔴 Must Fix reflected verify
+3. summary To :
+ - market·Target Analysis — `01_market_analysis.md`
+ - ad Copy — `02_ad_copy.md`
+ - Creative Concept — `03_creative_concept.md`
+ - — `04_media_plan.md`
+ - Review — `05_review_report.md`
 
-## 작업 규모별 모드
+## Modes by Task Scale
 
-사용자 요청의 범위에 따라 투입 에이전트를 조절한다:
+ of in Agent :
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| Pattern | mode | Agent |
 |----------------|----------|-------------|
-| "광고 캠페인 기획해줘", "풀 캠페인" | **풀 파이프라인** | 5명 전원 |
-| "광고 카피만 써줘" | **카피 모드** | analyst + copywriter + reviewer |
-| "이 카피로 크리에이티브 만들어줘" (기존 카피) | **크리에이티브 모드** | creative + reviewer |
-| "미디어 플랜만 짜줘" | **미디어 모드** | analyst + planner + reviewer |
-| "이 캠페인 검토해줘" | **리뷰 모드** | reviewer 단독 |
+| "ad Campaign Planning", " Campaign" | **Full Pipeline** | 5 All |
+| "ad Copy " | **Copy mode** | analyst + copywriter + reviewer |
+| " Copyto Creative " ( Copy) | **Creative mode** | creative + reviewer |
+| " " | ** mode** | analyst + planner + reviewer |
+| " Campaign " | **Review mode** | reviewer only |
 
-**기존 파일 활용**: 사용자가 카피, 브랜드 가이드 등 기존 파일을 제공하면, 해당 파일을 `_workspace/`의 적절한 번호 위치에 복사하고 해당 단계의 에이전트는 건너뛴다.
+**Using Existing Files**: Copy, Brand Guide etc. File , copy the files to `_workspace/`of in and of Agent .
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
+| Strategy | | |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| File-Based | `_workspace/` | Storing and sharing major deliverables |
+| Message-Based | SendMessage | Real-time delivery of key information, revision requests |
+| Task-Based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{}_{Agent}_{}.{}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
+| in type | Strategy |
 |----------|------|
-| 웹 검색 실패 | 분석가가 일반 지식 기반으로 작업, 보고서에 "데이터 제한" 명시 |
-| 이미지 생성 실패 | 텍스트 컨셉만으로 진행, Gemini 프롬프트 포함하여 사용자 재시도 가능 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰 보고서에 누락 명시 |
-| 리뷰에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
-| 예산 미제공 | 3개 시나리오(500만/1,000만/3,000만원)로 미디어 플랜 작성 |
+| web search | Analysis based on , in the report " " when |
+| Image | Text Conceptto , Gemini Prompt when |
+| Agent failure | 1 retry -> if still fails, proceed without that deliverable, note omission in review report |
+| RED found in review | Request revision from relevant agent -> rework -> re-verify (up to 2 times) |
+| Budget | 3 when(500/1,000/3,000)to Writing |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "신규 피트니스 앱 출시를 위한 디지털 광고 캠페인을 기획해줘. 예산 2,000만원, 기간 4주"
-**기대 결과**:
-- 시장 분석: 피트니스 앱 경쟁 분석 3건 이상, 타깃 페르소나 2개, 포지셔닝 맵
-- 카피: 배너+SNS+검색+영상 채널별 카피 세트, 슬로건 3개
-- 크리에이티브: 키 비주얼 컨셉 + A/B안 + 스토리보드 + 이미지 생성 시도
-- 미디어 플랜: 채널별 예산 배분, 4주 캘린더, KPI 목표
-- 리뷰: 정합성 매트릭스 전항목 확인
+### Normal Flow
+**Prompt**: " when digital ad Campaign Planning. Budget 2,000, between 4"
+**Expected Result**:
+- market Analysis: Competitive Analysis 3 , Target Persona 2, 
+- Copy: banner+SNS++video Per-channel Copy , to 3
+- Creative: Visual Concept + A/B + Storyboard + Image when
+- : Per-channel Budget allocation, 4 lean, KPI goal
+- Review: matrix before Verification
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 브랜드 가이드와 카피를 기반으로 배너 크리에이티브만 만들어줘" + 파일 첨부
-**기대 결과**:
-- 기존 카피를 `_workspace/02_ad_copy.md`로 복사
-- 크리에이티브 모드: creative + reviewer 투입
-- analyst, copywriter, planner는 건너뜀
+### Existing File Utilization Flow
+**Prompt**: " Brand Guideand Copy based on banner Creative " + File 
+**Expected Result**:
+- Copy `_workspace/02_ad_copy.md`to 
+- Creative mode: creative + reviewer 
+- analyst, copywriter, planner 
 
-### 에러 흐름
-**프롬프트**: "광고 카피만 빨리 써줘, 제품은 친환경 세제"
-**기대 결과**:
-- 카피 모드로 전환 (analyst + copywriter + reviewer)
-- 타깃이 불분명하므로 분석가가 친환경 세제 카테고리 기반 타깃 3개 제안 후 진행
-- 리뷰 보고서에 "크리에이티브/미디어플랜 미생성" 명시
+### Error Flow
+**Prompt**: "ad Copy , "
+**Expected Result**:
+- Copy modeto before (analyst + copywriter + reviewer)
+- Target to Analysis Target 3 Suggestion after 
+- Review in the report "Creative/ " when
 
-## 에이전트별 확장 스킬
+## Extended Skills per Agent
 
-개별 에이전트의 도메인 전문성을 강화하는 확장 스킬:
+per Agentof before Extended Skill:
 
-| 스킬 | 대상 에이전트 | 역할 |
+| | subject Agent | Role |
 |------|-------------|------|
-| `ad-copywriting-formulas` | copywriter | AIDA/PAS/BAB/4Ps 설득 공식, 심리 트리거, 채널별 글자수 제한 |
-| `media-mix-calculator` | media-planner | GRP/CPM/ROAS 계산 공식, 예산 배분 모델, 채널별 벤치마크 |
+| `ad-copywriting-formulas` | copywriter | AIDA/PAS/BAB/4Ps Formula, Psychology Trigger, Per-channel Character limit |
+| `media-mix-calculator` | media-planner | GRP/CPM/ROAS Calculation Formula, Budget allocation Model, Per-channel Benchmark |

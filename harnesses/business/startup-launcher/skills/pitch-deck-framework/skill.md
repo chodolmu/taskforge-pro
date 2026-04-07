@@ -1,143 +1,85 @@
 ---
 name: pitch-deck-framework
-description: "투자 유치용 피치덱의 구성, 스토리텔링, 슬라이드 설계 프레임워크. '피치덱 프레임워크', '투자 PT 구조', '피치 스토리라인', '슬라이드 구성', '투자자 Q&A 대비' 등 피치덱 작성 시 사용한다. 단, 실제 투자 계약서 작성, 법무 검토, 그래픽 디자인 실행은 이 스킬의 범위가 아니다."
+description: "Framework for pitch deck structure, storytelling, and slide design for fundraising. Use this skill for 'pitch deck framework', 'investor PT structure', 'pitch storyline', 'slide design', 'investor Q&A preparation', and other pitch deck writing tasks. Note: actual investment contract writing, legal review, and graphic design execution are outside the scope of this skill."
 ---
 
-# Pitch Deck Framework — 피치덱 작성 프레임워크
+# Pitch Deck Framework — Investor Pitch Deck Design Guide
 
-pitch-creator의 피치덱 품질을 강화하는 스킬.
+A skill that enhances pitch deck creation for the pitch-creator and launch-reviewer.
 
-## 대상 에이전트
+## Target Agents
 
-- **pitch-creator** — 투자자 관점의 설득력 있는 피치덱을 작성한다
-- **launch-reviewer** — 피치덱의 논리적 일관성을 검증한다
+- **pitch-creator** — Creates compelling investor pitch decks
+- **launch-reviewer** — Evaluates pitch deck quality and investment readiness
 
-## 10-슬라이드 표준 구조 (Guy Kawasaki 변형)
-
-| 순서 | 슬라이드 | 핵심 질문 | 시간 |
-|------|---------|----------|------|
-| 1 | 표지 | 한 문장으로 무엇인가? | 30초 |
-| 2 | 문제 | 얼마나 큰 고통인가? | 1분 |
-| 3 | 솔루션 | 어떻게 해결하는가? | 1분 |
-| 4 | 시장 규모 | TAM/SAM/SOM은? | 1분 |
-| 5 | 비즈니스 모델 | 어떻게 돈을 버는가? | 1분 |
-| 6 | 트랙션 | 지금까지 증명한 것은? | 1분 |
-| 7 | 경쟁 우위 | 왜 당신이어야 하는가? | 1분 |
-| 8 | 팀 | 이 팀이 왜 적합한가? | 1분 |
-| 9 | 재무 계획 | 3년 후 어디에 있는가? | 1분 |
-| 10 | Ask | 얼마를, 무엇에 쓸 것인가? | 30초 |
-
-## 슬라이드별 작성 가이드
-
-### 슬라이드 2: 문제 (Problem)
+## Standard Deck Structure (12 slides)
 
 ```
-구성요소:
-1. 공감 가능한 이야기/데이터 — "매일 N명이 X로 고통받고 있습니다"
-2. 현재 해결책의 한계 — "기존 방법은 Y 때문에 부족합니다"
-3. 문제의 크기 정량화 — "이로 인한 경제적 손실은 Z억원"
-
-금지:
-- 추상적 문제 ("시장이 비효율적이다")
-- 솔루션 먼저 언급
-- 너무 많은 문제 나열 (1-2개 집중)
+1. Cover — Company name, one-line description, contact
+2. Problem — The pain point (with data or story)
+3. Solution — Your approach + key differentiator
+4. Product/Demo — Screenshots, user flow, features
+5. Market — TAM/SAM/SOM with credible sources
+6. Business Model — Revenue model, pricing, unit economics
+7. Traction — Key metrics, milestones, growth chart
+8. Competition — 2x2 positioning map, competitive moat
+9. Go-to-Market — Customer acquisition strategy, channels
+10. Team — Founders, key hires, relevant experience
+11. Financials — 3-year projection, key assumptions
+12. The Ask — Amount, use of funds, next milestones
 ```
 
-### 슬라이드 4: 시장 규모 (Market Size)
+## Storytelling Arc
 
 ```
-TAM → SAM → SOM 순서:
-
-TAM (전체 시장): 산업 보고서 기반 상향식
-  "전 세계 X 시장은 Y조원"
-
-SAM (접근 가능 시장): 지리+세그먼트 필터
-  "국내 Z 세그먼트는 N천억원"
-
-SOM (확보 가능 시장): 현실적 1-3년 목표
-  "초기 타깃 고객 M만 명 × 단가 = N억원"
-
-산출 방법:
-  상향식(Bottom-up) 우선 — 고객수 × 단가 × 빈도
-  하향식(Top-down) 검증 — 산업 보고서 × 점유율
+Hook (Slide 1-2): Capture attention with a compelling problem
+Build (Slide 3-6): Show your solution and the opportunity
+Prove (Slide 7-8): Demonstrate traction and competitive position
+Close (Slide 9-12): Show the path forward and make the ask
 ```
 
-### 슬라이드 6: 트랙션 (Traction)
+## Per-Slide Design Rules
 
 ```
-우선순위 (있는 것 위주 강조):
-1. 매출/MRR — 가장 강력한 증거
-2. 사용자 수/성장률 — 제품-시장 적합성
-3. 유료 전환율 — 지불 의사 증명
-4. LOI/MOU — 대기업 파트너십
-5. 파일럿 결과 — 정량적 성과
-6. 대기자 명단 — 수요 증명
-7. 수상/선발 — 외부 검증
-
-없으면:
-  "사전 조사에서 N명 중 M%가 지불 의사 표명"
-  "프로토타입 테스트 결과 NPS X점"
+- One key message per slide
+- Maximum 6 bullet points per slide
+- Font size minimum 24pt (presentation), 14pt (reading)
+- Data visualization > text whenever possible
+- Consistent color scheme throughout
+- White space is your friend
 ```
 
-### 슬라이드 7: 경쟁 우위 (Competition)
+## Investor Q&A Preparation
 
+### Must-Have Answers
 ```
-2×2 포지셔닝 맵:
-  축 선택: 자사 강점이 드러나는 축 2개
-  예: "자동화 수준" × "커스터마이징"
-
-경쟁 우위 유형:
-  1. 기술 해자 (특허, 알고리즘)
-  2. 네트워크 효과 (사용자 ↔ 사용자)
-  3. 데이터 해자 (독점 데이터)
-  4. 규제 해자 (라이선스, 인증)
-  5. 브랜드/커뮤니티
-
-금지:
-  - "경쟁사가 없다" → 시장이 없다는 의미
-  - 체크마크 비교표만 → 포지셔닝 맵 추가
+1. Why now? (Market timing)
+2. Why you? (Team unfair advantage)
+3. How do you acquire customers? (GTM strategy)
+4. What if [big competitor] does this? (Competitive moat)
+5. What are the key risks? (Self-awareness)
+6. How will you use the funding? (Capital allocation)
+7. What are your next milestones? (Execution plan)
+8. What is your exit strategy? (Return path)
 ```
 
-### 슬라이드 10: Ask (투자 요청)
-
+### Financial Q&A Preparation
 ```
-포함 요소:
-1. 투자 금액: "시리즈A N억원"
-2. 밸류에이션: "프리밸류 N억원"
-3. 자금 용도 비중:
-   - 제품 개발: 40%
-   - 마케팅/영업: 30%
-   - 인력 확충: 20%
-   - 운영/기타: 10%
-4. 마일스톤: "이 자금으로 18개월 내 MRR X달성"
-5. 런웨이: "18-24개월 운영 가능"
+- What are the key assumptions behind your projections?
+- What is your current burn rate and runway?
+- When do you expect to reach profitability?
+- What metrics do you track weekly?
+- How does your unit economics compare to industry benchmarks?
 ```
 
-## 투자자 예상 Q&A TOP 10
-
+## Common Pitch Deck Mistakes
 ```
-1. 왜 지금인가? (타이밍)
-2. 해자가 무엇인가? (방어 가능성)
-3. 고객이 왜 바꾸는가? (전환 비용)
-4. CAC는 얼마이고 어떻게 낮출 것인가?
-5. 이탈률/리텐션은?
-6. 경쟁사가 같은 걸 하면?
-7. 규제 리스크는?
-8. 팀에 부족한 역량은?
-9. 실패하면 어떻게 되는가?
-10. Exit 전략은?
-```
-
-## 피치덱 품질 체크리스트
-
-```
-[ ] 5분 이내 발표 가능한가?
-[ ] 각 슬라이드 핵심 메시지가 1개인가?
-[ ] 숫자/데이터가 출처와 함께 있는가?
-[ ] 텍스트가 슬라이드당 30단어 이하인가?
-[ ] 글꼴 크기 24pt 이상인가?
-[ ] 일관된 디자인/색상인가?
-[ ] 문제→솔루션 논리가 매끄러운가?
-[ ] 트랙션이 정량적인가?
-[ ] Ask가 구체적인가?
+1. Too many slides (>15) — keep to 12
+2. No clear problem statement — lead with pain
+3. TAM/SAM/SOM without sources — always cite data
+4. Hockey stick projections without basis — show milestones
+5. Ignoring competition — never say "no competitors"
+6. Ask without use of funds breakdown — be specific
+7. No traction slide — show any validation you have
+8. Team slide without relevant experience — highlight domain fit
 ```

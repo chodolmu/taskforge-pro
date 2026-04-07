@@ -1,177 +1,177 @@
 ---
 name: book-metadata-seo
-description: "메타데이터관리자(metadata-manager)가 사용하는 전자책 메타데이터 SEO 전문 스킬. BISAC/KDC 분류, 키워드 최적화, 서점별 설명문 전략, 가격 심리학, 배포 플랫폼별 설정을 제공한다. '메타데이터', '도서 분류', '키워드', '전자책 배포' 등에 활용한다."
+description: "A specialized skill for the metadata-manager agent covering e-book metadata SEO. Provides BISAC/KDC classification, keyword optimization, bookstore-specific description strategies, pricing psychology, and platform-specific distribution settings. Use for 'metadata,' 'book classification,' 'keywords,' 'e-book distribution,' and similar topics."
 ---
 
-# Book Metadata SEO — 전자책 메타데이터 SEO 방법론
+# Book Metadata SEO — E-Book Metadata SEO Methodology
 
-metadata-manager 에이전트가 메타데이터와 배포 설정을 구성할 때 활용하는 전문 지식.
+Specialized knowledge used by the metadata-manager agent when configuring metadata and distribution settings.
 
-## 왜 메타데이터 SEO인가
+## Why Metadata SEO
 
-온라인 서점에서 독자가 책을 발견하는 경로의 **70% 이상이 검색과 추천 알고리즘**이다. 메타데이터는 알고리즘에게 "이 책이 누구를 위한 것인가"를 알려주는 유일한 수단이다.
+Over **70% of how readers discover books** in online bookstores is through search and recommendation algorithms. Metadata is the only means of telling the algorithm "who this book is for."
 
-## 도서 분류 체계
+## Book Classification Systems
 
 ### BISAC (Book Industry Standards and Communications)
 
-미국/국제 표준. 교보문고, 알라딘 등 국내 서점도 참고한다.
+US/international standard. Domestic bookstores like Kyobo and Aladin also reference it.
 
-| 대분류 | 인기 소분류 | 코드 예시 |
-|--------|-----------|----------|
+| Main Category | Popular Subcategories | Code Example |
+|--------------|--------------------|-------------|
 | BUSINESS | Small Business, Leadership, Marketing | BUS060000 |
 | SELF-HELP | Personal Growth, Motivational | SEL027000 |
 | COMPUTERS | Programming, AI | COM051300 |
 | FICTION | Literary, Thriller, Romance | FIC019000 |
 
-**선택 규칙**: 최대 3개, 가장 구체적인 카테고리 우선
+**Selection Rule**: Maximum 3, prioritize the most specific category
 
-### KDC (한국십진분류)
+### KDC (Korean Decimal Classification)
 
-국내 도서관 및 서점 표준.
+Standard for domestic libraries and bookstores.
 
-| 대분류 | 번호 |
-|--------|------|
-| 총류 | 000 |
-| 철학 | 100 |
-| 종교 | 200 |
-| 사회과학 | 300 |
-| 자연과학 | 400 |
-| 기술과학 | 500 |
-| 예술 | 600 |
-| 언어 | 700 |
-| 문학 | 800 |
-| 역사 | 900 |
+| Main Category | Number |
+|--------------|--------|
+| General Works | 000 |
+| Philosophy | 100 |
+| Religion | 200 |
+| Social Sciences | 300 |
+| Natural Sciences | 400 |
+| Technology | 500 |
+| Arts | 600 |
+| Language | 700 |
+| Literature | 800 |
+| History | 900 |
 
-## 키워드 최적화 전략
+## Keyword Optimization Strategy
 
-### 키워드 선정 프로세스
+### Keyword Selection Process
 
-1. **시드 키워드**: 책의 핵심 주제 3~5개
-2. **확장 키워드**: 시드에서 파생된 관련 용어
-3. **경쟁 분석**: 유사 도서의 키워드 확인
-4. **롱테일**: 구체적 검색 의도를 반영하는 긴 키워드
+1. **Seed Keywords**: 3-5 core topics of the book
+2. **Expanded Keywords**: Related terms derived from seeds
+3. **Competitive Analysis**: Check keywords of similar books
+4. **Long-tail**: Longer keywords reflecting specific search intent
 
-### 키워드 유형
+### Keyword Types
 
-| 유형 | 설명 | 예시 (리더십 책) |
-|------|------|----------------|
-| **주제** | 책의 핵심 내용 | 리더십, 경영, 조직관리 |
-| **독자** | 타깃 독자층 | 신입사원, 중간관리자, CEO |
-| **문제** | 독자의 고민 | 팀원 관리, 의사결정, 갈등 해결 |
-| **비교** | 유사 도서/저자 | ~식 리더십, ~처럼 |
-| **형식** | 도서 형태 | 자기계발서, 실용서, 에세이 |
+| Type | Description | Example (Leadership Book) |
+|------|-------------|--------------------------|
+| **Topic** | Core content of the book | Leadership, management, organizational management |
+| **Reader** | Target readership | New employees, middle managers, CEOs |
+| **Problem** | Reader's concerns | Team management, decision-making, conflict resolution |
+| **Comparison** | Similar books/authors | ~style leadership, like ~ |
+| **Format** | Book format | Self-help, practical guide, essay |
 
-### 플랫폼별 키워드 입력
+### Platform-Specific Keyword Entry
 
-| 플랫폼 | 키워드 수 | 규칙 |
-|--------|---------|------|
-| **Amazon KDP** | 7개 키워드 구문 | 구문 형태 (콤마 구분 아님), 각 구문 50바이트 |
-| **교보문고** | 태그 10개 | 단어 또는 짧은 구문 |
-| **리디북스** | 키워드 5~10개 | 단어 단위 |
-| **알라딘** | 태그 제한 없음 | 관련 키워드 자유 입력 |
+| Platform | Keyword Count | Rules |
+|----------|--------------|-------|
+| **Amazon KDP** | 7 keyword phrases | Phrase format (not comma-separated), 50 bytes per phrase |
+| **Kyobo** | 10 tags | Words or short phrases |
+| **Ridibooks** | 5-10 keywords | Word-level |
+| **Aladin** | No tag limit | Free entry of related keywords |
 
-## 도서 설명문 (Book Description) 전략
+## Book Description Strategy
 
-### 설명문 공식: AIDA
+### Description Formula: AIDA
 
 ```
-[A — Attention: 첫 문장으로 주목]
-독자의 고통이나 욕구를 직격하는 질문/진술
+[A — Attention: Grab attention with the first sentence]
+A question/statement that directly targets the reader's pain or desire
 
-[I — Interest: 관심 유도]
-이 책이 다루는 핵심 내용, 독특한 관점
+[I — Interest: Generate interest]
+Core content this book covers, unique perspective
 
-[D — Desire: 욕구 자극]
-구체적 이익, 독자 후기/추천사, 저자 자격
+[D — Desire: Stimulate desire]
+Specific benefits, reader reviews/endorsements, author credentials
 
-[A — Action: 행동 유도]
-"지금 읽기 시작하세요", 보너스 콘텐츠 언급
+[A — Action: Prompt action]
+"Start reading now," mention bonus content
 ```
 
-### 서점별 설명문 길이
+### Bookstore-Specific Description Length
 
-| 서점 | 권장 길이 | 핵심 영역 |
-|------|---------|----------|
-| **교보문고** | 500~1,000자 | 첫 200자가 미리보기에 노출 |
-| **리디북스** | 400~800자 | 간결하고 핵심적 |
-| **알라딘** | 500~1,000자 | 목차 연동 가능 |
-| **Amazon KDP** | 1,000~2,000자 (HTML) | 볼드/이탤릭 활용, 리스트 구조 |
+| Bookstore | Recommended Length | Key Area |
+|-----------|-------------------|----------|
+| **Kyobo** | 500-1,000 chars | First 200 chars shown in preview |
+| **Ridibooks** | 400-800 chars | Concise and focused |
+| **Aladin** | 500-1,000 chars | Table of contents integration possible |
+| **Amazon KDP** | 1,000-2,000 chars (HTML) | Use bold/italic, list structure |
 
-### 설명문 HTML 포맷 (KDP)
+### Description HTML Format (KDP)
 
 ```html
-<h2>당신의 리더십은 안전한가요?</h2>
+<h2>Is Your Leadership Safe?</h2>
 
-<p>팀원의 70%가 상사 때문에 퇴사를 고민합니다.
-당신은 그 70%를 만들고 있을 수도 있습니다.</p>
+<p>70% of team members consider quitting because of their boss.
+You might be creating that 70%.</p>
 
-<p><b>이 책에서 배우는 것:</b></p>
+<p><b>What you will learn in this book:</b></p>
 <ul>
-<li>신뢰를 구축하는 대화법 5가지</li>
-<li>갈등을 기회로 바꾸는 프레임워크</li>
-<li>원격 팀을 이끄는 디지털 리더십</li>
+<li>5 conversation techniques that build trust</li>
+<li>A framework for turning conflicts into opportunities</li>
+<li>Digital leadership for remote teams</li>
 </ul>
 
-<p><b>저자 소개:</b> [자격과 경험]</p>
+<p><b>About the Author:</b> [Credentials and experience]</p>
 
-<p><i>"올해 읽은 리더십 책 중 최고" — [추천인]</i></p>
+<p><i>"The best leadership book I have read this year" — [Endorser]</i></p>
 ```
 
-## 가격 전략
+## Pricing Strategy
 
-### 전자책 가격 심리학
+### E-Book Pricing Psychology
 
-| 가격대 | 포지셔닝 | 적합 도서 |
-|--------|---------|----------|
-| 무료~2,900원 | 리드 마그넷, 시리즈 첫 권 | 입문서, 짧은 에세이 |
-| 5,900~9,900원 | 대중 시장 | 자기계발, 에세이, 소설 |
-| 9,900~14,900원 | 프리미엄 | 전문서, 두꺼운 비즈니스서 |
-| 14,900~19,900원 | 전문가용 | 기술서, 학술서 |
-| 19,900원+ | 하이엔드 | 아트북, 전문 레퍼런스 |
+| Price Range | Positioning | Suitable Books |
+|------------|------------|----------------|
+| Free-$2.99 | Lead magnet, first in series | Introductory, short essays |
+| $5.99-$9.99 | Mass market | Self-help, essays, fiction |
+| $9.99-$14.99 | Premium | Professional, thick business books |
+| $14.99-$19.99 | Expert-level | Technical, academic |
+| $19.99+ | High-end | Art books, professional references |
 
-### 가격 끝자리 효과
+### Price Ending Effect
 
-- **X,900원**: 가장 보편적 ("만 원 미만" 심리)
-- **X,500원**: 합리적 느낌
-- **정수 가격**: 프리미엄 포지셔닝 (10,000원 = 고급)
+- **X.99**: Most common ("under $10" psychology)
+- **X.50**: Feels reasonable
+- **Round number**: Premium positioning ($10.00 = high-end)
 
-## 배포 플랫폼별 설정 체크리스트
+## Distribution Platform Checklists
 
-### 교보문고 전자책
+### Kyobo E-Book
 
-- [ ] BISAC + KDC 분류 코드
-- [ ] 도서 설명문 (500자+)
-- [ ] 키워드/태그 (10개)
-- [ ] 저자 소개
-- [ ] 목차
-- [ ] 미리보기 범위 설정 (10~15%)
-- [ ] 가격 설정
-- [ ] DRM 설정
+- [ ] BISAC + KDC classification codes
+- [ ] Book description (500+ chars)
+- [ ] Keywords/tags (10)
+- [ ] Author bio
+- [ ] Table of contents
+- [ ] Preview range setting (10-15%)
+- [ ] Price setting
+- [ ] DRM setting
 
-### 리디북스
+### Ridibooks
 
-- [ ] 카테고리 선택 (최대 3개)
-- [ ] 도서 소개 (400자+)
-- [ ] 키워드 (5~10개)
-- [ ] 작가 소개
-- [ ] 미리보기 설정
-- [ ] 가격 (리디셀렉트 포함 여부)
-- [ ] 판매 지역 설정
+- [ ] Category selection (max 3)
+- [ ] Book introduction (400+ chars)
+- [ ] Keywords (5-10)
+- [ ] Author bio
+- [ ] Preview settings
+- [ ] Pricing (Ridi Select inclusion)
+- [ ] Sales region setting
 
 ### Amazon KDP
 
-- [ ] BISAC 카테고리 (2개)
-- [ ] 7개 키워드 구문
-- [ ] Book Description (HTML, 4,000자 이내)
-- [ ] 가격 (KDP Select 독점 여부에 따라 로열티 35%/70%)
-- [ ] 판매 지역 (전세계/특정)
-- [ ] 대출 허용 여부
+- [ ] BISAC categories (2)
+- [ ] 7 keyword phrases
+- [ ] Book Description (HTML, under 4,000 chars)
+- [ ] Pricing (35%/70% royalty based on KDP Select exclusivity)
+- [ ] Sales territory (Worldwide/Specific)
+- [ ] Lending permission
 
-## ISBN 관리
+## ISBN Management
 
-| 항목 | 설명 |
-|------|------|
-| **발급** | 한국: 국립중앙도서관 (무료) / 미국: Bowker ($125/1개) |
-| **형식별 필요** | 종이책, 전자책, 오디오북 각각 별도 ISBN |
-| **필수 여부** | 자가출판 시 선택 (KDP는 ASIN 자동 부여) / 서점 유통 시 필수 |
+| Item | Description |
+|------|-------------|
+| **Issuance** | Korea: National Library (free) / US: Bowker ($125/1) |
+| **Per Format** | Separate ISBNs needed for print, e-book, and audiobook |
+| **Required** | Optional for self-publishing (KDP auto-assigns ASIN) / Required for bookstore distribution |

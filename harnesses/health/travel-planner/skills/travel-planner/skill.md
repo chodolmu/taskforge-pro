@@ -1,128 +1,128 @@
 ---
 name: travel-planner
-description: "여행 계획의 목적지분석부터 현지정보까지 전 과정을 에이전트 팀이 협업하여 생성하는 풀 파이프라인. '여행 계획 짜줘', '일본 여행 일정', '유럽 배낭여행', '제주도 2박3일', '해외여행 준비', '여행 예산', '숙소 추천', '여행 일정표', '현지 맛집', '여행 코스 추천' 등 여행 계획·일정·예산 관련 요청에 이 스킬을 사용한다. 기존 일정이 있으면 분석이나 개선을 지원한다. 단, 항공권·숙소 실시간 예약 대행, 비자 신청 대행, 여행사 패키지 비교는 이 스킬의 범위가 아니다."
+description: "A full pipeline where an agent team collaborates to generate everything from destination analysis to local information for travel planning. Used for 'plan a trip', 'Japan travel itinerary', 'Europe backpacking', 'weekend getaway', 'international travel prep', 'travel budget', 'accommodation recommendations', 'travel itinerary', 'local restaurants', 'travel route recommendations', etc. Supports analysis or improvement of existing itineraries. Real-time flight/accommodation booking, visa application processing, and travel agency package comparisons are outside this skill's scope."
 ---
 
-# Travel Planner — 여행 계획 풀 파이프라인
+# Travel Planner — Travel Planning Full Pipeline
 
-목적지분석→일정→숙소→예산→현지정보를 에이전트 팀이 협업하여 한 번에 생성한다.
+Generates destination analysis, itinerary, accommodation, budget, and local information through agent team collaboration in one go.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 4명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 4 agents communicate directly via SendMessage and cross-verify.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| destination-analyst | `.claude/agents/destination-analyst.md` | 목적지 리서치, 관광지, 안전정보 | general-purpose |
-| itinerary-designer | `.claude/agents/itinerary-designer.md` | 일별 일정, 동선 최적화, 숙소 | general-purpose |
-| budget-manager | `.claude/agents/budget-manager.md` | 예산 산출, 비용 비교, 절약 팁 | general-purpose |
-| local-guide | `.claude/agents/local-guide.md` | 교통, 맛집, 문화, 긴급 정보 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| destination-analyst | `.claude/agents/destination-analyst.md` | Destination research, attractions, safety info | general-purpose |
+| itinerary-designer | `.claude/agents/itinerary-designer.md` | Daily itinerary, route optimization, accommodation | general-purpose |
+| budget-manager | `.claude/agents/budget-manager.md` | Budget calculation, cost comparison, savings tips | general-purpose |
+| local-guide | `.claude/agents/local-guide.md` | Transport, restaurants, culture, emergency info | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Orchestrator performs directly)
 
-1. 사용자 입력에서 추출한다:
-    - **목적지**: 국가/도시 (미확정 시 조건으로 추천)
-    - **기간**: 며칠, 출발·도착일
-    - **인원**: 혼자/커플/가족/친구 + 인원수
-    - **예산** (선택): 총 예산 또는 예산 수준 (절약/보통/럭셔리)
-    - **여행 스타일** (선택): 힐링/액티비티/문화/미식
-    - **특별 요청** (선택): 꼭 가고 싶은 곳, 제외 사항
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Destination**: Country/City (recommend based on criteria if undecided)
+    - **Duration**: How many days, departure/arrival dates
+    - **Party**: Solo/Couple/Family/Friends + number of people
+    - **Budget** (optional): Total budget or budget level (Budget/Standard/Luxury)
+    - **Travel Style** (optional): Relaxation/Adventure/Cultural/Culinary
+    - **Special Requests** (optional): Must-visit places, exclusions
+2. Create `_workspace/` directory at project root
+3. Organize inputs and save to `_workspace/00_input.md`
+4. **Determine execution mode** based on request scope
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 목적지 분석 | analyst | 없음 | `_workspace/01_destination_analysis.md` |
-| 2 | 일정 설계 + 숙소 | designer | 작업 1 | `_workspace/02_itinerary.md`, `_workspace/03_accommodation.md` |
-| 3a | 예산 계획 | budget | 작업 1, 2 | `_workspace/04_budget.md` |
-| 3b | 현지 정보 | guide | 작업 1, 2 | `_workspace/05_local_guide.md` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1 | Destination Analysis | analyst | None | `_workspace/01_destination_analysis.md` |
+| 2 | Itinerary + Accommodation | designer | Task 1 | `_workspace/02_itinerary.md`, `_workspace/03_accommodation.md` |
+| 3a | Budget Plan | budget | Tasks 1, 2 | `_workspace/04_budget.md` |
+| 3b | Local Information | guide | Tasks 1, 2 | `_workspace/05_local_guide.md` |
 
-작업 3a(예산)와 3b(현지정보)는 **병렬 실행**한다.
+Tasks 3a (Budget) and 3b (Local Info) run **in parallel**.
 
-**팀원 간 소통 흐름:**
-- analyst 완료 → designer에게 관광지·소요시간·운영시간 전달, budget에게 물가·환율 전달, guide에게 문화·안전 정보 전달
-- designer 완료 → budget에게 일별 비용·숙소 예산 전달, guide에게 일별 방문 지역·이동 구간 전달
-- budget 완료 → guide에게 결제 수단 정보 전달
-- guide 완료 → 일정과 맞지 않는 정보 발견 시 designer에게 조정 요청
+**Inter-team communication flow:**
+- analyst complete → transmit attractions/time/hours to designer, costs/rates to budget, culture/safety to guide
+- designer complete → transmit daily costs/accommodation budget to budget, daily areas/segments to guide
+- budget complete → transmit payment info to guide
+- guide complete → if inconsistencies found with itinerary, request adjustment from designer
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 일정-예산-현지정보 간 일관성을 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 목적지 분석 — `01_destination_analysis.md`
-    - 일정표 — `02_itinerary.md`
-    - 숙소 가이드 — `03_accommodation.md`
-    - 예산 계획 — `04_budget.md`
-    - 현지 가이드 — `05_local_guide.md`
+1. Verify all files in `_workspace/`
+2. Confirm consistency across itinerary-budget-local information
+3. Report final summary to user:
+    - Destination Analysis — `01_destination_analysis.md`
+    - Itinerary — `02_itinerary.md`
+    - Accommodation Guide — `03_accommodation.md`
+    - Budget Plan — `04_budget.md`
+    - Local Guide — `05_local_guide.md`
 
-## 작업 규모별 모드
+## Modes by Request Scale
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "여행 전체 계획 짜줘" | **풀 파이프라인** | 4명 전원 |
-| "일본 어디가 좋을까" | **목적지 추천 모드** | analyst 단독 |
-| "파리 3박4일 일정만" | **일정 모드** | analyst + designer |
-| "여행 예산만 계산해줘" | **예산 모드** | budget 단독 |
-| "현지에서 필요한 정보" | **가이드 모드** | guide 단독 |
-| "이 일정 개선해줘" (기존 파일) | **분석 모드** | designer + budget |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|-----------------|
+| "Plan an entire trip" | **Full Pipeline** | All 4 |
+| "Where should I go in Japan?" | **Destination Recommendation** | analyst solo |
+| "Paris 3-night itinerary only" | **Itinerary Mode** | analyst + designer |
+| "Just calculate travel budget" | **Budget Mode** | budget solo |
+| "Info I need while there" | **Guide Mode** | guide solo |
+| "Improve this itinerary" (existing file) | **Analysis Mode** | designer + budget |
 
-**기존 파일 활용**: 사용자가 기존 일정을 제공하면, `_workspace/02_itinerary.md`로 복사하고 designer를 건너뛴다.
+**Using existing files**: If the user provides an existing itinerary, copy to `_workspace/02_itinerary.md` and skip the designer.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key info transfer, revision requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{order}_{agent}_{deliverable}.{ext}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 웹 검색 실패 | 일반 지식 기반 작업, "최신 정보 확인 필요" 명시 |
-| 목적지 미확정 | 사용자 조건 기반 3곳 비교 추천 |
-| 예산 초과 | 절약형 대안 제시 + 우선순위 조정 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 보고서에 누락 명시 |
-| 일정-정보 불일치 | designer에게 조정 요청 (최대 2회) |
+| Error Type | Strategy |
+|-----------|----------|
+| Web search failure | Work from general knowledge, note "Latest information verification needed" |
+| Destination undecided | Recommend 3 destinations based on user criteria |
+| Budget exceeded | Present budget alternatives + adjust priorities |
+| Agent failure | Retry once → proceed without that deliverable if failed, note omission in report |
+| Itinerary-info inconsistency | Request adjustment from designer (up to 2 times) |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "커플 여행으로 도쿄 4박5일 여행 계획 짜줘. 예산 200만원, 미식 여행 위주로"
-**기대 결과**:
-- 목적지 분석: 도쿄 관광지, 미식 명소, 입국 요건, 최적 방문 시기
-- 일정: 5일 일정, 미식 중심 동선, 츠키지/시부야/신주쿠 등 지역별 구성
-- 숙소: 동선 중심부 숙소 3곳 추천 + 예약 팁
-- 예산: 200만원 내 배분 (항공/숙소/식비/교통), 절약·보통·럭셔리 비교
-- 현지 가이드: 교통(Suica), 맛집 리스트, 일본어 기본 표현, 긴급 연락처
+### Normal Flow
+**Prompt**: "Plan a 4-night 5-day trip to Tokyo for a couple. Budget $1,500, focusing on food tourism."
+**Expected Results**:
+- Destination analysis: Tokyo attractions, culinary spots, entry requirements, optimal season
+- Itinerary: 5-day schedule, food-focused routes, organized by areas like Tsukiji/Shibuya/Shinjuku
+- Accommodation: 3 centrally-located recommendations + booking tips
+- Budget: Allocation within $1,500 (flights/accommodation/meals/transport), Budget/Standard/Luxury comparison
+- Local guide: Transit (Suica), restaurant list, basic Japanese phrases, emergency contacts
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 일정 예산 맞는지 확인하고 현지 정보 추가해줘" + 일정 파일 첨부
-**기대 결과**:
-- 기존 일정을 `_workspace/02_itinerary.md`로 복사
-- budget + guide 투입: 예산 산출 + 현지 정보 생성
+### Existing File Flow
+**Prompt**: "Check if this itinerary fits the budget and add local info" + attached itinerary file
+**Expected Results**:
+- Copy existing itinerary to `_workspace/02_itinerary.md`
+- Deploy budget + guide: generate budget calculation + local information
 
-### 에러 흐름
-**프롬프트**: "동남아 어디가 좋을까, 예산 100만원 이내, 혼자 3박4일"
-**기대 결과**:
-- 목적지 미확정 → analyst가 조건 기반 3곳 비교 (베트남/태국/필리핀 등)
-- 각 목적지별 예상 비용·장단점 비교표 제공
-- 사용자 선택 후 풀 파이프라인 진행 (또는 최추천 목적지로 자동 진행)
+### Error Flow
+**Prompt**: "Where should I go in Southeast Asia, budget under $800, solo for 3 nights 4 days"
+**Expected Results**:
+- Destination undecided → analyst compares 3 destinations based on criteria (Vietnam/Thailand/Philippines, etc.)
+- Provide comparison table of estimated costs, pros/cons for each
+- Proceed with full pipeline after user selection (or auto-proceed with top recommendation)
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-| 에이전트 | 확장 스킬 | 용도 |
-|---------|----------|------|
-| itinerary-designer | `route-optimizer` | 동선 최적화, 교통수단 비교, 시간 블록 배분 |
-| budget-manager | `budget-calculator` | 도시별 비용 기준표, 예산 배분 공식, 절약 전략 |
+| Agent | Extension Skill | Purpose |
+|-------|----------------|---------|
+| itinerary-designer | `route-optimizer` | Route optimization, transport comparison, time block allocation |
+| budget-manager | `budget-calculator` | City-specific cost tables, budget allocation formulas, savings strategies |

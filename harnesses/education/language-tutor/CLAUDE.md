@@ -1,27 +1,38 @@
 # Language Tutor Harness
 
-외국어 학습을 위한 레벨 테스트, 커리큘럼, 레슨, 퀴즈, 복습 관리 에이전트 팀 하네스.
+An agent team harness for foreign language learning: level testing, curriculum design, lessons, quizzes, and review management.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── level-assessor.md
-│   ├── curriculum-designer.md
-│   ├── lesson-tutor.md
-│   ├── quiz-master.md
-│   └── review-coach.md
+│   ├── level-assessor.md        — Level Assessor (CEFR-based diagnosis, skill area analysis)
+│   ├── curriculum-designer.md   — Curriculum Designer (learning path, goals, schedule)
+│   ├── lesson-tutor.md          — Lesson Tutor (pedagogy, examples, practice)
+│   ├── quiz-master.md           — Quiz Master (by type, difficulty, feedback)
+│   └── review-coach.md          — Review Coach (spaced repetition, error management, motivation)
 ├── skills/
 │   ├── language-tutor/
-│   │   └── skill.md              — 오케스트레이터
-│   ├── spaced-repetition/
-│   │   └── skill.md              — 간격 반복 알고리즘 (SM-2, 에빙하우스, 복습 설계)
-│   └── cefr-assessment/
-│       └── skill.md              — CEFR 레벨 평가 (6단계 기술자, 적응형 진단, 시험 매핑)
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md             — Orchestrator (team coordination, workflow, error handling)
+│   ├── cefr-assessment/
+│   │   └── skill.md             — CEFR Assessment (level diagnosis, skill-based evaluation)
+│   └── spaced-repetition/
+│       └── skill.md             — Spaced Repetition (Ebbinghaus, optimal review schedule)
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/language-tutor` 스킬을 트리거하거나 자연어로 요청한다.
+Trigger the `/language-tutor` skill, or make a natural language request such as "Help me learn a foreign language."
+
+## Deliverables
+
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_level_assessment.md` — Level test results
+- `02_curriculum.md` — Learning curriculum
+- `03_lessons.md` — Lesson materials
+- `04_quizzes.md` — Quizzes
+- `05_review_plan.md` — Review plan
+- `06_review_report.md` — Review report

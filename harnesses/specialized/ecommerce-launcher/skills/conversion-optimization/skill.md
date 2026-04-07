@@ -1,128 +1,128 @@
 ---
 name: conversion-optimization
-description: "구매전환 최적화 프레임워크. detail-page-writer와 pricing-strategist 에이전트가 상세페이지와 가격을 구매전환 중심으로 설계할 때 참조. '전환율 최적화', 'CRO', '구매 심리' 요청 시 사용. 단, A/B 테스트 도구 세팅이나 퍼널 자동화 구축은 범위 밖."
+description: "Purchase conversion optimization framework. Referenced by the detail-page-writer and pricing-strategist agents when designing detail pages and pricing with a conversion focus. Use for 'conversion rate optimization', 'CRO', or 'purchase psychology' requests. A/B testing tool setup and funnel automation are out of scope."
 ---
 
-# Conversion Optimization — 구매전환 최적화
+# Conversion Optimization — Purchase Conversion Optimization
 
-detail-page-writer / pricing-strategist 에이전트의 전환율 설계 역량 강화.
+Enhances conversion rate design capabilities for the detail-page-writer and pricing-strategist agents.
 
-## 구매 심리 프레임워크
+## Purchase Psychology Framework
 
-### Cialdini 6대 설득 원칙
+### Cialdini's 6 Principles of Persuasion
 
-| 원칙 | 적용 방법 | 이커머스 예시 |
-|------|----------|-------------|
-| 상호성 | 먼저 가치 제공 | 무료 샘플, 쿠폰, 콘텐츠 |
-| 일관성 | 작은 약속 → 큰 약속 | 장바구니 → 찜 → 구매 |
-| 사회적 증거 | 타인의 행동 보여주기 | 리뷰, 판매량, "N명이 보는 중" |
-| 호감 | 공감, 유사성 | 모델/인플루언서, 스토리 |
-| 권위 | 전문가 인정 | 인증, 수상, 전문가 추천 |
-| 희소성 | 제한된 기회 | 한정 수량, 타임세일, 마감 임박 |
+| Principle | Application | E-commerce Example |
+|-----------|------------|-------------------|
+| Reciprocity | Provide value first | Free samples, coupons, content |
+| Commitment | Small commitment -> large commitment | Cart -> wishlist -> purchase |
+| Social Proof | Show others' behavior | Reviews, sales volume, "N people viewing" |
+| Liking | Empathy, similarity | Models/influencers, stories |
+| Authority | Expert endorsement | Certifications, awards, expert recommendations |
+| Scarcity | Limited opportunity | Limited quantity, flash sales, deadline approaching |
 
-### 구매 의사결정 여정 (AIDA)
-
-```
-Attention (주의) → 썸네일, 메인 이미지, 헤드라인
-Interest (흥미) → 혜택 강조, 문제 공감
-Desire (욕구) → 사회적 증거, 비교 우위, 시각화
-Action (행동) → CTA, 긴급성, 결제 편의
-```
-
-## 상세페이지 전환 구조
-
-### 최적 구성 순서
+### Purchase Decision Journey (AIDA)
 
 ```
-1. 히어로 영역 (Above the fold)
-   - 메인 이미지 (5장 이상, 다양한 앵글)
-   - 상품명 + 핵심 USP (1줄)
-   - 가격 + 할인 정보
-   - CTA 버튼 (장바구니/구매)
-   - 배송/혜택 아이콘
+Attention -> Thumbnail, main image, headline
+Interest -> Benefit highlights, problem empathy
+Desire -> Social proof, comparative advantage, visualization
+Action -> CTA, urgency, payment convenience
+```
 
-2. 신뢰 영역
-   - 평점 + 리뷰 수 + 별점 분포
-   - 인증/수상 배지
+## Detail Page Conversion Structure
 
-3. 혜택 영역
-   - Before/After 비교
-   - 핵심 혜택 3~5개 (아이콘 + 짧은 설명)
+### Optimal Section Order
 
-4. 상세 설명
-   - 사용 시나리오 (라이프스타일 이미지)
-   - 제품 스펙/성분 표
-   - 사이즈 가이드
+```
+1. Hero Area (Above the fold)
+   - Main image (5+ images, multiple angles)
+   - Product name + core USP (1 line)
+   - Price + discount information
+   - CTA button (Add to cart / Buy now)
+   - Shipping/benefit icons
 
-5. 사회적 증거
-   - 베스트 리뷰 3~5개 (사진 리뷰 우선)
-   - 미디어 노출/전문가 추천
+2. Trust Area
+   - Rating + review count + star distribution
+   - Certification/award badges
+
+3. Benefits Area
+   - Before/After comparison
+   - 3-5 key benefits (icon + short description)
+
+4. Detailed Description
+   - Usage scenarios (lifestyle imagery)
+   - Product specs/ingredients table
+   - Size guide
+
+5. Social Proof
+   - 3-5 best reviews (photo reviews preferred)
+   - Media features/expert recommendations
 
 6. FAQ
-   - 상위 5개 자주 묻는 질문
+   - Top 5 frequently asked questions
 
-7. 크로스셀
-   - 함께 구매한 상품
-   - 유사 상품 추천
+7. Cross-sell
+   - Frequently bought together
+   - Similar product recommendations
 ```
 
-### CTA 최적화
+### CTA Optimization
 
-| 요소 | 권장 | 지양 |
-|------|------|------|
-| 문구 | "지금 구매하기", "장바구니 담기" | "제출", "확인" |
-| 색상 | 페이지 주색 대비색 | 배경과 유사색 |
-| 위치 | Above the fold + 스크롤 고정 | 하단에만 |
-| 크기 | 엄지로 탭 가능 (44px+) | 너무 작음 |
-| 긴급성 | "오늘만 할인", "3개 남음" | 상시 긴급 (신뢰 하락) |
+| Element | Recommended | Avoid |
+|---------|------------|-------|
+| Copy | "Buy Now", "Add to Cart" | "Submit", "Confirm" |
+| Color | Contrasting with page primary color | Similar to background |
+| Position | Above the fold + sticky on scroll | Bottom only |
+| Size | Thumb-tappable (44px+) | Too small |
+| Urgency | "Today only discount", "3 remaining" | Always urgent (erodes trust) |
 
-## 가격 심리 전략
+## Pricing Psychology Strategies
 
-### 가격 프레이밍
+### Price Framing
 
-| 전략 | 방법 | 예시 |
-|------|------|------|
-| 앵커링 | 정가 먼저 → 할인가 | ~~₩39,900~~ → ₩29,900 |
-| 분할 | 월/일 단위 환산 | "하루 ₩997원" |
-| 번들 | 묶음 할인 | "3개 사면 1개 무료" |
-| 데코이 | 비교 옵션 추가 | S/M/L 중 M이 최적으로 보이게 |
-| 무료 배송 | 배송비 상품가 포함 | "₩30,000 이상 무료 배송" |
+| Strategy | Method | Example |
+|----------|--------|---------|
+| Anchoring | Show list price first, then sale price | ~~$39.90~~ -> $29.90 |
+| Partitioning | Break into monthly/daily amounts | "Just $0.99 per day" |
+| Bundling | Bundle discount | "Buy 3 get 1 free" |
+| Decoy | Add a comparison option | S/M/L where M appears optimal |
+| Free Shipping | Include shipping in product price | "Free shipping on orders over $30" |
 
-### 가격 끝자리 효과
+### Price Ending Effects
 
-| 전략 | 적합 | 예시 |
-|------|------|------|
-| 9 끝 | 할인/가성비 | ₩29,900 |
-| 0 끝 | 프리미엄/럭셔리 | ₩30,000 |
-| 숫자 줄이기 | 심리적 저가 | ₩29,900 vs ₩30,000 |
+| Strategy | Best For | Example |
+|----------|---------|---------|
+| Ending in 9 | Discounts/value pricing | $29.90 |
+| Ending in 0 | Premium/luxury | $30.00 |
+| Fewer digits | Perceived lower price | $29.90 vs $30.00 |
 
-## 전환율 벤치마크
+## Conversion Rate Benchmarks
 
-| 산업 | 평균 전환율 | 상위 25% |
-|------|-----------|---------|
-| 패션 | 1.5~2.5% | 3.5%+ |
-| 전자제품 | 1.0~2.0% | 3.0%+ |
-| 뷰티/건강 | 2.0~3.5% | 5.0%+ |
-| 식품 | 2.5~4.0% | 6.0%+ |
-| 종합몰 | 1.0~2.0% | 3.0%+ |
+| Industry | Average Conversion Rate | Top 25% |
+|----------|----------------------|---------|
+| Fashion | 1.5-2.5% | 3.5%+ |
+| Electronics | 1.0-2.0% | 3.0%+ |
+| Beauty/Health | 2.0-3.5% | 5.0%+ |
+| Food & Beverage | 2.5-4.0% | 6.0%+ |
+| General Marketplace | 1.0-2.0% | 3.0%+ |
 
-## 전환 저해 요소 체크리스트
+## Conversion Barrier Checklist
 
-| 저해 요소 | 해결 방법 |
-|----------|----------|
-| 느린 로딩 | 이미지 최적화, CDN |
-| 복잡한 결제 | 간편결제, 원클릭 |
-| 신뢰 부족 | 리뷰, 인증, 보증 |
-| 정보 부족 | 상세 스펙, FAQ |
-| 반품 불안 | 무료 반품, 교환 보장 |
+| Barrier | Solution |
+|---------|---------|
+| Slow loading | Image optimization, CDN |
+| Complex checkout | Express payment, one-click |
+| Lack of trust | Reviews, certifications, guarantees |
+| Insufficient information | Detailed specs, FAQ |
+| Return anxiety | Free returns, exchange guarantee |
 
-## 품질 체크리스트
+## Quality Checklist
 
-| 항목 | 기준 |
-|------|------|
-| 히어로 | 이미지 5장+, CTA above fold |
-| 설득 원칙 | 6가지 중 3가지 이상 적용 |
-| CTA | 대비색, 고정, 명확한 문구 |
-| 사회적 증거 | 리뷰+판매량+인증 |
-| 가격 | 앵커링 + 분할/번들 |
-| 모바일 | 모바일 우선 최적화 |
+| Item | Criteria |
+|------|----------|
+| Hero | 5+ images, CTA above fold |
+| Persuasion Principles | 3+ of the 6 principles applied |
+| CTA | Contrasting color, sticky, clear copy |
+| Social Proof | Reviews + sales volume + certifications |
+| Pricing | Anchoring + partitioning/bundling |
+| Mobile | Mobile-first optimized |

@@ -1,27 +1,38 @@
 # Debate Simulator Harness
 
-토론 시뮬레이션 에이전트 팀 하네스.
+An agent team harness for debate simulation.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── topic-analyst.md
-│   ├── pro-debater.md
-│   ├── con-debater.md
-│   ├── judge.md
-│   └── rapporteur.md
+│   ├── topic-analyst.md         — Topic Analyst (issues, arguments, data)
+│   ├── pro-debater.md           — Pro-side Debater (argumentation, rebuttal, evidence)
+│   ├── con-debater.md           — Con-side Debater (argumentation, rebuttal, evidence)
+│   ├── judge.md                 — Judge (evaluation, verdict, feedback)
+│   └── rapporteur.md            — Rapporteur (summary, analysis, learning points)
 ├── skills/
 │   ├── debate-simulator/
-│   │   └── skill.md              — 오케스트레이터
-│   ├── argumentation-framework/
-│   │   └── skill.md              — 논증 구축 (Toulmin 모델, 증거 피라미드, 반박 5-Type)
-│   └── logical-fallacy-detector/
-│       └── skill.md              — 논리적 오류 검출 (4대 분류, 감점 기준, 루브릭)
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md             — Orchestrator (team coordination, workflow, error handling)
+│   ├── logical-fallacy-detector/
+│   │   └── skill.md             — Logical Fallacy Detector (formal/informal fallacies)
+│   └── argumentation-framework/
+│       └── skill.md             — Argumentation Framework (Toulmin, logical structure)
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/debate-simulator` 스킬을 트리거하거나 자연어로 요청한다.
+Trigger the `/debate-simulator` skill, or make a natural language request such as "Run a debate simulation."
+
+## Deliverables
+
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_topic_analysis.md` — Topic analysis
+- `02_pro_arguments.md` — Pro-side arguments
+- `03_con_arguments.md` — Con-side arguments
+- `04_verdict.md` — Verdict
+- `05_debate_record.md` — Debate record
+- `06_review_report.md` — Review report

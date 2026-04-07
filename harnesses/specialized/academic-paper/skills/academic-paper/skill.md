@@ -1,127 +1,127 @@
 ---
 name: academic-paper
-description: "학술 논문 작성의 연구설계, 실험, 분석, 집필, 투고준비를 에이전트 팀이 협업하여 한 번에 생성하는 풀 연구 파이프라인. '학술 논문 써줘', '연구 논문 작성', '논문 쓰기 도와줘', '연구 설계해줘', '통계 분석해줘', '저널 투고 준비', '논문 집필', '연구 방법론 설계', '가설 검증', '학술 글쓰기' 등 학술 연구 논문 작성 전반에 이 스킬을 사용한다. 기존 데이터나 초고가 있는 경우에도 분석/리라이팅/투고 준비를 지원한다. 단, 실제 데이터 수집 실행, IRB 공식 제출, 저널 시스템 로그인 및 업로드, 실제 통계 소프트웨어 실행은 이 스킬의 범위가 아니다."
+description: "Full research pipeline for academic paper writing where an agent team collaborates to generate research design, experiment protocols, analysis, manuscript writing, and submission preparation. Use this skill for requests such as 'write an academic paper', 'research paper writing', 'help me write a paper', 'design a study', 'run statistical analysis', 'prepare journal submission', 'manuscript writing', 'research methodology design', 'hypothesis testing', 'academic writing', and other academic research paper tasks. Also supports analysis, rewriting, and submission preparation when existing data or drafts are available. However, actual data collection execution, official IRB submission, journal system login and upload, and running actual statistical software are outside the scope of this skill."
 ---
 
-# Academic Paper — 학술 논문 작성 풀 파이프라인
+# Academic Paper — Academic Paper Writing Full Pipeline
 
-학술 논문의 연구설계→실험→분석→집필→투고준비를 에이전트 팀이 협업하여 한 번에 생성한다.
+An agent team collaborates to generate research design, experiment protocols, analysis, manuscript writing, and submission preparation for an academic paper.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 members communicate directly via SendMessage and cross-validate each other's work.
 
-## 에이전트 구성
+## Agent Roster
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| research-designer | `.claude/agents/research-designer.md` | 연구 질문, 가설, 방법론, 선행연구 | general-purpose |
-| experiment-manager | `.claude/agents/experiment-manager.md` | 실험 프로토콜, 데이터 수집 계획 | general-purpose |
-| statistical-analyst | `.claude/agents/statistical-analyst.md` | 통계 분석, 코드 생성, 시각화 | general-purpose |
-| paper-writer | `.claude/agents/paper-writer.md` | IMRaD 구조 집필, 인용 관리 | general-purpose |
-| submission-preparer | `.claude/agents/submission-preparer.md` | 저널 선정, 포맷팅, 커버레터 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| research-designer | `.claude/agents/research-designer.md` | Research questions, hypotheses, methodology, prior literature | general-purpose |
+| experiment-manager | `.claude/agents/experiment-manager.md` | Experiment protocols, data collection planning | general-purpose |
+| statistical-analyst | `.claude/agents/statistical-analyst.md` | Statistical analysis, code generation, visualization | general-purpose |
+| paper-writer | `.claude/agents/paper-writer.md` | IMRaD-structured writing, citation management | general-purpose |
+| submission-preparer | `.claude/agents/submission-preparer.md` | Journal selection, formatting, cover letter | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Performed Directly by Orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **연구 주제**: 연구 분야, 핵심 키워드
-    - **연구 수준** (선택): 학부/석사/박사/교수 수준
-    - **타깃 저널** (선택): 저널명, IF 범위
-    - **기존 자료** (선택): 데이터, 초고, 선행연구 목록
-    - **제약 조건** (선택): 마감일, 분량, 특이사항
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Research Topic**: Research field, core keywords
+    - **Research Level** (optional): Undergraduate/Master's/Doctoral/Faculty level
+    - **Target Journal** (optional): Journal name, IF range
+    - **Existing Materials** (optional): Data, drafts, literature lists
+    - **Constraints** (optional): Deadline, length, special considerations
+2. Create the `_workspace/` directory at the project root
+3. Organize the input and save it as `_workspace/00_input.md`
+4. If existing files are provided, copy them to `_workspace/` and skip the corresponding phase
+5. **Determine the execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 연구 설계 | designer | 없음 | `_workspace/01_research_design.md` |
-| 2 | 실험 프로토콜 | experiment | 작업 1 | `_workspace/02_experiment_protocol.md` |
-| 3 | 통계 분석 | analyst | 작업 1, 2 | `_workspace/03_analysis_report.md` |
-| 4 | 논문 집필 | writer | 작업 1, 2, 3 | `_workspace/04_manuscript.md` |
-| 5 | 투고 준비 | preparer | 작업 1, 4 | `_workspace/05_submission_package.md` |
-| 6 | 통합 리뷰 | 오케스트레이터 | 전체 | `_workspace/06_review_report.md` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1 | Research Design | designer | None | `_workspace/01_research_design.md` |
+| 2 | Experiment Protocol | experiment | Task 1 | `_workspace/02_experiment_protocol.md` |
+| 3 | Statistical Analysis | analyst | Tasks 1, 2 | `_workspace/03_analysis_report.md` |
+| 4 | Manuscript Writing | writer | Tasks 1, 2, 3 | `_workspace/04_manuscript.md` |
+| 5 | Submission Preparation | preparer | Tasks 1, 4 | `_workspace/05_submission_package.md` |
+| 6 | Integrated Review | orchestrator | All | `_workspace/06_review_report.md` |
 
-**팀원 간 소통 흐름:**
-- designer 완료 → experiment에게 변수·표본 전달, analyst에게 가설·분석 방향 전달, writer에게 이론적 배경 전달, preparer에게 연구 분야 전달
-- experiment 완료 → analyst에게 데이터 구조 전달, writer에게 Methods 자료 전달
-- analyst 완료 → writer에게 Results 자료(APA 형식 + Table/Figure) 전달, preparer에게 분석 코드 전달
-- writer 완료 → preparer에게 완성 원고 전달
-- 오케스트레이터가 전체 일관성(가설↔분석↔결과↔논의)을 교차 검증
+**Inter-Agent Communication Flow:**
+- designer completes -> delivers variables and sampling plan to experiment, hypotheses and analysis direction to analyst, theoretical background to writer, research field to preparer
+- experiment completes -> delivers data structure to analyst, Methods materials to writer
+- analyst completes -> delivers Results materials (APA format + Tables/Figures) to writer, analysis code to preparer
+- writer completes -> delivers completed manuscript to preparer
+- orchestrator cross-validates overall consistency (hypotheses <-> analysis <-> results <-> discussion)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일의 정합성을 확인한다
-2. 가설-분석-결과-논의의 논리적 일관성을 검증한다
-3. 통합 리뷰 보고서를 생성한다
-4. 최종 요약을 사용자에게 보고한다
+1. Verify consistency across all files in `_workspace/`
+2. Validate logical consistency of hypotheses-analysis-results-discussion chain
+3. Generate the integrated review report
+4. Report the final summary to the user
 
-## 작업 규모별 모드
+## Execution Modes by Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "논문 써줘", "연구 논문 작성" | **풀 파이프라인** | 5명 전원 |
-| "연구 설계만 해줘" | **설계 모드** | designer 단독 |
-| "이 데이터 분석해줘" + 데이터 | **분석 모드** | analyst + writer |
-| "논문 초고 다듬어줘" + 초고 | **리라이팅 모드** | writer + preparer |
-| "투고 준비해줘" + 원고 | **투고 모드** | preparer 단독 |
-| "이 연구 설계로 나머지 진행해줘" + 설계서 | **후속 모드** | experiment → analyst → writer → preparer |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|-----------------|
+| "Write a paper", "Research paper writing" | **Full Pipeline** | All 5 agents |
+| "Just design the study" | **Design Mode** | designer only |
+| "Analyze this data" + data | **Analysis Mode** | analyst + writer |
+| "Polish this manuscript draft" + draft | **Rewriting Mode** | writer + preparer |
+| "Prepare for submission" + manuscript | **Submission Mode** | preparer only |
+| "Continue with the rest using this design" + design doc | **Continuation Mode** | experiment -> analyst -> writer -> preparer |
 
-**기존 파일 활용**: 사용자가 데이터, 초고, 설계서 등을 제공하면, 해당 파일을 `_workspace/`에 복사하고 해당 단계를 건너뛴다.
+**Using Existing Files**: When the user provides data, drafts, or design documents, copy them to `_workspace/` and skip the corresponding phase.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-Based | `_workspace/` directory | Store and share main deliverables |
+| Message-Based | SendMessage | Real-time key information delivery, correction requests |
+| Task-Based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{산출물}.{확장자}`
+File naming convention: `{order}_{deliverable}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 선행연구 검색 실패 | 사용자 제공 참고문헌 중심으로 작업, "제한적 문헌 검토" 명시 |
-| 연구 주제 모호 | 세부 주제 3개 제안 후 사용자 선택 요청 |
-| 데이터 부재 | 분석 전략과 코드만 제공, "데이터 수집 후 실행" 안내 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰에 누락 명시 |
-| 가설-결과 불일치 | 논문작성자가 Discussion에서 설명, 사후 분석(post-hoc) 제안 |
+| Error Type | Strategy |
+|-----------|----------|
+| Prior literature search failure | Work from user-provided references, note "Limited literature review" |
+| Vague research topic | Propose 3 specific sub-topics and request user selection |
+| No data available | Provide analysis strategy and code only, instruct "Run after data collection" |
+| Agent failure | Retry once -> if still fails, proceed without that deliverable, note omission in review |
+| Hypothesis-results mismatch | Paper writer addresses in Discussion, suggests post-hoc analyses |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "소셜 미디어 사용 시간이 대학생의 학업 성취도에 미치는 영향을 연구하는 논문을 써줘. 설문조사 기반으로"
-**기대 결과**:
-- 설계: 횡단적 조사 설계, SNS 사용 시간(IV) → GPA(DV), 통제변수 포함
-- 프로토콜: 설문지(기존 척도 활용), 온라인 수집 절차
-- 분석: 다중회귀분석 코드(R/Python), APA 형식 결과
-- 원고: IMRaD 완전 구조, 선행연구 인용
-- 투고: SSCI 저널 3개 추천, 커버레터
+### Normal Flow
+**Prompt**: "Write a paper studying the effect of social media usage time on college students' academic achievement. Survey-based."
+**Expected Results**:
+- Design: Cross-sectional survey design, social media time (IV) -> GPA (DV), control variables included
+- Protocol: Questionnaire (using existing validated scales), online collection procedure
+- Analysis: Multiple regression code (R/Python), APA-format results
+- Manuscript: Complete IMRaD structure, prior study citations
+- Submission: 3 SSCI journal recommendations, cover letter
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 데이터로 논문 분석이랑 집필해줘" + CSV 데이터 첨부
-**기대 결과**:
-- 데이터에서 변수 구조를 파악하여 분석 전략 수립
-- designer를 가볍게 투입하여 연구 프레임 역추출
-- analyst → writer → preparer 순서로 진행
+### Existing File Flow
+**Prompt**: "Analyze this data and write the paper" + CSV data attached
+**Expected Results**:
+- Identify variable structure from the data to develop analysis strategy
+- Lightly deploy designer to reverse-extract research framework
+- Proceed in order: analyst -> writer -> preparer
 
-### 에러 흐름
-**프롬프트**: "논문 써줘, 주제는 아직 안 정했어"
-**기대 결과**:
-- designer가 사용자의 관심 분야를 질문하거나
-- 최근 트렌드 기반 연구 주제 3개를 제안
-- 리뷰 보고서에 "주제 미확정 — 예시 기반 진행" 명시
+### Error Flow
+**Prompt**: "Write a paper, but I haven't decided on a topic yet"
+**Expected Results**:
+- designer asks about the user's area of interest, or
+- suggests 3 research topics based on recent trends
+- Review report notes "Topic undetermined — proceeded on example basis"
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-| 확장 스킬 | 경로 | 대상 에이전트 | 역할 |
-|----------|------|-------------|------|
-| research-methodology | `.claude/skills/research-methodology/skill.md` | research-designer, statistical-analyst | 연구 설계, 표본, 통계 분석, 윤리 |
-| citation-standards | `.claude/skills/citation-standards/skill.md` | paper-writer, submission-preparer | APA/IEEE/Chicago 인용, IMRaD, 투고 준비 |
+| Extension Skill | Path | Target Agent | Role |
+|----------------|------|-------------|------|
+| research-methodology | `.claude/skills/research-methodology/skill.md` | research-designer, statistical-analyst | Research design, sampling, statistical analysis, ethics |
+| citation-standards | `.claude/skills/citation-standards/skill.md` | paper-writer, submission-preparer | APA/IEEE/Chicago citation, IMRaD, submission preparation |

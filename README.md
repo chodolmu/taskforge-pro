@@ -1,153 +1,153 @@
 # TaskForge Pro
 
-**통합 프로젝트 매니저** — TaskForge PM + Harness-100 도메인 전문가 + GSD 검증 체계를 하나로.
+**Integrated Project Manager** — TaskForge PM + Harness-100 Domain Experts + GSD Validation Framework, unified in one plugin.
 
-비개발자도 Claude Code를 쉽게 사용하여 프로젝트를 완성할 수 있게 하는 올인원 플러그인입니다.
+An all-in-one plugin that lets anyone — including non-developers — complete projects easily with Claude Code.
 
-## 특징
+## Features
 
-- **PM 자동화** — 프로젝트를 마일스톤→스프린트→태스크로 자동 분할
-- **100개 도메인 전문가** — YouTube, 웹앱, ML, 법률, 교육 등 전 분야 에이전트 팀 내장
-- **3단계 검증** — Goal-backward 검증 + 대화형 UAT + 마일스톤 회귀 감사
-- **Wave 병렬 실행** — 의존성 없는 태스크를 자동 병렬 처리
-- **모델 최적화** — 난이도별 자동 모델 배치 (haiku/sonnet/opus)
-- **깨끗한 컨텍스트** — 매 태스크마다 최소 컨텍스트, Handoff로 연결
+- **PM Automation** — Automatically breaks projects down into milestones → sprints → tasks
+- **100 Domain Expert Teams** — Built-in agent teams for YouTube, web apps, ML, legal, education, and more
+- **3-Level Validation** — Goal-backward validation + Interactive UAT + Milestone regression audits
+- **Wave Parallel Execution** — Automatically parallelizes tasks with no dependencies
+- **Model Optimization** — Automatic model routing by difficulty (haiku/sonnet/opus)
+- **Clean Context** — Minimal context per task, connected via Handoff
 
-## 설치
+## Installation
 
-Claude Code의 플러그인 디렉토리에 복사하거나 링크합니다:
+Copy or link to Claude Code's plugin directory:
 
 ```bash
-# 방법 1: 직접 복사
+# Option 1: Direct copy
 cp -r taskforge-pro/ ~/.claude/plugins/taskforge-pro/
 
-# 방법 2: 심볼릭 링크
+# Option 2: Symbolic link
 ln -s $(pwd)/taskforge-pro ~/.claude/plugins/taskforge-pro
 ```
 
-## 빠른 시작
+## Quick Start
 
-### 프로젝트 만들기
-
-```
-/taskforge-pro:discover     ← 대화로 프로젝트 정의
-/taskforge-pro:plan          ← AI가 작업을 자동 분할
-/taskforge-pro:plan-approve  ← 계획 승인
-/taskforge-pro:execute       ← 하나씩 실행 (반복)
-/taskforge-pro:wrap          ← 완료!
-```
-
-### 하네스 직접 사용
+### Create a Project
 
 ```
-/taskforge-pro:browse-harness          ← 100개 하네스 카탈로그
-/taskforge-pro:use-harness youtube-production "영상 기획해줘"
+/taskforge-pro:discover     ← Define the project through conversation
+/taskforge-pro:plan          ← AI auto-breaks down the work
+/taskforge-pro:plan-approve  ← Approve the plan
+/taskforge-pro:execute       ← Execute one task at a time (repeat)
+/taskforge-pro:wrap          ← Done!
 ```
 
-### 빠른 작업
+### Use a Harness Directly
 
 ```
-/taskforge-pro:quick 버튼 색상 변경
+/taskforge-pro:browse-harness          ← Browse 100-harness catalog
+/taskforge-pro:use-harness youtube-production "Plan a video for me"
 ```
 
-## 전체 워크플로우
+### Quick Task
+
+```
+/taskforge-pro:quick Change the button color
+```
+
+## Full Workflow
 
 ```
 /discover → /plan → /plan:approve
     ↓
-  [/discuss]  ← 실행 전 논의 (선택)
+  [/discuss]  ← Pre-execution discussion (optional)
     ↓
-  /execute (반복) 또는 /execute:all (자동)
+  /execute (repeat) or /execute:all (automatic)
     ↓
-  /validate   ← goal-backward 검증
+  /validate   ← goal-backward validation
     ↓
-  [/verify]   ← 대화형 UAT (선택)
+  [/verify]   ← Interactive UAT (optional)
     ↓
-  /refresh → 다음 스프린트
+  /refresh → next sprint
     ↓
-  [/audit]    ← 마일스톤 검증 (선택)
+  [/audit]    ← Milestone validation (optional)
     ↓
   /wrap
 ```
 
-## 명령어 목록 (26개)
+## Command Reference (26 commands)
 
-### 프로젝트 관리
-| 명령어 | 설명 |
-|--------|------|
-| `/discover` | 대화로 프로젝트 정의 |
-| `/plan` | 마일스톤/스프린트/태스크 분할 |
-| `/plan:edit` | 계획 수정 |
-| `/plan:approve` | 계획 승인 |
-| `/discuss` | 실행 전 회색지대 논의 |
+### Project Management
+| Command | Description |
+|---------|-------------|
+| `/discover` | Define the project through conversation |
+| `/plan` | Break down into milestones/sprints/tasks |
+| `/plan:edit` | Edit the plan |
+| `/plan:approve` | Approve the plan |
+| `/discuss` | Discuss gray areas before execution |
 
-### 실행
-| 명령어 | 설명 |
-|--------|------|
-| `/execute` | 다음 태스크 실행 |
-| `/execute:all` | 스프린트 자동 실행 |
-| `/quick` | 계획 없이 빠른 실행 |
-| `/handoff` | 작업 이력 생성 |
+### Execution
+| Command | Description |
+|---------|-------------|
+| `/execute` | Run the next task |
+| `/execute:all` | Auto-run the sprint |
+| `/quick` | Quick execution without a plan |
+| `/handoff` | Generate a work history record |
 
-### 검증
-| 명령어 | 설명 |
-|--------|------|
-| `/validate` | Goal-backward 검증 |
-| `/verify` | 대화형 UAT |
-| `/audit` | 마일스톤 회귀 검증 |
+### Validation
+| Command | Description |
+|---------|-------------|
+| `/validate` | Goal-backward validation |
+| `/verify` | Interactive UAT |
+| `/audit` | Milestone regression validation |
 
-### 모니터링
-| 명령어 | 설명 |
-|--------|------|
-| `/status` | 진행 상황 트리 |
-| `/cost` | 비용 요약 |
+### Monitoring
+| Command | Description |
+|---------|-------------|
+| `/status` | Progress tree |
+| `/cost` | Cost summary |
 
-### 적응
-| 명령어 | 설명 |
-|--------|------|
-| `/refresh` | 계획 갱신 |
-| `/pivot` | 방향 전환 |
-| `/retry` | 재시도 |
-| `/skip` | 건너뛰기 |
+### Adaptation
+| Command | Description |
+|---------|-------------|
+| `/refresh` | Refresh the plan |
+| `/pivot` | Change direction |
+| `/retry` | Retry a task |
+| `/skip` | Skip a task |
 
-### 하네스
-| 명령어 | 설명 |
-|--------|------|
-| `/browse-harness` | 100개 하네스 카탈로그 |
-| `/use-harness` | 하네스 직접 실행 |
+### Harness
+| Command | Description |
+|---------|-------------|
+| `/browse-harness` | 100-harness catalog |
+| `/use-harness` | Run a harness directly |
 
-### 기타
-| 명령어 | 설명 |
-|--------|------|
-| `/resume` | 새 세션에서 이어받기 |
-| `/wrap` | 프로젝트 마무리 |
-| `/help` | 사용법 안내 |
+### Other
+| Command | Description |
+|---------|-------------|
+| `/resume` | Resume in a new session |
+| `/wrap` | Wrap up the project |
+| `/help` | Usage guide |
 
-## 하네스 카탈로그
+## Harness Catalog
 
-100개 도메인 전문 에이전트 팀이 내장되어 있습니다:
+100 domain expert agent teams are built in:
 
-| 카테고리 | 수량 | 예시 |
-|----------|------|------|
-| 콘텐츠 | 15 | YouTube, 팟캐스트, 뉴스레터, 게임 내러티브 |
-| 소프트웨어 | 15 | 풀스택 웹앱, API 설계, 모바일 앱 |
-| 데이터/ML | 12 | ML 실험, 데이터 분석, NLP |
-| 비즈니스 | 13 | 스타트업 전략, 시장 조사, 가격 전략 |
-| 교육 | 10 | 언어 학습, 시험 준비, 코딩 교육 |
-| 법률 | 7 | 계약 분석, 특허, GDPR |
-| 건강 | 8 | 식단, 피트니스, 세금 |
-| 커뮤니케이션 | 8 | 기술 문서, 제안서, 연설문 |
-| 운영 | 7 | 채용, 온보딩, 프로세스 감사 |
-| 전문 | 5 | 부동산, 이커머스, 도시계획 |
+| Category | Count | Examples |
+|----------|-------|---------|
+| Content | 15 | YouTube, Podcast, Newsletter, Game Narrative |
+| Software | 15 | Full-stack Web App, API Design, Mobile App |
+| Data/ML | 12 | ML Experiments, Data Analysis, NLP |
+| Business | 13 | Startup Strategy, Market Research, Pricing Strategy |
+| Education | 10 | Language Learning, Exam Prep, Coding Education |
+| Legal | 7 | Contract Analysis, Patents, GDPR |
+| Health | 8 | Diet, Fitness, Tax |
+| Communication | 8 | Technical Docs, Proposals, Speeches |
+| Operations | 7 | Hiring, Onboarding, Process Audits |
+| Specialized | 5 | Real Estate, E-commerce, Urban Planning |
 
-## 3가지 DNA
+## 3 Core DNAs
 
-| 출처 | 기여 |
-|------|------|
-| **TaskForge** | PM 프레임워크 — 계획, 실행, 추적, 모델 배치, Handoff |
-| **Harness-100** | 도메인 전문가 — 100개 분야, 630개 스킬, 489개 에이전트 |
-| **GET SHIT DONE** | 검증 체계 — Goal-backward, UAT, 회귀 감사, Wave 병렬 |
+| Source | Contribution |
+|--------|--------------|
+| **TaskForge** | PM Framework — planning, execution, tracking, model routing, Handoff |
+| **Harness-100** | Domain Experts — 100 domains, 630 skills, 489 agents |
+| **GET SHIT DONE** | Validation Framework — Goal-backward, UAT, regression audits, wave parallelism |
 
-## 라이선스
+## License
 
 MIT

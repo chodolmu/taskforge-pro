@@ -1,29 +1,39 @@
 # Financial Modeler Harness
 
-수익 모델, 비용 구조, 시나리오 분석, 밸류에이션까지 재무 모델링 전 과정을 에이전트 팀이 협업하여 생성하는 하네스.
+A harness where an agent team collaborates to produce the full financial modeling lifecycle: revenue model, cost structure, scenario analysis, and valuation.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── revenue-modeler.md        — 수익 모델 설계
-│   ├── cost-analyst.md           — 비용 구조 분석
-│   ├── scenario-planner.md       — 시나리오 분석
-│   ├── valuation-expert.md       — 밸류에이션
-│   └── model-reviewer.md         — 교차 검증
+│   ├── revenue-modeler.md       — Revenue Modeler (revenue structure, growth model, unit price analysis)
+│   ├── cost-analyst.md          — Cost Analyst (fixed costs, variable costs, break-even)
+│   ├── scenario-planner.md      — Scenario Planner (sensitivity analysis, Monte Carlo)
+│   ├── valuation-expert.md      — Valuation Expert (DCF, multiples, comparable analysis)
+│   └── model-reviewer.md        — Model Reviewer (revenue-cost-scenario-valuation consistency)
 ├── skills/
 │   ├── financial-modeler/
-│   │   └── skill.md              — 오케스트레이터
-│   ├── dcf-valuation/
-│   │   └── skill.md              — DCF 밸류에이션 (WACC, FCFF, 터미널 밸류)
+│       └── skill.md             — Orchestrator (team coordination, workflow, error handling)
 │   ├── sensitivity-analysis/
-│   │   └── skill.md              — 민감도 분석 (토네이도, 시나리오 테이블, 브레이크이븐)
-│   └── unit-economics/
-│       └── skill.md              — 단위 경제학 (LTV/CAC, 공헌이익, 코호트 분석)
-└── CLAUDE.md                     — 이 파일
+│   │   └── skill.md             — Sensitivity Analysis (tornado, spider, data tables)
+│   ├── unit-economics/
+│   │   └── skill.md             — Unit Economics (CAC, LTV, payback period)
+│   └── dcf-valuation/
+│       └── skill.md             — DCF Valuation (WACC, terminal value, scenarios)
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/financial-modeler` 스킬을 트리거하거나 자연어로 요청한다.
+Trigger the `/financial-modeler` skill, or make a natural language request such as "Build a financial model."
+
+## Deliverables
+
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_revenue_model.md` — Revenue model
+- `02_cost_structure.md` — Cost structure
+- `03_scenario_analysis.md` — Scenario analysis results
+- `04_valuation.md` — Valuation report
+- `05_review_report.md` — Review report

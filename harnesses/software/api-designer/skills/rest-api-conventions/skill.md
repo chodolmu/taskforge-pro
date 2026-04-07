@@ -1,89 +1,89 @@
 ---
 name: rest-api-conventions
-description: "REST API 설계 컨벤션 레퍼런스. URL 네이밍, HTTP 메서드 매핑, 상태 코드 선택, 페이지네이션/필터링/정렬 패턴, HATEOAS, 버전관리 전략을 제공하는 api-architect 확장 스킬. 'REST 컨벤션', 'URL 설계', 'HTTP 상태 코드', '페이지네이션', 'API 버전관리', 'HATEOAS' 등 RESTful API 설계 시 사용한다. 단, GraphQL 설계나 실제 서버 구현은 이 스킬의 범위가 아니다."
+description: "REST API design conventions reference. An extension skill for api-architect that provides URL naming, HTTP method mapping, status code selection, pagination/filtering/sorting patterns, HATEOAS, and versioning strategies. Use when designing RESTful APIs involving 'REST conventions', 'URL design', 'HTTP status codes', 'pagination', 'API versioning', 'HATEOAS', etc. Note: GraphQL design and actual server implementation are outside the scope of this skill."
 ---
 
-# REST API Conventions — RESTful API 설계 컨벤션 레퍼런스
+# REST API Conventions — RESTful API Design Conventions Reference
 
-api-architect 에이전트가 REST API 설계 시 활용하는 네이밍 규칙, 상태 코드, 페이지네이션 패턴 레퍼런스.
+A reference of naming rules, status codes, and pagination patterns used by the api-architect agent when designing REST APIs.
 
-## 대상 에이전트
+## Target Agent
 
-`api-architect` — 이 스킬의 컨벤션을 API 설계에 직접 적용한다.
+`api-architect` — Directly applies the conventions in this skill to API designs.
 
-## URL 네이밍 규칙
+## URL Naming Rules
 
-### 기본 원칙
-| 규칙 | 올바른 예 | 잘못된 예 |
-|------|----------|----------|
-| 복수형 명사 | `/users` | `/user`, `/getUsers` |
-| 소문자 kebab-case | `/user-profiles` | `/userProfiles`, `/User_Profiles` |
-| 동사 금지 (CRUD는 메서드로) | `POST /orders` | `POST /createOrder` |
-| 계층적 관계 | `/users/{id}/orders` | `/getUserOrders` |
-| 슬래시 끝 금지 | `/users` | `/users/` |
-| 파일 확장자 금지 | `/users` (Accept 헤더) | `/users.json` |
+### Basic Principles
+| Rule | Correct Example | Incorrect Example |
+|------|----------------|-------------------|
+| Plural nouns | `/users` | `/user`, `/getUsers` |
+| Lowercase kebab-case | `/user-profiles` | `/userProfiles`, `/User_Profiles` |
+| No verbs (use methods for CRUD) | `POST /orders` | `POST /createOrder` |
+| Hierarchical relationships | `/users/{id}/orders` | `/getUserOrders` |
+| No trailing slash | `/users` | `/users/` |
+| No file extensions | `/users` (use Accept header) | `/users.json` |
 
-### 리소스 URL 패턴
+### Resource URL Patterns
 
-| 작업 | 메서드 | URL | 예시 |
-|------|--------|-----|------|
-| 목록 조회 | GET | `/resources` | `GET /products` |
-| 단건 조회 | GET | `/resources/{id}` | `GET /products/123` |
-| 생성 | POST | `/resources` | `POST /products` |
-| 전체 수정 | PUT | `/resources/{id}` | `PUT /products/123` |
-| 부분 수정 | PATCH | `/resources/{id}` | `PATCH /products/123` |
-| 삭제 | DELETE | `/resources/{id}` | `DELETE /products/123` |
+| Operation | Method | URL | Example |
+|-----------|--------|-----|---------|
+| List retrieval | GET | `/resources` | `GET /products` |
+| Single retrieval | GET | `/resources/{id}` | `GET /products/123` |
+| Create | POST | `/resources` | `POST /products` |
+| Full update | PUT | `/resources/{id}` | `PUT /products/123` |
+| Partial update | PATCH | `/resources/{id}` | `PATCH /products/123` |
+| Delete | DELETE | `/resources/{id}` | `DELETE /products/123` |
 
-### 관계 리소스
+### Relationship Resources
 ```
-GET  /users/{userId}/orders           -- 사용자의 주문 목록
-GET  /users/{userId}/orders/{orderId} -- 사용자의 특정 주문
-POST /users/{userId}/orders           -- 사용자의 주문 생성
-```
-
-### 비-CRUD 액션 (RPC 스타일 허용)
-```
-POST /orders/{id}/cancel        -- 주문 취소
-POST /users/{id}/verify-email   -- 이메일 인증
-POST /reports/generate          -- 보고서 생성
-POST /cart/checkout             -- 결제 진행
+GET  /users/{userId}/orders           -- User's order list
+GET  /users/{userId}/orders/{orderId} -- User's specific order
+POST /users/{userId}/orders           -- Create order for user
 ```
 
-## HTTP 상태 코드 선택 가이드
+### Non-CRUD Actions (RPC-Style Permitted)
+```
+POST /orders/{id}/cancel        -- Cancel order
+POST /users/{id}/verify-email   -- Verify email
+POST /reports/generate          -- Generate report
+POST /cart/checkout             -- Proceed to checkout
+```
 
-### 성공 (2xx)
-| 코드 | 의미 | 사용 시점 |
-|------|------|----------|
-| 200 | OK | GET, PUT, PATCH 성공 |
-| 201 | Created | POST 리소스 생성 성공 (Location 헤더 포함) |
-| 204 | No Content | DELETE 성공, 응답 바디 없음 |
+## HTTP Status Code Selection Guide
 
-### 클라이언트 에러 (4xx)
-| 코드 | 의미 | 사용 시점 |
-|------|------|----------|
-| 400 | Bad Request | 요청 형식 오류, 유효성 검증 실패 |
-| 401 | Unauthorized | 인증 필요 (토큰 없음/만료) |
-| 403 | Forbidden | 인증됨, 권한 없음 |
-| 404 | Not Found | 리소스 존재하지 않음 |
-| 405 | Method Not Allowed | 허용되지 않은 HTTP 메서드 |
-| 409 | Conflict | 리소스 충돌 (중복 생성 등) |
-| 422 | Unprocessable Entity | 형식은 맞지만 비즈니스 규칙 위반 |
-| 429 | Too Many Requests | Rate Limit 초과 |
+### Success (2xx)
+| Code | Meaning | When to Use |
+|------|---------|-------------|
+| 200 | OK | GET, PUT, PATCH success |
+| 201 | Created | POST resource creation success (include Location header) |
+| 204 | No Content | DELETE success, no response body |
 
-### 서버 에러 (5xx)
-| 코드 | 의미 | 사용 시점 |
-|------|------|----------|
-| 500 | Internal Server Error | 예상치 못한 서버 오류 |
-| 502 | Bad Gateway | 업스트림 서비스 오류 |
-| 503 | Service Unavailable | 점검/과부하 (Retry-After 헤더) |
+### Client Errors (4xx)
+| Code | Meaning | When to Use |
+|------|---------|-------------|
+| 400 | Bad Request | Malformed request, validation failure |
+| 401 | Unauthorized | Authentication required (missing/expired token) |
+| 403 | Forbidden | Authenticated but not authorized |
+| 404 | Not Found | Resource does not exist |
+| 405 | Method Not Allowed | HTTP method not permitted |
+| 409 | Conflict | Resource conflict (duplicate creation, etc.) |
+| 422 | Unprocessable Entity | Format is correct but violates business rules |
+| 429 | Too Many Requests | Rate limit exceeded |
 
-## 페이지네이션 패턴
+### Server Errors (5xx)
+| Code | Meaning | When to Use |
+|------|---------|-------------|
+| 500 | Internal Server Error | Unexpected server error |
+| 502 | Bad Gateway | Upstream service error |
+| 503 | Service Unavailable | Maintenance/overload (include Retry-After header) |
 
-### 오프셋 기반 (전통적)
+## Pagination Patterns
+
+### Offset-Based (Traditional)
 ```
 GET /products?page=2&limit=20
 
-응답:
+Response:
 {
   "data": [...],
   "pagination": {
@@ -94,14 +94,14 @@ GET /products?page=2&limit=20
   }
 }
 ```
-- 장점: 구현 간단, 임의 페이지 접근
-- 단점: 대량 데이터에서 성능 저하 (OFFSET)
+- Pros: Simple implementation, random page access
+- Cons: Performance degradation with large datasets (OFFSET)
 
-### 커서 기반 (권장)
+### Cursor-Based (Recommended)
 ```
 GET /products?cursor=eyJpZCI6MTIzfQ&limit=20
 
-응답:
+Response:
 {
   "data": [...],
   "pagination": {
@@ -110,42 +110,42 @@ GET /products?cursor=eyJpZCI6MTIzfQ&limit=20
   }
 }
 ```
-- 장점: 대량 데이터 성능 우수, 실시간 데이터에 안전
-- 단점: 총 개수/임의 페이지 접근 불가
+- Pros: Excellent performance with large datasets, safe for real-time data
+- Cons: No total count or random page access
 
-### 선택 기준
-| 상황 | 추천 |
-|------|------|
-| 관리자 대시보드 (페이지 번호 필요) | 오프셋 |
-| 무한 스크롤 | 커서 |
-| 실시간 피드 | 커서 |
-| 데이터 100만 건+ | 커서 |
+### Selection Criteria
+| Scenario | Recommendation |
+|----------|---------------|
+| Admin dashboard (page numbers needed) | Offset |
+| Infinite scroll | Cursor |
+| Real-time feed | Cursor |
+| 1M+ records | Cursor |
 
-## 필터링/정렬/검색 패턴
+## Filtering/Sorting/Search Patterns
 
-### 필터링
+### Filtering
 ```
 GET /products?category=electronics&price_min=10000&price_max=50000&status=active
 ```
 
-### 정렬
+### Sorting
 ```
 GET /products?sort=price&order=asc
-GET /products?sort=-created_at,+name    (prefix 방식: -내림, +오름)
+GET /products?sort=-created_at,+name    (prefix style: - descending, + ascending)
 ```
 
-### 검색
+### Search
 ```
-GET /products?q=키보드                  (전체 검색)
-GET /products?name=키보드               (특정 필드)
-```
-
-### 필드 선택 (Sparse Fieldsets)
-```
-GET /products?fields=id,name,price      (필요한 필드만)
+GET /products?q=keyboard                (full-text search)
+GET /products?name=keyboard             (specific field)
 ```
 
-## 에러 응답 표준 형식
+### Field Selection (Sparse Fieldsets)
+```
+GET /products?fields=id,name,price      (only needed fields)
+```
+
+## Error Response Standard Format
 
 ### RFC 7807 (Problem Details)
 ```json
@@ -153,36 +153,36 @@ GET /products?fields=id,name,price      (필요한 필드만)
   "type": "https://api.example.com/errors/validation",
   "title": "Validation Error",
   "status": 422,
-  "detail": "요청 데이터가 유효하지 않습니다",
+  "detail": "The request data is invalid",
   "instance": "/products",
   "errors": [
     {
       "field": "price",
       "code": "INVALID_RANGE",
-      "message": "가격은 0보다 커야 합니다"
+      "message": "Price must be greater than 0"
     }
   ]
 }
 ```
 
-## 버전관리 전략
+## Versioning Strategies
 
-| 전략 | 방법 | 장점 | 단점 |
-|------|------|------|------|
-| **URL Path** | `/v1/users` | 명확, 라우팅 간단 | URL 변경 |
-| **Header** | `Accept: application/vnd.api+json;version=1` | URL 깔끔 | 디버깅 어려움 |
-| **Query** | `/users?version=1` | 옵셔널 가능 | 캐싱 복잡 |
+| Strategy | Method | Pros | Cons |
+|----------|--------|------|------|
+| **URL Path** | `/v1/users` | Clear, simple routing | URL changes |
+| **Header** | `Accept: application/vnd.api+json;version=1` | Clean URLs | Harder to debug |
+| **Query** | `/users?version=1` | Can be optional | Complex caching |
 
-**권장**: URL Path (`/v1/`) — 가장 직관적이고 널리 채택
+**Recommended**: URL Path (`/v1/`) — Most intuitive and widely adopted
 
-### 버전 폐기 정책
-- 새 버전 출시 → 구 버전 12개월 유지
-- Deprecation 헤더: `Deprecation: true`, `Sunset: 2025-12-31`
-- 마이그레이션 가이드 제공
+### Version Deprecation Policy
+- New version released -> Maintain old version for 12 months
+- Deprecation headers: `Deprecation: true`, `Sunset: 2025-12-31`
+- Provide migration guide
 
-## 응답 Envelope 패턴
+## Response Envelope Pattern
 
-### 단건 응답
+### Single Resource Response
 ```json
 {
   "data": { "id": 1, "name": "Product" },
@@ -190,7 +190,7 @@ GET /products?fields=id,name,price      (필요한 필드만)
 }
 ```
 
-### 목록 응답
+### List Response
 ```json
 {
   "data": [{ "id": 1 }, { "id": 2 }],
@@ -199,12 +199,12 @@ GET /products?fields=id,name,price      (필요한 필드만)
 }
 ```
 
-## 멱등성 (Idempotency)
+## Idempotency
 
-| 메서드 | 멱등 | 안전 | 설명 |
-|--------|------|------|------|
-| GET | O | O | 동일 결과 반환 |
-| PUT | O | X | 같은 데이터로 반복 시 동일 결과 |
-| DELETE | O | X | 이미 삭제된 리소스 재삭제 시 404 |
-| PATCH | X | X | 상대적 변경 가능 (counter++) |
-| POST | X | X | 중복 생성 가능 → Idempotency-Key 권장 |
+| Method | Idempotent | Safe | Description |
+|--------|-----------|------|-------------|
+| GET | Yes | Yes | Returns the same result |
+| PUT | Yes | No | Same data repeated yields the same result |
+| DELETE | Yes | No | Re-deleting an already deleted resource returns 404 |
+| PATCH | No | No | Can make relative changes (counter++) |
+| POST | No | No | May create duplicates -> Idempotency-Key recommended |

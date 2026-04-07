@@ -1,125 +1,125 @@
 ---
 name: viral-copywriting
-description: "카피라이터(copywriter)가 사용하는 바이럴 카피라이팅 전문 스킬. 스크롤을 멈추는 훅 패턴, 플랫폼별 카피 구조, 감정 트리거, CTA 심리학을 제공한다. '바이럴 카피', '훅 작성', '캡션 작성', 'SNS 카피' 등에 활용한다."
+description: "A specialized skill for the copywriter agent covering viral copywriting. Provides scroll-stopping hook patterns, platform-specific copy structures, emotion triggers, and CTA psychology. Use for 'viral copy,' 'hook writing,' 'caption writing,' 'SNS copy,' and similar topics."
 ---
 
-# Viral Copywriting — 바이럴 카피라이팅 방법론
+# Viral Copywriting — Viral Copywriting Methodology
 
-copywriter 에이전트가 SNS 포스트를 작성할 때 활용하는 바이럴 카피 전문 지식.
+Specialized viral copy knowledge used by the copywriter agent when writing SNS posts.
 
-## 왜 바이럴 카피가 다른가
+## Why Viral Copy Is Different
 
-SNS 카피는 **0.5초 안에 스크롤을 멈추게** 해야 한다. 블로그나 이메일처럼 읽기 시작한 사람을 유지하는 것이 아니라, 지나가는 사람을 멈추게 하는 것이다.
+SNS copy must **stop the scroll within 0.5 seconds**. Unlike blogs or emails where you retain someone who has started reading, here you must stop someone who is passing by.
 
-## 스크롤 스톱 훅 패턴 15가지
+## 15 Scroll-Stop Hook Patterns
 
-### 충격/도발 계열
+### Shock/Provocation Category
 
-| # | 패턴 | 템플릿 | 예시 |
-|---|------|--------|------|
-| 1 | **반직관** | "[통념]은 틀렸습니다" | "열심히 일하는 사람이 성공한다? 정반대입니다" |
-| 2 | **숫자 충격** | "[놀라운 숫자]라는 사실을 아시나요?" | "직장인의 73%가 이것을 모르고 있습니다" |
-| 3 | **도발** | "[금기 발언]" | "네트워킹은 시간 낭비입니다" |
-| 4 | **경고** | "[행동]하고 있다면, 지금 멈추세요" | "이메일을 아침에 확인하고 있다면, 그만두세요" |
+| # | Pattern | Template | Example |
+|---|---------|----------|---------|
+| 1 | **Counter-Intuitive** | "[Conventional wisdom] is wrong" | "Hard workers succeed? It is the exact opposite" |
+| 2 | **Number Shock** | "Did you know [surprising number]?" | "73% of professionals don't know this" |
+| 3 | **Provocation** | "[Taboo statement]" | "Networking is a waste of time" |
+| 4 | **Warning** | "If you're doing [action], stop right now" | "If you check email first thing in the morning, stop" |
 
-### 호기심 계열
+### Curiosity Category
 
-| # | 패턴 | 템플릿 | 예시 |
-|---|------|--------|------|
-| 5 | **미완성** | "[상황]이 벌어졌습니다. 결과는..." | "100만 팔로워를 가진 계정을 삭제했습니다. 그 뒤..." |
-| 6 | **비밀** | "[대상]이 절대 말하지 않는 것" | "성공한 창업가들이 공유하지 않는 한 가지" |
-| 7 | **방법** | "어떻게 [놀라운 결과]를 달성했는가" | "어떻게 6개월 만에 월급 3배를 만들었는가" |
-| 8 | **리스트** | "[N]가지 [주제] (마지막이 핵심)" | "마케팅 예산을 줄이는 5가지 방법 (3번이 게임체인저)" |
+| # | Pattern | Template | Example |
+|---|---------|----------|---------|
+| 5 | **Incomplete** | "[Situation] happened. The result..." | "I deleted an account with 1M followers. After that..." |
+| 6 | **Secret** | "What [subject] never tells you" | "The one thing successful founders don't share" |
+| 7 | **How-To** | "How I achieved [amazing result]" | "How I tripled my salary in 6 months" |
+| 8 | **List** | "[N] ways to [topic] (the last one is key)" | "5 ways to cut your marketing budget (number 3 is a game-changer)" |
 
-### 감정/공감 계열
+### Emotion/Empathy Category
 
-| # | 패턴 | 템플릿 | 예시 |
-|---|------|--------|------|
-| 9 | **고백** | "솔직히 말씀드리면..." | "솔직히 말씀드리면, 저도 처음 3년은 실패였습니다" |
-| 10 | **공감** | "[보편적 고민]하고 계시죠?" | "일요일 밤마다 월요일이 두려우신 분?" |
-| 11 | **변화** | "[Before] → [After]" | "6개월 전의 나: 번아웃 → 지금의 나: 주 4일 근무" |
+| # | Pattern | Template | Example |
+|---|---------|----------|---------|
+| 9 | **Confession** | "Honestly speaking..." | "Honestly, my first 3 years were all failures" |
+| 10 | **Empathy** | "You're [universal struggle], right?" | "Anyone else dread Monday every Sunday night?" |
+| 11 | **Transformation** | "[Before] -> [After]" | "6 months ago: burnout -> Now: 4-day work week" |
 
-### 권위/신뢰 계열
+### Authority/Trust Category
 
-| # | 패턴 | 템플릿 | 예시 |
-|---|------|--------|------|
-| 12 | **자격** | "[경험/실적]을 통해 배운 것" | "300개 브랜드를 컨설팅하고 깨달은 1가지" |
-| 13 | **타인 인용** | "[유명인]이 말했다: '...'" | "일론 머스크가 직원에게 보낸 메일 한 통" |
-| 14 | **사례** | "[구체적 결과]를 만든 전략" | "월 매출 0원에서 3억으로. 이 전략 하나로" |
-| 15 | **트렌드** | "[최신 트렌드]가 [산업]을 바꾸고 있다" | "AI가 마케팅을 완전히 바꾸고 있습니다. 이미." |
+| # | Pattern | Template | Example |
+|---|---------|----------|---------|
+| 12 | **Credentials** | "What I learned from [experience/track record]" | "One thing I learned from consulting 300 brands" |
+| 13 | **Quote** | "[Famous person] said: '...'" | "The one email Elon Musk sent to his employees" |
+| 14 | **Case Study** | "The strategy behind [specific result]" | "From $0 to $3M monthly revenue. With this one strategy" |
+| 15 | **Trend** | "[Latest trend] is changing [industry]" | "AI is completely transforming marketing. Already." |
 
-## 플랫폼별 카피 구조
+## Platform-Specific Copy Structure
 
-### Instagram 캡션
+### Instagram Caption
 
 ```
-[훅 1줄 — 스크롤 스톱]
+[Hook 1 line — Scroll Stop]
 
-[공백 — "더 보기" 위에 훅만 노출]
+[Blank — Only hook visible above "more"]
 
-[본문 3~5줄 — 가치 전달]
+[Body 3-5 lines — Value delivery]
 
-[CTA — 댓글/저장/공유 유도]
+[CTA — Comment/Save/Share prompt]
 
 .
 .
 .
-#해시태그 (첫 댓글 또는 본문 하단)
+#hashtags (first comment or bottom of caption)
 ```
 
-### X/Twitter 스레드
+### X/Twitter Thread
 
 ```
-트윗 1: [훅 — 강렬한 주장] (280자)
-트윗 2: [맥락/배경]
-트윗 3~7: [증거/포인트] (각 트윗이 독립적으로도 RT 가능하게)
-트윗 8: [요약 + CTA]
-트윗 9: [셀프 리플라이로 링크]
+Tweet 1: [Hook — Bold claim] (280 chars)
+Tweet 2: [Context/Background]
+Tweets 3-7: [Evidence/Points] (each tweet independently RT-worthy)
+Tweet 8: [Summary + CTA]
+Tweet 9: [Self-reply with link]
 ```
 
-### LinkedIn 포스트
+### LinkedIn Post
 
 ```
-[훅 2줄 — 전문적이되 감정적]
+[Hook 2 lines — Professional yet emotional]
 
-[빈 줄 x3 — "더 보기" 유도]
+[3 blank lines — "See more" prompt]
 
-[개인 경험/스토리 4~6줄]
+[Personal experience/story 4-6 lines]
 
-[인사이트/교훈 3~4줄]
+[Insight/Lesson 3-4 lines]
 
-[CTA — 질문으로 끝나기]
+[CTA — End with a question]
 
-#해시태그 3~5개
+#hashtags 3-5
 ```
 
-## 감정 트리거 매트릭스
+## Emotion Trigger Matrix
 
-| 감정 | 공유 동기 | 카피 전략 | 적합 콘텐츠 |
-|------|---------|----------|-----------|
-| **놀라움** | "이거 봐!" | 반직관적 데이터/사실 | 인포그래픽, 통계 |
-| **분노** | "이건 부당해" | 불공정/문제 제기 | 사회 이슈, 산업 비판 |
-| **기쁨** | "기분 좋다" | 성공 사례, 유머 | 밈, 성과 공유 |
-| **두려움** | "나도 조심해야" | 경고, 리스크 알림 | 실수 사례, 트렌드 변화 |
-| **소속감** | "나도 그래!" | 공감, 소수자 연대 | 커뮤니티 콘텐츠 |
-| **자기 표현** | "이게 나야" | 정체성 관련 콘텐츠 | 가치관, 라이프스타일 |
+| Emotion | Sharing Motivation | Copy Strategy | Suitable Content |
+|---------|-------------------|---------------|-----------------|
+| **Surprise** | "Look at this!" | Counter-intuitive data/facts | Infographics, statistics |
+| **Anger** | "This is unfair" | Injustice/problem identification | Social issues, industry critique |
+| **Joy** | "Feels good" | Success stories, humor | Memes, achievement sharing |
+| **Fear** | "I should be careful too" | Warnings, risk alerts | Mistake examples, trend changes |
+| **Belonging** | "Me too!" | Empathy, solidarity | Community content |
+| **Self-Expression** | "This is me" | Identity-related content | Values, lifestyle |
 
-## CTA 설계
+## CTA Design
 
-### 행동 유형별 CTA
+### CTAs by Desired Action
 
-| 원하는 행동 | CTA 문구 패턴 | 심리 원리 |
-|-----------|-------------|---------|
-| **댓글** | "여러분은 어떻게 생각하세요?", "댓글로 알려주세요" | 질문에 답하고 싶은 본능 |
-| **저장** | "나중에 필요할 때 다시 보세요", "이 체크리스트 저장하세요" | 손실 회피 |
-| **공유** | "이 정보가 필요한 친구를 태그하세요" | 이타주의, 사회적 자본 |
-| **팔로우** | "매일 이런 인사이트를 올립니다" | 지속적 가치 약속 |
-| **클릭** | "자세한 내용은 바이오 링크에서" | 정보 격차 활용 |
+| Desired Action | CTA Phrase Pattern | Psychological Principle |
+|---------------|-------------------|----------------------|
+| **Comment** | "What do you think?", "Tell me in the comments" | Instinct to answer questions |
+| **Save** | "Save this for when you need it later" | Loss aversion |
+| **Share** | "Tag a friend who needs this" | Altruism, social capital |
+| **Follow** | "I post insights like this daily" | Promise of ongoing value |
+| **Click** | "Full details at the link in bio" | Information gap exploitation |
 
-### CTA 강화 공식
+### CTA Amplification Formula
 
 ```
-기본: "댓글 남겨주세요"
-강화: "여러분의 [구체적 경험/의견]을 댓글로 알려주세요"
-최강: "저도 처음엔 [상황]이었어요. 여러분은요? 가장 공감 가는 댓글에 답장드릴게요"
+Basic: "Leave a comment"
+Enhanced: "Tell me your [specific experience/opinion] in the comments"
+Maximum: "I was in [situation] at first too. How about you? I will reply to the most relatable comment"
 ```

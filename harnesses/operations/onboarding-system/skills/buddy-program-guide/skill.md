@@ -1,102 +1,102 @@
 ---
 name: buddy-program-guide
-description: "버디/멘토 프로그램 설계 가이드. mentor-matcher 에이전트가 신규입사자의 멘토/버디를 매칭하고 프로그램을 구성할 때 참조. '버디 프로그램', '멘토 매칭', '온보딩 버디' 요청 시 사용. 단, 인사 시스템 연동이나 실제 인사 발령은 범위 밖."
+description: "Buddy/mentor program design guide. Referenced by the mentor-matcher agent when matching new hire mentors/buddies and structuring programs. Used for 'buddy program', 'mentor matching', 'onboarding buddy' requests. Note: HR system integration and actual personnel assignments are out of scope."
 ---
 
-# Buddy Program Guide — 버디/멘토 프로그램 설계
+# Buddy Program Guide — Buddy/Mentor Program Design
 
-mentor-matcher 에이전트의 멘토/버디 프로그램 설계 역량 강화.
+Enhances the mentor-matcher agent's mentor/buddy program design capabilities.
 
-## 버디 vs 멘토 구분
+## Buddy vs Mentor Distinction
 
-| 구분 | 버디 (Buddy) | 멘토 (Mentor) |
-|------|-------------|--------------|
-| 목적 | 적응 지원, 문화 안내 | 경력 성장, 전문성 개발 |
-| 기간 | 1~3개월 | 6~12개월 |
-| 관계 | 동료/선배 | 시니어/리더 |
-| 주제 | 일상, 팀 문화, 시스템 | 역량, 커리어, 성과 |
-| 미팅 | 매일~주 2회 | 격주~월 1회 |
-| 형식 | 비공식 | 구조화 |
+| Aspect | Buddy | Mentor |
+|--------|-------|--------|
+| Purpose | Adaptation support, culture guidance | Career growth, professional development |
+| Duration | 1-3 months | 6-12 months |
+| Relationship | Peer/slightly senior | Senior/leader |
+| Topics | Daily life, team culture, systems | Skills, career, performance |
+| Meetings | Daily to 2x/week | Biweekly to monthly |
+| Format | Informal | Structured |
 
-## 버디 매칭 기준
+## Buddy Matching Criteria
 
-### 매칭 스코어카드
+### Matching Scorecard
 
-| 기준 | 가중치 | 설명 |
-|------|--------|------|
-| 팀/부서 | 25% | 같은 팀 또는 밀접 부서 |
-| 직급 | 20% | 1~2단계 선배 (너무 높지 않게) |
-| 직무 유사성 | 20% | 유사 업무 경험 |
-| 성격 보완 | 15% | 내향/외향 보완 또는 유사 |
-| 자발성 | 10% | 버디 역할 의지 |
-| 가용성 | 10% | 업무 부하, 일정 여유 |
+| Criterion | Weight | Description |
+|-----------|--------|-------------|
+| Team/department | 25% | Same team or closely related department |
+| Level | 20% | 1-2 levels senior (not too high) |
+| Role similarity | 20% | Similar work experience |
+| Personality complement | 15% | Introvert/extrovert balance or similarity |
+| Voluntariness | 10% | Willingness to serve as buddy |
+| Availability | 10% | Workload, schedule flexibility |
 
-### 비매칭 기준 (제외)
+### Exclusion Criteria
 
-- 직속 상사/평가자
-- 6개월 미만 재직자
-- 이직 예정자
-- 성과 개선 대상자
+- Direct supervisor/evaluator
+- Less than 6 months tenure
+- Employees planning to leave
+- Employees on performance improvement plans
 
-## 버디 활동 가이드
+## Buddy Activity Guide
 
-### 첫 주 (Day 1~5)
+### First Week (Days 1-5)
 
-| 일차 | 버디 활동 | 소요 시간 |
-|------|----------|----------|
-| Day 1 | 사무실 투어, 팀원 소개, 점심 | 3시간 |
-| Day 2 | 시스템 셋업 도움, 커피챗 | 1시간 |
-| Day 3 | 업무 도구 소개, Q&A | 1시간 |
-| Day 4 | 비공식 문화 안내 (회식, 동아리) | 30분 |
-| Day 5 | 첫 주 회고, 다음 주 안내 | 30분 |
+| Day | Buddy Activities | Time Required |
+|-----|-----------------|---------------|
+| Day 1 | Office tour, team introductions, lunch | 3 hours |
+| Day 2 | System setup assistance, coffee chat | 1 hour |
+| Day 3 | Work tools introduction, Q&A | 1 hour |
+| Day 4 | Informal culture guide (social events, interest groups) | 30 min |
+| Day 5 | First week retrospective, next week preview | 30 min |
 
-### 월간 활동 (Month 1~3)
+### Monthly Activities (Months 1-3)
 
-| 월 | 주요 활동 | 체크포인트 |
-|----|----------|-----------|
-| 1개월 | 주 2회 체크인, 팀 문화 안내 | "적응에 어려움 없는가?" |
-| 2개월 | 주 1회 체크인, 업무 피드백 | "독립적 업무 가능한가?" |
-| 3개월 | 격주 체크인, 관계 전환 | "버디 프로그램 종료 준비" |
+| Month | Key Activities | Checkpoint |
+|-------|---------------|------------|
+| Month 1 | 2x/week check-ins, team culture guidance | "Any difficulties adapting?" |
+| Month 2 | 1x/week check-ins, work feedback | "Able to work independently?" |
+| Month 3 | Biweekly check-ins, relationship transition | "Preparing for buddy program completion" |
 
-## 멘토링 대화 구조
+## Mentoring Conversation Structure
 
-### GROW 모델
+### GROW Model
 
-| 단계 | 질문 | 예시 |
-|------|------|------|
-| **G**oal | 목표는 무엇인가 | "3개월 후 어떤 모습이고 싶은가요?" |
-| **R**eality | 현재 상황은 | "지금 가장 어려운 점은?" |
-| **O**ptions | 어떤 방법이 있는가 | "어떤 시도를 해볼 수 있을까요?" |
-| **W**ill | 무엇을 할 것인가 | "이번 주에 구체적으로 뭘 해볼까요?" |
+| Stage | Question | Example |
+|-------|----------|---------|
+| **G**oal | What is the goal | "What do you want to look like in 3 months?" |
+| **R**eality | Current situation | "What's the hardest part right now?" |
+| **O**ptions | What methods are available | "What could you try?" |
+| **W**ill | What will you do | "What specifically will you do this week?" |
 
-## 프로그램 운영 템플릿
+## Program Operations Templates
 
-### 버디 OT 안건
-
-```
-1. 버디 프로그램 목적/기간 (10분)
-2. 버디의 역할과 책임 (15분)
-3. 신규입사자 프로필 공유 (10분)
-4. 첫 주 액션플랜 (15분)
-5. Q&A 및 지원 (10분)
-```
-
-### 피드백 설문 (4주차)
+### Buddy Orientation Agenda
 
 ```
-1. 버디와의 미팅 빈도는 적절했나요? (1~5)
-2. 버디가 적응에 도움이 되었나요? (1~5)
-3. 조직 문화를 이해하는 데 도움이 되었나요? (1~5)
-4. 가장 도움이 된 것은?
-5. 개선할 점은?
+1. Buddy program purpose/duration (10 min)
+2. Buddy roles and responsibilities (15 min)
+3. New hire profile sharing (10 min)
+4. First week action plan (15 min)
+5. Q&A and support (10 min)
 ```
 
-## 품질 체크리스트
+### Feedback Survey (Week 4)
 
-| 항목 | 기준 |
-|------|------|
-| 매칭 기준 | 6개 기준 스코어카드 |
-| 활동 계획 | 주차별 활동 명시 |
-| 교육 | 버디 OT 1시간 이상 |
-| 피드백 | 4주/8주/12주 설문 |
-| 종료 | 종료 기준 + 관계 전환 가이드 |
+```
+1. Was the meeting frequency with your buddy appropriate? (1-5)
+2. Did your buddy help with your adaptation? (1-5)
+3. Did it help you understand the organizational culture? (1-5)
+4. What was most helpful?
+5. What could be improved?
+```
+
+## Quality Checklist
+
+| Item | Criteria |
+|------|----------|
+| Matching criteria | 6-criterion scorecard |
+| Activity plan | Weekly activities specified |
+| Training | Buddy orientation 1+ hour |
+| Feedback | Surveys at weeks 4/8/12 |
+| Completion | Completion criteria + relationship transition guide |

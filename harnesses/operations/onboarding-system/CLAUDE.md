@@ -1,37 +1,37 @@
 # Onboarding System Harness
 
-신규입사자 온보딩: 체크리스트→교육→멘토배정→30-60-90일 계획까지 에이전트 팀이 협업하여 생성하는 하네스.
+New hire onboarding: A harness where an agent team collaborates to generate everything from checklists to training, mentor assignments, and 30-60-90 day plans.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── onboarding-architect.md   — 온보딩 설계 (체크리스트, 일정, 마일스톤)
-│   ├── training-builder.md       — 교육 콘텐츠 (커리큘럼, 자료, 퀴즈)
-│   ├── mentor-matcher.md         — 멘토·버디 배정 (기준, 매칭, 가이드)
-│   ├── milestone-tracker.md      — 30-60-90일 (목표, 평가, 피드백)
-│   └── experience-reviewer.md    — 경험 검증 (정합성, 개선, 보고서)
+│   ├── onboarding-architect.md   — Onboarding design (checklists, schedules, milestones)
+│   ├── training-builder.md       — Training content (curriculum, materials, quizzes)
+│   ├── mentor-matcher.md         — Mentor/buddy assignment (criteria, matching, guides)
+│   ├── milestone-tracker.md      — 30-60-90 days (goals, evaluation, feedback)
+│   └── experience-reviewer.md    — Experience review (consistency, improvements, reports)
 ├── skills/
 │   ├── onboarding-system/
-│   │   └── skill.md              — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md              — Orchestrator (team coordination, workflow, error handling)
 │   ├── learning-path-design/
-│   │   └── skill.md              — 학습 경로 설계 (training-builder 확장)
+│   │   └── skill.md              — Learning path design (training-builder extension)
 │   └── buddy-program-guide/
-│       └── skill.md              — 버디 프로그램 가이드 (mentor-matcher 확장)
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md              — Buddy program guide (mentor-matcher extension)
+└── CLAUDE.md                     — This file
 ```
 
-## 사용법
+## Usage
 
-`/onboarding-system` 스킬을 트리거하거나, "온보딩 프로그램 만들어줘" 같은 자연어로 요청한다.
+Trigger the `/onboarding-system` skill, or make a natural language request such as "Create an onboarding program."
 
-## 산출물
+## Outputs
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_onboarding_checklist.md` — 온보딩 체크리스트 및 일정
-- `02_training_program.md` — 교육 프로그램
-- `03_mentor_guide.md` — 멘토·버디 배정 가이드
-- `04_30_60_90_plan.md` — 30-60-90일 계획
-- `05_review_report.md` — 온보딩 경험 검증 보고서
+All outputs are saved to the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_onboarding_checklist.md` — Onboarding checklist and schedule
+- `02_training_program.md` — Training program
+- `03_mentor_guide.md` — Mentor/buddy assignment guide
+- `04_30_60_90_plan.md` — 30-60-90 day plan
+- `05_review_report.md` — Onboarding experience review report

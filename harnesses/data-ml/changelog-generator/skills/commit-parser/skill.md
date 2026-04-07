@@ -1,20 +1,20 @@
 ---
 name: commit-parser
-description: "git 커밋 메시지를 파싱하여 구조화된 변경 정보를 추출하는 방법론. '커밋 파싱', '커밋 메시지 분석', 'Conventional Commits 파싱', 'git 이력 구조화' 등 커밋 분석 시 사용한다. 단, git hook 설정, 커밋 린트 도구 설치는 이 스킬의 범위가 아니다."
+description: "Methodology for parsing git commit messages and extracting structured change information. Use this skill for 'commit parsing', 'commit message analysis', 'Conventional Commits parsing', 'git history structuring', and other commit analysis tasks. Note: git hook configuration and commit lint tool installation are outside the scope of this skill."
 ---
 
-# Commit Parser — 커밋 메시지 파싱 + 구조화 방법론
+# Commit Parser — Commit Message Parsing and Structuring Methodology
 
-commit-analyst의 커밋 분석 역량을 강화하는 스킬.
+A skill that enhances the commit analysis capabilities of the commit-analyst.
 
-## 대상 에이전트
+## Target Agents
 
-- **commit-analyst** — git 이력에서 의미 있는 변경 정보를 추출한다
-- **change-classifier** — 파싱된 결과로 변경을 분류한다
+- **commit-analyst** — Extracts meaningful change information from git history
+- **change-classifier** — Classifies changes using parsed results
 
-## Conventional Commits 파싱 규칙
+## Conventional Commits Parsing Rules
 
-### 정규식 패턴
+### Regex Pattern
 
 ```
 ^(?<type>feat|fix|docs|style|refactor|perf|test|ci|chore|build|revert)
@@ -27,20 +27,20 @@ Body: BREAKING CHANGE: <description>
 Footer: Refs: #123, Closes #456
 ```
 
-### 파싱 결과 구조
+### Parsed Result Structure
 
 ```python
 ParsedCommit = {
     "hash": "abc1234",
-    "type": "feat",           # 변경 유형
-    "scope": "auth",          # 영향 범위 (선택)
+    "type": "feat",           # Change type
+    "scope": "auth",          # Impact scope (optional)
     "breaking": True/False,   # Breaking Change
-    "subject": "add OAuth2",  # 제목
-    "body": "...",            # 본문
+    "subject": "add OAuth2",  # Subject
+    "body": "...",            # Body
     "footer": {
-        "refs": ["#123"],     # 참조 이슈
-        "closes": ["#456"],   # 종료 이슈
-        "breaking_change": "" # BREAKING CHANGE 설명
+        "refs": ["#123"],     # Referenced issues
+        "closes": ["#456"],   # Closed issues
+        "breaking_change": "" # BREAKING CHANGE description
     },
     "author": "name <email>",
     "date": "2025-01-15",
@@ -50,52 +50,48 @@ ParsedCommit = {
 }
 ```
 
-## 비정형 커밋 분류 전략
+## Non-Conventional Commit Classification Strategy
 
-Conventional Commits를 사용하지 않는 프로젝트용:
+For projects that do not use Conventional Commits:
 
-### 키워드 기반 분류
+### Keyword-Based Classification
 
 ```python
 classification_rules = {
-    "feat": ["add", "new", "implement", "introduce", "support",
-             "추가", "신규", "구현", "도입"],
-    "fix": ["fix", "bug", "patch", "resolve", "correct", "hotfix",
-            "수정", "버그", "해결", "오류"],
-    "refactor": ["refactor", "restructure", "reorganize", "clean",
-                 "리팩토링", "리팩터", "정리"],
-    "perf": ["performance", "optimize", "speed", "faster", "cache",
-             "성능", "최적화", "캐시"],
-    "docs": ["doc", "readme", "comment", "문서", "주석"],
-    "test": ["test", "spec", "coverage", "테스트"],
-    "ci": ["ci", "pipeline", "workflow", "deploy", "배포"],
-    "style": ["format", "lint", "whitespace", "포맷"],
-    "chore": ["bump", "update dep", "upgrade", "의존성"]
+    "feat": ["add", "new", "implement", "introduce", "support"],
+    "fix": ["fix", "bug", "patch", "resolve", "correct", "hotfix"],
+    "refactor": ["refactor", "restructure", "reorganize", "clean"],
+    "perf": ["performance", "optimize", "speed", "faster", "cache"],
+    "docs": ["doc", "readme", "comment"],
+    "test": ["test", "spec", "coverage"],
+    "ci": ["ci", "pipeline", "workflow", "deploy"],
+    "style": ["format", "lint", "whitespace"],
+    "chore": ["bump", "update dep", "upgrade", "dependency"]
 }
 ```
 
-### diff 기반 분류 (키워드 실패 시)
+### Diff-Based Classification (when keyword matching fails)
 
 ```
-1. 변경 파일 확장자 분석:
-   - .md/.rst → docs
-   - test_*.py / *.test.js → test
-   - .yml/.yaml (CI 경로) → ci
+1. Analyze changed file extensions:
+   - .md/.rst -> docs
+   - test_*.py / *.test.js -> test
+   - .yml/.yaml (CI paths) -> ci
 
-2. 변경 패턴 분석:
-   - 새 파일 추가 + export → feat
-   - 기존 파일 수정 + error/exception → fix
-   - import 추가 없이 코드 이동 → refactor
+2. Analyze change patterns:
+   - New file added + export -> feat
+   - Existing file modified + error/exception -> fix
+   - Code moved without new imports -> refactor
 
-3. 변경 규모 분석:
-   - +500줄 이상 → feat 가능성 높음
-   - ±10줄 이내 → fix/style 가능성 높음
+3. Analyze change scale:
+   - +500 lines or more -> likely feat
+   - +/-10 lines or fewer -> likely fix/style
 ```
 
-## PR/이슈 매핑 전략
+## PR/Issue Mapping Strategy
 
 ```python
-# 커밋에서 이슈 번호 추출
+# Extract issue numbers from commits
 issue_patterns = [
     r'#(\d+)',                    # #123
     r'(?:close|fix|resolve)s?\s+#(\d+)',  # closes #123
@@ -103,23 +99,23 @@ issue_patterns = [
     r'GH-(\d+)',                  # GH-123
 ]
 
-# PR에서 연관 이슈 추출 (Merge commit)
+# Extract related issues from PRs (Merge commit)
 merge_pattern = r'Merge pull request #(\d+)'
 
-# Squash merge에서 PR 번호 추출
+# Extract PR number from squash merges
 squash_pattern = r'\(#(\d+)\)$'
 ```
 
-## 변경 영향도 점수 계산
+## Change Impact Score Calculation
 
 ```python
 def impact_score(commit):
     score = 0
 
-    # 파일 수 기반
-    score += min(len(commit.files), 10) * 2  # 최대 20
+    # Based on file count
+    score += min(len(commit.files), 10) * 2  # Max 20
 
-    # 변경 줄 수 기반
+    # Based on lines changed
     changes = commit.insertions + commit.deletions
     if changes > 500: score += 30
     elif changes > 100: score += 20
@@ -129,38 +125,38 @@ def impact_score(commit):
     # Breaking Change
     if commit.breaking: score += 50
 
-    # 공개 API 변경
+    # Public API changes
     if any('api' in f or 'public' in f for f in commit.files):
         score += 15
 
-    # 데이터베이스 마이그레이션
+    # Database migrations
     if any('migration' in f for f in commit.files):
         score += 20
 
     return min(score, 100)
 
-# 점수 해석:
-# 80-100: Critical — 릴리스 노트 하이라이트
-# 50-79: High — 릴리스 노트 포함
-# 20-49: Medium — 변경 목록 포함
-# 0-19: Low — 상세 목록에만 포함
+# Score interpretation:
+# 80-100: Critical — Release note highlight
+# 50-79: High — Include in release notes
+# 20-49: Medium — Include in change list
+# 0-19: Low — Include in detailed list only
 ```
 
-## git 명령어 레시피
+## Git Command Recipes
 
 ```bash
-# 두 태그 사이 커밋 목록
+# Commits between two tags
 git log v1.2.0..v2.0.0 --oneline --no-merges
 
-# 변경 파일 포함
+# Include changed files
 git log v1.2.0..v2.0.0 --name-only --pretty=format:"%H|%s|%an|%ai"
 
-# diff 통계
+# Diff statistics
 git diff v1.2.0..v2.0.0 --stat
 
-# 기여자 목록
+# Contributor list
 git log v1.2.0..v2.0.0 --format="%aN" | sort -u
 
-# Breaking Change 커밋만
+# Breaking Change commits only
 git log v1.2.0..v2.0.0 --grep="BREAKING" --grep="!" --all-match
 ```

@@ -1,117 +1,117 @@
 ---
 name: research-methodology
-description: "학술 연구 방법론 설계의 상세 프레임워크를 제공하는 전문 스킬. methodology-expert 에이전트가 정량/정성/혼합 연구를 설계하고 표본, 도구, 분석 방법을 선정할 때 활용한다. '연구 방법론', '연구 설계', '표본 설계', '측정 도구', '타당도 신뢰도', '통계 분석 방법' 등의 맥락에서 자동 적용한다. 단, 통계 소프트웨어(SPSS, R) 직접 실행이나 IRB 승인 신청은 이 스킬의 범위가 아니다."
+description: "A specialized skill providing a detailed framework for academic research methodology design. Used by the methodology-expert agent when designing quantitative, qualitative, or mixed-methods research and selecting samples, instruments, and analysis methods. Automatically applied in contexts such as 'research methodology', 'research design', 'sample design', 'measurement instruments', 'validity and reliability', 'statistical analysis methods'. However, running statistical software (SPSS, R) directly and filing IRB applications are outside the scope of this skill."
 ---
 
-# Research Methodology — 연구 방법론 설계 프레임워크
+# Research Methodology — Research Methodology Design Framework
 
-methodology-expert 에이전트의 연구 설계 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the methodology-expert agent's research design capabilities.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **methodology-expert** — 연구 설계, 표본, 도구, 분석 방법 선정
+- **methodology-expert** — Research design, sample, instrument, and analysis method selection
 
-## 연구 설계 유형 선택 매트릭스
+## Research Design Type Selection Matrix
 
-### 연구 질문 → 설계 유형 매핑
+### Research Question -> Design Type Mapping
 
-| 연구 질문 유형 | 적합한 설계 | 데이터 유형 |
-|-------------|-----------|-----------|
-| "~은 무엇인가?" (탐색) | 질적 연구 (근거이론, 현상학) | 인터뷰, 관찰 |
-| "~의 관계는?" (상관) | 양적 연구 (설문, 2차 데이터) | 수치 데이터 |
-| "~이 ~에 영향을 미치는가?" (인과) | 실험/준실험 | 실험 데이터 |
-| "~을 어떻게 경험하는가?" (현상) | 현상학적 연구 | 심층 인터뷰 |
-| "~은 어떻게 발전했는가?" (과정) | 근거이론, 사례연구 | 다중 소스 |
-| "~을 통합적으로 이해하려면?" | 혼합 연구 | 양적+질적 |
+| Research Question Type | Suitable Design | Data Type |
+|-----------------------|----------------|-----------|
+| "What is ~?" (exploratory) | Qualitative (grounded theory, phenomenology) | Interviews, observation |
+| "What is the relationship between ~?" (correlational) | Quantitative (survey, secondary data) | Numerical data |
+| "Does ~ affect ~?" (causal) | Experimental / quasi-experimental | Experimental data |
+| "How is ~ experienced?" (phenomenological) | Phenomenological research | In-depth interviews |
+| "How has ~ developed?" (process) | Grounded theory, case study | Multiple sources |
+| "For an integrated understanding of ~?" | Mixed methods | Quantitative + qualitative |
 
-### 양적 연구 설계
+### Quantitative Research Designs
 
-| 설계 유형 | 특징 | 내적 타당도 | 적용 |
-|----------|------|-----------|------|
-| 진실험 (RCT) | 무작위 배정 + 통제집단 | 높음 | 의약, 교육 개입 |
-| 준실험 | 비무작위 + 통제/비교집단 | 중간 | 현장 교육 연구 |
-| 비실험 (설문) | 관찰, 상관 | 낮음 | 탐색적, 기술적 |
-| 종단 연구 | 시간에 따른 변화 추적 | 중간 | 발달, 패널 |
-| 횡단 연구 | 한 시점 측정 | 낮음 | 현황 파악 |
+| Design Type | Characteristics | Internal Validity | Application |
+|------------|----------------|------------------|-------------|
+| True experiment (RCT) | Random assignment + control group | High | Medicine, educational interventions |
+| Quasi-experiment | Non-random + control/comparison group | Medium | Field education research |
+| Non-experimental (survey) | Observational, correlational | Low | Exploratory, descriptive |
+| Longitudinal | Tracks changes over time | Medium | Developmental, panel studies |
+| Cross-sectional | Single-point measurement | Low | Status assessment |
 
-### 질적 연구 설계
+### Qualitative Research Designs
 
-| 설계 유형 | 목적 | 데이터 수집 | 참여자 수 |
-|----------|------|-----------|----------|
-| 현상학 | 경험의 본질 탐구 | 심층 인터뷰 | 5-25명 |
-| 근거이론 | 이론 생성 | 인터뷰, 관찰 | 20-30명 |
-| 사례연구 | 맥락 속 현상 이해 | 다중 소스 | 1-10사례 |
-| 문화기술지 | 문화적 맥락 이해 | 참여관찰 | 장기간 |
-| 내러티브 | 개인 경험 서사 | 생애사 인터뷰 | 1-5명 |
+| Design Type | Purpose | Data Collection | Participant Count |
+|------------|---------|----------------|-------------------|
+| Phenomenology | Explore the essence of experience | In-depth interviews | 5-25 |
+| Grounded theory | Generate theory | Interviews, observation | 20-30 |
+| Case study | Understand phenomena in context | Multiple sources | 1-10 cases |
+| Ethnography | Understand cultural context | Participant observation | Extended period |
+| Narrative | Personal experience narrative | Life history interviews | 1-5 |
 
-## 표본 설계
+## Sample Design
 
-### 양적 연구 표본 크기 산출
+### Quantitative Sample Size Calculation
 
 ```
-n = (Z² × p × (1-p)) / e²
+n = (Z^2 x p x (1-p)) / e^2
 
-Z = 신뢰수준 (95% → 1.96, 99% → 2.576)
-p = 예상 비율 (모르면 0.5)
-e = 오차 한계 (보통 ±5% = 0.05)
+Z = Confidence level (95% -> 1.96, 99% -> 2.576)
+p = Expected proportion (if unknown, use 0.5)
+e = Margin of error (typically +/-5% = 0.05)
 ```
 
-| 모집단 | 신뢰 95%, 오차 ±5% | 신뢰 95%, 오차 ±3% |
-|-------|------------------|--------------------|
+| Population | 95% conf, +/-5% | 95% conf, +/-3% |
+|-----------|-----------------|------------------|
 | 100 | 80 | 92 |
 | 500 | 217 | 341 |
 | 1,000 | 278 | 516 |
 | 10,000 | 370 | 964 |
 | 100,000+ | 384 | 1,067 |
 
-### 회귀분석용 최소 표본
+### Minimum Sample for Regression Analysis
 
 ```
-N ≥ 50 + 8 × (독립변수 수)  (Tabachnick & Fidell)
-또는
-N ≥ 15 × (독립변수 수)  (Stevens)
+N >= 50 + 8 x (number of independent variables)  (Tabachnick & Fidell)
+or
+N >= 15 x (number of independent variables)  (Stevens)
 ```
 
-## 측정 도구 타당도·신뢰도
+## Measurement Instrument Validity and Reliability
 
-### 타당도 (Validity)
+### Validity
 
-| 유형 | 검증 방법 | 기준 |
-|------|----------|------|
-| 내용 타당도 | 전문가 패널 검토 (CVI) | CVI ≥ 0.80 |
-| 구성 타당도 | 요인분석 (EFA/CFA) | 요인적재값 ≥ 0.40 |
-| 수렴 타당도 | AVE | AVE ≥ 0.50 |
-| 판별 타당도 | √AVE > 상관계수 | Fornell-Larcker |
-| 준거 타당도 | 외부 기준과 상관 | r ≥ 0.40 |
+| Type | Verification Method | Criterion |
+|------|-------------------|----------|
+| Content validity | Expert panel review (CVI) | CVI >= 0.80 |
+| Construct validity | Factor analysis (EFA/CFA) | Factor loading >= 0.40 |
+| Convergent validity | AVE | AVE >= 0.50 |
+| Discriminant validity | sqrt(AVE) > correlation | Fornell-Larcker criterion |
+| Criterion validity | Correlation with external criterion | r >= 0.40 |
 
-### 신뢰도 (Reliability)
+### Reliability
 
-| 유형 | 검증 방법 | 기준 |
-|------|----------|------|
-| 내적 일관성 | Cronbach's α | α ≥ 0.70 |
-| 복합 신뢰도 | CR (구조방정식) | CR ≥ 0.70 |
-| 검사-재검사 | 동일 도구 반복 측정 | r ≥ 0.70 |
-| 평가자 간 | Cohen's Kappa | κ ≥ 0.60 |
+| Type | Verification Method | Criterion |
+|------|-------------------|----------|
+| Internal consistency | Cronbach's alpha | alpha >= 0.70 |
+| Composite reliability | CR (SEM) | CR >= 0.70 |
+| Test-retest | Repeated measurement with same instrument | r >= 0.70 |
+| Inter-rater | Cohen's Kappa | kappa >= 0.60 |
 
-## 분석 방법 선택 가이드
+## Analysis Method Selection Guide
 
-### 연구 목적 → 분석 방법
+### Research Purpose -> Analysis Method
 
-| 연구 목적 | 독립변수 | 종속변수 | 분석 방법 |
-|----------|---------|---------|----------|
-| 차이 검증 (2집단) | 범주 | 연속 | t-test |
-| 차이 검증 (3+집단) | 범주 | 연속 | ANOVA |
-| 관계 분석 | 연속 | 연속 | 상관분석 |
-| 영향 분석 | 연속/범주 | 연속 | 회귀분석 |
-| 구조적 관계 | 잠재변수 | 잠재변수 | SEM |
-| 집단 분류 | 연속/범주 | 범주 | 로지스틱 회귀 |
-| 범주 간 관계 | 범주 | 범주 | 카이제곱 검정 |
+| Research Purpose | Independent Variable | Dependent Variable | Analysis Method |
+|-----------------|--------------------|--------------------|----------------|
+| Difference test (2 groups) | Categorical | Continuous | t-test |
+| Difference test (3+ groups) | Categorical | Continuous | ANOVA |
+| Relationship analysis | Continuous | Continuous | Correlation analysis |
+| Impact analysis | Continuous/Categorical | Continuous | Regression analysis |
+| Structural relationships | Latent variables | Latent variables | SEM |
+| Group classification | Continuous/Categorical | Categorical | Logistic regression |
+| Categorical relationship | Categorical | Categorical | Chi-square test |
 
-### 가정 위반 시 대안
+### Alternatives When Assumptions Are Violated
 
-| 가정 | 위반 시 대안 |
-|------|-----------|
-| 정규성 | Mann-Whitney, Kruskal-Wallis |
-| 등분산 | Welch's t-test, Games-Howell |
-| 독립성 | 반복측정 ANOVA, 대응표본 t-test |
-| 선형성 | 비선형 회귀, 변수 변환 |
+| Assumption | Alternative |
+|-----------|------------|
+| Normality | Mann-Whitney, Kruskal-Wallis |
+| Equal variance | Welch's t-test, Games-Howell |
+| Independence | Repeated measures ANOVA, paired t-test |
+| Linearity | Nonlinear regression, variable transformation |

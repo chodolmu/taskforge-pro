@@ -1,38 +1,38 @@
 # Operations Manual Harness
 
-업무 매뉴얼 자동 생성 하네스. 기존 문서/코드를 분석하여 프로세스 플로차트, 단계별 매뉴얼, FAQ, 교육자료를 에이전트 팀이 협업하여 생성한다.
+An automated operations manual generation harness. An agent team collaborates to analyze existing documents/code and generate process flowcharts, step-by-step manuals, FAQs, and training materials.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── document-analyst.md    — 기존 문서·코드 분석 (구조파악, 프로세스추출, 용어정리)
-│   ├── flowchart-designer.md  — 프로세스 플로차트 설계 (Mermaid 다이어그램, 분기로직)
-│   ├── manual-writer.md       — 단계별 매뉴얼 작성 (절차서, 스크린샷가이드, 체크리스트)
-│   ├── faq-builder.md         — FAQ 및 트러블슈팅 가이드 작성
-│   └── training-producer.md   — 교육자료 제작 (퀴즈, 실습과제, 요약카드)
+│   ├── document-analyst.md    — Existing document/code analysis (structure mapping, process extraction, glossary)
+│   ├── flowchart-designer.md  — Process flowchart design (Mermaid diagrams, branching logic)
+│   ├── manual-writer.md       — Step-by-step manual writing (procedures, screenshot guides, checklists)
+│   ├── faq-builder.md         — FAQ and troubleshooting guide creation
+│   └── training-producer.md   — Training material production (quizzes, hands-on exercises, summary cards)
 ├── skills/
 │   ├── operations-manual/
-│   │   └── skill.md           — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md           — Orchestrator (team coordination, workflow, error handling)
 │   ├── flowchart-standards/
-│   │   └── skill.md           — 프로세스 플로차트 표준 (flowchart-designer 확장)
+│   │   └── skill.md           — Process flowchart standards (flowchart-designer extension)
 │   └── knowledge-base-design/
-│       └── skill.md           — 지식 베이스 구축 가이드 (faq-builder 확장)
-└── CLAUDE.md                  — 이 파일
+│       └── skill.md           — Knowledge base design guide (faq-builder extension)
+└── CLAUDE.md                  — This file
 ```
 
-## 사용법
+## Usage
 
-`/operations-manual` 스킬을 트리거하거나, "업무 매뉴얼 만들어줘" 같은 자연어로 요청한다.
+Trigger the `/operations-manual` skill, or make a natural language request such as "Create an operations manual."
 
-## 산출물
+## Outputs
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 및 분석 대상 정리
-- `01_document_analysis.md` — 기존 문서/코드 분석 결과
-- `02_process_flowcharts.md` — 프로세스 플로차트 (Mermaid)
-- `03_step_by_step_manual.md` — 단계별 업무 매뉴얼
-- `04_faq_troubleshooting.md` — FAQ 및 트러블슈팅 가이드
-- `05_training_materials.md` — 교육자료 패키지
-- `06_review_report.md` — 통합 검증 보고서
+All outputs are saved to the `_workspace/` directory:
+- `00_input.md` — User input and analysis targets
+- `01_document_analysis.md` — Existing document/code analysis results
+- `02_process_flowcharts.md` — Process flowcharts (Mermaid)
+- `03_step_by_step_manual.md` — Step-by-step operations manual
+- `04_faq_troubleshooting.md` — FAQ and troubleshooting guide
+- `05_training_materials.md` — Training materials package
+- `06_review_report.md` — Integrated review report

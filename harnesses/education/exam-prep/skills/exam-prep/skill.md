@@ -1,133 +1,134 @@
 ---
 name: exam-prep
-description: "시험 준비 종합 파이프라인. 출제경향분석→약점진단→맞춤학습설계→모의고사출제→오답분석을 에이전트 팀이 협업하여 수행한다. '시험 준비 도와줘', '모의고사 만들어줘', '기출 분석해줘', '약점 진단', '오답 분석', '수능 준비', '자격증 시험', '공무원 시험', '토익 준비', '학습 계획 세워줘' 등 시험 준비 전반에 이 스킬을 사용한다. 기존 성적표나 오답 데이터가 있으면 진단 단계에 활용한다. 단, 실제 시험 접수·결제, 학원 추천, 실시간 강의 제공은 이 스킬의 범위가 아니다."
+description: "An exam preparation full pipeline. An agent team collaborates to perform trend analysis, weakness diagnosis, customized study planning, mock exam creation, and error analysis. Use this skill for requests like 'help me prepare for an exam', 'create a mock exam', 'analyze past exams', 'diagnose weaknesses', 'error analysis', 'college entrance prep', 'certification exam', 'civil service exam', 'TOEIC prep', 'create a study plan', and other exam preparation needs. Existing score reports or error data can be used to augment the diagnostic phase. However, actual exam registration/payment, academy recommendations, and live lecture delivery are outside the scope of this skill."
 ---
 
-# Exam Prep — 시험 준비 종합 파이프라인
+# Exam Prep — Exam Preparation Full Pipeline
 
-시험의 출제경향분석→약점진단→맞춤학습→모의고사→오답분석을 에이전트 팀이 협업하여 수행한다.
+An agent team collaborates to perform trend analysis, weakness diagnosis, customized study planning, mock exam creation, and error analysis.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## Agent Roster
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| trend-analyst | `.claude/agents/trend-analyst.md` | 출제경향 분석, 빈출영역 도출 | general-purpose |
-| diagnostician | `.claude/agents/diagnostician.md` | 약점 진단, 취약점 식별 | general-purpose |
-| learning-designer | `.claude/agents/learning-designer.md` | 맞춤학습 설계, 자료 구성 | general-purpose |
-| examiner | `.claude/agents/examiner.md` | 모의고사 출제, 해설 작성 | general-purpose |
-| error-analyst | `.claude/agents/error-analyst.md` | 오답 분석, 보완 전략 수립 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| trend-analyst | `.claude/agents/trend-analyst.md` | Exam trend analysis, frequently tested area identification | general-purpose |
+| diagnostician | `.claude/agents/diagnostician.md` | Weakness diagnosis, vulnerability identification | general-purpose |
+| learning-designer | `.claude/agents/learning-designer.md` | Customized study plan design, material assembly | general-purpose |
+| examiner | `.claude/agents/examiner.md` | Mock exam creation, answer explanation writing | general-purpose |
+| error-analyst | `.claude/agents/error-analyst.md` | Error analysis, remediation strategy formulation | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Orchestrator performs directly)
 
-1. 사용자 입력에서 추출한다:
-    - **시험명**: 어떤 시험을 준비하는가 (수능, 공무원, 자격증, 토익 등)
-    - **과목/영역**: 전 과목인가, 특정 과목인가
-    - **현재 수준** (선택): 기존 성적, 모의고사 점수, 자가 진단
-    - **목표** (선택): 목표 점수, 합격 기준
-    - **남은 기간** (선택): 시험까지 남은 기간
-    - **기존 데이터** (선택): 성적표, 오답 노트, 학습 이력
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 데이터가 있으면 `_workspace/`에 복사하고 해당 Phase를 조정한다
-5. 요청 범위에 따라 **실행 모드를 결정**한다 (아래 "작업 규모별 모드" 참조)
+1. Extract from user input:
+    - **Exam name**: Which exam is being prepared for (college entrance, civil service, certification, TOEIC, etc.)
+    - **Subject/area**: All subjects or a specific subject
+    - **Current level** (optional): Existing scores, mock exam results, self-assessment
+    - **Goal** (optional): Target score, pass threshold
+    - **Remaining time** (optional): Time until the exam
+    - **Existing data** (optional): Score reports, error notebooks, study history
+2. Create a `_workspace/` directory at the project root
+3. Organize the input and save it to `_workspace/00_input.md`
+4. If existing data is provided, copy it to `_workspace/` and adjust the relevant phase accordingly
+5. Determine the **execution mode** based on the scope of the request (see "Task-Scale Modes" below)
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 출제경향 분석 | trend-analyst | 없음 | `_workspace/01_trend_analysis.md` |
-| 2 | 약점 진단 | diagnostician | 작업 1 | `_workspace/02_diagnosis_report.md` |
-| 3 | 맞춤학습 설계 | learning-designer | 작업 1, 2 | `_workspace/03_learning_plan.md` |
-| 4 | 모의고사 출제 | examiner | 작업 1, 2, 3 | `_workspace/04_mock_exam.md`, `04_mock_exam_answer.md` |
-| 5 | 오답 분석 | error-analyst | 작업 4 | `_workspace/05_error_analysis.md` |
+| Order | Task | Agent | Depends On | Deliverable |
+|-------|------|-------|-----------|-------------|
+| 1 | Trend analysis | trend-analyst | None | `_workspace/01_trend_analysis.md` |
+| 2 | Weakness diagnosis | diagnostician | Task 1 | `_workspace/02_diagnosis_report.md` |
+| 3 | Study plan design | learning-designer | Tasks 1, 2 | `_workspace/03_learning_plan.md` |
+| 4 | Mock exam creation | examiner | Tasks 1, 2, 3 | `_workspace/04_mock_exam.md`, `04_mock_exam_answer.md` |
+| 5 | Error analysis | error-analyst | Task 4 | `_workspace/05_error_analysis.md` |
 
-**팀원 간 소통 흐름:**
-- trend-analyst 완료 → diagnostician에게 빈출 영역·함정 유형 전달, learning-designer에게 출제 예상 영역 전달, examiner에게 출제 빈도·난이도 데이터 전달
-- diagnostician 완료 → learning-designer에게 취약 영역·약점 유형·목표 갭 전달, examiner에게 약점 중심 출제 요청 전달
-- learning-designer 완료 → examiner에게 학습 범위·난이도 가이드 전달
-- examiner 완료 → error-analyst에게 문제지·해설지·출제 의도 전달
-- error-analyst 완료 → 보완 학습 항목을 learning-designer에게 피드백, 다음 모의고사 반영 사항을 examiner에게 전달
+**Inter-agent communication flow:**
+- trend-analyst completes -> sends frequently tested areas and trap types to diagnostician; sends predicted topics to learning-designer; sends frequency and difficulty data to examiner
+- diagnostician completes -> sends weak areas, weakness types, and goal gap to learning-designer; sends weakness-focused item requests to examiner
+- learning-designer completes -> sends study scope and difficulty guide to examiner
+- examiner completes -> sends question sheet, answer key, and item design intents to error-analyst
+- error-analyst completes -> feeds remediation items back to learning-designer; sends next-exam reflection items to examiner
 
-### Phase 3: 통합 및 최종 보고
+### Phase 3: Integration and Final Report
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 오답 분석의 보완 학습 제안이 학습 계획에 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 출제경향 분석 — `01_trend_analysis.md`
-    - 약점 진단 — `02_diagnosis_report.md`
-    - 맞춤학습 계획 — `03_learning_plan.md`
-    - 모의고사 문제지 — `04_mock_exam.md`
-    - 모의고사 해설지 — `04_mock_exam_answer.md`
-    - 오답 분석 — `05_error_analysis.md`
+1. Verify all files in `_workspace/`
+2. Confirm that the error analysis remediation suggestions are reflected in the study plan
+3. Report the final summary to the user:
+    - Trend analysis — `01_trend_analysis.md`
+    - Weakness diagnosis — `02_diagnosis_report.md`
+    - Customized study plan — `03_learning_plan.md`
+    - Mock exam question sheet — `04_mock_exam.md`
+    - Mock exam answer key — `04_mock_exam_answer.md`
+    - Error analysis — `05_error_analysis.md`
 
-## 작업 규모별 모드
+## Task-Scale Modes
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "시험 준비 풀코스", "종합 분석" | **풀 파이프라인** | 5명 전원 |
-| "기출 분석만", "출제경향 알려줘" | **경향분석 모드** | trend-analyst 단독 |
-| "약점 파악해줘", "진단해줘" | **진단 모드** | trend-analyst + diagnostician |
-| "학습 계획 세워줘" | **학습설계 모드** | trend-analyst + diagnostician + learning-designer |
-| "모의고사만 만들어줘" | **모의고사 모드** | trend-analyst + examiner |
-| "이 모의고사 오답 분석해줘" (기존 데이터) | **오답분석 모드** | error-analyst 단독 |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|----------------|
+| "Full course exam prep", "comprehensive analysis" | **Full Pipeline** | All 5 agents |
+| "Just analyze past exams", "show me trends" | **Trend Analysis Mode** | trend-analyst only |
+| "Identify my weaknesses", "diagnose me" | **Diagnostic Mode** | trend-analyst + diagnostician |
+| "Create a study plan" | **Study Design Mode** | trend-analyst + diagnostician + learning-designer |
+| "Just create a mock exam" | **Mock Exam Mode** | trend-analyst + examiner |
+| "Analyze my mock exam errors" (existing data) | **Error Analysis Mode** | error-analyst only |
 
-**기존 데이터 활용**: 사용자가 성적표, 기존 오답 노트 등을 제공하면, 해당 데이터를 `_workspace/`에 저장하고 관련 단계의 분석을 보강한다.
+**Existing data usage**: If the user provides score reports, existing error notebooks, etc., store the data in `_workspace/` and augment the relevant phase's analysis.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 보완 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information exchange, remediation requests |
+| Task-based | TaskCreate/TaskUpdate | Track progress, manage dependencies |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{order}_{agent}_{deliverable}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 시험 정보 검색 실패 | 사용자에게 시험 형식 직접 확인 요청, 일반 지식 기반 작업 |
-| 기출 데이터 부족 | 확보 가능한 범위 내 분석, 보고서에 "데이터 제한" 명시 |
-| 사용자 미응답(진단 문항) | 자가 체크리스트로 대체, 주관적 진단 수행 |
-| 과목 범위 과대 | 핵심 과목 우선 처리, 나머지는 후속 요청 안내 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행 |
+| Error Type | Strategy |
+|-----------|----------|
+| Exam info search failure | Ask user to confirm exam format directly; work from general knowledge |
+| Insufficient past exam data | Analyze within available range; note "data limited" in report |
+| User non-response (diagnostic items) | Substitute with self-assessment checklist; perform subjective diagnosis |
+| Excessive subject scope | Process core subjects first; guide remaining subjects to follow-up requests |
+| Agent failure | Retry once -> proceed without that deliverable if still failing |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "정보처리기사 실기 시험 준비를 도와줘. 한 달 남았고, 지난 필기는 75점으로 합격했어."
-**기대 결과**:
-- 경향 분석: 정보처리기사 실기 최근 3개년 출제경향, 빈출 영역
-- 진단: 필기 75점 기반 취약 영역 추론 + 진단 문항 제공
-- 학습 계획: 30일 일정, 약점 영역 집중 커리큘럼
-- 모의고사: 실기 형식(서술형+실무형) 모의 문제
-- 오답 분석: 패턴 분석 + 보완 학습 제안
+### Normal Flow
+**Prompt**: "Help me prepare for the AWS Solutions Architect certification. I have one month left, and I passed the Cloud Practitioner with 75%."
+**Expected Results**:
+- Trend analysis: Most recent 3-year exam trends, frequently tested domains
+- Diagnosis: Weakness areas inferred from 75% Cloud Practitioner score + diagnostic items provided
+- Study plan: 30-day schedule, weakness-area-focused curriculum
+- Mock exam: Certification-format mock questions (scenario-based + multi-select)
+- Error analysis: Pattern analysis + remediation plan
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 모의고사 결과를 분석해줘" + 오답 데이터 첨부
-**기대 결과**:
-- 오답분석 모드로 전환 (error-analyst 단독)
-- 첨부 데이터 기반 오답 패턴 분석
-- 보완 학습 계획 제안
-### 에러 흐름
-**프롬프트**: "시험 준비 도와줘"
-**기대 결과**:
-- 시험명 미지정 → 어떤 시험인지 추가 질문
-- 목표 점수/합격 기준 확인
-- 최소 정보 확보 후 풀 파이프라인 진행
+### Existing File Flow
+**Prompt**: "Analyze my mock exam results" + error data attached
+**Expected Results**:
+- Switches to Error Analysis Mode (error-analyst only)
+- Pattern analysis based on the attached data
+- Remediation study plan proposal
 
-## 에이전트별 확장 스킬
+### Error Flow
+**Prompt**: "Help me study for an exam"
+**Expected Results**:
+- Exam not specified -> ask which exam
+- Confirm target score / pass threshold
+- After minimum information acquired, proceed with full pipeline
 
-에이전트의 도메인 전문성을 강화하는 확장 스킬:
+## Agent Extension Skills
 
-| 에이전트 | 확장 스킬 | 역할 |
-|---------|----------|------|
-| examiner, learning-designer | `bloom-taxonomy-engine` | Bloom 6단계 문항 설계, 시험 유형별 분포 가이드, 학습 활동 매핑 |
-| error-analyst, diagnostician | `error-pattern-analyzer` | 5-Type 오답 분류, 개념 결손 추적, 보완 우선순위 산출 |
+Extension skills that enhance each agent's domain expertise:
+
+| Agent | Extension Skill | Role |
+|-------|----------------|------|
+| examiner, learning-designer | `bloom-taxonomy-engine` | Bloom's 6-level question design, exam-type distribution guide, learning activity mapping |
+| error-analyst, diagnostician | `error-pattern-analyzer` | 5-Type error classification, concept deficit tracking, remediation priority calculation |

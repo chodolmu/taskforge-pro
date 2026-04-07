@@ -1,137 +1,137 @@
 ---
 name: color-harmony-engine
-description: "인테리어 컬러 팔레트의 조화와 배색을 설계하는 색채 조화 엔진. 'moodboard-designer'와 'style-analyst' 에이전트가 컬러팔레트를 구성하고 스타일을 분석할 때 이 스킬의 색채 이론, 배색 공식, 스타일별 팔레트 DB를 반드시 활용해야 한다. '컬러팔레트 설계', '배색 조화', '색채 심리' 등에 사용한다. 단, 가구 선정이나 예산 관리는 이 스킬의 범위가 아니다."
+description: "A color harmony engine for designing interior color palettes. The 'moodboard-designer' and 'style-analyst' agents must use this skill's color theory, palette formulas, and style-specific palette database when composing color palettes and analyzing styles. Used for 'color palette design', 'color harmony', 'color psychology', etc. Furniture selection and budget management are outside this skill's scope."
 ---
 
-# Color Harmony Engine — 인테리어 색채 조화 엔진
+# Color Harmony Engine — Interior Color Harmony Engine
 
-공간 인테리어를 위한 색채 이론, 배색 공식, 심리적 효과를 체계적으로 제공한다.
+Provides systematic color theory, palette formulas, and psychological effects for interior design.
 
-## 배색 기본 공식
+## Basic Palette Formulas
 
-### 60-30-10 규칙
-
-```
-60% — 주조색 (Dominant): 벽, 천장, 대형 가구
-30% — 보조색 (Secondary): 패브릭, 커튼, 러그, 소형 가구
-10% — 강조색 (Accent): 쿠션, 소품, 아트워크
-
-예시 (스칸디나비안):
-  60% 화이트 (#FAFAFA)
-  30% 라이트 그레이 (#D5D5D5) + 내추럴 우드
-  10% 머스타드 옐로우 (#E8B730)
-```
-
-### 색채 조화 유형
-
-| 유형 | 설명 | 느낌 | 적합 공간 |
-|------|------|------|----------|
-| 모노크로매틱 | 한 색상의 명도·채도 변화 | 통일감, 세련 | 침실, 서재 |
-| 아날로그 | 인접 색상 조합 (색상환 30도) | 자연스러움, 편안 | 거실, 카페 |
-| 보색 | 반대편 색상 (180도) | 강렬, 역동 | 포인트 벽, 아이방 |
-| 분할보색 | 보색의 인접색 (150도) | 조화+활력 | 거실, 다이닝 |
-| 트라이어드 | 120도 간격 3색 | 균형잡힌 활력 | 키즈룸, 플레이룸 |
-| 뉴트럴 | 무채색 + 자연색 | 고급, 차분 | 미니멀 공간 |
-
-## 인테리어 스타일별 컬러 팔레트
-
-### 스칸디나비안 (Scandinavian)
+### 60-30-10 Rule
 
 ```
-주조: 화이트 #FFFFFF, 오프화이트 #F5F0EB
-보조: 라이트그레이 #D5D5D5, 내추럴 오크 #C4A574
-강조: 머스타드 #E8B730, 더스티핑크 #D4A5A5, 세이지그린 #8FA98C
-소재: 원목, 리넨, 울
+60% — Dominant: Walls, ceiling, large furniture
+30% — Secondary: Fabric, curtains, rugs, small furniture
+10% — Accent: Cushions, accessories, artwork
+
+Example (Scandinavian):
+  60% White (#FAFAFA)
+  30% Light Gray (#D5D5D5) + Natural Wood
+  10% Mustard Yellow (#E8B730)
 ```
 
-### 모던 (Modern)
+### Color Harmony Types
+
+| Type | Description | Feel | Suitable Spaces |
+|------|-------------|------|-----------------|
+| Monochromatic | Value/saturation shifts of a single hue | Unity, sophistication | Bedroom, study |
+| Analogous | Adjacent hues (30 degrees on color wheel) | Natural, comfortable | Living room, cafe |
+| Complementary | Opposite hues (180 degrees) | Bold, dynamic | Accent wall, kids' room |
+| Split-complementary | Adjacent to complement (150 degrees) | Harmony + energy | Living room, dining |
+| Triadic | 3 hues at 120 degree intervals | Balanced energy | Kids' room, playroom |
+| Neutral | Achromatics + natural tones | Refined, calm | Minimal spaces |
+
+## Interior Style Color Palettes
+
+### Scandinavian
 
 ```
-주조: 화이트 #FFFFFF, 쿨그레이 #9E9E9E
-보조: 차콜 #333333, 블랙 #1A1A1A
-강조: 일렉트릭블루 #2979FF, 레드 #D32F2F
-소재: 메탈, 유리, 하이글로시
+Dominant: White #FFFFFF, Off-White #F5F0EB
+Secondary: Light Gray #D5D5D5, Natural Oak #C4A574
+Accent: Mustard #E8B730, Dusty Pink #D4A5A5, Sage Green #8FA98C
+Materials: Solid wood, linen, wool
 ```
 
-### 내추럴 (Natural/Organic)
+### Modern
 
 ```
-주조: 아이보리 #FFFFF0, 베이지 #F5F0DC
-보조: 테라코타 #C2703E, 올리브그린 #6B8E23
-강조: 머드브라운 #6F4E37, 러스트 #B7410E
-소재: 라탄, 마, 코튼, 도기
+Dominant: White #FFFFFF, Cool Gray #9E9E9E
+Secondary: Charcoal #333333, Black #1A1A1A
+Accent: Electric Blue #2979FF, Red #D32F2F
+Materials: Metal, glass, high-gloss
 ```
 
-### 미드센추리 모던 (Mid-Century Modern)
+### Natural/Organic
 
 ```
-주조: 화이트 #FAFAFA, 웜우드 #A67B5B
-보조: 틸 #008080, 올리브 #808000
-강조: 오렌지 #FF6D00, 골드 #FFD700
-소재: 월넛, 가죽, 벨벳
+Dominant: Ivory #FFFFF0, Beige #F5F0DC
+Secondary: Terracotta #C2703E, Olive Green #6B8E23
+Accent: Mud Brown #6F4E37, Rust #B7410E
+Materials: Rattan, hemp, cotton, earthenware
 ```
 
-### 인더스트리얼 (Industrial)
+### Mid-Century Modern
 
 ```
-주조: 콘크리트그레이 #B0B0B0, 다크그레이 #4A4A4A
-보조: 블랙 #1A1A1A, 다크브라운 #3E2723
-강조: 오렌지 #E65100, 앰버 #FFAB00
-소재: 노출 벽돌, 철재, 에이징 우드
+Dominant: White #FAFAFA, Warm Wood #A67B5B
+Secondary: Teal #008080, Olive #808000
+Accent: Orange #FF6D00, Gold #FFD700
+Materials: Walnut, leather, velvet
 ```
 
-## 색채 심리학 — 공간별 적용
-
-| 색상 계열 | 심리 효과 | 적합 공간 | 부적합 공간 |
-|----------|----------|----------|-----------|
-| 블루 | 안정, 집중, 신뢰 | 서재, 침실, 욕실 | 식당 (식욕 감소) |
-| 그린 | 휴식, 자연, 균형 | 거실, 침실, 베란다 | - |
-| 옐로우 | 밝음, 활력, 창의 | 주방, 아이방, 현관 | 침실 (과각성) |
-| 레드 | 열정, 식욕, 에너지 | 식당, 포인트벽 | 침실, 서재 |
-| 퍼플 | 고급, 신비, 창의 | 침실, 서재 | 주방, 거실 |
-| 오렌지 | 따뜻함, 사교, 활력 | 거실, 다이닝 | 침실 |
-| 뉴트럴 | 안정, 세련, 확장 | 모든 공간 | - |
-
-## 공간 크기별 색채 전략
+### Industrial
 
 ```
-좁은 공간 (<10평):
-  - 밝은 톤 주조색 (팽창 효과)
-  - 천장색 = 벽색 또는 더 밝게
-  - 강조색 최소화 (산만함 방지)
-  - 거울 활용 (시각적 확장)
-
-넓은 공간 (>20평):
-  - 중간~어두운 톤 가능 (아늑함)
-  - 영역별 색상 존 분리 가능
-  - 대담한 강조색 활용
-  - 텍스처 변화로 깊이감
-
-높은 천장:
-  - 천장을 벽보다 1-2톤 어둡게 (아늑)
-
-낮은 천장:
-  - 천장을 벽보다 밝게 (높아 보임)
-  - 세로 스트라이프 패턴
+Dominant: Concrete Gray #B0B0B0, Dark Gray #4A4A4A
+Secondary: Black #1A1A1A, Dark Brown #3E2723
+Accent: Orange #E65100, Amber #FFAB00
+Materials: Exposed brick, steel, aged wood
 ```
 
-## 컬러 팔레트 출력 형식
+## Color Psychology — Application by Space
+
+| Color Family | Psychological Effect | Suitable Spaces | Unsuitable Spaces |
+|-------------|---------------------|-----------------|-------------------|
+| Blue | Stability, focus, trust | Study, bedroom, bathroom | Dining room (suppresses appetite) |
+| Green | Relaxation, nature, balance | Living room, bedroom, balcony | - |
+| Yellow | Brightness, energy, creativity | Kitchen, kids' room, entryway | Bedroom (overstimulating) |
+| Red | Passion, appetite, energy | Dining room, accent wall | Bedroom, study |
+| Purple | Luxury, mystery, creativity | Bedroom, study | Kitchen, living room |
+| Orange | Warmth, sociability, energy | Living room, dining area | Bedroom |
+| Neutral | Stability, refinement, openness | All spaces | - |
+
+## Color Strategy by Space Size
+
+```
+Small spaces (<330 sq ft):
+  - Light-toned dominant color (creates sense of expansion)
+  - Ceiling color = wall color or lighter
+  - Minimize accent colors (prevents visual clutter)
+  - Use mirrors (visual expansion)
+
+Large spaces (>660 sq ft):
+  - Medium to dark tones are viable (creates coziness)
+  - Color zoning by area is possible
+  - Bold accent colors can be used
+  - Texture variation adds depth
+
+High ceilings:
+  - Paint ceiling 1-2 shades darker than walls (cozier feel)
+
+Low ceilings:
+  - Paint ceiling lighter than walls (appears taller)
+  - Vertical stripe patterns
+```
+
+## Color Palette Output Format
 
 ```markdown
-## 컬러 팔레트
+## Color Palette
 
-**스타일**: [스타일명]
-**배색 유형**: [모노/아날로그/보색 등]
+**Style**: [Style Name]
+**Harmony type**: [Monochromatic/Analogous/Complementary, etc.]
 
-| 역할 | 색상명 | HEX | 적용 위치 | 비율 |
-|------|--------|-----|----------|------|
-| 주조색 | 오프화이트 | #F5F0EB | 벽, 천장 | 60% |
-| 보조색1 | 웜그레이 | #B8AFA6 | 소파, 커튼 | 20% |
-| 보조색2 | 내추럴오크 | #C4A574 | 테이블, 선반 | 10% |
-| 강조색 | 세이지그린 | #8FA98C | 쿠션, 화분 | 10% |
+| Role | Color Name | HEX | Application | Ratio |
+|------|-----------|-----|-------------|-------|
+| Dominant | Off-White | #F5F0EB | Walls, ceiling | 60% |
+| Secondary 1 | Warm Gray | #B8AFA6 | Sofa, curtains | 20% |
+| Secondary 2 | Natural Oak | #C4A574 | Table, shelving | 10% |
+| Accent | Sage Green | #8FA98C | Cushions, planters | 10% |
 ```
 
-## 참고
+## References
 
-- Pantone, NCS 색채 체계 참조
-- 상세 팔레트 조합: `references/color-palettes.md` 참조
+- Pantone and NCS color system references
+- Detailed palette combinations: see `references/color-palettes.md`

@@ -1,138 +1,140 @@
+```markdown
 ---
 name: tax-bracket-simulator
-description: "세율 구간별 세액을 시뮬레이션하고 절세 포인트를 식별하는 세율 구간 분석기. 'tax-engine'과 'strategy-advisor' 에이전트가 세액을 계산하고 절세 전략을 수립할 때 이 스킬의 세율표, 계산 공식, 구간 분석 방법을 반드시 활용해야 한다. '세율 구간 분석', '세액 시뮬레이션', '한계세율 계산' 등에 사용한다. 단, 공제 최적화나 소득 분류는 이 스킬의 범위가 아니다."
+description: "A tax bracket analyzer that simulates tax liability by bracket and identifies tax-saving points. The 'tax-engine' and 'strategy-advisor' agents must use this skill's tax rate tables, calculation formulas, and bracket analysis methods when computing taxes and building tax-saving strategies. Use for 'tax bracket analysis', 'tax liability simulation', 'marginal rate calculation', etc. Note: deduction optimization and income classification are outside the scope of this skill."
 ---
 
-# Tax Bracket Simulator — 세율 구간 시뮬레이터
+# Tax Bracket Simulator
 
-소득세 세율 구간별 세액 계산, 한계세율 분석, 절세 포인트 식별.
+Income tax calculation by bracket, marginal rate analysis, and tax-saving point identification.
 
-## 종합소득세 세율표
+## Comprehensive Income Tax Rate Table
 
-### 2024년 기준 세율
+### 2024 Tax Rates
 
-| 과세표준 구간 | 세율 | 누진공제 | 구간 세액 |
-|-------------|------|---------|----------|
-| ~1,400만원 | 6% | 0 | 최대 84만원 |
-| 1,400~5,000만원 | 15% | 126만원 | 최대 540만원 |
-| 5,000~8,800만원 | 24% | 576만원 | 최대 912만원 |
-| 8,800~1.5억원 | 35% | 1,544만원 | 최대 2,170만원 |
-| 1.5~3억원 | 38% | 1,994만원 | 최대 5,700만원 |
-| 3~5억원 | 40% | 2,594만원 | 최대 8,000만원 |
-| 5~10억원 | 42% | 3,594만원 | 최대 21,000만원 |
-| 10억원 초과 | 45% | 6,594만원 | - |
+| Taxable Income Bracket | Rate | Progressive Deduction | Bracket Tax |
+|------------------------|------|-----------------------|-------------|
+| ~14,000,000 KRW | 6% | 0 | Max 840,000 KRW |
+| 14,000,000~50,000,000 KRW | 15% | 1,260,000 KRW | Max 5,400,000 KRW |
+| 50,000,000~88,000,000 KRW | 24% | 5,760,000 KRW | Max 9,120,000 KRW |
+| 88,000,000~150,000,000 KRW | 35% | 15,440,000 KRW | Max 21,700,000 KRW |
+| 150,000,000~300,000,000 KRW | 38% | 19,940,000 KRW | Max 57,000,000 KRW |
+| 300,000,000~500,000,000 KRW | 40% | 25,940,000 KRW | Max 80,000,000 KRW |
+| 500,000,000~1,000,000,000 KRW | 42% | 35,940,000 KRW | Max 210,000,000 KRW |
+| Over 1,000,000,000 KRW | 45% | 65,940,000 KRW | - |
 
-### 산출세액 속산 공식
-
-```
-산출세액 = 과세표준 × 세율 - 누진공제
-
-예시: 과세표준 6,000만원
-  = 6,000만 × 24% - 576만 = 1,440만 - 576만 = 864만원
-
-실효세율 = 산출세액 / 과세표준 × 100
-  = 864만 / 6,000만 × 100 = 14.4%
-```
-
-## 세율 구간 경계 분석
-
-### 구간 경계(Bracket Boundary) 절세 포인트
+### Quick Tax Calculation Formula
 
 ```
-핵심 원리: 과세표준이 다음 구간에 진입하면 초과분에만 높은 세율 적용
+Calculated Tax = Taxable Income × Rate - Progressive Deduction
 
-절세 포인트 = 구간 경계 - 현재 과세표준
+Example: Taxable Income 60,000,000 KRW
+  = 60,000,000 × 24% - 5,760,000 = 14,400,000 - 5,760,000 = 8,640,000 KRW
 
-예시: 과세표준 5,100만원
-  - 5,000만원 초과 100만원에 24% 적용
-  - 100만원 소득공제 추가 시 → 24만원 → 15만원 (9만원 절약)
-  - 절세 효과: 소득공제 100만원당 9만원 추가 절세
+Effective Tax Rate = Calculated Tax / Taxable Income × 100
+  = 8,640,000 / 60,000,000 × 100 = 14.4%
 ```
 
-### 주요 구간 경계 전략
+## Bracket Boundary Analysis
 
-| 경계 | 세율 점프 | 전략 |
-|------|----------|------|
-| 1,400만원 | 6%→15% | 소규모 소득자 공제 확인 |
-| 5,000만원 | 15%→24% | 연금저축·IRP 납입 극대화 |
-| 8,800만원 | 24%→35% | 고액 공제 항목 집중 활용 |
-| 1.5억원 | 35%→38% | 소득 분산, 법인 전환 검토 |
-| 3억원 | 38%→40% | 법인 설립, 퇴직금 활용 |
-
-## 소득 유형별 세금 계산
-
-### 근로소득
+### Bracket Boundary Tax-Saving Points
 
 ```
-총급여
-- 근로소득공제 = 근로소득금액
-- 소득공제 = 과세표준
-× 세율 - 누진공제 = 산출세액
-- 세액공제 = 결정세액
-- 기납부세액(원천징수) = 납부/환급세액
+Key Principle: When taxable income enters the next bracket, the higher rate applies only to the excess amount
 
-근로소득공제:
-  ~500만: 70%
-  500~1,500만: 350만 + 초과×40%
-  1,500~4,500만: 750만 + 초과×15%
-  4,500~1억: 1,200만 + 초과×5%
-  1억 초과: 1,475만 + 초과×2%
+Tax-Saving Point = Bracket Boundary - Current Taxable Income
+
+Example: Taxable Income 51,000,000 KRW
+  - 24% applied to 1,000,000 KRW exceeding 50,000,000 KRW
+  - With an additional 1,000,000 KRW income deduction → 240,000 KRW → 150,000 KRW (save 90,000 KRW)
+  - Tax-saving effect: 90,000 KRW additional savings per 1,000,000 KRW income deduction
 ```
 
-### 사업소득
+### Key Bracket Boundary Strategies
+
+| Boundary | Rate Jump | Strategy |
+|----------|-----------|----------|
+| 14,000,000 KRW | 6%→15% | Review deductions for low-income earners |
+| 50,000,000 KRW | 15%→24% | Maximize pension savings and IRP contributions |
+| 88,000,000 KRW | 24%→35% | Focus on high-value deduction items |
+| 150,000,000 KRW | 35%→38% | Consider income splitting, corporate conversion |
+| 300,000,000 KRW | 38%→40% | Establish corporation, utilize retirement funds |
+
+## Tax Calculation by Income Type
+
+### Employment Income
 
 ```
-총수입금액
-- 필요경비 = 사업소득금액
+Gross Salary
+- Employment Income Deduction = Employment Income Amount
+- Income Deductions = Taxable Income
+× Rate - Progressive Deduction = Calculated Tax
+- Tax Credits = Determined Tax
+- Pre-paid Tax (Withholding) = Tax Payable / Refund
 
-경비 인정 방식:
-  1. 장부 기장: 실제 경비 인정 (기준경비율 적용)
-  2. 추계 신고: 단순경비율 / 기준경비율
-
-단순경비율 적용 기준 (업종별):
-  - 제조업: 직전 수입 1.5억 미만
-  - 서비스업: 직전 수입 7,500만 미만
-  - 부동산임대: 직전 수입 7,500만 미만
+Employment Income Deduction:
+  ~5,000,000: 70%
+  5,000,000~15,000,000: 3,500,000 + excess × 40%
+  15,000,000~45,000,000: 7,500,000 + excess × 15%
+  45,000,000~100,000,000: 12,000,000 + excess × 5%
+  Over 100,000,000: 14,750,000 + excess × 2%
 ```
 
-### 양도소득세
+### Business Income
 
 ```
-양도가액 - 취득가액 - 필요경비 = 양도차익
-- 장기보유특별공제 = 양도소득금액
-- 양도소득기본공제(250만원) = 과세표준
-× 세율 = 양도소득세
+Gross Revenue
+- Necessary Expenses = Business Income Amount
 
-부동산 세율:
-  1년 미만 보유: 70%
-  1~2년 보유: 60%
-  2년 이상 보유: 기본세율 (6-45%)
-  다주택자 중과: 기본세율 + 20~30%p
+Expense Recognition Methods:
+  1. Bookkeeping: Actual expenses recognized (standard expense ratio applied)
+  2. Estimated Filing: Simple expense ratio / Standard expense ratio
 
-장기보유특별공제:
-  3년+: 연 2% (최대 30%)
-  1세대1주택: 연 4% (보유) + 연 4% (거주) (최대 80%)
+Simple Expense Ratio Eligibility (by industry):
+  - Manufacturing: Prior revenue under 150,000,000 KRW
+  - Service industry: Prior revenue under 75,000,000 KRW
+  - Real estate rental: Prior revenue under 75,000,000 KRW
 ```
 
-## 시뮬레이션 비교 출력 형식
+### Capital Gains Tax
+
+```
+Transfer Price - Acquisition Price - Necessary Expenses = Capital Gain
+- Long-term Holding Special Deduction = Capital Gains Amount
+- Basic Capital Gains Deduction (2,500,000 KRW) = Taxable Income
+× Rate = Capital Gains Tax
+
+Real Estate Tax Rates:
+  Held less than 1 year: 70%
+  Held 1~2 years: 60%
+  Held 2+ years: Basic rate (6-45%)
+  Multi-home surcharge: Basic rate + 20~30%p
+
+Long-term Holding Special Deduction:
+  3+ years: 2% per year (max 30%)
+  1-household 1-home: 4% per year (holding) + 4% per year (occupancy) (max 80%)
+```
+
+## Simulation Comparison Output Format
 
 ```markdown
-## 세금 시뮬레이션 비교
+## Tax Simulation Comparison
 
-| 항목 | 현재 | 시나리오 A | 시나리오 B |
-|------|------|----------|----------|
-| 총소득 | X만원 | X만원 | X만원 |
-| 소득공제 합계 | X만원 | X만원 | X만원 |
-| 과세표준 | X만원 | X만원 | X만원 |
-| 한계세율 | X% | X% | X% |
-| 산출세액 | X만원 | X만원 | X만원 |
-| 세액공제 합계 | X만원 | X만원 | X만원 |
-| 결정세액 | X만원 | X만원 | X만원 |
-| 실효세율 | X% | X% | X% |
-| **절세 효과** | 기준 | X만원 ↓ | X만원 ↓ |
+| Item | Current | Scenario A | Scenario B |
+|------|---------|------------|------------|
+| Total Income | X KRW | X KRW | X KRW |
+| Total Income Deductions | X KRW | X KRW | X KRW |
+| Taxable Income | X KRW | X KRW | X KRW |
+| Marginal Tax Rate | X% | X% | X% |
+| Calculated Tax | X KRW | X KRW | X KRW |
+| Total Tax Credits | X KRW | X KRW | X KRW |
+| Determined Tax | X KRW | X KRW | X KRW |
+| Effective Tax Rate | X% | X% | X% |
+| **Tax Savings Effect** | Baseline | X KRW ↓ | X KRW ↓ |
 ```
 
-## 참고
+## References
 
-- 소득세법 제55조, 조세특례제한법 기준
-- 상세 세율 변천사: `references/tax-rate-history.md` 참조
+- Income Tax Act Article 55, Special Tax Treatment Control Act
+- Detailed tax rate history: see `references/tax-rate-history.md`
+```

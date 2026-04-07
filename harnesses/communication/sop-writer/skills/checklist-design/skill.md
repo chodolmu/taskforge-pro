@@ -1,134 +1,134 @@
 ---
 name: checklist-design
-description: "체크리스트 설계 원칙. checklist-designer 에이전트가 실행 점검표와 품질 게이트를 설계할 때 참조. '체크리스트 설계', '품질 게이트', '점검표 작성' 요청 시 사용. 단, 체크리스트 앱 개발이나 자동화 시스템 구축은 범위 밖."
+description: "checklist design principle. checklist-designer agent execution inspectiontable and quality designto do when reference. 'checklist design', 'quality ', 'inspectiontable writing' request when usage. However, checklist development specialist whensystem building scope outside."
 ---
 
-# Checklist Design — 체크리스트 설계 원칙
+# Checklist Design — checklist design principle
 
-checklist-designer 에이전트의 체크리스트 품질을 높이는 설계 원칙과 패턴.
+checklist-designer agent checklist quality design principle and pattern.
 
-## 체크리스트 유형 분류
+## checklist type classification
 
-### Atul Gawande 분류 (The Checklist Manifesto)
+### Atul Gawande classification (The Checklist Manifesto)
 
-| 유형 | 설명 | 사용 시점 |
+| type | description | usage timing |
 |------|------|----------|
-| DO-CONFIRM | 작업 후 확인 | 숙련자가 기억에 의존하되 누락 방지 |
-| READ-DO | 읽으며 순서대로 실행 | 초보자/비정기 작업/위험 작업 |
-| COMMUNICATION | 팀 간 정보 전달 | 인수인계, 교대 |
+| DO-CONFIRM | task after confirm | specialist basis00M dependency degree |
+| READ-DO | orderversus execution | reportspecialist/basis task/risk task |
+| COMMUNICATION | team between information deliver | personnumberpersontotal, versus |
 
-### SOP 연계 유형
+### SOP annualtotal type
 
-| 체크리스트 유형 | SOP 매핑 | 예시 |
+| checklist type | SOP mapping | examplewhen |
 |---------------|---------|------|
-| 사전 점검 | 절차 시작 전 준비 확인 | 장비 점검, 재료 준비 |
-| 단계별 확인 | 각 절차 단계 완료 확인 | 공정 체크, 품질 검사 |
-| 완료 검증 | 절차 종료 후 결과 확인 | 최종 검수, 인수 기준 |
-| 정기 감사 | 주기적 운영 상태 점검 | 월간 안전 점검, 분기 감사 |
+| companybefore inspection | procedure whenwork before preparation confirm | equipment inspection, re- preparation |
+| stageby confirm | each procedure stage complete confirm | , quality company |
+| complete verify | procedure after result confirm | final number, personnumber standard |
+| basis company | cyclequality operations status inspection | monthbetween planbefore inspection, minutebasis company |
 
-## 체크리스트 작성 7원칙
+## checklist writing 7principle
 
 ### 1. MECE (Mutually Exclusive, Collectively Exhaustive)
-- 항목 간 중복 없음
-- 빠짐없이 전체 커버
-- 카테고리별 그룹화
+- item between during None
+- overall 
+- categoryby 
 
-### 2. 하나의 항목 = 하나의 확인
-**나쁜 예**: "서버 상태와 네트워크 연결을 확인한다"
-**좋은 예**: "서버 프로세스가 실행 중인지 확인한다" + "네트워크 ping 응답을 확인한다"
+### 2. item = confirm
+** example**: "from status and annual confirm"
+** example**: "from process execution duringpersondegree confirm" + " ping confirm"
 
-### 3. 검증 가능한 기준 명시
-**나쁜 예**: "온도가 적절한지 확인"
-**좋은 예**: "온도가 18~22°C 범위인지 확인 (측정 위치: 중앙 센서)"
+### 3. verify possibleKorean standard specify
+** example**: " also qualityKoreandegree confirm"
+** example**: " also 18~22°C scopepersondegree confirm ( position: during from)"
 
-### 4. 5~9항목 규칙 (Killer Items 중심)
-- 전체 항목 중 핵심 위험 항목만 선별
-- 9항목 초과 시 카테고리 분리
-- "빼도 안전한 항목"은 과감히 제거
+### 4. 5~9item rule (Killer Items during)
+- overall item during core risk item only by
+- 9item exceeding when category minute
+- " also planbeforeKorean item" 
 
-### 5. 순서 = 작업 흐름
-- 실제 작업 순서와 일치
-- 의존 관계 반영 (A 완료 후 B)
+### 5. order = task flow
+- actual task order and dayvalue
+- dependency total reflected (A complete after B)
 
-### 6. 예외 처리 경로
-- 불합격 시 조치 절차 명시
-- 에스컬레이션 기준 포함
+### 6. example processing 
+- fail when action procedure specify
+- standard included
 
-### 7. 주기적 개정
-- 사용 피드백 반영 (분기 1회)
-- 사고/인시던트 후 즉시 업데이트
+### 7. cyclequality items
+- usage feedback reflected (minutebasis 1)
+- company/personwhen after i.e.when 
 
-## 체크리스트 템플릿
+## checklist template
 
-### READ-DO 체크리스트 (단계별 실행)
+### READ-DO checklist (stageby execution)
 
 ```markdown
-# [작업명] 체크리스트
-- 버전: v1.0 | 최종 수정: 2025-01-15 | 승인: 홍길동
+# [taskpeople] checklist
+- version: v1.0 | final revision: 2025-01-15 | person: 
 
-## 사전 준비
-- [ ] 필요 도구/재료가 준비되었는가
-- [ ] 작업 권한이 확인되었는가
-- [ ] 이전 단계 산출물이 인수되었는가
+## companybefore preparation
+-  needed tool/re- preparation?
+-  task authority confirm?
+-  before stage deliverable personnumber?
 
-## 실행 단계
-- [ ] 단계 1: [구체적 행동] → 기준: [수치/조건]
-- [ ] 단계 2: [구체적 행동] → 기준: [수치/조건]
-- [ ] 단계 3: [구체적 행동] → 기준: [수치/조건]
+## execution stage
+-  stage 1: [specific action] → standard: [figure/condition]
+-  stage 2: [specific action] → standard: [figure/condition]
+-  stage 3: [specific action] → standard: [figure/condition]
 
-## 완료 확인
-- [ ] 산출물이 기준을 충족하는가: [기준]
-- [ ] 다음 단계 담당자에게 인계되었는가
+## complete confirm
+-  deliverable standard : [standard]
+-  next stage person responsibleto persontotal?
 
-## 불합격 시 조치
-- 기준 미달 항목 → [담당자]에게 보고
-- 재작업 필요 시 → [절차] 참조
+## fail when action
+- standard un- item → [person responsible]to reporting
+- re-task needed when → [procedure] reference
 ```
 
-### DO-CONFIRM 체크리스트 (사후 확인)
+### DO-CONFIRM checklist (companyafter confirm)
 
 ```markdown
-# [작업명] 확인 체크리스트
-- 일시: ______ | 확인자: ______
+# [taskpeople] confirm checklist
+- daywhen: ______ | confirmspecialist: ______
 
-| # | 확인 항목 | 기준 | 결과 | 비고 |
+| # | confirm item | standard | result | notes |
 |---|----------|------|------|------|
-| 1 | [항목] | [기준] | □합격 □불합격 | |
-| 2 | [항목] | [기준] | □합격 □불합격 | |
+| 1 | [item] | [standard] | □pass □fail | |
+| 2 | [item] | [standard] | □pass □fail | |
 
-- 총 ___건 중 합격 ___건, 불합격 ___건
-- 불합격 조치: ___________________
+- total ___case during pass ___case, fail ___case
+- fail action: ___________________
 ```
 
-## 품질 게이트 설계
+## quality design
 
-### 게이트 기준 설정
+### standard setting
 
-| 요소 | 설명 |
+| element | description |
 |------|------|
-| 진입 기준 | 게이트 심사를 받기 위한 최소 조건 |
-| 필수 항목 | 반드시 통과해야 하는 항목 (1건이라도 실패 시 불합격) |
-| 선택 항목 | 불합격이어도 조건부 통과 가능 |
-| 통과 기준 | 필수 100% + 선택 N% 이상 |
-| 조건부 통과 | 시정 조치 계획 제출 시 한시적 허용 |
+| standard | company basis for minimum condition |
+| required item | mustwhen item (1case also failure when fail) |
+| optional item | fail also conditiondepartment and possible |
+| and standard | required 100% + optional N% or more |
+| conditiondepartment and | when action plan when Koreanwhenquality |
 
-### 게이트 리뷰 프로세스
+### review process
 
 ```
-1. 산출물 제출 (게이트 소유자에게)
-2. 체크리스트 기반 검토
-3. 판정: PASS / CONDITIONAL / FAIL
-4. CONDITIONAL: 시정 기한 설정 → 재심사
-5. FAIL: 이전 단계로 환류 → 재작업
+1. deliverable ( specialistto)
+2. checklist based review
+3. : PASS / CONDITIONAL / FAIL
+4. CONDITIONAL: when deadline setting → re-company
+5. FAIL: before stage exchange → re-task
 ```
 
-## 체크리스트 품질 메타 체크리스트
+## checklist quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| 항목 수 | 카테고리당 5~9개 |
-| 검증 기준 | 모든 항목에 정량적 기준 |
-| 예외 경로 | 불합격 시 조치 명시 |
-| 책임자 | 확인자/승인자 명시 |
-| 버전 정보 | 버전, 날짜, 승인자 |
-| 용어 일관성 | SOP 절차서와 동일 용어 |
+| item number | category 5~9items |
+| verify standard | all item quality standard |
+| example | fail when action specify |
+| responsibilityspecialist | confirmspecialist/approver specify |
+| version information | version, date, approver |
+| consistency | SOP procedure document and day |

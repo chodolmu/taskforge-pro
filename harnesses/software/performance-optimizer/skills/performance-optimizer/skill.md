@@ -1,125 +1,125 @@
 ---
 name: performance-optimizer
-description: "애플리케이션 성능 최적화를 프로파일링, 병목 분석, 최적화 구현, 벤치마크 검증까지 에이전트 팀이 협업하여 수행하는 풀 파이프라인. '성능 최적화해줘', '느린 API 개선', '쿼리 최적화', '응답시간 줄여줘', '성능 프로파일링', '병목 분석', '벤치마크 테스트', '로딩 속도 개선', 'P95 응답시간 줄이기', '처리량 늘리기' 등 성능 개선 전반에 이 스킬을 사용한다. 특정 쿼리 최적화나 프로파일링만 필요한 경우에도 지원한다. 단, 인프라 프로비저닝 직접 실행, 로드밸런서 설정, CDN 구성 직접 배포는 이 스킬의 범위가 아니다."
+description: "this performance optimization profiling, bottleneck analysis, optimization , benchmark verificationuntil inthisbefore teamthis to countlower  pipeline. 'performance optimization', 'slow API improvement', 'query optimization', 'between ', 'performance profiling', 'bottleneck analysis', 'benchmark test', 'as speed improvement', 'P95 between this', 'throughput ' etc. performance improvement beforein this  for.  query optimization profilingonly necessary inalso supported. , infrastructure provisioning direct execution, as configuration, CDN setup direct deployment this of scope ."
 ---
 
-# Performance Optimizer — 성능 최적화 풀 파이프라인
+# Performance Optimizer — performance optimization  pipeline
 
-애플리케이션의 프로파일링→병목분석→최적화→벤치마크를 에이전트 팀이 협업하여 한 번에 수행한다.
+thisof profiling→bottleneckanalysis→optimization→benchmark inthisbefore teamthis to  in count.
 
-## 실행 모드
+## execution 
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**inthisbefore team** — 5peoplethis SendMessageas direct and  verification.
 
-## 에이전트 구성
+## inthisbefore setup
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| inthisbefore | day | role | type |
 |---------|------|------|------|
-| profiler | `.claude/agents/profiler.md` | CPU, 메모리, I/O, 네트워크 프로파일링 | general-purpose |
-| bottleneck-analyst | `.claude/agents/bottleneck-analyst.md` | 핫스팟 식별, 근본원인, 영향산정 | general-purpose |
-| optimization-engineer | `.claude/agents/optimization-engineer.md` | 코드/쿼리/아키텍처 최적화 | general-purpose |
-| benchmark-manager | `.claude/agents/benchmark-manager.md` | 테스트설계, 실행, 비교분석 | general-purpose |
-| perf-reviewer | `.claude/agents/perf-reviewer.md` | 교차검증, 회귀방지, 최종보고서 | general-purpose |
+| profiler | `.claude/agents/profiler.md` | CPU, memory, I/O, network profiling | general-purpose |
+| bottleneck-analyst | `.claude/agents/bottleneck-analyst.md` | hotspot identification, , impactcalculate | general-purpose |
+| optimization-engineer | `.claude/agents/optimization-engineer.md` | code/query/architecture optimization | general-purpose |
+| benchmark-manager | `.claude/agents/benchmark-manager.md` | test, execution, analysis | general-purpose |
+| perf-reviewer | `.claude/agents/perf-reviewer.md` | verification, regression, finalreport | general-purpose |
 
-## 워크플로우
+## workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1:  (this direct count)
 
-1. 사용자 입력에서 추출한다:
-    - **최적화 대상**: 코드, API, 쿼리, 시스템 전체
-    - **성능 목표**: 응답시간, 처리량, 메모리 사용량 등 구체적 수치
-    - **기술 스택**: 언어, 프레임워크, DB, 인프라
-    - **현재 문제** (선택): 구체적 증상, 에러 로그, 사용자 불만
-    - **기존 파일** (선택): 프로파일링 결과, 실행 계획, 코드
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. user from :
+    - **optimization upper**: code, API, query, system before
+    - **performance target**: between, throughput, memory for etc. -based count
+    - ** stack**: language, framework, DB, infrastructure
+    - **current ** (optional): -based upper, error log, user only
+    - **existing day** (optional): profiling result, execution plan, code
+2. `_workspace/`  project rootin creation
+3.  to `_workspace/00_input.md`in 
+4. existing daythis  `_workspace/`in and corresponding Phase cases
+5. request scopein  **execution  decision**
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: team setup and execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+|  |  | responsible | of |  |
 |------|------|------|------|--------|
-| 1 | 프로파일링 | profiler | 없음 | `_workspace/01_profiling_report.md` |
-| 2 | 병목 분석 | bottleneck-analyst | 작업 1 | `_workspace/02_bottleneck_analysis.md` |
-| 3 | 최적화 구현 | optimization-engineer | 작업 2 | `_workspace/03_optimization_plan.md` |
-| 4 | 벤치마크 검증 | benchmark-manager | 작업 1, 3 | `_workspace/04_benchmark_results.md` |
-| 5 | 성능 리뷰 | perf-reviewer | 작업 1~4 | `_workspace/05_review_report.md` |
+| 1 | profiling | profiler |  | `_workspace/01_profiling_report.md` |
+| 2 | bottleneck analysis | bottleneck-analyst |  1 | `_workspace/02_bottleneck_analysis.md` |
+| 3 | optimization  | optimization-engineer |  2 | `_workspace/03_optimization_plan.md` |
+| 4 | benchmark verification | benchmark-manager |  1, 3 | `_workspace/04_benchmark_results.md` |
+| 5 | performance review | perf-reviewer |  1~4 | `_workspace/05_review_report.md` |
 
-**팀원 간 소통 흐름:**
-- profiler 완료 → analyst에게 핫스팟·자원 패턴 전달, benchmark에게 baseline 수치 전달
-- analyst 완료 → engineer에게 병목 우선순위·근본원인 전달, benchmark에게 성능 예산 전달
-- engineer 완료 → benchmark에게 최적화 코드·기대 수치 전달
-- benchmark 완료 → reviewer에게 비교 분석 결과 전달
-- reviewer는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**team between  :**
+- profiler completed → analystto hotspot·resources pattern before, benchmarkto baseline count before
+- analyst completed → engineerto bottleneck priority· before, benchmarkto performance budget before
+- engineer completed → benchmarkto optimization code· count before
+- benchmark completed → reviewerto  analysis result before
+- reviewer all   verification. 🔴 required modification   corresponding inthisbeforeto modification request →  → verification (maximum 2)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: integrated and final 
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 리뷰 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 프로파일링 — `01_profiling_report.md`
-    - 병목 분석 — `02_bottleneck_analysis.md`
-    - 최적화 계획 — `03_optimization_plan.md`
-    - 벤치마크 — `04_benchmark_results.md`
-    - 리뷰 보고서 — `05_review_report.md`
+1. `_workspace/` within all day confirmation
+2. review reportof 🔴 required modificationthis   confirmation
+3. final  userto report:
+    - profiling — `01_profiling_report.md`
+    - bottleneck analysis — `02_bottleneck_analysis.md`
+    - optimization plan — `03_optimization_plan.md`
+    - benchmark — `04_benchmark_results.md`
+    - review report — `05_review_report.md`
 
-## 작업 규모별 모드
+##  per 
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| user request pattern | execution  |  inthisbefore |
 |----------------|----------|-------------|
-| "성능 전체 최적화해줘" | **풀 파이프라인** | 5명 전원 |
-| "이 코드 프로파일링해줘" | **프로파일링 모드** | profiler + reviewer |
-| "이 쿼리 최적화해줘" | **쿼리 최적화 모드** | profiler + analyst + engineer + reviewer |
-| "벤치마크 테스트 설계해줘" | **벤치마크 모드** | benchmark + reviewer |
-| "이 최적화 결과 검증해줘" | **리뷰 모드** | reviewer 단독 |
+| "performance before optimization" | ** pipeline** | 5people before |
+| "this code profiling" | **profiling ** | profiler + reviewer |
+| "this query optimization" | **query optimization ** | profiler + analyst + engineer + reviewer |
+| "benchmark test " | **benchmark ** | benchmark + reviewer |
+| "this optimization result verification" | **review ** | reviewer  |
 
-## 데이터 전달 프로토콜
+## data before as
 
-| 전략 | 방식 | 용도 |
+| strategy |  | foralso |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| day  | `_workspace/`  | week   and shared |
+| message  | SendMessage | real-time core information before, modification request |
+|   | TaskCreate/TaskUpdate | in progress upper tracking, of   |
 
-## 에러 핸들링
+## error 
 
-| 에러 유형 | 전략 |
+| error type | strategy |
 |----------|------|
-| 프로파일링 도구 실행 불가 | 코드 정적 분석으로 대체, 도구 설정 가이드 제공 |
-| 실행 환경 부재 | 벤치마크 스크립트 + 실행 가이드 제공, 예상 결과 시뮬레이션 |
-| 성능 목표 미정 | 업계 표준(P95 < 200ms, 에러율 < 1%) 기반 목표 제안 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰 보고서에 누락 명시 |
-| 리뷰에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
+| profiling also execution impossible | code -based analysisas , also configuration guide provided |
+| execution   | benchmark script + execution guide provided, expected result this |
+| performance target  |  (P95 < 200ms, error < 1%)  target proposal |
+| inthisbefore failure | 1 retry → failure  corresponding  this in progress, review reportin  people |
+| reviewfrom 🔴  | corresponding inthisbeforein modification request →  → verification (maximum 2) |
 
-## 테스트 시나리오
+## test 
 
-### 정상 흐름
-**프롬프트**: "Django REST API의 응답시간이 P95 기준 2초인데, 500ms 이하로 줄이고 싶어. 코드 분석하고 최적화해줘."
-**기대 결과**:
-- 프로파일링: Django 미들웨어, ORM 쿼리, 직렬화 과정 분석, N+1 쿼리 탐지
-- 병목분석: DB 쿼리가 전체 응답시간의 70% 차지 → ORM N+1 + 인덱스 미비 진단
-- 최적화: select_related/prefetch_related 적용, 인덱스 추가, 쿼리셋 캐싱
-- 벤치마크: k6 스크립트로 전후 비교, P95 2s → 400ms 검증
-- 리뷰: 정합성 확인, 회귀 위험 평가
+### normal 
+****: "Django REST APIof betweenthis P95 criteria 2seconds, 500ms or lessas this . code analysisand optimization."
+** result**:
+- profiling: Django middleware, ORM query, -ize and analysis, N+1 query detection
+- bottleneckanalysis: DB query before betweenof 70%  → ORM N+1 + index  
+- optimization: select_related/prefetch_related -basedfor, index addition, queryset caching
+- benchmark: k6 scriptas beforeafter , P95 2s → 400ms verification
+- review:  confirmation, regression risk evaluation
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 프로파일링 결과를 분석하고 최적화 방안 제시해줘" + flame graph 첨부
-**기대 결과**:
-- 기존 프로파일링 데이터를 `_workspace/01_profiling_report.md`로 활용
-- profiler 건너뛰고 analyst + engineer + benchmark + reviewer 투입
+### existing day for 
+****: "this profiling result analysisand optimization  " + flame graph 
+** result**:
+- existing profiling data `_workspace/01_profiling_report.md`as for
+- profiler cases analyst + engineer + benchmark + reviewer 
 
-### 에러 흐름
-**프롬프트**: "사이트가 느린데 뭐가 문제인지 모르겠어"
-**기대 결과**:
-- 코드 정적 분석 기반 프로파일링 수행
-- 일반적 성능 안티패턴 체크리스트 적용
-- "상세 프로파일링 도구 적용 권장" 명시
+### error 
+****: "this slow   "
+** result**:
+- code -based analysis  profiling count
+- day-based performance pattern list -basedfor
+- "detailed profiling also -basedfor " people
 
 
-## 에이전트별 확장 스킬
+## inthisbeforeper extension 
 
-| 스킬 | 경로 | 강화 대상 에이전트 | 역할 |
+|  | as | -ize upper inthisbefore | role |
 |------|------|-----------------|------|
-| query-optimization-patterns | `.claude/skills/query-optimization-patterns/skill.md` | bottleneck-analyst, optimization-engineer | 실행 계획 분석, 인덱스 설계, N+1 해결, 페이지네이션 |
-| caching-strategy-selector | `.claude/skills/caching-strategy-selector/skill.md` | optimization-engineer | Cache Aside/Write Through/Behind, 무효화, 스탬피드 방지 |
+| query-optimization-patterns | `.claude/skills/query-optimization-patterns/skill.md` | bottleneck-analyst, optimization-engineer | execution plan analysis, index , N+1 resolution, thisthis |
+| caching-strategy-selector | `.claude/skills/caching-strategy-selector/skill.md` | optimization-engineer | Cache Aside/Write Through/Behind, invalid-ize,   |

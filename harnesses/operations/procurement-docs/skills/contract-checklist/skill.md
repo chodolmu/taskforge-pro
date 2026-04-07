@@ -1,101 +1,101 @@
 ---
 name: contract-checklist
-description: "구매 계약 검토 체크리스트. contract-reviewer와 acceptance-builder 에이전트가 계약 조건을 검토하고 검수 기준을 수립할 때 참조. '계약 검토', '계약 조건', '검수 기준' 요청 시 사용. 단, 법률 자문이나 계약서 공증은 범위 밖."
+description: "Procurement contract review checklist. Referenced by contract-reviewer and acceptance-builder agents when reviewing contract terms and establishing acceptance criteria. Used for 'contract review', 'contract terms', 'acceptance criteria' requests. Note: legal counsel and contract notarization are out of scope."
 ---
 
-# Contract Checklist — 구매 계약 검토 체크리스트
+# Contract Checklist — Procurement Contract Review Checklist
 
-contract-reviewer / acceptance-builder 에이전트의 계약 검토 역량 강화.
+Enhances the contract review capabilities of contract-reviewer / acceptance-builder agents.
 
-## 계약 검토 필수 항목
+## Contract Review Essential Items
 
-### 핵심 조항 체크리스트
+### Key Clause Checklist
 
-| 조항 | 확인 포인트 | 위험 수준 |
-|------|-----------|----------|
-| 범위 (Scope) | 업무 범위 명확성, 제외 사항 | 높음 |
-| 가격 (Price) | 고정/변동, 환율, 세금 | 높음 |
-| 납기 (Delivery) | 마일스톤, 지연 페널티 | 높음 |
-| 품질 (Quality) | 검수 기준, SLA, 보증 | 높음 |
-| 지적재산 (IP) | 소유권, 라이선스, 양도 | 높음 |
-| 비밀유지 (NDA) | 범위, 기간, 위반 시 제재 | 중간 |
-| 해지 (Termination) | 해지 사유, 통보 기간, 정산 | 중간 |
-| 책임 제한 | 손해배상 상한, 면책 | 중간 |
-| 분쟁 해결 | 중재/재판, 관할 법원 | 낮음 |
-| 불가항력 | 정의, 통보, 면책 | 낮음 |
+| Clause | Verification Points | Risk Level |
+|--------|-------------------|------------|
+| Scope | Scope clarity, exclusions | High |
+| Price | Fixed/variable, exchange rate, taxes | High |
+| Delivery | Milestones, delay penalties | High |
+| Quality | Acceptance criteria, SLA, warranty | High |
+| Intellectual Property (IP) | Ownership, license, assignment | High |
+| Confidentiality (NDA) | Scope, duration, breach penalties | Medium |
+| Termination | Grounds, notice period, settlement | Medium |
+| Liability Limitation | Damages cap, indemnification | Medium |
+| Dispute Resolution | Arbitration/litigation, jurisdiction | Low |
+| Force Majeure | Definition, notification, indemnification | Low |
 
-### 가격 조항 상세
-
-```
-확인 항목:
-- [ ] 총 계약 금액 명시
-- [ ] 지급 조건 (선금/중도/잔금 비율)
-- [ ] 지급 시기 (납품 후 N일)
-- [ ] 추가 비용 발생 조건
-- [ ] 물가 연동 조항 (장기 계약)
-- [ ] 환율 변동 처리 (해외 거래)
-- [ ] 세금 부담 주체
-- [ ] 지연 이자율
-```
-
-### SLA 조항 상세
-
-| SLA 항목 | 측정 기준 | 미달 시 조치 |
-|---------|----------|------------|
-| 가용성 | 월간 99.9% | 크레딧 환불 |
-| 응답 시간 | P1: 15분, P2: 1시간 | 페널티 |
-| 해결 시간 | P1: 4시간, P2: 8시간 | 에스컬레이션 |
-| 보고 | 월간 SLA 리포트 | 미제출 시 경고 |
-
-## 검수 기준서 설계
-
-### 검수 프로세스 단계
+### Price Clause Details
 
 ```
-1. 검수 계획 수립 (납품 전)
-2. 납품물 수령 확인
-3. 기능/성능 테스트
-4. 결함 분류 (Critical/Major/Minor)
-5. 시정 요청 (기한 포함)
-6. 재검수
-7. 검수 완료 확인서 발행
-8. 대금 지급 승인
+Verification items:
+- [ ] Total contract amount specified
+- [ ] Payment terms (advance/milestone/balance ratios)
+- [ ] Payment timing (N days after delivery)
+- [ ] Additional cost trigger conditions
+- [ ] Price index clause (long-term contracts)
+- [ ] Exchange rate fluctuation handling (international)
+- [ ] Tax liability assignment
+- [ ] Late payment interest rate
 ```
 
-### 검수 기준 템플릿
+### SLA Clause Details
 
-| 검수 항목 | 기준 | 방법 | 합격 조건 |
-|----------|------|------|----------|
-| 기능 완전성 | 요구사항 100% 구현 | 체크리스트 | 필수 100%, 우대 80% |
-| 성능 | 응답시간 ≤2초 | 부하 테스트 | P95 기준 충족 |
-| 보안 | OWASP Top 10 대응 | 취약점 스캔 | Critical 0건 |
-| 문서 | 매뉴얼, API 문서 | 문서 리뷰 | 완성도 90%+ |
-| 교육 | 운영자 교육 완료 | 교육 수료 | 수료율 100% |
+| SLA Item | Measurement Criteria | Non-compliance Action |
+|----------|---------------------|----------------------|
+| Availability | Monthly 99.9% | Credit refund |
+| Response time | P1: 15 min, P2: 1 hour | Penalty |
+| Resolution time | P1: 4 hours, P2: 8 hours | Escalation |
+| Reporting | Monthly SLA report | Warning if not submitted |
 
-### 결함 분류
+## Acceptance Criteria Design
 
-| 등급 | 정의 | 처리 |
-|------|------|------|
-| Critical | 핵심 기능 사용 불가 | 시정 필수, 검수 보류 |
-| Major | 주요 기능 제한 | 시정 필수, 조건부 수용 |
-| Minor | 경미한 이슈 | 차기 보완, 검수 진행 |
+### Acceptance Process Steps
 
-## 협상 포인트 가이드
+```
+1. Establish acceptance plan (before delivery)
+2. Confirm deliverable receipt
+3. Functional/performance testing
+4. Defect classification (Critical/Major/Minor)
+5. Correction request (with deadline)
+6. Re-inspection
+7. Issue acceptance completion certificate
+8. Authorize payment
+```
 
-| 우리 측 유리 | 공급사 유리 | 타협안 |
-|------------|-----------|--------|
-| 지연 페널티 | 페널티 면제 | 면책 기간 설정 |
-| 고정 가격 | 변동 가격 | 물가 연동 상한 |
-| 무한 책임 | 책임 상한 | 계약금의 N배 |
-| 독점 라이선스 | 비독점 | 용도 제한 라이선스 |
+### Acceptance Criteria Template
 
-## 품질 체크리스트
+| Inspection Item | Criteria | Method | Pass Condition |
+|----------------|----------|--------|----------------|
+| Functional completeness | 100% requirements implemented | Checklist | Must-have 100%, Optional 80% |
+| Performance | Response time ≤2s | Load test | P95 criteria met |
+| Security | OWASP Top 10 addressed | Vulnerability scan | 0 Critical findings |
+| Documentation | Manuals, API docs | Document review | 90%+ completeness |
+| Training | Operator training complete | Training completion | 100% completion rate |
 
-| 항목 | 기준 |
-|------|------|
-| 핵심 조항 | 10대 조항 모두 검토 |
-| 리스크 | 높음 항목 법무 검토 |
-| SLA | 측정 기준 + 미달 조치 |
-| 검수 | 항목+기준+방법 명시 |
-| 결함 분류 | 3등급 정의 |
-| 해지 | 사유+통보+정산 명시 |
+### Defect Classification
+
+| Level | Definition | Handling |
+|-------|-----------|----------|
+| Critical | Core functionality unusable | Correction required, acceptance held |
+| Major | Key functionality limited | Correction required, conditional acceptance |
+| Minor | Minor issue | Next iteration fix, acceptance proceeds |
+
+## Negotiation Points Guide
+
+| Buyer-favorable | Vendor-favorable | Compromise |
+|----------------|-----------------|------------|
+| Delay penalties | Penalty waiver | Grace period |
+| Fixed price | Variable price | Price index cap |
+| Unlimited liability | Liability cap | N times contract value |
+| Exclusive license | Non-exclusive | Use-restricted license |
+
+## Quality Checklist
+
+| Item | Criteria |
+|------|----------|
+| Key clauses | All 10 clauses reviewed |
+| Risks | High-risk items legally reviewed |
+| SLA | Measurement criteria + non-compliance actions |
+| Acceptance | Items + criteria + methods specified |
+| Defect classification | 3-level definition |
+| Termination | Grounds + notice + settlement specified |

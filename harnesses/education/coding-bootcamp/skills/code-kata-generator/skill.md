@@ -1,137 +1,137 @@
 ---
 name: code-kata-generator
-description: "코딩 실습 과제(Code Kata)를 체계적으로 설계하는 전문 스킬. exercise-creator 에이전트가 난이도별, 개념별 코딩 과제를 출제하고 테스트케이스와 모범 답안을 생성할 때 활용한다. '코딩 과제', '알고리즘 문제', '실습 문제', 'kata', '코딩 테스트', '프로그래밍 연습' 등의 맥락에서 자동 적용한다. 단, 온라인 저지(LeetCode, 백준) 시스템 연동이나 자동 채점 인프라 구축은 이 스킬의 범위가 아니다."
+description: "A specialized skill for systematically designing coding practice exercises (Code Kata). Used by the exercise-creator agent to create difficulty-tiered, concept-specific coding exercises with test cases and model solutions. Automatically applied in contexts such as 'coding exercises', 'algorithm problems', 'practice problems', 'kata', 'coding tests', 'programming practice'. However, online judge system integration (LeetCode, HackerRank) and automated grading infrastructure are outside the scope of this skill."
 ---
 
-# Code Kata Generator — 코딩 실습 과제 설계 도구
+# Code Kata Generator — Coding Exercise Design Tool
 
-exercise-creator 에이전트의 과제 출제 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the exercise-creator agent's exercise creation capabilities.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **exercise-creator** — 난이도별 과제, 테스트케이스, 모범 답안
+- **exercise-creator** — Difficulty-tiered exercises, test cases, model solutions
 
-## 과제 난이도 체계
+## Exercise Difficulty System
 
-### 5-Tier 난이도 분류
+### 5-Tier Difficulty Classification
 
-| Tier | 이름 | 개념 | 예상 풀이 시간 | 대상 |
-|------|------|------|-------------|------|
-| T1 | Warm-up | 변수, 조건, 반복, 함수 | 5-15분 | 1-2주차 |
-| T2 | Foundation | 배열, 문자열, 기본 자료구조 | 15-30분 | 3-6주차 |
-| T3 | Intermediate | 해시맵, 스택/큐, 재귀, 정렬 | 30-60분 | 7-12주차 |
-| T4 | Advanced | 트리, 그래프, DP, 이진탐색 | 45-90분 | 13-20주차 |
-| T5 | Challenge | 복합 알고리즘, 시스템 설계 | 60-120분 | 20주차+ |
+| Tier | Name | Concepts | Est. Solving Time | Target Phase |
+|------|------|----------|-------------------|-------------|
+| T1 | Warm-up | Variables, conditionals, loops, functions | 5-15 min | Week 1-2 |
+| T2 | Foundation | Arrays, strings, basic data structures | 15-30 min | Week 3-6 |
+| T3 | Intermediate | Hash maps, stacks/queues, recursion, sorting | 30-60 min | Week 7-12 |
+| T4 | Advanced | Trees, graphs, DP, binary search | 45-90 min | Week 13-20 |
+| T5 | Challenge | Composite algorithms, system design | 60-120 min | Week 20+ |
 
-## 과제 템플릿
+## Exercise Template
 
 ```markdown
-## [T{N}] {과제명}
+## [T{N}] {Exercise Name}
 
-### 문제 설명
-{명확한 문제 기술}
+### Problem Description
+{Clear problem statement}
 
-### 입력
-- {입력 형식 및 제약 조건}
+### Input
+- {Input format and constraints}
 
-### 출력
-- {출력 형식}
+### Output
+- {Output format}
 
-### 예시
-| 입력 | 출력 | 설명 |
-|------|------|------|
-| {예시1 입력} | {예시1 출력} | {풀이 설명} |
-| {예시2 입력} | {예시2 출력} | |
+### Examples
+| Input | Output | Explanation |
+|-------|--------|-------------|
+| {Example 1 input} | {Example 1 output} | {Walkthrough} |
+| {Example 2 input} | {Example 2 output} | |
 
-### 제약 조건
-- {시간/공간 복잡도 요구사항}
-- {입력 크기 범위}
+### Constraints
+- {Time/space complexity requirements}
+- {Input size range}
 
-### 힌트 (선택적)
+### Hints (optional)
 <details>
-<summary>힌트 보기</summary>
-{접근 방향 힌트}
+<summary>Show hint</summary>
+{Directional hint}
 </details>
 
-### 테스트케이스
-{기본 + 엣지 + 대용량 케이스}
+### Test Cases
+{Basic + edge + large-input cases}
 
-### 모범 답안
-{시간복잡도, 공간복잡도 분석 포함}
+### Model Solution
+{Including time complexity and space complexity analysis}
 
-### 학습 포인트
-- {이 문제로 학습하는 개념}
-- {실무 적용 사례}
+### Learning Points
+- {Concept learned from this problem}
+- {Real-world application}
 ```
 
-## 개념별 필수 과제 맵
+## Concept-to-Exercise Map
 
-### 자료구조
+### Data Structures
 
-| 개념 | 필수 과제 유형 | Tier |
-|------|-------------|------|
-| 배열 | Two Pointers, Sliding Window | T2-T3 |
-| 링크드 리스트 | 뒤집기, 합치기, 사이클 감지 | T2-T3 |
-| 스택 | 괄호 매칭, 히스토그램 | T2-T3 |
-| 큐 | BFS, 원형 큐, 우선순위 큐 | T3 |
-| 해시맵 | 빈도 세기, Two Sum, 그룹핑 | T2-T3 |
-| 트리 | 순회, LCA, 균형 검사 | T3-T4 |
-| 그래프 | DFS/BFS, 최단경로, 위상정렬 | T4-T5 |
+| Concept | Required Exercise Types | Tier |
+|---------|----------------------|------|
+| Arrays | Two Pointers, Sliding Window | T2-T3 |
+| Linked Lists | Reversal, merging, cycle detection | T2-T3 |
+| Stacks | Bracket matching, histogram | T2-T3 |
+| Queues | BFS, circular queue, priority queue | T3 |
+| Hash Maps | Frequency counting, Two Sum, grouping | T2-T3 |
+| Trees | Traversal, LCA, balance checking | T3-T4 |
+| Graphs | DFS/BFS, shortest path, topological sort | T4-T5 |
 
-### 알고리즘
+### Algorithms
 
-| 개념 | 필수 과제 유형 | Tier |
-|------|-------------|------|
-| 정렬 | 정렬 구현, 커스텀 정렬 | T2-T3 |
-| 이진 탐색 | 범위 탐색, Parametric Search | T3-T4 |
-| 재귀 | 피보나치, 순열/조합, 분할정복 | T3 |
-| DP | 배낭, LIS, 격자 경로 | T4-T5 |
-| 그리디 | 활동 선택, 구간 스케줄링 | T3-T4 |
-| 백트래킹 | N-Queen, 스도쿠, 조합 | T4 |
+| Concept | Required Exercise Types | Tier |
+|---------|----------------------|------|
+| Sorting | Sort implementation, custom sorting | T2-T3 |
+| Binary Search | Range search, Parametric Search | T3-T4 |
+| Recursion | Fibonacci, permutations/combinations, divide & conquer | T3 |
+| DP | Knapsack, LIS, grid paths | T4-T5 |
+| Greedy | Activity selection, interval scheduling | T3-T4 |
+| Backtracking | N-Queens, Sudoku, combinations | T4 |
 
-## 테스트케이스 설계 원칙
+## Test Case Design Principles
 
-### 필수 케이스 유형
+### Required Case Types
 
-| 유형 | 목적 | 예시 |
-|------|------|------|
-| 기본 | 정상 작동 확인 | 문제 예시와 동일 |
-| 최소 입력 | 경계값 하한 | 빈 배열, 길이 1 |
-| 최대 입력 | 성능 검증 | n = 10^5 |
-| 엣지 | 특수 상황 | 모두 같은 값, 음수, 0 |
-| 역순/정순 | 정렬 관련 | 이미 정렬됨, 역정렬 |
-| 중복 | 중복 처리 | 중복 원소 다수 |
+| Type | Purpose | Example |
+|------|---------|---------|
+| Basic | Verify normal operation | Same as problem examples |
+| Minimum input | Lower boundary value | Empty array, length 1 |
+| Maximum input | Performance verification | n = 10^5 |
+| Edge | Special situations | All same values, negatives, 0 |
+| Reverse/sorted | Sorting-related | Already sorted, reverse sorted |
+| Duplicates | Duplicate handling | Many duplicate elements |
 
-### 케이스 수 가이드
+### Case Count Guide
 
-| Tier | 공개 케이스 | 숨김 케이스 | 성능 케이스 |
-|------|-----------|-----------|-----------|
+| Tier | Public Cases | Hidden Cases | Performance Cases |
+|------|-------------|-------------|-----------------|
 | T1 | 3 | 3 | 0 |
 | T2 | 3 | 5 | 1 |
 | T3 | 3 | 7 | 2 |
 | T4 | 3 | 8 | 3 |
 | T5 | 3 | 10 | 5 |
 
-## 과제 시퀀싱 원칙
+## Exercise Sequencing Principles
 
-### 스캐폴딩 (Scaffolding)
+### Scaffolding
 
-동일 주제의 과제를 단계적으로 배열한다:
+Arrange exercises on the same topic progressively:
 
 ```
-[T2] 배열 내 특정 값 찾기 (선형 탐색)
-  ↓
-[T3] 정렬된 배열에서 값 찾기 (이진 탐색)
-  ↓
-[T3] 회전 정렬 배열에서 값 찾기
-  ↓
-[T4] 2차원 정렬 행렬에서 값 찾기
-  ↓
-[T4] Parametric Search (조건 만족하는 최적값)
+[T2] Find a specific value in an array (linear search)
+  |
+[T3] Find a value in a sorted array (binary search)
+  |
+[T3] Find a value in a rotated sorted array
+  |
+[T4] Find a value in a 2D sorted matrix
+  |
+[T4] Parametric Search (find optimal value satisfying a condition)
 ```
 
 ### Interleaving
 
-새 개념은 이전 개념과 섞어서 출제한다:
-- 해시맵 학습 주에 → 배열 복습 과제 1개 포함
-- 트리 학습 주에 → 재귀 복습 과제 1개 포함
+Mix new concepts with previous ones:
+- During hash map week -> include 1 array review exercise
+- During tree week -> include 1 recursion review exercise

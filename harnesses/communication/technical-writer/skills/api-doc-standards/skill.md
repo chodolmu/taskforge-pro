@@ -1,141 +1,141 @@
 ---
 name: api-doc-standards
-description: "API 문서 작성 표준 및 패턴 라이브러리. doc-writer 에이전트가 REST/GraphQL/gRPC API 문서를 작성할 때 참조하는 표준. 'API 문서 표준', 'API 레퍼런스 작성' 요청 시 사용. 단, OpenAPI Spec 자동 생성이나 API 테스트 실행은 범위 밖."
+description: "API document writing tablelevel and pattern library. doc-writer agent REST/GraphQL/gRPC API document writingto do when reference tablelevel. 'API document tablelevel', 'API reference writing' request when usage. However, OpenAPI Spec specialist creation API test execution scope outside."
 ---
 
-# API Doc Standards — API 문서 작성 표준
+# API Doc Standards — API document writing tablelevel
 
-doc-writer 에이전트의 API 문서 품질을 표준화하는 규격과 패턴.
+doc-writer agent API document quality tablelevel and pattern.
 
-## REST API 문서 필수 섹션
+## REST API document required section
 
 ```
-1. 개요 — API 목적, 대상 사용자, 기본 URL
-2. 인증 — 인증 방식, 토큰 획득/갱신
-3. 공통 규격 — 요청/응답 포맷, 페이지네이션, 에러 코드
-4. 엔드포인트 레퍼런스 — 리소스별 CRUD
-5. 에러 처리 — 에러 코드 테이블, 트러블슈팅
-6. 변경 이력 — 버전별 변경사항
+1. overview — API purpose, target user, basic URL
+2. authentication — authentication method, /
+3. — request/ format, degree, error code
+4. endpoint reference — by CRUD
+5. error processing — error code , 
+6. change capability — versionby changematters
 ```
 
-## 엔드포인트 문서 템플릿
+## endpoint document template
 
 ```markdown
 ## POST /api/v1/users
 
-사용자를 생성합니다.
+user creation.
 
-### 요청
+### request
 
-**헤더**
-| 헤더 | 값 | 필수 |
+****
+| | | required |
 |------|-----|------|
 | Authorization | Bearer {token} | O |
 | Content-Type | application/json | O |
 
-**본문**
-| 필드 | 타입 | 필수 | 설명 | 제약조건 |
+**body text**
+| | type | required | description | constraintcondition |
 |------|------|------|------|---------|
-| email | string | O | 이메일 | RFC 5322, 254자 |
-| name | string | O | 이름 | 2~50자 |
-| role | string | X | 역할 | admin/user/viewer, 기본: user |
+| email | string | O | email | RFC 5322, 254specialist |
+| name | string | O | name | 2~50specialist |
+| role | string | X | role | admin/user/viewer, basic: user |
 
-### 응답
+### 
 
-**성공 (201 Created)**
+**nature (201 Created)**
 { "id": "usr_abc123", "email": "...", "name": "..." }
 
-**에러**
-| 상태 | 코드 | 설명 |
+**error**
+| status | code | description |
 |------|------|------|
-| 400 | INVALID_EMAIL | 이메일 형식 오류 |
-| 409 | DUPLICATE_EMAIL | 중복 이메일 |
-| 422 | VALIDATION_ERROR | 유효성 오류 |
+| 400 | INVALID_EMAIL | email |
+| 409 | DUPLICATE_EMAIL | during email |
+| 422 | VALIDATION_ERROR | nature |
 ```
 
-## 에러 응답 표준 형식
+## error tablelevel 
 
 ```json
 {
-  "error": {
-    "code": "RESOURCE_NOT_FOUND",
-    "message": "요청한 리소스를 찾을 수 없습니다.",
-    "details": [{ "field": "user_id", "reason": "존재하지 않음" }],
-    "request_id": "req_xyz789"
-  }
+ "error": {
+ "code": "RESOURCE_NOT_FOUND",
+ "message": "requestKorean number .",
+ "details": [{ "field": "user_id", "reason": "re-degree " }],
+ "request_id": "req_xyz789"
+ }
 }
 ```
 
-## HTTP 상태 코드 매핑
+## HTTP status code mapping
 
-| 범위 | 의미 | 사용 코드 |
+| scope | un- | usage code |
 |------|------|----------|
-| 2xx | 성공 | 200, 201, 204 |
-| 4xx | 클라이언트 에러 | 400, 401, 403, 404, 409, 422, 429 |
-| 5xx | 서버 에러 | 500, 502, 503 |
+| 2xx | nature | 200, 201, 204 |
+| 4xx | error | 400, 401, 403, 404, 409, 422, 429 |
+| 5xx | from error | 500, 502, 503 |
 
-## 페이지네이션 문서 표준
+## degree document tablelevel
 
-### 커서 기반 (권장)
+### from based (recommended)
 
-| 파라미터 | 타입 | 기본값 | 설명 |
+| un- | type | basic | description |
 |---------|------|-------|------|
-| limit | integer | 20 | 항목 수 (1~100) |
-| cursor | string | - | 다음 페이지 커서 |
+| limit | integer | 20 | item number (1~100) |
+| cursor | string | - | next degree from |
 
-응답 메타: `has_more`, `next_cursor`
+ : `has_more`, `next_cursor`
 
-### 오프셋 기반
+### based
 
-| 파라미터 | 타입 | 기본값 | 설명 |
+| un- | type | basic | description |
 |---------|------|-------|------|
-| page | integer | 1 | 페이지 번호 |
-| per_page | integer | 20 | 항목 수 |
-| sort | string | created_at | 정렬 기준 |
-| order | string | desc | 정렬 방향 |
+| page | integer | 1 | degree |
+| per_page | integer | 20 | item number |
+| sort | string | created_at | standard |
+| order | string | desc | direction |
 
-## 인증 섹션 표준
+## authentication section tablelevel
 
 ```markdown
-## 인증
-모든 API 요청에 Bearer 토큰 필요.
+## authentication
+all API request Bearer needed.
 
-### 토큰 획득: POST /auth/token
-### 토큰 사용: Authorization: Bearer {access_token}
-### 토큰 갱신: POST /auth/refresh (만료 시)
+### : POST /auth/token
+### usage: Authorization: Bearer {access_token}
+### : POST /auth/refresh ( when)
 
-| 상태 코드 | 원인 | 조치 |
+| status code | cause | action |
 |----------|------|------|
-| 401 | 토큰 누락/만료 | 재발급 |
-| 403 | 권한 부족 | 역할 확인 |
+| 401 | / | re-grade |
+| 403 | authority insufficient | role confirm |
 ```
 
-## Rate Limiting 문서 표준
+## Rate Limiting document tablelevel
 
-| 플랜 | 제한 | 단위 |
+| | limitation | |
 |------|------|------|
-| Free | 100 | 분당 |
-| Pro | 1,000 | 분당 |
-| Enterprise | 10,000 | 분당 |
+| Free | 100 | minute |
+| Pro | 1,000 | minute |
+| Enterprise | 10,000 | minute |
 
-응답 헤더: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`
-초과 시: 429 + `Retry-After` 헤더
+ : `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`
+exceeding when: 429 + `Retry-After` 
 
-## 버저닝 문서 표준
+## document tablelevel
 
-- URL 경로 버전: `/api/v1/`, `/api/v2/`
-- 하위 호환: 새 필드/엔드포인트/옵션 파라미터 추가
-- 호환 불가: 필드 삭제, 구조 변경, 필수 파라미터 추가 → 새 버전 필요
-- 폐기 예고: 최소 6개월 전
+- URL version: `/api/v1/`, `/api/v2/`
+- exchange: /endpoint/option un- addition
+- exchange impossible: deletion, structure change, required un- addition → version needed
+- basis example: minimum 6months before
 
-## 문서 품질 체크리스트
+## document quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| 예시 | 모든 엔드포인트에 요청+응답+에러 |
-| 타입 | string, integer, boolean, array, object |
-| 필수/선택 | 모든 파라미터에 표시 |
-| 제약조건 | 길이, 허용 값, 패턴 |
-| 인증 | 엔드포인트별 필요 권한 |
-| SDK 예제 | cURL + 1개 이상 언어 |
-| 변경 이력 | 날짜 + 변경 + 영향 범위 |
+| examplewhen | all endpoint request++error |
+| type | string, integer, boolean, array, object |
+| required/optional | all un- tablewhen |
+| constraintcondition | , , pattern |
+| authentication | endpointby needed authority |
+| SDK example | cURL + 1items or more |
+| change capability | date + change + impact scope |

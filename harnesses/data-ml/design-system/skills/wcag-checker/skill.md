@@ -1,98 +1,98 @@
 ---
 name: wcag-checker
-description: "WCAG 2.1/2.2 접근성 검증 체크리스트와 자동 감사 방법론을 제공하는 스킬. '접근성 검증해줘', 'WCAG 체크', '대비비 확인', 'ARIA 검사', '키보드 접근성', '스크린리더 테스트' 등 접근성 검증이 필요할 때 사용한다. 단, 실제 보조기기(JAWS/NVDA) 실행, 법적 소송 자문, 접근성 인증 발급은 이 스킬의 범위가 아니다."
+description: "WCAG 2.1/2.2 accessibility verification checklist and automated audit methodology skill. Use for requests like 'verify accessibility', 'WCAG check', 'check contrast ratio', 'ARIA audit', 'keyboard accessibility', 'screen reader test', etc. Note: running actual assistive technology (JAWS/NVDA), legal consultation, and accessibility certification issuance are outside the scope of this skill."
 ---
 
-# WCAG Checker — 접근성 검증 체크리스트 + 도구
+# WCAG Checker — Accessibility Verification Checklist + Tools
 
-a11y-auditor 에이전트의 접근성 검증 역량을 강화하는 도메인 지식 스킬.
+A domain knowledge skill that enhances the a11y-auditor agent's accessibility verification capabilities.
 
-## 대상 에이전트
+## Target Agents
 
-- **a11y-auditor** — 이 스킬의 체크리스트와 공식을 사용하여 컴포넌트별 접근성을 검증한다
-- **component-developer** — 개발 시 접근성 요구사항을 사전 확인한다
+- **a11y-auditor** — Uses this skill's checklist and formulas to verify per-component accessibility
+- **component-developer** — Checks accessibility requirements proactively during development
 
-## WCAG 2.1 AA 필수 기준 체크리스트
+## WCAG 2.1 AA Mandatory Criteria Checklist
 
-### 1. 인식 가능 (Perceivable)
+### 1. Perceivable
 
-| 기준 | 항목 | 검증 방법 | 심각도 |
-|------|------|----------|--------|
-| 1.1.1 | 비텍스트 콘텐츠에 대체 텍스트 | `img`에 `alt`, 장식 이미지에 `alt=""` | P0 |
-| 1.3.1 | 정보와 관계 프로그래밍 방식 전달 | 시맨틱 HTML, ARIA role | P0 |
-| 1.3.2 | 의미 있는 순서 | DOM 순서 = 시각적 순서 | P1 |
-| 1.4.1 | 색상만으로 정보 전달 금지 | 아이콘/텍스트 보조 표시 | P0 |
-| 1.4.3 | 대비비 최소 4.5:1 (일반), 3:1 (대형) | 대비비 공식 계산 | P0 |
-| 1.4.4 | 200% 확대 시 콘텐츠 손실 없음 | `rem`/`em` 단위 사용 | P1 |
-| 1.4.11 | 비텍스트 UI 대비비 3:1 이상 | 포커스 링, 테두리, 아이콘 | P0 |
+| Criterion | Item | Verification Method | Severity |
+|----------|------|-------------------|----------|
+| 1.1.1 | Alt text for non-text content | `img` has `alt`, decorative images have `alt=""` | P0 |
+| 1.3.1 | Info and relationships programmatically determined | Semantic HTML, ARIA roles | P0 |
+| 1.3.2 | Meaningful sequence | DOM order = visual order | P1 |
+| 1.4.1 | Color not sole means of conveying info | Supplemented with icons/text | P0 |
+| 1.4.3 | Contrast ratio minimum 4.5:1 (normal), 3:1 (large) | Contrast ratio formula calculation | P0 |
+| 1.4.4 | No content loss at 200% zoom | Use `rem`/`em` units | P1 |
+| 1.4.11 | Non-text UI contrast ratio 3:1+ | Focus rings, borders, icons | P0 |
 
-### 2. 운용 가능 (Operable)
+### 2. Operable
 
-| 기준 | 항목 | 검증 방법 | 심각도 |
-|------|------|----------|--------|
-| 2.1.1 | 키보드 접근 가능 | Tab/Enter/Space/Esc/Arrow 동작 | P0 |
-| 2.1.2 | 키보드 트랩 없음 | 모든 요소에서 Tab out 가능 | P0 |
-| 2.4.3 | 포커스 순서 논리적 | `tabindex` 양수 금지 | P0 |
-| 2.4.7 | 포커스 시각적 표시 | `:focus-visible` 스타일 | P0 |
+| Criterion | Item | Verification Method | Severity |
+|----------|------|-------------------|----------|
+| 2.1.1 | Keyboard accessible | Tab/Enter/Space/Esc/Arrow behavior | P0 |
+| 2.1.2 | No keyboard trap | Tab out possible from all elements | P0 |
+| 2.4.3 | Logical focus order | No positive `tabindex` values | P0 |
+| 2.4.7 | Visual focus indicator | `:focus-visible` styling | P0 |
 
-### 3. 이해 가능 (Understandable)
+### 3. Understandable
 
-| 기준 | 항목 | 검증 방법 | 심각도 |
-|------|------|----------|--------|
-| 3.1.1 | 페이지 언어 명시 | `<html lang="ko">` | P0 |
-| 3.2.1 | 포커스 시 컨텍스트 변경 없음 | focus만으로 페이지 이동 금지 | P0 |
-| 3.3.1 | 오류 식별 텍스트 제공 | 색상 외 텍스트 에러 메시지 | P0 |
-| 3.3.2 | 레이블 또는 지시문 | `<label>` 연결, placeholder만 사용 금지 | P0 |
+| Criterion | Item | Verification Method | Severity |
+|----------|------|-------------------|----------|
+| 3.1.1 | Page language specified | `<html lang="en">` | P0 |
+| 3.2.1 | No context change on focus | Focus alone must not trigger navigation | P0 |
+| 3.3.1 | Error identification text provided | Text error messages beyond color alone | P0 |
+| 3.3.2 | Labels or instructions | `<label>` association; no placeholder-only usage | P0 |
 
-### 4. 견고 (Robust)
+### 4. Robust
 
-| 기준 | 항목 | 검증 방법 | 심각도 |
-|------|------|----------|--------|
-| 4.1.2 | 이름, 역할, 값 프로그래밍 방식 | ARIA 속성 정확성 | P0 |
-| 4.1.3 | 상태 메시지 보조기술 전달 | `aria-live`, `role="status"` | P1 |
+| Criterion | Item | Verification Method | Severity |
+|----------|------|-------------------|----------|
+| 4.1.2 | Name, role, value programmatically determined | ARIA attribute accuracy | P0 |
+| 4.1.3 | Status messages conveyed to assistive technology | `aria-live`, `role="status"` | P1 |
 
-## 대비비 계산 공식
+## Contrast Ratio Calculation Formula
 
-### 상대 휘도 (Relative Luminance)
+### Relative Luminance
 
 ```
 L = 0.2126 * R_lin + 0.7152 * G_lin + 0.0722 * B_lin
 
-여기서:
-- sRGB를 0~1로 정규화 (예: #FF → 1.0)
+Where:
+- Normalize sRGB to 0-1 (e.g., #FF -> 1.0)
 - C_lin = C_srgb <= 0.04045 ? C_srgb/12.92 : ((C_srgb+0.055)/1.055)^2.4
 ```
 
-### 대비비 공식
+### Contrast Ratio Formula
 
 ```
 CR = (L_lighter + 0.05) / (L_darker + 0.05)
 
-AA 기준:
-- 일반 텍스트 (< 18pt 또는 < 14pt bold): CR >= 4.5
-- 대형 텍스트 (>= 18pt 또는 >= 14pt bold): CR >= 3.0
-- UI 컴포넌트/그래픽: CR >= 3.0
+AA criteria:
+- Normal text (< 18pt or < 14pt bold): CR >= 4.5
+- Large text (>= 18pt or >= 14pt bold): CR >= 3.0
+- UI components/graphics: CR >= 3.0
 
-AAA 기준:
-- 일반 텍스트: CR >= 7.0
-- 대형 텍스트: CR >= 4.5
+AAA criteria:
+- Normal text: CR >= 7.0
+- Large text: CR >= 4.5
 ```
 
-### 대비비 미충족 시 자동 조정
+### Auto-Adjustment When Contrast Not Met
 
 ```
-1. 현재 전경색과 배경색의 대비비 계산
-2. CR < 목표 시:
-   a. HSL 색공간에서 L만 조정하여 색조 유지
-   b. L_target 역산: (L_fg + 0.05) / target_CR - 0.05
-3. 조정 전후 색상 함께 보고
+1. Calculate contrast ratio of current foreground and background
+2. If CR < target:
+   a. Adjust L only in HSL color space to preserve hue
+   b. Back-calculate L_target: (L_fg + 0.05) / target_CR - 0.05
+3. Report both pre- and post-adjustment colors
 ```
 
-## 컴포넌트별 ARIA 패턴
+## Per-Component ARIA Patterns
 
 ### Button
 ```html
-<button type="button" aria-label="닫기" aria-pressed="false">
+<button type="button" aria-label="Close" aria-pressed="false">
   <svg aria-hidden="true">...</svg>
 </button>
 ```
@@ -100,9 +100,9 @@ AAA 기준:
 ### Modal/Dialog
 ```html
 <div role="dialog" aria-modal="true" aria-labelledby="title-id">
-  <h2 id="title-id">제목</h2>
-  <!-- 포커스 트랩: Tab은 dialog 내부에서만 순환 -->
-  <!-- Esc로 닫기, 닫힐 때 트리거 요소로 포커스 복귀 -->
+  <h2 id="title-id">Title</h2>
+  <!-- Focus trap: Tab cycles within dialog only -->
+  <!-- Close with Esc, return focus to trigger element on close -->
 </div>
 ```
 
@@ -111,48 +111,48 @@ AAA 기준:
 <div role="combobox" aria-expanded="false" aria-haspopup="listbox">
   <input aria-autocomplete="list" aria-controls="listbox-id" />
   <ul id="listbox-id" role="listbox">
-    <li role="option" aria-selected="true">옵션 1</li>
+    <li role="option" aria-selected="true">Option 1</li>
   </ul>
 </div>
 ```
 
 ### Tab
 ```html
-<div role="tablist" aria-label="설정">
-  <button role="tab" aria-selected="true" aria-controls="panel-1">탭1</button>
+<div role="tablist" aria-label="Settings">
+  <button role="tab" aria-selected="true" aria-controls="panel-1">Tab 1</button>
 </div>
-<div role="tabpanel" id="panel-1" aria-labelledby="tab-1">내용</div>
+<div role="tabpanel" id="panel-1" aria-labelledby="tab-1">Content</div>
 ```
 
-## 키보드 인터랙션 매트릭스
+## Keyboard Interaction Matrix
 
-| 컴포넌트 | Tab | Enter | Space | Esc | Arrow | Home/End |
-|---------|-----|-------|-------|-----|-------|----------|
-| Button | 포커스 | 클릭 | 클릭 | - | - | - |
-| Checkbox | 포커스 | 토글 | 토글 | - | - | - |
-| Radio | 그룹포커스 | 선택 | 선택 | - | 순환 | 처음/끝 |
-| Select | 포커스 | 열기 | 열기 | 닫기 | 항목이동 | 처음/끝 |
-| Modal | 내부순환 | - | - | 닫기 | - | - |
-| Tab | 탭포커스 | 활성화 | 활성화 | - | 탭이동 | 처음/끝 |
-| Menu | 포커스 | 열기/실행 | 열기/실행 | 닫기 | 항목이동 | 처음/끝 |
-| Slider | 포커스 | - | - | - | 값조정 | 최소/최대 |
+| Component | Tab | Enter | Space | Esc | Arrow | Home/End |
+|----------|-----|-------|-------|-----|-------|----------|
+| Button | Focus | Click | Click | - | - | - |
+| Checkbox | Focus | Toggle | Toggle | - | - | - |
+| Radio | Group focus | Select | Select | - | Cycle | First/Last |
+| Select | Focus | Open | Open | Close | Move items | First/Last |
+| Modal | Cycle within | - | - | Close | - | - |
+| Tab | Tab focus | Activate | Activate | - | Move tabs | First/Last |
+| Menu | Focus | Open/Execute | Open/Execute | Close | Move items | First/Last |
+| Slider | Focus | - | - | - | Adjust value | Min/Max |
 
-## 검증 보고서 템플릿
+## Verification Report Template
 
 ```markdown
-## 접근성 검증 보고서
+## Accessibility Verification Report
 
-### 요약
-- 검증 수준: WCAG 2.1 AA
-- P0 이슈: N건 (릴리스 차단)
-- P1 이슈: N건 (권고)
+### Summary
+- Verification Level: WCAG 2.1 AA
+- P0 Issues: N (release blocker)
+- P1 Issues: N (recommended)
 
-### P0 이슈 (필수 수정)
-| # | 컴포넌트 | 기준 | 문제 | 수정 방안 |
+### P0 Issues (Must Fix)
+| # | Component | Criterion | Issue | Fix Proposal |
 
-### 대비비 매트릭스
-| 전경 | 배경 | 대비비 | AA일반 | AA대형 |
+### Contrast Ratio Matrix
+| Foreground | Background | Contrast Ratio | AA Normal | AA Large |
 
-### 키보드 테스트 결과
-| 컴포넌트 | Tab | Enter | Space | Esc | Arrow | 결과 |
+### Keyboard Test Results
+| Component | Tab | Enter | Space | Esc | Arrow | Result |
 ```

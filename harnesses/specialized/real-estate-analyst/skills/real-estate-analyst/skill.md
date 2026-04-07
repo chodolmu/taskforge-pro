@@ -1,128 +1,128 @@
 ---
 name: real-estate-analyst
-description: "부동산 투자 분석 파이프라인. 시장조사, 입지분석, 수익성, 리스크 평가, 투자 보고서까지 에이전트 팀이 협업 생성한다. '부동산 분석해줘', '아파트 투자 분석', '오피스텔 수익률', '부동산 시장 조사', '입지 분석', '부동산 투자 보고서', '매매 vs 전세', '재건축 투자 분석', '상가 수익률 분석' 등 부동산 투자 분석 전반에 이 스킬을 사용한다. 실제 매매 계약, 중개 서비스, 인테리어 설계, 임대 관리는 이 스킬의 범위가 아니다."
+description: "Real estate investment analysis pipeline. An agent team collaborates to produce market research, location analysis, profitability analysis, risk assessment, and investment reports. Use this skill for requests such as 'analyze this real estate', 'apartment investment analysis', 'studio apartment yield', 'real estate market research', 'location analysis', 'real estate investment report', 'buy vs lease', 'reconstruction investment analysis', 'commercial property yield analysis', and other general real estate investment analysis tasks. Actual purchase contracts, brokerage services, interior design, and property management are outside the scope of this skill."
 ---
 
-# Real Estate Analyst — 부동산 투자 분석 파이프라인
+# Real Estate Analyst — Real Estate Investment Analysis Pipeline
 
-시장조사, 입지분석, 수익성 분석, 리스크 평가, 투자 보고서까지 에이전트 팀이 협업 생성한다.
+An agent team collaborates to produce market research, location analysis, profitability analysis, risk assessment, and investment reports.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 members communicate directly via SendMessage and cross-validate each other's work.
 
-## 에이전트 구성
+## Agent Roster
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| market-researcher | `.claude/agents/market-researcher.md` | 거시경제, 지역시장, 가격동향 | general-purpose |
-| location-analyst | `.claude/agents/location-analyst.md` | 교통, 학군, 상권, 개발호재 | general-purpose |
-| profitability-analyst | `.claude/agents/profitability-analyst.md` | 임대수익률, IRR, 현금흐름 | general-purpose |
-| risk-assessor | `.claude/agents/risk-assessor.md` | 규제, 시장, 유동성 리스크 | general-purpose |
-| report-writer | `.claude/agents/report-writer.md` | 종합 투자 보고서, 투자 의견 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| market-researcher | `.claude/agents/market-researcher.md` | Macroeconomics, regional markets, price trends | general-purpose |
+| location-analyst | `.claude/agents/location-analyst.md` | Transit, school districts, commercial areas, development catalysts | general-purpose |
+| profitability-analyst | `.claude/agents/profitability-analyst.md` | Rental yield, IRR, cash flow | general-purpose |
+| risk-assessor | `.claude/agents/risk-assessor.md` | Regulatory, market, liquidity risks | general-purpose |
+| report-writer | `.claude/agents/report-writer.md` | Comprehensive investment report, investment opinion | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Performed Directly by Orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **분석 대상**: 구체적 물건(주소, 매물) 또는 지역/유형
-    - **투자 목적**: 실거주/임대수익/시세차익/복합
-    - **예산**: 자기자본, 대출 계획
-    - **투자 기간**: 단기(1~2년)/중기(3~5년)/장기(5년+)
-    - **제약 조건** (선택): 특정 요구사항 (학군, 교통, 면적 등)
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Analysis Target**: Specific property (address, listing) or area/type
+    - **Investment Objective**: Owner-occupancy / rental income / capital gains / mixed
+    - **Budget**: Equity, financing plan
+    - **Investment Horizon**: Short-term (1-2 years) / Medium-term (3-5 years) / Long-term (5+ years)
+    - **Constraints** (optional): Specific requirements (school district, transit, area, etc.)
+2. Create the `_workspace/` directory at the project root
+3. Organize the input and save it as `_workspace/00_input.md`
+4. **Determine the execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1a | 시장조사 | researcher | 없음 | `_workspace/01_market_research.md` |
-| 1b | 입지분석 | location | 없음 | `_workspace/02_location_analysis.md` |
-| 2 | 수익성 분석 | profitability | 작업 1a, 1b | `_workspace/03_profitability_analysis.md` |
-| 3 | 리스크 평가 | risk | 작업 1a, 1b, 2 | `_workspace/04_risk_assessment.md` |
-| 4 | 투자 보고서 | writer | 작업 1a, 1b, 2, 3 | `_workspace/05_investment_report.md` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1a | Market Research | researcher | None | `_workspace/01_market_research.md` |
+| 1b | Location Analysis | location | None | `_workspace/02_location_analysis.md` |
+| 2 | Profitability Analysis | profitability | Tasks 1a, 1b | `_workspace/03_profitability_analysis.md` |
+| 3 | Risk Assessment | risk | Tasks 1a, 1b, 2 | `_workspace/04_risk_assessment.md` |
+| 4 | Investment Report | writer | Tasks 1a, 1b, 2, 3 | `_workspace/05_investment_report.md` |
 
-작업 1a(시장조사)와 1b(입지분석)는 **병렬 실행**한다.
+Tasks 1a (Market Research) and 1b (Location Analysis) run **in parallel**.
 
-**팀원 간 소통 흐름:**
-- researcher + location 병렬 완료 → profitability에게 가격·금리·입지 데이터 전달
-- researcher → risk에게 정책·시장 리스크 데이터 전달
-- location → risk에게 개발 호재 불확실성, 환경 리스크 전달
-- profitability 완료 → risk에게 레버리지·현금흐름 리스크 데이터 전달
-- risk 완료 → writer에게 종합 리스크 등급·스트레스 테스트 전달
-- writer는 모든 결과를 종합하여 투자 보고서 작성
+**Inter-Agent Communication Flow:**
+- researcher + location complete in parallel -> deliver price, interest rate, and location data to profitability
+- researcher -> deliver policy and market risk data to risk
+- location -> deliver development catalyst uncertainties and environmental risks to risk
+- profitability completes -> deliver leverage and cash flow risk data to risk
+- risk completes -> deliver overall risk rating and stress test results to writer
+- writer synthesizes all results into the investment report
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 교차 검증:
-    - [ ] 시장조사의 가격 데이터와 수익성 분석의 매입가가 일치하는가
-    - [ ] 입지 점수가 보고서에 정확히 반영되었는가
-    - [ ] 리스크 평가의 시나리오가 수익성 분석의 시나리오와 일치하는가
-    - [ ] 투자 의견이 분석 결과에 의해 뒷받침되는가
-3. 불일치 발견 시 해당 에이전트에게 수정 요청 (최대 2회)
-4. 최종 요약을 사용자에게 보고한다
+1. Verify all files in `_workspace/`
+2. Cross-validation:
+    - [ ] Do the market research price data and the profitability analysis purchase price match?
+    - [ ] Is the location score accurately reflected in the report?
+    - [ ] Do the risk assessment scenarios align with the profitability analysis scenarios?
+    - [ ] Is the investment opinion supported by the analysis results?
+3. If discrepancies are found, request corrections from the relevant agent (up to 2 times)
+4. Present the final summary to the user
 
-## 작업 규모별 모드
+## Execution Modes by Request Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "부동산 투자 분석 전체 해줘" | **풀 파이프라인** | 5명 전원 |
-| "이 지역 시장 조사만" | **시장 모드** | researcher 단독 |
-| "이 아파트 입지 분석만" | **입지 모드** | location 단독 |
-| "수익률 계산만 해줘" | **수익 모드** | profitability 단독 |
-| "투자 리스크만 평가해줘" | **리스크 모드** | researcher + risk |
-| "두 물건 비교해줘" | **비교 모드** | 5명 전원 × 2건 비교 |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|-----------------|
+| "Run a full real estate investment analysis" | **Full Pipeline** | All 5 agents |
+| "Just do market research for this area" | **Market Mode** | researcher only |
+| "Just analyze this apartment's location" | **Location Mode** | location only |
+| "Just calculate the yield" | **Yield Mode** | profitability only |
+| "Just assess the investment risks" | **Risk Mode** | researcher + risk |
+| "Compare these two properties" | **Comparison Mode** | All 5 agents x 2 properties compared |
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-Based | `_workspace/` directory | Store and share main deliverables |
+| Message-Based | SendMessage | Real-time key information delivery, correction requests |
+| Task-Based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 시장 데이터 조회 실패 | 가용한 최신 데이터로 작업, 기준 시점 명시 |
-| 구체적 물건 정보 부족 | 지역 평균 데이터로 분석, 사용자에게 물건 특정 요청 |
-| 세금/법률 판단 필요 | "전문가 상담 권고" 명시, 일반적 기준으로 추정 |
-| 투자 의견 판단 불가 | "Hold (추가 데이터 필요)" 의견, 필요 데이터 목록 제시 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 보고서에 명시 |
+| Error Type | Strategy |
+|-----------|----------|
+| Market data retrieval failure | Work with most recent available data, note the reference date |
+| Insufficient property details | Analyze using regional averages, request property specifics from user |
+| Tax/legal judgment required | Note "Professional consultation recommended", estimate using standard criteria |
+| Unable to form investment opinion | Issue "Hold (additional data needed)" opinion, list required data |
+| Agent failure | Retry once -> if still fails, proceed without that deliverable, note in report |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "서울 마포구 아현동 아파트 투자를 고려하고 있어. 예산은 자기자본 3억, 대출 4억. 임대수익 + 시세차익 목적으로 3~5년 보유 예정이야"
-**기대 결과**:
-- 시장조사: 마포구 매매/전세 동향, 공급 전망, 금리 환경
-- 입지분석: 아현뉴타운 교통(2호선, 경의중앙선), 학군, 상권, 개발 호재
-- 수익성: Cap Rate, IRR, 낙관/중립/비관 시나리오, 레버리지 효과
-- 리스크: 금리 상승 리스크, 공급 과잉 리스크, 스트레스 테스트
-- 보고서: Executive Summary, 투자 의견(Buy/Hold/Avoid), 체크리스트
+### Normal Flow
+**Prompt**: "I'm considering investing in an apartment in Mapo-gu, Ahyeon-dong, Seoul. My budget is $300K equity and $400K in loans. I plan to hold for 3-5 years for both rental income and capital gains."
+**Expected Results**:
+- Market Research: Mapo-gu sale/lease trends, supply outlook, interest rate environment
+- Location Analysis: Ahyeon New Town transit (Line 2, Gyeongui-Jungang Line), school districts, commercial areas, development catalysts
+- Profitability: Cap Rate, IRR, optimistic/neutral/pessimistic scenarios, leverage effect
+- Risk: Interest rate increase risk, oversupply risk, stress tests
+- Report: Executive Summary, investment opinion (Buy/Hold/Avoid), checklist
 
-### 비교 분석 흐름
-**프롬프트**: "강남 오피스텔이랑 마포 아파트 중에 뭐가 나을까?"
-**기대 결과**:
-- 두 물건 각각 풀 파이프라인 분석
-- 비교표: 입지 점수, 수익률, 리스크 등급 직접 비교
-- 투자 목적별 추천: 임대수익 목적이면 A, 시세차익 목적이면 B
+### Comparative Analysis Flow
+**Prompt**: "Which is better, a studio in Gangnam or an apartment in Mapo?"
+**Expected Results**:
+- Full pipeline analysis for each property
+- Comparison table: location score, yield, risk rating side-by-side
+- Recommendation by investment objective: Property A for rental income, Property B for capital gains
 
-### 에러 흐름
-**프롬프트**: "부동산 투자 괜찮을까?"
-**기대 결과**:
-- 구체적 물건/지역이 없으므로 거시 시장 분석만 수행
-- 사용자에게 지역, 예산, 목적 등 구체화 질문 제시
-- 일반적인 부동산 투자 체크리스트 제공
+### Error Flow
+**Prompt**: "Is real estate investment a good idea?"
+**Expected Results**:
+- No specific property/area provided, so only macro market analysis is performed
+- Prompt user for specifics: area, budget, objectives
+- Provide a general real estate investment checklist
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-| 확장 스킬 | 경로 | 대상 에이전트 | 역할 |
-|----------|------|-------------|------|
-| cap-rate-calculator | `.claude/skills/cap-rate-calculator/skill.md` | profitability-analyst | Cap Rate, Cash-on-Cash, DCF, 시나리오 분석 |
-| location-scoring | `.claude/skills/location-scoring/skill.md` | location-analyst | 입지 스코어카드, 상권 분석, 미래 가치 |
+| Extension Skill | Path | Target Agent | Role |
+|----------------|------|-------------|------|
+| cap-rate-calculator | `.claude/skills/cap-rate-calculator/skill.md` | profitability-analyst | Cap Rate, Cash-on-Cash, DCF, scenario analysis |
+| location-scoring | `.claude/skills/location-scoring/skill.md` | location-analyst | Location scorecard, commercial area analysis, future value |

@@ -1,140 +1,140 @@
 ---
 name: roi-calculator
-description: "ROI 산출 프레임워크. pricing-strategist와 solution-architect 에이전트가 제안서에 투자 대비 수익을 정량화할 때 참조. 'ROI 계산', '비용편익분석', 'TCO' 요청 시 사용. 단, 재무 감사나 세무 컨설팅은 범위 밖."
+description: "ROI calculation framework. pricing-strategist and solution-architect agent proposal investment versus revenue to do when reference. 'ROI total', 'costanalysis', 'TCO' request when usage. However, financial company tax scope outside."
 ---
 
-# ROI Calculator — ROI 산출 프레임워크
+# ROI Calculator — ROI calculation framework
 
-pricing-strategist / solution-architect 에이전트의 투자수익 분석을 표준화.
+pricing-strategist / solution-architect agent investmentrevenue analysis tablelevel.
 
-## ROI 기본 공식
+## ROI basic official
 
 ```
-ROI = (순이익 / 총투자비용) × 100
+ROI = (profit / totalinvestmentcost) × 100
 
-순이익 = 총 수익(편익) - 총 비용
-총투자비용 = 초기 투자 + 운영 비용
+profit = total revenue - total cost
+totalinvestmentcost = initial investment + operations cost
 ```
 
-## TCO (Total Cost of Ownership) 분석
+## TCO (Total Cost of Ownership) analysis
 
-### 비용 카테고리
+### cost category
 
-| 카테고리 | 항목 | 산출 기준 |
+| category | item | calculation standard |
 |---------|------|----------|
-| 초기 투자 | 라이선스, 하드웨어, 구축비 | 일시불 |
-| 구현 비용 | 컨설팅, 커스터마이징, 교육 | 프로젝트 기간 |
-| 운영 비용 | 유지보수, 인건비, 인프라 | 연간 |
-| 숨은 비용 | 생산성 저하, 기회비용, 리스크 | 추정 |
+| initial investment | , , building | daywhen |
+| implementation cost | , , training | project duration |
+| operations cost | maintenancereportnumber, personcase, person | annualbetween |
+| cost | nature , opportunitycost, risk | estimation |
 
-### TCO 비교 템플릿
+### TCO comparison template
 
-| 비용 항목 | 현행(AS-IS) | 제안(TO-BE) | 차이 |
+| cost item | current(AS-IS) | proposal(TO-BE) | gap |
 |----------|-----------|-----------|------|
-| 초기 투자 | ₩0 | ₩5억 | +₩5억 |
-| 연간 운영비 | ₩3억 | ₩1억 | -₩2억 |
-| 3년 TCO | ₩9억 | ₩8억 | -₩1억 |
-| 5년 TCO | ₩15억 | ₩10억 | -₩5억 |
+| initial investment | ₩0 | ₩500M | +₩500M |
+| annualbetween operations | ₩300M | ₩100M | -₩200M |
+| 3year TCO | ₩900M | ₩800M | -₩100M |
+| 5year TCO | ₩1500M | ₩1000M | -₩500M |
 
-## Payback Period (투자회수기간)
-
-```
-단순 투자회수기간 = 초기 투자 / 연간 순현금흐름
-
-예시:
-  초기 투자: ₩5억
-  연간 절감액: ₩2억
-  Payback = 5 / 2 = 2.5년
-```
-
-## NPV (순현재가치)
+## Payback Period (investmentnumberduration)
 
 ```
-NPV = Σ [CF_t / (1+r)^t] - 초기투자
+ investmentnumberduration = initial investment / annualbetween currentflow
 
-CF_t = t년도 순현금흐름
-r = 할인율 (보통 WACC 또는 목표수익률)
-t = 연차 (1~N)
-
-판단 기준:
-  NPV > 0 → 투자 가치 있음
-  NPV < 0 → 투자 기각
+examplewhen:
+ initial investment: ₩500M
+ annualbetween reduction: ₩200M
+ Payback = 5 / 2 = 2.5year
 ```
 
-### NPV 계산 템플릿
+## NPV (currentvalue)
 
-| 연도 | 현금흐름 | 할인계수(10%) | 현재가치 |
+```
+NPV = Σ [CF_t / (1+r)^t] - initialinvestment
+
+CF_t = tyear also currentflow
+r = to doperson (report WACC or goalrevenuerate)
+t = annualgap (1~N)
+
+judgment standard:
+ NPV > 0 → investment value 
+ NPV < 0 → investment basiseach
+```
+
+### NPV total template
+
+| annual also | currentflow | to dopersontotalnumber(10%) | currentvalue |
 |------|---------|-------------|---------|
-| 0 | -₩5억 | 1.000 | -₩5억 |
-| 1 | ₩1.5억 | 0.909 | ₩1.36억 |
-| 2 | ₩2억 | 0.826 | ₩1.65억 |
-| 3 | ₩2.5억 | 0.751 | ₩1.88억 |
-| 4 | ₩2.5억 | 0.683 | ₩1.71억 |
-| 5 | ₩2.5억 | 0.621 | ₩1.55억 |
-| **NPV** | | | **₩3.15억** |
+| 0 | -₩500M | 1.000 | -₩500M |
+| 1 | ₩1.500M | 0.909 | ₩1.3600M |
+| 2 | ₩200M | 0.826 | ₩1.6500M |
+| 3 | ₩2.500M | 0.751 | ₩1.8800M |
+| 4 | ₩2.500M | 0.683 | ₩1.7100M |
+| 5 | ₩2.500M | 0.621 | ₩1.5500M |
+| **NPV** | | | **₩3.1500M** |
 
-## IRR (내부수익률)
+## IRR (withindepartmentrevenuerate)
 
 ```
-IRR = NPV = 0이 되는 할인율
+IRR = NPV = 0 to doperson
 
-판단 기준:
-  IRR > WACC → 투자 가치 있음
-  IRR > 목표수익률 → 투자 매력적
+judgment standard:
+ IRR > WACC → investment value 
+ IRR > goalrevenuerate → investment capabilityquality
 
-표현법:
-  "본 투자의 IRR은 28%로, 
-   당사 요구수익률 15%를 크게 상회합니다"
+tablecurrent:
+ " investment IRR 28%, 
+ company revenuerate 15% "
 ```
 
-## 정성적 편익 정량화
+## naturequality 
 
-### 편익 카테고리별 산출 방법
+### categoryby calculation method
 
-| 편익 유형 | 산출 방법 | 예시 |
+| type | calculation method | examplewhen |
 |----------|----------|------|
-| 시간 절감 | 절감 시간 × 시급 × 연간 횟수 | 20h × ₩5만 × 50회 = ₩5천만 |
-| 에러 감소 | 에러 건수 감소 × 건당 비용 | 100건 × ₩50만 = ₩5천만 |
-| 생산성 향상 | 처리량 증가 × 건당 수익 | +200건 × ₩10만 = ₩2천만 |
-| 이직률 감소 | 이직 감소 인원 × 채용비용 | 5명 × ₩2천만 = ₩1억 |
-| 고객 만족 | NPS 향상 → 재구매율 → 매출 | 간접 추정 |
+| time reduction | reduction time × whengrade × annualbetween number | 20h × ₩5 only × 50 = ₩5 only |
+| error decrease | error casenumber decrease × case cost | 100case × ₩50 only = ₩5 only |
+| nature | processing increase × case revenue | +200case × ₩10 only = ₩2 only |
+| rate decrease | decrease personKRW × hiringcost | 5people × ₩2 only = ₩100M |
+| client | NPS → re- → sales | between estimation |
 
-## 시나리오 분석
+## scenario analysis
 
-| 시나리오 | 가정 | ROI | Payback |
+| scenario | | ROI | Payback |
 |---------|------|-----|---------|
-| 보수적 (Pessimistic) | 편익 50%, 비용 120% | 85% | 3.2년 |
-| 기본 (Base) | 편익 100%, 비용 100% | 180% | 2.1년 |
-| 낙관적 (Optimistic) | 편익 130%, 비용 90% | 290% | 1.4년 |
+| reportnumberquality (Pessimistic) | 50%, cost 120% | 85% | 3.2year |
+| basic (Base) | 100%, cost 100% | 180% | 2.1year |
+| quality (Optimistic) | 130%, cost 90% | 290% | 1.4year |
 
-**제안서 권고**: 보수적 시나리오에서도 투자 가치를 입증해야 설득력 있음.
+**proposal **: reportnumberquality scenariofrom also investment value persuasioncapability .
 
-## 제안서용 ROI 표현 가이드
+## proposal ROI tablecurrent guide
 
-### 한 페이지 ROI 요약
+### Korean degree ROI summary
 
 ```
 ┌──────────────────────────────┐
-│  투자 요약                    │
-│  총 투자: ₩5억               │
-│  3년 ROI: 180%              │
-│  Payback: 2.1년              │
-│  NPV: ₩3.15억 (할인율 10%)   │
-│                              │
-│  핵심 편익 Top 3:             │
-│  1. 운영비 절감: 연 ₩2억      │
-│  2. 생산성 향상: 연 ₩8천만     │
-│  3. 에러 비용 감소: 연 ₩5천만  │
+│ investment summary │
+│ total investment: ₩500M │
+│ 3year ROI: 180% │
+│ Payback: 2.1year │
+│ NPV: ₩3.1500M (to doperson 10%) │
+│ │
+│ core Top 3: │
+│ 1. operations reduction: annual ₩200M │
+│ 2. nature : annual ₩8 only │
+│ 3. error cost decrease: annual ₩5 only │
 └──────────────────────────────┘
 ```
 
-## 품질 체크리스트
+## quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| 비용 완전성 | TCO 4대 카테고리 커버 |
-| 편익 근거 | 각 편익에 산출 로직 명시 |
-| 시나리오 | 보수적/기본/낙관적 3개 |
-| 할인율 | 근거 명시 (WACC 등) |
-| 시계열 | 최소 3년, 권장 5년 |
-| 리스크 | 주요 가정의 민감도 분석 |
+| cost completeness | TCO 4versus category |
+| basis | each calculation specify |
+| scenario | reportnumberquality/basic/quality 3items |
+| to doperson | basis specify (WACC etc.) |
+| whentotal | minimum 3year, recommended 5year |
+| risk | key also analysis |

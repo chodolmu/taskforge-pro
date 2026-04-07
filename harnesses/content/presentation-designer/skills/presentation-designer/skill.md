@@ -1,136 +1,136 @@
 ---
 name: presentation-designer
-description: "프레젠테이션의 기획, 스토리보드, 슬라이드 덱, 발표 노트를 에이전트 팀이 협업하여 한 번에 제작하는 풀 프로덕션 파이프라인. '프레젠테이션 만들어줘', '발표 자료 기획해줘', 'PPT 구성해줘', '슬라이드 덱 만들어줘', '발표 준비 도와줘', '키노트 자료', '피칭 덱', '보고서 슬라이드', '발표 대본 써줘', '투자자 발표 자료' 등 프레젠테이션 제작 전반에 이 스킬을 사용한다. 기존 자료가 있는 경우에도 디자인 개선이나 발표 코칭을 지원한다. 단, 실제 PowerPoint/Keynote 파일 생성, 슬라이드 애니메이션 프로그래밍, 발표 현장 지원은 이 스킬의 범위가 아니다."
+description: "of Planning, Storyboard, Slide Deck, Speaker notes an agent team collaborates to in production to line. ' ', 'Presentation Planning', 'PPT composition', 'Slide Deck ', 'Presentation and', ' ', ' Deck', ' Slide', 'Presentation vs ', ' Presentation ' etc. production beforein . casein Presentation Coaching . , PowerPoint/Keynote File , Slide to, Presentation of ."
 ---
 
-# Presentation Designer — 프레젠테이션 풀 프로덕션 파이프라인
+# Presentation Designer — Presentation Full Production Pipeline
 
-프레젠테이션의 기획→스토리보드→슬라이드→발표노트를 에이전트 팀이 협업하여 한 번에 제작한다.
+An agent team collaborates to produce presentation planning, storyboards, slides, and speaker notes all at once.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 members communicate directly via SendMessage and cross-validate each other's work.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| Agent | File | Role | Type |
 |---------|------|------|------|
-| storyteller | `.claude/agents/storyteller.md` | 메시지 구조화, 논리 흐름 설계 | general-purpose |
-| info-architect | `.claude/agents/info-architect.md` | 데이터 시각화, 정보 계층 설계 | general-purpose |
-| visual-designer | `.claude/agents/visual-designer.md` | 슬라이드 레이아웃, 디자인 시스템 | general-purpose |
-| presentation-coach | `.claude/agents/presentation-coach.md` | 발표 노트, 타이밍, Q&A 준비 | general-purpose |
-| deck-reviewer | `.claude/agents/deck-reviewer.md` | 교차 검증, 정합성 확인 | general-purpose |
+| storyteller | `.claude/agents/storyteller.md` | Message Structure, Logic Flow Design | general-purpose |
+| info-architect | `.claude/agents/info-architect.md` | Visualization, Information Hierarchy Design | general-purpose |
+| visual-designer | `.claude/agents/visual-designer.md` | Slide Layout, design system | general-purpose |
+| presentation-coach | `.claude/agents/presentation-coach.md` | Speaker notes, Timing, Q&A | general-purpose |
+| deck-reviewer | `.claude/agents/deck-reviewer.md` | cross-validate, Verification | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Performed Directly by the Orchestrator)
 
-1. 사용자 입력에서 추출한다:
-   - **발표 주제**: 프레젠테이션이 다룰 내용
-   - **청중 정보** (선택): 청중의 배경, 기대, 의사결정 권한
-   - **발표 시간** (선택): 목표 시간
-   - **발표 형식** (선택): 키노트/보고/제안/교육/피칭
-   - **기존 파일** (선택): 사용자가 제공한 자료, 데이터
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다 (아래 "작업 규모별 모드" 참조)
+1. Extract from user input:
+ - **Presentation **: within
+ - **Audience Information** (Selection): Audienceof background, expectations, decision-making authority
+ - **Presentation whenbetween** (Selection): goal whenbetween
+ - **Presentation Format** (Selection): //Suggestion//
+ - ** File** (Selection): , 
+2. `_workspace/` to in generate
+3. Organize input and save to `_workspace/00_input.md`in save
+4. If existing files are present `_workspace/`, copy to _workspace/ and skip the corresponding Phase
+5. Based on the scope of the request **determine the execution mode** ( " per mode" )
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-팀을 구성하고 작업을 할당한다. 작업 간 의존 관계는 다음과 같다:
+ compositionand . between of relationship and :
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| sequence | | | of | |
 |------|------|------|------|--------|
-| 1 | 스토리 구조 설계 | storyteller | 없음 | `_workspace/01_story_structure.md` |
-| 2 | 정보 설계 | info-architect | 작업 1 | `_workspace/02_info_design.md` |
-| 3 | 슬라이드 덱 제작 | visual-designer | 작업 1, 2 | `_workspace/03_slide_deck.md` |
-| 4a | 발표 노트 작성 | presentation-coach | 작업 1, 3 | `_workspace/04_speaker_notes.md` |
-| 4b | 덱 리뷰 | deck-reviewer | 작업 2, 3, 4a | `_workspace/05_review_report.md` |
+| 1 | Story Structure Design | storyteller | None | `_workspace/01_story_structure.md` |
+| 2 | Information Design | info-architect | 1 | `_workspace/02_info_design.md` |
+| 3 | Slide Deck production | visual-designer | 1, 2 | `_workspace/03_slide_deck.md` |
+| 4a | Speaker notes Writing | presentation-coach | 1, 3 | `_workspace/04_speaker_notes.md` |
+| 4b | Deck Review | deck-reviewer | 2, 3, 4a | `_workspace/05_review_report.md` |
 
-**팀원 간 소통 흐름:**
-- storyteller 완료 → info-architect에게 데이터 시각화 필요 슬라이드 전달, visual-designer에게 톤앤무드 전달, coach에게 전환 포인트 전달
-- info-architect 완료 → visual-designer에게 차트 스타일·색상 코드 전달, coach에게 수치 설명 포인트 전달
-- visual-designer 완료 → coach에게 슬라이드 전환 타이밍 전달
-- reviewer는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**Inter-team communication flow:**
+- storyteller complete -> info-architectTo Visualization Slide before, visual-designerTo before, coachTo before before
+- info-architect complete -> visual-designerTo Chart Style·Color before, coachTo description before
+- visual-designer complete -> coachTo Slide before Timing before
+- reviewer cross-validate. 🔴 Must Fix when AgentTo → → Verification (vs 2)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-리뷰어의 보고서를 기반으로 최종 산출물을 정리한다:
+Reviewof based on :
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 리뷰 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-   - 스토리 구조 — `01_story_structure.md`
-   - 정보 설계 — `02_info_design.md`
-   - 슬라이드 덱 — `03_slide_deck.md`
-   - 발표 노트 — `04_speaker_notes.md`
-   - 리뷰 보고서 — `05_review_report.md`
+1. `_workspace/` within File verify
+2. from the review report 🔴 Must Fix reflected verify
+3. summary To :
+ - Story Structure — `01_story_structure.md`
+ - Information Design — `02_info_design.md`
+ - Slide Deck — `03_slide_deck.md`
+ - Speaker notes — `04_speaker_notes.md`
+ - Review — `05_review_report.md`
 
-## 작업 규모별 모드
+## Modes by Task Scale
 
-사용자 요청의 범위에 따라 투입 에이전트를 조절한다:
+ of in Agent :
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| Pattern | mode | Agent |
 |----------------|----------|-------------|
-| "프레젠테이션 만들어줘", "풀 덱" | **풀 파이프라인** | 5명 전원 |
-| "발표 스토리보드만 짜줘" | **스토리 모드** | storyteller + reviewer |
-| "이 자료로 슬라이드 만들어줘" (기존 내용) | **슬라이드 모드** | info-architect + visual-designer + reviewer |
-| "발표 준비 도와줘" (기존 슬라이드) | **코칭 모드** | coach + reviewer |
-| "이 프레젠테이션 검토해줘" | **리뷰 모드** | reviewer 단독 |
+| " ", " Deck" | **Full Pipeline** | 5 All |
+| "Presentation Storyboard " | **Story mode** | storyteller + reviewer |
+| " to Slide " ( within) | **Slide mode** | info-architect + visual-designer + reviewer |
+| "Presentation and" ( Slide) | **Coaching mode** | coach + reviewer |
+| " " | **Review mode** | reviewer only |
 
-**기존 파일 활용**: 사용자가 기존 자료를 제공하면, 해당 파일을 `_workspace/`의 적절한 번호 위치에 복사하고 해당 단계의 에이전트는 건너뛴다.
+**Using Existing Files**: , copy the files to `_workspace/`of in and of Agent .
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
+| Strategy | | |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| File-Based | `_workspace/` | Storing and sharing major deliverables |
+| Message-Based | SendMessage | Real-time delivery of key information, revision requests |
+| Task-Based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{}_{Agent}_{}.{}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
+| in type | Strategy |
 |----------|------|
-| 청중 정보 부족 | 일반 비즈니스 청중 가정, 보고서에 "청중 가정" 명시 |
-| 발표 시간 미정 | 15분(15슬라이드) 기본값 적용 |
-| 데이터 미제공 | 더미 데이터로 차트 구조 설계, 플레이스홀더 표시 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰 보고서에 누락 명시 |
-| 리뷰에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
+| Audience Information | Audience , in the report "Audience " when |
+| Presentation whenbetween | 15(15Slide) application |
+| | to Chart Structure Design, when |
+| Agent failure | 1 retry -> if still fails, proceed without that deliverable, note omission in review report |
+| RED found in review | Request revision from relevant agent -> rework -> re-verify (up to 2 times) |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "신규 SaaS 제품 투자자 피칭 덱을 20분 분량으로 만들어줘. 청중은 시리즈 A 투자자"
-**기대 결과**:
-- 스토리 구조: 피칭 아크(문제→솔루션→시장→비즈니스모델→팀→요청), 감정 곡선
-- 정보 설계: 시장 규모 차트, 성장 그래프, 경쟁 매트릭스
-- 슬라이드 덱: 20매 내외, 디자인 시스템 정의, 슬라이드별 레이아웃
-- 발표 노트: 슬라이드별 멘트, 타이밍 맵, Q&A 10개
-- 리뷰: 정합성 매트릭스 전항목 확인
+### Normal Flow
+**Prompt**: " SaaS Deck 20 to . Audience when A "
+**Expected Result**:
+- Story Structure: arc(→→market→Model→→), Emotion Curve
+- Information Design: market Chart, , Competitive matrix
+- Slide Deck: 20 within, design system definition, Slideper Layout
+- Speaker notes: Slideper , Timing , Q&A 10
+- Review: matrix before Verification
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 보고서 내용으로 경영진 보고 슬라이드 만들어줘" + 보고서 파일
-**기대 결과**:
-- 기존 보고서를 `_workspace/`에 복사
-- 슬라이드 모드: info-architect + visual-designer + reviewer 투입
-- storyteller는 보고서 구조를 기반으로 간략 스토리 생성, coach는 건너뜀
+### Existing File Utilization Flow
+**Prompt**: " withinto Slide " + File
+**Expected Result**:
+- `_workspace/`in 
+- Slide mode: info-architect + visual-designer + reviewer 
+- storyteller Structure based on between Story , coach 
 
-### 에러 흐름
-**프롬프트**: "발표 자료 급하게 만들어줘, 주제는 AI 트렌드"
-**기대 결과**:
-- 풀 파이프라인으로 진행하되, 청중/시간 미정으로 기본값 적용
-- storyteller가 일반 비즈니스 청중 가정, 15분 기본값
-- 리뷰 보고서에 "청중/시간 가정 적용" 명시
+### Error Flow
+**Prompt**: "Presentation , AI "
+**Expected Result**:
+- Full Pipelineto , Audience/whenbetween to application
+- storyteller Audience , 15 
+- Review in the report "Audience/whenbetween application" when
 
-## 에이전트별 확장 스킬
+## Extended Skills per Agent
 
-개별 에이전트의 도메인 전문성을 강화하는 확장 스킬:
+per Agentof before Extended Skill:
 
-| 스킬 | 대상 에이전트 | 역할 |
+| | subject Agent | Role |
 |------|-------------|------|
-| `slide-layout-patterns` | visual-designer | 20가지 슬라이드 레이아웃, 그리드 시스템, 디자인 토큰 |
-| `data-visualization-guide` | info-architect | 차트 선택 매트릭스, 정보 계층(LATCH), 색상 접근성 |
+| `slide-layout-patterns` | visual-designer | 20 Slide Layout, grid system, |
+| `data-visualization-guide` | info-architect | Chart Selection matrix, Information Hierarchy(LATCH), Color |

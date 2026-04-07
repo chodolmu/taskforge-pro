@@ -1,99 +1,99 @@
 ---
 name: regulation-knowledge-base
-description: "한국 주요 규제 법령의 구조화된 지식 베이스. 'law-mapper'와 'gap-analyst' 에이전트가 업종별 적용 법령을 식별하고 의무사항을 매핑할 때 이 스킬의 법령 DB와 매핑 방법론을 반드시 활용해야 한다. '적용 법률 확인', '규제 매핑', '의무사항 추출' 등에 사용한다. 단, 컴플라이언스 전체 오케스트레이션이나 개선 계획 수립은 이 스킬의 범위가 아니다."
+description: "A structured knowledge base of key regulatory laws. The 'law-mapper' and 'gap-analyst' agents must use this skill's law database and mapping methodology when identifying applicable laws by industry and mapping obligations. Used for 'applicable law verification', 'regulatory mapping', 'obligation extraction', etc. Note: Full compliance orchestration or remediation planning is outside the scope of this skill."
 ---
 
-# Regulation Knowledge Base — 규제 법령 구조화 지식 베이스
+# Regulation Knowledge Base — Structured Regulatory Law Knowledge Base
 
-업종별 적용 법령, 의무사항, 과태료 기준을 체계적으로 매핑한다.
+Systematically maps applicable laws, obligations, and penalty criteria by industry sector.
 
-## 업종별 핵심 적용 법령 매트릭스
+## Industry-Specific Key Applicable Law Matrix
 
-### IT/온라인 서비스
+### IT/Online Services
 
-| 법령 | 적용 조건 | 핵심 의무 | 위반 시 제재 |
-|------|----------|----------|------------|
-| 개인정보보호법 | 개인정보 처리 시 | 수집 동의, 처리방침 공개, 안전조치 | 과태료 5천만원, 매출 3% |
-| 정보통신망법 | 온라인 서비스 제공 시 | 기술적 보호조치, 침해사고 신고 | 과태료 3천만원 |
-| 전자상거래법 | 재화/용역 판매 시 | 청약 철회, 표시·광고, 결제 | 과태료 1억원 |
-| 위치정보법 | 위치정보 수집 시 | 위치정보사업 신고, 동의 | 과태료 5천만원 |
-| 전자금융거래법 | 결제 서비스 시 | 전자금융업 등록, 보안 | 벌금 5천만원 |
+| Law | Application Condition | Key Obligations | Violation Sanctions |
+|-----|----------------------|----------------|-------------------|
+| Personal Information Protection Act | When processing personal data | Consent for collection, privacy policy disclosure, safety measures | Fines up to 50M, 3% of revenue |
+| Information and Communications Network Act | When providing online services | Technical safeguards, breach incident reporting | Fines up to 30M |
+| E-Commerce Act | When selling goods/services | Right of withdrawal, labeling/advertising, payment | Fines up to 100M |
+| Location Information Act | When collecting location data | Location service business registration, consent | Fines up to 50M |
+| Electronic Financial Transactions Act | When providing payment services | E-finance business registration, security | Fines up to 50M |
 
-### 금융
+### Finance
 
-| 법령 | 적용 조건 | 핵심 의무 |
-|------|----------|----------|
-| 자본시장법 | 금융투자업 | 인가, 영업행위 규제, 공시 |
-| 은행법 | 은행업 | 인가, 건전성 규제, BIS |
-| 보험업법 | 보험업 | 허가, 지급여력, 모집규제 |
-| 여신전문금융업법 | 카드/리스/할부 | 등록, 이자율 제한 |
-| 특정금융정보법 | 가상자산 | 신고, AML/KYC |
+| Law | Application Condition | Key Obligations |
+|-----|----------------------|----------------|
+| Capital Markets Act | Financial investment business | Authorization, business conduct regulation, disclosure |
+| Banking Act | Banking business | Authorization, soundness regulation, BIS |
+| Insurance Business Act | Insurance business | License, solvency, solicitation regulation |
+| Specialized Credit Finance Act | Cards/Leasing/Installments | Registration, interest rate limits |
+| Specific Financial Information Act | Virtual assets | Reporting, AML/KYC |
 
-### 의료/헬스케어
+### Healthcare
 
-| 법령 | 적용 조건 | 핵심 의무 |
-|------|----------|----------|
-| 의료법 | 의료행위 | 의료기관 개설, 의료인 면허 |
-| 약사법 | 의약품 취급 | 허가, GMP, 유통 관리 |
-| 의료기기법 | 의료기기 | 제조·수입 허가, 임상시험 |
-| 생명윤리법 | 인체유래물 연구 | IRB 심의, 동의 |
+| Law | Application Condition | Key Obligations |
+|-----|----------------------|----------------|
+| Medical Service Act | Medical practice | Medical facility establishment, practitioner licensing |
+| Pharmaceutical Affairs Act | Drug handling | Authorization, GMP, distribution management |
+| Medical Devices Act | Medical devices | Manufacturing/import authorization, clinical trials |
+| Bioethics Act | Human-derived material research | IRB review, consent |
 
-### 제조/유통
+### Manufacturing/Distribution
 
-| 법령 | 적용 조건 | 핵심 의무 |
-|------|----------|----------|
-| 산업안전보건법 | 사업장 운영 | 안전보건관리체계, 위험성 평가 |
-| 화학물질관리법 | 화학물질 취급 | 유해화학물질 영업허가 |
-| 식품위생법 | 식품 제조·판매 | 영업허가, HACCP |
-| 제품안전기본법 | 제품 유통 | 안전인증, 리콜 |
+| Law | Application Condition | Key Obligations |
+|-----|----------------------|----------------|
+| Occupational Safety and Health Act | Workplace operation | Safety and health management system, risk assessment |
+| Chemical Substances Control Act | Chemical handling | Hazardous chemical business permit |
+| Food Sanitation Act | Food manufacturing/sales | Business permit, HACCP |
+| Framework Act on Product Safety | Product distribution | Safety certification, recall |
 
-## 규모별 적용 법령 분기
+## Organization Size-Based Law Application Branches
 
-### 근로자 수 기준
+### By Number of Employees
 
-| 규모 | 추가 적용 법령/의무 |
-|------|------------------|
-| 5인 이상 | 근로기준법 전면 적용, 취업규칙 |
-| 10인 이상 | 취업규칙 신고 의무 |
-| 30인 이상 | 장애인고용촉진법 (의무고용) |
-| 50인 이상 | 산업안전보건위원회, 안전보건관리자 |
-| 100인 이상 | 고용영향평가, 직장어린이집 |
-| 300인 이상 | 대규모기업집단 공시, ESG |
-| 1000인 이상 | 중대재해처벌법 즉시 적용 |
+| Scale | Additional Applicable Laws/Obligations |
+|-------|---------------------------------------|
+| 5+ employees | Full application of Labor Standards Act, work rules |
+| 10+ employees | Obligation to report work rules |
+| 30+ employees | Act on Employment Promotion for Persons with Disabilities (mandatory employment) |
+| 50+ employees | Occupational safety and health committee, safety and health manager |
+| 100+ employees | Employment impact assessment, workplace childcare facility |
+| 300+ employees | Large business group disclosure, ESG |
+| 1000+ employees | Serious Accidents Punishment Act immediate application |
 
-## 의무사항 구조화 템플릿
-
-```
-[의무 ID]: REG-{법령코드}-{조항번호}
-[법령]: {법령명} 제{X}조
-[의무 유형]: 인허가 | 신고 | 보고 | 조치 | 기록 | 교육
-[의무 내용]: {구체적 의무 내용}
-[이행 주기]: 상시 | 연 1회 | 분기 | 사건 발생 시
-[관할 기관]: {감독 기관}
-[위반 제재]: {과태료/벌금/행정처분}
-[증거 자료]: {이행 증빙 문서}
-```
-
-## 리스크 영향도 산정
+## Obligation Structuring Template
 
 ```
-영향도 = 발생가능성(1-5) × 심각도(1-5)
-
-심각도 기준:
-  5: 형사처벌, 영업정지
-  4: 과태료 1억+, 시정명령
-  3: 과태료 5천만원 이하, 경고
-  2: 과태료 1천만원 이하, 개선권고
-  1: 행정지도, 자율시정
-
-영향도 등급:
-  20-25: 즉시 대응 (빨강)
-  12-19: 조기 대응 (주황)
-  6-11: 계획 대응 (노랑)
-  1-5: 모니터링 (초록)
+[Obligation ID]: REG-{law_code}-{clause_number}
+[Law]: {Law Name} Article {X}
+[Obligation Type]: Permit/License | Registration | Reporting | Action | Record | Training
+[Obligation Content]: {Specific obligation details}
+[Compliance Cycle]: Ongoing | Annually | Quarterly | Upon occurrence
+[Supervisory Authority]: {Regulatory body}
+[Violation Sanction]: {Fines/Penalties/Administrative action}
+[Evidence Documents]: {Compliance documentation}
 ```
 
-## 참고
+## Risk Impact Assessment
 
-- 법령 개정 주기에 따라 최신 확인 필수
-- 상세 법령 해설: `references/regulation-details.md` 참조
+```
+impact = probability(1-5) x severity(1-5)
+
+severity criteria:
+  5: Criminal punishment, business suspension
+  4: Fine 100M+, corrective order
+  3: Fine up to 50M, warning
+  2: Fine up to 10M, improvement recommendation
+  1: Administrative guidance, voluntary correction
+
+impact grades:
+  20-25: Immediate response (Red)
+  12-19: Early response (Orange)
+  6-11: Planned response (Yellow)
+  1-5: Monitoring (Green)
+```
+
+## Notes
+
+- Must verify latest information according to law amendment cycles
+- Detailed law explanations: See `references/regulation-details.md`

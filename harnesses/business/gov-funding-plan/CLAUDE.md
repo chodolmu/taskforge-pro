@@ -1,37 +1,37 @@
-# Gov Funding Plan Harness
+# Government Funding Plan Harness
 
-정부지원사업 사업계획서의 공고요건분석→기술성·사업성작성→예산편성→증빙준비→제출검증을 에이전트 팀이 협업하여 생성하는 하네스.
+Government funding proposal: a harness where an agent team collaborates to perform announcement analysis → business plan writing → technical writing → budget planning → submission review.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── announcement-analyst.md — 공고 분석가 (공고요건, 평가기준, 자격요건 분석)
-│   ├── tech-writer.md          — 기술성 작성자 (기술 개발 내용, 차별성, 구현방안)
-│   ├── biz-writer.md           — 사업성 작성자 (시장성, 사업화 전략, 기대효과)
-│   ├── budget-planner.md       — 예산 편성자 (정부 예산 기준, 비목별 편성, 증빙)
-│   └── submission-reviewer.md  — 제출 검증자 (교차 검증, 누락 확인, 감점 방지)
+│   ├── announcement-analyst.md — Announcement Analyst (eligibility analysis, evaluation criteria, deadline tracking)
+│   ├── biz-writer.md          — Business Plan Writer (project overview, market analysis, commercialization strategy)
+│   ├── tech-writer.md         — Technical Writer (technical approach, R&D plan, innovation description)
+│   ├── budget-planner.md      — Budget Planner (budget breakdown, cost justification, co-funding plan)
+│   └── submission-reviewer.md — Submission Reviewer (compliance check, scoring optimization, final review)
 ├── skills/
 │   ├── gov-funding-plan/
-│       └── skill.md            — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md              — Orchestrator (team coordination, workflow, error handling)
 │   ├── budget-standard-checker/
-│   │   └── skill.md            — 예산 기준 검증 (비목별 규정, 사업별 기준)
+│   │   └── skill.md              — Government budget standards compliance guide
 │   └── scoring-optimizer/
-│       └── skill.md            — 평가 고득점 (항목별 전략, 감점 방지, 키워드)
-└── CLAUDE.md                   — 이 파일
+│       └── skill.md              — Proposal scoring optimization methodology
+└── CLAUDE.md                  — This file
 ```
 
-## 사용법
+## Usage
 
-`/gov-funding-plan` 스킬을 트리거하거나, "정부지원사업 사업계획서 써줘" 같은 자연어로 요청한다.
+Trigger the `/gov-funding-plan` skill or use natural language like "Help me write a government funding proposal."
 
-## 산출물
+## Outputs
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_announcement_analysis.md` — 공고 요건 분석서
-- `02_tech_proposal.md` — 기술성 파트
-- `03_biz_proposal.md` — 사업성 파트
-- `04_budget_plan.md` — 예산 편성서
-- `05_review_report.md` — 제출 검증 보고서
+All outputs are stored in the `_workspace/` directory:
+- `00_input.md` — User input and funding program information
+- `01_announcement_analysis.md` — Funding announcement analysis
+- `02_business_plan.md` — Business plan document
+- `03_technical_plan.md` — Technical plan document
+- `04_budget_plan.md` — Budget plan and justification
+- `05_submission_review.md` — Final review and submission checklist

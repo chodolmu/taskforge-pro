@@ -1,124 +1,124 @@
 ---
 name: onboarding-system
-description: "신규입사자 온보딩 프로그램의 체크리스트, 교육, 멘토배정, 30-60-90일 계획을 에이전트 팀이 협업하여 한 번에 생성하는 풀 파이프라인. '온보딩', '신규입사자', '입사자 교육', '온보딩 체크리스트', '멘토 배정', '30-60-90', '입사 프로그램', 'onboarding', '신입사원 교육', '입사 안내', '온보딩 프로세스', '입사 첫날', '신규 직원 적응' 등 신규입사자 온보딩 전반에 이 스킬을 사용한다. 정규직, 계약직, 인턴, 원격 입사자 모두에 적용 가능하다. 단, 실제 HR 시스템(SAP, Workday) 연동, 급여/세금 처리, 근로계약서 법적 검토, 보안 시스템 접근 권한 설정은 이 스킬의 범위가 아니다."
+description: "A full pipeline where an agent team collaborates to generate onboarding checklists, training, mentor assignments, and 30-60-90 day plans for new hires all at once. Use this skill for 'onboarding', 'new hire', 'new employee training', 'onboarding checklist', 'mentor assignment', '30-60-90', 'onboarding program', 'new employee orientation', 'onboarding process', 'first day', 'new employee adaptation', and similar new hire onboarding topics. Applicable to full-time, contract, intern, and remote new hires. Note: actual HR system (SAP, Workday) integration, payroll/tax processing, legal review of employment contracts, and security system access provisioning are out of scope."
 ---
 
-# Onboarding System — 신규입사자 온보딩 풀 파이프라인
+# Onboarding System — New Hire Onboarding Full Pipeline
 
-신규입사자 온보딩의 체크리스트→교육→멘토배정→30-60-90일을 에이전트 팀이 협업하여 한 번에 생성한다.
+Generates new hire onboarding checklists, training, mentor assignments, and 30-60-90 day plans through agent team collaboration in a single pass.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 members communicate directly via SendMessage and cross-validate each other's work.
 
-## 에이전트 구성
+## Agent Roster
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| onboarding-architect | `.claude/agents/onboarding-architect.md` | 체크리스트, 일정, 이해관계자 | general-purpose |
-| training-builder | `.claude/agents/training-builder.md` | 커리큘럼, 학습자료, 퀴즈 | general-purpose |
-| mentor-matcher | `.claude/agents/mentor-matcher.md` | 멘토/버디 배정, 가이드 | general-purpose |
-| milestone-tracker | `.claude/agents/milestone-tracker.md` | 30-60-90 목표, 피드백 | general-purpose |
-| experience-reviewer | `.claude/agents/experience-reviewer.md` | 정합성, 과부하, 보고서 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| onboarding-architect | `.claude/agents/onboarding-architect.md` | Checklists, schedules, stakeholders | general-purpose |
+| training-builder | `.claude/agents/training-builder.md` | Curriculum, learning materials, quizzes | general-purpose |
+| mentor-matcher | `.claude/agents/mentor-matcher.md` | Mentor/buddy assignment, guides | general-purpose |
+| milestone-tracker | `.claude/agents/milestone-tracker.md` | 30-60-90 goals, feedback | general-purpose |
+| experience-reviewer | `.claude/agents/experience-reviewer.md` | Consistency, overload, report | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (performed directly by the orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **입사자 정보**: 직무, 직급, 고용 형태
-    - **조직 정보**: 팀 규모, 근무 형태(사무실/원격/하이브리드)
-    - **입사일**: 시작일
-    - **특수 요건** (선택): 원격 입사, 해외 입사, 경력직/신입 구분
-    - **기존 자료** (선택): 기존 온보딩 문서, 교육 자료
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 자료가 있으면 `_workspace/`에 복사하고 해당 Phase를 조정한다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **New hire info**: Role, level, employment type
+    - **Organization info**: Team size, work arrangement (office/remote/hybrid)
+    - **Start date**: First day
+    - **Special requirements** (optional): Remote start, international hire, experienced/entry-level
+    - **Existing materials** (optional): Existing onboarding docs, training materials
+2. Create the `_workspace/` directory in the project root
+3. Organize the input and save to `_workspace/00_input.md`
+4. If existing materials are provided, copy to `_workspace/` and adjust the relevant Phase
+5. Determine the **execution mode** based on the request scope
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 온보딩 체크리스트 | architect | 없음 | `_workspace/01_onboarding_checklist.md` |
-| 2a | 교육 프로그램 | builder | 작업 1 | `_workspace/02_training_program.md` |
-| 2b | 멘토 가이드 | matcher | 작업 1 | `_workspace/03_mentor_guide.md` |
-| 3 | 30-60-90 계획 | tracker | 작업 1, 2a, 2b | `_workspace/04_30_60_90_plan.md` |
-| 4 | 경험 검증 | reviewer | 작업 1, 2a, 2b, 3 | `_workspace/05_review_report.md` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1 | Onboarding checklist | architect | None | `_workspace/01_onboarding_checklist.md` |
+| 2a | Training program | builder | Task 1 | `_workspace/02_training_program.md` |
+| 2b | Mentor guide | matcher | Task 1 | `_workspace/03_mentor_guide.md` |
+| 3 | 30-60-90 plan | tracker | Tasks 1, 2a, 2b | `_workspace/04_30_60_90_plan.md` |
+| 4 | Experience review | reviewer | Tasks 1, 2a, 2b, 3 | `_workspace/05_review_report.md` |
 
-작업 2a(교육)와 2b(멘토)는 **병렬 실행**한다. 둘 다 작업 1(체크리스트)에만 의존한다.
+Tasks 2a (training) and 2b (mentor) run **in parallel**. Both depend only on Task 1 (checklist).
 
-**팀원 간 소통 흐름:**
-- architect 완료 → builder에게 학습 목표·시스템 목록, matcher에게 역할 정의 전달
-- builder + matcher 상호 공유 → 멘토 교육 책임 영역 합의
-- builder + matcher 완료 → tracker에게 교육 완료 기준, 멘토링 마일스톤 전달
-- tracker 완료 → reviewer에게 30-60-90 목표, 피드백 체계 전달
-- reviewer는 모든 산출물을 교차 검증, 불일치·과부하 발견 시 수정 요청 (최대 2회)
+**Inter-team communication flow:**
+- architect completes → sends learning goals/system list to builder, role definitions to matcher
+- builder + matcher share mutually → agree on mentor training responsibility areas
+- builder + matcher complete → send training completion criteria and mentoring milestones to tracker
+- tracker completes → sends 30-60-90 goals and feedback framework to reviewer
+- reviewer cross-validates all deliverables; requests corrections for inconsistencies/overload (up to 2 rounds)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. reviewer의 정합성 검증 및 과부하 분석 결과를 반영한다
-3. 최종 요약을 사용자에게 보고한다
+1. Verify all files in `_workspace/`
+2. Incorporate reviewer's consistency validation and overload analysis results
+3. Report the final summary to the user
 
-## 작업 규모별 모드
+## Execution Modes by Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "온보딩 프로그램 전체 만들어줘" | **풀 파이프라인** | 5명 전원 |
-| "온보딩 체크리스트만" | **체크리스트 모드** | architect 단독 |
-| "30-60-90 계획만 세워줘" | **마일스톤 모드** | architect + tracker |
-| "멘토 프로그램만 설계해줘" | **멘토 모드** | matcher 단독 |
-| "교육 커리큘럼만 만들어줘" | **교육 모드** | architect + builder |
+| User Request Pattern | Execution Mode | Agents Involved |
+|---------------------|----------------|-----------------|
+| "Create a complete onboarding program" | **Full Pipeline** | All 5 |
+| "Just the onboarding checklist" | **Checklist Mode** | architect solo |
+| "Just create a 30-60-90 plan" | **Milestone Mode** | architect + tracker |
+| "Just design a mentor program" | **Mentor Mode** | matcher solo |
+| "Just create a training curriculum" | **Training Mode** | architect + builder |
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| Strategy | Method | Usage |
+|----------|--------|-------|
+| File-based | `_workspace/` directory | Primary deliverable storage and sharing |
+| Message-based | SendMessage | Real-time key information transfer, correction requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{order}_{agent}_{deliverable}.{ext}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 직무 정보 부족 | architect가 직무 카테고리별 표준 템플릿 제공 |
-| 조직 규모 미상 | 소규모(~20명)/중규모(~100명)/대규모(100명+) 3가지 버전 |
-| 원격 입사자 | 모든 항목에 원격 대체 활동 병기 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행 |
-| 과부하 발견 | reviewer가 활동 재배치 요청 → 재조정 (최대 2회) |
+| Error Type | Strategy |
+|-----------|----------|
+| Insufficient role information | architect provides standard templates by job category |
+| Unknown organization size | 3 versions: small (~20), medium (~100), large (100+) |
+| Remote new hire | Include remote alternative activities for all items |
+| Agent failure | 1 retry → proceed without that deliverable if still failing |
+| Overload detected | reviewer requests activity redistribution → readjust (up to 2 rounds) |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "시니어 프론트엔드 개발자 온보딩 프로그램을 만들어줘. 20명 팀에 원격근무, 다음 달 1일 입사야."
-**기대 결과**:
-- 체크리스트: Pre-boarding D-7 ~ D-day ~ 90일, 원격 셋업 포함
-- 교육: 기술 스택 교육 + 코드베이스 온보딩 + 보안 교육
-- 멘토: 시니어 기술 멘토 + 문화 버디, 원격 페어링 가이드
-- 30-60-90: 코드베이스 이해 → PR 기여 → 기능 리드
-- 검증: 시간별 활동량 분석, 과부하 없음 확인
+### Normal Flow
+**Prompt**: "Create an onboarding program for a senior frontend developer. 20-person team, remote work, starting the 1st of next month."
+**Expected Results**:
+- Checklist: Pre-boarding D-7 through Day 1 through 90 days, remote setup included
+- Training: Tech stack training + codebase onboarding + security training
+- Mentor: Senior technical mentor + culture buddy, remote pairing guide
+- 30-60-90: Codebase understanding → PR contributions → feature lead
+- Review: Activity volume analysis by period, no overload confirmed
 
-### 부분 요청 흐름
-**프롬프트**: "인턴 온보딩 체크리스트만 빨리 만들어줘"
-**기대 결과**:
-- 체크리스트 모드 (architect 단독)
-- 인턴 특화 체크리스트 (짧은 기간, 프로젝트 중심)
-- 간결한 1개 산출물
+### Partial Request Flow
+**Prompt**: "Just quickly create an intern onboarding checklist"
+**Expected Results**:
+- Checklist mode (architect solo)
+- Intern-specific checklist (shorter duration, project-focused)
+- Single concise deliverable
 
-### 에러 흐름
-**프롬프트**: "온보딩 프로그램 만들어줘, 직무는 모르겠고 일단 범용으로"
-**기대 결과**:
-- architect가 직무 카테고리 5가지(개발/기획/영업/마케팅/경영지원) 공통 프로그램 설계
-- 직무별 커스터마이즈 포인트를 "[직무별 추가 필요]"로 표기
-- 범용 교육(회사소개, 문화, 도구) 중심 커리큘럼
+### Error Flow
+**Prompt**: "Create an onboarding program, I don't know the role, just make it generic"
+**Expected Results**:
+- architect designs a common program for 5 job categories (engineering/product/sales/marketing/operations)
+- Role-specific customization points marked as "[Role-specific additions needed]"
+- Curriculum focused on common training (company overview, culture, tools)
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-| 확장 스킬 | 경로 | 대상 에이전트 | 역할 |
-|----------|------|-------------|------|
-| learning-path-design | `.claude/skills/learning-path-design/skill.md` | training-builder, onboarding-architect | 30-60-90일 학습 경로, ADDIE, Kirkpatrick 평가 |
-| buddy-program-guide | `.claude/skills/buddy-program-guide/skill.md` | mentor-matcher | 버디 매칭 기준, 활동 가이드, GROW 멘토링 |
+| Extension Skill | Path | Target Agent | Role |
+|----------------|------|--------------|------|
+| learning-path-design | `.claude/skills/learning-path-design/skill.md` | training-builder, onboarding-architect | 30-60-90 day learning paths, ADDIE, Kirkpatrick assessment |
+| buddy-program-guide | `.claude/skills/buddy-program-guide/skill.md` | mentor-matcher | Buddy matching criteria, activity guides, GROW mentoring |

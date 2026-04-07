@@ -1,33 +1,33 @@
 ---
 name: data-quality-framework
-description: "데이터 품질 차원(정확성, 완전성, 적시성, 일관성 등)별 검증 규칙 설계와 Great Expectations, dbt tests 등의 도구 활용 가이드. '데이터 품질', '검증 규칙', 'Great Expectations', 'dbt test', '데이터 프로파일링', '이상 탐지', '데이터 계약' 등 데이터 품질 관리 시 이 스킬을 사용한다. data-quality-manager의 품질 검증 역량을 강화한다. 단, 파이프라인 스케줄링이나 전체 아키텍처 설계는 이 스킬의 범위가 아니다."
+description: "data  (accuracy, completeness, timeliness, consistency etc.)per verification rule and Great Expectations, dbt tests etc.of also for guide. 'data ', 'verification rule', 'Great Expectations', 'dbt test', 'data profiling', 'or more detection', 'data ' etc. data    this  for. data-quality-managerof  verification  -ize. , pipeline schedulingthis before architecture  this of scope ."
 ---
 
-# Data Quality Framework — 데이터 품질 프레임워크 가이드
+# Data Quality Framework — data  framework guide
 
-데이터 품질을 체계적으로 정의, 측정, 모니터링하는 프레임워크.
+data  systematicas of, measurement, monitoringlower framework.
 
-## 데이터 품질 6차원
+## data  6
 
-| 차원 | 정의 | 측정 방법 | 임계값 예시 |
+|  | of | measurement  | threshold example |
 |------|------|----------|-----------|
-| **정확성** (Accuracy) | 현실을 올바르게 반영 | 소스 대조, 비즈니스 규칙 검증 | 정확도 > 99.9% |
-| **완전성** (Completeness) | 필수 데이터 존재 | NULL 비율, 필수 필드 충족 | NULL < 1% |
-| **적시성** (Timeliness) | 기대 시간 내 도착 | 지연시간, 데이터 신선도 | 지연 < 30분 |
-| **일관성** (Consistency) | 시스템 간 일치 | 교차 검증, 참조 무결성 | 불일치 = 0 |
-| **유일성** (Uniqueness) | 중복 없음 | 중복 행/키 비율 | 중복 = 0% |
-| **유효성** (Validity) | 포맷/범위 준수 | 정규식, 범위 체크 | 유효율 > 99% |
+| **accuracy** (Accuracy) |    |  , business rule verification | also > 99.9% |
+| **completeness** (Completeness) | required data  | NULL ratio, required  satisfied | NULL < 1% |
+| **timeliness** (Timeliness) |  between within also | latencybetween, data also | latency < 30minutes |
+| **consistency** (Consistency) | system between day |  verification,  integrity | day = 0 |
+| **day** (Uniqueness) |   |  /key ratio |  = 0% |
+| **valid** (Validity) | /scope compliant | , scope  | efficiency > 99% |
 
-## 검증 규칙 설계 패턴
+## verification rule  pattern
 
-### P0 (필수 — 실패 시 파이프라인 중단)
+### P0 (required — failure  pipeline )
 
 ```yaml
 rules:
   - name: pk_uniqueness
     type: uniqueness
     column: order_id
-    threshold: 0  # 중복 0건
+    threshold: 0  #  0cases
 
   - name: not_null_critical
     type: completeness
@@ -36,8 +36,8 @@ rules:
 
   - name: row_count_sanity
     type: volume
-    min_rows: 1000  # 일일 최소 주문 수
-    max_deviation: 0.5  # 전일 대비 50% 이상 변동 시 경고
+    min_rows: 1000  # dayday minimum order count
+    max_deviation: 0.5  # beforeday  50% or more   warning
 
   - name: referential_integrity
     type: consistency
@@ -46,7 +46,7 @@ rules:
     match_rate: 1.0
 ```
 
-### P1 (중요 — 경고 후 진행)
+### P1 (important — warning after in progress)
 
 ```yaml
 rules:
@@ -60,7 +60,7 @@ rules:
     type: accuracy
     column: total_amount
     min: 0
-    max: 100000000  # 1억 초과 주문은 의심
+    max: 100000000  # 1 exceeding order of
 
   - name: freshness
     type: timeliness
@@ -68,32 +68,32 @@ rules:
     max_age_hours: 24
 ```
 
-## Great Expectations 구현
+## Great Expectations 
 
 ```python
 import great_expectations as gx
 
-# 기대 정의
+#  of
 suite = context.add_expectation_suite("orders_quality")
 
-# 완전성
+# completeness
 suite.add_expectation(
     gx.expectations.ExpectColumnValuesToNotBeNull(column="order_id")
 )
 
-# 유일성
+# day
 suite.add_expectation(
     gx.expectations.ExpectColumnValuesToBeUnique(column="order_id")
 )
 
-# 유효성
+# valid
 suite.add_expectation(
     gx.expectations.ExpectColumnValuesToBeBetween(
         column="total_amount", min_value=0, max_value=100000000
     )
 )
 
-# 볼륨
+# 
 suite.add_expectation(
     gx.expectations.ExpectTableRowCountToBeBetween(
         min_value=1000, max_value=1000000
@@ -101,7 +101,7 @@ suite.add_expectation(
 )
 ```
 
-## dbt Tests 구현
+## dbt Tests 
 
 ```yaml
 # schema.yml
@@ -131,42 +131,42 @@ models:
           interval: 24
 ```
 
-## 데이터 프로파일링 체크리스트
+## data profiling list
 
 ```
-컬럼별 프로파일:
-├── 타입: 실제 타입 vs 선언 타입
-├── 기수성(Cardinality): 고유값 수
-├── NULL 비율: 결측 패턴
-├── 분포: 히스토그램, 왜도, 첨도
-├── 이상치: IQR 기반 아웃라이어
-├── 패턴: 날짜, 이메일, 전화번호 등 정규식 일치율
-└── 의존성: 함수적 종속 관계
+columnper profile:
+├── type: actual type vs  type
+├── count(Cardinality): value count
+├── NULL ratio:  pattern
+├── distribution: the, also, also
+├── or more: IQR  this
+├── pattern: date, thisday, before-ize etc.  day
+└── dependency: function-based  
 
-테이블별 프로파일:
-├── 행 수: 기대 범위 vs 실제
-├── 중복률: 전체 행 중 중복
-├── 참조 무결성: FK 위반 건수
-└── 시간 분포: 레코드 생성 시간 패턴
+tableper profile:
+├──  count:  scope vs actual
+├── : before   
+├──  integrity: FK violated casescount
+└── between distribution: record creation between pattern
 ```
 
-## 이상 탐지 기법
+## or more detection 
 
-| 기법 | 적용 | 공식/방법 |
+|  | -basedfor | / |
 |------|------|----------|
-| Z-Score | 정규분포 데이터 | \|x - μ\| / σ > 3 |
-| IQR | 비정규분포 | x < Q1-1.5*IQR or x > Q3+1.5*IQR |
-| 이동평균 | 시계열 볼륨 | 7일 이동평균 대비 2σ 이탈 |
-| 전일 대비 | 일일 적재 | \|today - yesterday\| / yesterday > 0.5 |
+| Z-Score | distribution data | \|x - μ\| / σ > 3 |
+| IQR | distribution | x < Q1-1.5*IQR or x > Q3+1.5*IQR |
+| thisaverage |   | 7day thisaverage  2σ this |
+| beforeday  | dayday -based | \|today - yesterday\| / yesterday > 0.5 |
 
-## 데이터 계약 (Data Contract)
+## data  (Data Contract)
 
 ```yaml
 # data-contract.yml
 name: orders
 version: "2.0.0"
 owner: order-team
-description: "주문 데이터 계약"
+description: "order data "
 
 schema:
   - name: order_id

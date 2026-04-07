@@ -1,37 +1,37 @@
 # Risk Register Harness
 
-프로젝트 리스크 관리대장: 리스크식별→확률·영향평가→대응전략수립→모니터링계획→상태보고서까지 에이전트 팀이 협업하여 생성하는 하네스.
+project risk managementversus: riskidentification→probability·impactassessment→responsestrategyestablish→monitoringplan→statusreportto A harness where an agent team collaborates to produce deliverables.
 
-## 구조
+## structure
 
 ```
 .claude/
 ├── agents/
-│   ├── risk-identifier.md        — 리스크 식별 (카테고리별 리스크 도출, RBS)
-│   ├── assessment-analyst.md     — 확률·영향 평가 (정량/정성 분석, 리스크 매트릭스)
-│   ├── response-strategist.md    — 대응 전략 수립 (회피/전가/완화/수용)
-│   ├── monitoring-planner.md     — 모니터링 계획 (KRI, 트리거, 주기)
-│   └── report-writer.md          — 상태 보고서 (대시보드, 트렌드, 경영진 보고)
+│ ├── risk-identifier.md — risk identification (categoryby risk derive, RBS)
+│ ├── assessment-analyst.md — probability·impact assessment (/nature analysis, risk matrix)
+│ ├── response-strategist.md — response strategy establish (avoidance/transfer/mitigation/acceptance)
+│ ├── monitoring-planner.md — monitoring plan (KRI, , cycle)
+│ └── report-writer.md — status report (dashboard, trend, management reporting)
 ├── skills/
-│   ├── risk-register/
-│   │   └── skill.md              — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
-│   ├── risk-scoring-matrix/
-│   │   └── skill.md              — 리스크 평가 매트릭스 (assessment-analyst 확장)
-│   └── risk-response-patterns/
-│       └── skill.md              — 리스크 대응 전략 패턴 (response-strategist 확장)
-└── CLAUDE.md                     — 이 파일
+│ ├── risk-register/
+│ │ └── skill.md — Orchestrator (team , workflow, error handling)
+│ ├── risk-scoring-matrix/
+│ │ └── skill.md — risk assessment matrix (assessment-analyst extension)
+│ └── risk-response-patterns/
+│ └── skill.md — risk response strategy pattern (response-strategist extension)
+└── CLAUDE.md — file
 ```
 
-## 사용법
+## usage
 
-`/risk-register` 스킬을 트리거하거나, "프로젝트 리스크 관리대장 만들어줘" 같은 자연어로 요청한다.
+`/risk-register` skill , "project risk managementversus create it" specialistannual request.
 
-## 산출물
+## deliverable
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_risk_identification.md` — 리스크 식별 보고서
-- `02_risk_assessment.md` — 확률·영향 평가 매트릭스
-- `03_response_strategy.md` — 대응 전략 계획서
-- `04_monitoring_plan.md` — 모니터링 계획
-- `05_status_report.md` — 리스크 상태 보고서
+all deliverable `_workspace/` save:
+- `00_input.md` — user input organization
+- `01_risk_identification.md` — risk identification report
+- `02_risk_assessment.md` — probability·impact assessment matrix
+- `03_response_strategy.md` — response strategy planfrom
+- `04_monitoring_plan.md` — monitoring plan
+- `05_status_report.md` — risk status report

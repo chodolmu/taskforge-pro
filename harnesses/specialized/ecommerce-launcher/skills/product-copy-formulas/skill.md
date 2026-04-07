@@ -1,138 +1,138 @@
 ---
 name: product-copy-formulas
-description: "상품 카피 공식 라이브러리. detail-page-writer와 marketing-manager 에이전트가 구매를 유도하는 카피를 작성할 때 참조. '상품 카피', '마케팅 카피', '광고 문구' 요청 시 사용. 단, 광고 집행이나 디자인 시안 제작은 범위 밖."
+description: "Product copy formula library. Referenced by the detail-page-writer and marketing-manager agents when writing purchase-driving copy. Use for 'product copy', 'marketing copy', or 'ad copy' requests. Ad placement and design mockup creation are out of scope."
 ---
 
-# Product Copy Formulas — 상품 카피 공식
+# Product Copy Formulas — Product Copywriting Formulas
 
-detail-page-writer / marketing-manager 에이전트의 카피라이팅 역량 강화.
+Enhances the copywriting capabilities of the detail-page-writer and marketing-manager agents.
 
-## 카피 공식 (Formula)
+## Copy Formulas
 
 ### PAS (Problem-Agitate-Solution)
 
 ```
-P: [고객의 문제/고통 공감]
-A: [문제의 심각성 강조]
-S: [제품이 해결책임을 제시]
+P: [Empathize with the customer's problem/pain]
+A: [Amplify the severity of the problem]
+S: [Present the product as the solution]
 
-예시:
-P: "매일 아침 거울 보며 칙칙한 피부에 한숨 쉬시나요?"
-A: "바쁜 일상 속 관리할 시간도, 에너지도 부족하죠."
-S: "30초 올인원 세럼으로 매일 아침이 달라집니다."
+Example:
+P: "Tired of looking in the mirror every morning and sighing at your dull skin?"
+A: "In your busy life, you never have the time or energy for a proper routine."
+S: "Our 30-second all-in-one serum transforms your mornings."
 ```
 
 ### FAB (Feature-Advantage-Benefit)
 
 ```
-F: [제품 특징/스펙]
-A: [경쟁 대비 장점]
-B: [고객이 얻는 혜택]
+F: [Product feature/spec]
+A: [Advantage over competitors]
+B: [Benefit the customer receives]
 
-예시:
-F: "5000mAh 대용량 배터리"
-A: "경쟁 제품 대비 40% 더 오래 사용"
-B: "하루 종일 충전 걱정 없이 사용하세요"
+Example:
+F: "5000mAh high-capacity battery"
+A: "Lasts 40% longer than competing products"
+B: "Use all day without worrying about charging"
 ```
 
 ### AIDA (Attention-Interest-Desire-Action)
 
 ```
-A: [주의를 끄는 한 줄]
-I: [구체적 혜택으로 흥미]
-D: [사회적 증거/시각화로 욕구]
-A: [명확한 CTA]
+A: [One line that grabs attention]
+I: [Specific benefits to spark interest]
+D: [Social proof/visualization to build desire]
+A: [Clear CTA]
 
-예시:
-A: "10만 명이 선택한 수면 혁명"
-I: "NASA 기술 적용 메모리폼이 당신의 수면 패턴을 분석합니다"
-D: "사용자 89%가 첫날부터 수면 질 개선을 경험했습니다"
-A: "지금 시작하기 → 30일 무료 체험"
+Example:
+A: "The sleep revolution chosen by 100,000 people"
+I: "NASA-technology memory foam analyzes your sleep patterns"
+D: "89% of users experienced improved sleep quality from the first night"
+A: "Get started now -> 30-day free trial"
 ```
 
 ### BAB (Before-After-Bridge)
 
 ```
-Before: [현재 상태/문제]
-After: [이상적 미래]
-Bridge: [제품이 다리 역할]
+Before: [Current state/problem]
+After: [Ideal future]
+Bridge: [Product as the bridge]
 
-예시:
-Before: "주방 정리에 매일 30분씩 허비하고 계시나요?"
-After: "깔끔한 주방에서 요리에만 집중하는 하루를 상상해보세요."
-Bridge: "자동 분류 수납함이 그 변화를 만듭니다."
+Example:
+Before: "Spending 30 minutes every day organizing the kitchen?"
+After: "Imagine a day where you focus only on cooking in a spotless kitchen."
+Bridge: "The auto-sort organizer makes that transformation happen."
 ```
 
-## 상품명 작성 공식
+## Product Name Formulas
 
-### 네이밍 구조
-
-```
-[브랜드] + [핵심 키워드] + [차별점] + [카테고리]
-
-예시:
-"무로 실크터치 수분크림 50ml"
-"에코팜 유기농 카무카무 비타민C 1000mg"
-```
-
-### 검색 최적화 (SEO)
+### Naming Structure
 
 ```
-필수 키워드 포함:
-1. 제품 카테고리 (크림, 세럼, 앰플)
-2. 주요 성분/소재 (히알루론산, 레티놀)
-3. 용량/사이즈 (50ml, XL)
-4. 대상/용도 (건성, 여성, 여름용)
+[Brand] + [Core Keyword] + [Differentiator] + [Category]
 
-글자 수: 25~40자 (플랫폼별 상이)
+Example:
+"MuRo SilkTouch Moisture Cream 50ml"
+"EcoFarm Organic Camu Camu Vitamin C 1000mg"
 ```
 
-## 마케팅 채널별 카피 가이드
+### Search Optimization (SEO)
 
-### 상세페이지 (상품 설명)
+```
+Required keywords to include:
+1. Product category (cream, serum, ampoule)
+2. Key ingredients/materials (hyaluronic acid, retinol)
+3. Size/volume (50ml, XL)
+4. Target/use case (dry skin, women's, summer)
 
-| 위치 | 글자 수 | 핵심 |
-|------|--------|------|
-| 메인 카피 | 15~20자 | 핵심 USP 1개 |
-| 서브 카피 | 30~50자 | 혜택 구체화 |
-| 혜택 블릿 | 항목당 10~15자 | 아이콘 + 짧은 문구 |
-| 리뷰 유도 | 20~30자 | 행동 촉구 |
+Character count: 25-40 characters (varies by platform)
+```
 
-### 광고 카피 (SNS)
+## Channel-Specific Copy Guide
 
-| 플랫폼 | 헤드라인 | 본문 | CTA |
-|--------|---------|------|-----|
-| 네이버 쇼핑 | 25자 | 45자 | 15자 |
-| 인스타그램 | 한 줄 | 150자 | 해시태그 |
-| 카카오 | 20자 | 30자 | 버튼 |
+### Detail Page (Product Description)
 
-### 카피 톤 매트릭스
+| Placement | Character Count | Focus |
+|-----------|----------------|-------|
+| Main Copy | 15-20 chars | Single core USP |
+| Sub Copy | 30-50 chars | Benefit specification |
+| Benefit Bullets | 10-15 chars each | Icon + short phrase |
+| Review Prompt | 20-30 chars | Call to action |
 
-| 브랜드 포지션 | 톤 | 예시 |
-|-------------|-----|------|
-| 프리미엄 | 품격, 절제 | "피부가 기억하는 진정한 케어" |
-| 가성비 | 실용, 직설 | "이 가격에 이 성능, 실화입니다" |
-| 트렌디 | 위트, 공감 | "SNS에서 난리난 그 제품, 드디어!" |
-| 전문가 | 신뢰, 근거 | "피부과 전문의 92%가 추천" |
-| 친근함 | 대화체, 이모지 | "진짜 써보면 알아요, 믿어보세요" |
+### Ad Copy (Social Media)
 
-## 금지 표현 (공정거래법)
+| Platform | Headline | Body | CTA |
+|----------|---------|------|-----|
+| Naver Shopping | 25 chars | 45 chars | 15 chars |
+| Instagram | One line | 150 chars | Hashtags |
+| Kakao | 20 chars | 30 chars | Button |
 
-| 금지 | 대체 |
-|------|------|
-| "최고", "최초", "유일" | "국내 대표", "선도적" |
-| "100% 효과" | "사용자 N%가 경험" |
-| "즉시 효과" | "꾸준히 사용 시" |
-| "치료", "치유" | "개선", "케어" |
-| 근거 없는 비교 | 공인 데이터 기반 |
+### Copy Tone Matrix
 
-## 품질 체크리스트
+| Brand Position | Tone | Example |
+|---------------|------|---------|
+| Premium | Refined, restrained | "The care your skin truly remembers" |
+| Value | Practical, direct | "This performance at this price — unbelievable" |
+| Trendy | Witty, relatable | "That product everyone on social media is raving about — finally here!" |
+| Expert | Trustworthy, evidence-based | "Recommended by 92% of dermatologists" |
+| Friendly | Conversational, warm | "Try it once and you'll see — trust us" |
 
-| 항목 | 기준 |
-|------|------|
-| 카피 공식 | PAS/FAB/AIDA 중 1개 |
-| 혜택 중심 | 기능보다 혜택 강조 |
-| 사회적 증거 | 수치 포함 |
-| CTA | 명확한 행동 유도 |
-| 법적 준수 | 금지 표현 없음 |
-| 톤 일관성 | 브랜드 포지션에 맞는 톤 |
+## Prohibited Expressions (Fair Trade Compliance)
+
+| Prohibited | Alternative |
+|-----------|------------|
+| "Best", "First", "Only" | "Leading", "Pioneer" |
+| "100% effective" | "N% of users experienced" |
+| "Instant results" | "With consistent use" |
+| "Treat", "Cure" | "Improve", "Care for" |
+| Unsubstantiated comparisons | Based on certified data |
+
+## Quality Checklist
+
+| Item | Criteria |
+|------|----------|
+| Copy Formula | At least 1 of PAS/FAB/AIDA applied |
+| Benefit Focus | Benefits emphasized over features |
+| Social Proof | Includes numerical evidence |
+| CTA | Clear call to action |
+| Legal Compliance | No prohibited expressions |
+| Tone Consistency | Matches brand positioning |

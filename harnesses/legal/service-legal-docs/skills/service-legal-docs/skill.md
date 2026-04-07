@@ -1,128 +1,128 @@
 ---
 name: service-legal-docs
-description: "서비스 법무문서 세트 생성 풀 파이프라인. 이용약관→개인정보처리방침→쿠키정책→환불정책→저작권고지를 에이전트 팀이 협업하여 한 번에 생성한다. '서비스 약관 만들어줘', '이용약관 작성', '개인정보처리방침', '법무문서 세트', '서비스 런칭 법률 문서', '약관 세트', '환불정책 작성', '쿠키정책', '저작권고지', '법적 문서 패키지' 등 서비스 법무문서 작성 전반에 이 스킬을 사용한다. 단, 실제 법률 자문(변호사 검토), 약관 심사(공정위), 법적 분쟁 대응, 법무 문서 공증은 이 스킬의 범위가 아니다."
+description: "Full pipeline for generating a service legal document set. An agent team collaborates to generate Terms of Service → Privacy Policy → Cookie Policy → Refund Policy → Copyright Notice all at once. Use this skill for any service legal document creation including: 'create service terms', 'write terms of service', 'privacy policy', 'legal document set', 'service launch legal documents', 'terms package', 'write refund policy', 'cookie policy', 'copyright notice', 'legal document package', etc. Note: actual legal counsel (attorney review), terms review (fair trade commission), legal dispute response, and notarization of legal documents are outside the scope of this skill."
 ---
 
-# Service Legal Docs — 서비스 법무문서 세트 생성 파이프라인
+# Service Legal Docs — Service Legal Document Set Generation Pipeline
 
-서비스 런칭에 필요한 이용약관, 개인정보처리방침, 쿠키정책, 환불정책, 저작권고지를 일체 생성한다.
+Generates all legal documents required for service launch: Terms of Service, Privacy Policy, Cookie Policy, Refund Policy, and Copyright Notice.
 
-## 실행 모드
+## Execution Modes
 
-**에이전트 팀** — 4명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 4 members communicate directly via SendMessage and perform cross-validation.
 
-## 에이전트 구성
+## Agent Configuration
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| Agent | File | Role | Type |
 |---------|------|------|------|
-| tos-specialist | `.claude/agents/tos-specialist.md` | 이용약관, 불공정약관 방지 | general-purpose |
-| privacy-specialist | `.claude/agents/privacy-specialist.md` | 처리방침, 쿠키정책, 동의체계 | general-purpose |
-| consumer-analyst | `.claude/agents/consumer-analyst.md` | 환불정책, 저작권고지 | general-purpose |
-| consistency-reviewer | `.claude/agents/consistency-reviewer.md` | 문서 간 정합성, 최종 QA | general-purpose |
+| tos-specialist | `.claude/agents/tos-specialist.md` | Terms of Service, unfair terms prevention | general-purpose |
+| privacy-specialist | `.claude/agents/privacy-specialist.md` | Privacy policy, cookie policy, consent framework | general-purpose |
+| consumer-analyst | `.claude/agents/consumer-analyst.md` | Refund policy, copyright notice | general-purpose |
+| consistency-reviewer | `.claude/agents/consistency-reviewer.md` | Cross-document consistency, final QA | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Orchestrator performs directly)
 
-1. 사용자 입력에서 추출한다:
-    - **서비스명**: 회사/서비스 이름
-    - **서비스 유형**: SaaS, 이커머스, 콘텐츠 플랫폼, 커뮤니티 등
-    - **서비스 지역**: 국내, 글로벌(EU 포함 여부)
-    - **결제 유무**: 유료/무료/부분유료(인앱결제, 구독)
-    - **개인정보 수집 항목** (선택): 수집하는 데이터 목록
-    - **기존 자료** (선택): 현행 약관, 처리방침 등
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Service Name**: Company/service name
+    - **Service Type**: SaaS, e-commerce, content platform, community, etc.
+    - **Service Region**: Domestic, global (including EU or not)
+    - **Payment**: Paid/free/freemium (in-app purchases, subscriptions)
+    - **Personal Data Collected** (optional): List of data collected
+    - **Existing Materials** (optional): Current terms, privacy policy, etc.
+2. Create `_workspace/` directory in the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. **Determine execution mode** based on request scope
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Formation and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| Order | Task | Owner | Depends On | Output |
 |------|------|------|------|--------|
-| 1a | 이용약관 | tos-specialist | 없음 | `_workspace/01_terms_of_service.md` |
-| 1b | 처리방침 + 쿠키정책 | privacy-specialist | 없음 | `_workspace/02_privacy_policy.md`, `_workspace/03_cookie_policy.md` |
-| 1c | 환불정책 + 저작권고지 | consumer-analyst | 없음 | `_workspace/04_refund_policy.md`, `_workspace/05_copyright_notice.md` |
-| 2 | 정합성 검증 | consistency-reviewer | 작업 1a, 1b, 1c | `_workspace/06_review_report.md` |
+| 1a | Terms of Service | tos-specialist | None | `_workspace/01_terms_of_service.md` |
+| 1b | Privacy Policy + Cookie Policy | privacy-specialist | None | `_workspace/02_privacy_policy.md`, `_workspace/03_cookie_policy.md` |
+| 1c | Refund Policy + Copyright Notice | consumer-analyst | None | `_workspace/04_refund_policy.md`, `_workspace/05_copyright_notice.md` |
+| 2 | Consistency Review | consistency-reviewer | Tasks 1a, 1b, 1c | `_workspace/06_review_report.md` |
 
-작업 1a, 1b, 1c는 **병렬 실행**한다. 세 에이전트 모두 독립적으로 작업 가능하다. 단, 문서 간 연계를 위해 작업 중 상호 소통한다.
+Tasks 1a, 1b, and 1c are executed **in parallel**. All three agents can work independently. However, agents communicate with each other during work to ensure cross-document alignment.
 
-**팀원 간 소통 흐름:**
-- tos-specialist ↔ privacy-specialist: 개인정보 관련 약관 조항 조율
-- tos-specialist ↔ consumer-analyst: 환불·취소·저작권 관련 약관 조항 조율
-- privacy-specialist ↔ consumer-analyst: 결제·환불 시 개인정보 처리 조율
-- consistency-reviewer는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에 수정 요청 (최대 2회)
+**Inter-team Communication Flow:**
+- tos-specialist ↔ privacy-specialist: Coordinate privacy-related terms clauses
+- tos-specialist ↔ consumer-analyst: Coordinate refund, cancellation, and copyright clauses
+- privacy-specialist ↔ consumer-analyst: Coordinate personal data processing during payment and refund
+- consistency-reviewer cross-validates all outputs. If 🔴 critical issues are found, revision requests are sent to the relevant agent (maximum 2 times)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Output
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 검증 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 이용약관 — `01_terms_of_service.md`
-    - 개인정보처리방침 — `02_privacy_policy.md`
-    - 쿠키 정책 — `03_cookie_policy.md`
-    - 환불 정책 — `04_refund_policy.md`
-    - 저작권 고지 — `05_copyright_notice.md`
-    - 검증 보고서 — `06_review_report.md`
+1. Verify all files in `_workspace/`
+2. Confirm all 🔴 critical issues from the review report have been addressed
+3. Report final summary to the user:
+    - Terms of Service — `01_terms_of_service.md`
+    - Privacy Policy — `02_privacy_policy.md`
+    - Cookie Policy — `03_cookie_policy.md`
+    - Refund Policy — `04_refund_policy.md`
+    - Copyright Notice — `05_copyright_notice.md`
+    - Review Report — `06_review_report.md`
 
-## 작업 규모별 모드
+## Mode by Request Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| User Request Pattern | Execution Mode | Agents Involved |
 |----------------|----------|-------------|
-| "서비스 법무문서 전체", "약관 세트 만들어줘" | **풀 파이프라인** | 4명 전원 |
-| "이용약관만 작성해줘" | **약관 모드** | tos-specialist + reviewer |
-| "개인정보처리방침만 써줘" | **처리방침 모드** | privacy-specialist + reviewer |
-| "환불정책만 만들어줘" | **환불정책 모드** | consumer-analyst + reviewer |
-| "기존 약관 검토해줘" | **검증 모드** | consistency-reviewer 단독 |
+| "Full legal document set", "Create terms package" | **Full Pipeline** | All 4 agents |
+| "Write terms of service only" | **Terms Mode** | tos-specialist + reviewer |
+| "Write privacy policy only" | **Privacy Policy Mode** | privacy-specialist + reviewer |
+| "Create refund policy only" | **Refund Policy Mode** | consumer-analyst + reviewer |
+| "Review existing terms" | **Review Mode** | consistency-reviewer only |
 
-**기존 파일 활용**: 사용자가 기존 약관, 처리방침 등을 제공하면, 해당 파일을 `_workspace/`의 적절한 번호 위치에 복사하고 해당 에이전트는 건너뛴다.
+**Using Existing Files**: If the user provides existing terms, privacy policy, etc., copy the relevant files to the appropriate numbered location in `_workspace/` and skip the corresponding agent.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
+| Strategy | Method | Purpose |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 조항 조율, 수정 요청 |
+| File-based | `_workspace/` directory | Store and share primary outputs |
+| Message-based | SendMessage | Real-time clause coordination, revision requests |
 
-파일명 컨벤션: `{순번}_{문서유형}.{확장자}`
+Filename convention: `{sequence}_{document_type}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
+| Error Type | Strategy |
 |----------|------|
-| 서비스 정보 부족 | 일반 온라인 서비스 기준으로 작성, "서비스 맞춤화 필요" 명시 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 문서 없이 진행, 검증 보고서에 누락 명시 |
-| 검증에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
-| 문서 간 모순 발견 | consistency-reviewer가 조율 방향 제시, 관련 에이전트 동시 수정 요청 |
-| 법률 개정 미확인 | "최신 법률 확인 필요" 명시, 법률 자문 권고 |
+| Insufficient service information | Draft based on general online service standards, note "service customization required" |
+| Agent failure | 1 retry → if still failing, proceed without that document and note the omission in the review report |
+| 🔴 issues found in review | Send revision request to relevant agent → rework → re-review (maximum 2 times) |
+| Cross-document contradictions found | consistency-reviewer proposes resolution direction, simultaneously requests revision from related agents |
+| Unverified legal amendments | Note "latest law verification required", recommend legal counsel |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "SaaS 서비스 런칭 준비 중인데, 법무문서 세트를 전부 만들어줘. 서비스명은 TaskFlow, 월간 구독 모델이고, 회원가입 시 이메일/이름/전화번호를 수집해."
-**기대 결과**:
-- 이용약관: SaaS 맞춤 조항(구독, 서비스 수준, 데이터 소유권 등)
-- 처리방침: 이메일/이름/전화번호 수집 항목 반영
-- 쿠키정책: 웹 서비스 기준 쿠키 유형 분류
-- 환불정책: 구독 모델 맞춤 청약 철회 기준
-- 저작권고지: SaaS 콘텐츠 저작권 규정
-- 검증: 6개 문서 간 정합성 전항목 확인
+### Normal Flow
+**Prompt**: "I'm preparing to launch a SaaS service and need the full legal document set. The service is called TaskFlow, it's a monthly subscription model, and we collect email, name, and phone number at signup."
+**Expected Result**:
+- Terms of Service: SaaS-specific clauses (subscription, service level, data ownership, etc.)
+- Privacy Policy: Reflects email/name/phone number collection items
+- Cookie Policy: Cookie type classification based on web service standards
+- Refund Policy: Subscription model-specific withdrawal criteria
+- Copyright Notice: SaaS content copyright provisions
+- Review: Cross-document consistency verified across all 6 documents
 
-### 부분 흐름
-**프롬프트**: "이용약관은 이미 있어, 개인정보처리방침만 작성해줘"
-**기대 결과**:
-- 처리방침 모드로 전환 (privacy-specialist + reviewer)
-- 기존 약관과의 정합성 확인을 위해 약관 내용 참조
+### Partial Flow
+**Prompt**: "I already have the terms of service, just write the privacy policy"
+**Expected Result**:
+- Switches to Privacy Policy Mode (privacy-specialist + reviewer)
+- References existing terms for consistency verification
 
-### 에러 흐름
-**프롬프트**: "서비스 약관 만들어줘, 앱인데 자세한 건 나중에 알려줄게"
-**기대 결과**:
-- 풀 파이프라인 실행, 일반 모바일 앱 기준으로 작성
-- 모든 문서에 "[확인 필요]" 마커로 서비스 맞춤화 필요 항목 표시
-- 검증 보고서에 "서비스 상세 확인 후 문서 업데이트 필요" 포함
+### Error Flow
+**Prompt**: "Create service terms, it's an app but I'll give you the details later"
+**Expected Result**:
+- Full pipeline executes based on general mobile app standards
+- All documents include "[Verification Required]" markers for items requiring service customization
+- Review report includes "Document update required after confirming service details"
 
-## 에이전트별 확장 스킬
+## Agent Extended Skills
 
-| 에이전트 | 확장 스킬 | 용도 |
+| Agent | Extended Skill | Purpose |
 |---------|----------|------|
-| tos-specialist, consistency-reviewer | `unfair-terms-detector` | 불공정약관 감지, 약관법 위반 점검 |
-| consistency-reviewer, 전체 에이전트 | `cross-document-linker` | 문서 간 교차 참조, 정합성 관리 |
+| tos-specialist, consistency-reviewer | `unfair-terms-detector` | Detect unfair terms, check for terms law violations |
+| consistency-reviewer, all agents | `cross-document-linker` | Cross-document referencing, consistency management |

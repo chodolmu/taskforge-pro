@@ -1,38 +1,38 @@
 # Grant Writer Harness
 
-보조금 및 지원사업 신청을 위한 공고 분석, 사업계획 작성, 예산 편성, 제출 검증까지 에이전트 팀이 협업하는 하네스.
+A harness where an agent team collaborates on grant and funding applications: announcement analysis, business plan writing, budget design, and submission verification.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── announcement-analyst.md   — 공고 분석 (자격 요건, 평가 기준, 핵심 키워드 추출)
-│   ├── plan-writer.md            — 사업계획서 작성 (사업 개요, 추진 전략, 기대 효과)
-│   ├── budget-designer.md        — 예산 편성 (비목별 산정, 대응 자금, 집행 계획)
-│   ├── submission-verifier.md    — 제출 검증 (서류 완비, 자격 체크, 오류 검출)
-│   └── compliance-checker.md     — 규정 준수 검증 (공고 요건 매칭, 배점 최적화)
+│   ├── announcement-analyst.md  — Announcement Analyst (requirements, evaluation criteria, eligibility)
+│   ├── plan-writer.md           — Plan Writer (objectives, methodology, expected outcomes)
+│   ├── budget-designer.md       — Budget Designer (line items, eligible costs, matching funds)
+│   ├── compliance-checker.md    — Compliance Checker (qualification requirements, restrictions)
+│   └── submission-verifier.md   — Submission Verifier (document completeness, gap checking)
 ├── skills/
 │   ├── grant-writer/
-│   │   └── skill.md              — 오케스트레이터 (팀 조율, 워크플로우, 에러 핸들링)
-│   ├── scoring-optimizer/
-│   │   └── skill.md              — 배점 최적화 (평가 기준 해부, 탈락 방지, 가점 전략)
-│   └── budget-rule-engine/
-│       └── skill.md              — 예산 규정 엔진 (비목별 상한, 인건비 단가, 정산 가이드)
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md             — Orchestrator (team coordination, workflow, error handling)
+│   ├── budget-rule-engine/
+│   │   └── skill.md             — Budget Rule Engine (eligible costs, ratio limits)
+│   └── scoring-optimizer/
+│       └── skill.md             — Scoring Optimizer (point analysis, keywords)
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/grant-writer` 스킬을 트리거하거나, "보조금 신청서 작성해줘" 같은 자연어로 요청한다.
+Trigger the `/grant-writer` skill, or make a natural language request such as "Prepare a grant application."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_announcement_analysis.md` — 공고 분석서
-- `02_business_plan.md` — 사업계획서
-- `03_budget_plan.md` — 예산 편성서
-- `04_compliance_report.md` — 규정 준수 보고서
-- `05_submission_checklist.md` — 제출 체크리스트
-- `06_review_report.md` — 리뷰 보고서
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_announcement_analysis.md` — Announcement analysis
+- `02_business_plan.md` — Business plan
+- `03_budget.md` — Budget plan
+- `04_compliance_review.md` — Compliance review
+- `05_submission_checklist.md` — Submission checklist
+- `06_review_report.md` — Review report

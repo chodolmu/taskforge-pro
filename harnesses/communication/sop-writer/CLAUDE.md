@@ -1,37 +1,37 @@
 # SOP Writer Harness
 
-표준운영절차(SOP)의 프로세스분석→절차서→체크리스트→교육자료→버전관리를 에이전트 팀이 협업하여 생성하는 하네스.
+standard operating procedure(SOP) processanalysis→procedure document→checklist→training materials→versionmanagement A harness where an agent team collaborates to produce deliverables.
 
-## 구조
+## structure
 
 ```
 .claude/
 ├── agents/
-│   ├── process-analyst.md      — 프로세스 분석 (현행 업무 흐름 분석, 병목 식별)
-│   ├── procedure-writer.md     — 절차서 작성 (단계별 절차, 의사결정 분기)
-│   ├── checklist-designer.md   — 체크리스트 설계 (실행 점검표, 품질 게이트)
-│   ├── training-developer.md   — 교육자료 제작 (학습 가이드, 평가 문항)
-│   └── version-controller.md   — 버전 관리 및 교차 검증 (변경 이력, 정합성 확인)
+│ ├── process-analyst.md — process analysis (current work flow analysis, identification)
+│ ├── procedure-writer.md — procedure document writing (stageby procedure, decision-making minutebasis)
+│ ├── checklist-designer.md — checklist design (execution inspectiontable, quality )
+│ ├── training-developer.md — training materials work (learning guide, assessment document)
+│ └── version-controller.md — version management and cross-verification (change capability, consistency confirm)
 ├── skills/
-│   ├── sop-writer/
-│   │   └── skill.md           — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
-│   ├── process-mapping/
-│   │   └── skill.md           — 프로세스 매핑 방법론 (process-analyst 확장)
-│   └── checklist-design/
-│       └── skill.md           — 체크리스트 설계 원칙 (checklist-designer 확장)
-└── CLAUDE.md                  — 이 파일
+│ ├── sop-writer/
+│ │ └── skill.md — Orchestrator (team , workflow, error handling)
+│ ├── process-mapping/
+│ │ └── skill.md — process mapping method (process-analyst extension)
+│ └── checklist-design/
+│ └── skill.md — checklist design principle (checklist-designer extension)
+└── CLAUDE.md — file
 ```
 
-## 사용법
+## usage
 
-`/sop-writer` 스킬을 트리거하거나, "SOP 만들어줘" 같은 자연어로 요청한다.
+`/sop-writer` skill , "SOP create it" specialistannual request.
 
-## 산출물
+## deliverable
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_process_analysis.md` — 프로세스 분석 결과
-- `02_procedure_document.md` — 표준 절차서
-- `03_checklists.md` — 체크리스트 세트
-- `04_training_materials.md` — 교육자료
-- `05_version_control.md` — 버전 관리 및 검증 보고서
+all deliverable `_workspace/` save:
+- `00_input.md` — user input organization
+- `01_process_analysis.md` — process analysis result
+- `02_procedure_document.md` — tablelevel procedure document
+- `03_checklists.md` — checklist tax
+- `04_training_materials.md` — training materials
+- `05_version_control.md` — version management and verify report

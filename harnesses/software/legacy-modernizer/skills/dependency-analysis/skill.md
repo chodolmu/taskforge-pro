@@ -1,42 +1,42 @@
 ---
 name: dependency-analysis
-description: "코드베이스의 의존성 그래프를 분석하고 결합도/응집도를 정량적으로 측정하는 도구와 방법론. '의존성 분석', '결합도 측정', '순환 의존성', '모듈 결합도', '응집도 분석', '의존성 그래프', '커플링 분석' 등 코드 의존성 관련 분석에 이 스킬을 사용한다. legacy-analyzer와 refactoring-strategist의 의존성 분석 역량을 강화한다. 단, 전체 파이프라인 오케스트레이션은 이 스킬의 범위가 아니다."
+description: "Tools and methodologies for analyzing codebase dependency graphs and quantitatively measuring coupling/cohesion. Use this skill for 'dependency analysis', 'coupling measurement', 'circular dependencies', 'module coupling', 'cohesion analysis', 'dependency graph', 'coupling analysis', and other code dependency-related analysis. Enhances the dependency analysis capabilities of legacy-analyzer and refactoring-strategist. Note: full pipeline orchestration is outside the scope of this skill."
 ---
 
-# Dependency Analysis — 의존성 그래프 분석 도구
+# Dependency Analysis — Dependency Graph Analysis Tool
 
-코드 의존성의 정량적 측정과 시각화를 위한 방법론 및 도구 가이드.
+Methodologies and tool guide for quantitative measurement and visualization of code dependencies.
 
-## 의존성 메트릭 체계
+## Dependency Metric System
 
-### 1. 결합도 메트릭 (Coupling Metrics)
+### 1. Coupling Metrics
 
-| 메트릭 | 공식 | 해석 | 위험 임계값 |
-|--------|------|------|-----------|
-| **Ca (Afferent Coupling)** | 나를 의존하는 패키지 수 | 높으면 변경 파급 큼 | > 20 |
-| **Ce (Efferent Coupling)** | 내가 의존하는 패키지 수 | 높으면 불안정 | > 20 |
-| **I (Instability)** | Ce / (Ca + Ce) | 0=안정, 1=불안정 | 중간 지대(0.3~0.7) 경고 |
-| **D (Distance)** | \|A + I - 1\| | 주계열에서의 거리 | > 0.3 |
+| Metric | Formula | Interpretation | Risk Threshold |
+|--------|---------|----------------|---------------|
+| **Ca (Afferent Coupling)** | Number of packages depending on me | High = large change ripple effect | > 20 |
+| **Ce (Efferent Coupling)** | Number of packages I depend on | High = unstable | > 20 |
+| **I (Instability)** | Ce / (Ca + Ce) | 0=stable, 1=unstable | Warning in middle zone (0.3-0.7) |
+| **D (Distance)** | \|A + I - 1\| | Distance from the main sequence | > 0.3 |
 
-**안정 의존성 원칙 (SDP) 검증:**
+**Stable Dependencies Principle (SDP) Verification:**
 ```
-의존 방향: 불안정 → 안정 (올바름)
-위반: 안정 → 불안정 (위험 — 의존성 역전 필요)
+Dependency direction: Unstable -> Stable (correct)
+Violation: Stable -> Unstable (risky — dependency inversion needed)
 ```
 
-### 2. 응집도 메트릭
+### 2. Cohesion Metrics
 
-| 메트릭 | 측정 대상 | 양호 기준 |
-|--------|----------|----------|
-| **LCOM4** | 클래스 내 연결 컴포넌트 수 | = 1 |
-| **TCC** (Tight Class Cohesion) | 직접 연결 메서드 비율 | > 0.5 |
-| **H** (Henderson-Sellers) | 패키지 내부 관계 비율 | > 0.7 |
+| Metric | Measurement Target | Acceptable Threshold |
+|--------|-------------------|---------------------|
+| **LCOM4** | Number of connected components within a class | = 1 |
+| **TCC** (Tight Class Cohesion) | Ratio of directly connected methods | > 0.5 |
+| **H** (Henderson-Sellers) | Ratio of intra-package relationships | > 0.7 |
 
-### 3. 순환 의존성 탐지 — Tarjan SCC 알고리즘
+### 3. Circular Dependency Detection — Tarjan SCC Algorithm
 
 ```python
 def find_cycles(graph):
-    """Tarjan SCC로 순환 의존성 그룹 탐지"""
+    """Detect circular dependency groups using Tarjan SCC"""
     index_counter, stack, result = [0], [], []
     lowlink, index, on_stack = {}, {}, {}
 
@@ -65,22 +65,22 @@ def find_cycles(graph):
     return result
 ```
 
-### 4. 순환 해소 패턴
+### 4. Cycle Resolution Patterns
 
-| 패턴 | 적용 상황 | 방법 |
-|------|----------|------|
-| **의존성 역전 (DIP)** | A↔B 양방향 | 인터페이스 추출, 방향 통일 |
-| **이벤트 기반 분리** | A→B→A 콜백 | 이벤트 버스로 간접 통신 |
-| **중재자 패턴** | A↔B↔C 복잡 순환 | Mediator 중앙 조율 |
-| **공통 모듈 추출** | A↔B 공유 로직 | 공통부를 C로 추출 |
+| Pattern | Applicable Situation | Method |
+|---------|---------------------|--------|
+| **Dependency Inversion (DIP)** | A<->B bidirectional | Extract interface, unify direction |
+| **Event-based Decoupling** | A->B->A callback | Indirect communication via event bus |
+| **Mediator Pattern** | A<->B<->C complex cycle | Central coordination via Mediator |
+| **Common Module Extraction** | A<->B shared logic | Extract shared parts into module C |
 
-## 언어별 도구
+## Language-specific Tools
 
 ### JavaScript/TypeScript
 ```bash
-npx madge --image graph.svg src/        # 의존성 그래프
-npx madge --circular src/               # 순환 탐지
-npx depcheck                            # 미사용 의존성
+npx madge --image graph.svg src/        # Dependency graph
+npx madge --circular src/               # Circular detection
+npx depcheck                            # Unused dependencies
 ```
 
 ### Python
@@ -92,51 +92,51 @@ pydeps src/mypackage --max-bacon=2
 ### Java/Kotlin
 ```bash
 ./gradlew dependencies --configuration runtimeClasspath
-# ArchUnit으로 아키텍처 규칙 테스트
+# Architecture rule testing with ArchUnit
 ```
 
-## 변경 영향도 분석 (CIA)
+## Change Impact Analysis (CIA)
 
 ```
-변경 파일: UserService.java
-├── 직접 영향 (깊이 1): UserController, OrderService, AuthService
-├── 간접 영향 (깊이 2): OrderController, PaymentService
-└── 테스트 영향: UserServiceTest, OrderIntegrationTest
-→ 추정 파급 범위: 파일 8개, 테스트 3개
+Changed file: UserService.java
++-- Direct impact (depth 1): UserController, OrderService, AuthService
++-- Indirect impact (depth 2): OrderController, PaymentService
++-- Test impact: UserServiceTest, OrderIntegrationTest
+-> Estimated ripple scope: 8 files, 3 tests
 ```
 
-## 아키텍처 피트니스 함수
+## Architecture Fitness Functions
 
 ```python
 DEPENDENCY_RULES = {
-    "domain → infrastructure 금지": {
+    "domain -> infrastructure prohibited": {
         "from": "domain/**", "to_not": "infrastructure/**", "severity": "ERROR"
     },
-    "controller → repository 직접 접근 금지": {
+    "controller -> repository direct access prohibited": {
         "from": "controller/**", "to_not": "repository/**", "severity": "ERROR"
     },
 }
 ```
 
-## 보고서 템플릿
+## Report Template
 
 ```markdown
-# 의존성 분석 보고서
+# Dependency Analysis Report
 
-## 요약
-- 총 모듈 수: N개 | 평균 결합도(Ce): X.X | 순환 그룹: N개
+## Summary
+- Total modules: N | Average coupling (Ce): X.X | Circular groups: N
 
-## 모듈별 메트릭
-| 모듈 | Ca | Ce | I | A | D | LCOM4 | 등급 |
+## Per-module Metrics
+| Module | Ca | Ce | I | A | D | LCOM4 | Grade |
 
-## 순환 의존성
-- 그룹 1: [A, B, C] — 해소 전략: DIP
+## Circular Dependencies
+- Group 1: [A, B, C] — Resolution strategy: DIP
 
-## 핫스팟 (높은 Ca + 높은 Ce)
-- ModuleX: Ca=25, Ce=18 — 변경 파급 범위 과다
+## Hotspots (High Ca + High Ce)
+- ModuleX: Ca=25, Ce=18 — Excessive change ripple scope
 
-## 권고사항
-1. [긴급] 순환 의존성 해소
-2. [중요] 핫스팟 모듈 분리
-3. [개선] 의존성 규칙 CI 자동화
+## Recommendations
+1. [Urgent] Resolve circular dependencies
+2. [Important] Separate hotspot modules
+3. [Improvement] Automate dependency rules in CI
 ```

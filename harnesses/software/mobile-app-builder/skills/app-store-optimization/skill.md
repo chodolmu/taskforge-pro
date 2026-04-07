@@ -1,144 +1,144 @@
 ---
 name: app-store-optimization
-description: "앱 스토어 최적화(ASO) 가이드. App Store/Google Play 메타데이터 최적화, 키워드 전략, 스크린샷 가이드라인, 심사 거절 대응, 카테고리 선택을 제공하는 store-manager 확장 스킬. 'ASO', '앱 스토어 최적화', '키워드 전략', '스크린샷 가이드', '심사 대응', '앱 설명 작성' 등 스토어 배포 최적화 시 사용한다. 단, 실제 스토어 제출이나 광고 운영은 이 스킬의 범위가 아니다."
+description: "App Store Optimization (ASO) guide. Provides App Store/Google Play metadata optimization, keyword strategy, screenshot guidelines, review rejection response, and category selection as a store-manager extension skill. Use for requests like 'ASO', 'app store optimization', 'keyword strategy', 'screenshot guide', 'review response', 'app description writing', and other store deployment optimization tasks. However, actual store submission or ad management is outside this skill's scope."
 ---
 
-# App Store Optimization — ASO 가이드
+# App Store Optimization — ASO Guide
 
-store-manager 에이전트가 앱 스토어 배포 시 활용하는 메타데이터 최적화, 키워드 전략, 심사 가이드 레퍼런스.
+A reference for metadata optimization, keyword strategy, and review guidelines that the store-manager agent uses during app store deployment.
 
-## 대상 에이전트
+## Target Agent
 
-`store-manager` — 이 스킬의 ASO 전략과 가이드라인을 스토어 배포 준비에 직접 적용한다.
+`store-manager` — Applies this skill's ASO strategies and guidelines directly to store deployment preparation.
 
-## 메타데이터 최적화 매트릭스
+## Metadata Optimization Matrix
 
 ### App Store (iOS) vs Google Play
 
-| 필드 | App Store | Google Play | ASO 영향 |
-|------|----------|-------------|---------|
-| **앱 이름** | 30자 | 30자 | 최상 |
-| **부제목** | 30자 | 없음 | 높음 (iOS) |
-| **키워드** | 100자 (숨겨진 필드) | 없음 (설명에서 추출) | 높음 |
-| **짧은 설명** | 없음 | 80자 | 높음 (Android) |
-| **긴 설명** | 4,000자 | 4,000자 | 중간 (Android 높음) |
-| **스크린샷** | 최대 10장 | 최대 8장 | 높음 |
-| **프리뷰 영상** | 30초, 3개까지 | 30초~2분, 1개 | 중간 |
-| **카테고리** | 1차+2차 | 1개 | 중간 |
+| Field | App Store | Google Play | ASO Impact |
+|-------|----------|-------------|-----------|
+| **App Name** | 30 chars | 30 chars | Highest |
+| **Subtitle** | 30 chars | N/A | High (iOS) |
+| **Keywords** | 100 chars (hidden field) | N/A (extracted from description) | High |
+| **Short Description** | N/A | 80 chars | High (Android) |
+| **Long Description** | 4,000 chars | 4,000 chars | Medium (High for Android) |
+| **Screenshots** | Up to 10 | Up to 8 | High |
+| **Preview Video** | 30 sec, up to 3 | 30 sec-2 min, 1 | Medium |
+| **Category** | Primary + Secondary | 1 | Medium |
 
-## 키워드 전략
+## Keyword Strategy
 
-### 키워드 선정 프로세스
-1. **시드 키워드**: 앱 핵심 기능에서 추출 (5~10개)
-2. **확장 키워드**: 동의어, 관련어, 롱테일 (20~30개)
-3. **경쟁 분석**: 경쟁 앱의 키워드 확인
-4. **필터링**: 검색량 + 난이도 + 관련성으로 우선순위
-5. **배치**: 제목 > 부제 > 키워드 필드 > 설명 순으로 중요도
+### Keyword Selection Process
+1. **Seed Keywords**: Extract from app core features (5-10)
+2. **Expanded Keywords**: Synonyms, related terms, long-tail (20-30)
+3. **Competitive Analysis**: Check competitor app keywords
+4. **Filtering**: Prioritize by search volume + difficulty + relevance
+5. **Placement**: Priority order: title > subtitle > keyword field > description
 
-### iOS 키워드 필드 최적화 (100자)
-- 쉼표로 구분, 공백 없음
-- 앱 이름/부제에 이미 있는 단어 중복 금지 (낭비)
-- 단수형만 (복수형 자동 매칭)
-- 관사, 전치사 제외
-- 예시: `할일,투두,일정,체크리스트,메모,계획,생산성,습관,루틴,알림`
+### iOS Keyword Field Optimization (100 chars)
+- Separate with commas, no spaces
+- Do not duplicate words already in app name/subtitle (waste)
+- Singular form only (plural auto-matched)
+- Exclude articles and prepositions
+- Example: `todo,task,schedule,checklist,memo,plan,productivity,habit,routine,reminder`
 
-### Google Play 설명 최적화
-- 처음 5줄이 핵심 (접힘 전)
-- 키워드 자연스럽게 3~5회 반복
-- 불릿 포인트로 기능 나열
-- CTA 포함 ("지금 다운로드")
+### Google Play Description Optimization
+- First 5 lines are key (before fold)
+- Naturally repeat keywords 3-5 times
+- List features with bullet points
+- Include CTA ("Download now")
 
-## 스크린샷 가이드라인
+## Screenshot Guidelines
 
-### 사이즈 규격
-| 디바이스 | App Store (px) | Google Play (px) |
-|---------|---------------|-----------------|
+### Size Specifications
+| Device | App Store (px) | Google Play (px) |
+|--------|---------------|-----------------|
 | iPhone 6.7" | 1290 x 2796 | - |
 | iPhone 6.5" | 1284 x 2778 | - |
 | iPad 12.9" | 2048 x 2732 | - |
-| Android 폰 | - | 1080 x 1920 (16:9) |
-| Android 탭 | - | 1200 x 1920 |
+| Android Phone | - | 1080 x 1920 (16:9) |
+| Android Tablet | - | 1200 x 1920 |
 
-### 스크린샷 컨텐츠 전략
-| 순서 | 내용 | 목적 |
-|------|------|------|
-| 1장 | 핵심 가치 제안 (히어로) | "이 앱은 왜 필요한가" |
-| 2장 | 핵심 기능 #1 | 가장 많이 쓰는 기능 |
-| 3장 | 핵심 기능 #2 | 차별화 기능 |
-| 4장 | 핵심 기능 #3 | 부가 기능 |
-| 5장 | 사회적 증거 | 수상, 평점, 언론 |
+### Screenshot Content Strategy
+| Order | Content | Purpose |
+|-------|---------|---------|
+| 1st | Core value proposition (hero) | "Why do you need this app" |
+| 2nd | Core Feature #1 | Most-used feature |
+| 3rd | Core Feature #2 | Differentiating feature |
+| 4th | Core Feature #3 | Additional feature |
+| 5th | Social proof | Awards, ratings, press |
 
-### 스크린샷 디자인 원칙
-- 캡션 텍스트 20~30자 이내 (한국어)
-- 텍스트 위 / 앱 화면 아래 레이아웃 (또는 반대)
-- 일관된 색상 테마 (브랜드 컬러)
-- 기기 프레임 선택적 (트렌드: 프레임 없이)
-- 앱 UI에 실제적인 데이터 표시 (Lorem ipsum 금지)
+### Screenshot Design Principles
+- Caption text within 20-30 characters
+- Text top / app screen bottom layout (or reverse)
+- Consistent color theme (brand colors)
+- Device frame optional (trend: frameless)
+- Show realistic data in app UI (no Lorem ipsum)
 
-## 심사 거절 주요 사유 & 대응
+## Major Review Rejection Reasons & Responses
 
-### App Store (Apple) 주요 거절 사유
+### App Store (Apple) Top Rejection Reasons
 
-| 순위 | 가이드라인 | 사유 | 대응 |
-|------|----------|------|------|
-| 1 | 4.0 Design | 버그, 크래시, 불완전 기능 | 전체 기능 테스트 후 제출 |
-| 2 | 2.1 Performance | 앱 완성도 부족 | MVP라도 핵심 흐름 완전 동작 |
-| 3 | 4.3 Spam | 기존 앱과 중복 | 차별점 명확히 설명 |
-| 4 | 5.1.1 Data Collection | 개인정보 수집 미설명 | Privacy Policy + 목적 명시 |
-| 5 | 3.1.1 In-App Purchase | 비IAP 결제 사용 | 디지털 콘텐츠는 반드시 IAP |
-| 6 | 2.5.1 Software Requirements | 비공개 API 사용 | 공개 API만 사용 |
+| Rank | Guideline | Reason | Response |
+|------|----------|--------|---------|
+| 1 | 4.0 Design | Bugs, crashes, incomplete features | Fully test all features before submission |
+| 2 | 2.1 Performance | Insufficient app completeness | Even MVP must have fully working core flow |
+| 3 | 4.3 Spam | Duplicate of existing app | Clearly describe differentiators |
+| 4 | 5.1.1 Data Collection | Privacy collection not explained | Privacy Policy + purpose disclosure |
+| 5 | 3.1.1 In-App Purchase | Non-IAP payment used | Digital content must use IAP |
+| 6 | 2.5.1 Software Requirements | Private API usage | Use only public APIs |
 
-### Google Play 주요 거절 사유
+### Google Play Top Rejection Reasons
 
-| 사유 | 대응 |
-|------|------|
-| 크래시/ANR | 테스트 자동화, 크래시 리포팅 |
-| 권한 과다 요청 | 최소 권한 원칙, 사용 시점에 요청 |
-| 데이터 안전 섹션 미비 | Data Safety Form 정확히 작성 |
-| 타깃 연령 미설정 | 어린이 대상 여부 명확히 |
-| 지적재산권 | 타사 로고/이름 무단 사용 금지 |
+| Reason | Response |
+|--------|---------|
+| Crashes/ANR | Test automation, crash reporting |
+| Excessive permission requests | Minimum permission principle, request at point of use |
+| Incomplete Data Safety section | Accurately fill Data Safety Form |
+| Target age not set | Clearly specify children targeting |
+| IP infringement | Do not use third-party logos/names without permission |
 
-## 앱 설명 작성 공식
+## App Description Writing Formula
 
-### 구조
+### Structure
 ```
-[헤드라인: 핵심 가치 한 문장]
+[Headline: One sentence core value]
 
-[핵심 기능 3~5개 불릿]
+[3-5 core feature bullets]
 
-[사회적 증거: 다운로드 수, 평점, 수상]
+[Social proof: Download count, ratings, awards]
 
-[상세 기능 설명]
+[Detailed feature description]
 
-[CTA: 지금 다운로드하세요]
+[CTA: Download now]
 
-[키워드 자연 삽입 영역]
+[Natural keyword insertion area]
 ```
 
-## 카테고리 선택 가이드
+## Category Selection Guide
 
-| 앱 유형 | iOS 권장 카테고리 | Google Play 권장 카테고리 |
-|--------|-----------------|------------------------|
-| 할일/생산성 | Productivity | Productivity |
-| SNS/커뮤니티 | Social Networking | Social |
-| 쇼핑 | Shopping | Shopping |
-| 건강/피트니스 | Health & Fitness | Health & Fitness |
-| 교육 | Education | Education |
-| 금융 | Finance | Finance |
-| 유틸리티 | Utilities | Tools |
-| 음식 배달 | Food & Drink | Food & Drink |
+| App Type | Recommended iOS Category | Recommended Google Play Category |
+|---------|------------------------|-------------------------------|
+| To-do/Productivity | Productivity | Productivity |
+| Social/Community | Social Networking | Social |
+| Shopping | Shopping | Shopping |
+| Health/Fitness | Health & Fitness | Health & Fitness |
+| Education | Education | Education |
+| Finance | Finance | Finance |
+| Utilities | Utilities | Tools |
+| Food Delivery | Food & Drink | Food & Drink |
 
-### 카테고리 전략
-- 1차 카테고리: 가장 정확한 분류 (검색 노출 우선)
-- 2차 카테고리 (iOS): 추가 노출 기회 → 경쟁 낮은 카테고리 선택
-- 카테고리 내 순위가 전체 순위보다 중요
+### Category Strategy
+- Primary category: Most accurate classification (search visibility priority)
+- Secondary category (iOS): Additional exposure opportunity → choose lower-competition category
+- Category rank matters more than overall rank
 
-## 릴리스 노트 작성 가이드
+## Release Notes Writing Guide
 
-| 항목 | 규칙 |
+| Item | Rule |
 |------|------|
-| 길이 | 3~5줄 (사용자가 읽는 비율 고려) |
-| 구조 | 새 기능 > 개선 > 버그 수정 순 |
-| 톤 | 친근하고 명확 (전문 용어 자제) |
-| 이모지 | 적당히 (1~2개, 카테고리 구분) |
-| 키워드 | 주요 키워드 자연스럽게 포함 (ASO) |
+| Length | 3-5 lines (considering user read rate) |
+| Structure | New features > Improvements > Bug fixes |
+| Tone | Friendly and clear (avoid jargon) |
+| Emojis | Moderate (1-2, for category separation) |
+| Keywords | Naturally include key keywords (ASO) |

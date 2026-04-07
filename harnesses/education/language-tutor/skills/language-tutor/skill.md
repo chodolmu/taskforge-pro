@@ -1,130 +1,130 @@
 ---
 name: language-tutor
-description: "외국어 학습 풀 파이프라인. 레벨 테스트→커리큘럼 설계→레슨 생성→퀴즈 출제→복습 관리를 에이전트 팀이 협업하여 제공한다. '영어 공부', '일본어 학습', '외국어 배우기', '언어 학습', '영어 문법', '회화 연습', '레벨 테스트', '어휘 암기', '영어 독학', '중국어 입문', 'TOEIC 준비', '영어 회화' 등 외국어 학습 전반에 이 스킬을 사용한다. 특정 영역만 학습하는 것도 지원한다. 단, 실시간 음성 대화(STT/TTS), 원어민 매칭, 공인 시험 응시 대행은 이 스킬의 범위가 아니다."
+description: "A foreign language learning full pipeline. An agent team collaborates to provide level testing, curriculum design, lesson generation, quizzes, and review management. Use this skill for requests like 'study English', 'learn Japanese', 'learn a foreign language', 'language learning', 'English grammar', 'conversation practice', 'level test', 'vocabulary memorization', 'self-study English', 'beginner Chinese', 'TOEIC preparation', 'English conversation', and other foreign language learning needs. Also supports learning specific skill areas only. However, real-time voice conversation (STT/TTS), native speaker matching, and taking official exams on behalf of the learner are outside the scope of this skill."
 ---
 
-# Language Tutor — 외국어 학습 풀 파이프라인
+# Language Tutor — Foreign Language Learning Full Pipeline
 
-레벨 테스트→커리큘럼 설계→레슨 생성→퀴즈 출제→복습 관리를 에이전트 팀이 협업하여 제공한다.
+An agent team collaborates to deliver level testing, curriculum design, lesson generation, quiz creation, and review management.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## Agent Roster
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| level-assessor | `.claude/agents/level-assessor.md` | CEFR 기반 레벨 진단, 영역별 강약점 분석 | general-purpose |
-| curriculum-designer | `.claude/agents/curriculum-designer.md` | 맞춤 커리큘럼, 주차별 계획, 학습 전략 | general-purpose |
-| lesson-tutor | `.claude/agents/lesson-tutor.md` | 문법·어휘·회화·읽기·쓰기 레슨 생성 | general-purpose |
-| quiz-master | `.claude/agents/quiz-master.md` | 다양한 유형 퀴즈, 난이도 조절, 채점 | general-purpose |
-| review-coach | `.claude/agents/review-coach.md` | 간격 반복, 약점 보강, 진도 관리, 동기 부여 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| level-assessor | `.claude/agents/level-assessor.md` | CEFR-based level diagnosis, skill-area strength/weakness analysis | general-purpose |
+| curriculum-designer | `.claude/agents/curriculum-designer.md` | Customized curriculum, weekly plans, learning strategies | general-purpose |
+| lesson-tutor | `.claude/agents/lesson-tutor.md` | Grammar, vocabulary, conversation, reading, and writing lessons | general-purpose |
+| quiz-master | `.claude/agents/quiz-master.md` | Varied quiz types, difficulty adjustment, grading | general-purpose |
+| review-coach | `.claude/agents/review-coach.md` | Spaced repetition, weakness reinforcement, progress tracking, motivation | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Orchestrator performs directly)
 
-1. 사용자 입력에서 추출한다:
-    - **학습 언어**: 어떤 외국어를 배우려는가
-    - **모국어**: 학습자의 모국어 (기본: 한국어)
-    - **학습 경험**: 이전 학습 경험과 현재 수준 자가 평가
-    - **학습 목표**: 여행/업무/시험/이민/취미 등 구체적 목표
-    - **가용 시간**: 주당 투입 가능한 학습 시간
-    - **기존 자료** (선택): 기존 학습 자료, 시험 점수 등
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
+1. Extract from user input:
+    - **Target language**: Which foreign language the learner wants to study
+    - **Native language**: The learner's native language (default: English)
+    - **Learning experience**: Prior study experience and self-assessed current level
+    - **Learning goal**: Travel / work / exam / immigration / hobby, etc.
+    - **Available time**: Weekly hours available for study
+    - **Existing materials** (optional): Prior study materials, exam scores, etc.
+2. Create a `_workspace/` directory at the project root
+3. Organize the input and save it to `_workspace/00_input.md`
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 레벨 평가 | level-assessor | 없음 | `_workspace/01_level_assessment.md` |
-| 2 | 커리큘럼 설계 | curriculum-designer | 작업 1 | `_workspace/02_curriculum.md` |
-| 3 | 첫 레슨 생성 | lesson-tutor | 작업 2 | `_workspace/03_lesson_01.md` |
-| 4 | 첫 퀴즈 출제 | quiz-master | 작업 3 | `_workspace/04_quiz_01.md` |
-| 5 | 복습 계획 수립 | review-coach | 작업 2, 3, 4 | `_workspace/05_review_plan.md` |
+| Order | Task | Agent | Depends On | Deliverable |
+|-------|------|-------|-----------|-------------|
+| 1 | Level assessment | level-assessor | None | `_workspace/01_level_assessment.md` |
+| 2 | Curriculum design | curriculum-designer | Task 1 | `_workspace/02_curriculum.md` |
+| 3 | First lesson | lesson-tutor | Task 2 | `_workspace/03_lesson_01.md` |
+| 4 | First quiz | quiz-master | Task 3 | `_workspace/04_quiz_01.md` |
+| 5 | Review plan | review-coach | Tasks 2, 3, 4 | `_workspace/05_review_plan.md` |
 
-**팀원 간 소통 흐름:**
-- level-assessor 완료 → curriculum-designer에게 영역별 레벨·강약점·학습 목표·가용 시간 전달
-- curriculum-designer 완료 → lesson-tutor에게 Week 1 학습 주제·문법·어휘 전달, quiz-master에게 마일스톤 기준 전달
-- lesson-tutor 완료 → quiz-master에게 핵심 학습 항목 전달, review-coach에게 학습 항목 전달
-- quiz-master → review-coach에게 결과 전달 → 약점 보강 + 복습 스케줄 생성
+**Inter-agent communication flow:**
+- level-assessor completes -> sends skill-area levels, strengths/weaknesses, learning goals, and available time to curriculum-designer
+- curriculum-designer completes -> sends Week 1 topics, grammar, and vocabulary to lesson-tutor; sends milestone criteria to quiz-master
+- lesson-tutor completes -> sends key learning items to quiz-master; sends learning items to review-coach
+- quiz-master -> sends results to review-coach -> weakness reinforcement + review schedule generated
 
-**연속 학습 사이클:**
-레슨→퀴즈→복습은 반복적으로 실행된다. 사용자가 추가 레슨을 요청하면:
-1. lesson-tutor가 다음 레슨 생성 (`03_lesson_02.md`, `03_lesson_03.md`, ...)
-2. quiz-master가 해당 레슨 퀴즈 출제 (`04_quiz_02.md`, ...)
-3. review-coach가 복습 계획 업데이트 + 진도 보고서 생성
+**Continuous learning cycle:**
+Lessons, quizzes, and reviews run iteratively. When the user requests more lessons:
+1. lesson-tutor generates the next lesson (`03_lesson_02.md`, `03_lesson_03.md`, ...)
+2. quiz-master creates a quiz for that lesson (`04_quiz_02.md`, ...)
+3. review-coach updates the review plan + generates a progress report
 
-### Phase 3: 진도 보고
+### Phase 3: Progress Reporting
 
-review-coach가 주기적으로 진도 보고서를 생성한다:
-- `_workspace/06_progress_report.md` — 전체 진행률, 영역별 성장, 퀴즈 추이, 학습 패턴
+review-coach periodically generates progress reports:
+- `_workspace/06_progress_report.md` — Overall progress, skill-area growth, quiz trends, study patterns
 
-## 작업 규모별 모드
+## Task-Scale Modes
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "영어 공부 시작하고 싶어" | **풀 파이프라인** | 5명 전원 |
-| "내 영어 레벨 테스트해줘" | **진단 모드** | level-assessor 단독 |
-| "영어 문법 레슨 해줘" | **레슨 모드** | lesson-tutor (+ level-assessor 필요 시) |
-| "이 단원 퀴즈 내줘" | **퀴즈 모드** | quiz-master 단독 |
-| "복습 계획 세워줘" | **복습 모드** | review-coach 단독 |
-| "TOEIC 준비 커리큘럼 만들어줘" | **시험 특화 모드** | level-assessor + curriculum-designer + quiz-master |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|----------------|
+| "I want to start learning English" | **Full Pipeline** | All 5 agents |
+| "Test my English level" | **Diagnostic Mode** | level-assessor only |
+| "Give me an English grammar lesson" | **Lesson Mode** | lesson-tutor (+ level-assessor if needed) |
+| "Quiz me on this unit" | **Quiz Mode** | quiz-master only |
+| "Create a review plan" | **Review Mode** | review-coach only |
+| "Create a TOEIC prep curriculum" | **Exam-Specific Mode** | level-assessor + curriculum-designer + quiz-master |
 
-**레벨 자동 감지**: 사용자가 레벨을 모르는 경우, 대화 중 사용하는 표현 수준으로 잠정 레벨을 추정하고 진단 테스트를 제안한다.
+**Automatic level detection**: If the user does not know their level, provisionally estimate it from the expressions they use in conversation and suggest a diagnostic test.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 난이도 조정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 학습 사이클 관리 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information exchange, difficulty adjustment requests |
+| Task-based | TaskCreate/TaskUpdate | Track progress, manage learning cycles |
 
-파일명 컨벤션: `{순번}_{산출물}_{번호}.{확장자}`
+File naming convention: `{order}_{deliverable}_{number}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 학습 언어 미지정 | 영어를 기본으로 시작하되, 확인 요청 |
-| 레벨 진단 거부 | 자가 평가 기반 잠정 레벨 설정, 첫 레슨에서 조정 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행 |
-| 난이도 불일치 | 학습자 피드백 반영하여 즉시 조정, 커리큘럼 수정 |
-| 특수 언어 지원 한계 | 지원 가능 범위 안내, 주요 언어(영/일/중/스/불/독)에 집중 |
+| Error Type | Strategy |
+|-----------|----------|
+| Target language not specified | Default to English, but ask for confirmation |
+| Level diagnosis refused | Set provisional level via self-assessment; adjust in first lesson |
+| Agent failure | Retry once -> proceed without that deliverable if still failing |
+| Difficulty mismatch | Adjust immediately based on learner feedback; update curriculum |
+| Limited support for rare languages | Inform the user of supported range; focus on major languages (English, Japanese, Chinese, Spanish, French, German) |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "영어 회화를 잘하고 싶어. 해외 출장이 잦은 직장인이고, 주 5시간 정도 공부할 수 있어."
-**기대 결과**:
-- 레벨 평가: 적응형 진단 테스트 실시, 영역별 CEFR 레벨 판정
-- 커리큘럼: 비즈니스 영어 중심 12주 계획, 회화+이메일+프레젠테이션
-- 첫 레슨: 비즈니스 인사·자기소개 패턴 + 핵심 어휘 20개
-- 퀴즈: Lesson 1 내용 기반 15문항
-- 복습 계획: 간격 반복 스케줄 + 약점 보강 활동
+### Normal Flow
+**Prompt**: "I want to get better at English speaking. I travel abroad often for work, and I can study about 5 hours per week."
+**Expected Results**:
+- Level assessment: Adaptive diagnostic test administered; CEFR level determined per skill area
+- Curriculum: 12-week business English plan focused on conversation + emails + presentations
+- First lesson: Business greetings and self-introduction patterns + 20 key vocabulary items
+- Quiz: 15 items based on Lesson 1 content
+- Review plan: Spaced repetition schedule + weakness reinforcement activities
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 토익 성적표를 기반으로 약점 보강 커리큘럼 만들어줘" + 성적표 파일 첨부
-**기대 결과**:
-- 성적표를 `_workspace/01_level_assessment.md`의 참고 자료로 복사
-- level-assessor가 성적표 기반으로 영역별 레벨 판정 (별도 진단 테스트 간소화)
-- curriculum-designer + lesson-tutor + quiz-master + review-coach 투입
+### Existing File Flow
+**Prompt**: "Build a weakness-focused curriculum based on this TOEIC score report" + score report attached
+**Expected Results**:
+- Score report copied as reference material in `_workspace/01_level_assessment.md`
+- level-assessor determines skill-area levels based on the score report (streamlined diagnostic test)
+- curriculum-designer + lesson-tutor + quiz-master + review-coach deployed
 
-### 에러 흐름
-**프롬프트**: "외국어 좀 배워볼까"
-**기대 결과**:
-- 학습 언어 미지정 → 영어 기본 제안 + 다른 언어 선택지 안내
-- 학습 목표 불명확 → 3가지 목표(여행/업무/취미) 제안 후 선택 요청
-- 선택 완료 후 풀 파이프라인 실행
+### Error Flow
+**Prompt**: "Maybe I will try learning a language"
+**Expected Results**:
+- Target language not specified -> suggest English by default + offer alternatives
+- Learning goal unclear -> propose 3 goals (travel / work / hobby) and ask user to choose
+- After selection, execute full pipeline
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-에이전트의 도메인 전문성을 강화하는 확장 스킬:
+Extension skills that enhance each agent's domain expertise:
 
-| 에이전트 | 확장 스킬 | 역할 |
-|---------|----------|------|
-| review-coach | `spaced-repetition` | SM-2 알고리즘, 에빙하우스 망각곡선, 복습 세션 설계 |
-| level-assessor | `cefr-assessment` | CEFR 6단계 기술자, 적응형 진단 테스트, CEFR-시험 매핑 |
+| Agent | Extension Skill | Role |
+|-------|----------------|------|
+| review-coach | `spaced-repetition` | SM-2 algorithm, Ebbinghaus forgetting curve, review session design |
+| level-assessor | `cefr-assessment` | CEFR 6-level descriptors, adaptive diagnostic tests, CEFR-to-exam mapping |

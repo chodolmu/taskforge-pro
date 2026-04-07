@@ -1,130 +1,130 @@
 ---
 name: clause-risk-database
-description: "계약 조항의 위험 패턴을 체계적으로 식별하고 등급을 매기는 위험 조항 데이터베이스. 'risk-assessor'와 'clause-analyst' 에이전트가 계약서의 조항별 위험도를 평가할 때 이 스킬의 패턴 DB와 스코어링 방법론을 반드시 활용해야 한다. '위험 조항 분석', '불리한 조항 식별', '리스크 스코어링' 등 조항 수준의 위험 평가에 사용한다. 단, 전체 계약 오케스트레이션이나 계약서 작성 자체는 이 스킬의 범위가 아니다."
+description: "A risk clause database that systematically identifies and grades risk patterns in contract clauses. The 'risk-assessor' and 'clause-analyst' agents must use this skill's pattern DB and scoring methodology when evaluating clause-level risk in contracts. Used for clause-level risk assessment tasks such as 'risk clause analysis', 'disadvantageous clause identification', 'risk scoring', etc. Note: Overall contract orchestration or contract drafting itself is outside the scope of this skill."
 ---
 
-# Clause Risk Database — 위험 조항 패턴 DB 및 스코어링 엔진
+# Clause Risk Database — Risk Clause Pattern DB and Scoring Engine
 
-계약서 조항의 위험 패턴을 식별하고, 정량적 리스크 점수를 산출하는 전문 지식 베이스.
+A specialized knowledge base that identifies risk patterns in contract clauses and calculates quantitative risk scores.
 
-## 위험 조항 패턴 분류 체계
+## Risk Clause Pattern Classification System
 
-### Tier 1: 치명적 위험 (Critical, 80-100점)
+### Tier 1: Critical Risk (80-100 points)
 
-| 패턴 ID | 패턴명 | 설명 | 대표 문구 |
-|---------|--------|------|----------|
-| C-01 | 무제한 손해배상 | 배상 한도 없이 전체 손해 부담 | "일체의 손해를 배상한다" |
-| C-02 | 일방적 해지권 | 상대방만 무조건 해지 가능 | "갑은 이유 불문하고 즉시 해지할 수 있다" |
-| C-03 | 포괄적 면책 | 상대방의 모든 책임 면제 | "갑은 어떠한 경우에도 책임을 지지 아니한다" |
-| C-04 | 지식재산 무제한 양도 | 모든 IP를 대가 없이 양도 | "결과물의 일체 권리는 갑에게 귀속한다" |
-| C-05 | 경업금지 과다 | 기간·지역·범위가 과도한 경업금지 | "2년간 동종업계 취업 금지" |
+| Pattern ID | Pattern Name | Description | Representative Wording |
+|-----------|-------------|-------------|----------------------|
+| C-01 | Unlimited Liability | Full liability without cap | "shall indemnify all damages" |
+| C-02 | Unilateral Termination | Only the counterparty can terminate unconditionally | "Party A may terminate immediately without cause" |
+| C-03 | Blanket Indemnification | Complete exemption of counterparty's liability | "Party A shall not be liable under any circumstances" |
+| C-04 | Unlimited IP Transfer | Transfer of all IP without consideration | "All rights to deliverables shall vest in Party A" |
+| C-05 | Excessive Non-Compete | Non-compete with excessive scope in duration, geography, and range | "Prohibited from working in the same industry for 2 years" |
 
-### Tier 2: 고위험 (High, 60-79점)
+### Tier 2: High Risk (60-79 points)
 
-| 패턴 ID | 패턴명 | 설명 | 대표 문구 |
-|---------|--------|------|----------|
-| H-01 | 자동갱신 해지난 | 해지 통보 기간 과도 + 자동갱신 | "60일 전 통보 없으면 자동 1년 갱신" |
-| H-02 | 지체상금 과다 | 시장 기준 대비 과도한 지체상금률 | "지체 1일당 계약금액의 1%" |
-| H-03 | 검수 무한루프 | 검수 횟수/기간 제한 없음 | "갑이 만족할 때까지 수정한다" |
-| H-04 | 편면적 비밀유지 | 일방에게만 비밀유지 의무 부과 | "을은 본 계약 내용을 누설할 수 없다" |
-| H-05 | 관할법원 불리 | 상대방 소재지 전속관할 | "갑의 본사 소재지 관할 법원" |
+| Pattern ID | Pattern Name | Description | Representative Wording |
+|-----------|-------------|-------------|----------------------|
+| H-01 | Auto-Renewal Trap | Excessive notice period + automatic renewal | "Auto-renews for 1 year without 60-day prior notice" |
+| H-02 | Excessive Delay Penalties | Delay penalty rate exceeding market standard | "1% of contract amount per day of delay" |
+| H-03 | Infinite Acceptance Loop | No limit on acceptance review count/duration | "Revisions shall continue until Party A is satisfied" |
+| H-04 | One-Sided Confidentiality | Confidentiality obligation imposed on one party only | "Party B shall not disclose the contents of this contract" |
+| H-05 | Unfavorable Jurisdiction | Exclusive jurisdiction at counterparty's location | "Court at Party A's headquarters location" |
 
-### Tier 3: 중간 위험 (Medium, 40-59점)
+### Tier 3: Medium Risk (40-59 points)
 
-| 패턴 ID | 패턴명 | 설명 |
-|---------|--------|------|
-| M-01 | 대금 지급 지연 | 검수 후 60일 초과 지급 조건 |
-| M-02 | 변경 요청 무제한 | 범위 변경 시 대가 조정 조항 미비 |
-| M-03 | 불명확한 완료 기준 | 완성/인수 기준이 모호 |
-| M-04 | 보증 기간 과다 | 업계 표준 대비 과도한 하자보증 |
-| M-05 | 준거법 미명시 | 국제 거래에서 준거법 불명확 |
+| Pattern ID | Pattern Name | Description |
+|-----------|-------------|-------------|
+| M-01 | Delayed Payment | Payment terms exceeding 60 days after acceptance |
+| M-02 | Unlimited Change Requests | Lack of cost adjustment provisions for scope changes |
+| M-03 | Unclear Completion Criteria | Ambiguous completion/acceptance standards |
+| M-04 | Excessive Warranty Period | Warranty period exceeding industry standard |
+| M-05 | Unspecified Governing Law | Unclear governing law in international transactions |
 
-### Tier 4: 저위험 (Low, 20-39점)
+### Tier 4: Low Risk (20-39 points)
 
-| 패턴 ID | 패턴명 | 설명 |
-|---------|--------|------|
-| L-01 | 통지 방법 미비 | 서면/이메일 통지 규정 부재 |
-| L-02 | 양도금지 미비 | 계약상 권리/의무 양도 제한 미규정 |
-| L-03 | 불가항력 누락 | 천재지변 면책 조항 미비 |
+| Pattern ID | Pattern Name | Description |
+|-----------|-------------|-------------|
+| L-01 | Insufficient Notice Provisions | Absence of written/email notification rules |
+| L-02 | No Assignment Restriction | Absence of restrictions on transfer of contractual rights/obligations |
+| L-03 | Missing Force Majeure | Absence of force majeure exemption clause |
 
-## 리스크 스코어링 알고리즘
+## Risk Scoring Algorithm
 
-### 개별 조항 점수 산출
-
-```
-조항_점수 = 기본점수(패턴) × 입장_가중치 × 계약규모_가중치 × 산업_가중치
-
-입장_가중치:
-  - 갑(유리측): 0.5
-  - 을(불리측): 1.5
-  - 중립/불명: 1.0
-
-계약규모_가중치:
-  - 1억 미만: 0.8
-  - 1~10억: 1.0
-  - 10~100억: 1.3
-  - 100억 이상: 1.5
-
-산업_가중치:
-  - IT/SW 개발: 1.2 (IP 위험)
-  - 건설: 1.3 (지체상금, 하자보증)
-  - 금융: 1.4 (규제 리스크)
-  - 일반 용역: 1.0
-```
-
-### 종합 리스크 등급
+### Individual Clause Score Calculation
 
 ```
-종합_점수 = Σ(조항별 가중 점수) / 전체_조항_수
+clause_score = base_score(pattern) x position_weight x contract_size_weight x industry_weight
 
-등급:
-  S등급(즉시 시정): 종합 80+ 또는 Critical 조항 1개+
-  A등급(시정 권고): 종합 60-79
-  B등급(주의): 종합 40-59
-  C등급(양호): 종합 20-39
-  D등급(우수): 종합 20 미만
+position_weight:
+  - Party A (advantaged side): 0.5
+  - Party B (disadvantaged side): 1.5
+  - Neutral/Unknown: 1.0
+
+contract_size_weight:
+  - Under 100M: 0.8
+  - 100M-1B: 1.0
+  - 1B-10B: 1.3
+  - Over 10B: 1.5
+
+industry_weight:
+  - IT/Software Development: 1.2 (IP risk)
+  - Construction: 1.3 (delay penalties, warranty)
+  - Finance: 1.4 (regulatory risk)
+  - General Services: 1.0
 ```
 
-## 계약 유형별 필수 점검 항목
+### Overall Risk Grade
 
-### 소프트웨어 개발 용역
+```
+overall_score = sum(weighted_clause_scores) / total_clause_count
 
-| 필수 조항 | 미비 시 리스크 | 권장 수준 |
-|----------|-------------|----------|
-| 지식재산 귀속 | IP 분쟁 | 공동 귀속 또는 라이선스 |
-| 소스코드 인도 | 종속 위험 | 에스크로 또는 직접 인도 |
-| 변경관리(CR) | 범위 확장 | CR 프로세스 명시 |
-| 검수 기준·기간 | 무한 수정 | 2회 이내, 14일 기한 |
+Grades:
+  S Grade (Immediate Correction): Overall 80+ or 1+ Critical clauses
+  A Grade (Correction Recommended): Overall 60-79
+  B Grade (Caution): Overall 40-59
+  C Grade (Satisfactory): Overall 20-39
+  D Grade (Excellent): Overall under 20
+```
 
-### 임대차 계약
+## Required Checkpoints by Contract Type
 
-| 필수 조항 | 미비 시 리스크 | 권장 수준 |
-|----------|-------------|----------|
-| 보증금 반환 조건 | 미반환 | 퇴거 후 30일 이내 |
-| 원상복구 범위 | 과도한 복구비 | 통상 마모 제외 명시 |
-| 중도 해지 조건 | 위약금 분쟁 | 3개월 전 통보 |
+### Software Development Services
 
-### NDA (비밀유지계약)
+| Essential Clause | Risk if Missing | Recommended Standard |
+|-----------------|----------------|---------------------|
+| IP Ownership | IP dispute | Joint ownership or license |
+| Source Code Delivery | Vendor lock-in | Escrow or direct delivery |
+| Change Management (CR) | Scope creep | CR process specified |
+| Acceptance Criteria/Period | Infinite revisions | Within 2 rounds, 14-day deadline |
 
-| 필수 조항 | 미비 시 리스크 | 권장 수준 |
-|----------|-------------|----------|
-| 비밀정보 정의 | 범위 분쟁 | 표지 주의 방식 |
-| 존속 기간 | 무한 의무 | 2-3년 |
-| 예외 사항 | 과도한 제한 | 공지, 독자개발, 법원명령 |
+### Lease Agreement
 
-## 위험도 보고서 출력 포맷
+| Essential Clause | Risk if Missing | Recommended Standard |
+|-----------------|----------------|---------------------|
+| Deposit Return Conditions | Non-return | Within 30 days after vacating |
+| Restoration Scope | Excessive restoration costs | Exclude normal wear and tear |
+| Early Termination Terms | Penalty disputes | 3 months prior notice |
+
+### NDA (Non-Disclosure Agreement)
+
+| Essential Clause | Risk if Missing | Recommended Standard |
+|-----------------|----------------|---------------------|
+| Confidential Information Definition | Scope dispute | Marking/labeling approach |
+| Duration | Infinite obligation | 2-3 years |
+| Exceptions | Excessive restrictions | Public info, independent development, court orders |
+
+## Risk Report Output Format
 
 ```markdown
-## 계약 리스크 스코어카드
+## Contract Risk Scorecard
 
-**계약 유형**: [유형]  |  **당사자 입장**: [갑/을]  |  **종합 등급**: [S/A/B/C/D]
+**Contract Type**: [Type]  |  **Party Position**: [A/B]  |  **Overall Grade**: [S/A/B/C/D]
 
-| # | 조항 | 패턴 | 등급 | 점수 | 수정 권고 |
-|---|------|------|------|------|----------|
-| 1 | 제X조 | C-01 | Critical | 95 | 배상 한도 설정 필수 |
+| # | Clause | Pattern | Grade | Score | Modification Recommendation |
+|---|--------|---------|-------|-------|-----------------------------|
+| 1 | Article X | C-01 | Critical | 95 | Liability cap required |
 ```
 
-## 참고
+## Notes
 
-- 한국 계약법 관행 기반, 영미법 계약은 별도 패턴 적용
-- 상세 패턴: `references/clause-patterns-detail.md` 참조
+- Based on contract law practices; common law contracts require separate pattern application
+- Detailed patterns: See `references/clause-patterns-detail.md`

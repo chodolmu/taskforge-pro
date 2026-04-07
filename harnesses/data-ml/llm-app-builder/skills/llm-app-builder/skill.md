@@ -1,137 +1,137 @@
 ---
 name: llm-app-builder
-description: "LLM 앱을 에이전트 팀이 협업하여 개발하는 풀 파이프라인. 'LLM 앱 만들어줘', 'AI 앱 개발', 'RAG 시스템 구축', 'GPT 앱', 'AI 챗봇 개발', '프롬프트 엔지니어링', 'LLM 파이프라인', 'AI 어시스턴트 개발', '생성 AI 앱', 'RAG 파이프라인' 등 LLM 기반 앱 개발 전반에 이 스킬을 사용한다. 프롬프트 설계만 필요한 경우에도 프롬프트 모드로 지원한다. 단, LLM 모델 학습(fine-tuning 실행), GPU 인프라 구축, 모델 서빙(vLLM/TGI 배포)은 이 스킬의 범위가 아니다."
+description: "Full pipeline where an agent team collaborates to develop an LLM app. Use this skill for requests like 'build me an LLM app', 'AI app development', 'build a RAG system', 'GPT app', 'AI chatbot development', 'prompt engineering', 'LLM pipeline', 'AI assistant development', 'generative AI app', 'RAG pipeline', and other LLM-based app development tasks. Also supports prompt-only mode when only prompt design is needed. Note: LLM model training (running fine-tuning), GPU infrastructure construction, and model serving (vLLM/TGI deployment) are outside the scope of this skill."
 ---
 
-# LLM App Builder — LLM 앱 개발 파이프라인
+# LLM App Builder — LLM App Development Pipeline
 
-LLM 앱의 프롬프트→RAG→평가→최적화→배포를 에이전트 팀이 협업하여 개발한다.
+An agent team collaborates to develop LLM apps through prompt engineering > RAG pipeline > evaluation > optimization > deployment.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — Five agents communicate directly via SendMessage and perform cross-validation.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| prompt-engineer | `.claude/agents/prompt-engineer.md` | 프롬프트 설계 | general-purpose |
-| rag-architect | `.claude/agents/rag-architect.md` | RAG 파이프라인 | general-purpose |
-| eval-specialist | `.claude/agents/eval-specialist.md` | 평가 프레임워크 | general-purpose |
-| optimization-engineer | `.claude/agents/optimization-engineer.md` | 비용/성능 최적화 | general-purpose |
-| deploy-engineer | `.claude/agents/deploy-engineer.md` | 프로덕션 배포 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| prompt-engineer | `.claude/agents/prompt-engineer.md` | Prompt design | general-purpose |
+| rag-architect | `.claude/agents/rag-architect.md` | RAG pipeline | general-purpose |
+| eval-specialist | `.claude/agents/eval-specialist.md` | Evaluation framework | general-purpose |
+| optimization-engineer | `.claude/agents/optimization-engineer.md` | Cost/performance optimization | general-purpose |
+| deploy-engineer | `.claude/agents/deploy-engineer.md` | Production deployment | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (performed directly by the orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **앱 목적**: 무엇을 하는 LLM 앱인가
-    - **데이터 소스**: RAG에 사용할 문서/데이터 (선택)
-    - **LLM 모델**: 사용할 모델 (기본: Claude/GPT-4o)
-    - **배포 환경**: API/웹앱/챗봇/내부 도구
-    - **예산**: 월간 API 비용 예산
-    - **제약 조건** (선택): 보안, 규정, 성능 요구사항
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. `_workspace/src/` 디렉토리를 생성한다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract the following from user input:
+    - **App purpose**: What the LLM app does
+    - **Data sources**: Documents/data for RAG (optional)
+    - **LLM model**: Model to use (default: Claude/GPT-4o)
+    - **Deployment environment**: API/web app/chatbot/internal tool
+    - **Budget**: Monthly API cost budget
+    - **Constraints** (optional): Security, regulatory, performance requirements
+2. Create the `_workspace/` directory at the project root
+3. Organize the input and save it to `_workspace/00_input.md`
+4. Create the `_workspace/src/` directory
+5. **Determine the execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1a | 프롬프트 설계 | prompt | 없음 | `_workspace/01_prompt_design.md` |
-| 1b | RAG 파이프라인 | rag | 없음 | `_workspace/02_rag_pipeline.md` + `src/` |
-| 2 | 평가 프레임워크 | eval | 작업 1a, 1b | `_workspace/03_eval_framework.md` + `src/` |
-| 3 | 최적화 | optimizer | 작업 2 | `_workspace/04_optimization.md` + `src/` |
-| 4 | 배포 설정 | deploy | 작업 1b, 3 | `_workspace/05_deploy_config.md` + `src/` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1a | Prompt design | prompt | None | `_workspace/01_prompt_design.md` |
+| 1b | RAG pipeline | rag | None | `_workspace/02_rag_pipeline.md` + `src/` |
+| 2 | Evaluation framework | eval | Tasks 1a, 1b | `_workspace/03_eval_framework.md` + `src/` |
+| 3 | Optimization | optimizer | Task 2 | `_workspace/04_optimization.md` + `src/` |
+| 4 | Deployment config | deploy | Tasks 1b, 3 | `_workspace/05_deploy_config.md` + `src/` |
 
-작업 1a(프롬프트)와 1b(RAG)는 **병렬 실행**한다.
+Tasks 1a (prompt) and 1b (RAG) run **in parallel**.
 
-**팀원 간 소통 흐름:**
-- prompt 완료 → rag에게 컨텍스트 주입 포맷 전달, eval에게 기대 출력 전달
-- rag 완료 → eval에게 검색 테스트 데이터 전달, deploy에게 벡터DB 인프라 요구사항 전달
-- eval 완료 → optimizer에게 성능 베이스라인 전달, prompt에게 약점 피드백
-- optimizer 완료 → deploy에게 캐시/라우팅 설정 전달
-- deploy는 모든 컴포넌트를 통합하여 프로덕션 배포 구성 완성
+**Inter-agent communication flow:**
+- prompt completes > passes context injection format to rag, passes expected outputs to eval
+- rag completes > passes retrieval test data to eval, passes vector DB infra requirements to deploy
+- eval completes > passes performance baseline to optimizer, passes weakness feedback to prompt
+- optimizer completes > passes cache/routing config to deploy
+- deploy integrates all components to complete the production deployment configuration
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/src/`의 코드가 실행 가능한지 확인한다
-2. 평가 메트릭이 기준을 충족하는지 확인한다
-3. 배포 설정이 완전한지 검증한다
-4. 최종 요약을 사용자에게 보고한다:
-    - 프롬프트 설계 — `01_prompt_design.md`
-    - RAG 파이프라인 — `02_rag_pipeline.md`
-    - 평가 프레임워크 — `03_eval_framework.md`
-    - 최적화 전략 — `04_optimization.md`
-    - 배포 설정 — `05_deploy_config.md`
-    - 소스코드 — `src/`
+1. Verify that the code in `_workspace/src/` is executable
+2. Confirm that evaluation metrics meet the standards
+3. Validate that deployment configuration is complete
+4. Report the final summary to the user:
+    - Prompt design — `01_prompt_design.md`
+    - RAG pipeline — `02_rag_pipeline.md`
+    - Evaluation framework — `03_eval_framework.md`
+    - Optimization strategy — `04_optimization.md`
+    - Deployment config — `05_deploy_config.md`
+    - Source code — `src/`
 
-## 작업 규모별 모드
+## Execution Modes by Request Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "LLM 앱 만들어줘", "RAG 앱 전체" | **풀 파이프라인** | 5명 전원 |
-| "프롬프트만 설계해줘" | **프롬프트 모드** | prompt + eval |
-| "RAG 파이프라인만 구축" | **RAG 모드** | rag + eval + deploy |
-| "LLM 앱 평가 시스템 구축" | **평가 모드** | eval 단독 |
-| "기존 앱 비용 최적화" | **최적화 모드** | optimizer + eval |
-| "프로덕션 배포 설정" | **배포 모드** | deploy 단독 |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|----------------|
+| "Build me an LLM app", "full RAG app" | **Full pipeline** | All 5 agents |
+| "Just design prompts" | **Prompt mode** | prompt + eval |
+| "Just build the RAG pipeline" | **RAG mode** | rag + eval + deploy |
+| "Build an LLM app evaluation system" | **Eval mode** | eval only |
+| "Optimize the cost of an existing app" | **Optimization mode** | optimizer + eval |
+| "Set up production deployment" | **Deploy mode** | deploy only |
 
-**RAG 불필요 시**: 사용자가 외부 데이터 소스가 없다고 명시하면 rag 에이전트를 건너뛴다.
+**When RAG is not needed**: If the user specifies there is no external data source, skip the rag agent.
 
-**기존 파일 활용**: 사용자가 기존 프롬프트, RAG 설정, 코드 등을 제공하면, 해당 파일을 `_workspace/`의 적절한 번호 위치에 복사하고 해당 단계의 에이전트는 건너뛴다. 예: 기존 프롬프트 제공 → `_workspace/01_prompt_design.md`로 복사 → prompt 건너뛰고 나머지 에이전트만 투입.
+**Reusing existing files**: If the user provides existing prompts, RAG configs, or code, copy them to the appropriate numbered location in `_workspace/` and skip the corresponding agent. Example: Existing prompt provided > copy to `_workspace/01_prompt_design.md` > skip prompt and deploy remaining agents.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 설계 문서 및 설정 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 피드백 |
-| 코드 기반 | `_workspace/src/` | 실행 가능한 소스코드 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Design documents and configuration sharing |
+| Message-based | SendMessage | Real-time key information transfer, feedback |
+| Code-based | `_workspace/src/` | Executable source code |
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| LLM API 키 없음 | 환경 변수 설정 가이드 제공, 로컬 모델 대안 제시 |
-| RAG 데이터 소스 없음 | RAG 없이 순수 LLM 앱으로 구축, 추후 RAG 추가 가이드 |
-| 평가 데이터셋 없음 | LLM으로 합성 데이터 생성, 수동 검증 가이드 |
-| 비용 예산 초과 예상 | 소형 모델 라우팅, 캐싱 강화, 요청 제한 제안 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행 |
+| Error Type | Strategy |
+|-----------|----------|
+| No LLM API key | Provide environment variable setup guide, suggest local model alternatives |
+| No RAG data source | Build as a pure LLM app without RAG, provide guide for adding RAG later |
+| No evaluation dataset | Generate synthetic data with LLM, provide manual verification guide |
+| Projected budget overrun | Suggest small model routing, enhanced caching, request limits |
+| Agent failure | Retry once > if still failing, proceed without that deliverable |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "회사 내부 문서를 기반으로 직원 Q&A 챗봇을 만들어줘. Confluence 문서 500개 정도야. 월 예산 $200"
-**기대 결과**:
-- 프롬프트: Q&A용 시스템 프롬프트, 소스 인용 강제, 환각 방지 가드레일
-- RAG: Confluence → 마크다운 변환 → 시맨틱 청킹 → text-embedding-3-small → Chroma
-- 평가: 20개 골든 Q&A 셋, Recall@5, 충실도 LLM-as-Judge
-- 최적화: 시맨틱 캐싱(예상 히트율 40%), 소형 모델 라우팅(단순 질문)
-- 배포: FastAPI + Docker + 비용 상한 $200/월
+### Normal Flow
+**Prompt**: "Build me an employee Q&A chatbot based on internal company documents. About 500 Confluence docs. Monthly budget $200"
+**Expected result**:
+- Prompt: Q&A system prompt, forced source citation, hallucination prevention guardrails
+- RAG: Confluence > markdown conversion > semantic chunking > text-embedding-3-small > Chroma
+- Evaluation: 20 golden Q&A sets, Recall@5, faithfulness LLM-as-Judge
+- Optimization: Semantic caching (expected 40% hit rate), small model routing (simple questions)
+- Deployment: FastAPI + Docker + cost ceiling $200/month
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 RAG 코드를 기반으로 평가 프레임워크와 최적화만 해줘" + RAG 코드 첨부
-**기대 결과**:
-- 기존 코드를 `_workspace/src/`에 복사, RAG 설계를 `_workspace/02_rag_pipeline.md`로 복사
-- rag 건너뛰고 eval + optimizer + deploy 투입
-- prompt는 기존 코드에서 추출
+### Existing File Reuse Flow
+**Prompt**: "Based on this RAG code, just do evaluation framework and optimization" + RAG code attached
+**Expected result**:
+- Copy existing code to `_workspace/src/`, copy RAG design to `_workspace/02_rag_pipeline.md`
+- Skip rag; deploy eval + optimizer + deploy
+- Extract prompt from existing code
 
-### 에러 흐름
-**프롬프트**: "AI 앱 만들어줘" (목적/데이터 불명확)
-**기대 결과**:
-- 사용자에게 앱 목적과 데이터 소스 확인 요청
-- RAG 필요 여부 판단을 위한 질문
-- 확인 후 적절한 모드로 파이프라인 진행
+### Error Flow
+**Prompt**: "Build me an AI app" (purpose/data unclear)
+**Expected result**:
+- Request user to clarify app purpose and data sources
+- Ask questions to determine RAG necessity
+- Proceed with appropriate mode after confirmation
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-에이전트의 도메인 전문성을 강화하는 확장 스킬:
+Extension skills that enhance agent domain expertise:
 
-| 스킬 | 파일 | 대상 에이전트 | 역할 |
-|------|------|-------------|------|
-| prompt-optimizer | `.claude/skills/prompt-optimizer/skill.md` | prompt-engineer, eval-specialist | CRISP 루브릭, RCTF 템플릿, 가드레일 패턴, A/B 테스트, 토큰 최적화 |
-| chunking-strategy-guide | `.claude/skills/chunking-strategy-guide/skill.md` | rag-architect, eval-specialist | 청킹 전략 비교, 시맨틱 청킹 알고리즘, 문서별 전처리, 품질 메트릭 |
+| Skill | File | Target Agent | Role |
+|-------|------|-------------|------|
+| prompt-optimizer | `.claude/skills/prompt-optimizer/skill.md` | prompt-engineer, eval-specialist | CRISP rubric, RCTF template, guardrail patterns, A/B testing, token optimization |
+| chunking-strategy-guide | `.claude/skills/chunking-strategy-guide/skill.md` | rag-architect, eval-specialist | Chunking strategy comparison, semantic chunking algorithm, per-document preprocessing, quality metrics |

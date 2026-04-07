@@ -1,135 +1,135 @@
 ---
 name: rca-methodology
-description: "근본원인 분석(RCA) 방법론 상세 가이드. 5 Whys, 피시본 다이어그램, Fault Tree Analysis, 변경점 분석 등 구조화된 RCA 기법과 인지 편향 방지 체크리스트. '근본원인 분석', 'RCA', '5 Whys', '피시본', 'Fault Tree', '원인 분석 방법론', '변경점 분석' 등 장애 원인 분석 시 이 스킬을 사용한다. root-cause-investigator의 분석 역량을 강화한다. 단, 타임라인 재구성이나 재발방지 대책 수립은 이 스킬의 범위가 아니다."
+description: "Detailed guide for Root Cause Analysis (RCA) methodologies. Structured RCA techniques including 5 Whys, Fishbone diagrams, Fault Tree Analysis, change analysis, and a cognitive bias prevention checklist. Use this skill for 'root cause analysis', 'RCA', '5 Whys', 'fishbone', 'Fault Tree', 'cause analysis methodology', 'change analysis', and other incident cause analysis tasks. Enhances the analysis capabilities of root-cause-investigator. Note: timeline reconstruction and remediation planning are outside the scope of this skill."
 ---
 
-# RCA Methodology — 근본원인 분석 방법론 가이드
+# RCA Methodology — Root Cause Analysis Methodology Guide
 
-장애의 근본원인을 체계적으로 추적하는 구조화된 분석 기법 모음.
+A collection of structured analysis techniques for systematically tracing incident root causes.
 
-## 1. 5 Whys 기법
+## 1. 5 Whys Technique
 
-### 수행 절차
+### Procedure
 ```
-문제: 결제 서비스가 30분간 다운되었다.
+Problem: Payment service was down for 30 minutes.
 
-Why 1: 왜 결제 서비스가 다운되었나?
-→ DB 커넥션 풀이 소진되었다.
+Why 1: Why did the payment service go down?
+-> The DB connection pool was exhausted.
 
-Why 2: 왜 커넥션 풀이 소진되었나?
-→ 느린 쿼리가 커넥션을 장시간 점유했다.
+Why 2: Why was the connection pool exhausted?
+-> Slow queries held connections for extended periods.
 
-Why 3: 왜 느린 쿼리가 발생했나?
-→ 인덱스 없이 전체 테이블 스캔을 수행했다.
+Why 3: Why did slow queries occur?
+-> A full table scan was performed without an index.
 
-Why 4: 왜 인덱스가 없었나?
-→ 신규 기능 배포 시 마이그레이션에 인덱스 추가를 누락했다.
+Why 4: Why was there no index?
+-> The index addition was missed in the migration during the new feature deployment.
 
-Why 5: 왜 인덱스 누락을 감지하지 못했나?
-→ 쿼리 성능 검증이 배포 파이프라인에 포함되지 않았다.
+Why 5: Why was the missing index not detected?
+-> Query performance verification was not included in the deployment pipeline.
 
-근본원인: 배포 파이프라인에 쿼리 성능 검증 단계 부재
-```
-
-### 5 Whys 주의사항
-
-| 함정 | 설명 | 방지법 |
-|------|------|--------|
-| 너무 일찍 멈춤 | 2~3단계에서 원인 확정 | "이것을 고치면 재발 방지되나?" 검증 |
-| 비난으로 귀결 | "누가 실수했나"로 끝남 | 시스템/프로세스 원인에 집중 |
-| 단일 경로만 추적 | 복합 원인 놓침 | 각 단계에서 분기 검토 |
-| 추측 기반 답변 | 증거 없는 가설 | 로그/메트릭으로 검증 |
-
-## 2. 피시본 다이어그램 (Ishikawa)
-
-```
-                    ┌─ 사람 ──────── 배포 담당자 교육 부족
-                    │                 코드 리뷰 생략
-                    │
-                    ├─ 프로세스 ──── 배포 체크리스트 미준수
-                    │                 성능 테스트 미실시
-                    │
-결제 서비스 다운 ←──┼─ 기술 ──────── 인덱스 누락
-                    │                 커넥션 풀 사이즈 부족
-                    │
-                    ├─ 환경 ──────── 프로덕션 데이터 규모 미반영
-                    │                 스테이징 환경 불일치
-                    │
-                    └─ 모니터링 ──── 느린 쿼리 알림 미설정
-                                     DB 메트릭 대시보드 부재
+Root Cause: Absence of query performance verification step in the deployment pipeline
 ```
 
-### 6M 카테고리 (소프트웨어 적용)
+### 5 Whys Pitfalls
 
-| 전통 6M | 소프트웨어 적용 | 조사 항목 |
-|---------|---------------|----------|
-| Man | 사람/팀 | 교육, 커뮤니케이션, 온콜 체계 |
-| Method | 프로세스 | 배포 절차, 변경 관리, 승인 흐름 |
-| Machine | 기술/인프라 | 서버, DB, 네트워크, 코드 |
-| Material | 데이터/입력 | 입력 데이터, 외부 API 응답 |
-| Measurement | 모니터링 | 알림, 메트릭, 로그, 트레이싱 |
-| Environment | 환경 | 설정, 환경변수, 의존 서비스 |
+| Pitfall | Description | Prevention |
+|---------|-------------|-----------|
+| Stopping too early | Concluding at step 2-3 | Verify: "Would fixing this prevent recurrence?" |
+| Leading to blame | Ending with "who made the mistake" | Focus on system/process causes |
+| Single path only | Missing compound causes | Review branches at each step |
+| Speculation-based answers | Hypotheses without evidence | Verify with logs/metrics |
+
+## 2. Fishbone Diagram (Ishikawa)
+
+```
+                    +- People -------- Insufficient deployer training
+                    |                  Code review skipped
+                    |
+                    +- Process -------- Deployment checklist not followed
+                    |                   Performance testing not conducted
+                    |
+Payment Svc Down <--+- Technology ---- Missing index
+                    |                   Connection pool size insufficient
+                    |
+                    +- Environment ---- Production data scale not reflected
+                    |                   Staging environment mismatch
+                    |
+                    +- Monitoring ----- Slow query alert not configured
+                                        DB metrics dashboard absent
+```
+
+### 6M Categories (Software Application)
+
+| Traditional 6M | Software Application | Investigation Items |
+|----------------|---------------------|-------------------|
+| Man | People/Team | Training, communication, on-call structure |
+| Method | Process | Deployment procedures, change management, approval flows |
+| Machine | Technology/Infrastructure | Servers, DB, network, code |
+| Material | Data/Input | Input data, external API responses |
+| Measurement | Monitoring | Alerts, metrics, logs, tracing |
+| Environment | Environment | Configuration, env vars, dependent services |
 
 ## 3. Fault Tree Analysis (FTA)
 
 ```
-                    결제 서비스 장애 (Top Event)
-                          │
-                    ┌─────┤ OR ├─────┐
-                    │               │
-              DB 장애            애플리케이션 장애
-                │                    │
-          ┌─────┤ OR ├─────┐    ┌───┤ AND ├───┐
-          │               │    │             │
-    커넥션 풀 소진    디스크 풀  느린 쿼리   높은 트래픽
-          │                        │
-    ┌─────┤ AND ├─────┐     ┌─────┤ OR ├─────┐
-    │               │     │               │
- 인덱스 누락    대량 데이터  신규 코드 배포  스키마 변경
+                    Payment Service Outage (Top Event)
+                          |
+                    +-----| OR |-----+
+                    |                |
+              DB Failure        Application Failure
+                |                    |
+          +-----| OR |-----+  +---| AND |---+
+          |                |  |             |
+    Pool Exhaustion   Disk Full  Slow Queries  High Traffic
+          |                        |
+    +-----| AND |-----+     +-----| OR |-----+
+    |                |     |                |
+ Missing Index  Large Data  New Code Deploy  Schema Change
 ```
 
-**확률 계산:**
+**Probability Calculation:**
 ```
-OR 게이트:  P(A OR B)  = 1 - (1-P(A)) × (1-P(B))
-AND 게이트: P(A AND B) = P(A) × P(B)
+OR gate:  P(A OR B)  = 1 - (1-P(A)) x (1-P(B))
+AND gate: P(A AND B) = P(A) x P(B)
 
-예: P(느린쿼리)=0.3, P(높은트래픽)=0.2
-    P(앱장애) = 0.3 × 0.2 = 0.06 (6%)
+Example: P(slow query)=0.3, P(high traffic)=0.2
+    P(app failure) = 0.3 x 0.2 = 0.06 (6%)
 ```
 
-## 4. 변경점 분석 (Change Analysis)
+## 4. Change Analysis
 
 ```markdown
-장애 발생 전후 변경 사항 조사:
+Investigate changes before and after the incident:
 
-| 변경 시점 | 변경 내용 | 변경자 | 영향 범위 | 장애 상관 |
-|----------|----------|--------|----------|----------|
-| T-2h | 결제 API v2.3 배포 | 김개발 | 결제 서비스 | ✅ 높음 |
-| T-1h | Redis 설정 변경 | 박운영 | 캐시 서비스 | ❓ 중간 |
-| T-30m | CDN 캐시 퍼지 | 이마케팅 | 프론트엔드 | ❌ 낮음 |
+| Change Time | Change Content | Changed By | Impact Scope | Incident Correlation |
+|------------|---------------|-----------|-------------|---------------------|
+| T-2h | Payment API v2.3 deploy | Dev team | Payment service | HIGH |
+| T-1h | Redis config change | Ops team | Cache service | MEDIUM |
+| T-30m | CDN cache purge | Marketing | Frontend | LOW |
 
-상관 관계 판단 기준:
-1. 시간적 근접성: 변경 시점 ↔ 장애 발생 시점
-2. 범위 일치: 변경 범위 ↔ 장애 영향 범위
-3. 롤백 효과: 변경 롤백 시 장애 해소 여부
+Correlation criteria:
+1. Temporal proximity: Change time <-> Incident time
+2. Scope match: Change scope <-> Incident impact scope
+3. Rollback effect: Whether rolling back the change resolves the incident
 ```
 
-## 인지 편향 방지 체크리스트
+## Cognitive Bias Prevention Checklist
 
-| 편향 | 설명 | 방지법 |
-|------|------|--------|
-| **확증 편향** | 첫 가설에 맞는 증거만 수집 | 반례를 적극적으로 찾기 |
-| **사후 확신 편향** | "당연히 이게 원인이지" | 당시 시점의 정보만으로 판단 |
-| **가용성 편향** | 최근 경험한 유사 장애와 동일시 | 증거 기반 분석 강제 |
-| **기본 귀인 오류** | 사람 탓으로 귀결 | 시스템/프로세스 원인 우선 |
-| **앵커링** | 첫 보고 내용에 고착 | 다수 관점에서 독립적 분석 |
+| Bias | Description | Prevention |
+|------|-------------|-----------|
+| **Confirmation bias** | Collecting only evidence matching the first hypothesis | Actively search for counterexamples |
+| **Hindsight bias** | "Obviously this was the cause" | Judge based only on information available at the time |
+| **Availability bias** | Equating with recently experienced similar incidents | Enforce evidence-based analysis |
+| **Fundamental attribution error** | Attributing to human error | Prioritize system/process causes |
+| **Anchoring** | Fixating on initial report content | Analyze independently from multiple perspectives |
 
-## RCA 기법 선택 가이드
+## RCA Technique Selection Guide
 
-| 상황 | 추천 기법 | 이유 |
-|------|----------|------|
-| 단순 장애, 빠른 분석 필요 | 5 Whys | 경량, 즉시 수행 가능 |
-| 복합 원인 의심 | 피시본 | 다차원 원인 탐색 |
-| 안전 관련 심각 장애 | FTA | 정량적, 체계적 |
-| 배포 직후 장애 | 변경점 분석 | 원인 후보 좁히기 |
-| 모든 경우 | 5 Whys + 변경점 분석 병행 | 빠르면서도 체계적 |
+| Situation | Recommended Technique | Reason |
+|-----------|----------------------|--------|
+| Simple incident, quick analysis needed | 5 Whys | Lightweight, can be done immediately |
+| Suspected compound causes | Fishbone | Multi-dimensional cause exploration |
+| Safety-related severe incidents | FTA | Quantitative, systematic |
+| Post-deployment incidents | Change Analysis | Narrow down cause candidates |
+| All cases | 5 Whys + Change Analysis combined | Fast yet systematic |

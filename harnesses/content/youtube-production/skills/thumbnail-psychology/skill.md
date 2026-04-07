@@ -1,124 +1,124 @@
 ---
 name: thumbnail-psychology
-description: "YouTube 썸네일 시각 심리학 스킬. 색상 이론, 구도 원칙, CTR 최적화 패턴, 모바일 가독성 체크리스트를 제공한다. 썸네일디자이너(thumbnail-designer)가 시각적으로 효과적인 썸네일을 설계할 때 참조한다. 단독으로 '썸네일 잘 만드는 법', '클릭율 높이는 썸네일' 요청에도 사용한다. 실제 이미지 생성은 gemini-3-pro-imagegen 스킬의 영역이다."
+description: "YouTube thumbnail visual psychology skill. Provides color theory, composition principles, CTR optimization patterns, and mobile readability checklists. Referenced by the thumbnail-designer agent when designing visually effective thumbnails. Also used standalone for requests like 'how to make great thumbnails' or 'thumbnails that boost click-through rate.' Actual image generation falls under the gemini-3-pro-imagegen skill."
 ---
 
-# Thumbnail Psychology — 썸네일 시각 심리학 가이드
+# Thumbnail Psychology — Visual Psychology Guide for Thumbnails
 
-시청자의 무의식적 클릭을 유도하는 시각 심리학 원리. thumbnail-designer 에이전트의 디자인 능력을 확장한다.
+Visual psychology principles that drive subconscious clicks. Extends the thumbnail-designer agent's design capabilities.
 
-## 시선 추적 원리
+## Eye-Tracking Principles
 
-사람의 시선은 썸네일에서 평균 **1.5초** 체류한다. 이 시간 안에 3가지를 전달해야 한다:
-1. **무엇에 관한 영상인가** (주제)
-2. **왜 클릭해야 하는가** (가치)
-3. **감정적 반응** (호기심/놀라움/공포)
+The average viewer's gaze lingers on a thumbnail for **1.5 seconds**. Within that time, you must communicate 3 things:
+1. **What the video is about** (topic)
+2. **Why they should click** (value)
+3. **An emotional reaction** (curiosity/surprise/fear)
 
-## 색상 심리학
+## Color Psychology
 
-### 감정별 색상 매핑
+### Color-Emotion Mapping
 
-| 색상 | 감정 | YouTube 적합 용도 | HEX 코드 |
-|------|------|-----------------|----------|
-| 빨강 | 긴급, 열정, 경고 | 속보, 경고, 핫딜 | #E63946 |
-| 노랑 | 주의, 낙관, 에너지 | 꿀팁, 밝은 톤 | #FFD60A |
-| 파랑 | 신뢰, 전문성, 차분 | 교육, 기술, 리뷰 | #457B9D |
-| 초록 | 성장, 돈, 건강 | 재테크, 건강, 성공 | #2D6A4F |
-| 보라 | 고급, 창의, 신비 | 뷰티, 럭셔리, 예술 | #7B2CBF |
-| 주황 | 활력, 재미, 친근 | 엔터테인먼트, 먹방 | #F77F00 |
-| 검정 | 고급, 권위, 미스터리 | 프리미엄, 다크토픽 | #1D1D1D |
-| 흰색 | 깔끔, 미니멀, 순수 | 미니멀, 테크, 뷰티 | #FFFFFF |
+| Color | Emotion | YouTube Use Case | HEX Code |
+|-------|---------|-----------------|----------|
+| Red | Urgency, passion, warning | Breaking news, alerts, hot deals | #E63946 |
+| Yellow | Attention, optimism, energy | Tips, bright tone | #FFD60A |
+| Blue | Trust, expertise, calm | Education, tech, reviews | #457B9D |
+| Green | Growth, money, health | Finance, wellness, success | #2D6A4F |
+| Purple | Luxury, creativity, mystery | Beauty, luxury, art | #7B2CBF |
+| Orange | Vitality, fun, approachability | Entertainment, food | #F77F00 |
+| Black | Premium, authority, mystery | Premium content, dark topics | #1D1D1D |
+| White | Clean, minimal, pure | Minimalist, tech, beauty | #FFFFFF |
 
-### 대비 공식
+### Contrast Formula
 
-    가독성 = 전경색과 배경색의 명도 차이
-    최소 명도 차이: 4.5:1 (WCAG AA 기준)
+    Readability = luminance difference between foreground and background
+    Minimum contrast ratio: 4.5:1 (WCAG AA standard)
 
-    YouTube 추천: 7:1 이상 (모바일 소형 화면 고려)
+    YouTube recommendation: 7:1 or higher (accounting for small mobile screens)
 
-### 경쟁 차별화 색상 전략
+### Competitive Differentiation Color Strategy
 
-YouTube 검색 결과에서 동일 주제의 영상들이 비슷한 색상을 사용하면, **반대 색상**을 선택한다:
-- 경쟁 영상이 대부분 빨강/노랑 → **파랑/보라** 선택
-- 경쟁 영상이 어두운 톤 → **밝은 배경** 선택
+When videos on the same topic in YouTube search results use similar colors, **choose the opposite color**:
+- Most competitors use red/yellow → **choose blue/purple**
+- Most competitors use dark tones → **choose a light background**
 
-## 구도 패턴 (7가지)
+## Composition Patterns (7 Types)
 
-### 1. 센터 포커스
-- 핵심 요소를 정중앙에 배치
-- 가장 안전한 구도, 모바일 최적
-- 텍스트는 상단 또는 하단 밴드
+### 1. Center Focus
+- Place the key element dead center
+- Safest composition, mobile-optimized
+- Text goes in a top or bottom band
 
-### 2. 삼분할 대비
-- 좌 1/3에 인물, 우 2/3에 텍스트 (또는 반대)
-- 비교/대결 영상에 효과적
-- 중앙선에 VS, 화살표 등 시각 요소
+### 2. Rule of Thirds Split
+- Person in left 1/3, text in right 2/3 (or vice versa)
+- Effective for comparison/versus videos
+- VS mark, arrows, or other visual elements on the center line
 
-### 3. 대각선 텐션
-- 좌하단→우상단 대각선으로 시선 유도
-- 역동적, 에너지 넘치는 느낌
-- 액션, 스포츠, 변화 영상에 적합
+### 3. Diagonal Tension
+- Guide the eye from bottom-left to top-right along a diagonal
+- Creates a dynamic, high-energy feel
+- Best for action, sports, transformation videos
 
-### 4. 프레임 인 프레임
-- 원형/사각형 프레임으로 핵심 요소를 감싸기
-- 시선을 강제로 집중시키는 효과
-- 제품 리뷰, 언박싱에 적합
+### 4. Frame Within a Frame
+- Surround the key element with a circular/rectangular frame
+- Forces gaze to concentrate on the focal point
+- Great for product reviews, unboxings
 
-### 5. 미니멀 네거티브
-- 배경의 70%를 비우고 핵심 요소만 배치
-- 프리미엄, 고급 느낌
-- 텍스트 가독성 극대화
+### 5. Minimal Negative Space
+- Leave 70% of the background empty, placing only the key element
+- Conveys a premium, high-end feel
+- Maximizes text readability
 
-### 6. 콜라주/그리드
-- 2~4개 요소를 격자로 배열
-- 리스트형, 비교형 영상에 적합
-- 각 셀의 크기를 불균등하게 하면 시선 우선순위 생성
+### 6. Collage/Grid
+- Arrange 2–4 elements in a grid layout
+- Suited for listicle and comparison videos
+- Unequal cell sizes create visual priority
 
-### 7. 풀 블리드 텍스트
-- 텍스트가 썸네일의 주인공
-- 이미지 없이 타이포그래피만으로 승부
-- 뉴스, 논평, 에세이형 영상에 적합
+### 7. Full-Bleed Text
+- Text is the star of the thumbnail
+- Typography alone, no imagery
+- Best for news, commentary, essay-style videos
 
-## 텍스트 오버레이 규칙
+## Text Overlay Rules
 
-### 글자 수 제한
-- **최적**: 3~5단어
-- **최대**: 7단어 (그 이상은 모바일에서 읽기 불가)
-- **제목과 겹치지 않는다** — 제목이 "방법"이면 썸네일은 "결과"를 보여준다
+### Word Count Limits
+- **Optimal**: 3–5 words
+- **Maximum**: 7 words (anything more is unreadable on mobile)
+- **Never duplicate the title** — if the title says "how," the thumbnail should show "the result"
 
-### 폰트 선택 가이드
+### Font Selection Guide
 
-| 톤 | 추천 폰트 스타일 | 예시 |
-|----|----------------|------|
-| 전문적 | 산세리프 Bold | Pretendard, Noto Sans KR |
-| 캐주얼 | 라운드/손글씨 | 나눔바른펜, 카페24 |
-| 충격적 | 초굵은 고딕 | 스포카한산스, 블랙한산스 |
-| 고급 | 세리프 | 나눔명조, KoPub바탕 |
+| Tone | Recommended Font Style | Examples |
+|------|----------------------|---------|
+| Professional | Sans-serif Bold | Helvetica, Inter, Roboto |
+| Casual | Rounded/Handwritten | Comic Neue, Pacifico |
+| Shocking | Ultra-bold Gothic | Impact, Anton |
+| Premium | Serif | Playfair Display, Georgia |
 
-### 텍스트 가독성 체크리스트
+### Text Readability Checklist
 
-- [ ] 128x72px (모바일 목록 크기)에서도 읽히는가?
-- [ ] 텍스트에 외곽선(stroke) 또는 그림자가 있는가?
-- [ ] 배경과의 명도 대비가 7:1 이상인가?
-- [ ] 텍스트가 인물의 얼굴을 가리지 않는가?
+- [ ] Is it readable at 128x72px (mobile list size)?
+- [ ] Does the text have a stroke (outline) or drop shadow?
+- [ ] Is the contrast ratio against the background 7:1 or higher?
+- [ ] Does the text avoid covering a person's face?
 
-## 얼굴/감정 표현 효과
+## Face/Emotion Impact
 
-연구에 따르면 **얼굴이 포함된 썸네일**의 CTR이 평균 38% 높다.
+Research shows that **thumbnails featuring faces** see an average 38% higher CTR.
 
-### 효과적인 감정 표현 순위
-1. **놀라움** (입을 크게 벌린) — CTR 최고
-2. **호기심** (한쪽 눈썹 올린) — 교육 영상에 효과적
-3. **기쁨** (자연스러운 미소) — 브이로그, 라이프에 적합
-4. **충격** (눈을 크게 뜬) — 뉴스, 폭로에 적합
-5. **무표정** — 프리미엄, 전문적 톤에 적합
+### Effective Emotional Expressions (Ranked)
+1. **Surprise** (mouth wide open) — Highest CTR
+2. **Curiosity** (one eyebrow raised) — Effective for educational videos
+3. **Joy** (natural smile) — Suited for vlogs, lifestyle content
+4. **Shock** (eyes wide) — Suited for news, exposés
+5. **Neutral** — Suited for premium, professional tone
 
-## 3초 테스트 체크리스트
+## 3-Second Test Checklist
 
-최종 썸네일은 다음 테스트를 통과해야 한다:
+Every final thumbnail must pass the following tests:
 
-- [ ] 128x72px로 축소해도 주제를 알 수 있는가?
-- [ ] 3초 안에 "무엇에 관한 영상인지" 파악 가능한가?
-- [ ] 경쟁 영상 5개 사이에 놓았을 때 눈에 띄는가?
-- [ ] 제목을 가리고 썸네일만 봐도 클릭하고 싶은가?
-- [ ] 제목과 썸네일이 같은 말을 반복하지 않는가?
+- [ ] Is the topic still clear when shrunk to 128x72px?
+- [ ] Can you tell "what the video is about" within 3 seconds?
+- [ ] Does it stand out when placed among 5 competing thumbnails?
+- [ ] Would you click it based on the thumbnail alone, without reading the title?
+- [ ] Do the title and thumbnail avoid saying the same thing?

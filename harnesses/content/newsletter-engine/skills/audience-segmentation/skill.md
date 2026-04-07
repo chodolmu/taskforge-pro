@@ -1,104 +1,104 @@
 ---
 name: audience-segmentation
-description: "분석가(analyst)와 큐레이터(curator)가 사용하는 독자 세그멘테이션 전문 스킬. 구독자 행동 분석, 페르소나 기반 콘텐츠 맞춤화, 세그먼트별 전략 수립 방법론을 제공한다. '독자 분석', '세그멘테이션', '페르소나', '발송 최적화' 등에 활용한다."
+description: "Audience segmentation skill used by the analyst and curator agents. Provides subscriber behavior analysis, persona-based content personalization, and segment-specific strategy methodologies. Use for 'audience analysis,' 'segmentation,' 'persona,' 'send optimization,' and similar requests."
 ---
 
-# Audience Segmentation — 독자 세그멘테이션 전문 방법론
+# Audience Segmentation — Audience Segmentation Methodology
 
-analyst와 curator 에이전트가 콘텐츠 전략과 A/B 테스트를 설계할 때 활용하는 독자 분류 전문 지식.
+Specialist audience classification knowledge used by the analyst and curator agents when designing content strategy and A/B tests.
 
-## 왜 세그멘테이션이 필요한가
+## Why Segmentation Matters
 
-구독자 1,000명에게 같은 이메일을 보내면 **평균적으로 아무도 만족하지 않는** 콘텐츠가 된다. 세그멘테이션은 "누구에게 무엇을 보낼지"를 결정하는 기술이다.
+Sending the same email to 1,000 subscribers produces content that **satisfies nobody on average**. Segmentation is the art of deciding "who gets what."
 
-## 뉴스레터 세그멘테이션 모델: BEAR 프레임워크
+## Newsletter Segmentation Model: The BEAR Framework
 
-### B — Behavior (행동 기반)
+### B — Behavior (Behavior-Based)
 
-| 행동 세그먼트 | 정의 | 전략 |
-|-------------|------|------|
-| **열성 독자** | 최근 5회 연속 오픈 | 심층 콘텐츠, 독점 자료 제공 |
-| **간헐적 독자** | 5회 중 2~3회 오픈 | 제목줄 최적화, 핵심만 간결하게 |
-| **이탈 위험** | 최근 3회 연속 미오픈 | 재관여(re-engagement) 캠페인 |
-| **신규 구독자** | 가입 후 30일 이내 | 웰컴 시리즈, 베스트 콘텐츠 큐레이션 |
-| **클릭 액티브** | 오픈 후 링크 클릭 비율 높음 | 딥다이브 콘텐츠, CTA 중심 |
+| Behavior Segment | Definition | Strategy |
+|-----------------|------------|----------|
+| **Power Readers** | Opened last 5 issues consecutively | Deep content, exclusive resources |
+| **Occasional Readers** | Opened 2–3 out of 5 | Optimize subject lines, keep it concise |
+| **At-Risk** | Missed last 3 consecutive issues | Re-engagement campaign |
+| **New Subscribers** | Joined within last 30 days | Welcome series, best-of curation |
+| **Click-Active** | High link-click rate after opening | Deep-dive content, CTA-focused |
 
-### E — Engagement Level (참여 수준)
+### E — Engagement Level
 
-참여도를 0~100 스코어로 산출한다:
+Calculate engagement on a 0–100 score:
 
 ```
-참여 스코어 = (오픈율 가중치 x 40) + (클릭률 가중치 x 35) + (답장/공유 x 25)
+Engagement Score = (Open Rate Weight x 40) + (Click Rate Weight x 35) + (Reply/Share x 25)
 
-- 80~100: VIP — 커뮤니티 초대, 사전 콘텐츠 접근권
-- 50~79: 코어 — 표준 뉴스레터 + 월 1회 특별 콘텐츠
-- 20~49: 캐주얼 — 핵심 요약 버전, 짧은 포맷
-- 0~19: 휴면 — 재관여 시퀀스 → 반응 없으면 리스트 정리
+- 80–100: VIP — Community invite, early access to content
+- 50–79: Core — Standard newsletter + monthly special content
+- 20–49: Casual — Key summary version, short format
+- 0–19: Dormant — Re-engagement sequence → if no response, clean from list
 ```
 
-### A — Attribute (속성 기반)
+### A — Attribute (Attribute-Based)
 
-| 속성 | 분류 기준 | 콘텐츠 차별화 |
-|------|---------|-------------|
-| **직군** | 개발자 / 마케터 / 경영진 / 디자이너 | 사례와 용어 수준 조절 |
-| **경험 수준** | 초급 / 중급 / 전문가 | 기초 설명 포함 여부 |
-| **관심 주제** | 태그/카테고리별 클릭 이력 | 주제별 맞춤 큐레이션 |
-| **가입 경로** | 블로그 / SNS / 추천 / 이벤트 | 초기 기대치에 맞춘 온보딩 |
+| Attribute | Classification Criteria | Content Differentiation |
+|-----------|----------------------|------------------------|
+| **Role** | Developer / Marketer / Executive / Designer | Adjust examples and terminology level |
+| **Experience Level** | Beginner / Intermediate / Expert | Include/exclude foundational explanations |
+| **Interest Topic** | Click history by tag/category | Topic-specific curation |
+| **Signup Source** | Blog / Social / Referral / Event | Onboarding matched to initial expectations |
 
-### R — Recency-Frequency (시간-빈도)
+### R — Recency-Frequency
 
-| 세그먼트 | R (최근 오픈) | F (오픈 빈도) | 전략 |
-|---------|-------------|-------------|------|
-| **챔피언** | 최근 7일 | 매호 오픈 | 독점 콘텐츠, 추천인 프로그램 유도 |
-| **충성 독자** | 최근 14일 | 2회 중 1회+ | 표준 콘텐츠, 피드백 요청 |
-| **잠재 이탈** | 14~30일 전 | 감소 추세 | "놓치셨나요?" 리마인더 |
-| **휴면** | 30일+ | 거의 0 | 최후 재관여 → 미반응 시 제거 |
+| Segment | R (Last Open) | F (Open Frequency) | Strategy |
+|---------|--------------|-------------------|----------|
+| **Champion** | Within 7 days | Opens every issue | Exclusive content, referral program |
+| **Loyal Reader** | Within 14 days | 1 in 2+ | Standard content, feedback requests |
+| **At-Risk** | 14–30 days ago | Declining trend | "Did you miss this?" reminder |
+| **Dormant** | 30+ days | Near zero | Final re-engagement → remove if no response |
 
-## 세그먼트별 콘텐츠 전략
+## Segment-Specific Content Strategy
 
-### 웰컴 시리즈 (신규 구독자 전용)
+### Welcome Series (New Subscribers Only)
 
-| 일차 | 이메일 | 목적 |
-|------|--------|------|
-| D+0 | 환영 + 자기소개 + 기대치 설정 | 첫인상, 발행 주기/톤 안내 |
-| D+2 | 역대 인기 콘텐츠 TOP 3 | 뉴스레터의 가치 증명 |
-| D+5 | "당신에 대해 알고 싶어요" — 간단 설문 | 세그먼트 분류 데이터 수집 |
-| D+10 | 독점 콘텐츠 또는 리소스 제공 | 장기 구독 유인 |
+| Day | Email | Purpose |
+|-----|-------|---------|
+| D+0 | Welcome + self-introduction + expectation setting | First impression, frequency/tone overview |
+| D+2 | All-time top 3 content | Prove the newsletter's value |
+| D+5 | "We'd love to know about you" — short survey | Collect segmentation data |
+| D+10 | Exclusive content or resource | Incentivize long-term subscription |
 
-### 재관여 시퀀스 (이탈 위험 독자)
+### Re-engagement Sequence (At-Risk Readers)
 
-| 순서 | 제목줄 패턴 | 전략 |
-|------|-----------|------|
-| 1회차 | "요즘 바쁘신 거 알아요 — 이것만 읽어보세요" | 최고 콘텐츠 1개만 압축 제공 |
-| 2회차 | "혹시 스팸함에 있었나요?" | 화이트리스트 요청 + 기술적 해결 |
-| 3회차 | "솔직히 말씀드릴게요 — 구독을 유지할 이유" | 가치 재확인, 빈도 조절 옵션 제공 |
-| 미반응 | 리스트에서 제거 | 건강한 리스트 유지 (도달률 보호) |
+| Step | Subject Line Pattern | Strategy |
+|------|---------------------|----------|
+| 1st | "We know you've been busy — just read this one" | Deliver one compressed top piece |
+| 2nd | "Did we end up in your spam folder?" | Request whitelisting + technical fix |
+| 3rd | "Here's an honest case for staying subscribed" | Reaffirm value, offer frequency options |
+| No response | Remove from list | Maintain list health (protect deliverability) |
 
-## 발송 시간 최적화 매트릭스
+## Send Time Optimization Matrix
 
-| 구독자 유형 | 최적 요일 | 최적 시간 | 근거 |
-|-----------|---------|---------|------|
-| B2B 전문가 | 화~목 | 오전 8~10시 | 출근 후 이메일 체크 시간대 |
-| 개발자/테크 | 화, 목 | 오전 7~8시 | 일찍 시작하는 습관 |
-| B2C 일반 | 토, 일 | 오전 10~12시 | 주말 여유 시간 |
-| 경영진/의사결정자 | 화, 수 | 오전 6~7시 | 하루 시작 전 체크 |
-| 글로벌 혼합 | 화 | UTC 14:00 | 시간대 교차 최적점 |
+| Subscriber Type | Best Day | Best Time | Rationale |
+|----------------|----------|-----------|-----------|
+| B2B Professionals | Tue–Thu | 8–10 AM | Post-arrival email check window |
+| Developers/Tech | Tue, Thu | 7–8 AM | Early-start habit |
+| B2C General | Sat, Sun | 10 AM–12 PM | Weekend leisure time |
+| Executives/Decision-makers | Tue, Wed | 6–7 AM | Pre-day check |
+| Global Mixed | Tue | 2:00 PM UTC | Optimal cross-timezone intersection |
 
-## 콘텐츠 개인화 수준
+## Content Personalization Levels
 
-| 수준 | 방법 | 복잡도 | 효과 |
-|------|------|--------|------|
-| L1 | 이름 삽입 ([이름]님, 안녕하세요) | 낮음 | 오픈율 +10~15% |
-| L2 | 관심 주제별 섹션 순서 변경 | 중간 | 클릭률 +20~30% |
-| L3 | 세그먼트별 완전 다른 콘텐츠 버전 | 높음 | 클릭률 +40~60% |
-| L4 | 개인별 AI 추천 큐레이션 | 매우 높음 | 클릭률 +50~80% |
+| Level | Method | Complexity | Effect |
+|-------|--------|-----------|--------|
+| L1 | Name insertion (Hi [Name]) | Low | Open rate +10–15% |
+| L2 | Reorder sections by interest topic | Medium | Click rate +20–30% |
+| L3 | Completely different content versions per segment | High | Click rate +40–60% |
+| L4 | Individual AI-powered recommendation curation | Very High | Click rate +50–80% |
 
-## 뉴스레터 건강 지표
+## Newsletter Health Metrics
 
-| 지표 | 건강 | 주의 | 위험 |
-|------|------|------|------|
-| 오픈율 | 40%+ | 25~39% | 25% 미만 |
-| 클릭률 | 5%+ | 2~4% | 2% 미만 |
-| 구독 해지율 | 0.3% 미만 | 0.3~0.5% | 0.5%+ |
-| 스팸 신고율 | 0.01% 미만 | 0.01~0.05% | 0.05%+ |
-| 리스트 성장률 | 월 5%+ | 1~4% | 0% 미만 |
+| Metric | Healthy | Caution | Danger |
+|--------|---------|---------|--------|
+| Open Rate | 40%+ | 25–39% | Below 25% |
+| Click-through Rate | 5%+ | 2–4% | Below 2% |
+| Unsubscribe Rate | Below 0.3% | 0.3–0.5% | 0.5%+ |
+| Spam Complaint Rate | Below 0.01% | 0.01–0.05% | 0.05%+ |
+| List Growth Rate | 5%+/month | 1–4% | Below 0% |

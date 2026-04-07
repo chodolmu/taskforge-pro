@@ -1,116 +1,116 @@
 ---
 name: sensitivity-analysis
-description: "재무 모델의 민감도 분석과 시나리오 테이블 구성 방법론을 제공하는 전문 스킬. scenario-planner 에이전트가 Bear/Base/Bull 시나리오를 설계하고 핵심 변수의 영향도를 분석할 때 활용한다. '민감도 분석', '시나리오 분석', 'sensitivity table', '토네이도 차트', 'Monte Carlo' 등의 맥락에서 자동 적용한다. 단, 통계 소프트웨어(R, Python) 실행이나 실시간 시뮬레이션은 이 스킬의 범위가 아니다."
+description: "A specialized skill providing sensitivity analysis and scenario table construction methodology for financial models. Used by the scenario-planner agent when designing Bear/Base/Bull scenarios and analyzing key variable impact. Automatically applied in contexts such as 'sensitivity analysis', 'scenario analysis', 'sensitivity table', 'tornado chart', 'Monte Carlo'. However, statistical software (R, Python) execution and real-time simulation are outside the scope of this skill."
 ---
 
-# Sensitivity Analysis — 민감도 분석 방법론
+# Sensitivity Analysis — Sensitivity Analysis Methodology
 
-scenario-planner 에이전트의 시나리오 분석 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the scenario analysis capabilities of the scenario-planner agent.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **scenario-planner** — Bear/Base/Bull 시나리오, 민감도 테이블 구성
+- **scenario-planner** — Bear/Base/Bull scenarios, sensitivity table construction
 
-## 1-Way 민감도 분석
+## 1-Way Sensitivity Analysis
 
-하나의 변수를 변동시키고 나머지를 고정한 상태에서 결과값의 변화를 관찰한다.
+Vary one variable while holding all others constant and observe changes in the result.
 
-### 토네이도 차트 구성법
+### Tornado Chart Construction Method
 
-1. 핵심 가정 변수 5-8개를 선정한다
-2. 각 변수를 ±20% (또는 합리적 범위) 변동시킨다
-3. 결과값(기업 가치, IRR 등)의 변동폭을 계산한다
-4. 변동폭이 큰 순서대로 수평 바를 배치한다
+1. Select 5-8 key assumption variables
+2. Vary each variable by +/-20% (or a reasonable range)
+3. Calculate the variation in the result metric (enterprise value, IRR, etc.)
+4. Arrange horizontal bars in descending order of variation magnitude
 
 ```
-                    기업 가치 변동
-매출 성장률    ████████████████████████   가장 민감
-영업이익률     ██████████████████
-WACC          ████████████████
-영구성장률     █████████████
-CAPEX/매출     ███████████
-NWC/매출       ████████                   가장 둔감
+                    Enterprise Value Change
+Revenue Growth  ████████████████████████   Most Sensitive
+Operating Margin ██████████████████
+WACC            ████████████████
+Perpetual Growth █████████████
+CAPEX/Revenue    ███████████
+NWC/Revenue      ████████                   Least Sensitive
 ```
 
-### 핵심 변수 선정 가이드
+### Key Variable Selection Guide
 
-| 재무 모델 유형 | 1순위 변수 | 2순위 변수 | 3순위 변수 |
-|--------------|-----------|-----------|-----------|
-| SaaS | 매출 성장률 | NRR/Churn | CAC |
-| 제조 | 가동률 | 원재료 가격 | 환율 |
-| 유통 | GMV 성장률 | Take Rate | 배송 비용 |
-| 바이오 | 임상 성공 확률 | 시장 규모 | 약가 |
+| Financial Model Type | 1st Priority | 2nd Priority | 3rd Priority |
+|---------------------|-------------|-------------|-------------|
+| SaaS | Revenue Growth Rate | NRR/Churn | CAC |
+| Manufacturing | Utilization Rate | Raw Material Price | FX Rate |
+| Retail | GMV Growth Rate | Take Rate | Shipping Cost |
+| Biotech | Clinical Success Rate | Market Size | Drug Price |
 
-## 2-Way 민감도 분석 (Data Table)
+## 2-Way Sensitivity Analysis (Data Table)
 
-두 변수를 동시에 변동시키는 매트릭스:
+Matrix varying two variables simultaneously:
 
 ```markdown
-### 기업 가치 (억원) — 매출 성장률 vs WACC
+### Enterprise Value ($M) — Revenue Growth vs WACC
 
 |              | WACC 8% | WACC 9% | WACC 10% | WACC 11% | WACC 12% |
 |-------------|---------|---------|----------|----------|----------|
-| 성장률 10%  |   520   |   460   |   410    |   370    |   340    |
-| 성장률 15%  |   680   |   590   |   520    |   460    |   410    |
-| 성장률 20%  |   870   |   740   |   640    |   560    |   490    |
-| 성장률 25%  |  1,090  |   910   |   780    |   670    |   590    |
-| 성장률 30%  |  1,350  |  1,110  |   930    |   800    |   700    |
+| Growth 10%  |   52    |   46    |   41     |   37     |   34     |
+| Growth 15%  |   68    |   59    |   52     |   46     |   41     |
+| Growth 20%  |   87    |   74    |   64     |   56     |   49     |
+| Growth 25%  |  109    |   91    |   78     |   67     |   59     |
+| Growth 30%  |  135    |  111    |   93     |   80     |   70     |
 ```
 
-**색상 코딩 규칙:**
-- 현재 기업가치 이상 = 녹색 (투자 매력)
-- 현재 기업가치의 80-100% = 노란색 (관찰)
-- 현재 기업가치의 80% 미만 = 빨간색 (경고)
+**Color Coding Rules:**
+- Above current enterprise value = Green (Investment attractive)
+- 80-100% of current enterprise value = Yellow (Watch)
+- Below 80% of current enterprise value = Red (Warning)
 
-## 3-시나리오 분석 (Bear/Base/Bull)
+## 3-Scenario Analysis (Bear/Base/Bull)
 
-### 시나리오 정의 프레임워크
+### Scenario Definition Framework
 
-| 구분 | Bear (비관) | Base (기본) | Bull (낙관) |
-|------|-----------|-----------|-----------|
-| 확률 가중 | 20-25% | 50-60% | 20-25% |
-| 매출 성장 | 하위 25% 벤치마크 | 중위값 | 상위 25% 벤치마크 |
-| 마진 | 현 수준 유지 또는 하락 | 점진 개선 | 목표 달성 |
-| 시장 환경 | 경기 둔화, 경쟁 격화 | 현상 유지 | 호황, 시장 확대 |
+| Category | Bear (Pessimistic) | Base | Bull (Optimistic) |
+|----------|-------------------|------|-------------------|
+| Probability Weight | 20-25% | 50-60% | 20-25% |
+| Revenue Growth | Bottom 25% benchmark | Median | Top 25% benchmark |
+| Margin | Maintain or decline | Gradual improvement | Target achieved |
+| Market Environment | Economic slowdown, intensified competition | Status quo | Boom, market expansion |
 
-### 시나리오별 핵심 가정 테이블
+### Per-Scenario Key Assumptions Table
 
 ```markdown
-| 가정 항목 | Bear | Base | Bull | 근거 |
-|----------|------|------|------|------|
-| 매출 성장률 Y1 | 10% | 25% | 40% | 업종 분포 |
-| 매출 성장률 Y3 | 5% | 15% | 30% | 수렴 가정 |
-| 영업이익률 Y5 | 8% | 15% | 22% | 벤치마크 |
-| 고객 이탈률 | 5% | 3% | 1.5% | 동종 데이터 |
-| CAPEX/매출 | 12% | 8% | 6% | 규모의 경제 |
+| Assumption | Bear | Base | Bull | Basis |
+|-----------|------|------|------|-------|
+| Revenue Growth Y1 | 10% | 25% | 40% | Industry distribution |
+| Revenue Growth Y3 | 5% | 15% | 30% | Convergence assumption |
+| Operating Margin Y5 | 8% | 15% | 22% | Benchmark |
+| Customer Churn | 5% | 3% | 1.5% | Peer data |
+| CAPEX/Revenue | 12% | 8% | 6% | Economies of scale |
 ```
 
-### 확률 가중 가치 (Probability-Weighted)
+### Probability-Weighted Value
 
 ```
-가중 기업가치 = P(Bear) × V(Bear) + P(Base) × V(Base) + P(Bull) × V(Bull)
+Weighted Enterprise Value = P(Bear) x V(Bear) + P(Base) x V(Base) + P(Bull) x V(Bull)
 ```
 
-## 브레이크이븐 분석
+## Break-Even Analysis
 
-### 핵심 질문
+### Key Questions
 
-"어떤 가정이 어느 수준까지 악화되면 투자가 실패하는가?"
+"At what level must an assumption deteriorate for the investment to fail?"
 
-| 분석 항목 | 산식 | 의미 |
-|----------|------|------|
-| 매출 BEP | 고정비 / 공헌이익률 | 최소 필요 매출 |
-| 고객수 BEP | 고정비 / (ARPU × 마진) | 최소 필요 고객 |
-| 성장률 BEP | NPV = 0이 되는 성장률 | 최소 필요 성장률 |
-| IRR BEP | NPV = 0이 되는 할인율 | 내부수익률 |
+| Analysis Item | Formula | Meaning |
+|-------------|---------|---------|
+| Revenue BEP | Fixed Costs / Contribution Margin Ratio | Minimum required revenue |
+| Customer BEP | Fixed Costs / (ARPU x Margin) | Minimum required customers |
+| Growth Rate BEP | Growth rate where NPV = 0 | Minimum required growth |
+| IRR BEP | Discount rate where NPV = 0 | Internal rate of return |
 
-## 결과 보고 형식
+## Output Format Requirements
 
-### 필수 산출물
+### Required Deliverables
 
-1. **토네이도 차트** — 변수별 민감도 순위
-2. **2-Way 테이블** — 상위 2개 변수의 교차 분석 (최소 2개)
-3. **3-시나리오 요약** — Bear/Base/Bull 핵심 가정 + 결과값
-4. **확률 가중 가치** — 최종 추정값
-5. **브레이크이븐 포인트** — 핵심 변수별 손익분기
-6. **시사점** — 가장 민감한 변수에 대한 리스크 관리 제안
+1. **Tornado Chart** — Variable sensitivity ranking
+2. **2-Way Tables** — Cross-analysis of top 2 variables (minimum 2)
+3. **3-Scenario Summary** — Bear/Base/Bull key assumptions + results
+4. **Probability-Weighted Value** — Final estimate
+5. **Break-Even Points** — Per key variable break-even
+6. **Implications** — Risk management recommendations for the most sensitive variables

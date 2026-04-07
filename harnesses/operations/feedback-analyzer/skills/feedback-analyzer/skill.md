@@ -1,129 +1,129 @@
 ---
 name: feedback-analyzer
-description: "고객·직원 피드백 종합 분석 파이프라인. 데이터 수집부터 감성분석, 주제분류, 트렌드 도출, 인사이트 보고서까지 에이전트 팀이 협업 생성한다. '피드백 분석해줘', '고객 리뷰 분석', '설문 결과 분석', 'VOC 분석', '직원 만족도 분석', 'NPS 분석', '고객 불만 분석', '피드백 트렌드', '감성분석 해줘' 등 피드백/리뷰/설문 분석 전반에 이 스킬을 사용한다. 설문지 설계, 고객 응대 매뉴얼 작성, CRM 시스템 구축은 이 스킬의 범위가 아니다."
+description: "A comprehensive customer/employee feedback analysis pipeline. An agent team collaborates to handle data collection, sentiment analysis, topic classification, trend detection, and insight reporting. Use this skill for 'analyze feedback', 'customer review analysis', 'survey results analysis', 'VOC analysis', 'employee satisfaction analysis', 'NPS analysis', 'customer complaint analysis', 'feedback trends', 'sentiment analysis', and similar feedback/review/survey analysis topics. Survey design, customer response manual creation, and CRM system development are out of scope."
 ---
 
-# Feedback Analyzer — 피드백 종합 분석 파이프라인
+# Feedback Analyzer — Comprehensive Feedback Analysis Pipeline
 
-고객·직원 피드백 데이터를 수집·분석하여 감성분석, 주제분류, 트렌드 도출, 인사이트 보고서를 에이전트 팀이 협업 생성한다.
+Collects and analyzes customer/employee feedback data to produce sentiment analysis, topic classification, trend detection, and insight reports through agent team collaboration.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 members communicate directly via SendMessage and cross-validate each other's work.
 
-## 에이전트 구성
+## Agent Roster
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| data-collector | `.claude/agents/data-collector.md` | 데이터 수집·정제·정규화 | general-purpose |
-| sentiment-analyst | `.claude/agents/sentiment-analyst.md` | 감성분석, 감정 점수화 | general-purpose |
-| topic-classifier | `.claude/agents/topic-classifier.md` | 주제분류, 카테고리 설계 | general-purpose |
-| trend-detector | `.claude/agents/trend-detector.md` | 트렌드 분석, 이상 탐지 | general-purpose |
-| insight-writer | `.claude/agents/insight-writer.md` | 인사이트 보고서, 액션 아이템 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| data-collector | `.claude/agents/data-collector.md` | Data collection, cleansing, normalization | general-purpose |
+| sentiment-analyst | `.claude/agents/sentiment-analyst.md` | Sentiment analysis, emotion scoring | general-purpose |
+| topic-classifier | `.claude/agents/topic-classifier.md` | Topic classification, category design | general-purpose |
+| trend-detector | `.claude/agents/trend-detector.md` | Trend analysis, anomaly detection | general-purpose |
+| insight-writer | `.claude/agents/insight-writer.md` | Insight report, action items | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (performed directly by the orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **피드백 데이터**: 텍스트 파일, CSV, 붙여넣기, 또는 구두 설명
-    - **데이터 소스 유형**: 고객 리뷰/설문/CS 로그/직원 피드백/SNS
-    - **분석 목적**: 제품 개선/서비스 품질/직원 만족도/경쟁 분석
-    - **비교 기준** (선택): 이전 기간, 경쟁사, 목표치
-    - **기존 카테고리** (선택): 사용자 지정 분류 체계
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Feedback data**: Text files, CSV, paste, or verbal description
+    - **Data source type**: Customer reviews/surveys/support logs/employee feedback/social media
+    - **Analysis purpose**: Product improvement/service quality/employee satisfaction/competitive analysis
+    - **Comparison baseline** (optional): Previous period, competitors, targets
+    - **Existing categories** (optional): User-defined classification system
+2. Create the `_workspace/` directory in the project root
+3. Organize the input and save to `_workspace/00_input.md`
+4. Determine the **execution mode** based on the request scope
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 데이터 수집·정제 | collector | 없음 | `_workspace/01_data_collection.md` |
-| 2a | 감성분석 | sentiment | 작업 1 | `_workspace/02_sentiment_analysis.md` |
-| 2b | 주제분류 | classifier | 작업 1 | `_workspace/03_topic_classification.md` |
-| 3 | 트렌드 분석 | trend | 작업 2a, 2b | `_workspace/04_trend_report.md` |
-| 4 | 인사이트 보고서 | writer | 작업 2a, 2b, 3 | `_workspace/05_insight_report.md` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1 | Data collection/cleansing | collector | None | `_workspace/01_data_collection.md` |
+| 2a | Sentiment analysis | sentiment | Task 1 | `_workspace/02_sentiment_analysis.md` |
+| 2b | Topic classification | classifier | Task 1 | `_workspace/03_topic_classification.md` |
+| 3 | Trend analysis | trend | Tasks 2a, 2b | `_workspace/04_trend_report.md` |
+| 4 | Insight report | writer | Tasks 2a, 2b, 3 | `_workspace/05_insight_report.md` |
 
-작업 2a(감성분석)와 2b(주제분류)는 **병렬 실행**한다. 둘 다 작업 1에만 의존한다.
+Tasks 2a (sentiment) and 2b (topic) run **in parallel**. Both depend only on Task 1.
 
-**팀원 간 소통 흐름:**
-- collector 완료 → sentiment에게 정제 데이터 전달, classifier에게 데이터셋·키워드 전달, trend에게 분포 데이터 전달
-- sentiment 완료 → classifier에게 감정 태깅 데이터 전달 (교차분석용), trend에게 시계열 감정 데이터 전달
-- classifier 완료 → trend에게 주제별 시계열 전달, writer에게 카테고리·긴급 이슈 전달
-- trend 완료 → writer에게 핵심 트렌드·이상 탐지·예측 전달
-- writer는 모든 에이전트 결과를 종합하여 인사이트 보고서 작성
+**Inter-team communication flow:**
+- collector completes → sends cleansed data to sentiment, dataset/keywords to classifier, distribution data to trend
+- sentiment completes → sends emotion-tagged data to classifier (for cross-analysis), time-series emotion data to trend
+- classifier completes → sends topic time-series to trend, categories/urgent issues to writer
+- trend completes → sends key trends/anomalies/forecasts to writer
+- writer synthesizes all agent results into the insight report
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 교차 검증:
-    - [ ] 감성분석 건수와 데이터 수집 건수가 일치하는가
-    - [ ] 주제분류의 미분류율이 10% 이하인가
-    - [ ] 인사이트가 데이터 근거를 명시하고 있는가
-    - [ ] 액션 아이템이 SMART 원칙을 따르는가
-3. 불일치 발견 시 해당 에이전트에게 수정 요청 (최대 2회)
-4. 최종 요약을 사용자에게 보고한다
+1. Verify all files in `_workspace/`
+2. Cross-validation:
+    - [ ] Sentiment analysis count matches data collection count
+    - [ ] Topic classification unclassified rate is 10% or below
+    - [ ] Insights cite data evidence
+    - [ ] Action items follow SMART principles
+3. Request corrections from the relevant agent if discrepancies are found (up to 2 rounds)
+4. Report the final summary to the user
 
-## 작업 규모별 모드
+## Execution Modes by Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "피드백 전체 분석해줘" | **풀 파이프라인** | 5명 전원 |
-| "감성분석만 해줘" | **감성 모드** | collector + sentiment |
-| "이 데이터 주제별로 분류해줘" | **분류 모드** | collector + classifier |
-| "트렌드만 봐줘" (기존 분석 있음) | **트렌드 모드** | trend + writer |
-| "경영 보고서만 써줘" (기존 분석 있음) | **보고서 모드** | writer 단독 |
+| User Request Pattern | Execution Mode | Agents Involved |
+|---------------------|----------------|-----------------|
+| "Analyze all feedback" | **Full Pipeline** | All 5 |
+| "Just do sentiment analysis" | **Sentiment Mode** | collector + sentiment |
+| "Classify this data by topic" | **Classification Mode** | collector + classifier |
+| "Just look at trends" (existing analysis) | **Trend Mode** | trend + writer |
+| "Just write the executive report" (existing analysis) | **Report Mode** | writer solo |
 
-**기존 분석 활용**: 사용자가 이전 분석 결과를 제공하면 해당 파일을 `_workspace/`에 복사하고, 해당 에이전트는 건너뛴다.
+**Leveraging existing analysis**: When the user provides previous analysis results, copy to `_workspace/` and skip the corresponding agent.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| Strategy | Method | Usage |
+|----------|--------|-------|
+| File-based | `_workspace/` directory | Primary deliverable storage and sharing |
+| Message-based | SendMessage | Real-time key information transfer, correction requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 데이터 파싱 실패 | collector가 텍스트 추출 가능한 부분만 처리, 실패 구간 명시 |
-| 데이터 극소량 (5건 미만) | "통계적 유의미성 부족" 경고 포함, 질적 분석으로 전환 |
-| 다국어 혼재 | 언어별 분리 분석, 교차 비교 불가 시 주요 언어만 분석 |
-| 감성분석 불확실성 높음 | "[신뢰도: Low]" 태깅, 수동 검토 권고 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 보고서에 누락 명시 |
+| Error Type | Strategy |
+|-----------|----------|
+| Data parsing failure | collector processes text-extractable portions only, notes failure sections |
+| Extremely small data (fewer than 5) | Include "insufficient for statistical significance" warning, switch to qualitative analysis |
+| Mixed languages | Separate analysis by language, analyze primary language only if cross-comparison is not possible |
+| High sentiment analysis uncertainty | Tag with "[Confidence: Low]", recommend manual review |
+| Agent failure | 1 retry → proceed without that deliverable if still failing, note omission in report |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "이 고객 리뷰 데이터 분석해줘. 지난 3개월 앱 스토어 리뷰 200건이야"
-**기대 결과**:
-- 데이터 수집: 200건 정제, 기초 통계, 채널 분포
-- 감성분석: 긍정/부정/중립 비율, NPS 추정, 극단 감정 하이라이트
-- 주제분류: 3~5개 대분류, 주제×감정 교차분석
-- 트렌드: 3개월 감정 추이, 이상 구간 탐지
-- 인사이트: Executive Summary, Top 3 인사이트, 우선순위 매트릭스
+### Normal Flow
+**Prompt**: "Analyze this customer review data. It's 200 app store reviews from the last 3 months."
+**Expected Results**:
+- Data collection: 200 entries cleansed, basic statistics, channel distribution
+- Sentiment: Positive/negative/neutral ratios, NPS estimate, extreme sentiment highlights
+- Topic: 3-5 major categories, topic × sentiment cross-analysis
+- Trends: 3-month sentiment trajectory, anomaly detection
+- Insights: Executive Summary, Top 3 insights, priority matrix
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이전에 분석한 감성분석 결과가 있어. 이걸 바탕으로 트렌드랑 보고서만 만들어줘"
-**기대 결과**:
-- 기존 감성분석 결과를 `_workspace/02_sentiment_analysis.md`로 복사
-- 트렌드 모드: trend + writer만 투입
-- 기존 데이터 기반 트렌드 분석 및 인사이트 보고서 생성
+### Existing File Flow
+**Prompt**: "I have a previous sentiment analysis. Based on that, just create trends and a report."
+**Expected Results**:
+- Existing sentiment results copied to `_workspace/02_sentiment_analysis.md`
+- Trend mode: trend + writer only
+- Trend analysis and insight report generated from existing data
 
-### 에러 흐름
-**프롬프트**: "고객 피드백 5개만 분석해줘"
-**기대 결과**:
-- "통계적 유의미성 부족" 경고 포함
-- 질적 분석으로 전환: 개별 피드백 심층 분석
-- 트렌드 분석 대신 "스냅샷 분석" 제공
-- 보고서에 "추가 데이터 수집 권고" 명시
+### Error Flow
+**Prompt**: "Analyze just 5 customer feedback entries"
+**Expected Results**:
+- Include "insufficient for statistical significance" warning
+- Switch to qualitative analysis: in-depth analysis of individual feedback
+- Provide "snapshot analysis" instead of trend analysis
+- Report specifies "Additional data collection recommended"
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-| 확장 스킬 | 경로 | 대상 에이전트 | 역할 |
-|----------|------|-------------|------|
-| sentiment-scoring | `.claude/skills/sentiment-scoring/skill.md` | sentiment-analyst | 감성 분류, 스코어링, NPS, 맥락 보정 |
-| text-analytics-methods | `.claude/skills/text-analytics-methods/skill.md` | topic-classifier, trend-detector | 주제 분류, 키워드 분석, 트렌드 탐지, 인사이트 도출 |
+| Extension Skill | Path | Target Agent | Role |
+|----------------|------|--------------|------|
+| sentiment-scoring | `.claude/skills/sentiment-scoring/skill.md` | sentiment-analyst | Sentiment classification, scoring, NPS, context correction |
+| text-analytics-methods | `.claude/skills/text-analytics-methods/skill.md` | topic-classifier, trend-detector | Topic classification, keyword analysis, trend detection, insight derivation |

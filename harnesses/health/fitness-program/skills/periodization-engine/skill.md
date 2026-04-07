@@ -1,162 +1,166 @@
 ---
 name: periodization-engine
-description: "운동 프로그램의 주기화 설계와 점진적 과부하 전략 엔진. 'program-architect'와 'template-builder' 에이전트가 프로그램을 설계하고 진행 추적 템플릿을 만들 때 이 스킬의 주기화 모델, 볼륨·강도 계산법, 디로드 전략을 반드시 활용해야 한다. '주기화 설계', '점진적 과부하', '볼륨 계산' 등에 사용한다. 단, 운동 폼 설명이나 영양 전략은 이 스킬의 범위가 아니다."
+description: "Periodization design and progressive overload strategy engine for training programs. When 'program-architect' and 'template-builder' agents design programs and create progress tracking templates, they must utilize this skill's periodization models, volume/intensity calculation methods, and deload strategies. Use for 'periodization design', 'progressive overload', 'volume calculation', etc. Note: exercise form explanations and nutrition strategies are outside the scope of this skill."
 ---
 
-# Periodization Engine — 주기화 설계 엔진
+# Periodization Engine
 
-운동 프로그램의 메소·마이크로 주기 설계, 볼륨·강도 관리, 디로드 전략.
+Meso/microcycle design, volume/intensity management, and deload strategies for training programs.
 
-## 주기화 모델
+## Periodization Models
 
-### 선형 주기화 (Linear Periodization)
-
-```
-적합: 초보자, 근비대 목표
-
-12주 블록 구조:
-  Week 1-3: 적응기 — 3×12 @60-65% 1RM
-  Week 4-6: 축적기 — 4×10 @70-75% 1RM
-  Week 7-9: 강화기 — 4×6-8 @75-82% 1RM
-  Week 10-11: 최대기 — 5×3-5 @85-90% 1RM
-  Week 12: 디로드 — 2×10 @50-60% 1RM
-
-진행 규칙:
-  - 주당 볼륨 증가: 최대 10%
-  - 주당 강도 증가: 2-5% (초보) / 1-2.5% (중급)
-```
-
-### 비선형(파동) 주기화 (Undulating)
+### Linear Periodization
 
 ```
-적합: 중급자+, 다중 목표
+Best for: Beginners, hypertrophy goals
 
-일간 파동 (DUP):
-  월: 근비대 — 4×10 @70%
-  수: 근력 — 5×5 @82%
-  금: 파워 — 3×3 @88%
+12-week block structure:
+  Week 1-3: Adaptation — 3×12 @60-65% 1RM
+  Week 4-6: Accumulation — 4×10 @70-75% 1RM
+  Week 7-9: Intensification — 4×6-8 @75-82% 1RM
+  Week 10-11: Peak — 5×3-5 @85-90% 1RM
+  Week 12: Deload — 2×10 @50-60% 1RM
 
-주간 파동:
-  Week 1: 고볼륨 (4×10-12)
-  Week 2: 중간 (4×6-8)
-  Week 3: 고강도 (5×3-5)
-  Week 4: 디로드 (2×8)
+Progression rules:
+  - Weekly volume increase: max 10%
+  - Weekly intensity increase: 2-5% (beginner) / 1-2.5% (intermediate)
 ```
 
-### 블록 주기화 (Block)
+### Undulating Periodization (Nonlinear)
 
 ```
-적합: 상급자, 경기 준비
+Best for: Intermediate+, multiple goals
 
-축적 블록 (3-4주):
-  - 높은 볼륨, 중간 강도
-  - 근비대 + 작업능력 향상
+Daily Undulating Periodization (DUP):
+  Mon: Hypertrophy — 4×10 @70%
+  Wed: Strength — 5×5 @82%
+  Fri: Power — 3×3 @88%
+
+Weekly undulation:
+  Week 1: High volume (4×10-12)
+  Week 2: Moderate (4×6-8)
+  Week 3: High intensity (5×3-5)
+  Week 4: Deload (2×8)
+```
+
+### Block Periodization
+
+```
+Best for: Advanced athletes, competition prep
+
+Accumulation block (3-4 weeks):
+  - High volume, moderate intensity
+  - Hypertrophy + work capacity development
   - 4×8-12 @65-75%
 
-전환 블록 (3-4주):
-  - 중간 볼륨, 높은 강도
-  - 근력 강화
+Transmutation block (3-4 weeks):
+  - Moderate volume, high intensity
+  - Strength development
   - 4×4-6 @80-87%
 
-실현 블록 (1-2주):
-  - 낮은 볼륨, 최대 강도
-  - 최대 퍼포먼스 발휘
+Realization block (1-2 weeks):
+  - Low volume, maximal intensity
+  - Peak performance expression
   - 3×1-3 @90-100%
 ```
 
-## 볼륨·강도 계산
+## Volume & Intensity Calculations
 
-### 주간 세트 볼륨 가이드 (부위당)
+### Weekly Set Volume Guide (per muscle group)
 
-| 훈련 수준 | 유지 볼륨 | 최소 효과 | 최대 적응 | 한계 볼륨 |
-|----------|----------|----------|----------|----------|
-| 초보 | 4세트 | 6세트 | 12세트 | 16세트 |
-| 중급 | 6세트 | 8세트 | 16세트 | 22세트 |
-| 상급 | 8세트 | 10세트 | 20세트 | 28세트 |
+| Training Level | Maintenance Volume | Minimum Effective | Maximum Adaptive | Maximum Recoverable |
+|---------------|-------------------|-------------------|-----------------|---------------------|
+| Beginner | 4 sets | 6 sets | 12 sets | 16 sets |
+| Intermediate | 6 sets | 8 sets | 16 sets | 22 sets |
+| Advanced | 8 sets | 10 sets | 20 sets | 28 sets |
 
-### RPE (주관적 운동 강도) 스케일
+### RPE (Rate of Perceived Exertion) Scale
 
-| RPE | 설명 | 잔여 반복 | %1RM 추정 |
-|-----|------|----------|----------|
-| 10 | 최대 노력 | 0회 | 100% |
-| 9.5 | 간신히 완료 | 0.5회 | 97% |
-| 9 | 1회 더 가능 | 1회 | 95% |
-| 8.5 | 1-2회 더 가능 | 1-2회 | 92% |
-| 8 | 2회 더 가능 | 2회 | 90% |
-| 7.5 | 2-3회 더 가능 | 2-3회 | 87% |
-| 7 | 3회 더 가능 | 3회 | 85% |
-| 6 | 4회 더 가능 | 4회 | 80% |
+| RPE | Description | Reps in Reserve | Estimated %1RM |
+|-----|-------------|-----------------|----------------|
+| 10 | Maximum effort | 0 | 100% |
+| 9.5 | Barely completed | 0.5 | 97% |
+| 9 | 1 more possible | 1 | 95% |
+| 8.5 | 1-2 more possible | 1-2 | 92% |
+| 8 | 2 more possible | 2 | 90% |
+| 7.5 | 2-3 more possible | 2-3 | 87% |
+| 7 | 3 more possible | 3 | 85% |
+| 6 | 4 more possible | 4 | 80% |
 
-### 1RM 추정 공식 (Epley)
-
-```
-1RM = 중량 × (1 + 반복횟수/30)
-
-예시: 80kg × 8회 = 80 × (1 + 8/30) = 80 × 1.267 = 101.3kg
-```
-
-## 점진적 과부하 전략
-
-### 과부하 변수 우선순위
+### 1RM Estimation Formula (Epley)
 
 ```
-1순위: 볼륨 증가 (세트 수 +1)
-2순위: 반복 수 증가 (같은 중량으로 +1-2회)
-3순위: 중량 증가 (2.5-5% 증가)
-4순위: 빈도 증가 (주당 +1회)
-5순위: 템포 변화 (이센트릭 강조)
-6순위: 휴식시간 감소 (30초 단축)
+1RM = Weight × (1 + Reps/30)
+
+Example: 80kg × 8 reps = 80 × (1 + 8/30) = 80 × 1.267 = 101.3kg
 ```
 
-### 더블 프로그레션 모델
+## Progressive Overload Strategies
+
+### Overload Variable Priority
 
 ```
-목표 반복 범위: 8-12회
-
-단계 1: 3×8 @70kg
-단계 2: 3×10 @70kg (반복 증가)
-단계 3: 3×12 @70kg (상한 도달)
-단계 4: 3×8 @72.5kg (중량 증가, 반복 리셋)
-→ 반복
+1st: Volume increase (sets +1)
+2nd: Rep increase (same weight, +1-2 reps)
+3rd: Weight increase (2.5-5% increase)
+4th: Frequency increase (+1 session per week)
+5th: Tempo variation (emphasize eccentric)
+6th: Rest period reduction (shorten by 30 seconds)
 ```
 
-## 디로드 전략
-
-### 디로드 판단 기준
+### Double Progression Model
 
 ```
-필요 신호:
-  - 3-4주 연속 정체 (중량/반복 미증가)
-  - 만성 피로감, 수면 장애
-  - 관절 통증 지속
-  - 동기 저하, 훈련 회피
+Target rep range: 8-12 reps
 
-권장 주기:
-  초보: 8-12주마다
-  중급: 4-8주마다
-  상급: 3-6주마다
+Stage 1: 3×8 @70kg
+Stage 2: 3×10 @70kg (reps increased)
+Stage 3: 3×12 @70kg (upper limit reached)
+Stage 4: 3×8 @72.5kg (weight increased, reps reset)
+→ Repeat
 ```
 
-### 디로드 방법
+## Deload Strategies
 
-| 방법 | 볼륨 조정 | 강도 조정 | 적합 |
-|------|----------|----------|------|
-| 볼륨 디로드 | 50% 감소 | 유지 | 가장 일반적 |
-| 강도 디로드 | 유지 | 40-60% 감소 | 관절 휴식 |
-| 빈도 디로드 | 주 2회로 | 유지 | 시간 부족 시 |
-| 완전 휴식 | 0 | 0 | 누적 피로 심할 때 |
+### Deload Indicators
 
-## 분할 프로그램 템플릿
+```
+Warning signs:
+  - 3-4 consecutive weeks of stagnation (no increase in weight/reps)
+  - Chronic fatigue, sleep disturbances
+  - Persistent joint pain
+  - Loss of motivation, avoidance of training
 
-| 주당 횟수 | 분할 | 구성 |
-|----------|------|------|
-| 3회 | 전신 | A-B-A / B-A-B 교대 |
-| 4회 | 상하 | 상-하-상-하 |
-| 4회 | PPL+1 | 밀기-당기기-하체-약점 |
-| 5회 | PPL 2회전 | P-P-L-P-P (하체 1회 추가 가능) |
-| 6회 | PPL 2회전 | P-P-L-P-P-L |
+Recommended frequency:
+  Beginner: every 8-12 weeks
+  Intermediate: every 4-8 weeks
+  Advanced: every 3-6 weeks
+```
 
-## 참고
+### Deload Methods
 
-- NSCA Essentials of Strength Training, Periodization (Bompa) 기반
-- 상세 프로그램 예시: `references/program-templates.md` 참조
+| Method | Volume Adjustment | Intensity Adjustment | Best For |
+|--------|------------------|---------------------|----------|
+| Volume deload | 50% reduction | Maintained | Most common |
+| Intensity deload | Maintained | 40-60% reduction | Joint recovery |
+| Frequency deload | 2x/week | Maintained | Limited time |
+| Full rest | 0 | 0 | Severe accumulated fatigue |
+
+## Program Split Templates
+
+| Sessions/Week | Split | Structure |
+|--------------|-------|-----------|
+| 3 | Full body | A-B-A / B-A-B alternating |
+| 4 | Upper/Lower | Upper-Lower-Upper-Lower |
+| 4 | PPL+1 | Push-Pull-Legs-Weakness |
+| 5 | PPL 2x | P-P-L-P-P (extra leg session optional) |
+| 6 | PPL 2x | P-P-L-P-P-L |
+
+## References
+
+- Based on NSCA Essentials of Strength Training and Periodization (Bompa)
+- Detailed program examples: see `references/program-templates.md`
+eferences
+
+- Based on NSCA Essentials of Strength Training and Periodization (Bompa)
+- Detailed program examples: see `references/program-templates.md`

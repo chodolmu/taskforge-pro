@@ -1,151 +1,151 @@
 ---
 name: compound-interest-simulator
-description: "복리 효과 시뮬레이션과 장기 자산 성장 예측 도구. 'investment-advisor'와 'tax-strategist' 에이전트가 투자 수익을 시뮬레이션하고 은퇴 자금을 설계할 때 이 스킬의 복리 공식, 시나리오 비교, 은퇴 목표 계산법을 반드시 활용해야 한다. '복리 계산', '자산 성장 예측', '은퇴 자금 시뮬레이션' 등에 사용한다. 단, 예산 설계나 세금 계산은 이 스킬의 범위가 아니다."
+description: " and simulation and basis asset nature example tool. 'investment-advisor' and 'tax-strategist' agent investment revenue simulationand retirement specialist designto do when this skill's official, scenario comparison, retirement goal total must be utilized. ' total', 'asset nature example', 'retirement specialist simulation' etc. However, budget design tax total is outside this skill's scope."
 ---
 
-# Compound Interest Simulator — 복리 시뮬레이터
+# Compound Interest Simulator — simulator
 
-복리 효과 시뮬레이션, 자산 성장 예측, 은퇴 자금 역산 계산.
+ and simulation, asset nature example, retirement specialist total.
 
-## 핵심 복리 공식
+## core official
 
-### 일시불 복리
+### daywhen 
 
 ```
 FV = PV × (1 + r)^n
 
-FV: 미래 가치 (Future Value)
-PV: 현재 가치 (Present Value)
-r: 연 수익률 (소수)
-n: 기간 (년)
+FV: un- value (Future Value)
+PV: current value (Present Value)
+r: annual revenuerate (number)
+n: duration (year)
 
-예시: 1,000만원을 연 7%로 30년 투자
-  FV = 1,000만 × (1.07)^30 = 7,612만원
+examplewhen: 1,0000,000 KRW annual 7% 30year investment
+ FV = 1,000 only × (1.07)^30 = 7,6120,000 KRW
 ```
 
-### 정기 적립 복리 (매월)
+### basis quality (month)
 
 ```
 FV = PMT × [(1 + r/12)^(12n) - 1] / (r/12)
 
-PMT: 월 적립금
-r: 연 수익률
-n: 기간 (년)
+PMT: month quality
+r: annual revenuerate
+n: duration (year)
 
-예시: 월 50만원을 연 7%로 20년 적립
-  FV = 50만 × [(1.00583)^240 - 1] / 0.00583
-     = 50만 × 520.9 = 2억 6,045만원
-  (원금 1억 2,000만원, 수익 1억 4,045만원)
+examplewhen: month 500,000 KRW annual 7% 20year quality
+ FV = 50 only × [(1.00583)^240 - 1] / 0.00583
+ = 50 only × 520.9 = 200M 6,0450,000 KRW
+ (KRW 100M 2,0000,000 KRW, revenue 100M 4,0450,000 KRW)
 ```
 
-### 은퇴 자금 역산 (필요 월 적립금)
+### retirement specialist (needed month quality)
 
 ```
 PMT = FV × (r/12) / [(1 + r/12)^(12n) - 1]
 
-예시: 20년 후 5억 필요, 연 7% 기대수익
-  PMT = 5억 × 0.00583 / [(1.00583)^240 - 1]
-     = 5억 × 0.00192 = 95.9만원/월
+examplewhen: 20year after 500M needed, annual 7% expectedrevenue
+ PMT = 500M × 0.00583 / [(1.00583)^240 - 1]
+ = 500M × 0.00192 = 95.90,000 KRW/month
 ```
 
-## 72의 법칙 (자산 2배 기간)
+## 72 (asset 2 duration)
 
 ```
-자산 2배 소요 연수 ≈ 72 / 연 수익률(%)
+asset 2 annualnumber ≈ 72 / annual revenuerate(%)
 
-연 수익률별 2배 기간:
-  3%: 24년
-  5%: 14.4년
-  7%: 10.3년
-  10%: 7.2년
-  12%: 6년
-  15%: 4.8년
+annual revenuerateby 2 duration:
+ 3%: 24year
+ 5%: 14.4year
+ 7%: 10.3year
+ 10%: 7.2year
+ 12%: 6year
+ 15%: 4.8year
 ```
 
-## 자산 클래스별 기대수익률
+## asset by expectedrevenuerate
 
-| 자산 | 연 기대수익률 | 변동성(표준편차) | 특성 |
+| asset | annual expectedrevenuerate | nature(tablelevelgap) | nature |
 |------|-------------|---------------|------|
-| 예금/적금 | 3-4% | 0% | 원금 보장, 인플레 미만 |
-| 채권(국채) | 3-5% | 3-5% | 안정적, 금리 역관계 |
-| 채권(회사채) | 4-7% | 5-8% | 채권 내 고수익 |
-| 주식(국내) | 7-10% | 15-20% | 장기 성장, 높은 변동 |
-| 주식(선진국) | 7-10% | 14-18% | 글로벌 분산 |
-| 주식(신흥국) | 8-12% | 20-25% | 높은 성장·위험 |
-| 부동산(리츠) | 5-8% | 10-15% | 배당+시세차익 |
-| 금 | 3-6% | 15-20% | 인플레 헤지 |
+| example/quality | 3-4% | 0% | KRW report, person less than |
+|  | 3-5% | 3-5% | planquality, total |
+| (company) | 4-7% | 5-8% | within revenue |
+| week(within) | 7-10% | 15-20% | basis nature, |
+| week | 7-10% | 14-18% | minute |
+| week | 8-12% | 20-25% | nature·risk |
+| department | 5-8% | 10-15% | dividend+whentaxgap |
+| | 3-6% | 15-20% | person degree |
 
-## 시나리오 비교 시뮬레이션
+## scenario comparison simulation
 
-### 연 수익률 차이 영향 (월 100만원, 30년)
+### annual revenuerate gap impact (month 1000,000 KRW, 30year)
 
-| 연 수익률 | 총 원금 | 최종 자산 | 수익 | 수익률(총) |
+| annual revenuerate | total KRW | final asset | revenue | revenuerate(total) |
 |----------|---------|----------|------|-----------|
-| 3% | 3.6억 | 5.8억 | 2.2억 | 61% |
-| 5% | 3.6억 | 8.3억 | 4.7억 | 131% |
-| 7% | 3.6억 | 12.2억 | 8.6억 | 239% |
-| 10% | 3.6억 | 22.6억 | 19.0억 | 528% |
+| 3% | 3.600M | 5.800M | 2.200M | 61% |
+| 5% | 3.600M | 8.300M | 4.700M | 131% |
+| 7% | 3.600M | 12.200M | 8.600M | 239% |
+| 10% | 3.600M | 22.600M | 19.000M | 528% |
 
-### 시작 시점 차이 영향 (월 50만원, 연 7%)
+### whenwork timing gap impact (month 500,000 KRW, annual 7%)
 
-| 시작 나이 | 투자 기간 | 원금 | 최종 자산 | 비고 |
+| whenwork | investment duration | KRW | final asset | notes |
 |----------|----------|------|----------|------|
-| 25세 | 35년 | 2.1억 | 10.8억 | 일찍 시작 |
-| 30세 | 30년 | 1.8억 | 6.1억 | 5년 차이 -4.7억 |
-| 35세 | 25년 | 1.5억 | 4.1억 | |
-| 40세 | 20년 | 1.2억 | 2.6억 | |
+| 25tax | 35year | 2.100M | 10.800M | day whenwork |
+| 30tax | 30year | 1.800M | 6.100M | 5year gap -4.700M |
+| 35tax | 25year | 1.500M | 4.100M | |
+| 40tax | 20year | 1.200M | 2.600M | |
 
-## 은퇴 설계 계산
+## retirement design total
 
-### 은퇴 자금 필요액 산출
-
-```
-월 생활비 × 12 × 은퇴 후 기간(년) × 인플레 조정
-
-보수적 계산 (인플레 3%, 투자수익 5%):
-  실질 수익률 = 5% - 3% = 2%
-
-25년 은퇴 생활, 월 300만원 필요 시:
-  필요 자금 = 300만 × 12 / 0.02 × [1 - (1.02)^(-25)]
-           ≈ 7.0억원
-
-4% 인출 규칙 (간편법):
-  은퇴 자금 = 연간 생활비 / 0.04
-  = 3,600만원 / 0.04 = 9.0억원
-```
-
-### 국민연금 수령액 반영
+### retirement specialist needed calculation
 
 ```
-조정된 필요 자금 = 총 필요 자금 - 국민연금 현가
+month × 12 × retirement after duration(year) × person 
 
-국민연금 예상 수령액 (2024 기준, 20년 가입):
-  월 평균소득 300만원 → 월 약 60-80만원
-  월 평균소득 500만원 → 월 약 100-120만원
+reportnumberquality total (person 3%, investmentrevenue 5%):
+ actual revenuerate = 5% - 3% = 2%
 
-차액을 개인 자산으로 준비
+25year retirement , month 3000,000 KRW needed when:
+ needed specialist = 300 only × 12 / 0.02 × [1 - (1.02)^(-25)]
+ ≈ 7.000M KRW
+
+4% person rule (between):
+ retirement specialist = annualbetween / 0.04
+ = 3,6000,000 KRW / 0.04 = 9.000M KRW
 ```
 
-## 시뮬레이션 출력 형식
+### pension number reflected
+
+```
+done needed specialist = total needed specialist - pension current
+
+pension expected number (2024 standard, 20year ):
+ month pyeongbalanced 3000,000 KRW → month approx. 60-800,000 KRW
+ month pyeongbalanced 5000,000 KRW → month approx. 100-1200,000 KRW
+
+gap itemsperson assetas preparation
+```
+
+## simulation capability 
 
 ```markdown
-## 자산 성장 시뮬레이션
+## asset nature simulation
 
-**초기 투자**: X만원 | **월 적립**: X만원 | **기대 수익률**: X%
-**투자 기간**: X년
+**initial investment**: X0,000 KRW | **month quality**: X0,000 KRW | **expected revenuerate**: X%
+**investment duration**: Xyear
 
-| 연차 | 원금 누계 | 자산 가치 | 수익 | 수익률 |
+| annualgap | KRW total | asset value | revenue | revenuerate |
 |------|----------|----------|------|--------|
-| 5년 | X만원 | X만원 | X만원 | X% |
-| 10년 | X만원 | X만원 | X만원 | X% |
-| 15년 | X만원 | X만원 | X만원 | X% |
-| 20년 | X만원 | X만원 | X만원 | X% |
-| 30년 | X만원 | X만원 | X만원 | X% |
+| 5year | X0,000 KRW | X0,000 KRW | X0,000 KRW | X% |
+| 10year | X0,000 KRW | X0,000 KRW | X0,000 KRW | X% |
+| 15year | X0,000 KRW | X0,000 KRW | X0,000 KRW | X% |
+| 20year | X0,000 KRW | X0,000 KRW | X0,000 KRW | X% |
+| 30year | X0,000 KRW | X0,000 KRW | X0,000 KRW | X% |
 
-**핵심 인사이트**: [복리 효과가 두드러지는 시점, 절세 상품 활용 시 추가 효과 등]
+**core insight**: [ and degree timing, tax savings utilization when addition and etc.]
 ```
 
-## 참고
+## reference
 
-- 과거 수익률은 미래를 보장하지 않음
-- 상세 시뮬레이션 모델: `references/simulation-models.md` 참조
+- revenuerate un- reportdegree 
+- detailed simulation model: `references/simulation-models.md` reference

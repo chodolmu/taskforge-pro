@@ -1,130 +1,130 @@
 ---
 name: narrative-structure
-description: "구성작가(story-architect)와 내레이터(narrator)가 사용하는 다큐멘터리 서사 구조 전문 스킬. 3막 구조, 감정 곡선, 씬 배열, 다큐 유형별 서사 패턴을 제공한다. '구성안', '서사 구조', '3막', '감정 곡선' 등에 활용한다."
+description: "A specialized skill for the story-architect and narrator agents covering documentary narrative structure. Provides 3-act structure, emotion curves, scene arrangement, and narrative patterns by documentary type. Use for 'treatment,' 'narrative structure,' '3-act,' 'emotion curve,' and similar topics."
 ---
 
-# Narrative Structure — 다큐멘터리 서사 구조 방법론
+# Narrative Structure — Documentary Narrative Structure Methodology
 
-story-architect와 narrator 에이전트가 구성안과 내레이션을 설계할 때 활용하는 서사 전문 지식.
+Specialized narrative knowledge used by the story-architect and narrator agents when designing treatments and narration.
 
-## 왜 다큐멘터리에도 서사가 필요한가
+## Why Documentaries Need Narrative
 
-사실을 나열하면 보고서다. 사실에 **서사적 구조**를 입히면 다큐멘터리다. 관객이 끝까지 시청하게 만드는 것은 정보가 아니라 "다음에 무슨 일이 벌어질까?"라는 궁금증이다.
+Listing facts makes a report. Layering facts with **narrative structure** makes a documentary. What keeps the audience watching to the end is not information, but the curiosity of "what happens next?"
 
-## 다큐멘터리 서사 유형 5가지
+## 5 Documentary Narrative Types
 
-### 1. 탐사형 (Investigation)
+### 1. Investigative
 ```
-미스터리/질문 → 단서 수집 → 장벽 → 돌파 → 진실 발견
+Mystery/Question -> Clue gathering -> Obstacle -> Breakthrough -> Truth discovery
 ```
-- **핵심 장치**: 관객이 기자/탐정과 함께 진실을 추적하는 느낌
-- **내레이션 톤**: "우리는 ~을 발견했다", "여기서 예상 밖의 사실이 드러났다"
-- **위험**: 결론이 약하면 "그래서 뭐?"가 된다 — 강력한 발견 필요
-- **예시**: 넷플릭스 <만들어진 살인자>, <마약왕>
+- **Core Device**: The feeling that the audience is tracking the truth alongside the journalist/detective
+- **Narration Tone**: "We discovered...", "Here, an unexpected fact emerged"
+- **Risk**: A weak conclusion leads to "So what?" — a powerful discovery is needed
+- **Examples**: Netflix's Making a Murderer, Narcos
 
-### 2. 인물형 (Character-Driven)
+### 2. Character-Driven
 ```
-인물 소개 → 갈등/도전 → 시련 → 변화/성장 → 현재
+Character introduction -> Conflict/Challenge -> Trial -> Change/Growth -> Present
 ```
-- **핵심 장치**: 인물에 대한 감정적 투자
-- **내레이션 톤**: 인물의 감정에 공명하되 객관적 거리 유지
-- **위험**: 지나친 영웅화 — 결점도 보여줘야 입체적
-- **예시**: <아이 엠 넘버 포>, 인물 다큐
+- **Core Device**: Emotional investment in the character
+- **Narration Tone**: Resonating with the character's emotions while maintaining objective distance
+- **Risk**: Excessive heroization — showing flaws makes them three-dimensional
+- **Examples**: I Am Number Four, biographical documentaries
 
-### 3. 관찰형 (Observational)
+### 3. Observational
 ```
-상황 진입 → 일상 관찰 → 패턴 발견 → 갈등 고조 → 해결/미해결
+Entering the situation -> Daily observation -> Pattern discovery -> Conflict escalation -> Resolution/Unresolved
 ```
-- **핵심 장치**: 카메라가 투명하게 현실을 포착하는 느낌
-- **내레이션**: 최소한으로 (또는 없음), 영상이 말하게 한다
-- **위험**: 지루해질 수 있다 — 편집의 리듬이 관건
-- **예시**: <겨울왕국>, 관찰 다큐
+- **Core Device**: The feeling that the camera transparently captures reality
+- **Narration**: Minimal (or none) — let the footage speak
+- **Risk**: Can become boring — editing rhythm is key
+- **Examples**: Observational documentaries
 
-### 4. 에세이형 (Essay / Thesis)
+### 4. Essay / Thesis
 ```
-논제 제시 → 근거 1 → 근거 2 → 반론 → 재반박 → 결론
+Thesis presented -> Evidence 1 -> Evidence 2 -> Counterargument -> Rebuttal -> Conclusion
 ```
-- **핵심 장치**: 강력한 주장과 논증
-- **내레이션 톤**: 지적이고 설득적, 때로는 도발적
-- **위험**: 편향적 프로파간다가 될 수 있다 — 반론 공정하게 다루기
-- **예시**: 마이클 무어 다큐, <불편한 진실>
+- **Core Device**: Strong argument and reasoning
+- **Narration Tone**: Intellectual and persuasive, sometimes provocative
+- **Risk**: Can become biased propaganda — treat counterarguments fairly
+- **Examples**: Michael Moore documentaries, An Inconvenient Truth
 
-### 5. 역사형 (Historical / Archival)
+### 5. Historical / Archival
 ```
-현재 상황 → 과거로 회귀 → 역사적 전개 → 전환점 → 현재로 귀환 → 의미 부여
+Present situation -> Return to the past -> Historical development -> Turning point -> Return to present -> Meaning assigned
 ```
-- **핵심 장치**: 아카이브 자료와 현재의 교차 편집
-- **내레이션 톤**: 서사적, 때로는 장엄한
-- **위험**: 교과서처럼 될 수 있다 — 인물 중심으로 역사를 전달
-- **예시**: 켄 번스 다큐, <나는 당신의 흑인이 아니다>
+- **Core Device**: Cross-editing between archival materials and the present
+- **Narration Tone**: Epic, sometimes grand
+- **Risk**: Can become textbook-like — convey history through characters
+- **Examples**: Ken Burns documentaries, I Am Not Your Negro
 
-## 3막 구조 상세 설계
+## Detailed 3-Act Structure Design
 
-### 30분 다큐멘터리 기준
+### Based on a 30-Minute Documentary
 
-| 막 | 시간 | 목적 | 포함 요소 |
-|---|------|------|----------|
-| **1막** | 0~8분 | 세계 진입 + 질문 제시 | 훅(2분) → 주제 소개 → 핵심 질문 |
-| **2막** | 8~23분 | 탐구 + 복잡성 증가 | 씬 3~4개, 반전, 감정 클라이맥스 |
-| **3막** | 23~30분 | 결론 + 여운 | 답변(또는 열린 결말), 감정 착지 |
+| Act | Time | Purpose | Components |
+|-----|------|---------|------------|
+| **Act 1** | 0-8 min | World entry + Question posed | Hook (2 min) -> Topic introduction -> Core question |
+| **Act 2** | 8-23 min | Exploration + Increasing complexity | 3-4 scenes, twist, emotional climax |
+| **Act 3** | 23-30 min | Conclusion + Resonance | Answer (or open ending), emotional landing |
 
-### 감정 곡선 설계
+### Emotion Curve Design
 
 ```
-감정 강도
-  ↑
-  │        ╱╲            ╱╲
-  │      ╱    ╲        ╱    ╲
-  │    ╱        ╲    ╱        ╲
-  │──╱            ╲╱            ╲──
-  └──────────────────────────────→ 시간
-  훅   1막     2막 전반   2막 후반   3막
-  (충격) (탐구)  (심화)    (클라이맥스) (안착)
+Emotional Intensity
+  ^
+  |        /\            /\
+  |      /    \        /    \
+  |    /        \    /        \
+  |--/            \/            \--
+  +---------------------------------> Time
+  Hook   Act 1     Act 2 Early  Act 2 Late   Act 3
+  (Shock) (Exploration) (Deepening) (Climax) (Landing)
 ```
 
-### 감정 곡선 규칙
+### Emotion Curve Rules
 
-1. **훅은 감정적이어야 한다**: 통계보다 장면, 논리보다 감정
-2. **1막과 2막 사이 밸리**: 의도적으로 감정을 낮춰 2막 클라이맥스를 높인다
-3. **2막 클라이맥스가 최고점**: 가장 강렬한 인터뷰/자료/장면을 여기에
-4. **3막은 안착**: 급격한 하강이 아닌 부드러운 여운
+1. **The hook must be emotional**: Scenes over statistics, emotions over logic
+2. **Valley between Acts 1 and 2**: Intentionally lower emotions to heighten the Act 2 climax
+3. **Act 2 climax is the highest point**: Place the most intense interview/material/scene here
+4. **Act 3 is the landing**: A gentle afterglow, not a sharp descent
 
-## 씬 배열 전략
+## Scene Arrangement Strategy
 
-### 씬 유형
+### Scene Types
 
-| 유형 | 설명 | 사용 비율 |
-|------|------|---------|
-| **정보 씬** | 데이터, 전문가 인터뷰, 해설 | 30~40% |
-| **감정 씬** | 당사자 이야기, 감정적 순간 | 20~30% |
-| **관찰 씬** | 현장 영상, 일상 관찰 | 15~25% |
-| **전환 씬** | 장소 이동, 시간 경과, 주제 전환 | 10~15% |
-| **충격 씬** | 반전, 새로운 발견, 대비 | 5~10% |
+| Type | Description | Usage Ratio |
+|------|-------------|-------------|
+| **Information Scene** | Data, expert interviews, explanation | 30-40% |
+| **Emotional Scene** | Firsthand stories, emotional moments | 20-30% |
+| **Observation Scene** | Field footage, daily observation | 15-25% |
+| **Transition Scene** | Location change, time passage, topic shift | 10-15% |
+| **Impact Scene** | Twist, new discovery, contrast | 5-10% |
 
-### 씬 배열 원칙
+### Scene Arrangement Principles
 
-1. **긴장-이완 교대**: 무거운 씬 뒤에 가벼운 씬 배치
-2. **구체→추상→구체**: 사례 → 통찰 → 또 다른 사례
-3. **지리적/시간적 흐름**: 자연스러운 이동 동선
-4. **병렬 구조**: 두 이야기를 번갈아 진행하며 교차점에서 합류
+1. **Tension-Release Alternation**: Place lighter scenes after heavy ones
+2. **Specific -> Abstract -> Specific**: Case -> Insight -> Another case
+3. **Geographic/Temporal Flow**: Natural movement paths
+4. **Parallel Structure**: Alternate between two stories, converging at intersection points
 
-## 내레이션 작성 규칙
+## Narration Writing Rules
 
-### 텍스트-영상 관계
+### Text-Visual Relationship
 
-| 관계 | 설명 | 언제 사용 |
-|------|------|----------|
-| **보완** | 나레이션이 영상에 없는 정보 추가 | 맥락 설명, 역사적 배경 |
-| **대위** | 나레이션과 영상이 다른 이야기 | 아이러니, 비판 |
-| **침묵** | 나레이션 없이 영상만 | 감정적 순간, 관찰 |
-| **해설** | 나레이션이 영상을 직접 설명 | 지양 — "보이는 것을 말하지 마라" |
+| Relationship | Description | When to Use |
+|-------------|-------------|-------------|
+| **Complement** | Narration adds information not in the visuals | Context explanation, historical background |
+| **Counterpoint** | Narration and visuals tell different stories | Irony, critique |
+| **Silence** | Visuals only, no narration | Emotional moments, observation |
+| **Explanation** | Narration directly explains visuals | Avoid — "Don't say what is shown" |
 
-### 내레이션 DO/DON'T
+### Narration DO/DON'T
 
 | DO | DON'T |
 |---|------|
-| 화면에 보이지 않는 맥락을 제공 | 화면에 보이는 것을 설명 ("여기 보이는 것은...") |
-| 짧은 문장, 구어체 | 학술 논문 어투 |
-| 질문을 던져 긴장감 유지 | 모든 것을 설명하고 결론 내리기 |
-| 감정적 여백 남기기 | 관객의 생각을 대신해주기 |
-| 구체적 장면/인물 묘사 | 추상적 일반론 |
+| Provide context not visible on screen | Explain what is visible on screen ("What you see here is...") |
+| Short sentences, conversational tone | Academic paper style |
+| Maintain tension by posing questions | Explain everything and draw conclusions |
+| Leave emotional space | Think for the audience |
+| Describe specific scenes/characters | Abstract generalizations |

@@ -1,133 +1,133 @@
 ---
 name: data-visualization-guide
-description: "데이터 시각화 차트 선택 가이드, 정보 계층 설계 원칙, 숫자-차트 매핑 매트릭스를 제공하는 info-architect 확장 스킬. '차트 선택', '데이터 시각화', '그래프 종류', '정보 설계', '차트 컬러', '데이터 스토리텔링' 등 데이터를 시각적으로 표현할 때 사용한다. 단, 실제 차트 렌더링이나 BI 도구 연동은 이 스킬의 범위가 아니다."
+description: " Visualization Chart Selection Guide, Information Hierarchy Design , number-Chart matrix info-architect Extended Skill. 'Chart Selection', ' Visualization', ' ', 'Information Design', 'Chart ', ' Storytelling' etc. Visualto expression . , Chart BI of ."
 ---
 
-# Data Visualization Guide — 데이터 시각화 차트 선택 & 정보 설계 가이드
+# Data Visualization Guide — Data Visualization Chart Selection & Information Design Guide
 
-info-architect 에이전트가 데이터 시각화 설계 시 활용하는 차트 선택 매트릭스, 정보 계층 원칙, 시각화 베스트 프랙티스.
+Chart selection matrix, information hierarchy principles, and visualization best practices used by the info-architect agent when designing data visualizations.
 
-## 대상 에이전트
+## subject Agent
 
-`info-architect` — 이 스킬의 차트 선택 로직과 정보 설계 원칙을 데이터 시각화에 직접 적용한다.
+`info-architect` — of Chart Selection toand Information Design Visualizationin apply.
 
-## 차트 선택 매트릭스
+## Chart Selection matrix
 
-### 목적별 차트 유형
+### per Chart type
 
-| 목적 | 추천 차트 | 데이터 조건 | 비추 상황 |
+| | Chart | | |
 |------|----------|-----------|----------|
-| **비교** | 막대 (수직/수평) | 카테고리 3~12개 | 카테고리 2개 미만 |
-| **추세** | 꺾은선, 영역 | 시계열 5개+ 포인트 | 데이터 포인트 3개 미만 |
-| **구성** | 파이, 도넛, 트리맵 | 합계 100%, 3~6조각 | 7조각 이상 → 막대로 |
-| **분포** | 히스토그램, 박스플롯 | 연속형 데이터 | 카테고리형 데이터 |
-| **상관** | 산점도, 버블 | 두 변수 간 관계 | 변수 1개만 |
-| **흐름** | 산키, 워터폴 | 단계별 변화 | 단순 비교 |
-| **지리** | 맵, 코로플레스 | 위치 기반 데이터 | 위치 무관 데이터 |
-| **순위** | 수평 막대, 롤리팝 | 순서 중요 | 순서 무관 |
+| **comparison** | vs (/) | 3~12 | 2 |
+| **trend** | , | when 5+ | 3 |
+| **composition** | , , | 100%, 3~6 | 7 → vsto |
+| **distribution** | , | | |
+| **** | , | between relationship | 1 |
+| **Flow** | , | per | comparison |
+| **** | , to | | |
+| **** | vs, | sequence during | sequence |
 
-### 데이터 포인트 수에 따른 선택
+### in according to Selection
 
-| 데이터 포인트 | 추천 | 회피 |
+| | | |
 |-------------|------|------|
-| 1개 | 숫자 하이라이트 (Big Number) | 모든 차트 |
-| 2~3개 | 비교 카드, 도넛 | 꺾은선 |
-| 4~12개 | 막대, 꺾은선, 파이(6개까지) | - |
-| 13~50개 | 꺾은선, 히트맵 | 파이 |
-| 50개+ | 산점도, 히트맵, 소형 다중 | 막대, 파이 |
+| 1 | number (Big Number) | Chart |
+| 2~3 | comparison , | |
+| 4~12 | vs, , (6) | - |
+| 13~50 | , | |
+| 50+ | , , during | vs, |
 
-## 차트별 설계 규칙
+## Chartper Design 
 
-### 막대 차트
-- Y축: 반드시 0부터 시작 (절단 금지)
-- 막대 너비: 간격의 1.5~2배
-- 정렬: 값 크기순 또는 자연 순서 (시간, 알파벳)
-- 색상: 강조 1개만 포인트컬러, 나머지 neutral
-- 최대 12개 카테고리, 초과 시 상위 N개 + "기타"
+### vs Chart
+- Y: when 0 when ( )
+- vs : betweenof 1.5~2
+- : sequence (whenbetween, )
+- Color: 1 , neutral
+- vs 12 , secondsand when N + ""
 
-### 꺾은선 차트
-- 선 수: 최대 4~5개 (초과 시 소형 다중으로)
-- 선 두께: 2~3px, 강조선만 3~4px
-- 데이터 포인트 마커: 10개 이하면 표시, 초과하면 숨김
-- Y축 범위: 데이터 최소~최대에 10% 여유
+### Chart
+- : vs 4~5 (secondsand when duringto)
+- : 2~3px, 3~4px
+- : 10 when, secondsand 
+- Y : ~vsin 10% 
 
-### 파이/도넛 차트
-- 조각 수: 3~6개 (7개+ → 막대 차트로 전환)
-- 시작 각도: 12시 방향
-- 가장 큰 조각: 12시부터 시계방향
-- 라벨: 조각 위 또는 리더선, 절대값 + 퍼센트
-- 3D 효과 절대 금지
+### / Chart
+- : 3~6 (7+ → vs Chartto before)
+- when : 12when 
+- : 12when when
+- : , vs + 
+- 3D and vs 
 
-### 데이터 테이블
-- 숫자: 우정렬, 천 단위 쉼표
-- 텍스트: 좌정렬
-- 헤더: 배경색 구분, bold
-- 행 수: 최대 7행 (초과 시 분할 또는 필터)
-- 중요 셀: bold + 색상 하이라이트
+### 
+- number: , 
+- Text: 
+- : background , bold
+- : vs 7 (secondsand when )
+- during : bold + Color 
 
-## 색상 원칙
+## Color 
 
-### 순차적 데이터 (Sequential)
-단일 색상의 밝기 변화 — 낮은 값(밝음) → 높은 값(어두움)
+### (Sequential)
+ Colorof — () → ()
 
-### 분기형 데이터 (Diverging)
-중앙값 기준 양쪽 색상 — 부정(빨강) ← 중립(흰색) → 긍정(파랑)
+### (Diverging)
+during Color — () ← during() → ()
 
-### 범주형 데이터 (Categorical)
-서로 구분되는 색상 — 최대 6색, 색각이상자 고려
+### (Categorical)
+to Color — vs 6, 
 
-### 색상 접근성
-| 규칙 | 설명 |
+### Color 
+| | description |
 |------|------|
-| 색상만으로 구분 금지 | 패턴, 라벨, 두께 병행 |
-| 명도 대비 4.5:1 이상 | WCAG AA 기준 |
-| 적-녹 조합 회피 | 색각이상 8% (남성) |
-| 패턴 대안 | 빗금, 점선, 점 패턴 |
+| Colorto | Pattern, , |
+| vs 4.5:1 | WCAG AA |
+| - combination | 8% () |
+| Pattern vs | , , Pattern |
 
-## 정보 계층 설계 (LATCH)
+## Information Hierarchy Design (LATCH)
 
-| 원칙 | 정렬 기준 | 적용 예시 |
+| | | application when |
 |------|----------|----------|
-| **L** Location | 위치/지역 | 지역별 매출 → 지도 |
-| **A** Alphabet | 가나다/ABC | 용어 사전, 이름 목록 |
-| **T** Time | 시간순 | 로드맵, 타임라인, 추세 |
-| **C** Category | 범주/유형 | 제품별, 부서별 분류 |
-| **H** Hierarchy | 크기/중요도 | 매출 순위, 우선순위 |
+| **L** Location | / | per → |
+| **A** Alphabet | /ABC | Terminology before, name |
+| **T** Time | whenbetween | to, line, trend |
+| **C** Category | /type | per, per |
+| **H** Hierarchy | /during | , |
 
-## 데이터 스토리텔링 구조
+## Storytelling Structure
 
-### 3막 구조
-1. **맥락 설정**: "지난 분기 우리는..." (배경 데이터)
-2. **갈등/발견**: "그런데 X 지표가..." (핵심 인사이트)
-3. **해결/제안**: "따라서 우리는..." (액션 아이템)
+### 3 Structure
+1. **context **: " ..." (background )
+2. **etc./**: "launch X Metrics..." (core Insight)
+3. **/Suggestion**: " ..." ( )
 
-### 슬라이드 시퀀스 패턴
-| 패턴 | 슬라이드 흐름 |
+### Slide when Pattern
+| Pattern | Slide Flow |
 |------|-------------|
-| **줌인** | 전체 개요 → 세그먼트 → 상세 |
-| **줌아웃** | 개별 사례 → 패턴 → 전체 시사점 |
-| **대비** | A 상황 → B 상황 → 차이점 강조 |
-| **시간순** | 과거 → 현재 → 미래 예측 |
-| **문제-해결** | 문제 데이터 → 원인 분석 → 솔루션 데이터 |
+| **** | total → → detailed |
+| **** | per → Pattern → total when |
+| **vs** | A → B → |
+| **whenbetween** | and → Current → |
+| **-** | → Analysis → |
 
-## 숫자 포맷 규칙
+## number 
 
-| 데이터 유형 | 포맷 | 예시 |
+| type | | when |
 |-----------|------|------|
-| 금액 (원) | 천 단위 쉼표, 억/만 단위 | ₩12.5억, ₩3,400만 |
-| 퍼센트 | 소수점 1자리 | 23.4% |
-| 대형 숫자 | K/M/B 축약 | 1.2M, 350K |
-| 변화율 | +/- 부호 + 색상 | +12.3% (녹색) |
-| 날짜 | YYYY.MM 또는 Q1'25 | 2025.03, Q1'25 |
+| amount () | , / | ₩12.5, ₩3,400 |
+| | 1 | 23.4% |
+| vs number | K/M/B | 1.2M, 350K |
+| | +/- + Color | +12.3% () |
+| Date | YYYY.MM Q1'25 | 2025.03, Q1'25 |
 
-## 시각화 안티패턴 (반드시 회피)
+## Visualization Pattern (when )
 
-| 안티패턴 | 문제 | 대안 |
+| Pattern | | vs |
 |---------|------|------|
-| 3D 차트 | 왜곡, 가독성 저하 | 2D 차트 |
-| Y축 절단 | 차이 과장 | 0부터 시작 |
-| 이중 Y축 | 혼란, 오해 | 별도 차트 분리 |
-| 파이 7조각+ | 판독 불가 | 수평 막대 |
-| 스파게티 선 (5선+) | 구분 불가 | 소형 다중(Small Multiples) |
-| 무지개 색상 | 무의미한 화려함 | 목적에 맞는 팔레트 |
-| 장식 차트 (chartjunk) | 정보 대비 잡음 | 최소한의 잉크 원칙 |
+| 3D Chart | , | 2D Chart |
+| Y | and | 0 when |
+| during Y | , | per Chart |
+| 7+ | | vs |
+| (5+) | | during(Small Multiples) |
+| Color | of | in |
+| Chart (chartjunk) | Information vs | of |

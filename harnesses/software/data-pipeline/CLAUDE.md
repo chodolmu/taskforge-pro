@@ -1,38 +1,38 @@
 # Data Pipeline Harness
 
-데이터 파이프라인의 수집→변환→적재→품질검증→모니터링을 에이전트 팀이 협업하여 설계·구현하는 하네스.
+An agent team harness that collaborates to design and implement data pipelines covering ingestion, transformation, loading, quality verification, and monitoring.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── etl-architect.md        — ETL 아키텍처 설계 (소스분석, 스키마설계, 파이프라인구조)
-│   ├── data-quality-manager.md  — 데이터 품질 관리 (검증규칙, 프로파일링, 이상탐지)
-│   ├── scheduler-engineer.md    — 스케줄링 엔지니어 (DAG설계, 의존관계, 재시도전략)
-│   ├── monitoring-specialist.md — 모니터링 전문가 (메트릭, 알림, 대시보드, SLA)
-│   └── pipeline-reviewer.md     — 파이프라인 리뷰어 (교차검증, 정합성, 운영준비도)
+│   ├── etl-architect.md        — ETL architecture design (source analysis, schema design, pipeline structure)
+│   ├── data-quality-manager.md  — Data quality management (validation rules, profiling, anomaly detection)
+│   ├── scheduler-engineer.md    — Scheduling engineer (DAG design, dependencies, retry strategy)
+│   ├── monitoring-specialist.md — Monitoring specialist (metrics, alerts, dashboards, SLA)
+│   └── pipeline-reviewer.md     — Pipeline reviewer (cross-validation, consistency, operational readiness)
 ├── skills/
 │   ├── data-pipeline/
-│   │   └── skill.md              — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md              — Orchestrator (team coordination, workflow, error handling)
 │   ├── data-quality-framework/
-│   │   └── skill.md              — 데이터 품질 프레임워크 가이드
+│   │   └── skill.md              — Data quality framework guide
 │   └── dag-orchestration-patterns/
-│       └── skill.md              — 파이프라인 오케스트레이션 패턴 가이드
-└── CLAUDE.md                    — 이 파일
+│       └── skill.md              — Pipeline orchestration pattern guide
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/data-pipeline` 스킬을 트리거하거나, "데이터 파이프라인 설계해줘" 같은 자연어로 요청한다.
+Trigger the `/data-pipeline` skill, or make a natural language request such as "design a data pipeline."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_etl_architecture.md` — ETL 아키텍처 설계서
-- `02_data_quality_plan.md` — 데이터 품질 관리 계획
-- `03_scheduler_config.md` — 스케줄링 설정 및 DAG 정의
-- `04_monitoring_setup.md` — 모니터링 대시보드 및 알림 설정
-- `05_review_report.md` — 리뷰 보고서
-- `pipeline_code/` — 파이프라인 구현 코드
+All deliverables are stored in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_etl_architecture.md` — ETL architecture design document
+- `02_data_quality_plan.md` — Data quality management plan
+- `03_scheduler_config.md` — Scheduling configuration and DAG definitions
+- `04_monitoring_setup.md` — Monitoring dashboard and alert configuration
+- `05_review_report.md` — Review report
+- `pipeline_code/` — Pipeline implementation code

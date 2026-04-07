@@ -1,121 +1,121 @@
 ---
 name: dialogue-systems
-description: "대사작가(dialogue-writer)가 사용하는 게임 대사 시스템 전문 스킬. 캐릭터 보이스 설계, 선택지 심리학, 바크 시스템, 컷신 연출, 감정 태그 시스템을 제공한다. '게임 대사', 'NPC 대화', '선택지 설계', '캐릭터 보이스' 등에 활용한다."
+description: "A specialized skill for the dialogue-writer agent covering game dialogue systems. Provides character voice design, choice psychology, bark systems, cutscene direction, and emotion tag systems. Use for 'game dialogue,' 'NPC conversations,' 'choice design,' 'character voice,' and similar topics."
 ---
 
-# Dialogue Systems — 게임 대사 시스템 방법론
+# Dialogue Systems — Game Dialogue System Methodology
 
-dialogue-writer 에이전트가 NPC 대사, 선택지, 컷신을 작성할 때 활용하는 게임 대사 전문 지식.
+Specialized game dialogue knowledge used by the dialogue-writer agent when writing NPC dialogue, choices, and cutscenes.
 
-## 왜 게임 대사는 다른가
+## Why Game Dialogue Is Different
 
-소설의 대사는 읽히고, 영화의 대사는 들린다. 게임의 대사는 **플레이어가 선택한다**. 이 인터랙티브 요소가 모든 것을 바꾼다.
+Novel dialogue is read. Film dialogue is heard. Game dialogue is **chosen by the player**. This interactive element changes everything.
 
-## 캐릭터 보이스 설계: VOICE 프레임워크
+## Character Voice Design: VOICE Framework
 
-| 요소 | 설명 | 설계 질문 |
-|------|------|----------|
-| **V**ocabulary | 어휘 수준과 범위 | 이 캐릭터는 어떤 단어를 쓰고, 어떤 단어를 절대 안 쓰는가? |
-| **O**pinion | 세상에 대한 태도 | 낙관적? 냉소적? 실용적? 이상주의적? |
-| **I**diom | 말버릇, 구두점 패턴 | 특유의 감탄사, 끝맺음, 반복 표현은? |
-| **C**adence | 문장 리듬과 길이 | 짧고 끊어지는 말? 길고 우아한 문장? |
-| **E**motion | 감정 표현 방식 | 감정을 직접 표현? 행동으로 암시? 억제? |
+| Element | Description | Design Question |
+|---------|-------------|-----------------|
+| **V**ocabulary | Vocabulary level and range | What words does this character use, and which do they never use? |
+| **O**pinion | Attitude toward the world | Optimistic? Cynical? Pragmatic? Idealistic? |
+| **I**diom | Speech habits, punctuation patterns | Distinctive exclamations, sentence endings, repeated expressions? |
+| **C**adence | Sentence rhythm and length | Short, clipped speech? Long, elegant sentences? |
+| **E**motion | Emotional expression style | Express emotions directly? Imply through actions? Suppress? |
 
-### 캐릭터 보이스 카드 예시
-
-```
-캐릭터: 노련한 용병대장
-- V: 군사 용어 다수, 감정 어휘 최소. "작전", "후퇴", "보급"
-- O: 현실주의, 이상주의 조롱. "영웅은 일찍 죽어"
-- I: 문장 끝에 "...그래" 습관. 명령문 다수
-- C: 짧은 문장, 때때로 긴 독백 (과거 회상 시)
-- E: 감정을 절대 직접 표현 안 함. 행동으로만 보여줌
-```
-
-## 선택지 설계 심리학
-
-### 선택지 유형 분류
-
-| 유형 | 설명 | 서사 기능 | 예시 |
-|------|------|----------|------|
-| **성격 표현** | 플레이어의 롤플레이 | 캐릭터 정체성 구축 | 친절/냉정/유머러스 응답 |
-| **정보 수집** | 추가 정보 획득 | 세계관 탐구 | "그게 무슨 뜻이지?" |
-| **도덕적 딜레마** | 양립 불가 가치 충돌 | 감정적 무게 | 한 명만 구할 수 있다면? |
-| **전략적 선택** | 게임플레이에 영향 | 리소스/경로 결정 | 정면돌파/잠입/협상 |
-| **관계 선택** | NPC와의 관계 변화 | 사회적 시뮬레이션 | 동의/반대/회피 |
-
-### 선택지 설계 규칙
-
-1. **예측 가능한 결과**: 선택지를 읽으면 대략적 결과를 예측할 수 있어야 한다. "무고한 마을을 불태운다"가 좋은 결과로 이어지면 안 됨
-2. **감정적 차별화**: 모든 선택지가 "착한 말 vs 나쁜 말"이면 안 된다. 같은 의도라도 **방식**이 달라야 한다
-3. **3의 규칙**: 선택지는 2~4개, 최적은 3개 (적극적/중립적/공격적 변형)
-4. **거짓 선택 금지**: 어떤 것을 골라도 같은 결과면 플레이어는 배신감을 느낀다
-5. **침묵도 선택이다**: "..." 또는 시간 초과를 의미 있는 반응으로 처리
-
-### 선택의 무게감 설계
+### Character Voice Card Example
 
 ```
-무게감 = 되돌릴 수 없는 정도 x 영향 범위 x 감정적 투자
-
-- 되돌릴 수 없는 정도: 재선택 가능(낮음) ~ 영구적(높음)
-- 영향 범위: 즉각적 대사 변화(낮음) ~ 엔딩 변화(높음)
-- 감정적 투자: 처음 만난 NPC(낮음) ~ 오래 함께한 동료(높음)
+Character: Seasoned Mercenary Captain
+- V: Heavy military terminology, minimal emotional vocabulary. "Operation," "retreat," "supply"
+- O: Realism, mocks idealism. "Heroes die young"
+- I: Habit of ending sentences with "...yeah." Frequent imperative sentences
+- C: Short sentences, occasionally long monologues (when reminiscing)
+- E: Never expresses emotions directly. Shows only through actions
 ```
 
-## 바크 시스템 (Bark System)
+## Choice Design Psychology
 
-바크는 **비대화 상황에서 NPC가 자동으로 말하는 짧은 대사**다. 세계를 살아있게 만드는 핵심 요소.
+### Choice Type Classification
 
-### 바크 카테고리
+| Type | Description | Narrative Function | Example |
+|------|-------------|-------------------|---------|
+| **Personality Expression** | Player role-playing | Building character identity | Kind/Cold/Humorous responses |
+| **Information Gathering** | Obtaining additional info | World exploration | "What does that mean?" |
+| **Moral Dilemma** | Irreconcilable value conflicts | Emotional weight | If you could only save one? |
+| **Strategic Choice** | Affects gameplay | Resource/path decisions | Frontal assault/Stealth/Negotiation |
+| **Relationship Choice** | Changes NPC relationships | Social simulation | Agree/Disagree/Evade |
 
-| 카테고리 | 트리거 | 예시 |
-|---------|--------|------|
-| **유휴(Idle)** | 플레이어 근처에서 대기 | "오늘 시장은 한산하군..." |
-| **반응(React)** | 플레이어 행동에 반응 | "이런, 조심해!" (전투 시) |
-| **환경(Ambient)** | 날씨/시간/장소 변화 | "비가 오려나..." |
-| **관계(Relationship)** | 호감도에 따라 변화 | 호감 높음: "영웅이시여!" / 낮음: "흥, 또 왔나" |
-| **스토리(Story)** | 퀘스트 진행에 따라 | "장로님이 찾으시더라" |
-| **전투(Combat)** | 전투 중 상황 | "뒤에서 온다!", "체력 회복 필요해!" |
+### Choice Design Rules
 
-### 바크 품질 규칙
+1. **Predictable outcomes**: Reading the choices should allow rough prediction of results. "Burn the innocent village" should not lead to a good outcome
+2. **Emotional differentiation**: Not all choices should be "nice words vs. mean words." Even with the same intent, the **method** should differ
+3. **Rule of 3**: 2-4 choices, optimal is 3 (proactive/neutral/aggressive variants)
+4. **No false choices**: If every option leads to the same result, the player feels betrayed
+5. **Silence is also a choice**: Treat "..." or timeout as a meaningful response
 
-- **같은 바크 반복 금지**: 동일 트리거에 최소 3~5개 변형
-- **캐릭터 보이스 유지**: 바크도 VOICE 프레임워크를 따른다
-- **정보 전달**: 바크를 통해 퀘스트 힌트나 세계관 정보를 자연스럽게 전달
-- **길이**: 1~2문장, 최대 3초 분량
-
-## 컷신 대사 연출
-
-### 컷신 유형별 대사 밀도
-
-| 컷신 유형 | 대사 비율 | 무언 연출 비율 | 목적 |
-|----------|---------|-------------|------|
-| **오프닝** | 30% | 70% | 세계관 몰입, 시각적 임팩트 |
-| **캐릭터 소개** | 60% | 40% | 인물 성격 각인 |
-| **전투 전** | 40% | 60% | 긴장감 고조 |
-| **반전/트위스트** | 50% | 50% | 충격 + 여운 |
-| **엔딩** | 40% | 60% | 감정적 카타르시스 |
-
-### 대사-침묵 리듬 공식
+### Designing the Weight of Choices
 
 ```
-[대사] — [리액션 숏 1~2초] — [대사] — [긴 침묵 3~5초] — [결정적 대사]
+Weight = Irreversibility x Scope of Impact x Emotional Investment
 
-절대 금지: [대사][대사][대사] 연속 — 감정이 쌓일 여유가 없다
+- Irreversibility: Re-selectable (low) ~ Permanent (high)
+- Scope of Impact: Immediate dialogue change (low) ~ Ending change (high)
+- Emotional Investment: First-met NPC (low) ~ Long-time companion (high)
 ```
 
-## 대사 포맷 표준
+## Bark System
+
+Barks are **short lines NPCs say automatically in non-dialogue situations**. They are a key element that makes the world feel alive.
+
+### Bark Categories
+
+| Category | Trigger | Example |
+|----------|---------|---------|
+| **Idle** | Waiting near the player | "The market is quiet today..." |
+| **React** | Reacting to player actions | "Whoa, careful!" (during combat) |
+| **Ambient** | Weather/time/location changes | "Looks like rain..." |
+| **Relationship** | Changes based on affinity | High affinity: "Hail, hero!" / Low: "Hmph, you again" |
+| **Story** | Based on quest progression | "The elder was looking for you" |
+| **Combat** | During battle situations | "They're behind us!", "Need healing!" |
+
+### Bark Quality Rules
+
+- **No repeating the same bark**: At least 3-5 variations per trigger
+- **Maintain character voice**: Barks also follow the VOICE framework
+- **Information delivery**: Naturally convey quest hints or world information through barks
+- **Length**: 1-2 sentences, 3 seconds maximum
+
+## Cutscene Dialogue Direction
+
+### Dialogue Density by Cutscene Type
+
+| Cutscene Type | Dialogue Ratio | Silent Direction Ratio | Purpose |
+|--------------|---------------|----------------------|---------|
+| **Opening** | 30% | 70% | World immersion, visual impact |
+| **Character Introduction** | 60% | 40% | Imprinting character personality |
+| **Pre-Battle** | 40% | 60% | Building tension |
+| **Twist/Reveal** | 50% | 50% | Shock + lingering impression |
+| **Ending** | 40% | 60% | Emotional catharsis |
+
+### Dialogue-Silence Rhythm Formula
 
 ```
-DIALOGUE_ID: D_[챕터]_[씬]_[순번]
-SPEAKER: [캐릭터명]
+[Dialogue] — [Reaction shot 1-2 sec] — [Dialogue] — [Long silence 3-5 sec] — [Decisive line]
+
+Absolute prohibition: [Dialogue][Dialogue][Dialogue] in succession — no room for emotions to build
+```
+
+## Dialogue Format Standard
+
+```
+DIALOGUE_ID: D_[Chapter]_[Scene]_[Sequence]
+SPEAKER: [Character Name]
 EMOTION: [neutral/happy/angry/sad/fearful/surprised/contempt]
 CONDITION: [IF flag_xxx == true]
-VOICE_NOTE: [연기 지시 — "속삭이듯", "분노를 억누르며"]
+VOICE_NOTE: [Acting direction — "whispered," "suppressing anger"]
 
-[대사 내용]
+[Dialogue content]
 
-→ CHOICE (선택지가 있는 경우)
-  A: [선택지 텍스트] → GOTO D_XX_XX_XX / SET flag_xxx
-  B: [선택지 텍스트] → GOTO D_XX_XX_XX / SET flag_xxx
+-> CHOICE (if choices exist)
+  A: [Choice text] -> GOTO D_XX_XX_XX / SET flag_xxx
+  B: [Choice text] -> GOTO D_XX_XX_XX / SET flag_xxx
 ```

@@ -1,157 +1,157 @@
 ---
 name: techstack-decision-matrix
-description: "사이드프로젝트 기술스택을 체계적으로 비교·선정하는 의사결정 매트릭스. 'techstack-analyst' 에이전트가 기술스택을 비교하고 추천할 때 이 스킬의 평가 기준, 비용 계산법, 스택 조합 패턴을 반드시 활용해야 한다. '기술스택 비교', '인프라 비용 계산', '스택 선정' 등에 사용한다. 단, 시장 분석이나 MVP 설계는 이 스킬의 범위가 아니다."
+description: "companyproject tech stack systematicas comparison· decision-making matrix. 'techstack-analyst' agent tech stack comparisonand recommendationto do when this skill's assessment standard, cost total, pattern must be utilized. 'tech stack comparison', 'person cost total', ' ' etc. However, market analysis MVP design is outside this skill's scope."
 ---
 
-# TechStack Decision Matrix — 기술스택 의사결정 매트릭스
+# TechStack Decision Matrix — tech stack decision-making matrix
 
-사이드프로젝트에 최적화된 기술스택 비교, 비용 산출, 추천 조합.
+companyproject optimizationdone tech stack comparison, cost calculation, recommendation .
 
-## 평가 기준 프레임워크 (5축)
+## assessment standard framework (5)
 
 ```
-1. 학습 곡선 (Learning Curve): 새로 배우는 데 걸리는 시간
-2. 개발 속도 (Development Speed): MVP까지의 소요 시간
-3. 운영 비용 (Operating Cost): 월 인프라 비용
-4. 확장성 (Scalability): 사용자 증가 시 대응 용이성
-5. 생태계 (Ecosystem): 라이브러리, 커뮤니티, 채용 시장
+1. learning (Learning Curve): time
+2. development within also (Development Speed): MVPto time
+3. operations cost (Operating Cost): month person cost
+4. extensionnature (Scalability): user increase when response nature
+5. total (Ecosystem): library, , hiring market
 ```
 
-## 프론트엔드 비교
+## comparison
 
-| 프레임워크 | 학습 | 속도 | 생태계 | 적합 | 비고 |
+| framework | learning | within also | total | quality | notes |
 |-----------|------|------|--------|------|------|
-| Next.js | 3/5 | 5/5 | 5/5 | 웹앱, SaaS | SSR+API 통합 |
-| React (Vite) | 3/5 | 4/5 | 5/5 | SPA, 대시보드 | 유연성 최고 |
-| Vue.js | 4/5 | 4/5 | 4/5 | 중소 프로젝트 | 쉬운 학습 |
-| Svelte | 4/5 | 4/5 | 3/5 | 성능 중시 | 번들 크기 최소 |
-| Astro | 4/5 | 5/5 | 3/5 | 콘텐츠/블로그 | 정적 사이트 |
-| Flutter Web | 3/5 | 3/5 | 3/5 | 크로스 플랫폼 | 모바일 겸용 |
+| Next.js | 3/5 | 5/5 | 5/5 | web, SaaS | SSR+API integration |
+| React (Vite) | 3/5 | 4/5 | 5/5 | SPA, dashboard | annualnature |
+| Vue.js | 4/5 | 4/5 | 4/5 | during project | learning |
+| Svelte | 4/5 | 4/5 | 3/5 | nature duringwhen | size minimum |
+| Astro | 4/5 | 5/5 | 3/5 | content/blog | quality company |
+| Flutter Web | 3/5 | 3/5 | 3/5 | platform | day |
 
-## 백엔드 비교
+## comparison
 
-| 프레임워크 | 학습 | 속도 | 성능 | 적합 | 비고 |
+| framework | learning | within also | nature | quality | notes |
 |-----------|------|------|------|------|------|
-| Next.js API | 4/5 | 5/5 | 3/5 | 풀스택, BFF | 프론트 통합 |
-| FastAPI (Python) | 4/5 | 4/5 | 4/5 | API, AI/ML | 타입 힌트 |
-| Express (Node) | 4/5 | 4/5 | 3/5 | 범용 API | 유연성 |
-| Django | 3/5 | 4/5 | 4/5 | 관리자 필요 시 | 배터리 포함 |
-| Spring Boot | 2/5 | 3/5 | 5/5 | 대규모 시스템 | 과투자 주의 |
-| Go (Fiber) | 3/5 | 3/5 | 5/5 | 고성능 API | 동시성 강점 |
+| Next.js API | 4/5 | 5/5 | 3/5 | Full, BFF | integration |
+| FastAPI (Python) | 4/5 | 4/5 | 4/5 | API, AI/ML | type |
+| Express (Node) | 4/5 | 4/5 | 3/5 | API | annualnature |
+| Django | 3/5 | 4/5 | 4/5 | managementspecialist needed when | included |
+| Spring Boot | 2/5 | 3/5 | 5/5 | versusscale whensystem | investment week |
+| Go (Fiber) | 3/5 | 3/5 | 5/5 | nature API | whennature strength |
 
-## 데이터베이스 비교
+## data comparison
 
-| DB | 유형 | 무료 티어 | 적합 | 비고 |
+| DB | type | free | quality | notes |
 |----|------|----------|------|------|
-| Supabase (PostgreSQL) | SQL | 500MB, 50K MAU | CRUD 앱, 인증 포함 | Firebase 대안 |
-| PlanetScale (MySQL) | SQL | 1GB, 1B reads | 확장성 필요 시 | 브랜칭 기능 |
-| Firebase Firestore | NoSQL | 1GB, 50K reads/일 | 실시간, 모바일 | 구글 생태계 |
-| MongoDB Atlas | NoSQL | 512MB | 유연한 스키마 | JSON 네이티브 |
-| Turso (SQLite) | SQL | 9GB, 500 DB | 엣지, 빠른 시작 | 서버리스 |
-| Neon (PostgreSQL) | SQL | 3GB | Next.js 궁합 | 서버리스 PG |
+| Supabase (PostgreSQL) | SQL | 500MB, 50K MAU | CRUD , authentication included | Firebase versusplan |
+| PlanetScale (MySQL) | SQL | 1GB, 1B reads | extensionnature needed when | feature |
+| Firebase Firestore | NoSQL | 1GB, 50K reads/day | actualtime, day | total |
+| MongoDB Atlas | NoSQL | 512MB | annualKorean | JSON |
+| Turso (SQLite) | SQL | 9GB, 500 DB | degree, whenwork | from |
+| Neon (PostgreSQL) | SQL | 3GB | Next.js | from PG |
 
-## 인프라·배포 비용 비교
+## person·deployment cost comparison
 
-### 무료 티어 활용 스택
-
-```
-$0/월 스택:
-  호스팅: Vercel Free (100GB 대역폭)
-  DB: Supabase Free (500MB)
-  인증: Supabase Auth (50K MAU)
-  스토리지: Supabase Storage (1GB)
-  도메인: 서브도메인 (*.vercel.app)
-  이메일: Resend Free (100/일)
-
-적합: MVP 검증, 초기 사용자 100명 이하
-```
-
-### 저비용 스택 ($10-30/월)
+### free utilization 
 
 ```
-호스팅: Vercel Pro ($20/월) 또는 Railway ($5~)
-DB: Supabase Pro ($25/월) 또는 PlanetScale Scaler ($29/월)
-도메인: 연 $12-15
-이메일: Resend ($20/월)
-모니터링: Sentry Free
+$0/month :
+ : Vercel Free (100GB versus)
+ DB: Supabase Free (500MB)
+ authentication: Supabase Auth (50K MAU)
+ storydegree: Supabase Storage (1GB)
+ person: fromperson (*.vercel.app)
+ email: Resend Free (100/day)
 
-총: $25-50/월 (약 3-7만원)
-적합: 유료 사용자 100-1,000명
+quality: MVP verify, initial user 100people or less
 ```
 
-### 스택 ROI 계산
+### cost ($10-30/month)
 
 ```
-손익분기점 = 월 운영비 / (ARPU × 유료전환율 × MAU)
+: Vercel Pro ($20/month) or Railway ($5~)
+DB: Supabase Pro ($25/month) or PlanetScale Scaler ($29/month)
+person: annual $12-15
+email: Resend ($20/month)
+monitoring: Sentry Free
 
-예시:
-  월 운영비: 5만원
-  구독료: 9,900원/월
-  유료 전환: 3%
-  필요 MAU: 5만 / (9,900 × 0.03) = 168명
-
-168명의 활성 사용자가 필요
+total: $25-50/month (approx. 3-70,000 KRW)
+quality: user 100-1,000people
 ```
 
-## 추천 스택 조합
-
-### 웹 SaaS (1인 개발자)
+### ROI total
 
 ```
-✅ 추천: Next.js + Supabase + Vercel + Tailwind CSS
-  - 풀스택 통합
-  - 무료 시작 → 유료 스케일
-  - 인증·DB·스토리지 올인원
-  - 학습 곡선 보통, 생산성 최고
+minutebasispoint = month operations / (ARPU × beforeexchange × MAU)
+
+examplewhen:
+ month operations: 50,000 KRW
+ : 9,900KRW/month
+ beforeexchange: 3%
+ needed MAU: 5 only / (9,900 × 0.03) = 168people
+
+168people nature user needed
 ```
 
-### 모바일 앱
+## recommendation 
+
+### web SaaS (1person developmentspecialist)
 
 ```
-✅ 추천: Flutter + Firebase + Google Play/App Store
-  - iOS + Android 동시
-  - 실시간 DB, 푸시 알림 내장
-  - 무료 시작 → 유료 스케일
-
-대안: React Native + Expo + Supabase
+✅ recommendation: Next.js + Supabase + Vercel + Tailwind CSS
+ - Full integration
+ - free whenwork → day
+ - authentication·DB·storydegree personKRW
+ - learning report, nature 
 ```
 
-### AI/ML 제품
+### day 
 
 ```
-✅ 추천: Next.js + FastAPI + OpenAI API + Vercel + Railway
-  - 프론트: Next.js (Vercel)
-  - AI 백엔드: FastAPI (Railway)
-  - LLM: OpenAI/Anthropic API
-  - DB: Supabase (벡터 검색 pgvector)
+✅ recommendation: Flutter + Firebase + Google Play/App Store
+ - iOS + Android when
+ - actualtime DB, when within
+ - free whenwork → day
+
+versusplan: React Native + Expo + Supabase
 ```
 
-### 콘텐츠/블로그
+### AI/ML 
 
 ```
-✅ 추천: Astro + Markdown + Vercel + 무료 CMS
-  - 빌드 시 정적 생성 (빠름, 저비용)
-  - SEO 최적화 내장
-  - $0/월 운영 가능
+✅ recommendation: Next.js + FastAPI + OpenAI API + Vercel + Railway
+ - : Next.js (Vercel)
+ - AI : FastAPI (Railway)
+ - LLM: OpenAI/Anthropic API
+ - DB: Supabase ( search pgvector)
 ```
 
-## 의사결정 매트릭스 출력 형식
+### content/blog
+
+```
+✅ recommendation: Astro + Markdown + Vercel + free CMS
+ - when quality creation (, cost)
+ - SEO optimization within
+ - $0/month operations possible
+```
+
+## decision-making matrix capability 
 
 ```markdown
-## 기술스택 비교 매트릭스
+## tech stack comparison matrix
 
-| 기준 (가중치) | 옵션 A | 옵션 B | 옵션 C |
+| standard (duringvalue) | option A | option B | option C |
 |-------------|--------|--------|--------|
-| 학습곡선 (20%) | 4/5 | 3/5 | 5/5 |
-| 개발속도 (30%) | 5/5 | 4/5 | 3/5 |
-| 운영비용 (20%) | 5/5 | 3/5 | 4/5 |
-| 확장성 (15%) | 4/5 | 5/5 | 3/5 |
-| 생태계 (15%) | 5/5 | 5/5 | 3/5 |
-| **가중 합계** | **4.6** | **3.9** | **3.7** |
-| **추천** | ✅ 1순위 | 2순위 | 3순위 |
+| learning (20%) | 4/5 | 3/5 | 5/5 |
+| developmentwithin also (30%) | 5/5 | 4/5 | 3/5 |
+| operationscost (20%) | 5/5 | 3/5 | 4/5 |
+| extensionnature (15%) | 4/5 | 5/5 | 3/5 |
+| total (15%) | 5/5 | 5/5 | 3/5 |
+| **during total** | **4.6** | **3.9** | **3.7** |
+| **recommendation** | ✅ 1 | 2 | 3 |
 ```
 
-## 참고
+## reference
 
-- 2024-2025 시장 기준, 가격·무료 티어는 변동 가능
-- 상세 스택 가이드: `references/techstack-details.md` 참조
+- 2024-2025 market standard, price·free possible
+- detailed guide: `references/techstack-details.md` reference

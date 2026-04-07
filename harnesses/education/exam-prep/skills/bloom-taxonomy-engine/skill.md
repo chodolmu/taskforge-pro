@@ -1,115 +1,115 @@
 ---
 name: bloom-taxonomy-engine
-description: "Bloom의 교육목표 분류학을 활용한 문항 설계 및 학습 수준 분석 전문 스킬. examiner와 learning-designer 에이전트가 인지 수준별 문항을 출제하고 학습 목표를 계층화할 때 활용한다. 'Bloom 분류', '인지 수준', '문항 설계', '학습 목표 분류', '고차 사고력' 등의 맥락에서 자동 적용한다. 단, 교육과정 공식 인증이나 학교 교육과정 편성은 이 스킬의 범위가 아니다."
+description: "A specialized skill for question design and learning level analysis using Bloom's Taxonomy of Educational Objectives. Used by examiner and learning-designer agents when creating questions at various cognitive levels and hierarchizing learning objectives. Automatically applied in contexts such as 'Bloom's Taxonomy', 'cognitive levels', 'question design', 'learning objective classification', 'higher-order thinking'. However, official curriculum certification and school curriculum planning are outside the scope of this skill."
 ---
 
-# Bloom Taxonomy Engine — 인지 수준별 문항 설계 도구
+# Bloom Taxonomy Engine — Cognitive-Level Question Design Tool
 
-examiner, learning-designer 에이전트의 문항 설계 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the examiner and learning-designer agents' question design capabilities.
 
-## 적용 대상 에이전트
+## Target Agents
 
-- **examiner** — 인지 수준별 문항 출제, 난이도 균형
-- **learning-designer** — 학습 목표 계층화, 수준별 학습 활동 설계
+- **examiner** — Cognitive-level question creation, difficulty balancing
+- **learning-designer** — Learning objective hierarchization, level-appropriate activity design
 
-## Bloom 인지 영역 6단계
+## Bloom's Cognitive Domain — 6 Levels
 
-### 수정된 Bloom 분류학 (Anderson & Krathwohl, 2001)
+### Revised Bloom's Taxonomy (Anderson & Krathwohl, 2001)
 
-| 단계 | 인지 수준 | 정의 | 핵심 동사 |
-|------|---------|------|----------|
-| 1 | **기억** (Remember) | 사실, 개념을 회상 | 나열하다, 정의하다, 식별하다, 암기하다 |
-| 2 | **이해** (Understand) | 의미를 파악, 설명 | 설명하다, 요약하다, 분류하다, 비교하다 |
-| 3 | **적용** (Apply) | 절차를 실행, 활용 | 사용하다, 계산하다, 실행하다, 해결하다 |
-| 4 | **분석** (Analyze) | 구성요소 분해, 관계 파악 | 구별하다, 분해하다, 조직하다, 귀인하다 |
-| 5 | **평가** (Evaluate) | 기준에 따라 판단 | 판단하다, 비판하다, 정당화하다, 검증하다 |
-| 6 | **창조** (Create) | 새로운 것을 생성 | 설계하다, 구성하다, 계획하다, 생산하다 |
+| Level | Cognitive Level | Definition | Key Verbs |
+|-------|---------------|-----------|-----------|
+| 1 | **Remember** | Recall facts and concepts | List, define, identify, memorize |
+| 2 | **Understand** | Grasp meaning, explain | Explain, summarize, classify, compare |
+| 3 | **Apply** | Execute procedures, use knowledge | Use, calculate, execute, solve |
+| 4 | **Analyze** | Break into components, find relationships | Distinguish, deconstruct, organize, attribute |
+| 5 | **Evaluate** | Judge based on criteria | Judge, critique, justify, verify |
+| 6 | **Create** | Produce something new | Design, construct, plan, produce |
 
-## 인지 수준별 문항 설계 가이드
+## Per-Level Question Design Guide
 
-### 1단계: 기억 (Remember)
+### Level 1: Remember
 
-**문항 유형:** 객관식, 참/거짓, 용어 매칭
+**Item types:** Multiple choice, true/false, term matching
 ```
-예시:
-Q: 다음 중 TCP/IP 프로토콜의 전송 계층에 해당하는 것은?
+Example:
+Q: Which of the following belongs to the transport layer of the TCP/IP protocol?
 (a) HTTP  (b) TCP  (c) IP  (d) ARP
 ```
-**출제 비율:** 시험 전체의 15-20%
+**Recommended proportion:** 15-20% of the exam
 
-### 2단계: 이해 (Understand)
+### Level 2: Understand
 
-**문항 유형:** 객관식(해석형), 짧은 서술, 비교
+**Item types:** Interpretive multiple choice, short answer, comparison
 ```
-예시:
-Q: TCP와 UDP의 차이점을 신뢰성과 속도 관점에서 설명하시오.
+Example:
+Q: Explain the differences between TCP and UDP in terms of reliability and speed.
 ```
-**출제 비율:** 20-25%
+**Recommended proportion:** 20-25%
 
-### 3단계: 적용 (Apply)
+### Level 3: Apply
 
-**문항 유형:** 계산 문제, 코드 작성, 사례 적용
+**Item types:** Calculation problems, code writing, case application
 ```
-예시:
-Q: 서브넷 마스크 255.255.255.192에서 사용 가능한 호스트 수를 구하시오.
+Example:
+Q: Calculate the number of usable hosts for a subnet mask of 255.255.255.192.
 ```
-**출제 비율:** 25-30%
+**Recommended proportion:** 25-30%
 
-### 4단계: 분석 (Analyze)
+### Level 4: Analyze
 
-**문항 유형:** 사례 분석, 로그 분석, 비교 분석
+**Item types:** Case analysis, log analysis, comparative analysis
 ```
-예시:
-Q: 아래 네트워크 장애 로그를 분석하고 원인을 추론하시오.
+Example:
+Q: Analyze the following network failure log and deduce the cause.
 ```
-**출제 비율:** 15-20%
+**Recommended proportion:** 15-20%
 
-### 5단계: 평가 (Evaluate)
+### Level 5: Evaluate
 
-**문항 유형:** 판단형 서술, 설계 비교 평가
+**Item types:** Judgment essays, design comparison evaluation
 ```
-예시:
-Q: 아래 두 데이터베이스 설계 중 어느 것이 더 적합한지 
-   정규화, 성능, 유지보수 관점에서 평가하시오.
+Example:
+Q: Evaluate which of the two database designs below is more suitable
+   from the perspectives of normalization, performance, and maintainability.
 ```
-**출제 비율:** 5-10%
+**Recommended proportion:** 5-10%
 
-### 6단계: 창조 (Create)
+### Level 6: Create
 
-**문항 유형:** 설계 문제, 프로젝트, 종합 서술
+**Item types:** Design problems, projects, comprehensive essays
 ```
-예시:
-Q: 다음 요구사항을 충족하는 시스템 아키텍처를 설계하시오.
+Example:
+Q: Design a system architecture that meets the following requirements.
 ```
-**출제 비율:** 5-10%
+**Recommended proportion:** 5-10%
 
-## 시험 유형별 Bloom 분포 가이드
+## Bloom Distribution Guide by Exam Type
 
-| 시험 유형 | 기억 | 이해 | 적용 | 분석 | 평가 | 창조 |
-|---------|------|------|------|------|------|------|
-| 자격증 필기 | 30% | 30% | 25% | 10% | 5% | 0% |
-| 자격증 실기 | 5% | 15% | 40% | 25% | 10% | 5% |
-| 수능/모의고사 | 20% | 25% | 25% | 20% | 10% | 0% |
-| 대학원 시험 | 10% | 15% | 20% | 25% | 20% | 10% |
-| 공무원 시험 | 35% | 30% | 20% | 10% | 5% | 0% |
+| Exam Type | Remember | Understand | Apply | Analyze | Evaluate | Create |
+|-----------|----------|-----------|-------|---------|----------|--------|
+| Certification (written) | 30% | 30% | 25% | 10% | 5% | 0% |
+| Certification (practical) | 5% | 15% | 40% | 25% | 10% | 5% |
+| Standardized tests | 20% | 25% | 25% | 20% | 10% | 0% |
+| Graduate exams | 10% | 15% | 20% | 25% | 20% | 10% |
+| Civil service exams | 35% | 30% | 20% | 10% | 5% | 0% |
 
-## 학습 활동 설계 (learning-designer용)
+## Learning Activity Design (for learning-designer)
 
-### Bloom 단계별 효과적 학습 활동
+### Effective Activities by Bloom Level
 
-| 단계 | 학습 활동 | 도구/방법 |
-|------|----------|----------|
-| 기억 | 플래시카드, 반복 읽기, 요약 노트 | SRS, 마인드맵 |
-| 이해 | 자기 말로 설명, 예시 만들기 | 파인만 기법, 비유 |
-| 적용 | 연습 문제 풀이, 실습 | 드릴, 코딩 과제 |
-| 분석 | 사례 분석, 비교표 작성 | 매트릭스, 다이어그램 |
-| 평가 | 토론, 피어 리뷰, 비평문 | 루브릭 기반 평가 |
-| 창조 | 프로젝트, 설계, 발표 | PBL, 포트폴리오 |
+| Level | Learning Activity | Tools/Methods |
+|-------|------------------|--------------|
+| Remember | Flashcards, repeated reading, summary notes | SRS, mind maps |
+| Understand | Explain in own words, create examples | Feynman technique, analogies |
+| Apply | Practice problems, hands-on exercises | Drills, coding assignments |
+| Analyze | Case analysis, comparison table creation | Matrices, diagrams |
+| Evaluate | Discussion, peer review, critique writing | Rubric-based assessment |
+| Create | Projects, design work, presentations | PBL, portfolios |
 
-## 문항 품질 검증 체크리스트
+## Question Quality Verification Checklist
 
-- [ ] 각 문항의 Bloom 레벨이 태깅되어 있는가?
-- [ ] 전체 문항의 Bloom 분포가 시험 목적에 맞는가?
-- [ ] 고차 사고력 문항(분석+평가+창조)이 30% 이상인가?
-- [ ] 문항 간 정답 힌트 제공(cue leakage)이 없는가?
-- [ ] 오답 선지가 그럴듯한가(매력적 오답)?
+- [ ] Is each item tagged with its Bloom level?
+- [ ] Does the overall Bloom distribution match the exam's purpose?
+- [ ] Are higher-order thinking items (Analyze + Evaluate + Create) at least 30%?
+- [ ] Is there no cue leakage between items (one item hinting at another's answer)?
+- [ ] Are distractors plausible (attractive wrong answers)?

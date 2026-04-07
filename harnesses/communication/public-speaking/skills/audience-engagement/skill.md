@@ -1,108 +1,108 @@
 ---
 name: audience-engagement
-description: "청중 참여 전략 라이브러리. audience-analyst와 rehearsal-coach 에이전트가 청중 분석과 발표 준비를 할 때 참조. '청중 분석', '발표 긴장', '무대 연출' 요청 시 사용. 단, 슬라이드 디자인이나 영상 편집은 범위 밖."
+description: "audience strategy library. audience-analyst and rehearsal-coach agent audience analysis and presentation preparation to do when reference. 'audience analysis', 'presentation ', 'stage annual' request when usage. However, specialistperson scope outside."
 ---
 
-# Audience Engagement — 청중 참여 전략
+# Audience Engagement — audience strategy
 
-audience-analyst / rehearsal-coach 에이전트의 청중 분석과 참여 설계 역량 강화.
+audience-analyst / rehearsal-coach agent audience analysis and design competency .
 
-## 청중 분석 프레임워크
+## audience analysis framework
 
-### 5W 청중 분석
+### 5W audience analysis
 
-| 요소 | 질문 | 분석 포인트 |
+| element | question | analysis point |
 |------|------|-----------|
-| Who | 누구인가 | 직급, 전문성, 인원, 연령대 |
-| What | 무엇을 기대하는가 | 정보, 영감, 해결책, 엔터테인먼트 |
-| Why | 왜 참석하는가 | 자발/의무, 동기, 관심사 |
-| Where | 어떤 환경인가 | 대면/온라인, 장소, 시간대 |
-| Worry | 무엇이 걱정인가 | 저항 요인, 반대 근거, 이해상충 |
+| Who | person | grade, specialistnature, personKRW, annualversus |
+| What | expected | information, , , person |
+| Why | | specialist/, basis, company |
+| Where | environmentperson | versus/person, venue, timeversus |
+| Worry | person | person, versus basis, |
 
-### 청중 유형별 전략
+### audience typeby strategy
 
-| 청중 유형 | 특성 | 전략 |
+| audience type | nature | strategy |
 |----------|------|------|
-| 우호적 | 이미 동의, 지지 | 행동 촉구에 집중, 감정 동조 |
-| 중립적 | 정보 부족, 미결정 | 데이터 중심, 양면 제시 |
-| 적대적 | 반대 입장 | 공통 기반 먼저, 점진적 설득 |
-| 혼합 | 다양한 입장 | 공통 가치 강조, 분열 방지 |
-| 전문가 | 높은 지식 수준 | 깊은 분석, 새로운 시각 |
-| 비전문가 | 배경지식 부족 | 비유/사례, 전문용어 최소화 |
+| quality | un- , degreedegree | action during, emotion |
+| duringquality | information insufficient, un-decision | data during, present |
+| qualityversusquality | versus | based , pointquality persuasion |
+| | Korean | value , minute degree |
+| expert | degree level | analysis, wheneach |
+| expert | backgrounddegree insufficient | /case, specialist minimization |
 
-## 오프닝 기법 (처음 30초)
+## technique ( 30)
 
-| 기법 | 예시 | 효과 |
+| technique | examplewhen | and |
 |------|------|------|
-| 충격 통계 | "매년 한국에서 X만 건의..." | 문제 인식 |
-| 도발적 질문 | "여러분 중 Y를 경험한 분?" | 참여 유도 |
-| 개인 스토리 | "3년 전 저는..." | 공감/신뢰 |
-| 반직관 명제 | "우리가 알던 것은 틀렸습니다" | 호기심 |
-| 현장 연결 | "오늘 이 자리에 오시면서..." | 즉시성 |
-| 인용 | "스티브 잡스는 말했습니다..." | 권위 |
+| statistics | "year Koreanfrom X only case..." | problem person |
+| quality question | "minute during Y Korean minute?" | also |
+| itemsperson story | "3year before ..." | empathy/ |
+| people | " " | basis |
+| current annual | " specialist whenfrom..." | i.e.whennature |
+| person | " ..." | |
 
-## 클로징 기법 (마지막 60초)
+## technique (degree 60)
 
-| 기법 | 설명 |
+| technique | description |
 |------|------|
-| 원점 회귀 | 오프닝 스토리의 결말 제공 |
-| 행동 촉구 | "내일 첫 출근 시 X를 해보세요" |
-| 미래 비전 | "1년 후 우리는..." |
-| 핵심 반복 | 3개 핵심 메시지 재정리 |
-| 여운 질문 | 답 없는 질문으로 생각 유도 |
+| KRWpoint | story provide |
+| action | "withinday when X reporttax" |
+| un- vision | "1year after ..." |
+| core | 3items core message re-organization |
+| question | questionas each also |
 
-## 발표 긴장 관리
+## presentation management
 
-### 신체적 기법
+### quality technique
 
-| 기법 | 방법 | 타이밍 |
+| technique | method | |
 |------|------|--------|
-| 복식호흡 | 4초 들이쉬기-7초 내쉬기 | 발표 5분 전 |
-| 파워포즈 | 양팔 벌리기 2분 | 발표 10분 전 |
-| 접지 기법 | 양발 바닥 누르기, 감각 집중 | 무대 위 |
-| 시선 앵커 | 우호적 청중 3명 삼각형 | 발표 중 |
+| | 4 basis-7 withinbasis | presentation 5minute before |
+| | basis 2minute | presentation 10minute before |
+| degree technique | basis, each during | stage |
+| when | quality audience 3people each | presentation during |
 
-### 인지적 기법
+### persondegreequality technique
 
-| 기법 | 방법 |
+| technique | method |
 |------|------|
-| 리프레이밍 | "긴장 = 에너지" |
-| 시각화 | 성공적 발표 완료 장면 |
-| 최악 시나리오 | "최악이 뭐지? → 그래도 괜찮다" |
-| 준비 확신 | "나는 충분히 준비했다" |
+| | " = degree" |
+| visualization | naturequality presentation complete |
+| scenario | " degree? → also " |
+| preparation | " minute preparation" |
 
-## 비언어적 커뮤니케이션
+## quality communication
 
-### Mehrabian 법칙 (감정 전달 기준)
+### Mehrabian (emotion deliver standard)
 
-| 채널 | 비중 | 핵심 |
+| channel | proportion | core |
 |------|------|------|
-| 언어 (내용) | 7% | 메시지 명확성 |
-| 음성 (톤/속도) | 38% | 강약/속도/침묵 |
-| 시각 (표정/제스처) | 55% | 제스처/시선/자세 |
+| (content) | 7% | message clarity |
+| nature (tone/within) | 38% | approx./within/ |
+| wheneach (table/) | 55% | /when/specialisttax |
 
-### 무대 활용
+### stage utilization
 
 ```
-무대 3구역:
-├── 좌측: 과거/문제 이야기
-├── 중앙: 핵심 메시지/현재
-└── 우측: 미래/해결책/비전
+stage 3:
+├── : /problem basis
+├── during: core message/current
+└── : un-//vision
 
-이동 규칙:
-- 포인트 전환 시 구역 이동
-- 핵심 메시지는 중앙에서
-- Q&A는 청중 방향으로 이동
-- 이동 중에는 말하지 않음
+ rule:
+- point beforeexchange when 
+- core message duringfrom
+- Q&A audience directionas 
+- during degree 
 ```
 
-## 품질 체크리스트
+## quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| 청중 분석 | 5W 모두 파악 |
-| 오프닝 | 30초 이내 관심 집중 |
-| 핵심 메시지 | 3개 이내 |
-| 클로징 | CTA 포함 |
-| 시간 배분 | 분당 150단어, 슬라이드당 2분 |
-| 리허설 | 최소 3회, 1회는 녹화 |
+| audience analysis | 5W identify |
+| | 30 within during |
+| core message | 3items within |
+| | CTA included |
+| time allocation | minute 150, 2minute |
+| rehearsal | minimum 3, 1 |

@@ -1,109 +1,109 @@
 ---
 name: cloud-cost-models
-description: "AWS/GCP/Azure 비용 모델, 사이징 가이드, 예약 인스턴스/Savings Plan 전략, FinOps 프레임워크 가이드. '클라우드 비용', '비용 최적화', 'FinOps', '인스턴스 사이징', 'Savings Plan', '예약 인스턴스', 'Spot 인스턴스', '비용 추정' 등 인프라 비용 관련 판단 시 이 스킬을 사용한다. cost-optimizer의 비용 분석 역량을 강화한다. 단, 실제 리소스 프로비저닝이나 결제 설정은 이 스킬의 범위가 아니다."
+description: "AWS/GCP/Azure cost models, sizing guides, Reserved Instance/Savings Plan strategies, and FinOps framework guide. Use this skill for 'cloud costs', 'cost optimization', 'FinOps', 'instance sizing', 'Savings Plan', 'reserved instances', 'Spot instances', 'cost estimation', and other infrastructure cost-related decisions. Enhances the cost analysis capabilities of cost-optimizer. Note: actual resource provisioning and billing configuration are outside the scope of this skill."
 ---
 
-# Cloud Cost Models — 클라우드 비용 모델 및 FinOps 가이드
+# Cloud Cost Models — Cloud Cost Model and FinOps Guide
 
-클라우드 인프라 비용을 정확히 추정하고 최적화하는 실전 가이드.
+A practical guide for accurately estimating and optimizing cloud infrastructure costs.
 
-## AWS 핵심 서비스 비용 모델
+## AWS Core Service Cost Models
 
-### EC2 구매 옵션 비교 (ap-northeast-2 기준)
+### EC2 Purchase Option Comparison (ap-northeast-2 basis)
 
-| 옵션 | 할인율 | 약정 | 유연성 | 적합 워크로드 |
-|------|-------|------|--------|-------------|
-| On-Demand | 0% | 없음 | 최대 | 변동 워크로드, 테스트 |
-| Savings Plan (Compute) | ~30% | 1년 | 인스턴스 변경 가능 | 안정적 기본 부하 |
-| Savings Plan (EC2) | ~40% | 1년 | 패밀리 내 변경 | 예측 가능한 워크로드 |
-| Reserved Instance | ~40% | 1년/3년 | 제한적 | 24/7 서버 |
-| Spot Instance | ~70% | 없음 | 중단 가능 | 배치, CI/CD, ML |
+| Option | Discount | Commitment | Flexibility | Suitable Workload |
+|--------|---------|-----------|------------|-------------------|
+| On-Demand | 0% | None | Maximum | Variable workloads, testing |
+| Savings Plan (Compute) | ~30% | 1 year | Instance changeable | Stable baseline load |
+| Savings Plan (EC2) | ~40% | 1 year | Within family | Predictable workloads |
+| Reserved Instance | ~40% | 1yr/3yr | Limited | 24/7 servers |
+| Spot Instance | ~70% | None | Interruptible | Batch, CI/CD, ML |
 
-### 사이징 의사결정 테이블
-
-```
-CPU 사용률 < 20% 지속 → 다운사이징 권장
-CPU 사용률 > 80% 지속 → 업사이징 또는 스케일아웃
-메모리 사용률 < 30%   → 메모리 최적화 인스턴스 불필요
-
-워크로드 유형 → 인스턴스 패밀리:
-├── 범용: t3, m6i (CPU/메모리 균형)
-├── 컴퓨팅 집약: c6i (API 서버, 연산)
-├── 메모리 집약: r6i (캐시, 인메모리 DB)
-├── 스토리지 집약: i3, d3 (데이터베이스)
-└── GPU: p4d, g5 (ML 학습/추론)
-```
-
-### RDS 비용 요소
+### Sizing Decision Table
 
 ```
-월간 비용 = 인스턴스 비용 + 스토리지 + I/O + 백업 + 전송
+CPU utilization < 20% sustained -> Downsizing recommended
+CPU utilization > 80% sustained -> Upsize or scale out
+Memory utilization < 30%        -> Memory-optimized instance unnecessary
 
-예: db.r6g.xlarge, Multi-AZ, 500GB gp3
-├── 인스턴스: $0.54/h × 730h × 2(Multi-AZ) = $788.40
-├── 스토리지: 500GB × $0.138/GB = $69.00
-├── 백업(초과분): 100GB × $0.095/GB = $9.50
-└── 월 합계: ~$866.90
+Workload type -> Instance family:
++-- General purpose: t3, m6i (CPU/memory balanced)
++-- Compute intensive: c6i (API servers, computation)
++-- Memory intensive: r6i (cache, in-memory DB)
++-- Storage intensive: i3, d3 (databases)
++-- GPU: p4d, g5 (ML training/inference)
 ```
 
-## 환경별 비용 최적화 전략
+### RDS Cost Components
 
-| 환경 | 전략 | 예상 절감 |
-|------|------|----------|
-| **dev** | 업무 시간만 운영 (12h/day, 주5일) = 36% 가동 | ~60% 절감 |
-| **staging** | dev와 동일 + 더 작은 인스턴스 | ~70% 절감 |
-| **prod** | Savings Plan + Right-sizing + 오토스케일링 | ~40% 절감 |
+```
+Monthly cost = Instance cost + Storage + I/O + Backup + Transfer
 
-### 개발 환경 스케줄링
+Example: db.r6g.xlarge, Multi-AZ, 500GB gp3
++-- Instance: $0.54/h x 730h x 2(Multi-AZ) = $788.40
++-- Storage: 500GB x $0.138/GB = $69.00
++-- Backup (excess): 100GB x $0.095/GB = $9.50
++-- Monthly total: ~$866.90
+```
+
+## Per-environment Cost Optimization Strategies
+
+| Environment | Strategy | Expected Savings |
+|------------|----------|-----------------|
+| **dev** | Business hours only (12h/day, 5 days/week) = 36% uptime | ~60% savings |
+| **staging** | Same as dev + smaller instances | ~70% savings |
+| **prod** | Savings Plan + Right-sizing + Auto-scaling | ~40% savings |
+
+### Dev Environment Scheduling
 
 ```hcl
-# Lambda로 dev 환경 자동 시작/중지
+# Lambda for auto start/stop of dev environment
 resource "aws_cloudwatch_event_rule" "start_dev" {
-  schedule_expression = "cron(0 0 ? * MON-FRI *)"  # 평일 09:00 KST
+  schedule_expression = "cron(0 0 ? * MON-FRI *)"  # Weekdays 09:00 KST
 }
 resource "aws_cloudwatch_event_rule" "stop_dev" {
-  schedule_expression = "cron(0 12 ? * MON-FRI *)"  # 평일 21:00 KST
+  schedule_expression = "cron(0 12 ? * MON-FRI *)"  # Weekdays 21:00 KST
 }
 ```
 
-## 비용 추정 템플릿
+## Cost Estimation Template
 
 ```markdown
-# 월간 비용 추정서
+# Monthly Cost Estimate
 
-## 아키텍처 요약
-| 구성요소 | 사양 | 수량 |
+## Architecture Summary
+| Component | Specs | Quantity |
 
-## 환경별 비용
-| 서비스 | Dev | Staging | Prod | 합계 |
-|--------|-----|---------|------|------|
+## Per-environment Costs
+| Service | Dev | Staging | Prod | Total |
+|---------|-----|---------|------|-------|
 | EC2/ECS | | | | |
 | RDS | | | | |
 | ElastiCache | | | | |
 | ALB | | | | |
 | S3 | | | | |
 | CloudWatch | | | | |
-| 데이터 전송 | | | | |
-| **소계** | | | | |
+| Data Transfer | | | | |
+| **Subtotal** | | | | |
 
-## 최적화 적용
-| 최적화 | 절감액 |
-|--------|--------|
-| Savings Plan (1년) | |
-| 개발환경 스케줄링 | |
+## Optimization Applied
+| Optimization | Savings |
+|-------------|---------|
+| Savings Plan (1 year) | |
+| Dev env scheduling | |
 | Right-sizing | |
-| **총 절감** | |
+| **Total savings** | |
 
-## 최종 비용
-- 최적화 전: ₩N/월
-- 최적화 후: ₩N/월
-- 절감률: N%
+## Final Cost
+- Before optimization: $N/month
+- After optimization: $N/month
+- Savings rate: N%
 ```
 
-## FinOps 성숙도 모델
+## FinOps Maturity Model
 
-| 단계 | 활동 | 도구 |
-|------|------|------|
-| **Inform** | 비용 가시화, 태깅, 할당 | AWS Cost Explorer, 태그 정책 |
-| **Optimize** | Right-sizing, 예약, 스팟 | Compute Optimizer, Trusted Advisor |
-| **Operate** | 예산 알림, 자동 조치, 거버넌스 | AWS Budgets, Lambda 자동 정리 |
+| Phase | Activities | Tools |
+|-------|-----------|-------|
+| **Inform** | Cost visibility, tagging, allocation | AWS Cost Explorer, tag policies |
+| **Optimize** | Right-sizing, reservations, spot | Compute Optimizer, Trusted Advisor |
+| **Operate** | Budget alerts, automated actions, governance | AWS Budgets, Lambda auto-cleanup |

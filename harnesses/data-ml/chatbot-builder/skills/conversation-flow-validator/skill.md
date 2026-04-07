@@ -1,150 +1,150 @@
 ---
 name: conversation-flow-validator
-description: "챗봇 대화 흐름의 완전성, 순환, 데드엔드를 검증하는 방법론. '대화 흐름 검증', '시나리오 테스트', '엣지케이스 확인', '폴백 검증', '멀티턴 테스트' 등 대화 품질 검증 시 사용한다. 단, 실제 사용자 테스트 진행, A/B 테스트 인프라 구축은 이 스킬의 범위가 아니다."
+description: "Methodology for validating chatbot conversation flow completeness, cycles, and dead ends. Use this skill for 'conversation flow validation', 'scenario testing', 'edge case checking', 'fallback verification', 'multi-turn testing', and other dialog quality verification tasks. Note: conducting actual user testing and building A/B testing infrastructure are outside the scope of this skill."
 ---
 
-# Conversation Flow Validator — 대화 흐름 검증 방법론
+# Conversation Flow Validator — Dialog Flow Validation Methodology
 
-dialog-tester와 conversation-designer의 대화 품질 검증을 강화하는 스킬.
+A skill that enhances dialog quality verification for the dialog-tester and conversation-designer.
 
-## 대상 에이전트
+## Target Agents
 
-- **dialog-tester** — 대화 시나리오를 체계적으로 검증한다
-- **conversation-designer** — 설계 단계에서 흐름 결함을 사전 발견한다
+- **dialog-tester** — Systematically validates conversation scenarios
+- **conversation-designer** — Proactively discovers flow defects during the design phase
 
-## 대화 흐름 그래프 분석
+## Conversation Flow Graph Analysis
 
-### 노드 유형
-
-```
-[START] → 시작점
-[BOT] → 봇 발화 노드
-[USER] → 사용자 입력 기대 노드
-[ACTION] → 백엔드 API 호출
-[CONDITION] → 분기 조건
-[END] → 종료점
-[FALLBACK] → 미인식 처리
-[HANDOFF] → 상담원 전환
-```
-
-### 결함 유형 탐지
-
-| 결함 | 설명 | 심각도 | 탐지 방법 |
-|------|------|--------|----------|
-| 데드엔드 | 대화가 막다른 곳에 도달 | P0 | END 없는 말단 노드 탐색 |
-| 무한 루프 | 동일 노드 무한 순환 | P0 | 사이클 탐지 (DFS) |
-| 도달 불가 | 어떤 경로로도 도달 불가 | P1 | START에서 BFS 미도달 노드 |
-| 폴백 블랙홀 | fallback에서 복귀 경로 없음 | P0 | fallback 후 유효 전이 확인 |
-| 슬롯 누수 | 필수 슬롯 미수집 상태로 진행 | P0 | 슬롯 충족 조건 추적 |
-| 컨텍스트 손실 | 멀티턴에서 이전 정보 미유지 | P1 | 세션 변수 추적 |
-
-## 테스트 시나리오 생성 프레임워크
-
-### Happy Path (정상 경로)
+### Node Types
 
 ```
-목적: 가장 일반적인 사용 흐름 검증
-
-구조:
-1. 인사 → 의도 표현 → 슬롯 제공 → 확인 → 완료
-
-예시 (카페 주문):
-USER: "안녕하세요"
-BOT: "안녕하세요! 무엇을 도와드릴까요?"
-USER: "아메리카노 두 잔 주문할게요"
-BOT: "아메리카노 2잔, 맞으시죠? 사이즈를 선택해주세요."
-USER: "톨이요"
-BOT: "아메리카노 톨 2잔, 총 9,000원입니다. 주문하시겠어요?"
-USER: "네"
-BOT: "주문이 접수되었습니다! 감사합니다."
+[START] → Entry point
+[BOT] → Bot utterance node
+[USER] → User input expectation node
+[ACTION] → Backend API call
+[CONDITION] → Branching condition
+[END] → Exit point
+[FALLBACK] → Unrecognized input handling
+[HANDOFF] → Human agent handoff
 ```
 
-### Sad Path (실패 경로)
+### Defect Type Detection
+
+| Defect | Description | Severity | Detection Method |
+|--------|------------|----------|-----------------|
+| Dead end | Conversation reaches a dead end | P0 | Search for terminal nodes without END |
+| Infinite loop | Infinite cycling through the same nodes | P0 | Cycle detection (DFS) |
+| Unreachable | Cannot be reached via any path | P1 | BFS from START for unreached nodes |
+| Fallback black hole | No recovery path from fallback | P0 | Verify valid transitions after fallback |
+| Slot leakage | Proceeds without collecting required slots | P0 | Track slot fulfillment conditions |
+| Context loss | Prior information not retained in multi-turn | P1 | Track session variables |
+
+## Test Scenario Generation Framework
+
+### Happy Path (Normal Flow)
 
 ```
-목적: 오류 상황에서의 복구 능력 검증
+Purpose: Validate the most common usage flow
 
-시나리오 유형:
-1. 없는 메뉴 주문 → 유사 메뉴 제안
-2. 재고 부족 → 대안 제안 또는 다른 매장 안내
-3. API 실패 → 재시도 또는 상담원 연결
-4. 결제 실패 → 다른 결제 수단 안내
+Structure:
+1. Greeting > Express intent > Provide slots > Confirm > Complete
+
+Example (Cafe order):
+USER: "Hello"
+BOT: "Hello! How can I help you?"
+USER: "I'd like to order two Americanos"
+BOT: "Two Americanos, correct? Please choose a size."
+USER: "Tall"
+BOT: "Two tall Americanos, total $9.00. Would you like to place the order?"
+USER: "Yes"
+BOT: "Your order has been placed! Thank you."
 ```
 
-### Edge Case (경계 사례)
+### Sad Path (Failure Flow)
 
 ```
-1. 의도 전환: 주문 중 갑자기 "영업시간 알려줘"
-   → 현재 컨텍스트 보존 후 응답, 복귀 유도
+Purpose: Validate recovery capabilities in error situations
 
-2. 다중 의도: "주문하고 영수증도 보내줘"
-   → 순차 처리 또는 복합 처리
-
-3. 애매한 표현: "그거 하나 더"
-   → 이전 컨텍스트 참조 또는 확인 질문
-
-4. 부정 확인: "아니요" 후 반복 질문
-   → 최대 2회 후 대안 제시
-
-5. 빈 입력 / 특수문자 / 이모지만
-   → 안전한 폴백 응답
+Scenario types:
+1. Ordering unavailable item > Suggest similar items
+2. Out of stock > Suggest alternatives or direct to another location
+3. API failure > Retry or connect to agent
+4. Payment failure > Suggest alternative payment methods
 ```
 
-## 멀티턴 검증 체크리스트
+### Edge Case (Boundary Cases)
 
 ```
-[ ] 3턴 이상 대화에서 컨텍스트 유지되는가?
-[ ] 사용자가 이전 정보를 수정할 수 있는가?
-[ ] "아니요" 응답 후 대안 경로가 있는가?
-[ ] 의도 전환 후 원래 흐름 복귀가 가능한가?
-[ ] 세션 타임아웃 후 적절한 안내가 있는가?
-[ ] 동일 질문 3회 반복 시 에스컬레이션되는가?
-[ ] 슬롯 수정 시 이미 수집된 다른 슬롯이 유지되는가?
+1. Intent switch: Suddenly asking "What are your hours?" mid-order
+   > Preserve current context, respond, then guide back
+
+2. Multiple intents: "Place an order and send me the receipt too"
+   > Sequential processing or compound handling
+
+3. Ambiguous expression: "One more of that"
+   > Reference previous context or ask clarifying question
+
+4. Negative confirmation: Repeated questions after "No"
+   > Offer alternatives after maximum 2 attempts
+
+5. Empty input / special characters only / emojis only
+   > Safe fallback response
 ```
 
-## 폴백 전략 계층
+## Multi-Turn Verification Checklist
 
 ```
-Level 1: 재입력 요청
-  "죄송합니다, 이해하지 못했어요. 다시 말씀해 주세요."
-  → 1회 허용
-
-Level 2: 선택지 제안
-  "다음 중 어떤 것을 원하시나요? 1. 주문 2. 메뉴 조회 3. 기타"
-  → 2회째 미인식 시
-
-Level 3: 상담원 전환
-  "정확한 도움을 위해 상담원에게 연결해 드릴게요."
-  → 3회째 미인식 또는 사용자 요청 시
+[ ] Is context maintained in conversations of 3+ turns?
+[ ] Can the user modify previously provided information?
+[ ] Is there an alternative path after a "No" response?
+[ ] Can the original flow be resumed after an intent switch?
+[ ] Is there appropriate guidance after session timeout?
+[ ] Is escalation triggered after 3 repetitions of the same question?
+[ ] When modifying a slot, are other already-collected slots preserved?
 ```
 
-## 품질 메트릭
+## Fallback Strategy Hierarchy
 
-| 메트릭 | 공식 | 기준 |
-|--------|------|------|
-| 의도 인식률 | 정확 인식 / 전체 발화 | >= 85% |
-| 작업 완료율 | 성공 완료 / 시작된 작업 | >= 70% |
-| 폴백 비율 | fallback 횟수 / 전체 턴 | <= 15% |
-| 평균 턴 수 | 총 턴 / 완료 세션 | 작업별 기준 ±2 |
-| 에스컬레이션율 | 상담원 전환 / 전체 세션 | <= 20% |
+```
+Level 1: Re-input request
+  "I'm sorry, I didn't understand that. Could you please say it again?"
+  > Allowed once
 
-## 검증 보고서 템플릿
+Level 2: Suggest options
+  "Which of the following would you like? 1. Order 2. View menu 3. Other"
+  > On 2nd unrecognized input
+
+Level 3: Human agent handoff
+  "Let me connect you with an agent for more accurate assistance."
+  > On 3rd unrecognized input or user request
+```
+
+## Quality Metrics
+
+| Metric | Formula | Threshold |
+|--------|---------|-----------|
+| Intent recognition rate | Correct recognitions / total utterances | >= 85% |
+| Task completion rate | Successful completions / started tasks | >= 70% |
+| Fallback rate | Fallback count / total turns | <= 15% |
+| Average turn count | Total turns / completed sessions | Task-specific baseline +/- 2 |
+| Escalation rate | Agent handoffs / total sessions | <= 20% |
+
+## Validation Report Template
 
 ```markdown
-## 대화 흐름 검증 보고서
+## Conversation Flow Validation Report
 
-### 테스트 요약
-- Happy Path: N/M 통과
-- Sad Path: N/M 통과
-- Edge Case: N/M 통과
+### Test Summary
+- Happy Path: N/M passed
+- Sad Path: N/M passed
+- Edge Case: N/M passed
 
-### 발견된 결함
-| # | 유형 | 시나리오 | 심각도 | 수정 방안 |
+### Defects Found
+| # | Type | Scenario | Severity | Remediation |
 
-### 폴백 분석
-- 폴백 비율: N%
-- 주요 미인식 발화: [목록]
+### Fallback Analysis
+- Fallback rate: N%
+- Key unrecognized utterances: [list]
 
-### 메트릭
-| 메트릭 | 결과 | 기준 | 판정 |
+### Metrics
+| Metric | Result | Threshold | Verdict |
 ```

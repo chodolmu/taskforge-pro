@@ -1,125 +1,125 @@
 ---
 name: personal-finance
-description: "개인 재무관리를 에이전트 팀이 협업하여 종합 설계하는 파이프라인. '재무관리 도와줘', '가계부 정리', '돈 모으는 법', '투자 어떻게', '절세 방법', '연말정산 최적화', '은퇴 준비', '예산 짜줘', '저축 계획', '재테크', '자산관리', '재무설계' 등 개인 재무 전반에 이 스킬을 사용한다. 기존 가계부 데이터가 있는 경우 분석부터 시작할 수 있다. 단, 실제 금융 거래 실행, 증권 매매, 세무 신고 대행은 이 스킬의 범위가 아니다."
+description: "itemsperson financialmanagement A pipeline where an agent team collaborates for comprehensive planning. 'financialmanagement ', 'totaldepartment organization', ' ', 'investment ', 'tax savings method', 'annual optimization', 'retirement preparation', 'budget ', 'savings plan', 're-', 'assetmanagement', 'financialdesign' etc. itemsperson financial before skill usage. existing totaldepartment data case analysisdepartment whenworkto do number . However, actual execution, , tax versus is outside this skill's scope."
 ---
 
-# Personal Finance — 개인 재무관리 종합 파이프라인
+# Personal Finance — itemsperson financialmanagement comprehensive pipeline
 
-수입지출분석→예산설계→투자전략→절세방안→은퇴설계를 에이전트 팀이 협업하여 한 번에 생성한다.
+incomeexpenseanalysis→budgetdesign→investmentstrategy→tax savingsapproach→retirementdesign An agent team collaborates to generate all deliverables at once.
 
-## 실행 모드
+## execution mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**agent team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## agent composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| agent | file | role | type |
 |---------|------|------|------|
-| financial-analyst | `.claude/agents/financial-analyst.md` | 수입지출 분석, 재무건전성 진단 | general-purpose |
-| budget-planner | `.claude/agents/budget-planner.md` | 예산 설계, 저축 계획 | general-purpose |
-| investment-advisor | `.claude/agents/investment-advisor.md` | 자산배분, 포트폴리오 설계 | general-purpose |
-| tax-strategist | `.claude/agents/tax-strategist.md` | 절세 전략, 은퇴 설계 | general-purpose |
-| finance-reviewer | `.claude/agents/finance-reviewer.md` | 교차 검증, 수치 정합성 확인 | general-purpose |
+| financial-analyst | `.claude/agents/financial-analyst.md` | incomeexpense analysis, financialcasebeforenature diagnosis | general-purpose |
+| budget-planner | `.claude/agents/budget-planner.md` | budget design, savings plan | general-purpose |
+| investment-advisor | `.claude/agents/investment-advisor.md` | assetallocation, portfolio design | general-purpose |
+| tax-strategist | `.claude/agents/tax-strategist.md` | tax savings strategy, retirement design | general-purpose |
+| finance-reviewer | `.claude/agents/finance-reviewer.md` | cross-verification, figure consistency confirm | general-purpose |
 
-## 워크플로우
+## workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: preparation (Orchestrator directly perform)
 
-1. 사용자 입력에서 추출한다:
-    - **소득 정보**: 월 수입, 소득 유형(근로/사업/프리랜서)
-    - **지출 정보** (선택): 월 지출 내역 또는 대략적 규모
-    - **자산·부채** (선택): 보유 자산, 대출 현황
-    - **재무 목표** (선택): 저축, 투자, 내 집 마련, 은퇴 등
-    - **기존 파일** (선택): 가계부 데이터, 기존 재무 계획 등
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+ - ** information**: month income, type(/company/from)
+ - **expense information** (optional): month expense within or versusquality scale
+ - **asset·debt** (optional): report asset, versus current status
+ - **financial goal** (optional): savings, investment, within , retirement etc.
+ - **existing file** (optional): totaldepartment data, existing financial plan etc.
+2. `_workspace/` Create the directory at the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. If existing files are provided, copy them to `_workspace/`and skip the corresponding Phase
+5. Determine the **execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: team composition and execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| order | task | responsible | dependency | deliverable |
 |------|------|------|------|--------|
-| 1 | 수입지출 분석 | analyst | 없음 | `_workspace/01_financial_analysis.md` |
-| 2 | 예산 설계 | planner | 작업 1 | `_workspace/02_budget_plan.md` |
-| 3a | 투자 전략 | advisor | 작업 1, 2 | `_workspace/03_investment_strategy.md` |
-| 3b | 절세·은퇴 설계 | strategist | 작업 1, 2 | `_workspace/04_tax_strategy.md` |
-| 4 | 종합 리뷰 | reviewer | 작업 1~3 | `_workspace/05_review_report.md` |
+| 1 | incomeexpense analysis | analyst | None | `_workspace/01_financial_analysis.md` |
+| 2 | budget design | planner | task 1 | `_workspace/02_budget_plan.md` |
+| 3a | investment strategy | advisor | task 1, 2 | `_workspace/03_investment_strategy.md` |
+| 3b | tax savings·retirement design | strategist | task 1, 2 | `_workspace/04_tax_strategy.md` |
+| 4 | comprehensive review | reviewer | task 1~3 | `_workspace/05_review_report.md` |
 
-작업 3a(투자)와 3b(절세)는 **병렬 실행**한다. 둘 다 작업 2(예산)에만 의존하므로 동시에 시작할 수 있다.
+task 3a(investment) and 3b(tax savings) ** execution**. task 2(budget) only dependency when whenworkto do number .
 
-**팀원 간 소통 흐름:**
-- analyst 완료 → planner에게 지출 구조·절감 가능 항목, advisor에게 투자 가능 금액·위험 성향, strategist에게 소득 구조·세금 부담 전달
-- planner 완료 → advisor에게 투자 가능 월 금액, strategist에게 저축·투자 계획 전달
-- advisor ↔ strategist: 세제혜택 상품 활용 현황 상호 공유
-- reviewer는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**teamKRW between flow:**
+- analyst complete → plannerto expense structure·reduction possible item, advisorto investment possible amount·risk nature, strategistto structure·tax department deliver
+- planner complete → advisorto investment possible month amount, strategistto savings·investment plan deliver
+- advisor ↔ strategist: tax utilization current status 
+- reviewer all deliverable cross-verification. 🔴 required revision findings when Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: integration and final deliverable
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 리뷰 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다
+1. `_workspace/` Verify all files in the directory
+2. review reportConfirm that all critical revisions from the review report have been addressed
+3. Report the final summary to the user
 
-## 작업 규모별 모드
+## task scaleby mode
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| user request pattern | execution mode | deploy agent |
 |----------------|----------|-------------|
-| "재무관리 종합 설계" | **풀 파이프라인** | 5명 전원 |
-| "예산만 짜줘" | **예산 모드** | analyst + planner + reviewer |
-| "투자 어떻게 해" | **투자 모드** | analyst + advisor + reviewer |
-| "절세 방법 알려줘" | **절세 모드** | analyst + strategist + reviewer |
-| "은퇴 설계 해줘" | **은퇴 모드** | analyst + strategist + reviewer |
-| "이 가계부 분석해줘" | **분석 모드** | analyst + reviewer |
+| "financialmanagement comprehensive design" | **Full pipeline** | 5people beforeKRW |
+| "budget only " | **budget mode** | analyst + planner + reviewer |
+| "investment " | **investment mode** | analyst + advisor + reviewer |
+| "tax savings method " | **tax savings mode** | analyst + strategist + reviewer |
+| "retirement design please do" | **retirement mode** | analyst + strategist + reviewer |
+| " totaldepartment analysisplease do" | **analysis mode** | analyst + reviewer |
 
-**기존 파일 활용**: 가계부 데이터, 기존 예산표 등을 제공하면 해당 단계를 건너뛴다.
+**existing file utilization**: totaldepartment data, existing budgettable etc. provide applicable stage case.
 
-## 데이터 전달 프로토콜
+## data deliver protocol
 
-| 전략 | 방식 | 용도 |
+| strategy | method | also |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| File-based | `_workspace/` | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information transfer, revision requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{}_{agent}_{deliverable}.{extensionspecialist}`
 
-## 에러 핸들링
+## error handling
 
-| 에러 유형 | 전략 |
+| error type | strategy |
 |----------|------|
-| 재무 데이터 미제공 | 한국 평균 가구 데이터로 시뮬레이션, "샘플 데이터" 명시 |
-| 웹 검색 실패 | 일반적 금리·세율 기준 적용, "데이터 제한" 명시 |
-| 투자 가능 금액 0원 | 비상금 확보 + 부채 상환 우선 전략으로 전환 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰 보고서에 누락 명시 |
-| 리뷰에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
+| financial data un-provide | Korean pyeongbalanced data simulation, " data" specify |
+| web search failure | general ·tax standard applied, "data limitation" specify |
+| investment possible amount 0KRW | secure + debt exchange strategyas beforeexchange |
+| agent failure | Retry once -> proceed without that deliverable, note the gap in the review report |
+| reviewfrom 🔴 findings | Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds) |
 
-## 테스트 시나리오
+## test scenario
 
-### 정상 흐름
-**프롬프트**: "월급 400만원 직장인인데 재무관리 전체적으로 도와줘. 월세 70만원, 저축은 거의 못하고 있어."
-**기대 결과**:
-- 분석: 400만원 수입 대비 지출 구조 진단, 저축률 미달 경고
-- 예산: 50/30/20 기반 예산표, 최소 월 80만원 저축 목표
-- 투자: 초보자 대상 안정적 포트폴리오, 연금저축 우선
-- 절세: 연말정산 최적화, 연금저축 세액공제 활용
-- 리뷰: 수치 교차 검증, 실행 가능성 확인
+### flow
+**Prompt**: "monthgrade 4000,000 KRW personperson financialmanagement overallqualityas . monthtax 700,000 KRW, savings and ."
+**expected result**:
+- analysis: 4000,000 KRW income versus expense structure However, savingsrate un- 
+- budget: 50/30/20 based budgettable, minimum month 800,000 KRW savings goal
+- investment: reportspecialist target planquality portfolio, pensionsavings 
+- tax savings: annual optimization, pensionsavings tax utilization
+- review: figure cross-verification, execution possiblenature confirm
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 가계부 데이터로 투자 전략 짜줘" + 가계부 파일 첨부
-**기대 결과**:
-- 가계부를 `_workspace/01_financial_analysis.md` 기반 데이터로 활용
-- 투자 모드: analyst(데이터 정리) + advisor + reviewer 투입
+### existing file utilization flow
+**Prompt**: " totaldepartment data investment strategy " + totaldepartment file department
+**expected result**:
+- totaldepartment `_workspace/01_financial_analysis.md` based data utilization
+- investment mode: analyst(data organization) + advisor + reviewer deploy
 
-### 에러 흐름
-**프롬프트**: "돈 좀 모으고 싶은데 어떻게 해야 해?"
-**기대 결과**:
-- 재무 데이터 부족 → analyst가 기본 질문 또는 평균 데이터로 시뮬레이션
-- 목표 불명확 → planner가 비상금→중기→장기 단계별 목표 제안
-- 리뷰 보고서에 "실제 데이터 입력 시 정확도 향상" 명시
+### error flow
+**Prompt**: " ?"
+**expected result**:
+- financial data insufficient → analyst basic question or pyeongbalanced data simulation
+- goal people → planner →duringbasis→basis stageby goal proposal
+- review report "actual data input when also " specify
 
-## 에이전트별 확장 스킬
+## agentby extension skill
 
-| 에이전트 | 확장 스킬 | 용도 |
+| agent | extension skill | also |
 |---------|----------|------|
-| investment-advisor, tax-strategist | `compound-interest-simulator` | 복리 계산, 자산 성장 예측, 은퇴 설계 |
-| financial-analyst, finance-reviewer | `financial-ratio-analyzer` | 재무 비율 분석, 건전성 진단, 스코어링 |
+| investment-advisor, tax-strategist | `compound-interest-simulator` | total, asset nature example, retirement design |
+| financial-analyst, finance-reviewer | `financial-ratio-analyzer` | financial ratio analysis, casebeforenature However, score |

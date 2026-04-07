@@ -1,156 +1,89 @@
 ---
 name: tam-sam-som-calculator
-description: "시장 규모(TAM/SAM/SOM)를 체계적으로 산출하는 방법론. 'TAM SAM SOM 계산', '시장 규모 추정', '시장 크기 산출', '시장 기회 분석', '어드레서블 마켓' 등 시장 규모 산출 시 사용한다. 단, 유료 시장조사 리포트 구매, 통계청 데이터 직접 수집은 이 스킬의 범위가 아니다."
+description: "Methodology for systematically calculating market size (TAM/SAM/SOM). Use this skill for 'TAM SAM SOM calculation', 'market size estimation', 'market sizing', 'market opportunity analysis', 'addressable market', and other market sizing tasks. Note: purchasing paid market research reports and directly collecting census data are outside the scope of this skill."
 ---
 
-# TAM SAM SOM Calculator — 시장 규모 산출 방법론
+# TAM SAM SOM Calculator — Market Sizing Methodology
 
-industry-analyst의 시장 규모 분석을 강화하는 스킬.
+A skill that enhances market sizing for the industry-analyst and research-reviewer.
 
-## 대상 에이전트
+## Target Agents
 
-- **industry-analyst** — 산업 시장 규모를 정량적으로 산출한다
-- **research-reviewer** — 시장 규모 추정의 논리적 타당성을 검증한다
+- **industry-analyst** — Calculates market size systematically
+- **research-reviewer** — Validates market size calculations
 
-## TAM/SAM/SOM 정의 및 관계
-
-```
-TAM (Total Addressable Market) — 전체 시장
-  "이 제품이 해결하는 문제를 가진 모든 시장"
-
-SAM (Serviceable Addressable Market) — 접근 가능 시장
-  "현재 제품/서비스로 실제 도달 가능한 시장"
-  = TAM × 지리적 필터 × 세그먼트 필터
-
-SOM (Serviceable Obtainable Market) — 확보 가능 시장
-  "현실적으로 1-3년 내 확보할 수 있는 시장"
-  = SAM × 예상 시장 점유율
-
-관계: TAM > SAM > SOM
-```
-
-## 산출 방법론
-
-### 방법 1: 하향식 (Top-Down)
+## Definitions
 
 ```
-출발점: 산업 보고서의 전체 시장 규모
+TAM (Total Addressable Market):
+  Total revenue opportunity if 100% market share
+  "If everyone who could use our product, did"
 
-TAM = 산업 보고서 시장 규모
-SAM = TAM × 지역 비율 × 타깃 세그먼트 비율
-SOM = SAM × 목표 점유율
+SAM (Serviceable Addressable Market):
+  Portion of TAM targeted by your product/service
+  "Our market segment based on geography, customer type, etc."
 
-예시 (AI 헬스케어):
-TAM = 글로벌 AI 헬스케어 시장 $450억 (2025)
-SAM = $450억 × 0.05(한국) × 0.2(진단 분야) = $4.5억
-SOM = $4.5억 × 0.03(3% 점유) = $1,350만
-
-장점: 빠르고 간단, 신뢰할 수 있는 출처
-단점: 과대 추정 위험, 세분화 한계
+SOM (Serviceable Obtainable Market):
+  Realistic market share you can capture
+  "What we can actually achieve in 1-3 years"
 ```
 
-### 방법 2: 상향식 (Bottom-Up) — 권장
+## Top-Down Approach
 
 ```
-출발점: 단위 고객 × 가격 × 수량
+Start with total industry data, narrow down:
 
-TAM = 잠재 고객 수 × 연간 지불액
-SAM = 도달 가능 고객 수 × 연간 지불액
-SOM = 예상 획득 고객 × 연간 지불액
+TAM = Industry report market size
+SAM = TAM x (Target segment %)
+SOM = SAM x (Realistic market share %)
 
-예시 (B2B SaaS):
-잠재 고객: 국내 50인 이상 기업 = 30,000개
-서비스 단가: 월 50만원 × 12 = 연 600만원
-TAM = 30,000 × 600만 = 1,800억원
-SAM = 30,000 × 0.3(IT기업) × 600만 = 540억원
-SOM = 200개 기업 × 600만 = 12억원
-
-장점: 현실적, 투자자 설득력 높음
-단점: 잠재 고객 수 추정 어려움
+Example:
+TAM: Global CRM market = $80B
+SAM: SMB CRM in North America = $80B x 15% x 40% = $4.8B
+SOM: Year 3 target = $4.8B x 0.5% = $24M
 ```
 
-### 방법 3: 가치 기반 (Value Theory)
+## Bottom-Up Approach
 
 ```
-출발점: 제품이 제공하는 가치로 역산
+Start with unit economics, scale up:
 
-고객 가치 = 문제로 인한 비용 × 해결 비율
-적정 가격 = 고객 가치 × 0.1~0.3 (가치의 10-30%)
-TAM = 해당 문제를 가진 고객 수 × 적정 가격
+SOM = Target customers x Revenue per customer
+SAM = Total addressable customers x Revenue per customer
+TAM = Total potential customers globally x Revenue per customer
 
-예시 (생산성 도구):
-직원 1인 시간 낭비: 주 5시간 × 시급 3만원 = 월 60만원
-해결 비율: 50% → 절감 30만원/월
-적정 가격: 30만원 × 20% = 6만원/월
-TAM = 500만 지식노동자 × 72만원/년 = 3.6조원
+Example:
+SOM: 500 customers x $2,000/yr = $1M
+SAM: 50,000 potential SMBs x $2,000/yr = $100M
+TAM: 2M potential businesses globally x $2,000/yr = $4B
 ```
 
-## 시장 성장률 추정
+## Cross-Validation
 
 ```
-CAGR (연평균 성장률):
-  CAGR = (미래값/현재값)^(1/기간) - 1
-
-성장 동인 분석:
-  1. 기술 채택률 (S-커브 위치)
-  2. 규제 변화 (완화/강화)
-  3. 인구통계 변화
-  4. 대체재 등장
-  5. 거시경제 영향
-
-S-커브 위치 판단:
-  혁신가(2.5%) → 얼리어답터(13.5%) → 초기다수(34%)
-  → 후기다수(34%) → 지각수용(16%)
+Compare Top-Down and Bottom-Up results:
+- If within 2x of each other: Good convergence
+- If >3x difference: Review assumptions
+- Present both with reasoning
 ```
 
-## 데이터 소스 가이드
+## Data Sources
 
-| 소스 | 비용 | 신뢰도 | 용도 |
-|------|------|--------|------|
-| 통계청 (kostat.go.kr) | 무료 | 높음 | 산업분류별 규모 |
-| 공공데이터포털 | 무료 | 중간 | 정부 보유 데이터 |
-| KISVALUE/DART | 일부무료 | 높음 | 기업 재무정보 |
-| Statista | 유료 | 높음 | 글로벌 시장 데이터 |
-| 산업연구원 보고서 | 무료~유료 | 높음 | 국내 산업 분석 |
-| 뉴스/기사 인용 | 무료 | 중간 | 최신 수치 |
-| 경쟁사 IR 자료 | 무료 | 높음 | 상장사 매출/시장 |
-| VC/스타트업 리포트 | 무료 | 중간 | 생태계 트렌드 |
+| Source Type | Examples | Best For |
+|-----------|---------|---------|
+| Industry reports | Gartner, IDC, Statista, Grand View Research | TAM |
+| Government data | Census, trade statistics, economic indicators | Market sizing |
+| Company filings | SEC filings, annual reports | Competitor sizing |
+| App/web analytics | App Annie, SimilarWeb, Alexa | Digital market estimation |
+| Job postings | LinkedIn, Indeed | Market growth signals |
 
-## 검증 체크리스트
+## Common Mistakes
 
 ```
-[ ] 상향식과 하향식 교차 검증했는가? (오차 2배 이내)
-[ ] 데이터 출처를 명시했는가?
-[ ] 데이터 연도를 명시했는가?
-[ ] 환율/인플레이션을 반영했는가?
-[ ] CAGR에 근거가 있는가?
-[ ] SOM이 현실적인가? (SAM의 1-5% 수준)
-[ ] 경쟁사 매출 합계와 비교했는가?
-[ ] 가정(assumptions)을 명시했는가?
-```
-
-## 산출물 템플릿
-
-```markdown
-## 시장 규모 분석
-
-### TAM: [금액]
-- 산출 방법: [상향식/하향식]
-- 근거: [데이터 소스 + 계산식]
-
-### SAM: [금액]
-- 필터: [지역 + 세그먼트 + 기타]
-- 근거: [필터 적용 논리]
-
-### SOM: [금액] (Y년 기준)
-- 목표 점유율: [N%]
-- 근거: [경쟁 현황 + 성장 전략]
-
-### 시장 성장률: CAGR [N%]
-- 동인: [성장 요인]
-- 리스크: [위험 요인]
-
-### 가정 및 한계
-- [가정 1]
-- [가정 2]
+1. TAM too large ("the whole internet")
+2. Confusing TAM with SAM (not everyone is your customer)
+3. SOM too aggressive (>5% in year 1 for new market)
+4. No sources cited
+5. Static analysis (no growth rate consideration)
+6. Not accounting for pricing differences across segments
 ```

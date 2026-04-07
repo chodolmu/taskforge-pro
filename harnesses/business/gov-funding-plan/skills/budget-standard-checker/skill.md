@@ -1,156 +1,134 @@
 ---
 name: budget-standard-checker
-description: "정부 R&D 사업 예산 편성의 비목별 기준과 적정성을 검증하는 방법론. '예산 기준 확인', '비목별 편성', '정부과제 예산 규정', '인건비 기준', '연구장비 편성', '간접비 계산' 등 정부사업 예산 검증 시 사용한다. 단, 실제 회계 처리, 세금 계산, 증빙 서류 발급은 이 스킬의 범위가 아니다."
+description: "Methodology for verifying government R&D project budget cost category standards and appropriateness. Use this skill for 'budget standard verification', 'cost category allocation', 'government project budget regulations', 'personnel cost standards', 'equipment allocation', 'indirect cost calculation', and other government project budget verification tasks. Note: actual accounting processing, tax calculation, and evidence document issuance are outside the scope of this skill."
 ---
 
-# Budget Standard Checker — 정부 R&D 예산 기준 검증
+# Budget Standard Checker — Government R&D Budget Compliance Verification
 
-budget-planner와 submission-reviewer의 예산 검증을 강화하는 스킬.
+A skill that enhances budget compliance verification for the budget-planner and submission-reviewer.
 
-## 대상 에이전트
+## Target Agents
 
-- **budget-planner** — 정부 기준에 맞는 예산을 편성한다
-- **submission-reviewer** — 예산의 규정 적합성을 검증한다
+- **budget-planner** — Ensures budget complies with government standards
+- **submission-reviewer** — Validates budget appropriateness
 
-## 정부 R&D 예산 비목 체계
+## Cost Category Standards
 
-### 직접비
-
-#### 1. 인건비
-
+### Personnel Costs
 ```
-내부인건비:
-  참여연구원 인건비 = 연봉 × 참여율
-  참여율: 연구책임자 20%+, 참여연구원 10%+
-  기준: 전년도 원천징수영수증 또는 4대보험 납부 확인서
+Rules:
+- Based on government published researcher salary tables
+- Effort rate must be realistic (typically 50-100%)
+- Project lead typically 30-50% effort
+- Cannot exceed actual salary
+- Include benefits and insurance in calculation
 
-외부인건비:
-  학생연구원: 석사 월 150만원 이내, 박사 월 200만원 이내
-  연구보조원: 월 200만원 이내 (과제별 상이)
-  
-주의사항:
-  - 총 인건비 비중: 전체 예산의 40-60% 권장
-  - 과제 간 참여율 합계 130% 초과 금지
-  - 퇴직금/4대보험 포함 가능 여부 확인
+Verification:
+- [ ] Salary grade matches researcher qualifications
+- [ ] Effort percentage is reasonable for role
+- [ ] Total does not exceed published caps
+- [ ] Existing employees vs. new hires clearly distinguished
 ```
 
-#### 2. 연구장비·재료비
-
+### Equipment
 ```
-연구장비:
-  - 단가 500만원 이상: 연구장비로 분류
-  - 단가 500만원 미만: 연구재료로 분류
-  - 기존 장비 활용 가능성 검토 필수
-  - 3,000만원 이상 장비: 전문기관 사전 승인
+Rules:
+- Must be directly necessary for the research
+- Cannot be general-purpose office equipment
+- Must specify exact model and justification
+- Equipment over threshold requires multiple quotes
+- Depreciation vs. purchase criteria
 
-연구재료비:
-  - 시약, 소프트웨어 라이선스(연간), 소모품
-  - 견적서 2건 이상 비교 (1,000만원 이상)
-  - SW 구독형: 과제 기간에 해당하는 월할 편성
-
-위탁연구개발비:
-  - 전체 예산의 30% 이내 (일반)
-  - 위탁 기관의 자격 요건 확인
-  - 세부 비목 편성 필수
+Verification:
+- [ ] Each item justified by technical plan
+- [ ] Not available through shared facilities
+- [ ] Cost is market-rate (provide quotes)
+- [ ] Lifespan exceeds project period considerations
 ```
 
-#### 3. 연구활동비
-
+### Materials and Supplies
 ```
-연구과제추진비:
-  - 회의비, 세미나비, 학회 참가비
-  - 전체 예산의 10% 이내 권장
+Rules:
+- Direct materials for R&D only
+- Consumables, components, software licenses
+- Must be itemized with unit costs
+- Bulk purchases require justification
 
-국내외 여비:
-  - 공무원 출장 규정 준용
-  - 해외출장: 사전 승인, 성과보고 필수
-  
-연구수당:
-  - 참여연구원 1인당 연 300만원 이내
-  - 과제 예산의 20% 이내
+Verification:
+- [ ] Each item linked to specific R&D activity
+- [ ] Unit costs are reasonable
+- [ ] Quantities match technical plan
 ```
 
-### 간접비
-
+### Outsourcing/Subcontracting
 ```
-간접비율 = 기관별 간접비 비율
-  - 대학: 33% 이내
-  - 출연연: 22% 이내
-  - 기업: 10-15% 이내 (일반)
-  - 중소기업: 별도 기준 적용 가능
+Rules:
+- Outsourcing typically capped (often 30-50% of total)
+- Must justify why in-house is not feasible
+- Subcontractor qualifications must be documented
+- Cannot outsource core research activities
 
-간접비 = (직접비 - 위탁연구비 - 장비비) × 간접비율
-
-간접비 사용 항목:
-  - 건물 임차료, 공공요금
-  - 안전 관리비
-  - 기관 공통 지원 경비
+Verification:
+- [ ] Within outsourcing cap
+- [ ] Technical justification provided
+- [ ] Contractor selection criteria documented
+- [ ] Deliverables clearly defined
 ```
 
-## 비목별 적정성 검증 체크리스트
-
+### Travel
 ```
-[ ] 인건비 참여율이 과제별 기준 이상인가?
-[ ] 인건비 합계가 전체 예산의 40-60%인가?
-[ ] 연구장비 필요성이 기술적으로 정당화되는가?
-[ ] 500만원 이상 장비에 3건 이상 견적이 있는가?
-[ ] 위탁연구비가 30% 이내인가?
-[ ] 연구수당이 20% 이내인가?
-[ ] 간접비율이 기관 기준을 초과하지 않는가?
-[ ] 모든 항목에 산출 근거가 있는가?
-[ ] 연차별 예산 배분이 합리적인가?
-[ ] 정부 부담금과 민간 부담금 비율이 맞는가?
-```
+Rules:
+- Must be directly related to research
+- Domestic vs. international guidelines
+- Per diem rates follow government standards
+- Conference attendance justification required
 
-## 대표 사업별 예산 특이사항
-
-### TIPS
-
-```
-총 예산: 5억원 (2년) / 10억원 (3년)
-정부 부담: 90%, 민간: 10%
-특이사항:
-  - 엔젤투자 매칭 필수
-  - 인건비 제한 없음 (비중 자유)
-  - 해외 마케팅비 편성 가능
+Verification:
+- [ ] Each trip linked to project activity
+- [ ] Rates follow government per diem
+- [ ] International travel additionally justified
 ```
 
-### 창업성장기술개발
-
+### Indirect Costs (Overhead)
 ```
-총 예산: 1~3억원 (1-2년)
-정부 부담: 75-100% (기업 규모별 상이)
-특이사항:
-  - 창업 7년 이내 기업
-  - 인건비 비중 60% 권장
-  - 시제품 제작비 포함 가능
-```
+Rules:
+- Rate varies by institution type
+- Applied to specific cost base (varies by program)
+- University vs. company vs. research institute rates differ
 
-### 중소기업 기술개발
-
-```
-총 예산: 3~10억원 (2-3년)
-정부 부담: 67-75%
-특이사항:
-  - 매출액 대비 R&D 투자 비율 확인
-  - 기업 부담금 현금 비율 조건
-  - 대기업 참여 시 추가 제한
+Verification:
+- [ ] Correct rate applied for institution type
+- [ ] Correct cost base used
+- [ ] Total does not exceed program ceiling
 ```
 
-## 예산서 포맷
+## Budget Proportion Guidelines
 
-```markdown
-| 비목 | 세목 | 1차년도 | 2차년도 | 합계 | 산출 근거 |
-|------|------|---------|---------|------|----------|
-| 인건비 | 내부인건비 | | | | 연봉×참여율 |
-| | 외부인건비 | | | | 월단가×개월 |
-| 연구장비·재료비 | 연구장비 | | | | 견적 기반 |
-| | 연구재료 | | | | 품목별 단가 |
-| | 위탁연구개발비 | | | | |
-| 연구활동비 | 연구과제추진비 | | | | |
-| | 여비 | | | | |
-| | 연구수당 | | | | |
-| 소계(직접비) | | | | | |
-| 간접비 | | | | | 직접비×비율 |
-| **합계** | | | | | |
+```
+Typical healthy distribution:
+- Personnel: 40-60%
+- Equipment: 10-20%
+- Materials: 5-15%
+- Outsourcing: 10-30%
+- Travel: 3-5%
+- Overhead: per regulation
+
+Red flags:
+- Personnel > 70% (may indicate lack of R&D activity)
+- Equipment > 40% (may indicate equipment shopping)
+- Outsourcing > 50% (core research should be internal)
+- Travel > 10% (not a research activity)
+```
+
+## Compliance Checklist
+
+```
+[ ] All cost items justified by technical plan
+[ ] Government salary standards applied for personnel
+[ ] Equipment costs verified against market rates
+[ ] Outsourcing within program caps
+[ ] Indirect cost rate correct for institution type
+[ ] Co-funding ratio meets requirements
+[ ] Total within program funding ceiling
+[ ] All required evidence documents identified
 ```

@@ -1,119 +1,119 @@
 ---
 name: ddd-context-mapping
-description: "DDD(Domain-Driven Design)의 바운디드 컨텍스트 식별, 컨텍스트 맵 작성, 이벤트 스토밍 수행을 위한 상세 방법론. '바운디드 컨텍스트', 'DDD', '도메인 모델링', '이벤트 스토밍', '컨텍스트 맵', '애그리거트 설계', '유비쿼터스 언어' 등 도메인 분석 시 이 스킬을 사용한다. domain-analyst와 service-architect의 도메인 분석 역량을 강화한다. 단, 인프라 배포나 코드 구현은 이 스킬의 범위가 아니다."
+description: "Detailed methodology for DDD (Domain-Driven Design) bounded context identification, context map creation, and event storming execution. Use this skill for 'bounded context', 'DDD', 'domain modeling', 'event storming', 'context map', 'aggregate design', 'ubiquitous language', and other domain analysis tasks. Enhances the domain analysis capabilities of domain-analyst and service-architect. Note: infrastructure deployment and code implementation are outside the scope of this skill."
 ---
 
-# DDD Context Mapping — 도메인 주도 설계 컨텍스트 매핑 가이드
+# DDD Context Mapping — Domain-Driven Design Context Mapping Guide
 
-바운디드 컨텍스트 식별부터 컨텍스트 맵 작성까지의 체계적 방법론.
+Systematic methodology from bounded context identification to context map creation.
 
-## 이벤트 스토밍 수행 절차
+## Event Storming Procedure
 
-### Phase 1: 도메인 이벤트 수집
+### Phase 1: Domain Event Collection
 ```
-규칙: 과거형 동사로 표현한다
-예: "주문이 생성되었다", "결제가 승인되었다", "배송이 시작되었다"
+Rule: Express in past tense verbs
+Examples: "Order was created", "Payment was approved", "Shipping was initiated"
 
-수집 순서:
-1. 핵심 비즈니스 흐름의 이벤트를 시간순으로 나열
-2. 예외/실패 이벤트 추가
-3. 외부 시스템 이벤트 추가
-```
-
-### Phase 2: 커맨드 → 이벤트 매핑
-```
-[사용자/시스템] → {커맨드} → [애그리거트] → <<도메인 이벤트>>
-[고객]         → {주문 생성} → [Order]    → <<주문이 생성되었다>>
-[결제 시스템]   → {결제 승인} → [Payment]  → <<결제가 승인되었다>>
+Collection order:
+1. List events from core business flows in chronological order
+2. Add exception/failure events
+3. Add external system events
 ```
 
-### Phase 3: 애그리거트 식별
+### Phase 2: Command -> Event Mapping
 ```
-애그리거트 경계 판단 기준:
-1. 트랜잭션 일관성 경계 — 함께 변경되어야 하는 객체 그룹
-2. 불변식(Invariant) 보호 — 비즈니스 규칙을 보장하는 단위
-3. 동시성 경계 — 동시 접근 시 충돌을 관리하는 단위
-```
-
-### Phase 4: 바운디드 컨텍스트 도출
-
-| 신호 | 의미 |
-|------|------|
-| 같은 단어가 다른 의미 | 컨텍스트 분리 필요 (예: "계정" = 사용자계정 vs 금융계정) |
-| 다른 팀이 소유 | 조직 경계 = 컨텍스트 경계 |
-| 다른 변경 주기 | 독립 배포 필요 → 분리 |
-| 다른 데이터 저장소 | 기술적 경계 = 컨텍스트 경계 |
-
-## 컨텍스트 맵 관계 유형
-
-| 관계 | 기호 | 설명 | 예시 |
-|------|------|------|------|
-| **Shared Kernel** | SK | 공유 도메인 모델 | 두 팀이 같은 Entity 사용 |
-| **Customer-Supplier** | C/S | 상류/하류 관계 | 주문(상류) → 배송(하류) |
-| **Conformist** | CF | 하류가 상류 모델을 그대로 수용 | 외부 API 모델 수용 |
-| **Anti-Corruption Layer** | ACL | 모델 변환 계층 삽입 | 레거시 시스템 연동 |
-| **Open Host Service** | OHS | 공개 프로토콜 제공 | REST API 공개 |
-| **Published Language** | PL | 공유 언어(스키마) | Protobuf/Avro 스키마 |
-| **Separate Ways** | SW | 독립 운영 | 통합 불필요 |
-| **Partnership** | P | 대등한 협력 | 두 팀 공동 개발 |
-
-```
-컨텍스트 맵 예시:
-
-┌─────────────┐     OHS/PL      ┌───────────────┐
-│   주문 관리   │ ──────────────→ │   결제 처리     │
-│  (Order BC)  │                 │ (Payment BC)   │
-└──────┬──────┘                  └───────┬───────┘
-       │ C/S                             │ C/S
-       ▼                                 ▼
-┌─────────────┐     ACL          ┌───────────────┐
-│   배송 관리   │ ←───────────── │  외부 PG 연동    │
-│ (Shipping BC)│                 │ (3rd Party)    │
-└─────────────┘                  └───────────────┘
+[User/System] -> {Command} -> [Aggregate] -> <<Domain Event>>
+[Customer]    -> {Create Order} -> [Order]  -> <<Order was created>>
+[Payment System] -> {Approve Payment} -> [Payment] -> <<Payment was approved>>
 ```
 
-## 애그리거트 설계 원칙
-
-### 크기 결정 기준
+### Phase 3: Aggregate Identification
 ```
-작은 애그리거트 선호:
-├── 트랜잭션 범위 최소화 → 동시성 충돌 감소
-├── 메모리 사용량 감소
-└── 변경 영향 범위 축소
-
-예외 (큰 애그리거트 허용):
-├── 불변식이 여러 엔티티에 걸침
-├── 원자적 일관성이 반드시 필요
-└── 최종 일관성으로 대체 불가
+Aggregate boundary criteria:
+1. Transactional consistency boundary — groups of objects that must change together
+2. Invariant protection — units that enforce business rules
+3. Concurrency boundary — units that manage conflicts during concurrent access
 ```
 
-### 애그리거트 간 참조 규칙
-```
-✅ ID 참조: Order.customerId (Customer 애그리거트의 ID만 보관)
-❌ 직접 참조: Order.customer (Customer 객체를 직접 보관)
+### Phase 4: Bounded Context Derivation
 
-이유:
-1. 애그리거트 경계 존중
-2. 트랜잭션 격리
-3. 독립적 저장소 사용 가능
+| Signal | Meaning |
+|--------|---------|
+| Same word with different meanings | Context separation needed (e.g., "Account" = user account vs. financial account) |
+| Owned by different teams | Organizational boundary = context boundary |
+| Different change cadences | Independent deployment needed -> separate |
+| Different data stores | Technical boundary = context boundary |
+
+## Context Map Relationship Types
+
+| Relationship | Symbol | Description | Example |
+|-------------|--------|-------------|---------|
+| **Shared Kernel** | SK | Shared domain model | Two teams using the same Entity |
+| **Customer-Supplier** | C/S | Upstream/downstream relationship | Order (upstream) -> Shipping (downstream) |
+| **Conformist** | CF | Downstream accepts upstream model as-is | Accepting external API model |
+| **Anti-Corruption Layer** | ACL | Insert model translation layer | Integration with legacy system |
+| **Open Host Service** | OHS | Provide public protocol | Public REST API |
+| **Published Language** | PL | Shared language (schema) | Protobuf/Avro schema |
+| **Separate Ways** | SW | Independent operation | Integration unnecessary |
+| **Partnership** | P | Equal collaboration | Joint development by two teams |
+
+```
+Context Map Example:
+
++---------------+     OHS/PL      +-----------------+
+| Order Mgmt    | ---------------> | Payment Process |
+| (Order BC)    |                  | (Payment BC)    |
++-------+-------+                  +--------+--------+
+        | C/S                               | C/S
+        v                                   v
++---------------+     ACL          +-----------------+
+| Shipping Mgmt | <--------------- | External PG     |
+| (Shipping BC) |                  | (3rd Party)     |
++---------------+                  +-----------------+
 ```
 
-## 유비쿼터스 언어 사전 템플릿
+## Aggregate Design Principles
+
+### Sizing Criteria
+```
+Prefer small aggregates:
++-- Minimize transaction scope -> reduce concurrency conflicts
++-- Reduce memory usage
++-- Shrink change impact scope
+
+Exceptions (larger aggregates allowed):
++-- Invariants span multiple entities
++-- Atomic consistency is absolutely required
++-- Cannot be replaced with eventual consistency
+```
+
+### Inter-aggregate Reference Rules
+```
+OK - ID reference: Order.customerId (only holds the Customer aggregate's ID)
+NO - Direct reference: Order.customer (directly holds the Customer object)
+
+Reasons:
+1. Respects aggregate boundaries
+2. Transaction isolation
+3. Enables independent storage usage
+```
+
+## Ubiquitous Language Dictionary Template
 
 ```markdown
-| 용어 | 컨텍스트 | 정의 | 동의어 | 반의어/혼동 |
-|------|---------|------|--------|-----------|
-| 주문(Order) | 주문관리 | 고객의 상품 구매 요청 | 오더 | 장바구니(Cart)와 구분 |
-| 계정(Account) | 사용자관리 | 로그인 가능한 사용자 단위 | 유저 | 금융계좌와 구분 |
-| 계정(Account) | 정산관리 | 정산 대상 금융 계좌 | 계좌 | 사용자계정과 구분 |
+| Term | Context | Definition | Synonyms | Confusion/Antonyms |
+|------|---------|-----------|----------|-------------------|
+| Order | Order Management | Customer's product purchase request | Purchase order | Distinct from Cart |
+| Account | User Management | Loginable user unit | User | Distinct from financial account |
+| Account | Settlement Management | Settlement target financial account | Bank account | Distinct from user account |
 ```
 
-## 서비스 분해 안티패턴
+## Service Decomposition Anti-patterns
 
-| 안티패턴 | 증상 | 해결 |
-|---------|------|------|
-| **나노서비스** | 서비스가 너무 작아 1-2개 API만 보유 | 관련 서비스 병합 |
-| **분산 모놀리스** | 모든 서비스가 동기 호출 체인 | 이벤트 기반 비동기 전환 |
-| **CRUD 서비스** | 도메인 로직 없이 DB 프록시 역할 | 도메인 로직 내재화 |
-| **God 서비스** | 하나의 서비스에 과도한 책임 | 바운디드 컨텍스트 기준 재분해 |
-| **공유 DB** | 여러 서비스가 같은 테이블 사용 | 데이터 소유권 분리 |
+| Anti-pattern | Symptoms | Resolution |
+|-------------|----------|-----------|
+| **Nanoservice** | Service is too small, only 1-2 APIs | Merge related services |
+| **Distributed Monolith** | All services in synchronous call chains | Switch to event-driven async |
+| **CRUD Service** | Acts as DB proxy without domain logic | Internalize domain logic |
+| **God Service** | Excessive responsibilities in one service | Re-decompose based on bounded contexts |
+| **Shared DB** | Multiple services using the same tables | Separate data ownership |

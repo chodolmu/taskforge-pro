@@ -1,40 +1,40 @@
 # Scenario Planner Harness
 
-불확실한 환경에서 핵심 변수를 정의하고, 시나리오 매트릭스를 구성하여 영향 분석과 대응 전략을 수립하는 에이전트 팀 하네스.
+An agent team harness that defines key variables in uncertain environments, constructs a scenario matrix, and develops impact analysis and response strategies.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── variable-analyst.md       — 핵심 변수 식별 및 불확실성 평가
-│   ├── scenario-designer.md      — 시나리오 매트릭스 설계 및 시나리오 서사 작성
-│   ├── impact-assessor.md        — 시나리오별 영향 분석 및 정량/정성 평가
-│   ├── strategy-architect.md     — 대응 전략 수립 및 의사결정 프레임워크 설계
-│   └── integration-reviewer.md   — 교차 검증, 논리적 정합성 확인, 최종 문서 통합
+│   ├── variable-analyst.md       — Key variable identification and uncertainty assessment
+│   ├── scenario-designer.md      — Scenario matrix design and scenario narrative writing
+│   ├── impact-assessor.md        — Per-scenario impact analysis and quantitative/qualitative assessment
+│   ├── strategy-architect.md     — Response strategy development and decision-making framework design
+│   └── integration-reviewer.md   — Cross-validation, logical consistency verification, final document integration
 ├── skills/
 │   ├── scenario-planner/
-│   │   └── skill.md              — 오케스트레이터 (팀 조율, 워크플로우, 에러 핸들링)
+│   │   └── skill.md              — Orchestrator (team coordination, workflow, error handling)
 │   ├── steep-framework/
-│   │   └── skill.md              — STEEP 거시환경 분석 (6대 차원 스캐닝, 불확실성-영향력 매트릭스)
+│   │   └── skill.md              — STEEP macro-environment analysis (6 dimension scanning, uncertainty-impact matrix)
 │   ├── scenario-narrative-engine/
-│   │   └── skill.md              — 시나리오 서사 구성 (2x2 매트릭스, 타임라인, 조기 경보 신호)
+│   │   └── skill.md              — Scenario narrative construction (2x2 matrix, timeline, early warning signals)
 │   └── decision-trigger-mapper/
-│       └── skill.md              — 의사결정 트리거 맵 (리얼옵션, 전략 포트폴리오, 실행 로드맵)
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md              — Decision trigger map (real options, strategy portfolio, execution roadmap)
+└── CLAUDE.md                     — This file
 ```
 
-## 사용법
+## Usage
 
-`/scenario-planner` 스킬을 트리거하거나, "시나리오 분석해줘", "미래 시나리오 기획" 같은 자연어로 요청한다.
+Trigger the `/scenario-planner` skill or make a natural language request such as "Run a scenario analysis" or "Plan future scenarios."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_variable_analysis.md` — 핵심 변수 분석서
-- `02_scenario_matrix.md` — 시나리오 매트릭스 및 서사
-- `03_impact_assessment.md` — 영향 분석 보고서
-- `04_response_strategy.md` — 대응 전략서
-- `05_decision_document.md` — 통합 의사결정 문서
-- `06_review_report.md` — 리뷰 보고서
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_variable_analysis.md` — Key variable analysis report
+- `02_scenario_matrix.md` — Scenario matrix and narratives
+- `03_impact_assessment.md` — Impact analysis report
+- `04_response_strategy.md` — Response strategy document
+- `05_decision_document.md` — Integrated decision document
+- `06_review_report.md` — Review report

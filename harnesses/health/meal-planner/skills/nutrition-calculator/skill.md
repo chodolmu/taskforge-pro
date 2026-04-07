@@ -1,116 +1,118 @@
+```markdown
 ---
 name: nutrition-calculator
-description: "영양소 요구량 산출과 매크로 배분을 위한 전문 계산 엔진. 'nutritionist'와 'meal-designer' 에이전트가 개인별 칼로리·매크로 목표를 산출하고 식단을 설계할 때 이 스킬의 계산 공식과 기준표를 반드시 활용해야 한다. '칼로리 계산', '매크로 배분', 'TDEE 산출' 등에 사용한다. 단, 레시피 작성이나 장보기 목록은 이 스킬의 범위가 아니다."
+description: "Specialized calculation engine for nutrient requirement estimation and macro distribution. The 'nutritionist' and 'meal-designer' agents must use this skill's formulas and reference tables when calculating individual calorie/macro targets and designing meal plans. Use for 'calorie calculation', 'macro distribution', 'TDEE estimation', etc. Recipe writing and grocery lists are outside the scope of this skill."
 ---
 
-# Nutrition Calculator — 영양소 계산 엔진
+# Nutrition Calculator — Nutrient Calculation Engine
 
-개인 신체 정보 기반으로 에너지 요구량, 매크로 배분, 미량 영양소 목표를 산출한다.
+Calculates energy requirements, macro distribution, and micronutrient targets based on individual body metrics.
 
-## 기초대사량(BMR) 계산
+## Basal Metabolic Rate (BMR) Calculation
 
-### Mifflin-St Jeor 공식 (권장)
+### Mifflin-St Jeor Formula (Recommended)
 
 ```
-남성: BMR = (10 × 체중kg) + (6.25 × 신장cm) - (5 × 나이) + 5
-여성: BMR = (10 × 체중kg) + (6.25 × 신장cm) - (5 × 나이) - 161
+Male:   BMR = (10 × weight_kg) + (6.25 × height_cm) - (5 × age) + 5
+Female: BMR = (10 × weight_kg) + (6.25 × height_cm) - (5 × age) - 161
 
-예시: 30세 남성, 178cm, 80kg
+Example: 30-year-old male, 178 cm, 80 kg
   BMR = (10 × 80) + (6.25 × 178) - (5 × 30) + 5
       = 800 + 1112.5 - 150 + 5 = 1767.5 kcal
 ```
 
-### Harris-Benedict 공식 (보조)
+### Harris-Benedict Formula (Secondary)
 
 ```
-남성: BMR = 88.362 + (13.397 × 체중kg) + (4.799 × 신장cm) - (5.677 × 나이)
-여성: BMR = 447.593 + (9.247 × 체중kg) + (3.098 × 신장cm) - (4.330 × 나이)
+Male:   BMR = 88.362 + (13.397 × weight_kg) + (4.799 × height_cm) - (5.677 × age)
+Female: BMR = 447.593 + (9.247 × weight_kg) + (3.098 × height_cm) - (4.330 × age)
 ```
 
-## 일일 에너지 소비량(TDEE) 산출
+## Total Daily Energy Expenditure (TDEE) Calculation
 
 ```
-TDEE = BMR × 활동계수
+TDEE = BMR × Activity Factor
 
-활동계수:
-  1.2: 비활동적 (좌식 생활, 운동 없음)
-  1.375: 약간 활동적 (주 1-3회 가벼운 운동)
-  1.55: 보통 활동적 (주 3-5회 중간 강도 운동)
-  1.725: 매우 활동적 (주 6-7회 고강도 운동)
-  1.9: 극도로 활동적 (운동선수, 육체노동)
+Activity Factors:
+  1.2:   Sedentary (desk job, no exercise)
+  1.375: Lightly active (light exercise 1-3 days/week)
+  1.55:  Moderately active (moderate exercise 3-5 days/week)
+  1.725: Very active (intense exercise 6-7 days/week)
+  1.9:   Extremely active (athletes, physical labor)
 ```
 
-## 목표별 칼로리 조정
+## Goal-Based Calorie Adjustment
 
-| 목표 | 칼로리 조정 | 권장 속도 | 주의사항 |
-|------|-----------|----------|---------|
-| 체중 감량 | TDEE - 300~500 kcal | 주 0.3~0.5kg | 최소 BMR 미만 금지 |
-| 완만 감량 | TDEE - 200~300 kcal | 주 0.2~0.3kg | 근손실 최소화 |
-| 유지 | TDEE ± 0 | 0 | 체중 안정 |
-| 린벌크 | TDEE + 200~300 kcal | 주 0.1~0.2kg | 지방 증가 최소화 |
-| 벌크업 | TDEE + 300~500 kcal | 주 0.3~0.5kg | 초보자 유리 |
+| Goal | Calorie Adjustment | Recommended Rate | Notes |
+|------|--------------------|------------------|-------|
+| Weight loss | TDEE - 300~500 kcal | 0.3~0.5 kg/week | Never go below BMR |
+| Gradual loss | TDEE - 200~300 kcal | 0.2~0.3 kg/week | Minimize muscle loss |
+| Maintenance | TDEE ± 0 | 0 | Stable weight |
+| Lean bulk | TDEE + 200~300 kcal | 0.1~0.2 kg/week | Minimize fat gain |
+| Bulk | TDEE + 300~500 kcal | 0.3~0.5 kg/week | Favorable for beginners |
 
-**안전 하한선**: 남성 1500kcal, 여성 1200kcal 미만 금지
+**Safe minimum threshold**: No less than 1500 kcal for males, 1200 kcal for females
 
-## 매크로 영양소 배분
+## Macronutrient Distribution
 
-### 목표별 매크로 비율
+### Macro Ratios by Goal
 
-| 목표 | 단백질 | 탄수화물 | 지방 | 비고 |
-|------|--------|---------|------|------|
-| 일반 건강 | 15-20% | 50-60% | 20-30% | 한국영양학회 권장 |
-| 체중 감량 | 25-30% | 40-50% | 25-30% | 고단백 포만감 |
-| 근비대 | 25-35% | 40-50% | 20-25% | 체중 kg당 1.6-2.2g 단백질 |
-| 저탄고지 | 20-25% | 10-20% | 55-65% | 케토 적응 필요 |
-| 당뇨 관리 | 20-25% | 40-45% | 30-35% | 저GI 탄수화물 |
+| Goal | Protein | Carbohydrates | Fat | Notes |
+|------|---------|---------------|-----|-------|
+| General health | 15-20% | 50-60% | 20-30% | Korean Nutrition Society recommendation |
+| Weight loss | 25-30% | 40-50% | 25-30% | High protein for satiety |
+| Muscle gain | 25-35% | 40-50% | 20-25% | 1.6-2.2g protein per kg body weight |
+| Low-carb / high-fat | 20-25% | 10-20% | 55-65% | Keto adaptation required |
+| Diabetes management | 20-25% | 40-45% | 30-35% | Low-GI carbohydrates |
 
-### 그램 환산
+### Gram Conversion
 
 ```
-단백질: 1g = 4kcal
-탄수화물: 1g = 4kcal
-지방: 1g = 9kcal
-알코올: 1g = 7kcal
+Protein:      1g = 4 kcal
+Carbohydrates: 1g = 4 kcal
+Fat:           1g = 9 kcal
+Alcohol:       1g = 7 kcal
 
-예시: 1800kcal, 감량 목표 (25/45/30)
-  단백질: 1800 × 0.25 / 4 = 112.5g
-  탄수화물: 1800 × 0.45 / 4 = 202.5g
-  지방: 1800 × 0.30 / 9 = 60g
+Example: 1800 kcal, weight loss goal (25/45/30)
+  Protein:      1800 × 0.25 / 4 = 112.5g
+  Carbohydrates: 1800 × 0.45 / 4 = 202.5g
+  Fat:           1800 × 0.30 / 9 = 60g
 ```
 
-## 미량 영양소 일일 권장량 (한국인 기준)
+## Daily Micronutrient Reference Intake (Korean Standards)
 
-| 영양소 | 성인 남성 | 성인 여성 | 주요 급원 |
-|--------|----------|----------|----------|
-| 비타민 A | 800 μg RE | 650 μg RE | 간, 당근, 시금치 |
-| 비타민 C | 100 mg | 100 mg | 키위, 고추, 딸기 |
-| 비타민 D | 10 μg | 10 μg | 연어, 달걀, 버섯 |
-| 칼슘 | 800 mg | 800 mg | 우유, 멸치, 두부 |
-| 철분 | 10 mg | 14 mg | 소고기, 시금치, 조개 |
-| 식이섬유 | 25-30 g | 20-25 g | 현미, 채소, 과일 |
-| 나트륨 | <2000 mg | <2000 mg | — (제한) |
+| Nutrient | Adult Male | Adult Female | Main Sources |
+|----------|------------|--------------|--------------|
+| Vitamin A | 800 μg RE | 650 μg RE | Liver, carrots, spinach |
+| Vitamin C | 100 mg | 100 mg | Kiwi, peppers, strawberries |
+| Vitamin D | 10 μg | 10 μg | Salmon, eggs, mushrooms |
+| Calcium | 800 mg | 800 mg | Milk, dried anchovies, tofu |
+| Iron | 10 mg | 14 mg | Beef, spinach, clams |
+| Dietary fiber | 25-30 g | 20-25 g | Brown rice, vegetables, fruit |
+| Sodium | <2000 mg | <2000 mg | — (limit) |
 
-## 끼니별 배분 전략
+## Meal Distribution Strategy
 
-| 패턴 | 배분 | 적합한 사람 |
-|------|------|-----------|
-| 3끼 균등 | 33/33/34 | 규칙적 생활 |
-| 아침 중심 | 40/35/25 | 오전 활동 많음 |
-| 저녁 가벼운 | 30/40/30 | 감량 목표 |
-| 3끼+간식 | 25/30/30/15 | 혈당 관리 |
-| 간헐적 단식 16:8 | 0/50/50 | 체중 감량 (점심-저녁) |
+| Pattern | Distribution | Best For |
+|---------|--------------|----------|
+| 3 equal meals | 33/33/34 | Regular lifestyle |
+| Breakfast-heavy | 40/35/25 | High morning activity |
+| Light dinner | 30/40/30 | Weight loss goal |
+| 3 meals + snack | 25/30/30/15 | Blood sugar management |
+| Intermittent fasting 16:8 | 0/50/50 | Weight loss (lunch–dinner) |
 
-## 특수 상황 조정
+## Special Situation Adjustments
 
-| 상황 | 조정 내용 |
-|------|----------|
-| 임신 초기 | +0 kcal, 엽산 600μg |
-| 임신 중·후기 | +300-450 kcal, 철분 24mg |
-| 수유 | +500 kcal, 칼슘 강화 |
-| 노인 (65+) | 단백질 1.0-1.2g/kg, 비타민D 강화 |
-| 청소년 | 성장기 추가 300-500 kcal |
+| Situation | Adjustment |
+|-----------|------------|
+| Early pregnancy | +0 kcal, folate 600 μg |
+| Mid/late pregnancy | +300-450 kcal, iron 24 mg |
+| Breastfeeding | +500 kcal, increased calcium |
+| Elderly (65+) | Protein 1.0-1.2g/kg, increased vitamin D |
+| Adolescents | +300-500 kcal for growth |
 
-## 참고
+## References
 
-- 한국영양학회 한국인 영양소 섭취기준(KDRIs) 2020 기반
-- 상세 영양소 DB: `references/nutrient-database.md` 참조
+- Based on Korean Dietary Reference Intakes (KDRIs) 2020 by the Korean Nutrition Society
+- Detailed nutrient database: see `references/nutrient-database.md`
+```

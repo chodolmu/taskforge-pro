@@ -1,126 +1,116 @@
 ---
 name: porter-five-forces
-description: "Porter의 5 Forces 분석을 체계적으로 수행하는 방법론. 'Porter 분석', '5 Forces', '산업 경쟁 분석', '진입 장벽 분석', '산업 매력도' 등 산업 구조 분석 시 사용한다. 단, 재무제표 심층 분석, M&A 자문은 이 스킬의 범위가 아니다."
+description: "Methodology for systematically performing Porter's 5 Forces analysis. Use this skill for 'Porter analysis', '5 Forces', 'industry competition analysis', 'entry barrier analysis', 'industry attractiveness', and other industry structure analysis tasks. Note: in-depth financial statement analysis and M&A advisory are outside the scope of this skill."
 ---
 
-# Porter Five Forces — 산업 경쟁 구조 분석 방법론
+# Porter Five Forces — Industry Structure Analysis Methodology
 
-industry-analyst와 competitor-analyst의 산업 분석을 강화하는 스킬.
+A skill that enhances industry structure analysis for the industry-analyst and competitor-analyst.
 
-## 대상 에이전트
+## Target Agents
 
-- **industry-analyst** — 산업의 구조적 매력도를 평가한다
-- **competitor-analyst** — 경쟁 환경을 다차원으로 분석한다
+- **industry-analyst** — Analyzes industry competitive dynamics
+- **competitor-analyst** — Evaluates competitive positioning within industry structure
 
-## Five Forces 프레임워크
+## The Five Forces Framework
 
+### 1. Threat of New Entrants
 ```
-                 [신규 진입 위협]
-                      ↓
-[공급자 교섭력] ← [기존 경쟁 강도] → [구매자 교섭력]
-                      ↑
-                 [대체재 위협]
-```
+Assessment factors:
+- Capital requirements (High = low threat)
+- Economies of scale (High = low threat)
+- Brand loyalty / switching costs
+- Access to distribution channels
+- Government regulations / licenses
+- Proprietary technology / patents
+- Network effects
 
-## Force 1: 기존 기업 간 경쟁 강도
-
-### 평가 항목
-
-| 요인 | 높은 경쟁 (불리) | 낮은 경쟁 (유리) |
-|------|----------------|----------------|
-| 경쟁사 수 | 많고 규모 비슷 | 적거나 1강 체제 |
-| 시장 성장률 | 정체/감소 | 빠른 성장 |
-| 제품 차별화 | 낮음 (범용) | 높음 (전문) |
-| 고정비 비중 | 높음 | 낮음 |
-| 전환 비용 | 낮음 | 높음 |
-| 퇴출 장벽 | 높음 | 낮음 |
-
-### 점수 체계 (1-5)
-```
-1점: 경쟁 거의 없음 (매우 유리)
-2점: 경쟁 약함
-3점: 보통
-4점: 경쟁 심함
-5점: 초과경쟁 (매우 불리)
+Rating: Low / Medium / High threat
 ```
 
-## Force 2: 신규 진입 위협
-
-| 진입 장벽 | 높은 장벽 (유리) | 낮은 장벽 (불리) |
-|----------|----------------|----------------|
-| 규모의 경제 | 대량생산 필요 | 소규모 가능 |
-| 자본 요구 | 대규모 초기투자 | 소자본 가능 |
-| 전환 비용 | 높음 | 낮음 |
-| 유통 채널 | 기존사 장악 | 디지털 접근 용이 |
-| 특허/기술 | 핵심 특허 보유 | 오픈소스/범용 |
-| 정부 규제 | 라이선스 필요 | 규제 없음 |
-| 브랜드 충성도 | 강한 브랜드 | 브랜드 미약 |
-
-## Force 3: 대체재 위협
-
-| 요인 | 높은 위협 (불리) | 낮은 위협 (유리) |
-|------|----------------|----------------|
-| 대체재 성능 | 우수하거나 유사 | 열등 |
-| 가격 대비 성능 | 대체재 우위 | 기존 제품 우위 |
-| 전환 비용 | 낮음 | 높음 |
-| 구매자 전환 성향 | 높음 | 낮음 |
-
-### 대체재 유형
+### 2. Bargaining Power of Suppliers
 ```
-1. 직접 대체: 동일 기능의 다른 제품
-2. 간접 대체: 다른 방식으로 동일 니즈 충족
-3. 비소비: 아예 사용하지 않는 선택
+Assessment factors:
+- Number of suppliers (Few = high power)
+- Switching costs to alternative suppliers
+- Availability of substitutes
+- Supplier concentration vs. industry
+- Importance of volume to supplier
+- Forward integration threat
+
+Rating: Low / Medium / High power
 ```
 
-## Force 4: 공급자 교섭력
+### 3. Bargaining Power of Buyers
+```
+Assessment factors:
+- Number of buyers (Few = high power)
+- Buyer volume relative to total sales
+- Switching costs for buyers
+- Buyer price sensitivity
+- Product differentiation
+- Backward integration threat
+- Access to market information
 
-| 요인 | 높은 교섭력 (불리) | 낮은 교섭력 (유리) |
-|------|-------------------|-------------------|
-| 공급자 집중도 | 소수 독과점 | 다수 분산 |
-| 대체 공급자 | 없음 | 다수 |
-| 전환 비용 | 높음 | 낮음 |
-| 전방 통합 위협 | 있음 | 없음 |
-| 구매량 비중 | 작음 | 큼 |
+Rating: Low / Medium / High power
+```
 
-## Force 5: 구매자 교섭력
+### 4. Threat of Substitute Products
+```
+Assessment factors:
+- Availability of close substitutes
+- Price-performance ratio of substitutes
+- Buyer switching costs
+- Buyer propensity to substitute
+- Cross-industry substitutes
 
-| 요인 | 높은 교섭력 (불리) | 낮은 교섭력 (유리) |
-|------|-------------------|-------------------|
-| 구매자 집중도 | 소수 대형 | 다수 분산 |
-| 구매 물량 | 대량 | 소량 |
-| 전환 비용 | 낮음 | 높음 |
-| 가격 민감도 | 높음 | 낮음 |
-| 후방 통합 위협 | 있음 | 없음 |
-| 정보 접근성 | 완전 | 제한적 |
+Rating: Low / Medium / High threat
+```
 
-## 종합 분석 매트릭스
+### 5. Rivalry Among Existing Competitors
+```
+Assessment factors:
+- Number and size of competitors
+- Industry growth rate
+- Product differentiation
+- Exit barriers
+- Fixed costs / value added
+- Capacity utilization
+- Competitive information availability
+
+Rating: Low / Medium / High rivalry
+```
+
+## Analysis Output Template
 
 ```markdown
-| Force | 점수(1-5) | 수준 | 핵심 근거 |
-|-------|----------|------|----------|
-| 기존 경쟁 | 4 | 높음 | 다수 경쟁사, 낮은 차별화 |
-| 신규 진입 | 2 | 낮음 | 높은 기술 장벽, 규제 |
-| 대체재 | 3 | 중간 | 간접 대체재 존재 |
-| 공급자 | 2 | 낮음 | 다수 공급자, 표준 부품 |
-| 구매자 | 4 | 높음 | 가격 비교 용이, 낮은 전환비 |
-| **산업 매력도** | **3.0** | **보통** | |
+## Porter's Five Forces Analysis: [Industry]
 
-산업 매력도 = (5 - 평균점수) / 4 × 100
-  80-100%: 매우 매력적
-  60-79%: 매력적
-  40-59%: 보통
-  20-39%: 비매력적
-  0-19%: 매우 비매력적
+### Summary
+| Force | Rating | Key Factors |
+|-------|--------|-------------|
+| New Entrants | Low/Med/High | [Top 2-3 factors] |
+| Supplier Power | Low/Med/High | [Top 2-3 factors] |
+| Buyer Power | Low/Med/High | [Top 2-3 factors] |
+| Substitutes | Low/Med/High | [Top 2-3 factors] |
+| Rivalry | Low/Med/High | [Top 2-3 factors] |
+
+### Overall Industry Attractiveness
+[Assessment based on combined forces]
+
+### Strategic Implications
+1. [Implication + recommended action]
+2. [Implication + recommended action]
+3. [Implication + recommended action]
 ```
 
-## 전략 시사점 도출
+## Scoring Guide
 
 ```
-각 Force별 대응 전략:
-
-높은 경쟁 → 차별화 전략, 니치 시장 집중
-높은 진입 위협 → 전환 비용 강화, 브랜드 구축
-높은 대체재 → 전환 비용 강화, 부가 서비스
-높은 공급자 교섭 → 공급원 다변화, 후방 통합
-높은 구매자 교섭 → 전환 비용 강화, 가치 차별화
+Each force: 1 (Low) to 5 (High)
+Industry Attractiveness Score = 25 - Sum of forces
+  20-25: Very attractive
+  15-19: Attractive
+  10-14: Moderate
+  5-9: Unattractive
 ```

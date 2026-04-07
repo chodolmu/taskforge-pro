@@ -1,126 +1,126 @@
 ---
 name: research-methodology
-description: "연구 방법론 가이드. research-designer와 statistical-analyst 에이전트가 연구 설계와 분석 방법을 선택할 때 참조. '연구 방법론', '실험 설계', '통계 분석' 요청 시 사용. 단, 실제 데이터 수집이나 IRB 심사 대행은 범위 밖."
+description: "Research methodology guide. Referenced by the research-designer and statistical-analyst agents when selecting research designs and analysis methods. Use for 'research methodology', 'experiment design', or 'statistical analysis' requests. Actual data collection and IRB review processing are out of scope."
 ---
 
-# Research Methodology — 연구 방법론 가이드
+# Research Methodology — Research Methodology Guide
 
-research-designer / statistical-analyst 에이전트의 방법론 설계 역량 강화.
+Enhances the methodology design capabilities of the research-designer and statistical-analyst agents.
 
-## 연구 설계 유형
+## Research Design Types
 
-### 양적 연구 (Quantitative)
+### Quantitative Research
 
-| 설계 | 목적 | 변수 통제 | 인과 추론 |
-|------|------|----------|----------|
-| 실험 (RCT) | 인과관계 검증 | 높음 | 강함 |
-| 준실험 | 인과관계 (통제 제한) | 중간 | 중간 |
-| 상관 연구 | 관계 파악 | 낮음 | 약함 |
-| 서베이 | 현황 파악 | 없음 | 없음 |
-| 종단 연구 | 시간에 따른 변화 | 다양 | 중간 |
+| Design | Purpose | Variable Control | Causal Inference |
+|--------|---------|-----------------|-----------------|
+| Experiment (RCT) | Verify causation | High | Strong |
+| Quasi-experiment | Causation (limited control) | Medium | Medium |
+| Correlational Study | Identify relationships | Low | Weak |
+| Survey | Assess current status | None | None |
+| Longitudinal Study | Change over time | Varies | Medium |
 
-### 질적 연구 (Qualitative)
+### Qualitative Research
 
-| 설계 | 목적 | 데이터 수집 |
-|------|------|-----------|
-| 사례 연구 | 심층적 맥락 이해 | 인터뷰, 관찰, 문서 |
-| 근거이론 | 이론 생성 | 인터뷰, 현장 메모 |
-| 현상학 | 경험의 본질 | 심층 인터뷰 |
-| 민족지학 | 문화/집단 이해 | 참여 관찰 |
+| Design | Purpose | Data Collection |
+|--------|---------|----------------|
+| Case Study | Deep contextual understanding | Interviews, observation, documents |
+| Grounded Theory | Theory generation | Interviews, field notes |
+| Phenomenology | Essence of experience | In-depth interviews |
+| Ethnography | Cultural/group understanding | Participant observation |
 
-### 혼합 연구 (Mixed Methods)
-
-```
-순차적: 양적 → 질적 (결과 설명)
-         질적 → 양적 (가설 생성)
-동시적: 양적 + 질적 (삼각검증)
-```
-
-## 표본 설계
-
-### 표본 크기 산출
+### Mixed Methods
 
 ```
-양적 연구 (평균 비교):
-  n = (Z_α/2 + Z_β)² × 2σ² / d²
-
-  Z_α/2 = 1.96 (유의수준 0.05)
-  Z_β = 0.84 (검정력 80%)
-  σ = 표준편차 (선행연구)
-  d = 효과 크기 (최소 의미 있는 차이)
-
-서베이:
-  n = Z² × p(1-p) / e²
-  Z = 1.96, p = 0.5 (최대 분산), e = 오차 한계
-
-  예: 95% 신뢰, 5% 오차 → n = 384명
+Sequential: Quantitative -> Qualitative (explain results)
+            Qualitative -> Quantitative (generate hypotheses)
+Concurrent: Quantitative + Qualitative (triangulation)
 ```
 
-### 표본 추출 방법
+## Sampling Design
 
-| 방법 | 설명 | 적합 |
-|------|------|------|
-| 단순 무작위 | 모집단에서 랜덤 | 소규모, 균일 모집단 |
-| 층화 추출 | 하위 그룹별 비례 | 이질적 모집단 |
-| 군집 추출 | 자연 그룹 단위 | 지역 기반 조사 |
-| 편의 추출 | 접근 가능한 대상 | 탐색적 연구 (제한적) |
-
-## 통계 분석 방법 선택
-
-### 분석 방법 의사결정 트리
+### Sample Size Calculation
 
 ```
-Q1: 변수 유형은?
-├── 연속형 → Q2
-└── 범주형 → Q3
+Quantitative (mean comparison):
+  n = (Z_alpha/2 + Z_beta)^2 x 2*sigma^2 / d^2
 
-Q2: 비교 집단 수?
-├── 1~2개 → t-test (독립/대응)
-├── 3개+ → ANOVA
-└── 관계 분석 → 회귀/상관
+  Z_alpha/2 = 1.96 (significance level 0.05)
+  Z_beta = 0.84 (power 80%)
+  sigma = standard deviation (from prior research)
+  d = effect size (minimum meaningful difference)
 
-Q3: 변수 수?
-├── 2개 → 카이제곱
-└── 3개+ → 로지스틱 회귀
+Survey:
+  n = Z^2 x p(1-p) / e^2
+  Z = 1.96, p = 0.5 (maximum variance), e = margin of error
+
+  e.g.: 95% confidence, 5% margin -> n = 384 participants
 ```
 
-### 주요 통계 방법 요약
+### Sampling Methods
 
-| 방법 | 목적 | 조건 | 보고 항목 |
-|------|------|------|----------|
-| t-test | 두 집단 평균 비교 | 정규성, 등분산 | t, df, p, Cohen's d |
-| ANOVA | 3+ 집단 평균 비교 | 정규성, 등분산 | F, df, p, η² |
-| 카이제곱 | 범주형 변수 관계 | 기대빈도 ≥5 | χ², df, p, Cramer's V |
-| 상관분석 | 두 변수 관계 | 선형성 | r, p |
-| 회귀분석 | 예측/설명 | 선형성, 독립성 | β, R², p, VIF |
+| Method | Description | Suitable For |
+|--------|------------|-------------|
+| Simple Random | Random from population | Small, homogeneous populations |
+| Stratified | Proportional by subgroup | Heterogeneous populations |
+| Cluster | By natural group unit | Region-based surveys |
+| Convenience | Accessible participants | Exploratory research (limited) |
 
-### 효과 크기 가이드
+## Statistical Analysis Method Selection
 
-| 지표 | 작은 | 중간 | 큰 |
-|------|------|------|-----|
+### Analysis Method Decision Tree
+
+```
+Q1: Variable type?
++-- Continuous -> Q2
++-- Categorical -> Q3
+
+Q2: Number of comparison groups?
++-- 1-2 -> t-test (independent/paired)
++-- 3+ -> ANOVA
++-- Relationship analysis -> Regression/Correlation
+
+Q3: Number of variables?
++-- 2 -> Chi-square
++-- 3+ -> Logistic regression
+```
+
+### Key Statistical Methods Summary
+
+| Method | Purpose | Requirements | Reported Items |
+|--------|---------|-------------|---------------|
+| t-test | Compare 2 group means | Normality, equal variance | t, df, p, Cohen's d |
+| ANOVA | Compare 3+ group means | Normality, equal variance | F, df, p, partial eta-squared |
+| Chi-square | Categorical variable relationship | Expected frequency >= 5 | chi-square, df, p, Cramer's V |
+| Correlation | Relationship between 2 variables | Linearity | r, p |
+| Regression | Prediction/explanation | Linearity, independence | beta, R-squared, p, VIF |
+
+### Effect Size Guide
+
+| Metric | Small | Medium | Large |
+|--------|-------|--------|-------|
 | Cohen's d | 0.2 | 0.5 | 0.8 |
-| r (상관) | 0.1 | 0.3 | 0.5 |
-| η² (ANOVA) | 0.01 | 0.06 | 0.14 |
-| R² (회귀) | 0.02 | 0.13 | 0.26 |
+| r (correlation) | 0.1 | 0.3 | 0.5 |
+| partial eta-squared (ANOVA) | 0.01 | 0.06 | 0.14 |
+| R-squared (regression) | 0.02 | 0.13 | 0.26 |
 
-## 연구 윤리
+## Research Ethics
 
-### IRB 고려사항
+### IRB Considerations
 
-| 항목 | 확인 |
-|------|------|
-| 동의서 | 연구 목적, 절차, 위험, 자발성 |
-| 개인정보 | 비식별화, 보관 기간, 파기 |
-| 취약 대상 | 미성년자, 환자 특별 보호 |
-| 이해충돌 | 연구비 출처, 이해관계 공시 |
+| Item | Verification |
+|------|-------------|
+| Informed Consent | Research purpose, procedure, risks, voluntariness |
+| Personal Data | De-identification, retention period, destruction |
+| Vulnerable Populations | Special protections for minors, patients |
+| Conflicts of Interest | Funding source, interest disclosure |
 
-## 품질 체크리스트
+## Quality Checklist
 
-| 항목 | 기준 |
-|------|------|
-| 연구 질문 | PICO 또는 SPIDER 구조 |
-| 설계 적합성 | 연구 질문에 맞는 설계 |
-| 표본 | 산출 근거 + 추출 방법 |
-| 분석 방법 | 데이터 특성에 적합 |
-| 효과 크기 | 통계적 유의성 + 실질적 의미 |
-| 윤리 | IRB 승인 또는 면제 사유 |
+| Item | Criteria |
+|------|----------|
+| Research Question | PICO or SPIDER structure |
+| Design Fit | Design matches the research question |
+| Sampling | Calculation basis + sampling method |
+| Analysis Method | Suited to data characteristics |
+| Effect Size | Statistical significance + practical meaning |
+| Ethics | IRB approval or exemption justification |

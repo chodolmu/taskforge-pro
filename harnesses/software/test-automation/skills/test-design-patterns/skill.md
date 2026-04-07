@@ -1,93 +1,93 @@
 ---
 name: test-design-patterns
-description: "효과적인 테스트 설계를 위한 패턴, 경계값 분석, 동등 분할, 상태 전이 테스트 등 체계적 테스트 케이스 도출 방법론. '테스트 설계', '테스트 케이스 도출', '경계값 분석', '동등 분할', '상태 전이 테스트', '페어와이즈', '테스트 매트릭스' 등 테스트 설계 시 이 스킬을 사용한다. test-strategist와 unit-tester의 테스트 설계 역량을 강화한다. 단, 테스트 인프라 구축이나 CI/CD 설정은 이 스킬의 범위가 아니다."
+description: "Patterns for effective test design, including boundary value analysis, equivalence partitioning, state transition testing, and other systematic test case derivation methodologies. Use this skill for 'test design', 'test case derivation', 'boundary value analysis', 'equivalence partitioning', 'state transition testing', 'pairwise', 'test matrix', and other test design tasks. Enhances the test design capabilities of test-strategist and unit-tester. Note: test infrastructure setup and CI/CD configuration are outside the scope of this skill."
 ---
 
-# Test Design Patterns — 체계적 테스트 설계 가이드
+# Test Design Patterns — Systematic Test Design Guide
 
-테스트 케이스를 체계적으로 도출하고 효과적으로 구조화하는 방법론.
+Methodologies for systematically deriving and effectively structuring test cases.
 
-## 테스트 케이스 도출 기법
+## Test Case Derivation Techniques
 
-### 1. 동등 분할 (Equivalence Partitioning)
-
-```
-입력: 나이 (1~150 정수)
-├── 유효 클래스: [1, 150] → 대표값: 25
-├── 무효 클래스 1: < 1   → 대표값: 0, -1
-├── 무효 클래스 2: > 150 → 대표값: 151, 999
-├── 무효 클래스 3: 비정수 → 대표값: 25.5, "abc"
-└── 무효 클래스 4: null  → 대표값: null, undefined
-```
-
-### 2. 경계값 분석 (Boundary Value Analysis)
+### 1. Equivalence Partitioning
 
 ```
-범위: [1, 150]
-테스트 값: 0, 1, 2, ... , 149, 150, 151
-          ↑  ↑  ↑        ↑    ↑    ↑
-         무효 경계 유효    유효 경계  무효
-
-3점 경계값: min-1, min, max, max+1
-7점 경계값: min-1, min, min+1, nominal, max-1, max, max+1
+Input: Age (integer 1-150)
++-- Valid class: [1, 150] -> representative: 25
++-- Invalid class 1: < 1   -> representative: 0, -1
++-- Invalid class 2: > 150 -> representative: 151, 999
++-- Invalid class 3: non-integer -> representative: 25.5, "abc"
++-- Invalid class 4: null  -> representative: null, undefined
 ```
 
-### 3. 상태 전이 테스트
+### 2. Boundary Value Analysis
 
 ```
-주문 상태 전이:
-CREATED ─(결제)→ PAID ─(배송시작)→ SHIPPING ─(배송완료)→ DELIVERED
-   │                │                  │                    │
-   └─(취소)→ CANCELLED  └─(환불)→ REFUNDED  └─(반품)→ RETURNED  └─(반품)→ RETURNED
+Range: [1, 150]
+Test values: 0, 1, 2, ... , 149, 150, 151
+             ^  ^  ^        ^    ^    ^
+          invalid boundary valid  valid boundary invalid
 
-테스트 케이스:
-1. Happy Path: CREATED → PAID → SHIPPING → DELIVERED
-2. 주문 취소: CREATED → CANCELLED
-3. 결제 후 환불: CREATED → PAID → REFUNDED
-4. 배송 중 반품: CREATED → PAID → SHIPPING → RETURNED
-5. 무효 전이: CANCELLED → PAID (거부되어야 함)
-6. 무효 전이: DELIVERED → SHIPPING (거부되어야 함)
+3-point boundary: min-1, min, max, max+1
+7-point boundary: min-1, min, min+1, nominal, max-1, max, max+1
 ```
 
-### 4. 페어와이즈 테스트 (Pairwise Testing)
+### 3. State Transition Testing
 
 ```
-파라미터:
+Order state transitions:
+CREATED -(payment)-> PAID -(shipping start)-> SHIPPING -(delivery)-> DELIVERED
+   |                  |                         |                      |
+   +-(cancel)-> CANCELLED  +-(refund)-> REFUNDED  +-(return)-> RETURNED  +-(return)-> RETURNED
+
+Test cases:
+1. Happy Path: CREATED -> PAID -> SHIPPING -> DELIVERED
+2. Order cancel: CREATED -> CANCELLED
+3. Post-payment refund: CREATED -> PAID -> REFUNDED
+4. In-transit return: CREATED -> PAID -> SHIPPING -> RETURNED
+5. Invalid transition: CANCELLED -> PAID (should be rejected)
+6. Invalid transition: DELIVERED -> SHIPPING (should be rejected)
+```
+
+### 4. Pairwise Testing
+
+```
+Parameters:
 - OS: Windows, macOS, Linux
-- 브라우저: Chrome, Firefox, Safari
-- 언어: ko, en, ja
+- Browser: Chrome, Firefox, Safari
+- Language: ko, en, ja
 
-전수 조합: 3×3×3 = 27개
-페어와이즈: 9개로 축소 (모든 2-way 조합 커버)
+Full combinations: 3x3x3 = 27
+Pairwise: Reduced to 9 (covers all 2-way combinations)
 
-| # | OS      | 브라우저 | 언어 |
-|---|---------|---------|------|
-| 1 | Windows | Chrome  | ko   |
-| 2 | Windows | Firefox | en   |
-| 3 | Windows | Safari  | ja   |
-| 4 | macOS   | Chrome  | en   |
-| 5 | macOS   | Firefox | ja   |
-| 6 | macOS   | Safari  | ko   |
-| 7 | Linux   | Chrome  | ja   |
-| 8 | Linux   | Firefox | ko   |
-| 9 | Linux   | Safari  | en   |
+| # | OS      | Browser | Language |
+|---|---------|---------|----------|
+| 1 | Windows | Chrome  | ko       |
+| 2 | Windows | Firefox | en       |
+| 3 | Windows | Safari  | ja       |
+| 4 | macOS   | Chrome  | en       |
+| 5 | macOS   | Firefox | ja       |
+| 6 | macOS   | Safari  | ko       |
+| 7 | Linux   | Chrome  | ja       |
+| 8 | Linux   | Firefox | ko       |
+| 9 | Linux   | Safari  | en       |
 ```
 
-### 5. 결정 테이블 (Decision Table)
+### 5. Decision Table
 
 ```
-할인 규칙:
-조건                     | R1 | R2 | R3 | R4 |
-─────────────────────────┼────┼────┼────┼────┤
-VIP 회원인가?            | Y  | Y  | N  | N  |
-주문금액 ≥ 50,000원?     | Y  | N  | Y  | N  |
-─────────────────────────┼────┼────┼────┼────┤
-15% 할인                 | X  |    |    |    |
-10% 할인                 |    | X  | X  |    |
-할인 없음                |    |    |    | X  |
+Discount rules:
+Condition                    | R1 | R2 | R3 | R4 |
+-----------------------------+----+----+----+----+
+VIP member?                  | Y  | Y  | N  | N  |
+Order amount >= $50?         | Y  | N  | Y  | N  |
+-----------------------------+----+----+----+----+
+15% discount                 | X  |    |    |    |
+10% discount                 |    | X  | X  |    |
+No discount                  |    |    |    | X  |
 ```
 
-## 테스트 구조 패턴
+## Test Structure Patterns
 
 ### AAA (Arrange-Act-Assert)
 ```python
@@ -106,18 +106,18 @@ def test_order_total_with_discount():
 ### Given-When-Then (BDD)
 ```python
 def test_vip_customer_gets_extra_discount():
-    # Given: VIP 고객이 5만원 이상 주문했을 때
+    # Given: A VIP customer places an order of $50 or more
     customer = Customer(tier="VIP")
     order = Order(customer, total=60000)
 
-    # When: 할인을 적용하면
+    # When: Discount is applied
     discounted = pricing_service.apply_discount(order)
 
-    # Then: 15% 할인이 적용된다
+    # Then: 15% discount is applied
     assert discounted == 51000
 ```
 
-### Builder 패턴 (테스트 데이터)
+### Builder Pattern (Test Data)
 ```python
 class OrderBuilder:
     def __init__(self):
@@ -127,39 +127,39 @@ class OrderBuilder:
     def with_item(self, name, price): ...
     def build(self) -> Order: ...
 
-# 사용
+# Usage
 order = OrderBuilder().with_vip_customer().with_item("A", 10000).build()
 ```
 
-## 테스트 피라미드 비율 가이드
+## Test Pyramid Ratio Guide
 
 ```
-        ╱ E2E ╲          5~10%   느리지만 현실적
-       ╱───────╲
-      ╱ 통합    ╲        20~30%  서비스 간 연동
-     ╱───────────╲
-    ╱  단위 테스트  ╲      60~70%  빠르고 격리됨
-   ╱───────────────╲
+        / E2E  \          5-10%   Slow but realistic
+       /--------\
+      / Integration \     20-30%  Inter-service integration
+     /--------------\
+    /  Unit Tests    \    60-70%  Fast and isolated
+   /------------------\
 ```
 
-| 레이어 | 실행 시간 | 범위 | 실패 원인 |
-|--------|----------|------|----------|
-| 단위 | < 10ms | 함수/클래스 | 로직 오류 |
-| 통합 | < 5s | 모듈 간 | 인터페이스 불일치 |
-| E2E | < 60s | 전체 흐름 | 환경, 타이밍 |
+| Layer | Execution Time | Scope | Failure Cause |
+|-------|---------------|-------|--------------|
+| Unit | < 10ms | Function/class | Logic error |
+| Integration | < 5s | Inter-module | Interface mismatch |
+| E2E | < 60s | Full flow | Environment, timing |
 
-## 리스크 기반 테스트 우선순위
+## Risk-based Test Prioritization
 
 ```
-리스크 = 장애 확률 × 비즈니스 영향
+Risk = Failure Probability x Business Impact
 
-       높은 영향
-          │
-  P1 테스트 │ P0 테스트
-  (반드시)  │ (최우선)
-  ─────────┼─────────→ 높은 확률
-  P3 테스트 │ P2 테스트
-  (시간 있으면)│ (권장)
-          │
-       낮은 영향
+       High Impact
+          |
+  P1 Tests | P0 Tests
+  (Must)   | (Top Priority)
+  ---------+----------> High Probability
+  P3 Tests | P2 Tests
+  (If time)| (Recommended)
+          |
+       Low Impact
 ```

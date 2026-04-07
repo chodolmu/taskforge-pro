@@ -1,131 +1,131 @@
 ---
 name: patent-valuation
-description: "특허 가치 평가 프레임워크. ip-analyst와 license-strategist 에이전트가 IP 자산의 경제적 가치를 산출할 때 참조. '특허 가치', 'IP 가치평가', '로열티 산출' 요청 시 사용. 단, 법적 특허 침해 감정이나 소송 대리는 범위 밖."
+description: "Patent valuation framework. Referenced by the ip-analyst and license-strategist agents when calculating the economic value of IP assets. Use for 'patent value', 'IP valuation', or 'royalty calculation' requests. Legal patent infringement assessment and litigation representation are out of scope."
 ---
 
-# Patent Valuation — 특허 가치 평가
+# Patent Valuation — Patent Value Assessment
 
-ip-analyst / license-strategist 에이전트의 IP 가치평가 역량 강화.
+Enhances the IP valuation capabilities of the ip-analyst and license-strategist agents.
 
-## 가치평가 방법론
+## Valuation Methodologies
 
-### 3대 접근법
+### Three Approaches
 
-| 접근법 | 방법 | 적합 |
-|--------|------|------|
-| 비용 접근 | 개발/취득에 든 비용 | 초기 단계, 대체 기술 없음 |
-| 시장 접근 | 유사 IP 거래 사례 | 비교 거래 존재 시 |
-| 수익 접근 | 미래 수익 현재가치 | 수익화 경로 명확 시 |
+| Approach | Method | Best Suited For |
+|----------|--------|----------------|
+| Cost Approach | Cost of development/acquisition | Early-stage, no alternative technology |
+| Market Approach | Comparable IP transaction data | Comparable transactions exist |
+| Income Approach | Present value of future income | Clear monetization pathway |
 
-### 비용 접근법
-
-```
-재생산 비용:
-  = R&D 인건비 + 재료비 + 장비비 + 간접비
-  + 기회비용 (시간 가치)
-  - 감가상각 (기능적/경제적 진부화)
-
-예시:
-  R&D 비용: ₩5억
-  간접비: ₩1억
-  진부화 감가: -20%
-  가치: (5 + 1) × 0.8 = ₩4.8억
-```
-
-### 시장 접근법
+### Cost Approach
 
 ```
-유사 거래 비교:
-  가치 = 유사 IP 거래가 × 조정 계수
+Reproduction Cost:
+  = R&D Labor + Materials + Equipment + Overhead
+  + Opportunity Cost (time value)
+  - Depreciation (functional/economic obsolescence)
 
-조정 요소:
-  - 기술 유사성 (0.5~1.5)
-  - 시장 규모 비율
-  - 잔여 보호 기간 비율
-  - 권리 범위 (독점/비독점)
+Example:
+  R&D Cost: $500,000
+  Overhead: $100,000
+  Obsolescence Depreciation: -20%
+  Value: (500,000 + 100,000) x 0.8 = $480,000
 ```
 
-### 수익 접근법 (Relief from Royalty)
+### Market Approach
 
 ```
-가치 = Σ [매출_t × 로열티율 × (1-세율) / (1+r)^t]
+Comparable Transaction Comparison:
+  Value = Comparable IP Transaction Price x Adjustment Factor
 
-t: 잔여 특허 기간 (1~N년)
-r: 할인율 (WACC 기준 12~20%)
-로열티율: 업종별 기준 (아래 참조)
+Adjustment Factors:
+  - Technology similarity (0.5-1.5)
+  - Market size ratio
+  - Remaining protection period ratio
+  - Rights scope (exclusive/non-exclusive)
 ```
 
-## 업종별 로열티 벤치마크
-
-| 업종 | 로열티율 범위 | 중간값 |
-|------|-------------|--------|
-| 제약/바이오 | 3~10% | 5% |
-| 반도체/전자 | 1~5% | 3% |
-| 소프트웨어 | 5~25% | 10% |
-| 화학/소재 | 2~5% | 3% |
-| 기계/장비 | 1~5% | 3% |
-| 소비재 | 2~8% | 4% |
-| 자동차 | 1~3% | 2% |
-
-## 25% 규칙 (Rule of Thumb)
+### Income Approach (Relief from Royalty)
 
 ```
-로열티 = 라이선시 영업이익 × 25%
+Value = Sum of [Revenue_t x Royalty Rate x (1-Tax Rate) / (1+r)^t]
 
-근거: 특허 기여 이익의 25%가 특허권자 몫
-주의: 법원에서 참고만 하며 절대적 기준 아님
+t: Remaining patent term (1 to N years)
+r: Discount rate (WACC basis, 12-20%)
+Royalty Rate: Industry-specific benchmark (see below)
 ```
 
-## 특허 강도 평가
+## Industry Royalty Benchmarks
 
-### 특허 스코어카드
+| Industry | Royalty Rate Range | Median |
+|----------|-------------------|--------|
+| Pharmaceutical/Biotech | 3-10% | 5% |
+| Semiconductor/Electronics | 1-5% | 3% |
+| Software | 5-25% | 10% |
+| Chemical/Materials | 2-5% | 3% |
+| Machinery/Equipment | 1-5% | 3% |
+| Consumer Goods | 2-8% | 4% |
+| Automotive | 1-3% | 2% |
 
-| 평가 항목 | 가중치 | 점수(1~5) |
-|----------|--------|----------|
-| 청구항 범위 | 20% | 넓을수록 높음 |
-| 회피 난이도 | 20% | 회피 어려울수록 높음 |
-| 기술적 중요성 | 15% | 핵심 기술일수록 높음 |
-| 인용 빈도 | 15% | 피인용 많을수록 높음 |
-| 잔여 기간 | 15% | 남은 기간 길수록 높음 |
-| 시장 관련성 | 15% | 시장 적용성 높을수록 높음 |
-
-### 강도 등급
-
-| 총점 | 등급 | 전략 |
-|------|------|------|
-| 4.0~5.0 | A (핵심) | 적극 보호, 라이선스 수익화 |
-| 3.0~3.9 | B (중요) | 유지, 포트폴리오 강화 |
-| 2.0~2.9 | C (보통) | 비용 효율 검토, 매각 검토 |
-| 1.0~1.9 | D (약함) | 포기/매각 권고 |
-
-## 라이선스 구조 설계
-
-### 라이선스 유형
-
-| 유형 | 설명 | 로열티 구조 |
-|------|------|-----------|
-| 독점 (Exclusive) | 라이선시만 실시 | 높은 일시금 + 로열티 |
-| 비독점 (Non-exclusive) | 복수 라이선시 | 낮은 일시금 + 로열티 |
-| 서브라이선스 | 재실시 허용 | 로열티 분배 약정 |
-| 크로스라이선스 | 상호 실시 | 로열티 프리 또는 밸런싱 |
-
-### 로열티 구조
+## 25% Rule (Rule of Thumb)
 
 ```
-일시금 (Lump-sum): 계약 시 일괄 지급
-경상 로열티 (Running): 매출/수량 기반 정기
-최소 로열티 (Minimum): 연간 최소 보장액
-마일스톤: 개발/상용화 단계별 지급
-혼합: 일시금 + 경상 조합
+Royalty = Licensee Operating Profit x 25%
+
+Rationale: 25% of patent-contributed profit goes to the patent holder
+Caveat: Courts use this only as a reference, not an absolute standard
 ```
 
-## 품질 체크리스트
+## Patent Strength Assessment
 
-| 항목 | 기준 |
-|------|------|
-| 평가 방법 | 3대 접근법 중 2개 이상 |
-| 로열티 근거 | 업종별 벤치마크 인용 |
-| 할인율 | 산출 근거 명시 |
-| 특허 강도 | 6개 항목 스코어카드 |
-| 시나리오 | 보수/기본/낙관 3개 |
-| 잔여 기간 | 만료일 기준 현재가치 |
+### Patent Scorecard
+
+| Evaluation Item | Weight | Score (1-5) |
+|----------------|--------|------------|
+| Claim Scope | 20% | Broader = higher |
+| Design-Around Difficulty | 20% | More difficult = higher |
+| Technical Importance | 15% | More critical = higher |
+| Citation Frequency | 15% | More cited = higher |
+| Remaining Term | 15% | Longer = higher |
+| Market Relevance | 15% | Greater applicability = higher |
+
+### Strength Ratings
+
+| Total Score | Rating | Strategy |
+|------------|--------|----------|
+| 4.0-5.0 | A (Core) | Active protection, licensing monetization |
+| 3.0-3.9 | B (Important) | Retain, portfolio strengthening |
+| 2.0-2.9 | C (Moderate) | Cost-efficiency review, sale consideration |
+| 1.0-1.9 | D (Weak) | Abandonment/sale recommended |
+
+## License Structure Design
+
+### License Types
+
+| Type | Description | Royalty Structure |
+|------|------------|-----------------|
+| Exclusive | Only licensee may practice | High upfront + royalty |
+| Non-exclusive | Multiple licensees | Lower upfront + royalty |
+| Sublicensable | Relicensing permitted | Royalty sharing agreement |
+| Cross-license | Mutual practice rights | Royalty-free or balancing |
+
+### Royalty Structures
+
+```
+Lump-sum: One-time payment at agreement
+Running Royalty: Periodic payment based on sales/volume
+Minimum Royalty: Annual minimum guarantee
+Milestone: Stage-based payments (development/commercialization)
+Hybrid: Lump-sum + running combination
+```
+
+## Quality Checklist
+
+| Item | Criteria |
+|------|----------|
+| Valuation Methods | At least 2 of the 3 approaches |
+| Royalty Basis | Industry benchmarks cited |
+| Discount Rate | Calculation basis specified |
+| Patent Strength | 6-item scorecard |
+| Scenarios | Conservative/Baseline/Optimistic (3 scenarios) |
+| Remaining Term | Present value based on expiration date |

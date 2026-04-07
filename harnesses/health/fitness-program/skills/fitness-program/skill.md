@@ -1,129 +1,131 @@
 ---
 name: fitness-program
-description: "운동 프로그램의 목표별 설계부터 진행 기록 템플릿까지 전 과정을 에이전트 팀이 협업하여 생성하는 풀 파이프라인. '운동 프로그램 짜줘', '헬스 루틴', '근력 프로그램', '다이어트 운동', '홈트레이닝', '주간 운동 스케줄', '벌크업 프로그램', '마라톤 훈련', '운동 루틴 추천', 'PPL 프로그램', '맨몸운동 루틴' 등 운동·트레이닝 프로그램 관련 요청에 이 스킬을 사용한다. 기존 프로그램이 있으면 분석이나 개선을 지원한다. 단, 재활치료 프로그램 처방(물리치료사 업무), 경기력 향상 약물 상담, 실시간 퍼스널 트레이닝은 이 스킬의 범위가 아니다."
+description: "A full pipeline where an agent team collaborates to generate everything from goal-based fitness program design to progress tracking templates. Use this skill for requests related to fitness and training programs such as 'create a workout program', 'gym routine', 'strength program', 'diet workout', 'home training', 'weekly workout schedule', 'bulk-up program', 'marathon training', 'workout routine recommendation', 'PPL program', 'bodyweight routine', etc. If an existing program is provided, analysis or improvement is supported. However, rehabilitation program prescription (physical therapist work), performance-enhancing drug consultation, and real-time personal training are outside the scope of this skill."
 ---
 
-# Fitness Program — 운동 프로그램 설계 풀 파이프라인
+# Fitness Program — Full Design Pipeline
 
-목표별프로그램설계→주간스케줄→운동가이드문서→식단연계표→진행기록템플릿을 에이전트 팀이 협업하여 한 번에 생성한다.
+An agent team collaborates to generate goal-based program design → weekly schedule → exercise guide document → nutrition pairing chart → progress tracking template all at once.
 
-## 실행 모드
+## Execution Modes
 
-**에이전트 팀** — 4명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 4 agents communicate directly via SendMessage and perform cross-validation.
 
-## 에이전트 구성
+## Agent Roster
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| Agent | File | Role | Type |
 |---------|------|------|------|
-| program-architect | `.claude/agents/program-architect.md` | 프로그램 설계, 주기화, 스케줄 | general-purpose |
-| exercise-guide | `.claude/agents/exercise-guide.md` | 운동 동작 설명, 폼 가이드, 대체운동 | general-purpose |
-| nutrition-linker | `.claude/agents/nutrition-linker.md` | 운동별 영양전략, 보충제, 타이밍 | general-purpose |
-| template-builder | `.claude/agents/template-builder.md` | 기록지, 추적표, 평가 양식 | general-purpose |
+| program-architect | `.claude/agents/program-architect.md` | Program design, periodization, scheduling | general-purpose |
+| exercise-guide | `.claude/agents/exercise-guide.md` | Exercise descriptions, form guides, substitutions | general-purpose |
+| nutrition-linker | `.claude/agents/nutrition-linker.md` | Nutrition strategy per workout, supplements, timing | general-purpose |
+| template-builder | `.claude/agents/template-builder.md` | Logs, tracking sheets, evaluation forms | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Orchestrator handles directly)
 
-1. 사용자 입력에서 추출한다:
-    - **목표**: 근비대/근력/다이어트/체력향상/재활
-    - **체력 수준**: 초보자/중급자/상급자, 운동 경력
-    - **가용 자원**: 주 X회, 회당 X분, 장비(헬스장/홈트/맨몸)
-    - **신체 정보** (선택): 성별, 연령, 신장, 체중
-    - **부상 이력** (선택): 부위, 현재 상태
-    - **기존 프로그램** (선택): 현재 수행 중인 프로그램
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Goal**: hypertrophy / strength / fat loss / fitness improvement / rehabilitation
+    - **Fitness level**: beginner / intermediate / advanced, training history
+    - **Available resources**: X sessions/week, X minutes/session, equipment (gym / home / bodyweight)
+    - **Physical info** (optional): sex, age, height, weight
+    - **Injury history** (optional): area, current condition
+    - **Existing program** (optional): currently running program
+2. Create a `_workspace/` directory at the project root
+3. Organize inputs and save to `_workspace/00_input.md`
+4. **Determine execution mode** based on request scope
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| Order | Task | Owner | Depends on | Output |
 |------|------|------|------|--------|
-| 1 | 프로그램 설계 + 주간 스케줄 | architect | 없음 | `01_program_design.md`, `02_weekly_schedule.md` |
-| 2a | 운동 가이드 문서 | guide | 작업 1 | `03_exercise_guide.md` |
-| 2b | 식단 연계표 | linker | 작업 1 | `04_nutrition_plan.md` |
-| 3 | 진행 기록 템플릿 | builder | 작업 1, 2a, 2b | `05_tracking_template.md` |
+| 1 | Program design + weekly schedule | architect | none | `01_program_design.md`, `02_weekly_schedule.md` |
+| 2a | Exercise guide document | guide | Task 1 | `03_exercise_guide.md` |
+| 2b | Nutrition pairing chart | linker | Task 1 | `04_nutrition_plan.md` |
+| 3 | Progress tracking template | builder | Tasks 1, 2a, 2b | `05_tracking_template.md` |
 
-작업 2a(운동 가이드)와 2b(식단 연계)는 **병렬 실행**한다.
+Tasks 2a (exercise guide) and 2b (nutrition pairing) run **in parallel**.
 
-**팀원 간 소통 흐름:**
-- architect 완료 → guide에게 운동 목록·주의사항 전달, linker에게 강도·볼륨·목표 전달, builder에게 주기화 일정 전달
-- guide 완료 → linker에게 고강도 운동 목록 전달, builder에게 기록 항목 전달
-- linker 완료 → builder에게 영양 추적 항목 전달
-- builder는 모든 정보를 통합하여 템플릿 생성. 누락 항목 발견 시 해당 에이전트에게 확인 요청
+**Inter-agent communication flow:**
+- architect completes → sends exercise list and precautions to guide, sends intensity/volume/goal to linker, sends periodization schedule to builder
+- guide completes → sends high-intensity exercise list to linker, sends logging items to builder
+- linker completes → sends nutrition tracking items to builder
+- builder integrates all information to create the template; if missing items are found, requests clarification from the relevant agent
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 프로그램-스케줄-가이드-영양-템플릿 간 일관성을 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 프로그램 설계서 — `01_program_design.md`
-    - 주간 스케줄 — `02_weekly_schedule.md`
-    - 운동 가이드 — `03_exercise_guide.md`
-    - 식단 연계표 — `04_nutrition_plan.md`
-    - 기록 템플릿 — `05_tracking_template.md`
+1. Review all files in `_workspace/`
+2. Verify consistency across program–schedule–guide–nutrition–template
+3. Report final summary to the user:
+    - Program design doc — `01_program_design.md`
+    - Weekly schedule — `02_weekly_schedule.md`
+    - Exercise guide — `03_exercise_guide.md`
+    - Nutrition pairing chart — `04_nutrition_plan.md`
+    - Tracking template — `05_tracking_template.md`
 
-## 작업 규모별 모드
+## Mode by Request Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| User Request Pattern | Execution Mode | Agents Involved |
 |----------------|----------|-------------|
-| "운동 프로그램 전체 짜줘" | **풀 파이프라인** | 4명 전원 |
-| "주간 운동 스케줄만" | **스케줄 모드** | architect 단독 |
-| "스쿼트 폼 알려줘" | **가이드 모드** | guide 단독 |
-| "벌크업 식단 연계해줘" (프로그램 있음) | **영양 모드** | linker 단독 |
-| "운동 기록지 만들어줘" | **템플릿 모드** | builder 단독 |
-| "이 프로그램 분석해줘" (기존 파일) | **분석 모드** | architect + guide |
+| "Build me a full workout program" | **Full Pipeline** | All 4 |
+| "Just the weekly workout schedule" | **Schedule Mode** | architect only |
+| "Teach me squat form" | **Guide Mode** | guide only |
+| "Link a bulk-up diet" (program exists) | **Nutrition Mode** | linker only |
+| "Make a workout log" | **Template Mode** | builder only |
+| "Analyze this program" (existing file) | **Analysis Mode** | architect + guide |
 
-**기존 파일 활용**: 사용자가 기존 프로그램을 제공하면, `_workspace/01_program_design.md`로 복사하고 architect를 건너뛴다.
+**Using existing files**: If the user provides an existing program, copy it to `_workspace/01_program_design.md` and skip the architect.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
+| Strategy | Method | Purpose |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| File-based | `_workspace/` directory | Store and share primary deliverables |
+| Message-based | SendMessage | Real-time key information transfer, revision requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{order}_{agent}_{deliverable}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
+| Error Type | Strategy |
 |----------|------|
-| 사용자 정보 부족 | 보수적(초보자) 기준으로 설계, "체력 수준 미확인" 명시 |
-| 부상 이력 | 해당 부위 운동 제외 또는 대체 + "전문의 상담 권고" |
-| 장비 제한 | 가용 장비 내 대체 운동으로 구성 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 보고서에 누락 명시 |
-| 프로그램 비일관성 | architect에게 수정 요청 (최대 2회) |
+| Insufficient user info | Design using conservative (beginner) baseline; note "fitness level unconfirmed" |
+| Injury history | Exclude or substitute exercises for the affected area + "consult a specialist" note |
+| Equipment limitations | Compose with substitute exercises within available equipment |
+| Agent failure | Retry once → if still failing, proceed without that deliverable and note the omission in the report |
+| Program inconsistency | Request revision from architect (up to 2 times) |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "헬스장 다니는 초보자인데, 근비대 목표로 주 4회 운동 프로그램 짜줘. 178cm, 75kg, 28세 남성이야"
-**기대 결과**:
-- 프로그램: 상·하체 4분할, 12주 주기화(적응→축적→강화→디로드)
-- 스케줄: 주 4회 × 60분, 운동별 세트·반복·RPE 명시
-- 가이드: 프로그램 내 모든 운동(15~20개)의 폼 설명 + 대체운동
-- 영양: 벌크업 칼로리(TDEE+300), 매크로, 운동 전후 타이밍
-- 템플릿: 일일 기록지, 주간 요약, 4주 평가 양식, 체성분 추적표
+### Normal Flow
+**Prompt**: "I'm a beginner at the gym and want a hypertrophy-focused program, 4 days a week. 178cm, 75kg, 28-year-old male."
+**Expected output**:
+- Program: upper/lower 4-day split, 12-week periodization (adaptation → accumulation → intensification → deload)
+- Schedule: 4 sessions/week × 60 min, sets/reps/RPE specified per exercise
+- Guide: form descriptions + substitutions for all exercises in the program (15–20 exercises)
+- Nutrition: bulk-up calories (TDEE+300), macros, pre/post-workout timing
+- Template: daily log, weekly summary, 4-week evaluation form, body composition tracker
 
-### 기존 파일 활용 흐름
-**프롬프트**: "지금 하고 있는 PPL 루틴인데 식단이랑 연계해줘" + 프로그램 파일 첨부
-**기대 결과**:
-- 기존 프로그램을 `_workspace/01_program_design.md`로 복사
-- 영양 모드: linker 투입, 기존 프로그램 강도 분석 후 식단 연계표 생성
+### Existing File Flow
+**Prompt**: "Here's my current PPL routine — can you pair it with a diet?" + program file attached
+**Expected output**:
+- Copy existing program to `_workspace/01_program_design.md`
+- Nutrition mode: deploy linker, analyze existing program intensity, generate nutrition pairing chart
 
-### 에러 흐름
-**프롬프트**: "허리디스크 있는데 운동 프로그램 짜줘"
-**기대 결과**:
-- 부상 이력 반영: 허리 부담 운동(데드리프트, 바벨 스쿼트) 제외
-- 코어 안정화 운동 포함, 대체 운동(레그프레스, 머신 기반) 제시
-- 모든 운동에 "허리 주의" ⚠️ 표시 + "정형외과/재활의학과 상담 권고"
-- 점진적 강도 증가를 더 보수적으로 설정
+### Error Flow
+**Prompt**: "I have a herniated disc — create a workout program for me."
+**Expected output**:
+- Injury history applied: exclude high-lumbar-load exercises (deadlifts, barbell squats)
+- Include core stabilization exercises, suggest substitutes (leg press, machine-based)
+- All exercises marked with "lumbar caution" ⚠️ + "consult orthopedics/rehabilitation medicine"
+- Progressive overload set more conservatively
 
-## 에이전트별 확장 스킬
+## Per-Agent Extended Skills
 
-| 에이전트 | 확장 스킬 | 용도 |
+| Agent | Extended Skill | Purpose |
 |---------|----------|------|
-| exercise-guide | `exercise-biomechanics` | 운동 생체역학, 근육 활성화, 대체 운동 |
-| program-architect, template-builder | `periodization-engine` | 주기화 설계, 볼륨·강도 계산, 디로드 전략 |
+| exercise-guide | `exercise-biomechanics` | Exercise biomechanics, muscle activation, substitution exercises |
+| program-architect, template-builder | `periodization-engine` | Periodization design, volume/intensity calculation, deload strategy |
+chitect, template-builder | `periodization-engine` | Periodization design, volume/intensity calculation, deload strategy |
+```

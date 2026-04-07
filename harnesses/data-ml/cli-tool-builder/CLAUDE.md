@@ -1,38 +1,37 @@
 # CLI Tool Builder Harness
 
-CLI 도구 개발의 명령설계→파서→핸들러→테스트→문서→배포설정을 에이전트 팀이 협업하여 수행하는 하네스.
+CLI tool construction: a harness where an agent team collaborates to perform command design → core development → testing → documentation → release.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── command-designer.md    — 명령 체계 설계 (서브커맨드, 옵션, 인자 구조)
-│   ├── core-developer.md      — 코어 개발 (파서, 핸들러, 비즈니스 로직)
-│   ├── test-engineer.md       — 테스트 (단위/통합/E2E, 커버리지)
-│   ├── docs-writer.md         — 문서 작성 (man page, --help, README, 예제)
-│   └── release-engineer.md    — 릴리스 (빌드, 패키징, 배포, CI/CD)
+│   ├── command-designer.md    — Command Designer (command structure, arguments, flags, UX)
+│   ├── core-developer.md     — Core Developer (implementation, I/O, configuration management)
+│   ├── test-engineer.md      — Test Engineer (unit/integration/E2E tests, fixture management)
+│   ├── docs-writer.md        — Docs Writer (man page, help text, README, tutorials)
+│   └── release-engineer.md   — Release Engineer (build, packaging, distribution, CI/CD)
 ├── skills/
 │   ├── cli-tool-builder/
-│       └── skill.md           — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md              — Orchestrator (team coordination, workflow, error handling)
 │   ├── arg-parser-generator/
-│   │   └── skill.md           — 인자 파서 생성 (서브커맨드, 언어별 보일러플레이트)
+│   │   └── skill.md              — Argument parser generation guide
 │   └── ux-linter/
-│       └── skill.md           — CLI UX 검증 (12원칙, 에러 메시지, 출력 포맷)
-└── CLAUDE.md                  — 이 파일
+│       └── skill.md              — CLI UX linting guide
+└── CLAUDE.md                  — This file
 ```
 
-## 사용법
+## Usage
 
-`/cli-tool-builder` 스킬을 트리거하거나, "CLI 도구 만들어줘" 같은 자연어로 요청한다.
+Trigger the `/cli-tool-builder` skill or use natural language like "Build a CLI tool for me."
 
-## 산출물
+## Outputs
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_command_design.md` — 명령 체계 설계서
-- `02_core_implementation.md` — 코어 구현 문서
-- `03_test_suite.md` — 테스트 스위트
-- `04_documentation.md` — 사용자 문서
-- `05_release_config.md` — 릴리스 설정
-- `src/` — CLI 소스코드
+All outputs are stored in the `_workspace/` directory:
+- `00_input.md` — User input and CLI requirements
+- `01_command_design.md` — Command structure and UX design
+- `02_src/` — Source code
+- `03_tests/` — Test suite
+- `04_docs/` — Documentation
+- `05_release_config/` — Build and release configuration

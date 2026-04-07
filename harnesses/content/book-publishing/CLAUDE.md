@@ -1,39 +1,39 @@
 # Book Publishing Harness
 
-전자책 출판의 원고편집→표지→목차→메타데이터→배포를 에이전트 팀이 협업하여 생성하는 하네스.
+A harness where an agent team collaborates to produce e-book publishing deliverables: manuscript editing, cover design, table of contents, metadata, and distribution setup.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── manuscript-editor.md     — 편집자 (구조편집, 문체교정, 일관성)
-│   ├── proofreader.md           — 교정교열자 (맞춤법, 문법, 표기통일)
-│   ├── cover-designer.md        — 표지디자이너 (표지컨셉, 이미지생성, 타이포)
-│   ├── metadata-manager.md      — 메타데이터관리자 (ISBN, 분류, 설명, 키워드, 배포)
-│   └── publishing-reviewer.md   — 출판검증자 (품질검증, 규격확인, 최종체크)
+│   ├── manuscript-editor.md     — Editor (structural editing, style correction, consistency)
+│   ├── proofreader.md           — Proofreader (spelling, grammar, notation standardization)
+│   ├── cover-designer.md        — Cover Designer (cover concept, image generation, typography)
+│   ├── metadata-manager.md      — Metadata Manager (ISBN, classification, description, keywords, distribution)
+│   └── publishing-reviewer.md   — Publishing Reviewer (quality verification, spec compliance, final check)
 ├── skills/
 │   ├── book-publishing/
-│   │   └── skill.md             — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md             — Orchestrator (team coordination, workflow, error handling)
 │   ├── developmental-editing/
-│   │   └── skill.md             — manuscript-editor 확장 (SPINE 체크, 장르별 편집, 페이싱)
+│   │   └── skill.md             — manuscript-editor extension (SPINE check, genre-specific editing, pacing)
 │   ├── cover-design-psychology/
-│   │   └── skill.md             — cover-designer 확장 (장르별 컨벤션, 타이포, AI 프롬프트)
+│   │   └── skill.md             — cover-designer extension (genre conventions, typography, AI prompts)
 │   └── book-metadata-seo/
-│       └── skill.md             — metadata-manager 확장 (BISAC/KDC, 키워드, AIDA 설명문)
-└── CLAUDE.md                    — 이 파일
+│       └── skill.md             — metadata-manager extension (BISAC/KDC, keywords, AIDA descriptions)
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/book-publishing` 스킬을 트리거하거나, "전자책 출판해줘", "원고 편집해줘" 같은 자연어로 요청한다.
+Trigger the `/book-publishing` skill, or make a natural language request such as "Publish my e-book" or "Edit my manuscript."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_edited_manuscript.md` — 편집된 원고
-- `02_proofread_report.md` — 교정교열 보고서
-- `03_cover_concept.md` — 표지 컨셉/이미지
-- `04_metadata.md` — 메타데이터/배포 설정
-- `05_review_report.md` — 리뷰 보고서
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_edited_manuscript.md` — Edited manuscript
+- `02_proofread_report.md` — Proofreading report
+- `03_cover_concept.md` — Cover concept/images
+- `04_metadata.md` — Metadata/distribution settings
+- `05_review_report.md` — Review report

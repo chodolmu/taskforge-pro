@@ -1,132 +1,132 @@
 ---
 name: bars-assessment
-description: "BARS(행동기준평가척도) 기반 평가 도구 설계 전문 스킬. rubric-designer 에이전트가 역량별 행동 앵커를 정의하고 BEI 질문, SJT 문항을 설계할 때 활용한다. 'BARS', '행동기준평가', 'BEI 면접', 'SJT', '평가센터', '행동 앵커' 등의 맥락에서 자동 적용한다. 단, 실제 평가 실시나 심리측정 검증(요인분석)은 이 스킬의 범위가 아니다."
+description: "Specialized skill for designing BARS (Behaviorally Anchored Rating Scale) assessment tools. Used by the rubric-designer agent when defining behavioral anchors per competency and designing BEI questions and SJT items. Automatically applied in contexts involving 'BARS,' 'behavioral rating scale,' 'BEI interview,' 'SJT,' 'assessment center,' or 'behavioral anchors.' Actual assessment execution or psychometric validation (factor analysis) is outside the scope of this skill."
 ---
 
-# BARS Assessment — 행동기준평가척도 설계 도구
+# BARS Assessment — Behaviorally Anchored Rating Scale Design Tool
 
-rubric-designer 에이전트의 평가 도구 설계 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the rubric-designer agent's assessment tool design capabilities.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **rubric-designer** — BARS 채점표, BEI 질문, SJT 문항 설계
+- **rubric-designer** — BARS scoring guides, BEI questions, SJT item design
 
-## BARS(Behaviorally Anchored Rating Scale) 설계
+## BARS (Behaviorally Anchored Rating Scale) Design
 
-### BARS 구성 요소
-
-```
-역량: [역량명]
-정의: [역량 정의]
-
-5점 — 탁월 (Exceptional)
-  앵커: "[구체적 행동 기술]"
-
-4점 — 우수 (Proficient)
-  앵커: "[구체적 행동 기술]"
-
-3점 — 적정 (Competent)
-  앵커: "[구체적 행동 기술]"
-
-2점 — 미흡 (Developing)
-  앵커: "[구체적 행동 기술]"
-
-1점 — 부족 (Inadequate)
-  앵커: "[구체적 행동 기술]"
-```
-
-### 행동 앵커 작성 원칙
-
-| 원칙 | 좋은 예 | 나쁜 예 |
-|------|---------|---------|
-| 관찰 가능 | "매주 팀 회고를 주도하여 3개 이상 개선안 도출" | "리더십이 뛰어남" |
-| 구체적 | "장애 발생 시 15분 내 원인 분석 보고서 작성" | "문제를 잘 해결함" |
-| 수준 간 차이 명확 | 3점: 기존 방법 적용 / 4점: 개선 방법 제안 | 수준 간 차이 모호 |
-| 빈도/품질 포함 | "분기당 2건 이상 기술 블로그 발행" | "종종 글을 씀" |
-
-### BARS 설계 5단계 프로세스
+### BARS Components
 
 ```
-1. CIT(Critical Incident Technique)
-   → 해당 직무에서 효과적/비효과적 행동 수집
+Competency: [Competency Name]
+Definition: [Competency Definition]
 
-2. 행동 유목화
-   → 수집된 행동을 역량별로 분류
+5 — Exceptional
+  Anchor: "[Specific behavioral description]"
 
-3. 앵커 배치
-   → 각 행동을 1-5점 척도에 배치
+4 — Proficient
+  Anchor: "[Specific behavioral description]"
 
-4. 전문가 검증
-   → SME 3-5명이 앵커 배치 적절성 검토
+3 — Competent
+  Anchor: "[Specific behavioral description]"
 
-5. 최종 확정
-   → Retranslation (재분류) 일치도 70%+ 앵커만 채택
+2 — Developing
+  Anchor: "[Specific behavioral description]"
+
+1 — Inadequate
+  Anchor: "[Specific behavioral description]"
 ```
 
-## BEI(Behavioral Event Interview) 질문 설계
+### Behavioral Anchor Writing Principles
 
-### 질문 구조: STAR-L
+| Principle | Good Example | Bad Example |
+|-----------|-------------|-------------|
+| Observable | "Leads weekly team retrospectives, generating 3+ improvement actions" | "Has excellent leadership" |
+| Specific | "Writes root cause analysis report within 15 min of incident" | "Solves problems well" |
+| Clear level distinction | Lv.3: Applies existing methods / Lv.4: Proposes improvements | Unclear level differences |
+| Includes frequency/quality | "Publishes 2+ technical blog posts per quarter" | "Writes occasionally" |
+
+### 5-Step BARS Design Process
 
 ```
-S - Situation: "구체적인 상황을 말씀해주세요"
-T - Task: "당시 본인의 역할/과제는 무엇이었나요?"
-A - Action: "구체적으로 어떤 행동을 취했나요?"
-R - Result: "결과는 어떠했나요? 정량적으로?"
-L - Learning: "그 경험에서 배운 것은?"
+1. CIT (Critical Incident Technique)
+   → Collect effective/ineffective behaviors for the target job
+
+2. Behavioral Categorization
+   → Classify collected behaviors by competency
+
+3. Anchor Placement
+   → Place each behavior on the 1-5 point scale
+
+4. Expert Validation
+   → 3-5 SMEs review appropriateness of anchor placement
+
+5. Final Confirmation
+   → Adopt only anchors with 70%+ retranslation agreement
 ```
 
-### 역량별 BEI 질문 예시
+## BEI (Behavioral Event Interview) Question Design
 
-| 역량 | 질문 | 평가 포인트 |
-|------|------|-----------|
-| 문제해결 | "예상치 못한 기술적 문제를 해결한 경험?" | 체계성, 창의성, 속도 |
-| 협업 | "의견이 다른 동료와 합의를 이끌어낸 경험?" | 경청, 설득, 타협점 |
-| 리더십 | "팀의 목표를 달성하기 위해 주도한 경험?" | 비전, 동기부여, 성과 |
-| 학습 민첩성 | "새로운 기술/도구를 빠르게 익힌 경험?" | 학습 전략, 적용 속도 |
-| 고객 중심 | "고객 불만을 처리한 경험?" | 공감, 해결, 후속 조치 |
+### Question Structure: STAR-L
 
-### BEI 후속 질문 (Probing)
+```
+S - Situation: "Please describe the specific situation"
+T - Task: "What was your role/assignment at that time?"
+A - Action: "What specific actions did you take?"
+R - Result: "What were the results? Can you quantify them?"
+L - Learning: "What did you learn from that experience?"
+```
 
-| 상황 | 후속 질문 |
-|------|----------|
-| 답변이 모호할 때 | "좀 더 구체적으로 말씀해주실 수 있나요?" |
-| 행동 주체가 불명확 | "그것은 팀이 한 건가요, 본인이 직접 한 건가요?" |
-| 결과가 불명확 | "그 결과를 수치로 표현하면 어떻게 되나요?" |
-| STAR 누락 | "그때 구체적으로 어떤 조치를 취했나요?" |
+### BEI Question Examples by Competency
 
-## SJT(Situational Judgment Test) 문항 설계
+| Competency | Question | Evaluation Points |
+|------------|----------|------------------|
+| Problem Solving | "Describe an experience resolving an unexpected technical issue?" | Systematic approach, creativity, speed |
+| Collaboration | "Describe an experience reaching consensus with a disagreeing colleague?" | Listening, persuasion, finding common ground |
+| Leadership | "Describe an experience where you led your team to achieve a goal?" | Vision, motivation, results |
+| Learning Agility | "Describe an experience quickly mastering a new technology/tool?" | Learning strategy, application speed |
+| Customer Focus | "Describe an experience handling a customer complaint?" | Empathy, resolution, follow-up |
 
-### SJT 문항 템플릿
+### BEI Follow-up Questions (Probing)
+
+| Situation | Follow-up Question |
+|-----------|-------------------|
+| Vague answer | "Could you be more specific?" |
+| Unclear attribution | "Did the team do that, or did you do it personally?" |
+| Unclear results | "How would you express that result numerically?" |
+| Missing STAR element | "What specific actions did you take at that point?" |
+
+## SJT (Situational Judgment Test) Item Design
+
+### SJT Item Template
 
 ```markdown
-**상황:** [직무에서 발생할 수 있는 구체적 상황 기술]
+**Situation:** [Specific scenario that could occur in the job]
 
-다음 중 가장 효과적인 행동과 가장 비효과적인 행동을 각각 선택하세요:
+Select the most effective and least effective action from the following:
 
-(A) [행동 선택지 1]
-(B) [행동 선택지 2]
-(C) [행동 선택지 3]
-(D) [행동 선택지 4]
+(A) [Action option 1]
+(B) [Action option 2]
+(C) [Action option 3]
+(D) [Action option 4]
 
-정답: 최선 = (C), 최악 = (A)
-채점: 역량 [X]의 수준 [N]에 해당
+Answer: Best = (C), Worst = (A)
+Scoring: Corresponds to competency [X] at level [N]
 ```
 
-### SJT 선택지 설계 원칙
+### SJT Option Design Principles
 
-| 원칙 | 설명 |
-|------|------|
-| 4-5개 선택지 | 모두 그럴듯하되 효과성 차이 존재 |
-| 극단 배제 | 명백한 최선/최악은 피함 |
-| 상황 현실성 | 실제 직무에서 발생 가능한 상황 |
-| 단일 역량 측정 | 하나의 문항은 하나의 역량만 |
+| Principle | Description |
+|-----------|-------------|
+| 4-5 options | All plausible but with varying effectiveness |
+| Avoid extremes | No obviously best/worst choices |
+| Realistic situations | Scenarios that could actually occur in the job |
+| Single competency | Each item measures only one competency |
 
-## 평가 방법 비교표
+## Assessment Method Comparison
 
-| 방법 | 타당도 | 비용 | 적용 상황 |
-|------|--------|------|----------|
-| BARS | 높음 | 중간 | 정기 인사 평가 |
-| BEI | 매우 높음 | 높음 | 채용, 승진 |
-| SJT | 중간-높음 | 낮음 | 대량 스크리닝 |
-| 360도 | 중간 | 중간 | 역량 개발 피드백 |
-| AC(Assessment Center) | 매우 높음 | 매우 높음 | 핵심 인재 선발 |
+| Method | Validity | Cost | Application |
+|--------|----------|------|-------------|
+| BARS | High | Medium | Regular performance evaluations |
+| BEI | Very High | High | Hiring, promotion |
+| SJT | Medium-High | Low | Large-scale screening |
+| 360-degree | Medium | Medium | Competency development feedback |
+| AC (Assessment Center) | Very High | Very High | Key talent selection |

@@ -1,104 +1,106 @@
+```markdown
 ---
 name: cross-document-linker
-description: "서비스 법무문서 간 교차 참조와 정합성을 관리하는 문서 연결 도구. 'consistency-reviewer'와 각 전문가 에이전트가 문서 간 정의·조항·용어를 일관되게 유지할 때 이 스킬의 연결 매트릭스와 점검 규칙을 반드시 활용해야 한다. '문서 간 정합성', '교차 참조 관리', '용어 통일' 등에 사용한다. 단, 개별 문서 작성 자체는 이 스킬의 범위가 아니다."
+description: "A document linking tool that manages cross-references and consistency across service legal documents. The 'consistency-reviewer' and each specialist agent MUST use this skill's linking matrix and check rules to maintain consistent definitions, clauses, and terminology across documents. Use for 'cross-document consistency', 'cross-reference management', 'terminology unification', etc. Note: authoring individual documents is outside the scope of this skill."
 ---
 
-# Cross Document Linker — 법무문서 교차 참조·정합성 관리
+# Cross Document Linker — Legal Document Cross-Reference & Consistency Management
 
-이용약관, 개인정보처리방침, 쿠키정책, 환불정책, 저작권고지 간 참조 관계와 정합성을 관리한다.
+Manages reference relationships and consistency across Terms of Service, Privacy Policy, Cookie Policy, Refund Policy, and Copyright Notice.
 
-## 문서 간 교차 참조 매트릭스
+## Cross-Reference Matrix Between Documents
 
-### 공유 정의 체계
+### Shared Definition Framework
 
-| 공유 용어 | 정의 원본 문서 | 참조 문서 | 일관성 규칙 |
-|----------|-------------|----------|-----------|
-| "서비스" | 이용약관 제2조 | 전체 문서 | 동일 정의 사용 |
-| "회원/이용자" | 이용약관 제2조 | 전체 문서 | 동일 용어 통일 |
-| "개인정보" | 처리방침 제1조 | 약관, 쿠키정책 | 처리방침 정의 준용 |
-| "쿠키" | 쿠키정책 제1조 | 처리방침 | 쿠키정책 정의 준용 |
-| "유료 서비스" | 이용약관 제X조 | 환불정책 | 동일 범위 |
-| "콘텐츠" | 이용약관 제X조 | 저작권고지 | 동일 정의 |
+| Shared Term | Source Document | Referencing Documents | Consistency Rule |
+|-------------|----------------|-----------------------|-----------------|
+| "Service" | Terms of Service Article 2 | All documents | Use identical definition |
+| "Member/User" | Terms of Service Article 2 | All documents | Unify identical terminology |
+| "Personal Information" | Privacy Policy Article 1 | Terms, Cookie Policy | Apply Privacy Policy definition |
+| "Cookie" | Cookie Policy Article 1 | Privacy Policy | Apply Cookie Policy definition |
+| "Paid Service" | Terms of Service Article X | Refund Policy | Same scope |
+| "Content" | Terms of Service Article X | Copyright Notice | Identical definition |
 
-### 조항 간 연결 관계
+### Clause Linkage Relationships
 
 ```
-[이용약관]
-├── 제X조(개인정보) → [처리방침] 전체 참조
-│   "회원의 개인정보는 별도의 개인정보처리방침에 따라 처리됩니다."
-├── 제X조(쿠키) → [쿠키정책] 전체 참조
-│   "쿠키 사용에 관한 사항은 쿠키정책을 참조하십시오."
-├── 제X조(환불) → [환불정책] 전체 참조
-│   "환불·취소에 관한 세부 사항은 환불정책에 따릅니다."
-├── 제X조(저작권) → [저작권고지] 참조
-│   "서비스 내 콘텐츠의 저작권에 관한 사항은 저작권고지를 참조하십시오."
-└── 제X조(약관 변경) → 모든 문서에 변경 절차 일관 적용
+[Terms of Service]
+├── Article X (Personal Information) → [Privacy Policy] full reference
+│   "Members' personal information is processed in accordance with the separate Privacy Policy."
+├── Article X (Cookies) → [Cookie Policy] full reference
+│   "For matters regarding cookie use, please refer to the Cookie Policy."
+├── Article X (Refunds) → [Refund Policy] full reference
+│   "Detailed matters regarding refunds and cancellations are governed by the Refund Policy."
+├── Article X (Copyright) → [Copyright Notice] reference
+│   "For matters regarding copyright of content within the Service, please refer to the Copyright Notice."
+└── Article X (Terms Amendment) → Amendment procedures applied consistently to all documents
 
-[처리방침]
-├── 수집 항목 → [이용약관] 회원가입 조항과 일치
-├── 위탁 정보 → [이용약관] 제3자 제공 조항과 일치
-└── 쿠키 관련 → [쿠키정책] 상호 참조
+[Privacy Policy]
+├── Collected items → Consistent with [Terms of Service] membership registration clauses
+├── Consignment information → Consistent with [Terms of Service] third-party provision clauses
+└── Cookie-related → Cross-reference with [Cookie Policy]
 
-[환불정책]
-├── 결제 조건 → [이용약관] 유료 서비스 조항과 일치
-└── 개인정보(환불) → [처리방침] 결제정보 보유 조항과 일치
+[Refund Policy]
+├── Payment conditions → Consistent with [Terms of Service] paid service clauses
+└── Personal information (refunds) → Consistent with [Privacy Policy] payment information retention clauses
 ```
 
-## 정합성 점검 규칙
+## Consistency Check Rules
 
-### 필수 일치 규칙 (🔴 위반 시 즉시 수정)
+### Mandatory Compliance Rules (🔴 Immediate correction required on violation)
 
-| 규칙 ID | 규칙 | 점검 대상 |
-|---------|------|----------|
-| CR-01 | 서비스명이 전체 문서에서 동일 | 모든 문서 |
-| CR-02 | 회사명·대표자·연락처 일치 | 약관, 처리방침 |
-| CR-03 | 개인정보 수집 항목이 약관과 처리방침에서 일치 | 약관↔처리방침 |
-| CR-04 | 환불 조건이 약관과 환불정책에서 일치 | 약관↔환불정책 |
-| CR-05 | 쿠키 유형이 쿠키정책과 처리방침에서 일치 | 처리방침↔쿠키정책 |
-| CR-06 | 시행일이 모든 문서에서 동일 | 모든 문서 |
-| CR-07 | 관할 법원·준거법이 약관과 처리방침에서 일치 | 약관↔처리방침 |
+| Rule ID | Rule | Targets |
+|---------|------|---------|
+| CR-01 | Service name is identical across all documents | All documents |
+| CR-02 | Company name, representative, and contact information match | Terms, Privacy Policy |
+| CR-03 | Personal information collection items match between Terms and Privacy Policy | Terms ↔ Privacy Policy |
+| CR-04 | Refund conditions match between Terms and Refund Policy | Terms ↔ Refund Policy |
+| CR-05 | Cookie types match between Cookie Policy and Privacy Policy | Privacy Policy ↔ Cookie Policy |
+| CR-06 | Effective date is identical across all documents | All documents |
+| CR-07 | Jurisdiction court and governing law match between Terms and Privacy Policy | Terms ↔ Privacy Policy |
 
-### 권고 일치 규칙 (🟡 개선 권고)
+### Recommended Compliance Rules (🟡 Improvement recommended)
 
-| 규칙 ID | 규칙 | 점검 대상 |
-|---------|------|----------|
-| CR-08 | 용어 통일 (회원/이용자/사용자 혼용 금지) | 모든 문서 |
-| CR-09 | 변경 고지 절차 동일 | 약관↔처리방침 |
-| CR-10 | 연령 기준 통일 (만 14세/만 19세) | 약관↔처리방침 |
-| CR-11 | 분쟁 해결 절차 일관 | 약관↔환불정책 |
-| CR-12 | 면책 범위 상호 모순 없음 | 약관↔각 정책 |
+| Rule ID | Rule | Targets |
+|---------|------|---------|
+| CR-08 | Unified terminology (prohibit mixed use of member/user/subscriber) | All documents |
+| CR-09 | Amendment notification procedures are identical | Terms ↔ Privacy Policy |
+| CR-10 | Age criteria unified (age 14 / age 19) | Terms ↔ Privacy Policy |
+| CR-11 | Dispute resolution procedures consistent | Terms ↔ Refund Policy |
+| CR-12 | Indemnification scope has no mutual contradictions | Terms ↔ each policy |
 
-## 정합성 보고서 출력 구조
+## Consistency Report Output Structure
 
 ```markdown
-## 문서 간 정합성 검증 보고서
+## Cross-Document Consistency Verification Report
 
-### 검증 결과 요약
-| 규칙 ID | 규칙 | 상태 | 문서 |
-|---------|------|------|------|
-| CR-01 | 서비스명 일치 | ✅ | 전체 |
-| CR-03 | 수집 항목 일치 | ❌ | 약관↔처리방침 |
+### Verification Summary
+| Rule ID | Rule | Status | Documents |
+|---------|------|--------|-----------|
+| CR-01 | Service name match | ✅ | All |
+| CR-03 | Collection items match | ❌ | Terms ↔ Privacy Policy |
 
-### 불일치 상세 (🔴)
-1. **CR-03**: 약관에서 "전화번호" 수집 명시, 처리방침에 누락
-   - 수정: 처리방침 수집 항목에 "전화번호" 추가
+### Inconsistency Details (🔴)
+1. **CR-03**: Terms of Service specifies collection of "phone number"; missing from Privacy Policy
+   - Fix: Add "phone number" to Privacy Policy collection items
 
-### 개선 권고 (🟡)
-1. **CR-08**: 약관은 "회원", 환불정책은 "이용자" 사용
-   - 수정: "회원"으로 통일
+### Improvement Recommendations (🟡)
+1. **CR-08**: Terms of Service uses "member"; Refund Policy uses "user"
+   - Fix: Unify to "member"
 ```
 
-## 버전 관리 규칙
+## Version Control Rules
 
 ```
-문서 버전 동기화:
-  - 어느 한 문서 변경 시 연관 문서 점검 필수
-  - 시행일 동일하게 설정
-  - 변경 이력표에 교차 영향 문서 기재
-  - 이전 버전 30일 이상 열람 가능 유지
+Document version synchronization:
+  - When any one document is changed, related documents must be reviewed
+  - Set identical effective dates
+  - Record cross-impact documents in the change history table
+  - Keep previous versions accessible for at least 30 days
 ```
 
-## 참고
+## References
 
-- 전자상거래법, 약관법, 개인정보보호법 교차 적용
-- 상세 점검표: `references/cross-check-templates.md` 참조
+- Cross-application of E-Commerce Act, Terms Regulation Act, and Personal Information Protection Act
+- Detailed checklist: see `references/cross-check-templates.md`
+```

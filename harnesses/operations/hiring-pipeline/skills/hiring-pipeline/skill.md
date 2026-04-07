@@ -1,124 +1,124 @@
 ---
 name: hiring-pipeline
-description: "채용 프로세스의 JD작성, 소싱, 스크리닝, 면접 설계, 평가, 오퍼까지 에이전트 팀이 협업하여 한 번에 생성하는 풀 파이프라인. '채용', '인재 채용', 'JD 작성', '직무기술서', '채용공고', '면접 질문', '면접 설계', '채용 프로세스', '소싱 전략', '스크리닝', '오퍼레터', '채용 파이프라인', 'hiring', '인재 확보' 등 채용 전반에 이 스킬을 사용한다. 단, 실제 채용 플랫폼(ATS) 연동, 급여 시스템 등록, 채용 계약서의 법적 효력 보장, 레퍼런스 체크 실행은 이 스킬의 범위가 아니다."
+description: "hiring process JDwriting, sourcing, screening, interview design, assessment, offerto agent team to Korean creation Full pipeline. 'hiring', 'talent hiring', 'JD writing', 'job description', 'hiringposting', 'interview question', 'interview design', 'hiring process', 'sourcing strategy', 'screening', 'offer', 'hiring pipeline', 'hiring', 'talent secure' etc. hiring before skill usage. However, actual hiring platform(ATS) annual, grade whensystem etc.record, hiring totalapprox.from legal capability report, reference execution is outside this skill's scope."
 ---
 
-# Hiring Pipeline — 채용 프로세스 풀 파이프라인
+# Hiring Pipeline — hiring process Full pipeline
 
-채용의 JD작성→소싱→스크리닝→면접→평가→오퍼를 에이전트 팀이 협업하여 한 번에 생성한다.
+hiring JDwriting→sourcing→screening→interview→assessment→offer An agent team collaborates to generate all deliverables at once.
 
-## 실행 모드
+## execution mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**agent team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## agent composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| agent | file | role | type |
 |---------|------|------|------|
-| jd-writer | `.claude/agents/jd-writer.md` | 직무기술서, 채용공고 | general-purpose |
-| sourcing-specialist | `.claude/agents/sourcing-specialist.md` | 채널전략, 아웃리치 | general-purpose |
-| screening-expert | `.claude/agents/screening-expert.md` | 서류평가, 과제, 스크리닝 | general-purpose |
-| interview-designer | `.claude/agents/interview-designer.md` | 구조화면접, 질문, 평가표 | general-purpose |
-| offer-coordinator | `.claude/agents/offer-coordinator.md` | 최종평가, 보상, 오퍼 | general-purpose |
+| jd-writer | `.claude/agents/jd-writer.md` | job description, hiringposting | general-purpose |
+| sourcing-specialist | `.claude/agents/sourcing-specialist.md` | channelstrategy, value | general-purpose |
+| screening-expert | `.claude/agents/screening-expert.md` | fromassessment, task, screening | general-purpose |
+| interview-designer | `.claude/agents/interview-designer.md` | structureinterview, question, evaluation form | general-purpose |
+| offer-coordinator | `.claude/agents/offer-coordinator.md` | finalassessment, report, offer | general-purpose |
 
-## 워크플로우
+## workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: preparation (Orchestrator directly perform)
 
-1. 사용자 입력에서 추출한다:
-    - **포지션**: 채용할 직무, 직급
-    - **조직 정보**: 회사명, 팀 구성, 문화
-    - **채용 조건**: 고용 형태, 근무 형태, 급여 범위
-    - **긴급도**: 채용 기한, 채용 인원
-    - **기존 자료** (선택): 기존 JD, 지원자 현황
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 자료가 있으면 `_workspace/`에 복사하고 해당 Phase를 조정한다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+ - **degree**: hiringto do job, grade
+ - ** information**: companypeople, team composition, document
+ - **hiring condition**: , , grade scope
+ - **grade**: hiring deadline, hiring personKRW
+ - **existing material** (optional): existing JD, applicant current status
+2. `_workspace/` Create the directory at the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. existing material `_workspace/` companyand applicable Phase 
+5. Determine the **execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: team composition and execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| order | task | responsible | dependency | deliverable |
 |------|------|------|------|--------|
-| 1 | JD 작성 | writer | 없음 | `_workspace/01_job_description.md` |
-| 2 | 소싱 전략 | sourcing | 작업 1 | `_workspace/02_sourcing_strategy.md` |
-| 3 | 스크리닝 설계 | screening | 작업 1 | `_workspace/03_screening_framework.md` |
-| 4 | 면접 설계 | interview | 작업 1, 3 | `_workspace/04_interview_design.md` |
-| 5 | 평가·오퍼 | offer | 작업 1, 2, 3, 4 | `_workspace/05_evaluation_offer.md` |
+| 1 | JD writing | writer | None | `_workspace/01_job_description.md` |
+| 2 | sourcing strategy | sourcing | task 1 | `_workspace/02_sourcing_strategy.md` |
+| 3 | screening design | screening | task 1 | `_workspace/03_screening_framework.md` |
+| 4 | interview design | interview | task 1, 3 | `_workspace/04_interview_design.md` |
+| 5 | assessment·offer | offer | task 1, 2, 3, 4 | `_workspace/05_evaluation_offer.md` |
 
-작업 2(소싱)와 3(스크리닝)은 **병렬 실행**한다. 둘 다 작업 1(JD)에만 의존한다.
+task 2(sourcing) and 3(screening) ** execution**. task 1(JD) only dependency.
 
-**팀원 간 소통 흐름:**
-- writer 완료 → sourcing에게 타깃 프로필·EVP, screening에게 역량·평가기준 전달
-- sourcing 완료 → offer에게 시장 보상 수준 전달
-- screening 완료 → interview에게 심층 확인 필요 역량 전달
-- interview 완료 → offer에게 평가표 구조·채용 추천 기준 전달
-- offer는 전체 파이프라인을 교차 검증, 불일치 발견 시 수정 요청 (최대 2회)
+**teamKRW between flow:**
+- writer complete → sourcingto target ·EVP, screeningto competency·assessmentstandard deliver
+- sourcing complete → offerto market report level deliver
+- screening complete → interviewto confirm needed competency deliver
+- interview complete → offerto evaluation form structure·hiring recommendation standard deliver
+- offer overall pipeline cross-verification, dayvalue findings when revision request (versus 2)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: integration and final deliverable
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. offer의 정합성 검증 결과를 반영한다
-3. 최종 요약을 사용자에게 보고한다
+1. `_workspace/` Verify all files in the directory
+2. offer consistency verify result reflected
+3. Report the final summary to the user
 
-## 작업 규모별 모드
+## task scaleby mode
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| user request pattern | execution mode | deploy agent |
 |----------------|----------|-------------|
-| "채용 프로세스 전체 설계해줘" | **풀 파이프라인** | 5명 전원 |
-| "JD만 써줘" | **JD 모드** | writer 단독 |
-| "면접 질문 만들어줘" | **면접 모드** | writer + interview |
-| "이 JD로 소싱 전략 짜줘" (기존 JD) | **소싱 모드** | sourcing 단독 |
-| "채용 스크리닝 기준 만들어줘" | **스크리닝 모드** | writer + screening |
+| "hiring process overall designplease do" | **Full pipeline** | 5people beforeKRW |
+| "JD only " | **JD mode** | writer |
+| "interview question create it" | **interview mode** | writer + interview |
+| " JD sourcing strategy " (existing JD) | **sourcing mode** | sourcing |
+| "hiring screening standard create it" | **screening mode** | writer + screening |
 
-## 데이터 전달 프로토콜
+## data deliver protocol
 
-| 전략 | 방식 | 용도 |
+| strategy | method | also |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| File-based | `_workspace/` | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information transfer, revision requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{}_{agent}_{deliverable}.{extensionspecialist}`
 
-## 에러 핸들링
+## error handling
 
-| 에러 유형 | 전략 |
+| error type | strategy |
 |----------|------|
-| 직무 정보 부족 | writer가 표준 JD 템플릿 + 맞춤화 가이드 제공 |
-| 급여 정보 없음 | sourcing이 시장 벤치마크 조사, 3단계 범위 제안 |
-| 웹 검색 실패 | 일반 지식 기반 JD/소싱 전략, "[시장 데이터 미반영]" 명시 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행 |
-| 정합성 불일치 | offer가 수정 요청 → 재작업 (최대 2회) |
+| job information insufficient | writer tablelevel JD template + guide provide |
+| grade information None | sourcing market value research, 3stage scope proposal |
+| web search failure | day degree based JD/sourcing strategy, "[market data un-reflected]" specify |
+| agent failure | Retry once -> proceed without that deliverable |
+| consistency dayvalue | offer revision request → re-task (versus 2) |
 
-## 테스트 시나리오
+## test scenario
 
-### 정상 흐름
-**프롬프트**: "시니어 백엔드 개발자 1명을 채용하려고 해. 연봉 8천~1억, 원격근무 가능, 한 달 안에 채용하고 싶어."
-**기대 결과**:
-- JD: 시니어 백엔드 역량 5개, 매력적인 채용공고, 평가 기준
-- 소싱: LinkedIn Boolean 쿼리, 아웃리치 템플릿 3종, 채널별 전략
-- 스크리닝: 코딩 테스트 + 시스템 설계 과제, 전화 스크리닝 5문항
-- 면접: 기술 면접(라이브코딩) + 문화 면접, STAR 질문 10개+
-- 오퍼: 시장 벤치마크 대비 보상, 오퍼레터, 협상 가이드
+### flow
+**Prompt**: "when developmentspecialist 1people hiring . salary 8~100M, KRW possible, Korean plan hiringand ."
+**expected result**:
+- JD: when competency 5items, capabilityqualityperson hiringposting, assessment standard
+- sourcing: LinkedIn Boolean , value template 3, channelby strategy
+- screening: test + whensystem design task, before screening 5document
+- interview: technical interview + document interview, STAR question 10items+
+- offer: market value versus report, offer, negotiation guide
 
-### 부분 요청 흐름
-**프롬프트**: "이 JD로 면접 질문만 만들어줘" + JD 파일
-**기대 결과**:
-- 면접 모드 (writer + interview)
-- 기존 JD 기반 역량 추출 후 구조화 면접 질문 설계
-- writer는 역량 기준 초안만 보강
+### departmentminute request flow
+**Prompt**: " JD interview question only create it" + JD file
+**expected result**:
+- interview mode (writer + interview)
+- existing JD based competency after structure interview question design
+- writer competency standard plan only report
 
-### 에러 흐름
-**프롬프트**: "채용해야 하는데 어떤 직무인지 잘 모르겠어"
-**기대 결과**:
-- writer가 업무 내용/목표 질문으로 직무 분석 시작
-- 유사 직무 3개 벤치마킹 제안
-- 최소한의 정보로 초안 JD 작성 후 사용자 확인 요청
+### error flow
+**Prompt**: "hiring jobpersondegree "
+**expected result**:
+- writer work content/goal questionas job analysis whenwork
+- company job 3items value proposal
+- minimumKorean information plan JD writing after user confirm request
 
-## 에이전트별 확장 스킬
+## agentby extension skill
 
-| 확장 스킬 | 경로 | 대상 에이전트 | 역할 |
+| extension skill | | target agent | role |
 |----------|------|-------------|------|
-| competency-model | `.claude/skills/competency-model/skill.md` | jd-writer, screening-expert | 역량 정의, 수준 체계, 스크리닝 매트릭스 |
-| interview-scorecard | `.claude/skills/interview-scorecard/skill.md` | interview-designer | 구조화 면접, BEI 질문 뱅크, 편향 방지 |
+| competency-model | `.claude/skills/competency-model/skill.md` | jd-writer, screening-expert | competency definition, level total, screening matrix |
+| interview-scorecard | `.claude/skills/interview-scorecard/skill.md` | interview-designer | structure interview, BEI question , degree |

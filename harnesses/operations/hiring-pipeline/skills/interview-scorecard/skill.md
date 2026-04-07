@@ -1,142 +1,142 @@
 ---
 name: interview-scorecard
-description: "구조화 면접 설계 및 평가표 프레임워크. interview-designer 에이전트가 면접 프로세스를 설계하고 평가 기준을 표준화할 때 참조. '면접 설계', '평가표', '구조화 면접' 요청 시 사용. 단, 면접 실시나 합격 판정은 범위 밖."
+description: "structure interview design and evaluation form framework. interview-designer agent interview process designand assessment standard tablelevelto do when reference. 'interview design', 'evaluation form', 'structure interview' request when usage. However, interview actualwhen pass scope outside."
 ---
 
-# Interview Scorecard — 구조화 면접 설계
+# Interview Scorecard — structure interview design
 
-interview-designer 에이전트의 면접 프로세스 설계 역량 강화.
+interview-designer agent interview process design competency .
 
-## 구조화 면접 원칙
+## structure interview principle
 
-### 비구조화 vs 구조화
+### structure vs structure
 
-| 항목 | 비구조화 | 구조화 |
+| item | structure | structure |
 |------|---------|--------|
-| 질문 | 면접관 자유 | 사전 설계 |
-| 평가 | 직감/인상 | 스코어카드 |
-| 예측 타당도 | 0.2~0.4 | 0.5~0.7 |
-| 법적 리스크 | 높음 | 낮음 |
-| 면접관 편향 | 높음 | 최소화 |
+| question | interviewer specialist | companybefore design |
+| assessment | /person | scorecard |
+| example also | 0.2~0.4 | 0.5~0.7 |
+| legal risk | High | Low |
+| interviewer | High | minimization |
 
-### 면접 유형별 용도
+### interview typeby purpose
 
-| 유형 | 목적 | 시간 | 역량 평가 |
+| type | purpose | time | competency assessment |
 |------|------|------|----------|
-| 행동 면접 (BEI) | 과거 행동 기반 역량 | 45~60분 | 소프트 스킬 |
-| 기술 면접 | 기술적 역량 | 60~90분 | 하드 스킬 |
-| 케이스 면접 | 문제 해결력 | 45~60분 | 분석/논리 |
-| 문화 면접 | 조직 적합성 | 30~45분 | 가치관/태도 |
-| 프레젠테이션 | 커뮤니케이션 | 30~45분 | 발표/설득 |
+| action interview (BEI) | action based competency | 45~60minute | skill |
+| technical interview | technicalquality competency | 60~90minute | skill |
+| interview | problem capability | 45~60minute | analysis/ |
+| document interview | qualitynature | 30~45minute | value/ also |
+| presentation | communication | 30~45minute | presentation/persuasion |
 
-## BEI (Behavioral Event Interview) 질문 설계
+## BEI (Behavioral Event Interview) question design
 
-### STAR 질문 공식
+### STAR question official
 
 ```
-S (Situation): 상황 질문 → 구체적 맥락
-T (Task): 과제 → 본인의 역할
-A (Action): 행동 → 구체적으로 무엇을 했는가
-R (Result): 결과 → 정량적 성과, 교훈
+S (Situation): situation question → specific context
+T (Task): task → person role
+A (Action): action → specificas 
+R (Result): result → quality performance, 
 
-질문 패턴:
-"[역량]이 필요했던 구체적인 경험을 이야기해 주세요.
- 당시 상황은 어떠했고, 어떤 역할이었으며,
- 구체적으로 어떤 행동을 취했고, 결과는 어떠했나요?"
+question pattern:
+"[competency] needed specificperson basis weektax.
+ when situation , role,
+ specificas action , result ?"
 ```
 
-### 역량별 질문 뱅크 (예시)
+### competencyby question (examplewhen)
 
-| 역량 | 질문 | 후속 질문 |
+| competency | question | afterwithin question |
 |------|------|----------|
-| 문제해결 | "가장 어려웠던 기술적 문제를 해결한 경험은?" | "대안은 뭐가 있었나요?", "왜 그 방법을 선택했나요?" |
-| 협업 | "팀원과 의견 충돌이 있었던 경험은?" | "어떻게 해결했나요?", "결과는?" |
-| 리더십 | "팀을 이끌어 목표를 달성한 경험은?" | "어떤 어려움이 있었나요?", "팀원 반응은?" |
-| 학습 | "빠르게 새로운 기술을 배워야 했던 경험은?" | "어떻게 학습했나요?", "얼마나 걸렸나요?" |
+| problem | " technicalquality problem Korean ?" | "versusplan ?", " method optional?" |
+| | "teamKRW and ?" | " ?", "result?" |
+| leadership | "team goal natureKorean ?" | " ?", "teamKRW ?" |
+| learning | " technical ?" | " learning?", " ?" |
 
-## 평가 스코어카드 설계
+## assessment scorecard design
 
-### 4점 척도 (추천)
+### 4point also (recommendation)
 
-| 점수 | 등급 | 기준 |
+| score | etc.grade | standard |
 |------|------|------|
-| 4 | 탁월 (Strong Hire) | 기대 초과, 즉시 임팩트 |
-| 3 | 적합 (Hire) | 기대 충족, 안정적 수행 |
-| 2 | 부족 (Lean No) | 부분 충족, 리스크 존재 |
-| 1 | 미달 (No Hire) | 기준 미달 |
+| 4 | month (Strong Hire) | expected exceeding, i.e.when |
+| 3 | quality (Hire) | expected , planquality perform |
+| 2 | insufficient (Lean No) | departmentminute , risk re- |
+| 1 | un- (No Hire) | standard un- |
 
-### 스코어카드 템플릿
+### scorecard template
 
 ```markdown
-# 면접 평가표
+# interview evaluation form
 
-- 후보자: _________ | 직무: _________
-- 면접관: _________ | 일시: _________
+- candidate: _________ | job: _________
+- interviewer: _________ | daywhen: _________
 
-## 역량별 평가
+## competencyby assessment
 
-| 역량 | 질문 | 답변 요약 | 점수(1~4) |
+| competency | question | answer summary | score(1~4) |
 |------|------|----------|-----------|
-| [역량 1] | [질문] | [핵심 내용] | [ ] |
-| [역량 2] | [질문] | [핵심 내용] | [ ] |
-| [역량 3] | [질문] | [핵심 내용] | [ ] |
+| [competency 1] | [question] | [core content] |  |
+| [competency 2] | [question] | [core content] |  |
+| [competency 3] | [question] | [core content] |  |
 
-## 종합 평가
-- 총점: __ / __ (평균: __.__)
-- 종합 판정: □ Strong Hire □ Hire □ Lean No □ No Hire
-- 강점: 
-- 우려사항: 
-- 특이사항: 
+## comprehensive assessment
+- totalpoint: __ / __ (pyeongbalanced: __.__)
+- comprehensive : □ Strong Hire □ Hire □ Lean No □ No Hire
+- strength: 
+- matters: 
+- matters: 
 
-서명: _________ 일시: _________
+frompeople: _________ daywhen: _________
 ```
 
-## 면접관 편향 방지
+## interviewer degree
 
-### 주요 편향과 대응
+### key and response
 
-| 편향 | 설명 | 대응 |
+| | description | response |
 |------|------|------|
-| 후광 효과 | 첫인상에 끌림 | 역량별 독립 평가 |
-| 유사성 편향 | 나와 비슷한 사람 선호 | 다양한 면접관 패널 |
-| 확증 편향 | 첫 판단 확인만 추구 | STAR 질문 강제 |
-| 최신성 편향 | 마지막 후보 기억 | 즉시 스코어 기록 |
-| 관대화/엄격화 | 점수 편향 | 앵커 예시 제공 |
+| after and | person | competencyby assessment |
+| companynature | and Korean company | Korean interviewer |
+| | judgment confirm only | STAR question |
+| nature | degree afterreport basis00M | i.e.when score basisrecord |
+| versus/ | score | examplewhen provide |
 
-### 면접관 가이드라인
+### interviewer guideperson
 
 ```
 DO:
-- 모든 후보에게 동일 질문
-- 답변 중 메모 (직후 스코어)
-- STAR 후속 질문으로 깊이 파악
-- 침묵 허용 (10초 대기)
+- all afterreportto day question
+- answer during (after score)
+- STAR afterwithin questionas identify
+- (10 versusbasis)
 
 DON'T:
-- 유도 질문 ("당연히 X 하시죠?")
-- 개인적 질문 (가족, 종교, 정치)
-- 면접 중 합격/불합격 언급
-- 다른 후보와 비교 언급
+- also question ("annual X when?")
+- itemspersonquality question (, , value)
+- interview during pass/fail grade
+- afterreport and comparison grade
 ```
 
-## 채용 파이프라인 전환율 벤치마크
+## hiring pipeline beforeexchange value
 
-| 단계 | 전환율 | 산출 |
+| stage | beforeexchange | calculation |
 |------|--------|------|
-| 지원 → 서류 통과 | 20~30% | 100명 → 25명 |
-| 서류 → 1차 면접 | 40~60% | 25명 → 12명 |
-| 1차 → 2차 면접 | 40~60% | 12명 → 6명 |
-| 2차 → 최종 면접 | 50~70% | 6명 → 3명 |
-| 최종 → 오퍼 | 60~80% | 3명 → 2명 |
-| 오퍼 → 수락 | 70~90% | 2명 → 1.5명 |
+| degreeKRW → from and | 20~30% | 100people → 25people |
+| from → 1gap interview | 40~60% | 25people → 12people |
+| 1gap → 2gap interview | 40~60% | 12people → 6people |
+| 2gap → final interview | 50~70% | 6people → 3people |
+| final → offer | 60~80% | 3people → 2people |
+| offer → number | 70~90% | 2people → 1.5people |
 
-## 품질 체크리스트
+## quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| 구조화 | 질문 사전 설계, 동일 적용 |
-| STAR | 모든 BEI 질문 STAR 구조 |
-| 스코어카드 | 4점 척도, 앵커 예시 |
-| 편향 방지 | 면접관 가이드 배포 |
-| 후속 질문 | 역량당 2~3개 준비 |
-| 기록 | 즉시 기록, 24시간 내 제출 |
+| structure | question companybefore design, day applied |
+| STAR | all BEI question STAR structure |
+| scorecard | 4point , examplewhen |
+| degree | interviewer guide deployment |
+| afterwithin question | competency 2~3items preparation |
+| basisrecord | i.e.when basisrecord, 24time within |

@@ -1,141 +1,141 @@
 ---
 name: decision-frameworks
-description: "의사결정 프레임워크 라이브러리. framework-designer 에이전트가 회의용 의사결정 구조를 설계할 때 참조. '의사결정 매트릭스', 'DACI', '옵션 평가' 요청 시 사용. 단, 실제 투표 시스템이나 의사결정 자동화 도구 구축은 범위 밖."
+description: "decision-making framework library. framework-designer agent meeting decision-making structure designto do when reference. 'decision-making matrix', 'DACI', 'option assessment' request when usage. However, actual table whensystem decision-making specialist tool building scope outside."
 ---
 
-# Decision Frameworks — 의사결정 프레임워크 라이브러리
+# Decision Frameworks — decision-making framework library
 
-framework-designer 에이전트의 의사결정 구조 설계를 강화하는 프레임워크 모음.
+framework-designer agent decision-making structure design framework .
 
-## 의사결정 유형별 프레임워크 매핑
+## decision-making typeby framework mapping
 
-| 의사결정 유형 | 복잡도 | 추천 프레임워크 | 적합 회의 |
+| decision-making type | also | recommendation framework | quality meeting |
 |-------------|--------|---------------|----------|
-| 양자택일 | 낮음 | 찬반 테이블 | 10분 스탠드업 |
-| 다중 옵션 선택 | 중간 | 가중 평가 매트릭스 | 30분 의사결정 |
-| 전략적 방향 | 높음 | DACI + 시나리오 | 60분 전략 회의 |
-| 자원 배분 | 높음 | 우선순위 매트릭스 | 분기 계획 |
-| 리스크 판단 | 높음 | 기대값 분석 | 임원 보고 |
+| specialistday | Low | | 10minute |
+| during option optional | duringbetween | during assessment matrix | 30minute decision-making |
+| strategyquality direction | High | DACI + scenario | 60minute strategy meeting |
+| specialistKRW allocation | High | priority matrix | minutebasis plan |
+| risk judgment | High | expected analysis | KRW reporting |
 
-## DACI 프레임워크
+## DACI framework
 
-| 역할 | 설명 | 인원 |
+| role | description | personKRW |
 |------|------|------|
-| **D**river | 의사결정 프로세스 주도 | 1명 |
-| **A**pprover | 최종 승인 | 1명 |
-| **C**ontributor | 의견/정보 제공 | N명 |
-| **I**nformed | 결과 통보 대상 | N명 |
+| **D**river | decision-making process week also | 1people |
+| **A**pprover | final person | 1people |
+| **C**ontributor | /information provide | Npeople |
+| **I**nformed | result report target | Npeople |
 
-### DACI 문서 템플릿
+### DACI document template
 
 ```markdown
-## 의사결정: [제목]
-- 기한: 2025-01-31
-- Driver: [이름/직함]
-- Approver: [이름/직함]
-- Contributors: [이름 목록]
-- Informed: [이름 목록]
+## decision-making: [title]
+- deadline: 2025-01-31
+- Driver: [name/]
+- Approver: [name/]
+- Contributors: [name list]
+- Informed: [name list]
 
-### 배경
-[왜 이 결정이 필요한가]
+### background
+[ decision neededKorean]
 
-### 옵션
-| 옵션 | 설명 | 장점 | 단점 | 비용 | 일정 |
+### option
+| option | description | advantage | disadvantage | cost | schedule |
 |------|------|------|------|------|------|
 | A | ... | ... | ... | ... | ... |
 | B | ... | ... | ... | ... | ... |
 
-### 권고안
-[Driver의 권고 및 근거]
+### plan
+[Driver and basis]
 
-### 결정
-[Approver의 최종 결정] — 일시: ____
+### decision
+[Approver final decision] — daywhen: ____
 ```
 
-## 가중 평가 매트릭스 (Weighted Scoring)
+## during assessment matrix (Weighted Scoring)
 
-### 설계 절차
+### design procedure
 
 ```
-1. 평가 기준 정의 (5~7개)
-2. 가중치 할당 (합계 100%)
-3. 각 옵션을 기준별 1~5점 평가
-4. 가중 점수 = 점수 × 가중치
-5. 총점 비교 → 최고점 옵션 선택
+1. assessment standard (5~7items)
+2. duringvalue to do (total 100%)
+3. each option standardby 1~5point assessment
+4. during score = score × duringvalue
+5. totalpoint comparison → point option optional
 ```
 
-### 템플릿
+### template
 
-| 기준 | 가중치 | 옵션 A | 옵션 B | 옵션 C |
+| standard | duringvalue | option A | option B | option C |
 |------|--------|--------|--------|--------|
-| 비용 효율 | 30% | 4 (1.2) | 3 (0.9) | 5 (1.5) |
-| 구현 난이도 | 25% | 3 (0.75) | 5 (1.25) | 2 (0.5) |
-| 전략 적합성 | 25% | 5 (1.25) | 3 (0.75) | 4 (1.0) |
-| 리스크 | 20% | 4 (0.8) | 4 (0.8) | 3 (0.6) |
-| **총점** | **100%** | **4.0** | **3.7** | **3.6** |
+| cost | 30% | 4 (1.2) | 3 (0.9) | 5 (1.5) |
+| implementation difficulty | 25% | 3 (0.75) | 5 (1.25) | 2 (0.5) |
+| strategy qualitynature | 25% | 5 (1.25) | 3 (0.75) | 4 (1.0) |
+| risk | 20% | 4 (0.8) | 4 (0.8) | 3 (0.6) |
+| **totalpoint** | **100%** | **4.0** | **3.7** | **3.6** |
 
-## 2x2 우선순위 매트릭스
+## 2x2 priority matrix
 
-### Eisenhower 매트릭스
+### Eisenhower matrix
 
 ```
-            긴급함
-        높음         낮음
-  ┌───────────┬───────────┐
-높│  DO NOW   │  SCHEDULE │
-음│  즉시 실행  │  일정 수립  │
-  ├───────────┼───────────┤
-중│  DELEGATE  │  ELIMINATE│
-요│  위임      │  제거      │
-도├───────────┴───────────┤
-낮│                       │
-음│                       │
-  └───────────────────────┘
+ grade
+ High Low
+ ┌───────────┬───────────┐
+│ DO NOW │ SCHEDULE │
+│ i.e.when execution │ schedule establish │
+ ├───────────┼───────────┤
+during│ DELEGATE │ ELIMINATE│
+│ │ │
+├───────────┴───────────┤
+│ │
+│ │
+ └───────────────────────┘
 ```
 
-### Impact-Effort 매트릭스
+### Impact-Effort matrix
 
-| | 노력 낮음 | 노력 높음 |
+| | capability Low | capability High |
 |---|---------|---------|
-| **임팩트 높음** | Quick Win (즉시) | Major Project (계획) |
-| **임팩트 낮음** | Fill-in (여유 시) | Thankless Task (폐기) |
+| ** High** | Quick Win (i.e.when) | Major Project (plan) |
+| ** Low** | Fill-in ( when) | Thankless Task (basis) |
 
-## 기대값 분석 (Expected Value)
+## expected analysis (Expected Value)
 
 ```
-기대값 = Σ (결과값 × 확률)
+expected = Σ (result × probability)
 
-옵션 A:
-  성공(70%): +500만원 → 350만원
-  실패(30%): -200만원 → -60만원
-  기대값: +290만원
+option A:
+ nature(70%): +5000,000 KRW → 3500,000 KRW
+ failure(30%): -2000,000 KRW → -600,000 KRW
+ expected: +2900,000 KRW
 
-옵션 B:
-  성공(90%): +200만원 → 180만원
-  실패(10%): -50만원 → -5만원
-  기대값: +175만원
+option B:
+ nature(90%): +2000,000 KRW → 1800,000 KRW
+ failure(10%): -500,000 KRW → -50,000 KRW
+ expected: +1750,000 KRW
 
-→ 기대값 기준 옵션 A 선택
-→ 단, 리스크 허용도가 낮으면 옵션 B 선택 (최대 손실 고려)
+→ expected standard option A optional
+→ However, risk also option B optional (versus loss )
 ```
 
-## 합의 도출 방법
+## derive method
 
-| 방법 | 설명 | 적합 상황 |
+| method | description | quality situation |
 |------|------|----------|
-| Fist of Five | 1~5 동시 표시 | 빠른 합의 확인 |
-| Dot Voting | 각자 스티커 배분 | 다수 옵션 필터링 |
-| Roman Voting | 👍/👎/✊ 동시 | 찬반 확인 |
-| Gradients of Agreement | 8단계 동의 스펙트럼 | 미묘한 입장 차이 |
-| Decision Sprint | 타임박스 토론+투표 | 시간 제한 |
+| Fist of Five | 1~5 when tablewhen | confirm |
+| Dot Voting | eachspecialist allocation | number option |
+| Roman Voting | 👍/👎/✊ when | confirm |
+| Gradients of Agreement | 8stage | un-Korean gap |
+| Decision Sprint | debate+table | time limitation |
 
-## 품질 체크리스트
+## quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| 역할 정의 | DACI 또는 동등 역할 배정 |
-| 평가 기준 | 사전 합의된 기준 5~7개 |
-| 옵션 수 | 2~5개 (초과 시 사전 필터링) |
-| 데이터 근거 | 각 옵션의 정량적 근거 |
-| 합의 방법 | 사전 합의된 의결 방식 |
-| 기한 | 의사결정 데드라인 명시 |
+| role | DACI or etc. role |
+| assessment standard | companybefore done standard 5~7items |
+| option number | 2~5items (exceeding when companybefore ) |
+| data basis | each option quality basis |
+| method | companybefore done method |
+| deadline | decision-making person specify |

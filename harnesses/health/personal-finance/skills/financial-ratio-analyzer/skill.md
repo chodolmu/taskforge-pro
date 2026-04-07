@@ -1,165 +1,165 @@
 ---
 name: financial-ratio-analyzer
-description: "개인 재무 건전성을 진단하는 재무 비율 분석 도구. 'financial-analyst'와 'finance-reviewer' 에이전트가 재무 상태를 진단하고 수치를 검증할 때 이 스킬의 재무 비율 공식, 건전성 기준, 진단 프레임워크를 반드시 활용해야 한다. '재무 건전성 진단', '재무 비율 분석', '가계 재무 점검' 등에 사용한다. 단, 투자 전략이나 절세 방안은 이 스킬의 범위가 아니다."
+description: "itemsperson financial casebeforenature diagnosis financial ratio analysis tool. 'financial-analyst' and 'finance-reviewer' agent financial status diagnosisand figure verifyto do when this skill's financial ratio official, casebeforenature standard, diagnosis framework must be utilized. 'financial casebeforenature diagnosis', 'financial ratio analysis', 'total financial inspection' etc. However, investment strategy tax savings approach is outside this skill's scope."
 ---
 
-# Financial Ratio Analyzer — 개인 재무 비율 분석기
+# Financial Ratio Analyzer — itemsperson financial ratio analysisbasis
 
-개인/가구의 재무 건전성을 핵심 비율로 진단하고, 개선 방향을 제시한다.
+itemsperson/ financial casebeforenature core ratio diagnosisand, improvement direction present.
 
-## 핵심 재무 비율 8종
+## core financial ratio 8
 
-### 1. 저축률 (Savings Rate)
-
-```
-저축률 = (월 저축액 + 투자금) / 세후 월 소득 × 100
-
-양호: 20%+    적정: 10-20%    위험: 10% 미만
-
-세부 기준:
-  20대: 15%+ (자산 형성기)
-  30대: 20%+ (내 집 마련 준비)
-  40대: 25%+ (교육비·은퇴 준비)
-  50대: 30%+ (은퇴 집중)
-```
-
-### 2. 소비성향 (Consumption Ratio)
+### 1. savingsrate (Savings Rate)
 
 ```
-소비성향 = 월 소비 지출 / 세후 월 소득 × 100
+savingsrate = (month savings + investment) / taxafter month × 100
 
-양호: 60% 이하    적정: 60-80%    위험: 80% 초과
+: 20%+ quality: 10-20% risk: 10% less than
 
-50/30/20 규칙:
-  필수 지출(주거·식비·교통): 50% 이하
-  선택 지출(여가·쇼핑): 30% 이하
-  저축·투자·부채상환: 20% 이상
+taxdepartment standard:
+ 20versus: 15%+ (asset naturebasis)
+ 30versus: 20%+ (within preparation)
+ 40versus: 25%+ (training·retirement preparation)
+ 50versus: 30%+ (retirement during)
 ```
 
-### 3. 비상자금 비율 (Emergency Fund)
+### 2. nature (Consumption Ratio)
 
 ```
-비상자금 비율 = 유동자산 / 월 필수 지출
+nature = month expense / taxafter month × 100
 
-양호: 6개월+    적정: 3-6개월    위험: 3개월 미만
+: 60% or less quality: 60-80% risk: 80% exceeding
 
-유동자산: 보통예금 + CMA + MMF (즉시 현금화 가능)
-필수 지출: 주거비 + 식비 + 교통비 + 보험료 + 통신비 + 대출상환
+50/30/20 rule:
+ required expense(week··): 50% or less
+ optional expense(·): 30% or less
+ savings·investment·debtexchange: 20% or more
 ```
 
-### 4. 부채비율 (Debt-to-Asset)
+### 3. specialist ratio (Emergency Fund)
 
 ```
-부채비율 = 총 부채 / 총 자산 × 100
+specialist ratio = asset / month required expense
 
-양호: 40% 이하    적정: 40-60%    위험: 60% 초과
+: 6months+ quality: 3-6months risk: 3months less than
 
-포함 부채: 주택담보대출, 신용대출, 학자금, 카드론, 할부
-포함 자산: 부동산, 금융자산, 퇴직금, 보증금 등
+asset: reportexample + CMA + MMF (i.e.when current possible)
+required expense: week + + + insurance + communication + versusexchange
 ```
 
-### 5. 총부채상환비율 (DTI)
+### 4. debtratio (Debt-to-Asset)
 
 ```
-DTI = 연간 부채 원리금 상환액 / 연 소득 × 100
+debtratio = total debt / total asset × 100
 
-양호: 30% 이하    적정: 30-40%    위험: 40% 초과
+: 40% or less quality: 40-60% risk: 60% exceeding
 
-은행 대출 심사 기준:
-  주택담보대출 DTI 한도: 40-60% (지역별)
-  DSR(모든 대출): 40% 이내
+included debt: weekreportversus, creditversus, specialist, , to dodepartment
+included asset: department, asset, , report etc.
 ```
 
-### 6. 주거비 부담률 (Housing Cost Ratio)
+### 5. totaldebtexchangeratio (DTI)
 
 ```
-주거비 부담률 = (월세 또는 대출이자+관리비) / 세후 월 소득 × 100
+DTI = annualbetween debt KRW exchange / annual × 100
 
-양호: 25% 이하    적정: 25-30%    위험: 30% 초과
+: 30% or less quality: 30-40% risk: 40% exceeding
 
-포함 항목: 월세/대출이자, 관리비, 주거 보험
-미포함: 원금 상환분 (자산 형성이므로)
+ versus company standard:
+ weekreportversus DTI Korean: 40-60% (degreeby)
+ DSR(all versus): 40% within
 ```
 
-### 7. 보험 적정성 비율
+### 6. week departmentrate (Housing Cost Ratio)
 
 ```
-보험료 비율 = 월 보험료 합계 / 세후 월 소득 × 100
+week departmentrate = (monthtax or versusinterest+management) / taxafter month × 100
 
-양호: 7-10%    과다: 15% 초과    부족: 5% 미만
+: 25% or less quality: 25-30% risk: 30% exceeding
 
-권장 보장 범위:
-  사망보험금: 연 소득 × 5-10배
-  의료/실손: 필수
-  3대 질병: 진단금 3,000만원+
+included item: monthtax/versusinterest, management, week insurance
+un-included: KRW exchangeminute (asset nature)
 ```
 
-### 8. 투자자산 비율
+### 7. insurance qualitynature ratio
 
 ```
-투자자산 비율 = (주식+펀드+ETF+채권) / 총 금융자산 × 100
+insurance ratio = month insurance total / taxafter month × 100
 
-권장 비율 = 100 - 나이 (%)
-  25세: 75% 투자 / 25% 안전
-  35세: 65% / 35%
-  45세: 55% / 45%
-  55세: 45% / 55%
+: 7-10% : 15% exceeding insufficient: 5% less than
+
+recommended report scope:
+ companyinsurance: annual × 5-10
+ /actual: required
+ 3versus : diagnosis 3,0000,000 KRW+
 ```
 
-## 종합 재무 건전성 스코어
+### 8. investmentasset ratio
 
 ```
-종합 점수 = Σ(비율별 점수 × 가중치) / Σ(가중치)
+investmentasset ratio = (week++ETF+) / total asset × 100
 
-비율별 점수:
-  양호: 100점
-  적정: 60점
-  위험: 20점
-
-가중치:
-  저축률: 3.0
-  비상자금: 2.5
-  부채비율: 2.5
-  DTI: 2.0
-  소비성향: 1.5
-  주거비: 1.5
-  보험: 1.0
-  투자: 1.0
-
-등급:
-  A(85+): 매우 건전 — 공격적 자산 형성 가능
-  B(70-84): 건전 — 균형 잡힌 상태
-  C(55-69): 보통 — 일부 개선 필요
-  D(40-54): 취약 — 체계적 개선 필요
-  F(40 미만): 위험 — 긴급 재무 구조조정
+recommended ratio = 100 - (%)
+ 25tax: 75% investment / 25% planbefore
+ 35tax: 65% / 35%
+ 45tax: 55% / 45%
+ 55tax: 45% / 55%
 ```
 
-## 재무 진단 보고서 출력 형식
+## comprehensive financial casebeforenature score
+
+```
+comprehensive score = Σ(ratioby score × duringvalue) / Σ(duringvalue)
+
+ratioby score:
+ : 100point
+ quality: 60point
+ risk: 20point
+
+duringvalue:
+ savingsrate: 3.0
+ specialist: 2.5
+ debtratio: 2.5
+ DTI: 2.0
+ nature: 1.5
+ week: 1.5
+ insurance: 1.0
+ investment: 1.0
+
+etc.grade:
+ A(85+): casebefore — quality asset nature possible
+ B(70-84): casebefore — balanced status
+ C(55-69): report — daydepartment improvement needed
+ D(40-54): approx. — systematic improvement needed
+ F(40 less than): risk — grade financial structure
+```
+
+## financial diagnosis report capability 
 
 ```markdown
-## 개인 재무 건전성 진단
+## itemsperson financial casebeforenature diagnosis
 
-**진단일**: [일자] | **종합 등급**: [A/B/C/D/F] | **점수**: [XX/100]
+**diagnosisday**: [dayspecialist] | **comprehensive etc.grade**: [A/B/C/D/F] | **score**: [XX/100]
 
-### 핵심 비율 대시보드
-| 비율 | 현재값 | 기준 | 판정 | 개선 방향 |
+### core ratio dashboard
+| ratio | current | standard | | improvement direction |
 |------|--------|------|------|----------|
-| 저축률 | X% | 20%+ | 🟢/🟡/🔴 | - |
-| 비상자금 | X개월 | 6개월+ | 🟢/🟡/🔴 | - |
-| 부채비율 | X% | 40% 이하 | 🟢/🟡/🔴 | - |
-| DTI | X% | 30% 이하 | 🟢/🟡/🔴 | - |
+| savingsrate | X% | 20%+ | 🟢/🟡/🔴 | - |
+| specialist | Xmonths | 6months+ | 🟢/🟡/🔴 | - |
+| debtratio | X% | 40% or less | 🟢/🟡/🔴 | - |
+| DTI | X% | 30% or less | 🟢/🟡/🔴 | - |
 
-### 즉시 개선 필요 (🔴)
-1. [항목]: 현재 X% → 목표 X% (개선 방법)
+### i.e.when improvement needed (🔴)
+1. [item]: current X% → goal X% (improvement method)
 
-### 개선 권고 (🟡)
-1. [항목]: 현재 X% → 목표 X%
+### improvement (🟡)
+1. [item]: current X% → goal X%
 
-### 양호 항목 (🟢)
-1. [항목]: 기준 충족
+### item (🟢)
+1. [item]: standard 
 ```
 
-## 참고
+## reference
 
-- 한국은행 가계금융복지조사, 금융감독원 기준 반영
-- 상세 진단 모델: `references/financial-diagnosis.md` 참조
+- Korean totaldegreeresearch, KRW standard reflected
+- detailed diagnosis model: `references/financial-diagnosis.md` reference

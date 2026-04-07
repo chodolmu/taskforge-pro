@@ -1,129 +1,129 @@
 ---
 name: risk-scoring-matrix
-description: "리스크 평가 매트릭스 및 정량 분석 도구. assessment-analyst 에이전트가 리스크의 확률과 영향을 체계적으로 평가할 때 참조. '리스크 매트릭스', '확률 영향 분석', '리스크 점수' 요청 시 사용. 단, 보험 계리나 금융 리스크 모델링은 범위 밖."
+description: "risk assessment matrix and analysis tool. assessment-analyst agent risk probability and impact systematicas assessmentto do when reference. 'risk matrix', 'probability impact analysis', 'risk score' request when usage. However, insurance total risk model scope outside."
 ---
 
-# Risk Scoring Matrix — 리스크 평가 매트릭스
+# Risk Scoring Matrix — risk assessment matrix
 
-assessment-analyst 에이전트의 리스크 정량/정성 평가를 표준화.
+assessment-analyst agent risk /nature assessment tablelevel.
 
-## 5x5 확률-영향 매트릭스
+## 5x5 probability-impact matrix
 
-### 확률 등급
+### probability etc.grade
 
-| 등급 | 점수 | 확률 범위 | 설명 |
+| etc.grade | score | probability scope | description |
 |------|------|----------|------|
-| 극히 낮음 | 1 | <5% | 거의 발생하지 않음 |
-| 낮음 | 2 | 5~20% | 가능성 낮음 |
-| 보통 | 3 | 20~50% | 발생할 수 있음 |
-| 높음 | 4 | 50~80% | 발생 가능성 높음 |
-| 극히 높음 | 5 | >80% | 거의 확실 |
+| Low | 1 | <5% | occurrencedegree |
+| Low | 2 | 5~20% | possiblenature Low |
+| report | 3 | 20~50% | occurrenceto do number |
+| High | 4 | 50~80% | occurrence possiblenature High |
+| High | 5 | >80% | actual |
 
-### 영향 등급
+### impact etc.grade
 
-| 등급 | 점수 | 일정 | 비용 | 품질 | 범위 |
+| etc.grade | score | schedule | cost | quality | scope |
 |------|------|------|------|------|------|
-| 극미 | 1 | <1주 | <1% | 미미 | 미미 |
-| 경미 | 2 | 1~2주 | 1~5% | 일부 영역 | 일부 기능 |
-| 보통 | 3 | 2~4주 | 5~10% | 주요 영역 | 주요 기능 |
-| 심각 | 4 | 1~3월 | 10~25% | 전반적 | 핵심 기능 |
-| 치명 | 5 | >3월 | >25% | 사용 불가 | 프로젝트 실패 |
+| un- | 1 | <1week | <1% | un-un- | un-un- |
+| un- | 2 | 1~2week | 1~5% | daydepartment | daydepartment feature |
+| report | 3 | 2~4week | 5~10% | key | key feature |
+| each | 4 | 1~3month | 10~25% | beforequality | core feature |
+| valuepeople | 5 | >3month | >25% | usage impossible | project failure |
 
-### 리스크 점수 = 확률 × 영향
+### risk score = probability × impact
 
 ```
-        영향
-     1   2   3   4   5
-  ┌───┬───┬───┬───┬───┐
-5 │ 5 │10 │15 │20 │25 │  확
-4 │ 4 │ 8 │12 │16 │20 │  률
+ impact
+ 1 2 3 4 5
+ ┌───┬───┬───┬───┬───┐
+5 │ 5 │10 │15 │20 │25 │ 
+4 │ 4 │ 8 │12 │16 │20 │ rate
 3 │ 3 │ 6 │ 9 │12 │15 │
 2 │ 2 │ 4 │ 6 │ 8 │10 │
 1 │ 1 │ 2 │ 3 │ 4 │ 5 │
-  └───┴───┴───┴───┴───┘
+ └───┴───┴───┴───┴───┘
 
-등급: 🟢 1~4 낮음 | 🟡 5~9 보통 | 🟠 10~15 높음 | 🔴 16~25 극심
+etc.grade: 🟢 1~4 Low | 🟡 5~9 report | 🟠 10~15 High | 🔴 16~25 
 ```
 
-## 리스크 카테고리 분류 (RBS)
+## risk category classification (RBS)
 
 ### Risk Breakdown Structure
 
 ```
-프로젝트 리스크
-├── 기술 리스크
-│   ├── 기술 복잡도
-│   ├── 기술 성숙도
-│   ├── 통합 이슈
-│   └── 성능/품질
-├── 관리 리스크
-│   ├── 일정 추정
-│   ├── 자원 가용성
-│   ├── 범위 변경
-│   └── 의사소통
-├── 외부 리스크
-│   ├── 벤더/공급
-│   ├── 규제 변경
-│   ├── 시장 변화
-│   └── 환경/재해
-└── 조직 리스크
-    ├── 인력 이탈
-    ├── 우선순위 변경
-    ├── 예산 삭감
-    └── 조직 변경
+project risk
+├── technical risk
+│ ├── technical 
+│ ├── technical nature
+│ ├── integration issue
+│ └── nature/quality
+├── management risk
+│ ├── schedule estimation
+│ ├── specialistKRW nature
+│ ├── scope change
+│ └── company
+├── external risk
+│ ├── /grade
+│ ├── change
+│ ├── market 
+│ └── environment/re-
+└── risk
+ ├── personcapability 
+ ├── priority change
+ ├── budget 
+ └── change
 ```
 
-## 정량적 리스크 분석
+## quality risk analysis
 
 ### EMV (Expected Monetary Value)
 
 ```
-EMV = 확률 × 영향(금액)
+EMV = probability × impact(amount)
 
-위협: EMV = 30% × (-₩5억) = -₩1.5억
-기회: EMV = 40% × (+₩3억) = +₩1.2억
+: EMV = 30% × (-₩500M) = -₩1.500M
+opportunity: EMV = 40% × (+₩300M) = +₩1.200M
 
-프로젝트 총 EMV = Σ 개별 EMV
-→ 예비비(Contingency Reserve) 산출 근거
+project total EMV = Σ individual EMV
+→ example(Contingency Reserve) calculation basis
 ```
 
-### 민감도 분석 (Tornado Diagram)
+### also analysis (Tornado Diagram)
 
 ```
-변수별 영향 범위 (프로젝트 비용 기준):
+numberby impact scope (project cost standard):
 
-환율 변동    ████████████████████ ±₩3억
-인건비       ███████████████ ±₩2.2억
-납기 지연    ██████████ ±₩1.5억
-품질 이슈    ████████ ±₩1.2억
-규제 변경    ██████ ±₩0.8억
+exchange ████████████████████ ±₩300M
+personcase ███████████████ ±₩2.200M
+delivery date degreeannual ██████████ ±₩1.500M
+quality issue ████████ ±₩1.200M
+ change ██████ ±₩0.800M
 
-→ 환율 변동이 가장 민감한 변수 → 우선 관리
+→ exchange Korean number → management
 ```
 
-## 리스크 등록부 템플릿
+## risk etc.recorddepartment template
 
-| ID | 리스크 | 카테고리 | 확률 | 영향 | 점수 | 등급 | 대응 | 담당 | 상태 |
+| ID | risk | category | probability | impact | score | etc.grade | response | responsible | status |
 |----|--------|---------|------|------|------|------|------|------|------|
-| R01 | [설명] | 기술 | 4 | 5 | 20 | 🔴 | 완화 | [이름] | 활성 |
-| R02 | [설명] | 관리 | 3 | 3 | 9 | 🟡 | 수용 | [이름] | 모니터링 |
+| R01 | [description] | technical | 4 | 5 | 20 | 🔴 | mitigation | [name] | nature |
+| R02 | [description] | management | 3 | 3 | 9 | 🟡 | acceptance | [name] | monitoring |
 
-## KRI (Key Risk Indicator) 설계
+## KRI (Key Risk Indicator) design
 
-| KRI | 임계값 | 측정 주기 | 트리거 |
+| KRI | total | cycle | |
 |-----|--------|----------|--------|
-| 일정 SPI | <0.9 | 주간 | 일정 리스크 재평가 |
-| 비용 CPI | <0.9 | 월간 | 예산 리스크 재평가 |
-| 결함률 | >5% | 스프린트 | 품질 리스크 재평가 |
-| 이직률 | >15% | 월간 | 인력 리스크 재평가 |
+| schedule SPI | <0.9 | weekbetween | schedule risk re-assessment |
+| cost CPI | <0.9 | monthbetween | budget risk re-assessment |
+| rate | >5% | sprint | quality risk re-assessment |
+| rate | >15% | monthbetween | personcapability risk re-assessment |
 
-## 품질 체크리스트
+## quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| 매트릭스 | 5x5 확률-영향 적용 |
-| 카테고리 | RBS 4대 카테고리 커버 |
-| 정량 분석 | EMV 또는 시나리오 분석 |
-| KRI | 리스크당 1개 이상 |
-| 등급 기준 | 4단계 색상 코딩 |
-| 갱신 주기 | 리스크 재평가 일정 명시 |
+| matrix | 5x5 probability-impact applied |
+| category | RBS 4versus category |
+| analysis | EMV or scenario analysis |
+| KRI | risk 1items or more |
+| etc.grade standard | 4stage |
+| cycle | risk re-assessment schedule specify |

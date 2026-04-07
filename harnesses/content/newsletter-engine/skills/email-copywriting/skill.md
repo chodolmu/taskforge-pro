@@ -1,136 +1,136 @@
 ---
 name: email-copywriting
-description: "카피라이터(copywriter)가 사용하는 이메일 카피라이팅 전문 스킬. 제목줄 심리학, 프리헤더 최적화, CTA 설계, 스캔 가능한 본문 구조 등 이메일 매체 특화 작문 방법론을 제공한다. '이메일 카피', '뉴스레터 작성', '제목줄', 'CTA 설계' 등에 활용한다."
+description: "Email copywriting skill used by the copywriter agent. Provides subject line psychology, preheader optimization, CTA design, and scannable body structure methodologies specific to the email medium. Use for 'email copy,' 'newsletter writing,' 'subject lines,' 'CTA design,' and similar requests."
 ---
 
-# Email Copywriting — 이메일 카피라이팅 전문 방법론
+# Email Copywriting — Email Copywriting Methodology
 
-copywriter 에이전트가 뉴스레터를 작성할 때 활용하는, 이메일 매체 고유의 작문 기법.
+Writing techniques specific to the email medium, used by the copywriter agent when crafting newsletters.
 
-## 왜 이메일 카피는 다른가
+## Why Email Copy Is Different
 
-블로그는 검색으로 유입되고, SNS는 피드에서 발견된다. 이메일은 **받은편지함에서 열어야만** 읽힌다. 제목줄에서 승부가 갈리고, 열린 후 7초 안에 스크롤할지 닫을지가 결정된다.
+Blog posts are found via search. Social media posts are discovered in feeds. Emails must be **opened from the inbox** to be read. The battle is won or lost at the subject line, and within 7 seconds of opening, readers decide whether to scroll or close.
 
-## 제목줄(Subject Line) 설계: CURVE 프레임워크
+## Subject Line Design: The CURVE Framework
 
-| 요소 | 설명 | 예시 |
-|------|------|------|
-| **C**uriosity | 정보 격차를 만든다 | "대부분의 마케터가 모르는 이메일 비밀" |
-| **U**rgency | 시간적 긴박감 | "오늘 자정까지만 — 이 전략을 공유합니다" |
-| **R**elevance | 독자의 현재 관심사와 연결 | "[AI 트렌드] 이번 주 꼭 알아야 할 3가지" |
-| **V**alue | 구체적 이득을 약속 | "읽는 데 3분, 절약하는 시간 3시간" |
-| **E**motion | 감정을 자극 | "저도 이 실수를 했습니다 (그리고 크게 후회했어요)" |
+| Element | Description | Example |
+|---------|-------------|---------|
+| **C**uriosity | Create an information gap | "The email secret most marketers don't know" |
+| **U**rgency | Create time pressure | "Only until midnight — sharing this strategy" |
+| **R**elevance | Connect to the reader's current interests | "[AI Trends] 3 things you need to know this week" |
+| **V**alue | Promise a specific benefit | "3 minutes to read, 3 hours saved" |
+| **E**motion | Trigger an emotion | "I made this mistake too (and deeply regretted it)" |
 
-### 제목줄 공식 12가지
+### 12 Subject Line Formulas
 
-| # | 공식 | 템플릿 |
-|---|------|--------|
-| 1 | 숫자 + 이익 | "[N]가지 방법으로 [결과]를 달성하세요" |
-| 2 | 질문형 | "[독자의 고민]하고 계신가요?" |
-| 3 | How-to | "[원하는 결과]하는 법 (전문가 검증)" |
-| 4 | 네거티브 | "[실수]를 하고 있다면, 지금 멈추세요" |
-| 5 | 소셜 프루프 | "[유명인/기업]이 실제로 사용하는 [도구]" |
-| 6 | 대비/반전 | "[통념]이라고요? 정반대입니다" |
-| 7 | 개인적 스토리 | "제가 [경험]에서 배운 한 가지" |
-| 8 | 뉴스 속보 | "[업계] 판도를 바꿀 소식이 나왔습니다" |
-| 9 | 리스티클 예고 | "이번 주 뉴스레터: [주제1], [주제2], 그리고..." |
-| 10 | 독점/희소 | "구독자만을 위한 [콘텐츠] 공개" |
-| 11 | 도전/도발 | "[결과]를 원한다면, 이 [습관]을 버리세요" |
-| 12 | 미완성 루프 | "[상황]이 벌어졌습니다. 결과는..." |
+| # | Formula | Template |
+|---|---------|----------|
+| 1 | Number + Benefit | "[N] ways to achieve [result]" |
+| 2 | Question | "Struggling with [reader's pain point]?" |
+| 3 | How-to | "How to [desired result] (expert-verified)" |
+| 4 | Negative | "If you're making [mistake], stop now" |
+| 5 | Social Proof | "The [tool] that [famous person/company] actually uses" |
+| 6 | Contrast/Reversal | "You think [conventional wisdom]? It's the opposite" |
+| 7 | Personal Story | "One thing I learned from [experience]" |
+| 8 | Breaking News | "News just dropped that will reshape [industry]" |
+| 9 | Listicle Preview | "In this week's newsletter: [Topic 1], [Topic 2], and..." |
+| 10 | Exclusive/Scarcity | "Subscriber-only [content] revealed" |
+| 11 | Challenge/Provocation | "If you want [result], drop this [habit]" |
+| 12 | Open Loop | "[Situation] happened. The result..." |
 
-### 제목줄 최적화 규칙
+### Subject Line Optimization Rules
 
-- **길이**: 28~50자 (모바일에서 잘리지 않는 범위)
-- **개인화**: [이름] 삽입 시 오픈율 평균 26% 향상 (단, 과용 금지)
-- **이모지**: 1개까지 허용, 2개 이상은 스팸 필터 위험
-- **대문자**: 전체 대문자 금지, 첫 단어만 대문자 가능
-- **A/B 변수**: 제목줄은 반드시 2개 이상 작성하여 A/B 테스트 설계
+- **Length**: 28–50 characters (avoids truncation on mobile)
+- **Personalization**: [Name] insertion boosts open rates by an average of 26% (but don't overuse)
+- **Emojis**: 1 is acceptable; 2+ risks spam filter triggers
+- **Capitalization**: No all-caps; sentence case only
+- **A/B Variable**: Always write 2+ subject lines for A/B testing
 
-## 프리헤더(Preview Text) 전략
+## Preheader (Preview Text) Strategy
 
-프리헤더는 제목줄의 **보조 무기**다. 제목줄이 호기심을 유발하면, 프리헤더가 약속을 구체화한다.
+The preheader is the subject line's **supporting weapon**. When the subject line sparks curiosity, the preheader delivers specifics.
 
-| 전략 | 설명 | 예시 |
-|------|------|------|
-| **보완형** | 제목줄의 정보를 확장 | 제목: "이번 주 AI 뉴스 3선" → 프리헤더: "OpenAI 신모델 + 구글 반격 + 스타트업 잭팟" |
-| **후속형** | 제목줄의 문장을 이어감 | 제목: "마케팅 예산을 50% 줄였는데..." → 프리헤더: "매출은 오히려 올랐습니다" |
-| **CTA형** | 행동을 직접 유도 | 제목: "무료 템플릿 공개" → 프리헤더: "지금 다운로드하세요 (48시간 한정)" |
-| **소셜형** | 타인의 반응을 보여줌 | 프리헤더: "지난 호에 127개의 답장이 왔습니다" |
+| Strategy | Description | Example |
+|----------|-------------|---------|
+| **Complementary** | Expand on the subject line's info | Subject: "Top 3 AI stories this week" → Preheader: "OpenAI's new model + Google strikes back + startup jackpot" |
+| **Continuation** | Continue the subject line's sentence | Subject: "We cut our marketing budget by 50%..." → Preheader: "and revenue actually went up" |
+| **CTA** | Directly prompt action | Subject: "Free template release" → Preheader: "Download now (48-hour window)" |
+| **Social Proof** | Show others' reactions | Preheader: "127 replies to our last issue" |
 
-- **길이**: 40~90자 (이메일 클라이언트별 다름, Gmail은 90자까지)
-- **금지**: 제목줄 내용을 그대로 반복하는 것
+- **Length**: 40–90 characters (varies by email client; Gmail shows up to 90)
+- **Prohibited**: Repeating the subject line verbatim
 
-## 본문 구조: F-패턴 스캔 설계
+## Body Structure: F-Pattern Scan Design
 
-이메일 독자는 읽지 않는다, **스캔한다**. F자 형태로 시선이 이동한다.
+Email readers don't read — they **scan** in an F-shaped pattern.
 
-### 뉴스레터 본문 설계 원칙
+### Newsletter Body Design Principles
 
-1. **첫 문장이 전부다**: 열자마자 보이는 1~2문장이 전체 읽기 여부를 결정
-2. **역피라미드 구조**: 가장 중요한 정보를 맨 위에, 부가 정보를 아래로
-3. **시각적 끊기**: 3~4문장마다 소제목, 구분선, 이미지, 인용구 삽입
-4. **한 문단 = 한 생각**: 문단당 2~3문장, 5문장 초과 금지
-5. **링크 전략**: 중요 링크는 본문 상단 1/3에 배치 (스크롤 전 클릭 유도)
+1. **The first sentence is everything**: The 1–2 sentences visible on open determine whether the entire email gets read
+2. **Inverted pyramid**: Most important information at the top, supplementary info below
+3. **Visual breaks**: Insert subheadings, dividers, images, or pull quotes every 3–4 sentences
+4. **One paragraph = one idea**: 2–3 sentences per paragraph; never exceed 5
+5. **Link strategy**: Place important links in the top 1/3 of the body (drive clicks before scrolling)
 
-### 섹션별 권장 구조
+### Recommended Section Structure
 
 ```
-[인트로: 1~2문장 — 이번 호의 핵심 메시지]
+[Intro: 1–2 sentences — this issue's core message]
 
 ---
 
-[메인 스토리: 가장 중요한 콘텐츠]
-- 소제목
-- 본문 (5~8문장)
-- CTA 버튼 또는 링크
+[Main Story: Most important content]
+- Subheading
+- Body (5–8 sentences)
+- CTA button or link
 
 ---
 
-[서브 스토리 2~3개: 짧은 큐레이션]
-- 각 항목 2~3문장 + 링크
+[Sub Stories 2–3: Short curations]
+- 2–3 sentences each + link
 
 ---
 
-[추천 리소스 / 도구 / 도서]
+[Recommended Resources / Tools / Books]
 
 ---
 
-[클로징: 독자에게 질문 또는 다음 호 예고]
+[Closing: Question for reader or preview of next issue]
 ```
 
-## CTA(Call-to-Action) 설계
+## CTA (Call-to-Action) Design
 
-### CTA 배치 전략
+### CTA Placement Strategy
 
-| 위치 | CTA 유형 | 전환율 기대치 |
-|------|---------|-------------|
-| **상단 (첫 200px)** | 핵심 CTA — 이번 호의 메인 액션 | 가장 높음 |
-| **중단 (메인 스토리 후)** | 보조 CTA — 관련 콘텐츠 탐색 | 중간 |
-| **하단 (클로징)** | 반복 CTA — 상단과 동일하거나 공유 유도 | 보험 역할 |
+| Position | CTA Type | Expected Conversion |
+|----------|---------|-------------------|
+| **Top (first 200px)** | Primary CTA — this issue's main action | Highest |
+| **Middle (after main story)** | Secondary CTA — explore related content | Medium |
+| **Bottom (closing)** | Repeat CTA — same as top or share prompt | Safety net |
 
-### CTA 문구 공식
+### CTA Copy Formula
 
-- **동사로 시작**: "읽어보기", "다운로드하기", "지금 확인하기"
-- **구체적 이익 포함**: "5분 가이드 읽기" > "자세히 보기"
-- **버튼 디자인**: 텍스트 링크보다 버튼이 CTR 28% 높음
-- **긴급성 부여**: "48시간 한정", "선착순 100명"
+- **Start with a verb**: "Read the guide," "Download now," "Check it out"
+- **Include specific benefit**: "Read the 5-minute guide" > "Learn more"
+- **Button design**: Buttons get 28% higher CTR than text links
+- **Add urgency**: "48-hour window," "First 100 only"
 
-## 톤앤보이스 매트릭스
+## Tone & Voice Matrix
 
-| 뉴스레터 유형 | 권장 톤 | 1인칭 | 독자 호칭 | 이모지 사용 |
-|-------------|--------|-------|---------|-----------|
-| 비즈니스/산업 | 전문적 + 위트 | "저는/우리는" | "여러분" | 최소 (섹션 구분용) |
-| 테크/개발 | 캐주얼 + 실용적 | "저는" | "여러분/당신" | 자유롭게 |
-| 라이프스타일 | 친밀 + 감성적 | "나는" | "당신" | 적극적 |
-| 큐레이션/뉴스 | 객관적 + 간결 | "편집팀" | "독자 여러분" | 거의 없음 |
+| Newsletter Type | Recommended Tone | First Person | Reader Address | Emoji Use |
+|----------------|-----------------|--------------|---------------|-----------|
+| Business/Industry | Professional + witty | "I/we" | "you" | Minimal (section dividers) |
+| Tech/Dev | Casual + practical | "I" | "you" | Freely |
+| Lifestyle | Intimate + emotional | "I" | "you" | Generous |
+| Curation/News | Objective + concise | "The editorial team" | "readers" | Almost none |
 
-## A/B 테스트 변수 우선순위
+## A/B Test Variable Priority
 
-효과가 큰 순서대로 테스트한다 (한 번에 1개 변수만):
+Test in order of impact (one variable at a time):
 
-1. **제목줄** (오픈율에 직접 영향, 가장 먼저 테스트)
-2. **발송 시간** (요일+시간대)
-3. **CTA 문구/디자인** (클릭률)
-4. **본문 길이** (긴 형태 vs 짧은 형태)
-5. **프리헤더** (오픈율 미세 조정)
-6. **발신자 이름** (브랜드명 vs 개인 이름)
+1. **Subject line** (direct impact on open rate — test first)
+2. **Send time** (day + time slot)
+3. **CTA copy/design** (click-through rate)
+4. **Body length** (long-form vs. short-form)
+5. **Preheader** (fine-tuning open rate)
+6. **Sender name** (brand name vs. personal name)

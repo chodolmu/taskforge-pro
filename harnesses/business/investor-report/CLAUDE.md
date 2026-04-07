@@ -1,40 +1,40 @@
 # Investor Report Harness
 
-투자자 보고서 생성: 재무실적분석→KPI대시보드→시장동향→전략업데이트→리스크공시를 에이전트 팀이 협업하여 생성하는 하네스.
+Investor report generation: an agent team collaborates to produce financial performance analysis, KPI dashboard, market trends, strategy updates, and risk disclosures.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── financial-analyst.md     — 재무 분석 (P&L, 현금흐름, 핵심 재무지표)
-│   ├── kpi-designer.md          — KPI 대시보드 (핵심 메트릭, 트렌드, 벤치마크)
-│   ├── market-analyst.md        — 시장 동향 (산업 트렌드, 경쟁, 규제)
-│   ├── strategy-updater.md      — 전략 업데이트 (진행 상황, 로드맵, 리스크 공시)
-│   └── ir-reviewer.md           — 교차 검증 (재무↔KPI↔시장↔전략 정합성)
+│   ├── financial-analyst.md     — Financial analysis (P&L, cash flow, key financial metrics)
+│   ├── kpi-designer.md          — KPI dashboard (key metrics, trends, benchmarks)
+│   ├── market-analyst.md        — Market trends (industry trends, competition, regulation)
+│   ├── strategy-updater.md      — Strategy update (progress, roadmap, risk disclosure)
+│   └── ir-reviewer.md           — Cross-validation (financial ↔ KPI ↔ market ↔ strategy consistency)
 ├── skills/
 │   ├── investor-report/
-│   │   └── skill.md             — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md             — Orchestrator (team coordination, workflow, error handling)
 │   ├── financial-ratio-analyzer/
-│   │   └── skill.md             — 재무비율 심층 분석 (DuPont, SaaS 메트릭, 5대 비율)
+│   │   └── skill.md             — Financial ratio deep analysis (DuPont, SaaS metrics, 5 ratio categories)
 │   ├── kpi-benchmark-engine/
-│   │   └── skill.md             — KPI 벤치마크 (산업별 벤치마크, SMART-R, 피라미드)
+│   │   └── skill.md             — KPI benchmarking (industry benchmarks, SMART-R, pyramid)
 │   └── ir-narrative-builder/
-│       └── skill.md             — IR 서사 구성 (Equity Story, 투자자별 톤, EBITDA Bridge)
-└── CLAUDE.md                    — 이 파일
+│       └── skill.md             — IR narrative construction (Equity Story, investor-specific tone, EBITDA Bridge)
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/investor-report` 스킬을 트리거하거나, "투자자 보고서 만들어줘" 같은 자연어로 요청한다.
+Trigger the `/investor-report` skill or make a natural language request such as "Create an investor report."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_financial_analysis.md` — 재무 실적 분석서
-- `02_kpi_dashboard.md` — KPI 대시보드
-- `03_market_trends.md` — 시장 동향 보고서
-- `04_strategy_update.md` — 전략 업데이트 및 리스크 공시
-- `05_review_report.md` — 리뷰 보고서
-- `06_investor_report_final.md` — 최종 통합 보고서
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_financial_analysis.md` — Financial performance analysis report
+- `02_kpi_dashboard.md` — KPI dashboard
+- `03_market_trends.md` — Market trends report
+- `04_strategy_update.md` — Strategy update and risk disclosure
+- `05_review_report.md` — Review report
+- `06_investor_report_final.md` — Final integrated report

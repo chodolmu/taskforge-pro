@@ -1,43 +1,43 @@
 ---
 name: deployment-strategies
-description: "배포 전략 카탈로그. Blue-Green/Canary/Rolling/A-B Test/Shadow 배포 전략별 장단점, 구현 패턴, 롤백 절차, 헬스체크 설계, DORA 메트릭을 제공하는 pipeline-designer 확장 스킬. '배포 전략', 'Blue-Green', 'Canary', 'Rolling', '롤백', '무중단 배포', 'DORA 메트릭' 등 배포 파이프라인 설계 시 사용한다. 단, 실제 인프라 구성이나 모니터링 도구 설정은 이 스킬의 범위가 아니다."
+description: "Deployment strategy catalog. An extension skill for pipeline-designer that provides pros/cons, implementation patterns, rollback procedures, health check design, and DORA metrics for Blue-Green/Canary/Rolling/A-B Test/Shadow deployment strategies. Use when designing deployment pipelines involving 'deployment strategy', 'Blue-Green', 'Canary', 'Rolling', 'rollback', 'zero-downtime deployment', 'DORA metrics', etc. Note: actual infrastructure configuration and monitoring tool setup are outside the scope of this skill."
 ---
 
-# Deployment Strategies — 배포 전략 카탈로그
+# Deployment Strategies — Deployment Strategy Catalog
 
-pipeline-designer 에이전트가 배포 파이프라인 설계 시 활용하는 배포 전략, 롤백 절차, 헬스체크, DORA 메트릭 레퍼런스.
+A reference of deployment strategies, rollback procedures, health checks, and DORA metrics used by the pipeline-designer agent when designing deployment pipelines.
 
-## 대상 에이전트
+## Target Agent
 
-`pipeline-designer` — 이 스킬의 배포 전략과 롤백 패턴을 파이프라인 설계에 직접 적용한다.
+`pipeline-designer` — Directly applies the deployment strategies and rollback patterns from this skill to pipeline design.
 
-## 배포 전략 비교
+## Deployment Strategy Comparison
 
-| 전략 | 다운타임 | 위험도 | 인프라 비용 | 롤백 속도 | 적합 상황 |
-|------|---------|--------|-----------|----------|----------|
-| **Rolling** | 없음 | 중간 | 낮음 | 중간 | 일반 웹서비스 |
-| **Blue-Green** | 없음 | 낮음 | 2배 | 즉각 | 미션 크리티컬 |
-| **Canary** | 없음 | 매우 낮음 | 약간 추가 | 즉각 | 대규모 트래픽 |
-| **Recreate** | 있음 | 높음 | 없음 | 느림 | 개발/스테이징 |
-| **A/B Test** | 없음 | 낮음 | 약간 추가 | 즉각 | 기능 실험 |
-| **Shadow** | 없음 | 없음 | 2배 | 불필요 | 성능/호환성 검증 |
+| Strategy | Downtime | Risk | Infra Cost | Rollback Speed | Best For |
+|----------|----------|------|-----------|---------------|----------|
+| **Rolling** | None | Medium | Low | Medium | General web services |
+| **Blue-Green** | None | Low | 2x | Instant | Mission-critical |
+| **Canary** | None | Very low | Slightly extra | Instant | High-traffic systems |
+| **Recreate** | Yes | High | None | Slow | Dev/staging |
+| **A/B Test** | None | Low | Slightly extra | Instant | Feature experiments |
+| **Shadow** | None | None | 2x | N/A | Performance/compatibility validation |
 
-## 전략별 상세
+## Strategy Details
 
-### 1. Rolling Update (순차 교체)
+### 1. Rolling Update (Sequential Replacement)
 ```
-서버 풀: [v1] [v1] [v1] [v1]
-단계 1:  [v2] [v1] [v1] [v1]  -- 1대 교체
-단계 2:  [v2] [v2] [v1] [v1]  -- 2대 교체
-단계 3:  [v2] [v2] [v2] [v1]  -- 3대 교체
-단계 4:  [v2] [v2] [v2] [v2]  -- 완료
+Server pool: [v1] [v1] [v1] [v1]
+Step 1:      [v2] [v1] [v1] [v1]  -- 1 replaced
+Step 2:      [v2] [v2] [v1] [v1]  -- 2 replaced
+Step 3:      [v2] [v2] [v2] [v1]  -- 3 replaced
+Step 4:      [v2] [v2] [v2] [v2]  -- Complete
 ```
 
-**설정 파라미터**:
-- `maxUnavailable`: 동시에 내릴 수 있는 최대 수 (1 또는 25%)
-- `maxSurge`: 동시에 추가할 수 있는 최대 수 (1 또는 25%)
+**Configuration parameters**:
+- `maxUnavailable`: Maximum instances to take down simultaneously (1 or 25%)
+- `maxSurge`: Maximum instances to add simultaneously (1 or 25%)
 
-**Kubernetes 예시**:
+**Kubernetes example**:
 ```yaml
 strategy:
   type: RollingUpdate
@@ -46,70 +46,70 @@ strategy:
     maxSurge: 1
 ```
 
-**장점**: 추가 인프라 최소, 점진적 교체
-**단점**: v1+v2 공존 기간 발생 (호환성 필요)
+**Pros**: Minimal extra infrastructure, gradual replacement
+**Cons**: v1+v2 coexistence period (requires compatibility)
 
-### 2. Blue-Green (청록 배포)
+### 2. Blue-Green Deployment
 ```
-Blue (현재):  [v1] [v1] [v1]  ← 트래픽 100%
-Green (대기):  [v2] [v2] [v2]  ← 트래픽 0%
+Blue (current):  [v1] [v1] [v1]  <- 100% traffic
+Green (standby): [v2] [v2] [v2]  <- 0% traffic
 
-전환:
-Blue:   [v1] [v1] [v1]  ← 트래픽 0% (대기/제거)
-Green:  [v2] [v2] [v2]  ← 트래픽 100%
-```
-
-**절차**:
-1. Green 환경에 새 버전 배포
-2. Green에서 스모크 테스트/헬스체크
-3. 로드밸런서 트래픽 전환 (Green으로)
-4. Blue 환경 모니터링 (롤백 대비)
-5. 안정화 후 Blue 제거 또는 다음 배포 대기
-
-**롤백**: 로드밸런서를 Blue로 재전환 (수초 이내)
-
-### 3. Canary (카나리 배포)
-```
-단계 1: [v1 x 95%] [v2 x 5%]   -- 5% 트래픽으로 시작
-단계 2: [v1 x 80%] [v2 x 20%]  -- 메트릭 정상 시 확대
-단계 3: [v1 x 50%] [v2 x 50%]  -- 추가 확대
-단계 4: [v2 x 100%]             -- 전체 전환
+Switch:
+Blue:   [v1] [v1] [v1]  <- 0% traffic (standby/remove)
+Green:  [v2] [v2] [v2]  <- 100% traffic
 ```
 
-**단계별 검증 기준**:
-| 단계 | 트래픽 | 대기 시간 | 검증 |
-|------|--------|----------|------|
-| 1 | 5% | 10~30분 | 에러율, 레이턴시 |
-| 2 | 20% | 30~60분 | 비즈니스 메트릭 추가 |
-| 3 | 50% | 1~2시간 | 전체 메트릭 |
-| 4 | 100% | - | 완료 |
+**Procedure**:
+1. Deploy new version to Green environment
+2. Run smoke tests/health checks on Green
+3. Switch load balancer traffic to Green
+4. Monitor Blue environment (rollback standby)
+5. After stabilization, remove Blue or hold for next deployment
 
-**자동 롤백 조건**:
-- 에러율 > 1% (평소 대비 2배)
-- p99 레이턴시 > 2초 (평소 대비 50% 증가)
-- 비즈니스 메트릭 이상 (전환율, 매출 등)
+**Rollback**: Re-switch load balancer to Blue (within seconds)
 
-### 4. A/B Testing (기능 실험)
-- 사용자 세그먼트 기반 트래픽 분리
-- Feature Flag 시스템과 연동
-- 통계적 유의성 확보 후 결정
+### 3. Canary Deployment
+```
+Step 1: [v1 x 95%] [v2 x 5%]   -- Start with 5% traffic
+Step 2: [v1 x 80%] [v2 x 20%]  -- Expand if metrics are normal
+Step 3: [v1 x 50%] [v2 x 50%]  -- Further expansion
+Step 4: [v2 x 100%]             -- Full rollout
+```
 
-### 5. Shadow (미러링)
-- 프로덕션 트래픽을 새 버전에 복제 (응답은 무시)
-- 성능, 에러, 호환성 검증에만 사용
-- 사용자 영향 zero
+**Per-stage validation criteria**:
+| Stage | Traffic | Wait Time | Validation |
+|-------|---------|-----------|------------|
+| 1 | 5% | 10-30 min | Error rate, latency |
+| 2 | 20% | 30-60 min | Add business metrics |
+| 3 | 50% | 1-2 hours | All metrics |
+| 4 | 100% | - | Complete |
 
-## 헬스체크 설계
+**Automatic rollback conditions**:
+- Error rate > 1% (2x normal)
+- p99 latency > 2 seconds (50% increase from normal)
+- Business metric anomaly (conversion rate, revenue, etc.)
 
-### 3단계 헬스체크
+### 4. A/B Testing (Feature Experiment)
+- Traffic splitting based on user segments
+- Integrated with Feature Flag systems
+- Decide after achieving statistical significance
 
-| 유형 | 검증 대상 | 엔드포인트 | 주기 |
-|------|----------|----------|------|
-| **Liveness** | 프로세스 생존 | `/healthz` | 10초 |
-| **Readiness** | 트래픽 수신 가능 | `/readyz` | 5초 |
-| **Startup** | 초기화 완료 | `/healthz` | 1초 (최대 300초) |
+### 5. Shadow (Mirroring)
+- Replicate production traffic to new version (responses discarded)
+- Used only for performance, error, and compatibility validation
+- Zero user impact
 
-### 헬스체크 응답 구조
+## Health Check Design
+
+### Three-Level Health Checks
+
+| Type | Validates | Endpoint | Interval |
+|------|----------|----------|----------|
+| **Liveness** | Process survival | `/healthz` | 10s |
+| **Readiness** | Ready to receive traffic | `/readyz` | 5s |
+| **Startup** | Initialization complete | `/healthz` | 1s (max 300s) |
+
+### Health Check Response Structure
 ```json
 {
   "status": "healthy",
@@ -123,7 +123,7 @@ Green:  [v2] [v2] [v2]  ← 트래픽 100%
 }
 ```
 
-### Kubernetes Probe 설정
+### Kubernetes Probe Configuration
 ```yaml
 livenessProbe:
   httpGet:
@@ -142,58 +142,58 @@ readinessProbe:
   failureThreshold: 3
 ```
 
-## 롤백 절차
+## Rollback Procedures
 
-### 자동 롤백 트리거
-| 지표 | 임계값 | 대기 시간 |
-|------|--------|----------|
-| HTTP 5xx 비율 | > 5% | 2분 연속 |
-| 레이턴시 p99 | > 3초 | 5분 연속 |
-| Pod 재시작 | > 3회 | 10분 이내 |
-| 메모리/CPU | > 90% | 5분 연속 |
+### Automatic Rollback Triggers
+| Metric | Threshold | Duration |
+|--------|-----------|----------|
+| HTTP 5xx rate | > 5% | 2 min consecutive |
+| Latency p99 | > 3s | 5 min consecutive |
+| Pod restarts | > 3 times | Within 10 min |
+| Memory/CPU | > 90% | 5 min consecutive |
 
-### 롤백 절차
+### Rollback Procedure
 ```
-1. 트리거 감지 → 자동 알림 (Slack/PagerDuty)
-2. 이전 버전으로 즉시 전환
-   - Blue-Green: 로드밸런서 전환
-   - Canary: 카나리 트래픽 0%로
+1. Trigger detected -> Auto-alert (Slack/PagerDuty)
+2. Immediate switch to previous version
+   - Blue-Green: Switch load balancer
+   - Canary: Set canary traffic to 0%
    - Rolling: kubectl rollout undo
-3. 근본 원인 분석 (RCA)
-4. 수정 후 재배포
+3. Root Cause Analysis (RCA)
+4. Fix and redeploy
 ```
 
-## DORA 메트릭
+## DORA Metrics
 
-### 4대 핵심 메트릭
+### 4 Key Metrics
 
-| 메트릭 | 설명 | Elite | High | Medium | Low |
-|--------|------|-------|------|--------|-----|
-| **배포 빈도** | 프로덕션 배포 주기 | 수시 (일 다회) | 일~주 1회 | 월 1회 | 월 1회 미만 |
-| **리드 타임** | 커밋→배포 시간 | < 1시간 | 1일~1주 | 1주~1개월 | 1개월+ |
-| **변경 실패율** | 배포 후 장애 비율 | < 5% | 6~15% | 16~30% | > 30% |
-| **복구 시간** | 장애→복구 시간 | < 1시간 | < 1일 | 1일~1주 | 1주+ |
+| Metric | Description | Elite | High | Medium | Low |
+|--------|-------------|-------|------|--------|-----|
+| **Deployment frequency** | Production deployment cadence | On demand (multiple/day) | Daily-weekly | Monthly | Less than monthly |
+| **Lead time** | Commit-to-deploy time | < 1 hour | 1 day-1 week | 1 week-1 month | 1 month+ |
+| **Change failure rate** | Post-deployment failure ratio | < 5% | 6-15% | 16-30% | > 30% |
+| **Recovery time** | Incident-to-recovery time | < 1 hour | < 1 day | 1 day-1 week | 1 week+ |
 
-### 측정 자동화
+### Measurement Automation
 ```
-배포 빈도 = 프로덕션 배포 이벤트 카운트 / 기간
-리드 타임 = 프로덕션 배포 시간 - 첫 커밋 시간
-변경 실패율 = 롤백 배포 수 / 전체 배포 수 x 100
-복구 시간 = 인시던트 해결 시간 - 인시던트 발생 시간
+Deployment frequency = Production deployment event count / period
+Lead time = Production deploy time - First commit time
+Change failure rate = Rollback deployments / Total deployments x 100
+Recovery time = Incident resolution time - Incident detection time
 ```
 
-## 브랜치 전략과 배포 매핑
+## Branch Strategy and Deployment Mapping
 
-| 브랜치 전략 | 배포 흐름 | 적합 |
-|-----------|----------|------|
-| **Trunk-Based** | main → 스테이징 → 프로덕션 | 소규모 팀, 빈번한 배포 |
-| **GitHub Flow** | feature → PR → main → 프로덕션 | 중규모 팀, CI/CD 성숙 |
-| **GitFlow** | feature → develop → release → main | 대규모, 릴리스 주기 고정 |
+| Branch Strategy | Deployment Flow | Best For |
+|----------------|----------------|----------|
+| **Trunk-Based** | main -> staging -> production | Small teams, frequent deployments |
+| **GitHub Flow** | feature -> PR -> main -> production | Medium teams, mature CI/CD |
+| **GitFlow** | feature -> develop -> release -> main | Large teams, fixed release cycles |
 
-### 환경별 자동 배포 규칙
+### Per-Environment Auto-Deployment Rules
 ```
-feature/* → PR → 프리뷰 환경 (ephemeral)
-main       → 자동 → 스테이징 (자동 테스트)
-main + tag → 수동 승인 → 프로덕션
-hotfix/*   → 긴급 → 프로덕션 (승인 간소화)
+feature/* -> PR -> preview environment (ephemeral)
+main       -> auto -> staging (automated testing)
+main + tag -> manual approval -> production
+hotfix/*   -> emergency -> production (simplified approval)
 ```

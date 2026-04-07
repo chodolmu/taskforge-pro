@@ -1,119 +1,86 @@
 ---
 name: pricing-calculator
-description: "RFP 가격 제안에서 원가 산정, 투찰 전략, 가격 시뮬레이션을 체계적으로 수행하는 전문 스킬. pricing-strategist 에이전트가 인건비, 경비, 이윤을 산출하고 최적 투찰가를 결정할 때 활용한다. '원가 산정', '투찰가', '가격 전략', '인건비 산출', 'FP/MM 단가' 등의 맥락에서 자동 적용한다. 단, 실시간 입찰 참여나 나라장터 시스템 조작은 이 스킬의 범위가 아니다."
+description: "A specialized skill for systematically performing cost estimation, bidding strategy, and price simulation in RFP pricing proposals. Used by the pricing-strategist agent when calculating labor costs, expenses, and profit to determine optimal bid prices. Automatically applied in contexts such as 'cost estimation', 'bid price', 'pricing strategy', 'labor cost calculation', 'FP/MM rates'. However, real-time bidding participation or government procurement system operation are outside the scope of this skill."
 ---
 
-# Pricing Calculator — RFP 가격 산정 도구
+# Pricing Calculator — RFP Pricing Calculation Tool
 
-pricing-strategist 에이전트의 가격 제안 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the pricing calculation capabilities of the pricing-strategist agent.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **pricing-strategist** — 원가 산정, 투찰 전략, 가격 시뮬레이션
+- **pricing-strategist** — Cost estimation, bid price calculation, price simulation
 
-## SW 사업 원가 산정 프레임워크
+## Software Project Cost Estimation
 
-### 표준 원가 구조
-
-```
-총 사업비 = 직접인건비 + 직접경비 + 제경비 + 기술료 + 이윤
-
-직접인건비 = Σ(등급별 단가 × 투입 M/M)
-직접경비 = HW/SW 구매비 + 여비 + 교육비 + 기타
-제경비 = 직접인건비 × 제경비율 (110-120%)
-기술료 = (직접인건비 + 제경비) × 기술료율 (20-40%)
-이윤 = (직접인건비 + 제경비 + 기술료) × 이윤율 (최대 25%)
-```
-
-### SW 기술자 등급별 노임 단가 (참고)
-
-| 등급 | 월 노임 (참고) | 일 단가 | 적용 기준 |
-|------|-------------|---------|----------|
-| 기술사/특급 | 700-900만원 | 33-42만원 | 경력 20년+, 기술사 |
-| 고급 | 550-700만원 | 26-33만원 | 경력 12-20년 |
-| 중급 | 400-550만원 | 19-26만원 | 경력 6-12년 |
-| 초급 | 300-400만원 | 14-19만원 | 경력 6년 미만 |
-
-**주의:** 실제 노임 단가는 한국소프트웨어산업협회 공표 단가를 기준으로 한다.
-
-## 인력 투입 산출 (M/M 추정)
-
-### 기능점수(FP) 기반 산출
+### Labor Cost Calculation
 
 ```
-총 M/M = 보정 FP / 생산성 (FP/M/M)
+Labor Cost = Person-Months (MM) x Monthly Rate per Grade
 
-보정 FP = 측정 FP × 보정계수
-보정계수 = 규모보정 × 연계복잡도 × 성능요구 × 운영환경 × 보안요구
+Total MM = Scope Assessment → Function Point or Experience-based
+Monthly Rate = Industry standard labor rate table (published annually)
 ```
 
-| 프로젝트 유형 | 생산성 (FP/M/M) 참고 |
-|-------------|-------------------|
-| 신규 개발 | 15-25 FP/M/M |
-| 유지보수 | 25-40 FP/M/M |
-| 패키지 커스텀 | 20-30 FP/M/M |
+| Grade | Typical Monthly Rate Range | Experience Criteria |
+|-------|--------------------------|---------------------|
+| Senior (Principal) | $8,000-12,000 | 15+ years |
+| Advanced | $6,500-9,000 | 10-15 years |
+| Intermediate | $5,000-7,000 | 5-10 years |
+| Junior | $3,500-5,500 | 1-5 years |
 
-### 공수 산출 교차 검증
+### Cost Structure
 
-| 방법 | 산정 방식 | 검증용 |
-|------|----------|-------|
-| FP 기반 | 기능점수 × 단가 | 공식 산정 |
-| WBS 기반 | 작업분해 → 각 작업 공수 추정 | Bottom-up 검증 |
-| 유사 실적 | 유사 프로젝트 공수 참조 | 경험적 검증 |
+```
+Total Project Cost = Labor + Direct Expenses + Overhead + Profit + Tax
 
-## 가격 평가 방식별 투찰 전략
+Labor: MM x Rate
+Direct Expenses: Equipment, Software, Travel, Training (10-20% of labor)
+Overhead: Labor x Rate (typically 110-120%)
+Profit: (Labor + Overhead) x Rate (typically 25%)
+Tax: Subtotal x Tax Rate
+```
 
-### 적격심사 (최저가 + 기술 평가)
+## Bidding Strategy
 
-| 가격 범위 | 가격 점수 |
-|----------|----------|
-| 예정가격의 80% 이상 | 만점 |
-| 예정가격의 60-80% | 비례 감점 |
-| 예정가격의 60% 미만 | 대폭 감점/탈락 |
+### Price Evaluation Methods
 
-**전략:** 예정가격의 85-90% 범위에서 투찰. 가격보다 기술 점수에 집중.
+| Method | Formula | Strategy |
+|--------|---------|----------|
+| Lowest Price | Score = (Lowest Bid / Your Bid) x Price Weight | Minimize price |
+| Qualification Review | Pass/Fail threshold | Stay above minimum |
+| Comprehensive | Weighted (Tech + Price) | Optimize balance |
 
-### 협상에 의한 계약
+### Optimal Bid Price Simulation
 
-1단계: 기술 평가로 협상 대상자 선정 (통상 2-3개사)
-2단계: 가격 협상
+```
+Target Score = Technical Score + Price Score
+Price Score = f(Your Bid, Estimated Price, Competitors)
 
-**전략:** 기술 점수 최대화 → 가격 협상 여지 확보
+Simulation Variables:
+- Estimated price range
+- Expected competitor bids (3 scenarios)
+- Technical score assumptions
+- Price evaluation formula specifics
+```
 
-### 총액 입찰
-
-**전략:** 3개 시나리오 가격 시뮬레이션
+### Price Sensitivity Matrix
 
 ```markdown
-| 시나리오 | 가격 수준 | 이윤율 | 승률 | 리스크 |
-|---------|----------|-------|------|-------|
-| 공격적 | 예정가 82% | 5% | 높음 | 수익성 ↓ |
-| 기본 | 예정가 87% | 12% | 중간 | 균형 |
-| 안정적 | 예정가 92% | 18% | 낮음 | 안전 |
+| Bid Rate (% of Est.) | Price Score | Tech Score Needed to Win | Risk |
+|----------------------|------------|------------------------|------|
+| 85% | High | Low | Margin squeeze |
+| 90% | Medium-High | Medium | Balanced |
+| 95% | Medium | Medium-High | Safe margin |
+| 100% | Low | High | May lose on price |
 ```
 
-## 가격 경쟁력 분석
+## Cost Validation Checklist
 
-### 가격 구성비 벤치마크
-
-| 비목 | 일반 비중 | 경쟁력 확보 방안 |
-|------|---------|----------------|
-| 직접인건비 | 40-50% | 효율적 인력 구성 (고급:중급:초급 비율) |
-| 제경비 | 25-30% | 제경비율 최적화 |
-| 기술료 | 10-15% | 기술료율 조정 |
-| 이윤 | 5-15% | 전략적 이윤율 설정 |
-| 직접경비 | 5-10% | 장비 임차/기보유 활용 |
-
-### 인력 구성 최적화
-
-```
-총 M/M를 등급별로 배분할 때:
-
-고급 : 중급 : 초급 = 1 : 2 : 1 (일반적)
-PM 급 = 총 M/M의 10-15%
-```
-
-**비용 절감 레버:**
-- 고급 인력 비율 축소 → 단가 절감 (품질 리스크 관리 필요)
-- 기보유 장비 활용 → 직접경비 절감
-- 오프사이트 개발 → 경비 절감
+- [ ] All required personnel accounted for in labor calculation?
+- [ ] Labor rates match published standards?
+- [ ] Direct expenses include all anticipated costs?
+- [ ] Overhead rate within acceptable range?
+- [ ] Profit margin sustainable?
+- [ ] Hidden costs (travel, overtime, warranty) factored in?
+- [ ] Price competitive against estimated budget?

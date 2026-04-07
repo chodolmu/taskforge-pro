@@ -1,133 +1,133 @@
 ---
 name: technical-writer
-description: "기술 문서를 에이전트 팀이 협업하여 전문적으로 작성하는 파이프라인. '기술 문서 작성해줘', 'API 문서', '아키텍처 문서', '사용자 가이드', '개발자 문서', 'README 작성', '튜토리얼 만들어줘', '운영 매뉴얼', '기술 블로그', '문서화', 'documentation', '기술 명세서' 등 기술 문서 작성 전반에 이 스킬을 사용한다. 기존 코드나 기존 문서가 있는 경우에도 리뷰와 개선을 지원한다. 단, 소스 코드 작성, 테스트 실행, CI/CD 구축, 실제 문서 호스팅 배포는 이 스킬의 범위가 아니다."
+description: "technical document agent team to specialistqualityas writing pipeline. 'technical document writingplease do', 'API document', ' document', 'user guide', 'developmentspecialist document', 'README writing', ' create it', 'operations ', 'technical blog', 'document', 'documentation', 'technical peopletaxfrom' etc. technical document writing before skill usage. existing code existing document case also review and improvement degreeKRW. However, code writing, test execution, CI/CD building, actual document deployment is outside this skill's scope."
 ---
 
-# Technical Writer — 기술 문서 작성 파이프라인
+# Technical Writer — technical document writing pipeline
 
-구조설계→집필→다이어그램→리뷰→버전관리를 에이전트 팀이 협업하여 한 번에 생성한다.
+structuredesign→→diagram→review→versionmanagement An agent team collaborates to generate all deliverables at once.
 
-## 실행 모드
+## execution mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**agent team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## agent composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| agent | file | role | type |
 |---------|------|------|------|
-| info-architect | `.claude/agents/info-architect.md` | 구조 설계, 독자 분석, 목차 | general-purpose |
-| doc-writer | `.claude/agents/doc-writer.md` | 본문 작성, 코드 예제, 튜토리얼 | general-purpose |
-| diagram-maker | `.claude/agents/diagram-maker.md` | Mermaid 다이어그램, 시각 자료 | general-purpose |
-| tech-reviewer | `.claude/agents/tech-reviewer.md` | 정확성, 완전성, 일관성 검증 | general-purpose |
-| version-controller | `.claude/agents/version-controller.md` | 메타데이터, 변경 이력, 배포 | general-purpose |
+| info-architect | `.claude/agents/info-architect.md` | structure design, reader analysis, table of contents | general-purpose |
+| doc-writer | `.claude/agents/doc-writer.md` | body text writing, code example, | general-purpose |
+| diagram-maker | `.claude/agents/diagram-maker.md` | Mermaid diagram, wheneach material | general-purpose |
+| tech-reviewer | `.claude/agents/tech-reviewer.md` | accuracy, completeness, consistency verify | general-purpose |
+| version-controller | `.claude/agents/version-controller.md` | data, change capability, deployment | general-purpose |
 
-## 워크플로우
+## workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: preparation (Orchestrator directly perform)
 
-1. 사용자 입력에서 추출한다:
-    - **문서 주제**: 무엇에 대한 문서인가
-    - **문서 유형** (선택): API/튜토리얼/가이드/아키텍처/운영
-    - **대상 독자** (선택): 역할, 기술 수준
-    - **참조 자료** (선택): 소스 코드, 기존 문서, 스펙
-    - **기존 파일** (선택): 기존 문서 초안, 구조안
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+ - **document week**: regarding documentperson
+ - **document type** (optional): API//guide//operations
+ - **target reader** (optional): role, technical level
+ - **reference material** (optional): code, existing document, 
+ - **existing file** (optional): existing document plan, structureplan
+2. `_workspace/` Create the directory at the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. If existing files are provided, copy them to `_workspace/`and skip the corresponding Phase
+5. Determine the **execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: team composition and execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| order | task | responsible | dependency | deliverable |
 |------|------|------|------|--------|
-| 1 | 구조 설계 | architect | 없음 | `_workspace/01_doc_structure.md` |
-| 2a | 본문 집필 | writer | 작업 1 | `_workspace/02_doc_draft.md` |
-| 2b | 다이어그램 작성 | diagram | 작업 1 | `_workspace/03_diagrams.md` |
-| 3 | 기술 리뷰 | reviewer | 작업 2a, 2b | `_workspace/04_review_report.md` |
-| 4 | 버전 관리 | version | 작업 1~3 | `_workspace/05_version_meta.md` |
+| 1 | structure design | architect | None | `_workspace/01_doc_structure.md` |
+| 2a | body text | writer | task 1 | `_workspace/02_doc_draft.md` |
+| 2b | diagram writing | diagram | task 1 | `_workspace/03_diagrams.md` |
+| 3 | technical review | reviewer | task 2a, 2b | `_workspace/04_review_report.md` |
+| 4 | version management | version | task 1~3 | `_workspace/05_version_meta.md` |
 
-작업 2a(본문)와 2b(다이어그램)는 **병렬 실행**한다. 둘 다 작업 1(구조)에만 의존하므로 동시에 시작할 수 있다.
+task 2a(body text) and 2b(diagram) ** execution**. task 1(structure) only dependency when whenworkto do number .
 
-**팀원 간 소통 흐름:**
-- architect 완료 → writer에게 목차·콘텐츠 전략, diagram에게 다이어그램 요건, version에게 메타데이터 전달
-- writer ↔ diagram: 삽입 위치, 캡션 조율
-- reviewer는 본문+다이어그램을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
-- version은 리뷰 결과를 반영하여 최종 메타데이터 확정
+**teamKRW between flow:**
+- architect complete → writerto table of contents·content strategy, diagramto diagram requirement, versionto data deliver
+- writer ↔ diagram: position, caption 
+- reviewer body text+diagram cross-verification. 🔴 required revision findings when Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds)
+- version review result reflectedto final data 
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: integration and final deliverable
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 리뷰 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 문서 구조 — `01_doc_structure.md`
-    - 문서 본문 — `02_doc_draft.md`
-    - 다이어그램 — `03_diagrams.md`
-    - 리뷰 보고서 — `04_review_report.md`
-    - 버전 메타 — `05_version_meta.md`
+1. `_workspace/` Verify all files in the directory
+2. review reportConfirm that all critical revisions from the review report have been addressed
+3. Report the final summary to the user:
+ - document structure — `01_doc_structure.md`
+ - document body text — `02_doc_draft.md`
+ - diagram — `03_diagrams.md`
+ - review report — `04_review_report.md`
+ - version — `05_version_meta.md`
 
-## 작업 규모별 모드
+## task scaleby mode
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| user request pattern | execution mode | deploy agent |
 |----------------|----------|-------------|
-| "기술 문서 전체 작성" | **풀 파이프라인** | 5명 전원 |
-| "문서 구조만 잡아줘" | **설계 모드** | architect + reviewer |
-| "이 내용으로 문서 써줘" (구조 있음) | **집필 모드** | writer + diagram + reviewer |
-| "이 문서에 다이어그램 추가" | **다이어그램 모드** | diagram + reviewer |
-| "이 문서 리뷰해줘" | **리뷰 모드** | reviewer 단독 |
-| "이 문서 업데이트해줘" (기존 버전) | **업데이트 모드** | writer + reviewer + version |
+| "technical document overall writing" | **Full pipeline** | 5people beforeKRW |
+| "document structure only " | **design mode** | architect + reviewer |
+| " contentas document " (structure ) | ** mode** | writer + diagram + reviewer |
+| " document diagram addition" | **diagram mode** | diagram + reviewer |
+| " document reviewplease do" | **review mode** | reviewer |
+| " document please do" (existing version) | ** mode** | writer + reviewer + version |
 
-**기존 파일 활용**: 기존 문서, 코드, 스펙을 제공하면 해당 단계를 건너뛰거나 기존 자료 기반으로 작업한다.
+**existing file utilization**: existing document, code, provide applicable stage case existing material basedas task.
 
-## 데이터 전달 프로토콜
+## data deliver protocol
 
-| 전략 | 방식 | 용도 |
+| strategy | method | also |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| File-based | `_workspace/` | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information transfer, revision requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{}_{agent}_{deliverable}.{extensionspecialist}`
 
-## 에러 핸들링
+## error handling
 
-| 에러 유형 | 전략 |
+| error type | strategy |
 |----------|------|
-| 문서 주제/범위 불명확 | 독자·목적 후보 제시, 선택 유도 |
-| 기술 세부사항 부족 | [확인 필요] 태그 삽입, 리뷰 시 검증 |
-| 코드 예제 검증 불가 | "검증 필요" 표시, 독자에게 테스트 권고 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰 보고서에 누락 명시 |
-| 리뷰에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
+| document week/scope people | reader·purpose afterreport present, optional also |
+| technical taxdepartmentmatters insufficient | [confirm needed] , review when verify |
+| code example verify impossible | "verify needed" tablewhen, readerto test |
+| agent failure | Retry once -> proceed without that deliverable, note the gap in the review report |
+| reviewfrom 🔴 findings | Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds) |
 
-## 테스트 시나리오
+## test scenario
 
-### 정상 흐름
-**프롬프트**: "우리 팀의 결제 API를 문서화해줘. 대상은 외부 개발자이고, REST API 5개 엔드포인트가 있어."
-**기대 결과**:
-- 구조: API 레퍼런스 유형, 외부 개발자 대상 독자 분석, 엔드포인트별 섹션 설계
-- 본문: 인증, 엔드포인트 5개 상세, 에러 코드, 예제 코드
-- 다이어그램: 인증 플로우 시퀀스, 결제 프로세스 플로차트
-- 리뷰: 기술 정확성·완전성 검증
-- 버전: v1.0.0, Published 상태
+### flow
+**Prompt**: " team API documentplease do. target external developmentspecialist, REST API 5items endpoint ."
+**expected result**:
+- structure: API reference type, external developmentspecialist target reader analysis, endpointby section design
+- body text: authentication, endpoint 5items detailed, error code, example code
+- diagram: authentication when, process flowchart
+- review: technical accuracy·completeness verify
+- version: v1.0.0, Published status
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 문서 구조는 잡혀 있는데, 본문을 작성해줘" + 구조 파일 첨부
-**기대 결과**:
-- 집필 모드: writer + diagram + reviewer 투입
-- architect는 건너뜀, 기존 구조 기반 작업
+### existing file utilization flow
+**Prompt**: " document structure existing, body text writingplease do" + structure file department
+**expected result**:
+- mode: writer + diagram + reviewer deploy
+- architect case, existing structure based task
 
-### 에러 흐름
-**프롬프트**: "기술 문서 써줘, 주제는 대충 우리 시스템 전반"
-**기대 결과**:
-- 범위 과대 → architect가 문서 분리 제안 (아키텍처 개요, API, 운영 가이드 등)
-- 독자 불명확 → 내부 개발자/외부 개발자/운영팀 후보 제시
-- 우선순위 문서부터 작업
+### error flow
+**Prompt**: "technical document , week versus whensystem before"
+**expected result**:
+- scope versus → architect document minute proposal ( overview, API, operations guide etc.)
+- reader people → withindepartment developmentspecialist/external developmentspecialist/operationsteam afterreport present
+- priority documentdepartment task
 
-## 에이전트별 확장 스킬
+## agentby extension skill
 
-각 에이전트의 전문성을 강화하는 도메인 특화 스킬:
+each agent specialistnature person skill:
 
-| 확장 스킬 | 경로 | 대상 에이전트 | 역할 |
+| extension skill | | target agent | role |
 |----------|------|-------------|------|
-| diagram-patterns | `.claude/skills/diagram-patterns/skill.md` | diagram-maker | Mermaid 다이어그램 패턴 라이브러리 (아키텍처, 시퀀스, 플로차트, ER, 상태 다이어그램) |
-| api-doc-standards | `.claude/skills/api-doc-standards/skill.md` | doc-writer | REST API 문서 작성 표준 (엔드포인트 템플릿, 에러 코드, 페이지네이션, 인증) |
-| code-example-patterns | `.claude/skills/code-example-patterns/skill.md` | doc-writer | 코드 예제 패턴 (5단계 구조, 언어별 스타일, 튜토리얼 구성) |
+| diagram-patterns | `.claude/skills/diagram-patterns/skill.md` | diagram-maker | Mermaid diagram pattern library (, when, flowchart, ER, status diagram) |
+| api-doc-standards | `.claude/skills/api-doc-standards/skill.md` | doc-writer | REST API document writing tablelevel (endpoint template, error code, degree, authentication) |
+| code-example-patterns | `.claude/skills/code-example-patterns/skill.md` | doc-writer | code example pattern (5stage structure, by style, composition) |

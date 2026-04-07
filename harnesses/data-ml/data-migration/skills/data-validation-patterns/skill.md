@@ -1,37 +1,37 @@
 ---
 name: data-validation-patterns
-description: "마이그레이션 데이터 검증 패턴: 행 수 비교, 체크섬, 샘플링 검증, FK 무결성, 비즈니스 규칙 검증 쿼리 설계 가이드. '데이터 검증', '마이그레이션 검증', '체크섬', '행 수 비교', '무결성 검증', '회귀 테스트', 'Go/No-Go 체크리스트' 등 마이그레이션 데이터 정합성 검증 시 이 스킬을 사용한다. validation-engineer의 검증 설계 역량을 강화한다. 단, 스키마 매핑이나 롤백 계획은 이 스킬의 범위가 아니다."
+description: "Migration data validation patterns: row count comparison, checksums, sampling validation, FK integrity, and business rule validation query design guide. Use this skill for requests involving 'data validation', 'migration validation', 'checksum', 'row count comparison', 'integrity validation', 'regression testing', 'Go/No-Go checklist', etc. Enhances validation-engineer's validation design capabilities. Note: schema mapping and rollback planning are outside the scope of this skill."
 ---
 
-# Data Validation Patterns — 마이그레이션 검증 패턴 가이드
+# Data Validation Patterns — Migration Validation Patterns Guide
 
-마이그레이션 전후 데이터 정합성을 검증하는 체계적 패턴과 쿼리 모음.
+A systematic collection of patterns and queries for verifying data integrity before and after migration.
 
-## 검증 계층 모델
+## Validation Layer Model
 
 ```
-Level 5: 비즈니스 규칙 검증  ← 도메인 특화 규칙
-Level 4: 교차 참조 검증      ← 테이블 간 관계
-Level 3: 데이터 값 검증      ← 변환 정확성
-Level 2: 스키마 검증         ← 구조 일치
-Level 1: 건수 검증           ← 행/열 수 일치
+Level 5: Business Rule Validation  <- Domain-specific rules
+Level 4: Cross-Reference Validation <- Inter-table relationships
+Level 3: Data Value Validation      <- Transformation accuracy
+Level 2: Schema Validation          <- Structural match
+Level 1: Count Validation           <- Row/column count match
 ```
 
-## Level 1: 건수 검증
+## Level 1: Count Validation
 
 ```sql
--- 소스
+-- Source
 SELECT 'orders' AS table_name, COUNT(*) AS row_count FROM source.orders
 UNION ALL
 SELECT 'customers', COUNT(*) FROM source.customers
 UNION ALL
 SELECT 'products', COUNT(*) FROM source.products;
 
--- 타깃 (동일 쿼리)
+-- Target (same query)
 SELECT 'orders' AS table_name, COUNT(*) AS row_count FROM target.orders
 UNION ALL ...;
 
--- 차이 비교
+-- Difference comparison
 SELECT s.table_name,
        s.row_count AS source_count,
        t.row_count AS target_count,
@@ -40,10 +40,10 @@ SELECT s.table_name,
 FROM source_counts s JOIN target_counts t ON s.table_name = t.table_name;
 ```
 
-## Level 2: 스키마 검증
+## Level 2: Schema Validation
 
 ```sql
--- 컬럼 수 비교
+-- Column count comparison
 SELECT s.table_name,
        s.col_count AS source_cols,
        t.col_count AS target_cols,
@@ -54,36 +54,36 @@ JOIN (SELECT table_name, COUNT(*) col_count
       FROM target_information_schema.columns GROUP BY table_name) t
 ON s.table_name = t.table_name;
 
--- NULL 제약 비교
--- PK/FK 제약 비교
--- 인덱스 비교
+-- NULL constraint comparison
+-- PK/FK constraint comparison
+-- Index comparison
 ```
 
-## Level 3: 데이터 값 검증
+## Level 3: Data Value Validation
 
-### 체크섬 비교
+### Checksum Comparison
 
 ```sql
--- 행 단위 체크섬 (PostgreSQL)
+-- Row-level checksum (PostgreSQL)
 SELECT id, md5(ROW(order_id, customer_id, total_amount, created_at)::text) AS row_hash
 FROM orders;
 
--- 테이블 전체 체크섬
+-- Full table checksum
 SELECT md5(string_agg(row_hash, '' ORDER BY id)) AS table_hash
 FROM (
     SELECT id, md5(ROW(*)::text) AS row_hash FROM orders
 ) t;
 
--- MySQL 체크섬
+-- MySQL checksum
 CHECKSUM TABLE orders;
 ```
 
-### 샘플링 검증
+### Sampling Validation
 
 ```python
 def sample_validation(source_conn, target_conn, table, pk_col, sample_size=1000):
-    """무작위 샘플 N건을 행 단위로 비교"""
-    # 1. PK 무작위 추출
+    """Compare N randomly sampled rows one-by-one"""
+    # 1. Random PK extraction
     pks = source_conn.execute(
         f"SELECT {pk_col} FROM {table} ORDER BY RANDOM() LIMIT {sample_size}"
     ).fetchall()
@@ -108,14 +108,14 @@ def sample_validation(source_conn, target_conn, table, pk_col, sample_size=1000)
         'sample_size': sample_size,
         'mismatches': len(mismatches),
         'match_rate': (sample_size - len(mismatches)) / sample_size,
-        'details': mismatches[:10]  # 상위 10건만
+        'details': mismatches[:10]  # Top 10 only
     }
 ```
 
-### 집계 비교
+### Aggregate Comparison
 
 ```sql
--- 수치 컬럼 집계 비교
+-- Numeric column aggregate comparison
 SELECT
     COUNT(*) AS cnt,
     SUM(total_amount) AS sum_amount,
@@ -127,26 +127,26 @@ FROM orders
 WHERE created_at BETWEEN '2024-01-01' AND '2024-12-31';
 ```
 
-## Level 4: 교차 참조 검증
+## Level 4: Cross-Reference Validation
 
 ```sql
--- FK 무결성: orders.customer_id가 customers.id에 존재하는가?
+-- FK integrity: Does orders.customer_id exist in customers.id?
 SELECT o.order_id, o.customer_id
 FROM target.orders o
 LEFT JOIN target.customers c ON o.customer_id = c.id
 WHERE c.id IS NULL;
--- 결과가 0행이어야 통과
+-- Result must be 0 rows to pass
 
--- 역방향: 주문이 있는 고객이 모두 존재하는가?
+-- Reverse: Do all customers with orders exist?
 SELECT DISTINCT o.customer_id
 FROM source.orders o
 WHERE o.customer_id NOT IN (SELECT id FROM target.customers);
 ```
 
-## Level 5: 비즈니스 규칙 검증
+## Level 5: Business Rule Validation
 
 ```sql
--- 규칙 1: 주문 총액 = 주문항목 합계
+-- Rule 1: Order total = sum of order items
 SELECT o.order_id, o.total_amount, SUM(oi.price * oi.quantity) AS calc_total,
        ABS(o.total_amount - SUM(oi.price * oi.quantity)) AS diff
 FROM target.orders o
@@ -154,41 +154,41 @@ JOIN target.order_items oi ON o.id = oi.order_id
 GROUP BY o.order_id, o.total_amount
 HAVING ABS(o.total_amount - SUM(oi.price * oi.quantity)) > 0.01;
 
--- 규칙 2: 상태 전이 유효성
+-- Rule 2: Status transition validity
 SELECT * FROM target.orders
 WHERE status = 'SHIPPED' AND paid_at IS NULL;
--- 결제 없이 배송은 불가 → 0행이어야 함
+-- Shipping without payment is invalid -> must be 0 rows
 
--- 규칙 3: 날짜 순서
+-- Rule 3: Date ordering
 SELECT * FROM target.orders
 WHERE created_at > paid_at OR paid_at > shipped_at;
--- 생성 > 결제 > 배송 순서 위반 → 0행이어야 함
+-- Created > Paid > Shipped order violation -> must be 0 rows
 ```
 
-## Go/No-Go 체크리스트
+## Go/No-Go Checklist
 
 ```markdown
-## 마이그레이션 Go/No-Go 판정
+## Migration Go/No-Go Decision
 
-### 필수 통과 (전부 PASS여야 Go)
-- [ ] L1: 전체 테이블 행 수 100% 일치
-- [ ] L2: 스키마 구조 일치 (컬럼 수, 타입, 제약)
-- [ ] L3: 체크섬 100% 일치 (또는 샘플 99.99%)
-- [ ] L4: FK 무결성 위반 0건
-- [ ] L5: 핵심 비즈니스 규칙 위반 0건
+### Must Pass (all must be PASS for Go)
+- [ ] L1: 100% row count match across all tables
+- [ ] L2: Schema structure match (column count, types, constraints)
+- [ ] L3: 100% checksum match (or 99.99% sample match)
+- [ ] L4: 0 FK integrity violations
+- [ ] L5: 0 critical business rule violations
 
-### 경고 허용 (문서화 후 Go 가능)
-- [ ] 날짜/시간 밀리초 차이 (타임존 변환 시)
-- [ ] 문자열 트레일링 공백 차이
-- [ ] 소수점 끝자리 반올림 차이
+### Warnings Allowed (document and Go)
+- [ ] Date/time millisecond differences (from timezone conversion)
+- [ ] String trailing whitespace differences
+- [ ] Decimal trailing digit rounding differences
 
-### 자동 판정
-전체 PASS → ✅ Go
-필수 1건 이상 FAIL → ❌ No-Go
-경고만 있음 → ⚠️ 조건부 Go (승인 필요)
+### Automatic Decision
+All PASS -> Go
+1+ mandatory FAIL -> No-Go
+Warnings only -> Conditional Go (approval required)
 ```
 
-## 검증 자동화 프레임워크
+## Validation Automation Framework
 
 ```python
 class MigrationValidator:

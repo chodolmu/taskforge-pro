@@ -1,133 +1,133 @@
 ---
 name: academic-writing-style
-description: "학술 논문의 문체, 구조, 인용 규칙을 체계적으로 가이드하는 전문 스킬. writing-coach와 proofreader 에이전트가 학술적 글쓰기 품질을 향상시키고 형식 오류를 검증할 때 활용한다. '학술 문체', '논문 구조', '인용 형식', 'APA 스타일', '논증 구조', '학술적 표현' 등의 맥락에서 자동 적용한다. 단, 실제 표절 검사 소프트웨어(Turnitin) 실행이나 학술지 투고 대행은 이 스킬의 범위가 아니다."
+description: "A specialized skill that systematically guides academic thesis style, structure, and citation rules. Used by writing-coach and proofreader agents to improve academic writing quality and verify format compliance. Automatically applied in contexts such as 'academic style', 'thesis structure', 'citation format', 'APA style', 'argumentation structure', 'scholarly expression'. However, running plagiarism detection software (Turnitin) and journal submission on behalf of the user are outside the scope of this skill."
 ---
 
-# Academic Writing Style — 학술 논문 작성 스타일 가이드
+# Academic Writing Style — Academic Thesis Writing Style Guide
 
-writing-coach, proofreader 에이전트의 학술 글쓰기 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the writing-coach and proofreader agents' academic writing capabilities.
 
-## 적용 대상 에이전트
+## Target Agents
 
-- **writing-coach** — 논문 구조 설계, 초고 작성
-- **proofreader** — 문체 검증, 형식 일관성 점검
+- **writing-coach** — Thesis structure design, draft writing
+- **proofreader** — Style verification, format consistency checking
 
-## 논문 장별 구조 및 작성 가이드
+## Per-Chapter Thesis Structure and Writing Guide
 
-### 1장: 서론 (Introduction)
+### Chapter 1: Introduction
 
-| 구성요소 | 목적 | 분량 기준 |
-|---------|------|----------|
-| 연구 배경 | 독자의 관심 유도, 맥락 설정 | 전체의 30-40% |
-| 문제 제기 | 연구의 필요성, 선행연구 한계 | 20-30% |
-| 연구 목적 | 구체적 목표 진술 | 10% |
-| 연구 질문/가설 | 검증할 질문 명시 | 10% |
-| 연구 범위 | 시간적/공간적/대상 범위 | 10% |
-| 논문 구성 | 장별 개요 | 5% |
+| Component | Purpose | Length Guideline |
+|-----------|---------|-----------------|
+| Research background | Engage the reader, establish context | 30-40% of chapter |
+| Problem statement | Justify the need for research, prior study limitations | 20-30% |
+| Research purpose | State specific objectives | 10% |
+| Research questions/hypotheses | Specify questions to be investigated | 10% |
+| Research scope | Temporal/spatial/subject boundaries | 10% |
+| Thesis organization | Chapter-by-chapter overview | 5% |
 
-**서론 깔때기 구조:**
+**Introduction funnel structure:**
 ```
-[넓음] 거시적 맥락, 사회적 이슈
-  ↓
-[중간] 학문적 맥락, 선행 연구 흐름
-  ↓
-[좁음] 연구 갭, 미해결 질문
-  ↓
-[핀포인트] 본 연구의 목적과 질문
-```
-
-### 2장: 이론적 배경 / 문헌 검토
-
-**조직 방식:**
-
-| 방식 | 적합한 경우 |
-|------|-----------|
-| 주제별 (Thematic) | 여러 이론/변수를 다룰 때 |
-| 연대별 (Chronological) | 발전 과정이 중요할 때 |
-| 방법론별 (Methodological) | 방법론 비교가 핵심일 때 |
-| 이론별 (Theoretical) | 경쟁 이론을 비교할 때 |
-
-**비판적 검토 문장 패턴:**
-- "~한 연구들이 있으나, ~한 한계가 있다"
-- "~와 ~의 결과가 상충하므로, 추가 연구가 필요하다"
-- "선행 연구들은 ~를 간과하였으며, 이는 ~"
-
-### 3장: 연구 방법
-
-**필수 포함 항목:**
-1. 연구 설계 및 근거
-2. 연구 대상 (모집단, 표본, 선정 기준)
-3. 측정 도구 (문항 구성, 타당도, 신뢰도)
-4. 자료 수집 절차
-5. 분석 방법 및 근거
-6. 윤리적 고려 (IRB 등)
-
-### 4장: 연구 결과
-
-**작성 원칙:**
-- 결과만 기술, 해석은 5장에서
-- 통계값 보고 형식 준수 (APA: *t*(24) = 2.31, *p* = .029)
-- 표/그림은 본문에서 반드시 언급
-- 연구 질문/가설 순서대로 보고
-
-### 5장: 논의 (Discussion)
-
-```
-결과 요약 → 선행연구 비교 → 이론적 시사점 → 실무적 시사점 → 한계 → 후속 연구 제언
+[Broad] Macro context, societal issues
+  |
+[Medium] Academic context, prior research trajectory
+  |
+[Narrow] Research gap, unresolved questions
+  |
+[Pinpoint] This study's purpose and questions
 ```
 
-## 학술 문체 규칙
+### Chapter 2: Theoretical Background / Literature Review
 
-### 사용해야 할 표현
+**Organizational approaches:**
 
-| 상황 | 학술적 표현 | 피해야 할 표현 |
-|------|-----------|-------------|
-| 주장 완화 | "~할 수 있다", "~로 사료된다" | "~이다" (단정) |
-| 인과 관계 | "~와 관련이 있는 것으로 나타났다" | "~때문이다" (설문연구에서) |
-| 일반화 | "본 연구의 맥락에서" | "모든 경우에" |
-| 자기 언급 | "본 연구에서는" | "제가 생각하기에" |
-| 선행연구 | "Kim(2023)에 따르면" | "어떤 논문에서 본 건데" |
+| Approach | Best suited when |
+|----------|-----------------|
+| Thematic | Addressing multiple theories/variables |
+| Chronological | Development process matters |
+| Methodological | Comparing methods is central |
+| Theoretical | Comparing competing theories |
 
-### 헤징(Hedging) 표현 수준
+**Critical review sentence patterns:**
+- "While studies have found ~, they have the limitation of ~"
+- "The findings of ~ and ~ are contradictory, indicating the need for further research"
+- "Prior studies have overlooked ~, which means ~"
 
-| 확신 수준 | 표현 |
-|----------|------|
-| 높음 | "~을 보여준다", "~을 나타낸다" |
-| 중간 | "~을 시사한다", "~로 추론된다" |
-| 낮음 | "~할 가능성이 있다", "~일 수 있다" |
+### Chapter 3: Research Methods
 
-## 인용 형식 (APA 7th 중심)
+**Required components:**
+1. Research design and rationale
+2. Participants (population, sample, selection criteria)
+3. Measurement instruments (item composition, validity, reliability)
+4. Data collection procedures
+5. Analysis methods and rationale
+6. Ethical considerations (IRB, etc.)
 
-### 본문 인용
+### Chapter 4: Results
 
-| 유형 | 형식 | 예시 |
-|------|------|------|
-| 1저자 | (저자, 연도) | (Kim, 2023) |
-| 2저자 | (저자1 & 저자2, 연도) | (Kim & Lee, 2023) |
-| 3+저자 | (제1저자 et al., 연도) | (Kim et al., 2023) |
-| 직접 인용 | (저자, 연도, p. 페이지) | (Kim, 2023, p. 45) |
-| 재인용 | (원저자, 연도, as cited in 인용자, 연도) | 최소화 권장 |
+**Writing principles:**
+- Report results only; interpretation goes in Chapter 5
+- Follow statistical reporting format (APA: *t*(24) = 2.31, *p* = .029)
+- Always reference tables/figures in the body text
+- Report in the order of research questions/hypotheses
 
-### 참고문헌 형식
+### Chapter 5: Discussion
 
 ```
-학술지: 저자. (연도). 제목. 학술지명, 권(호), 페이지. https://doi.org/xxx
-단행본: 저자. (연도). 제목 (판). 출판사.
-학위논문: 저자. (연도). 제목 [석사/박사학위논문, 대학]. 데이터베이스.
+Summary of results -> Comparison with prior studies -> Theoretical implications -> Practical implications -> Limitations -> Future research suggestions
 ```
 
-## 교정 체크리스트 (proofreader용)
+## Academic Style Rules
 
-### 형식
-- [ ] 제목 페이지 형식 (학교 양식 준수)
-- [ ] 페이지 번호, 여백, 글꼴/크기 규정 준수
-- [ ] 목차와 본문 제목 일치
-- [ ] 표/그림 번호 순차적, 제목 형식 통일
-- [ ] 참고문헌 형식 일관성 (APA/MLA/Chicago)
+### Expressions to Use
 
-### 내용
-- [ ] 연구 질문에 대한 답이 결과에 모두 있는가?
-- [ ] 서론의 주장이 결론에서 일관되게 마무리되는가?
-- [ ] 전문 용어의 최초 사용 시 정의가 있는가?
-- [ ] 약어 최초 사용 시 풀네임 병기
-- [ ] 수동태/능동태 일관성
+| Situation | Academic Expression | Expression to Avoid |
+|-----------|-------------------|-------------------|
+| Hedging claims | "may," "suggests that," "it appears that" | Definitive statements (in survey studies) |
+| Causal relationships | "was found to be associated with" | "is caused by" (in survey studies) |
+| Generalization | "in the context of this study" | "in all cases" |
+| Self-reference | "this study," "the present research" | "I think that" |
+| Prior research | "According to Kim (2023)" | "Something I read in a paper" |
+
+### Hedging Expression Levels
+
+| Confidence Level | Expression |
+|-----------------|-----------|
+| High | "demonstrates," "indicates," "shows" |
+| Medium | "suggests," "implies," "appears to" |
+| Low | "may," "could," "it is possible that" |
+
+## Citation Format (APA 7th Focus)
+
+### In-Text Citations
+
+| Type | Format | Example |
+|------|--------|---------|
+| 1 author | (Author, Year) | (Kim, 2023) |
+| 2 authors | (Author1 & Author2, Year) | (Kim & Lee, 2023) |
+| 3+ authors | (First Author et al., Year) | (Kim et al., 2023) |
+| Direct quote | (Author, Year, p. Page) | (Kim, 2023, p. 45) |
+| Secondary source | (Original, Year, as cited in Citer, Year) | Minimize usage |
+
+### Reference List Format
+
+```
+Journal: Author. (Year). Title. Journal Name, Volume(Issue), Pages. https://doi.org/xxx
+Book: Author. (Year). Title (Edition). Publisher.
+Thesis: Author. (Year). Title [Master's/Doctoral thesis, University]. Database.
+```
+
+## Proofreading Checklist (for proofreader)
+
+### Format
+- [ ] Title page format (follows institutional template)
+- [ ] Page numbers, margins, font/size comply with guidelines
+- [ ] Table of contents matches body headings
+- [ ] Table/figure numbers are sequential, title format is uniform
+- [ ] Reference list format is consistent (APA/MLA/Chicago)
+
+### Content
+- [ ] Are all research questions answered in the results?
+- [ ] Are claims in the introduction consistently resolved in the conclusion?
+- [ ] Are technical terms defined at first use?
+- [ ] Are abbreviations spelled out at first use?
+- [ ] Is passive/active voice usage consistent?

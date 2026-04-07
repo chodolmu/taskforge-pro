@@ -1,151 +1,151 @@
 ---
 name: market-sizing-calculator
-description: "사이드프로젝트의 시장 규모를 추정하고 수익 모델을 검증하는 시장 규모 계산기. 'idea-validator' 에이전트가 아이디어의 시장성을 검증할 때 이 스킬의 TAM/SAM/SOM 프레임워크, 수익 모델 계산법, 경쟁 분석 매트릭스를 반드시 활용해야 한다. '시장 규모 추정', '수익 모델 검증', '경쟁 분석' 등에 사용한다. 단, 기술스택 선정이나 MVP 설계는 이 스킬의 범위가 아니다."
+description: "companyproject market scale estimationand revenue model verify market scale totalbasis. 'idea-validator' agent idea marketnature verifyto do when this skill's TAM/SAM/SOM framework, revenue model total, competition analysis matrix must be utilized. 'market scale estimation', 'revenue model verify', 'competition analysis' etc. However, tech stack MVP design is outside this skill's scope."
 ---
 
-# Market Sizing Calculator — 시장 규모 계산기
+# Market Sizing Calculator — market scale totalbasis
 
-사이드프로젝트의 시장 기회를 정량적으로 추정하고 수익 가능성을 검증한다.
+companyproject market opportunity qualityas estimationand revenue possiblenature verify.
 
-## TAM/SAM/SOM 프레임워크
+## TAM/SAM/SOM framework
 
-### 정의 및 산출법
-
-```
-TAM (Total Addressable Market): 전체 시장 규모
-  → 해당 문제를 가진 전체 잠재 고객 × 연간 지출 의향
-
-SAM (Serviceable Addressable Market): 접근 가능 시장
-  → TAM × 지역/언어/플랫폼 제약 필터
-
-SOM (Serviceable Obtainable Market): 실제 획득 가능 시장
-  → SAM × 현실적 시장 점유율 (1인 사이드프로젝트: 0.1-1%)
-```
-
-### Top-Down 방식
+### and calculation
 
 ```
-예시: 개발자 면접 준비 웹앱
+TAM (Total Addressable Market): overall market scale
+ → applicable problem overall re- client × annualbetween expense 
 
-TAM: 전 세계 소프트웨어 개발자 2,700만명 × 연 $50 지출 의향
-   = $13.5억
+SAM (Serviceable Addressable Market): possible market
+ → TAM × degree//platform constraint 
 
-SAM: 한국어 사용자 (한국 개발자 약 50만명) × $50
-   = $2,500만
-
-SOM: 1% 시장 점유 가능 (1인 운영)
-   = $25만 (약 3.3억원/년)
+SOM (Serviceable Obtainable Market): actual possible market
+ → SAM × realistic market point (1person companyproject: 0.1-1%)
 ```
 
-### Bottom-Up 방식
+### Top-Down method
 
 ```
-예시: 개발자 면접 준비 웹앱
+examplewhen: developmentspecialist interview preparation web
 
-월 유료 전환 예상:
-  블로그/SNS → 방문자: 월 10,000명
-  회원가입 전환: 10% = 1,000명
-  유료 전환: 5% = 50명
-  월 구독료: 9,900원
+TAM: before taxtotal developmentspecialist 2,700people × annual $50 expense 
+ = $13.500M
 
-MRR = 50 × 9,900 = 495,000원
-ARR = 594만원
+SAM: Korean user (Korean developmentspecialist approx. 50people) × $50
+ = $2,500
 
-성장 시나리오 (12개월 후):
-  방문자 3배 → MRR 150만원 → ARR 1,800만원
+SOM: 1% market point possible (1person operations)
+ = $25 only (approx. 3.300M KRW/year)
 ```
 
-## 수익 모델 유형별 계산
-
-### 구독 모델 (SaaS)
+### Bottom-Up method
 
 ```
-핵심 지표:
-  MRR = 유료 사용자 × 월 구독료
-  ARR = MRR × 12
-  LTV = ARPU / 이탈률
-  CAC = 마케팅 비용 / 신규 유료 가입자
+examplewhen: developmentspecialist interview preparation web
 
-건전성 기준:
-  LTV/CAC > 3 (양호)
-  이탈률 < 5%/월 (양호)
-  회수 기간 < 12개월
+month beforeexchange expected:
+ blog/SNS → documentspecialist: month 10,000people
+ KRW beforeexchange: 10% = 1,000people
+ beforeexchange: 5% = 50people
+ month : 9,900KRW
 
-예시:
-  100명 × 9,900원/월 = MRR 99만원
-  월 이탈 5% → 평균 수명 20개월
-  LTV = 9,900 × 20 = 198,000원
-  광고 CAC 30,000원 → LTV/CAC = 6.6 ✅
+MRR = 50 × 9,900 = 495,000KRW
+ARR = 5940,000 KRW
+
+nature scenario (12months after):
+ documentspecialist 3 → MRR 1500,000 KRW → ARR 1,8000,000 KRW
 ```
 
-### 프리미엄 모델 (Freemium)
+## revenue model typeby total
+
+### model (SaaS)
 
 ```
-무료 사용자 → 유료 전환율: 2-5% (일반적)
-프리미엄 가격: 무료 대비 기능 차별화
+core indicator:
+ MRR = user × month 
+ ARR = MRR × 12
+ LTV = ARPU / rate
+ CAC = cost / specialist
 
-예시:
-  무료 10,000명 → 유료 전환 3% = 300명
-  월 19,900원 → MRR 597만원
+casebeforenature standard:
+ LTV/CAC > 3 
+ rate < 5%/month 
+ number duration < 12months
+
+examplewhen:
+ 100people × 9,900KRW/month = MRR 990,000 KRW
+ month 5% → pyeongbalanced numberpeople 20months
+ LTV = 9,900 × 20 = 198,000KRW
+ CAC 30,000KRW → LTV/CAC = 6.6 ✅
 ```
 
-### 일회성 구매
+### premium model (Freemium)
 
 ```
-예상 판매량 = 노출 × 전환율
+free user → beforeexchange: 2-5% (general)
+premium price: free versus feature differentiation
 
-예시 (디지털 상품):
-  블로그 월 방문 10,000 × 구매 전환 1% = 100건
-  가격 29,000원 → 월 290만원
+examplewhen:
+ free 10,000people → beforeexchange 3% = 300people
+ month 19,900KRW → MRR 5970,000 KRW
 ```
 
-## 경쟁 분석 매트릭스
-
-### 포지셔닝 맵
+### daynature 
 
 ```
-가격
-  높음 ┌─────────┐
-       │ [경쟁B]  │ [?기회]
-       │         │
-       │         │
-  낮음 │ [경쟁A]  │ [우리]
-       └─────────┘
-       낮음     높음
-            기능/차별화
+expected = × beforeexchange
+
+examplewhen (degree ):
+ blog month document 10,000 × beforeexchange 1% = 100case
+ price 29,000KRW → month 2900,000 KRW
 ```
 
-### 경쟁 비교표
+## competition analysis matrix
+
+### positioning 
+
+```
+price
+ High ┌─────────┐
+ │ [competitionB] │ [?opportunity]
+ │ │
+ │ │
+ Low │ [competitionA] │ 
+ └─────────┘
+ Low High
+ feature/differentiation
+```
+
+### competition comparisontable
 
 ```markdown
-| 항목 | 우리 | 경쟁A | 경쟁B | 경쟁C |
+| item | | competitionA | competitionB | competitionC |
 |------|------|-------|-------|-------|
-| 가격 | 무료/9.9k | 무료 | $19/월 | 무료 |
-| 핵심 기능 1 | ✅ | ✅ | ✅ | ❌ |
-| 핵심 기능 2 | ✅ | ❌ | ✅ | ✅ |
-| 차별화 기능 | ✅ | ❌ | ❌ | ❌ |
-| 한국어 지원 | ✅ | ❌ | ❌ | ✅ |
-| 모바일 | ✅ | ❌ | ✅ | ❌ |
+| price | free/9.9k | free | $19/month | free |
+| core feature 1 | ✅ | ✅ | ✅ | ❌ |
+| core feature 2 | ✅ | ❌ | ✅ | ✅ |
+| differentiation feature | ✅ | ❌ | ❌ | ❌ |
+| Korean degreeKRW | ✅ | ❌ | ❌ | ✅ |
+| day | ✅ | ❌ | ✅ | ❌ |
 ```
 
-## 사이드프로젝트 수익 실현 가능성 스코어
+## companyproject revenue actualcurrent possiblenature score
 
 ```
-실현 가능성 = (시장_크기 × 0.2) + (차별화 × 0.25) + (실행가능 × 0.3) + (수익모델 × 0.25)
+actualcurrent possiblenature = (market_size × 0.2) + (differentiation × 0.25) + (executionpossible × 0.3) + (revenuemodel × 0.25)
 
-시장 크기: SOM > 1억: 5, 5천만+: 4, 1천만+: 3, 미만: 2
-차별화: 독보적: 5, 강함: 4, 보통: 3, 약함: 2, 없음: 1
-실행 가능: 기술 보유+시간 충분: 5, 학습 필요: 3, 어려움: 1
-수익 모델: 검증됨: 5, 유사 사례: 4, 실험적: 3, 불확실: 2
+market size: SOM > 100M: 5, 5+: 4, 1+: 3, less than: 2
+differentiation: reportquality: 5, : 4, report: 3, approx.: 2, None: 1
+execution possible: technical report+time minute: 5, learning needed: 3, : 1
+revenue model: verify: 5, company case: 4, actualquality: 3, actual: 2
 
-등급:
-  4.0+: 🟢 유망 — 바로 착수
-  3.0-3.9: 🟡 검토 — MVP로 검증
-  2.0-2.9: 🟠 재고 — 피봇 고려
-  2.0 미만: 🔴 위험 — 아이디어 재탐색
+etc.grade:
+ 4.0+: 🟢 — number
+ 3.0-3.9: 🟡 review — MVP verify
+ 2.0-2.9: 🟠 re- — 
+ 2.0 less than: 🔴 risk — idea re-
 ```
 
-## 참고
+## reference
 
-- 사이드프로젝트 규모에 맞는 현실적 수치 사용
-- 상세 시장 분석: `references/market-analysis-guide.md` 참조
+- companyproject scale realistic figure usage
+- detailed market analysis: `references/market-analysis-guide.md` reference

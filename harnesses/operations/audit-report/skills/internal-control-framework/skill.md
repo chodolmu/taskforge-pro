@@ -1,109 +1,109 @@
 ---
 name: internal-control-framework
-description: "내부통제 프레임워크 가이드. scope-designer와 checklist-builder 에이전트가 감사 범위와 통제 항목을 설계할 때 참조. 'COSO', '내부통제', '통제 테스트' 요청 시 사용. 단, 외부 감사 대행이나 법적 의견서 작성은 범위 밖."
+description: "Internal control framework guide. Referenced by scope-designer and checklist-builder agents when designing audit scope and control items. Used for 'COSO', 'internal controls', 'control testing' requests. Note: external audit representation and legal opinion preparation are out of scope."
 ---
 
-# Internal Control Framework — 내부통제 프레임워크
+# Internal Control Framework
 
-scope-designer / checklist-builder 에이전트의 감사 설계 역량 강화.
+Enhances the audit design capabilities of scope-designer / checklist-builder agents.
 
-## COSO 내부통제 프레임워크
+## COSO Internal Control Framework
 
-### 5대 구성요소
+### 5 Components
 
-| 구성요소 | 설명 | 감사 포인트 |
-|---------|------|-----------|
-| 통제 환경 | 조직 문화, 윤리, 역량 | 윤리 강령, 직무 분리, 교육 |
-| 위험 평가 | 목표 달성 위험 식별/분석 | 위험 평가 프로세스, 문서화 |
-| 통제 활동 | 위험 대응 정책/절차 | 승인, 검증, 물리적 통제 |
-| 정보/소통 | 필요 정보의 적시 전달 | 보고 체계, IT 통제 |
-| 모니터링 | 통제 효과 지속 평가 | 자체 점검, 내부 감사 |
+| Component | Description | Audit Points |
+|-----------|-------------|-------------|
+| Control Environment | Organizational culture, ethics, competence | Code of ethics, segregation of duties, training |
+| Risk Assessment | Identification/analysis of risks to objectives | Risk assessment process, documentation |
+| Control Activities | Policies/procedures responding to risks | Approvals, verification, physical controls |
+| Information/Communication | Timely delivery of necessary information | Reporting structure, IT controls |
+| Monitoring | Continuous evaluation of control effectiveness | Self-assessments, internal audit |
 
-### 통제 유형
+### Control Types
 
-| 유형 | 설명 | 예시 |
-|------|------|------|
-| 예방 통제 | 발생 전 차단 | 승인 절차, 접근 제한, 교육 |
-| 탐지 통제 | 발생 후 발견 | 감사 로그, 대사, 이상 탐지 |
-| 보정 통제 | 발견 후 교정 | 시정 조치, 롤백, 복구 |
+| Type | Description | Examples |
+|------|-------------|---------|
+| Preventive | Block before occurrence | Approval procedures, access restrictions, training |
+| Detective | Discover after occurrence | Audit logs, reconciliation, anomaly detection |
+| Corrective | Rectify after discovery | Corrective actions, rollback, recovery |
 
-### 통제 테스트 방법
+### Control Testing Methods
 
-| 방법 | 설명 | 적합 |
-|------|------|------|
-| 질의 (Inquiry) | 담당자 인터뷰 | 초기 이해, 프로세스 파악 |
-| 관찰 (Observation) | 실제 수행 관찰 | 현장 통제 확인 |
-| 검사 (Inspection) | 문서/기록 검토 | 증빙 확인, 승인 기록 |
-| 재수행 (Reperformance) | 통제 절차 직접 수행 | 통제 효과 직접 검증 |
+| Method | Description | Best For |
+|--------|-------------|----------|
+| Inquiry | Interview the owner | Initial understanding, process mapping |
+| Observation | Observe actual execution | Field control verification |
+| Inspection | Review documents/records | Evidence verification, approval records |
+| Reperformance | Execute the control procedure | Direct verification of control effectiveness |
 
-## 감사 범위 설계 프레임워크
+## Audit Scope Design Framework
 
-### 위험 기반 접근 (Risk-Based Audit)
+### Risk-Based Audit Approach
 
 ```
-1. 감사 대상 프로세스 식별
-2. 고유 위험 평가 (금액, 복잡도, 변경)
-3. 통제 위험 평가 (통제 설계, 운영 효과)
-4. 잔여 위험 = 고유 위험 × 통제 위험
-5. 잔여 위험 높은 순으로 감사 우선순위
+1. Identify audit target processes
+2. Assess inherent risk (amount, complexity, change)
+3. Assess control risk (control design, operating effectiveness)
+4. Residual risk = Inherent risk × Control risk
+5. Prioritize audit by highest residual risk
 ```
 
-### 감사 범위 정의 템플릿
+### Audit Scope Definition Template
 
 ```markdown
-## 감사 범위
+## Audit Scope
 
-### 포함 (In-Scope)
-- 기간: [YYYY-MM-DD ~ YYYY-MM-DD]
-- 대상: [부서/프로세스/시스템]
-- 기준: [규정/정책/법규]
+### In-Scope
+- Period: [YYYY-MM-DD to YYYY-MM-DD]
+- Target: [Department/Process/System]
+- Criteria: [Regulations/Policies/Laws]
 
-### 제외 (Out-of-Scope)
-- [제외 항목 및 사유]
+### Out-of-Scope
+- [Excluded items and rationale]
 
-### 감사 기준
-| 기준 | 출처 |
-|------|------|
-| [기준 1] | [사내 규정/법규] |
-| [기준 2] | [업계 표준] |
+### Audit Criteria
+| Criteria | Source |
+|----------|--------|
+| [Criteria 1] | [Internal policy/Law] |
+| [Criteria 2] | [Industry standard] |
 ```
 
-## 체크리스트 설계 패턴
+## Checklist Design Patterns
 
-### 통제 항목 카드
+### Control Item Card
 
 ```markdown
-## 통제 항목: [ID]-[항목명]
+## Control Item: [ID]-[Item Name]
 
-- 카테고리: [COSO 구성요소]
-- 유형: [예방/탐지/보정]
-- 담당: [부서/역할]
-- 빈도: [일/주/월/분기/연]
+- Category: [COSO component]
+- Type: [Preventive/Detective/Corrective]
+- Owner: [Department/Role]
+- Frequency: [Daily/Weekly/Monthly/Quarterly/Annual]
 
-### 통제 기술
-[구체적 통제 활동 설명]
+### Control Description
+[Specific control activity description]
 
-### 테스트 절차
-1. [테스트 단계 1]
-2. [테스트 단계 2]
-3. [확인 기준]
+### Test Procedure
+1. [Test step 1]
+2. [Test step 2]
+3. [Verification criteria]
 
-### 증빙 자료
-- [필요 증빙 목록]
+### Evidence
+- [Required evidence list]
 
-### 판정 기준
-- 효과적: [기준]
-- 부분 효과: [기준]
-- 미효과: [기준]
+### Determination Criteria
+- Effective: [Criteria]
+- Partially effective: [Criteria]
+- Ineffective: [Criteria]
 ```
 
-## 품질 체크리스트
+## Quality Checklist
 
-| 항목 | 기준 |
-|------|------|
-| COSO 커버리지 | 5대 구성요소 검토 |
-| 위험 기반 | 잔여 위험 기반 우선순위 |
-| 통제 유형 | 예방/탐지/보정 균형 |
-| 테스트 방법 | 항목당 2개 이상 |
-| 증빙 | 테스트별 필요 증빙 명시 |
-| 판정 기준 | 3단계 판정 기준 |
+| Item | Criteria |
+|------|----------|
+| COSO coverage | 5 components reviewed |
+| Risk-based | Residual risk-based prioritization |
+| Control types | Preventive/detective/corrective balance |
+| Test methods | 2+ methods per item |
+| Evidence | Required evidence specified per test |
+| Determination | 3-level determination criteria |

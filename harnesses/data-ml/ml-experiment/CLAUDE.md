@@ -1,40 +1,40 @@
 # ML Experiment Harness
 
-ML 실험 관리의 데이터준비→모델설계→학습→평가→배포를 에이전트 팀이 협업하여 수행하는 하네스.
+A harness where an agent team collaborates to perform the full ML experiment lifecycle: data preparation → model design → training → evaluation → deployment.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── data-engineer.md         — 데이터 엔지니어 (수집, 전처리, 피처엔지니어링, 분할)
-│   ├── model-designer.md        — 모델 설계자 (아키텍처, 하이퍼파라미터, 손실함수)
-│   ├── training-manager.md      — 학습 관리자 (실험추적, GPU관리, 체크포인트, 재현성)
-│   ├── evaluation-analyst.md    — 평가 분석가 (메트릭, 편향검증, 해석가능성, A/B)
-│   └── experiment-reviewer.md   — 실험 리뷰어 (교차검증, 논문품질, 재현성검증)
+│   ├── data-engineer.md         — Data Engineer (collection, preprocessing, feature engineering, splitting)
+│   ├── model-designer.md        — Model Designer (architecture, hyperparameters, loss functions)
+│   ├── training-manager.md      — Training Manager (experiment tracking, GPU management, checkpoints, reproducibility)
+│   ├── evaluation-analyst.md    — Evaluation Analyst (metrics, bias verification, interpretability, A/B)
+│   └── experiment-reviewer.md   — Experiment Reviewer (cross-validation, publication quality, reproducibility verification)
 ├── skills/
 │   ├── ml-experiment/
-│   │   └── skill.md              — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md              — Orchestrator (team coordination, workflow, error handling)
 │   ├── feature-engineering-cookbook/
-│   │   └── skill.md              — 피처 엔지니어링 기법 카탈로그
+│   │   └── skill.md              — Feature engineering techniques catalog
 │   ├── model-selection-guide/
-│   │   └── skill.md              — ML 모델 선택 매트릭스 가이드
+│   │   └── skill.md              — ML model selection matrix guide
 │   └── experiment-tracking-setup/
-│       └── skill.md              — 실험 추적 및 재현성 가이드
-└── CLAUDE.md                    — 이 파일
+│       └── skill.md              — Experiment tracking and reproducibility guide
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/ml-experiment` 스킬을 트리거하거나, "ML 실험 설계해줘" 같은 자연어로 요청한다.
+Trigger the `/ml-experiment` skill or use natural language like "Design an ML experiment for me."
 
-## 산출물
+## Outputs
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_data_preparation.md` — 데이터 준비 계획 및 파이프라인
-- `02_model_design.md` — 모델 아키텍처 설계
-- `03_training_config.md` — 학습 설정 및 실험 추적
-- `04_evaluation_report.md` — 평가 보고서
-- `05_review_report.md` — 실험 리뷰 보고서
-- `experiment_code/` — 실험 구현 코드
+All outputs are stored in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_data_preparation.md` — Data preparation plan and pipeline
+- `02_model_design.md` — Model architecture design
+- `03_training_config.md` — Training configuration and experiment tracking
+- `04_evaluation_report.md` — Evaluation report
+- `05_review_report.md` — Experiment review report
+- `experiment_code/` — Experiment implementation code

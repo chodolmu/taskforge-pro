@@ -1,168 +1,168 @@
 ---
 name: psm-analyzer
-description: "Van Westendorp PSM(Price Sensitivity Meter)을 활용한 가격 민감도 분석 방법론. 'PSM 분석', '가격 민감도', 'Van Westendorp', '최적 가격', '가격 수용 범위', '지불 의사 분석' 등 가격 민감도 조사 시 사용한다. 단, 실제 설문 실행, 통계 소프트웨어 구동은 이 스킬의 범위가 아니다."
+description: "A Van Westendorp PSM (Price Sensitivity Meter) methodology for price sensitivity analysis. Use this skill for 'PSM analysis', 'price sensitivity', 'Van Westendorp', 'optimal price', 'price acceptance range', 'willingness to pay analysis', and other price sensitivity research needs. However, actual survey execution and statistical software operation are outside the scope of this skill."
 ---
 
-# PSM Analyzer — Van Westendorp 가격 민감도 분석
+# PSM Analyzer — Van Westendorp Price Sensitivity Analysis
 
-value-assessor와 pricing-simulator의 가격 설정을 강화하는 스킬.
+A skill that enhances the pricing capabilities of value-assessor and pricing-simulator.
 
-## 대상 에이전트
+## Target Agents
 
-- **value-assessor** — WTP(지불 의사)를 체계적으로 분석한다
-- **pricing-simulator** — PSM 결과를 시뮬레이션에 반영한다
+- **value-assessor** — Systematically analyzes WTP (willingness to pay)
+- **pricing-simulator** — Incorporates PSM results into simulations
 
-## Van Westendorp PSM 4대 질문
-
-```
-Q1: "이 가격이면 너무 싸서 품질이 의심되는 가격은?"
-    → Too Cheap (TC) 곡선
-
-Q2: "이 가격이면 싸다고 느끼는 가격은?"
-    → Cheap/Bargain (C) 곡선
-
-Q3: "이 가격이면 비싸다고 느끼는 가격은?"
-    → Expensive (E) 곡선
-
-Q4: "이 가격이면 너무 비싸서 고려하지 않을 가격은?"
-    → Too Expensive (TE) 곡선
-```
-
-## PSM 분석 방법
-
-### 1단계: 데이터 수집
+## Van Westendorp PSM 4 Core Questions
 
 ```
-응답자: 타깃 고객 50-200명
-형식: 각 질문에 구체적 금액 기입
-전제: 제품/서비스 설명 충분히 제공
+Q1: "At what price would you consider the product too cheap, making you question its quality?"
+    → Too Cheap (TC) curve
 
-데이터 테이블:
-| 응답자 | Too Cheap | Cheap | Expensive | Too Expensive |
-|--------|-----------|-------|-----------|---------------|
-| 1      | 5,000     | 10,000| 30,000    | 50,000        |
-| 2      | 3,000     | 8,000 | 25,000    | 40,000        |
-| ...    | ...       | ...   | ...       | ...           |
+Q2: "At what price would you consider the product a bargain — a great buy for the money?"
+    → Cheap/Bargain (C) curve
+
+Q3: "At what price would you start to feel the product is expensive?"
+    → Expensive (E) curve
+
+Q4: "At what price would you consider the product too expensive to even consider?"
+    → Too Expensive (TE) curve
 ```
 
-### 2단계: 누적 분포 그래프
+## PSM Analysis Method
+
+### Step 1: Data Collection
 
 ```
-X축: 가격 (0원 ~ 최대 응답 가격)
-Y축: 누적 비율 (0% ~ 100%)
+Respondents: 50-200 target customers
+Format: Specific monetary amounts for each question
+Prerequisite: Sufficient product/service description provided
 
-TC(너무 쌈): 왼쪽에서 오른쪽 누적 (이하 비율)
-C(쌈):       왼쪽에서 오른쪽 누적 (이하 비율)
-E(비쌈):     오른쪽에서 왼쪽 누적 (이상 비율)
-TE(너무비쌈): 오른쪽에서 왼쪽 누적 (이상 비율)
+Data Table:
+| Respondent | Too Cheap | Cheap | Expensive | Too Expensive |
+|-----------|-----------|-------|-----------|---------------|
+| 1         | 5         | 10    | 30        | 50            |
+| 2         | 3         | 8     | 25        | 40            |
+| ...       | ...       | ...   | ...       | ...           |
 ```
 
-### 3단계: 교차점 도출
+### Step 2: Cumulative Distribution Graph
 
 ```
-4개 핵심 가격 포인트:
+X-axis: Price ($0 to maximum response price)
+Y-axis: Cumulative percentage (0% to 100%)
+
+TC (Too Cheap): Left-to-right cumulative (at or below percentage)
+C (Cheap):      Left-to-right cumulative (at or below percentage)
+E (Expensive):  Right-to-left cumulative (at or above percentage)
+TE (Too Expensive): Right-to-left cumulative (at or above percentage)
+```
+
+### Step 3: Intersection Point Derivation
+
+```
+4 Key Price Points:
 
 PMC (Point of Marginal Cheapness):
-  TC(너무쌈) ∩ E(비쌈) 교차점
-  → 이 가격 이하면 품질 의심 시작
+  TC (Too Cheap) ∩ E (Expensive) intersection
+  → Below this price, quality suspicion begins
 
 OPP (Optimal Price Point):
-  TC(너무쌈) ∩ TE(너무비쌈) 교차점
-  → 구매 저항이 최소인 최적 가격
+  TC (Too Cheap) ∩ TE (Too Expensive) intersection
+  → Minimum purchase resistance = optimal price
 
 IPP (Indifference Price Point):
-  C(쌈) ∩ E(비쌈) 교차점
-  → 싸다/비싸다 동일 비율 = 시장 기대 가격
+  C (Cheap) ∩ E (Expensive) intersection
+  → Equal proportion cheap/expensive = market expected price
 
 PME (Point of Marginal Expensiveness):
-  C(쌈) ∩ TE(너무비쌈) 교차점
-  → 이 가격 이상이면 이탈 급증
+  C (Cheap) ∩ TE (Too Expensive) intersection
+  → Above this price, churn increases sharply
 
-수용 가능 가격 범위: PMC ~ PME
+Acceptable Price Range: PMC to PME
 ```
 
-## Gabor-Granger 보완 분석
+## Gabor-Granger Supplementary Analysis
 
 ```
-PSM의 한계: 실제 구매 의사와 차이 가능
+PSM Limitation: May differ from actual purchase intent
 
-Gabor-Granger 질문:
-  "[가격 X]에 이 제품을 구매하시겠습니까?" (Yes/No)
-  → 가격을 변동하며 반복 (높은 가격부터 or 낮은 가격부터)
+Gabor-Granger Question:
+  "Would you purchase this product at [Price X]?" (Yes/No)
+  → Repeat while varying price (from high to low or low to high)
 
-수요 곡선 도출:
-  가격별 "Yes" 비율 → 수요 곡선
-  매출 최대화 가격 = 가격 × 구매 의향률 이 최대인 점
+Demand Curve Derivation:
+  "Yes" percentage by price → Demand curve
+  Revenue-maximizing price = Price x Purchase intent rate at maximum point
 
-| 가격 | 구매 의향 | 예상 매출 (100명 기준) |
-|------|----------|---------------------|
-| 10,000 | 90% | 900,000 |
-| 20,000 | 70% | 1,400,000 ← 최대 |
-| 30,000 | 40% | 1,200,000 |
-| 40,000 | 15% | 600,000 |
+| Price  | Purchase Intent | Expected Revenue (per 100 people) |
+|--------|----------------|----------------------------------|
+| $10    | 90%            | $900                             |
+| $20    | 70%            | $1,400 ← Maximum                |
+| $30    | 40%            | $1,200                           |
+| $40    | 15%            | $600                             |
 ```
 
-## 세그먼트별 PSM 분석
+## Segment-Based PSM Analysis
 
 ```
-세그먼트 분류 기준:
-  1. 기업 규모 (SMB / Mid-Market / Enterprise)
-  2. 사용 목적 (개인 / 업무 / 팀)
-  3. 기존 솔루션 유무 (신규 / 전환)
-  4. 가격 민감도 수준 (낮음 / 높음)
+Segment Classification Criteria:
+  1. Company Size (SMB / Mid-Market / Enterprise)
+  2. Use Case (Personal / Professional / Team)
+  3. Existing Solution (New / Switching)
+  4. Price Sensitivity Level (Low / High)
 
-세그먼트별 OPP 비교:
-| 세그먼트 | PMC | OPP | IPP | PME |
-|---------|-----|-----|-----|-----|
-| SMB     | 5만 | 8만 | 10만| 15만|
-| Enterprise | 20만| 35만| 50만| 80만|
+OPP Comparison by Segment:
+| Segment    | PMC  | OPP  | IPP  | PME  |
+|-----------|------|------|------|------|
+| SMB       | $50  | $80  | $100 | $150 |
+| Enterprise| $200 | $350 | $500 | $800 |
 
-→ 세그먼트별 가격 차별화 근거
+→ Basis for segment-based price differentiation
 ```
 
-## 가격 구조 설계 연계
+## Pricing Structure Design Integration
 
 ```
-PSM 결과 → 요금제 설계:
+PSM Results → Plan Design:
 
-1. Free/Freemium: PMC 이하
-   → 품질 의심 가격 = 무료로 진입 장벽 제거
+1. Free/Freemium: Below PMC
+   → Quality-suspect price = remove entry barrier with free
 
-2. Starter: PMC ~ OPP
-   → 최소 가격 ~ 최적 가격
+2. Starter: PMC to OPP
+   → Minimum price to optimal price
 
-3. Professional: OPP ~ IPP
-   → 최적 ~ 시장 기대 가격
+3. Professional: OPP to IPP
+   → Optimal to market expected price
 
-4. Enterprise: IPP ~ PME
-   → 시장 기대 ~ 최대 허용 가격
-   → 추가 가치(지원, SLA, 커스텀)로 정당화
+4. Enterprise: IPP to PME
+   → Market expected to maximum acceptable price
+   → Justified by additional value (support, SLA, customization)
 ```
 
-## PSM 보고서 템플릿
+## PSM Report Template
 
 ```markdown
-## 가격 민감도 분석 (PSM)
+## Price Sensitivity Analysis (PSM)
 
-### 조사 개요
-- 대상: [타깃 고객 설명]
-- 응답자: [N]명
-- 조사 기간: [기간]
+### Survey Overview
+- Target: [Target customer description]
+- Respondents: [N] people
+- Survey Period: [Period]
 
-### 핵심 가격 포인트
-| 포인트 | 가격 | 의미 |
-|--------|------|------|
-| PMC | [원] | 최저 수용 가격 |
-| OPP | [원] | 최적 가격 |
-| IPP | [원] | 시장 기대 가격 |
-| PME | [원] | 최고 수용 가격 |
+### Key Price Points
+| Point | Price | Meaning |
+|-------|-------|---------|
+| PMC | [$] | Minimum acceptable price |
+| OPP | [$] | Optimal price |
+| IPP | [$] | Market expected price |
+| PME | [$] | Maximum acceptable price |
 
-### 수용 가능 가격 범위: [PMC] ~ [PME]
-### 권장 가격: [OPP 기반 제안]
+### Acceptable Price Range: [PMC] to [PME]
+### Recommended Price: [OPP-based recommendation]
 
-### 세그먼트별 분석
-[세그먼트별 표]
+### Segment Analysis
+[Segment-specific table]
 
-### 가격 구조 권고
-[요금제별 가격 제안]
+### Pricing Structure Recommendation
+[Plan-specific price proposals]
 ```

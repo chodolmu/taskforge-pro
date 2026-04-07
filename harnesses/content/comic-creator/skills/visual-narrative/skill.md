@@ -1,100 +1,100 @@
 ---
 name: visual-narrative
-description: "대사작가(dialogue-writer)와 만화편집자(comic-editor)가 사용하는 시각 서사 전문 스킬. 말풍선 시스템, 효과음 타이포그래피, Show-Don't-Tell 원칙, 시각적 은유 활용법을 제공한다. '말풍선', '효과음', '시각 스토리텔링', '만화 연출' 등에 활용한다."
+description: "A visual narrative skill used by the dialogue-writer and comic-editor agents. Provides speech bubble systems, sound effect typography, Show-Don't-Tell principles, and visual metaphor techniques. Used for 'speech bubbles,' 'sound effects,' 'visual storytelling,' 'comic direction,' and related topics."
 ---
 
-# Visual Narrative — 시각 서사 전문 방법론
+# Visual Narrative — Visual Narrative Methodology
 
-dialogue-writer와 comic-editor 에이전트가 대사와 시각 요소를 통합할 때 활용하는 만화 서사 전문 지식.
+Expert knowledge used by the dialogue-writer and comic-editor agents when integrating dialogue and visual elements.
 
-## 왜 시각 서사인가
+## Why Visual Narrative Matters
 
-만화에서 대사는 전체 스토리텔링의 **30%**에 불과하다. 나머지 70%는 그림, 구도, 표정, 효과음, 여백이 전달한다. 대사를 줄일수록 만화는 강해진다.
+In comics, dialogue accounts for only about **30%** of the storytelling. The remaining 70% is conveyed through art, composition, expressions, sound effects, and white space. The less dialogue, the stronger the comic.
 
-## 말풍선 시스템
+## Speech Bubble System
 
-### 말풍선 유형
+### Speech Bubble Types
 
-| 유형 | 모양 | 용도 | 프롬프트 지시 |
-|------|------|------|-------------|
-| **일반 대사** | 둥근 타원 | 보통 대화 | "speech bubble" |
-| **생각** | 구름 모양 | 내면 독백 | "thought bubble, cloud shape" |
-| **외침/강조** | 폭발/뾰족 | 큰 소리, 분노 | "burst speech bubble, jagged" |
-| **속삭임** | 점선 타원 | 낮은 목소리 | "dashed speech bubble, whisper" |
-| **전자 음성** | 사각 테두리 | 전화, 방송, AI | "rectangular speech box" |
-| **나레이션** | 사각 박스 (상단) | 해설, 시간 표시 | "narration box, caption" |
-| **감정 부호** | 기호만 | ?, !, ..., ♥ | 말풍선 없이 기호만 |
+| Type | Shape | Use | Prompt Instruction |
+|------|-------|-----|-------------------|
+| **Normal Dialogue** | Rounded ellipse | Regular conversation | "speech bubble" |
+| **Thought** | Cloud shape | Inner monologue | "thought bubble, cloud shape" |
+| **Shout/Emphasis** | Explosion/Jagged | Loud voice, anger | "burst speech bubble, jagged" |
+| **Whisper** | Dashed ellipse | Low voice | "dashed speech bubble, whisper" |
+| **Electronic Voice** | Rectangular border | Phone, broadcast, AI | "rectangular speech box" |
+| **Narration** | Rectangular box (top) | Commentary, time markers | "narration box, caption" |
+| **Emotion Symbol** | Symbol only | ?, !, ..., heart | Symbols without bubbles |
 
-### 말풍선 배치 규칙
+### Speech Bubble Placement Rules
 
-1. **읽기 순서**: 위→아래, 왼→오른 (한국어 기준)
-2. **꼬리 방향**: 말풍선 꼬리가 화자의 입을 가리킨다
-3. **겹침 금지**: 말풍선이 중요한 그림 요소를 가리면 안 된다
-4. **3개 이하**: 한 패널에 말풍선 3개까지 (초과 시 패널 분할)
-5. **빈 공간 활용**: 패널의 상단 1/3에 말풍선 배치가 가장 자연스럽다
+1. **Reading order**: Top-to-bottom, left-to-right (for left-to-right languages)
+2. **Tail direction**: The bubble tail points toward the speaker's mouth
+3. **No obstruction**: Bubbles must not cover important visual elements
+4. **Maximum 3**: No more than 3 speech bubbles per panel (split panel if exceeded)
+5. **Use blank space**: Placing bubbles in the top third of the panel is most natural
 
-## 효과음 타이포그래피
+## Sound Effect Typography
 
-### 한국 만화 효과음 라이브러리
+### Sound Effect Library
 
-| 카테고리 | 효과음 | 상황 |
-|---------|--------|------|
-| **타격** | 퍽! 쾅! 팍! 둥! 탁! | 주먹, 충돌, 폭발 |
-| **이동** | 슈웅~ 휙! 스윽 콰콰콰 | 달리기, 비행, 회전 |
-| **감정** | 두근두근 울컥 싸늘 찌릿 | 긴장, 감동, 공포, 전율 |
-| **환경** | 우르르르 콸콸 사각사각 | 천둥, 물, 바람 |
-| **일상** | 딸깍 끼이익 뚝뚝 찰칵 | 문, 브레이크, 물방울, 카메라 |
-| **침묵** | 조용... 쥐 죽은 듯 | 긴장된 침묵 |
+| Category | Examples | Context |
+|----------|---------|---------|
+| **Impact** | WHAM! CRASH! BAM! THUD! | Punches, collisions, explosions |
+| **Movement** | WHOOSH~ SWISH! ZOOM | Running, flying, spinning |
+| **Emotion** | Thump thump, Shiver, Tingle | Heartbeat, fear, excitement |
+| **Environment** | RUMBLE, SPLASH, RUSTLE | Thunder, water, wind |
+| **Daily Life** | CLICK, SCREECH, DRIP, SNAP | Doors, brakes, drops, cameras |
+| **Silence** | ... (dead silence) | Tense quiet |
 
-### 효과음 디자인 규칙
+### Sound Effect Design Rules
 
-- **크기 = 음량**: 큰 글자 = 큰 소리, 작은 글자 = 작은 소리
-- **기울기 = 속도**: 기울어진 글자 = 빠른 움직임
-- **색상 = 성질**: 빨강=파괴, 파랑=차가움, 노랑=전기
-- **위치 = 출처**: 소리가 나는 곳에 가깝게 배치
-- **폰트**: 효과음은 본문과 다른 폰트, 손글씨 느낌 권장
+- **Size = Volume**: Larger text = louder sound, smaller text = quieter
+- **Tilt = Speed**: Tilted text = fast movement
+- **Color = Nature**: Red = destruction, Blue = cold, Yellow = electricity
+- **Position = Source**: Place near the source of the sound
+- **Font**: Use a different font from body text; handwritten feel recommended
 
-## Show-Don't-Tell 원칙
+## Show-Don't-Tell Principle
 
-### 대사로 하지 말고 그림으로 보여주기
+### Show Through Art, Don't Tell Through Dialogue
 
-| 나쁜 예 (Tell) | 좋은 예 (Show) |
-|-------------|------------|
-| "나 정말 화가 나!" | 꽉 쥔 주먹, 이를 악문 표정 클로즈업 |
-| "여기가 위험한 곳이야" | 금이 간 벽, 피묻은 표지판, 경고등 |
-| "시간이 많이 흘렀어" | 계절 변화, 성장한 나무, 녹슨 물건 |
-| "그녀를 좋아하게 됐어" | 시선이 자꾸 그쪽으로, 볼의 홍조 |
-| "이건 소중한 물건이야" | 떨리는 손으로 조심스럽게 쥠 |
+| Bad Example (Tell) | Good Example (Show) |
+|--------------------|---------------------|
+| "I'm so angry!" | Clenched fist, gritted teeth in close-up |
+| "This place is dangerous" | Cracked walls, bloodstained signs, warning lights |
+| "A lot of time has passed" | Changing seasons, grown trees, rusted objects |
+| "I started to like her" | Eyes drifting toward her, flushed cheeks |
+| "This is a precious object" | Trembling hands carefully clutching it |
 
-### 감정 표현 시각 코드
+### Emotion Visual Codes
 
-| 감정 | 시각 코드 |
-|------|----------|
-| **분노** | 이마 핏줄, 흔들리는 프레임, 붉은 배경, 이 악물기 |
-| **슬픔** | 비/눈 오버레이, 어두운 톤, 축 늘어진 자세, 눈물 |
-| **기쁨** | 밝은 톤, 꽃잎/빛줄기 효과, 활짝 웃는 입 |
-| **공포** | 넓게 뜬 눈, 어둠, 긴 그림자, 떨리는 손 |
-| **놀라움** | 흰 동공, 후광 효과, 발 뜬 자세, 땀방울 |
-| **긴장** | 좁은 패널, 클로즈업 연속, 어둠과 빛의 대비 |
+| Emotion | Visual Code |
+|---------|------------|
+| **Anger** | Forehead veins, shaking frame, red background, gritted teeth |
+| **Sadness** | Rain/snow overlay, dark tones, slumped posture, tears |
+| **Joy** | Bright tones, flower petals/light rays, wide smile |
+| **Fear** | Wide eyes, darkness, long shadows, trembling hands |
+| **Surprise** | White pupils, halo effect, startled posture, sweat drops |
+| **Tension** | Narrow panels, consecutive close-ups, dark-light contrast |
 
-## 페이지 전환 연출
+## Page Transition Techniques
 
-### 장면 전환 기법
+### Scene Transition Methods
 
-| 기법 | 설명 | 사용 상황 |
-|------|------|----------|
-| **컷 (Cut)** | 즉각적 장면 전환, 연결 없음 | 시간/장소 변경 |
-| **디졸브** | 두 장면이 겹쳐지는 패널 | 회상, 몽상 |
-| **와이프** | 대각선/수평으로 장면 분할 | 동시 진행 |
-| **모양 전환** | A 장면의 오브젝트 → B 장면의 유사 오브젝트 | 은유적 연결 |
-| **컬러 전환** | 색상 변화로 시간/분위기 전환 | 과거(세피아)→현재(풀컬러) |
+| Technique | Description | Use Case |
+|-----------|-------------|----------|
+| **Cut** | Immediate scene change, no connection | Time/location change |
+| **Dissolve** | Two scenes overlapping in one panel | Flashback, daydream |
+| **Wipe** | Diagonal/horizontal scene split | Simultaneous events |
+| **Match Cut** | Object in Scene A matches object in Scene B | Metaphorical connection |
+| **Color Shift** | Color change indicates time/mood shift | Past (sepia) -> Present (full color) |
 
-## 텍스트-이미지 밀도 균형
+## Text-Image Density Balance
 
-| 장면 유형 | 텍스트 비율 | 이미지 비율 | 패널 수 |
-|----------|-----------|-----------|--------|
-| 액션/전투 | 10~20% | 80~90% | 많고 작은 패널 |
-| 일상 대화 | 40~50% | 50~60% | 중간 크기 균일 |
-| 감정 장면 | 10~20% | 80~90% | 적고 큰 패널 |
-| 설명/회상 | 30~40% | 60~70% | 나레이션 박스 활용 |
-| 코미디 | 30~40% | 60~70% | 펀치라인에 큰 패널 |
+| Scene Type | Text Ratio | Image Ratio | Panel Count |
+|-----------|-----------|-------------|-------------|
+| Action/Combat | 10-20% | 80-90% | Many small panels |
+| Daily Conversation | 40-50% | 50-60% | Medium uniform panels |
+| Emotional Scene | 10-20% | 80-90% | Few large panels |
+| Exposition/Flashback | 30-40% | 60-70% | Narration boxes |
+| Comedy | 30-40% | 60-70% | Large panel for punchline |

@@ -1,117 +1,117 @@
 ---
 name: text-analytics-methods
-description: "텍스트 분석 방법론. topic-classifier와 trend-detector 에이전트가 비정형 텍스트에서 주제를 추출하고 트렌드를 도출할 때 참조. '주제 분류', '키워드 분석', '텍스트 마이닝' 요청 시 사용. 단, NLP 모델 학습이나 대규모 데이터 처리 파이프라인 구축은 범위 밖."
+description: "Text analytics methodology. Referenced by topic-classifier and trend-detector agents when extracting topics and deriving trends from unstructured text. Used for 'topic classification', 'keyword analysis', 'text mining' requests. Note: NLP model training and large-scale data processing pipeline development are out of scope."
 ---
 
-# Text Analytics Methods — 텍스트 분석 방법론
+# Text Analytics Methods
 
-topic-classifier / trend-detector 에이전트의 텍스트 분석 역량 강화.
+Enhances the text analysis capabilities of topic-classifier / trend-detector agents.
 
-## 주제 분류 방법론
+## Topic Classification Methodology
 
-### 상향식 분류 (Bottom-up)
-
-```
-1. 피드백 전체 읽기 (샘플링: 100건 이상)
-2. 반복 키워드/구문 식별
-3. 유사 키워드 클러스터링
-4. 클러스터에 주제명 부여
-5. 주제 체계 확정 (MECE 검증)
-6. 전체 데이터에 주제 태깅
-```
-
-### 하향식 분류 (Top-down)
+### Bottom-up Classification
 
 ```
-사전 정의 카테고리:
-├── 제품/서비스 품질
-│   ├── 기능
-│   ├── 성능
-│   ├── 디자인
-│   └── 안정성
-├── 고객 경험
-│   ├── 사용 편의성
-│   ├── 고객 지원
-│   ├── 구매 과정
-│   └── 배송
-├── 가격/가치
-│   ├── 가격 수준
-│   ├── 가성비
-│   └── 할인/프로모션
-└── 기타
-    ├── 경쟁사 비교
-    └── 개선 요청
+1. Read all feedback (sample: 100+ entries)
+2. Identify recurring keywords/phrases
+3. Cluster similar keywords
+4. Assign topic names to clusters
+5. Finalize topic system (MECE verification)
+6. Tag all data with topics
 ```
 
-## 키워드 분석
-
-### TF-IDF 개념 적용
+### Top-down Classification
 
 ```
-TF (Term Frequency) = 특정 문서에서 단어 빈도
-IDF (Inverse Document Frequency) = 전체 문서 중 희소성
+Pre-defined categories:
+├── Product/Service Quality
+│   ├── Features
+│   ├── Performance
+│   ├── Design
+│   └── Reliability
+├── Customer Experience
+│   ├── Usability
+│   ├── Customer Support
+│   ├── Purchase Process
+│   └── Delivery
+├── Price/Value
+│   ├── Price Level
+│   ├── Value for Money
+│   └── Discounts/Promotions
+└── Other
+    ├── Competitor Comparison
+    └── Improvement Requests
+```
+
+## Keyword Analysis
+
+### TF-IDF Concept Application
+
+```
+TF (Term Frequency) = Word frequency in a specific document
+IDF (Inverse Document Frequency) = Rarity across all documents
 TF-IDF = TF × IDF
 
-높은 TF-IDF = 특정 문서에서 중요하지만 흔하지 않은 단어
-→ 피드백 특이사항 파악에 유용
+High TF-IDF = Words important in a specific document but uncommon overall
+→ Useful for identifying feedback anomalies
 ```
 
-### 키워드 추출 절차
+### Keyword Extraction Process
 
 ```
-1. 불용어 제거: 조사, 접속사, 일반 동사
-2. 명사/형용사 추출
-3. 빈도 계산 (상위 30개)
-4. n-gram 분석 (2-gram, 3-gram)
-   "배송 느림", "고객센터 연결 안됨"
-5. 키워드 클라우드 시각화
+1. Remove stop words: articles, conjunctions, common verbs
+2. Extract nouns/adjectives
+3. Calculate frequency (top 30)
+4. N-gram analysis (2-gram, 3-gram)
+   "slow delivery", "support not reachable"
+5. Keyword cloud visualization
 ```
 
-## 트렌드 분석 기법
+## Trend Analysis Techniques
 
-### 시계열 주제 추이
+### Time-series Topic Trends
 
-| 주제 | Q1 | Q2 | Q3 | Q4 | 추세 |
-|------|-----|-----|-----|-----|------|
-| 배송 | 15% | 18% | 22% | 25% | ↑ 주의 |
-| 품질 | 30% | 28% | 25% | 20% | ↓ 개선 |
-| 가격 | 20% | 22% | 20% | 21% | → 안정 |
+| Topic | Q1 | Q2 | Q3 | Q4 | Trend |
+|-------|-----|-----|-----|-----|-------|
+| Delivery | 15% | 18% | 22% | 25% | ↑ Attention |
+| Quality | 30% | 28% | 25% | 20% | ↓ Improving |
+| Price | 20% | 22% | 20% | 21% | → Stable |
 
-### 이상 탐지 기준
-
-```
-이상 신호:
-- 특정 주제 비율 전기 대비 +50% → 긴급 분석
-- 부정 감성 +0.3 이상 급등 → 원인 조사
-- 신규 키워드 급부상 (이전 분기 미출현) → 신규 이슈
-```
-
-## 인사이트 도출 프레임워크
-
-### 피라미드 원칙 (So What?)
+### Anomaly Detection Criteria
 
 ```
-Level 1 (데이터): "배송 불만이 25%로 전분기 대비 7%p 증가"
-Level 2 (분석): "신규 물류사 전환 후 배송 지연이 주 원인"
-Level 3 (인사이트): "물류사 SLA 재협상 또는 기존 업체 복귀 필요"
-Level 4 (액션): "물류팀에 SLA 검토 요청, 2주 내 개선안 보고"
+Anomaly signals:
+- Topic ratio +50% vs previous period → urgent analysis
+- Negative sentiment surge of +0.3 or more → investigate cause
+- New keyword emergence (absent in previous quarter) → new issue
 ```
 
-### 액션 우선순위 매트릭스
+## Insight Derivation Framework
 
-| 인사이트 | 빈도 | 감성 강도 | 영향 | 실행 용이 | 우선순위 |
-|---------|------|----------|------|----------|---------|
-| 배송 개선 | 높음 | -0.8 | 높음 | 중간 | ★★★★★ |
-| UI 개선 | 중간 | -0.5 | 중간 | 높음 | ★★★★ |
-| 신기능 A | 낮음 | +0.3 | 낮음 | 낮음 | ★★ |
+### Pyramid Principle (So What?)
 
-## 품질 체크리스트
+```
+Level 1 (Data): "Delivery complaints at 25%, up 7pp from previous quarter"
+Level 2 (Analysis): "Delivery delays mainly caused by new logistics partner switch"
+Level 3 (Insight): "Need to renegotiate logistics SLA or revert to previous provider"
+Level 4 (Action): "Request SLA review from logistics team, improvement plan due in 2 weeks"
+```
 
-| 항목 | 기준 |
-|------|------|
-| 분류 체계 | MECE (중복 없고 빠짐 없이) |
-| 샘플 크기 | 100건 이상 또는 전수 |
-| 다중 태깅 | 1건에 복수 주제 허용 |
-| 트렌드 | 최소 3기간 비교 |
-| So What | 데이터→분석→인사이트→액션 |
-| 시각화 | 키워드 클라우드 + 추이 차트 |
+### Action Priority Matrix
+
+| Insight | Frequency | Sentiment Intensity | Impact | Ease of Implementation | Priority |
+|---------|-----------|--------------------| -------|----------------------|----------|
+| Delivery improvement | High | -0.8 | High | Medium | ★★★★★ |
+| UI improvement | Medium | -0.5 | Medium | High | ★★★★ |
+| New feature A | Low | +0.3 | Low | Low | ★★ |
+
+## Quality Checklist
+
+| Item | Criteria |
+|------|----------|
+| Classification system | MECE (Mutually Exclusive, Collectively Exhaustive) |
+| Sample size | 100+ entries or full dataset |
+| Multi-tagging | Multiple topics per entry allowed |
+| Trends | Minimum 3-period comparison |
+| So What | Data → Analysis → Insight → Action |
+| Visualization | Keyword cloud + trend chart |

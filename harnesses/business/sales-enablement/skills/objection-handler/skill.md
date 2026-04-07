@@ -1,134 +1,134 @@
 ---
 name: objection-handler
-description: "B2B 영업에서 고객 이의(Objection)를 체계적으로 분류하고 대응하는 방법론. '이의 대응', '반론 처리', '영업 반박', '가격 이의', '경쟁사 비교 대응', '예산 부족 대응' 등 영업 이의 처리 시 사용한다. 단, 법적 자문, 계약서 작성, 실제 협상 대행은 이 스킬의 범위가 아니다."
+description: "A methodology for systematically classifying and responding to customer objections in B2B sales. Used for 'objection handling,' 'rebuttal management,' 'sales rebuttals,' 'price objections,' 'competitive comparison responses,' and 'budget constraint responses' when handling sales objections. Note: Legal advisory, contract drafting, and actual negotiation representation are outside the scope of this skill."
 ---
 
-# Objection Handler — 영업 이의 대응 프레임워크
+# Objection Handler — Sales Objection Response Framework
 
-followup-manager와 proposal-writer의 이의 대응 역량을 강화하는 스킬.
+A skill that enhances objection handling capabilities for followup-manager and proposal-writer.
 
-## 대상 에이전트
+## Target Agents
 
-- **followup-manager** — 팔로업 과정에서 고객 이의를 체계적으로 처리한다
-- **proposal-writer** — 제안서에 사전 이의 대응을 포함한다
+- **followup-manager** — Systematically handles customer objections during the follow-up process
+- **proposal-writer** — Includes pre-emptive objection responses in the proposal
 
-## 이의 분류 체계 (BANT+C)
+## Objection Classification System (BANT+C)
 
-### Budget (예산)
+### Budget
 
-| 이의 | 대응 전략 |
-|------|----------|
-| "예산이 없어요" | 1. 비용 vs 투자 관점 전환 2. 현재 문제의 비용 정량화 3. 단계별 도입 제안 |
-| "너무 비싸요" | 1. TCO 비교 (경쟁사 포함) 2. ROI 제시 3. 가격 구성 요소 분해 설명 |
-| "올해 예산은 이미 소진" | 1. 내년 예산 확보 지원 2. 파일럿 무료/저가 제안 3. 예산 절감 효과로 정당화 |
+| Objection | Response Strategy |
+|-----------|-----------------|
+| "We don't have the budget" | 1. Shift from cost to investment perspective 2. Quantify the cost of the current problem 3. Propose phased adoption |
+| "It's too expensive" | 1. TCO comparison (including competitors) 2. Present ROI 3. Break down pricing components |
+| "This year's budget is already spent" | 1. Help secure next year's budget 2. Propose free/low-cost pilot 3. Justify with cost-saving benefits |
 
-### Authority (권한)
+### Authority
 
-| 이의 | 대응 전략 |
-|------|----------|
-| "결정할 수 있는 사람이 아녜요" | 1. 의사결정자 소개 요청 2. 내부 챔피언 육성 자료 제공 3. 경영진 브리핑 제안 |
-| "여러 부서 합의가 필요해요" | 1. 부서별 가치 제안서 작성 2. 사내 PT 자료 제공 3. 다부서 미팅 주선 |
+| Objection | Response Strategy |
+|-----------|-----------------|
+| "I'm not the decision-maker" | 1. Request introduction to decision-maker 2. Provide materials to build an internal champion 3. Offer executive briefing |
+| "Multiple departments need to agree" | 1. Create department-specific value propositions 2. Provide internal presentation materials 3. Arrange multi-department meeting |
 
-### Need (필요성)
+### Need
 
-| 이의 | 대응 전략 |
-|------|----------|
-| "지금은 필요 없어요" | 1. 잠재 문제 비용 정량화 2. 경쟁사 도입 사례 3. 시장 변화 시나리오 |
-| "현재 시스템으로 충분해요" | 1. 현재 vs 미래 비교 2. 숨은 비효율 식별 3. 차세대 요구사항 제시 |
-| "다른 우선순위가 있어요" | 1. 다른 프로젝트와 시너지 2. 병행 가능한 경량 도입 3. 타이밍 재설정 |
+| Objection | Response Strategy |
+|-----------|-----------------|
+| "We don't need it right now" | 1. Quantify the cost of latent problems 2. Share competitor adoption cases 3. Present market change scenarios |
+| "Our current system is sufficient" | 1. Current vs. future comparison 2. Identify hidden inefficiencies 3. Present next-generation requirements |
+| "We have other priorities" | 1. Show synergy with other projects 2. Propose lightweight parallel adoption 3. Reset the timing |
 
-### Timeline (시기)
+### Timeline
 
-| 이의 | 대응 전략 |
-|------|----------|
-| "올해는 어려워요" | 1. 지연 비용 계산 2. 단계별 도입 일정 제안 3. 준비 작업만 선행 |
-| "너무 오래 걸려요" | 1. Quick Win 먼저 보여주기 2. 병렬 진행 일정 3. 유사 도입 기간 사례 |
+| Objection | Response Strategy |
+|-----------|-----------------|
+| "Not this year" | 1. Calculate cost of delay 2. Propose phased adoption schedule 3. Start with preparation work only |
+| "It takes too long" | 1. Show quick wins first 2. Propose parallel execution schedule 3. Share comparable implementation timelines |
 
-### Competition (경쟁)
+### Competition
 
-| 이의 | 대응 전략 |
-|------|----------|
-| "경쟁사가 더 싸요" | 1. 기능 대비 가격 비교 2. 숨은 비용 드러내기 3. 전환 비용 포함 TCO |
-| "이미 다른 곳과 진행 중" | 1. 차별화 포인트 3가지 2. 사전 PoC 제안 3. 세컨드 오피니언 포지션 |
-| "경쟁사 레퍼런스가 더 많아요" | 1. 관련 산업 사례 집중 2. 고객 직접 소개 3. 파일럿 제안 |
+| Objection | Response Strategy |
+|-----------|-----------------|
+| "The competitor is cheaper" | 1. Feature-to-price comparison 2. Expose hidden costs 3. TCO including switching costs |
+| "We're already working with another vendor" | 1. Three differentiating points 2. Offer a pre-emptive PoC 3. Position as a second opinion |
+| "The competitor has more references" | 1. Focus on relevant industry cases 2. Offer direct customer introductions 3. Propose a pilot |
 
-## LAER 대응 프레임워크
-
-```
-L - Listen (경청)
-  "그 부분이 걱정되시는군요. 좀 더 자세히 말씀해주시겠어요?"
-
-A - Acknowledge (인정)
-  "충분히 이해합니다. 다른 고객분들도 처음에 같은 우려를 하셨어요."
-
-E - Explore (탐색)
-  "구체적으로 어떤 부분이 가장 걱정되시나요?"
-  → 표면적 이의 뒤의 진짜 이유 파악
-
-R - Respond (대응)
-  구체적 데이터, 사례, 해결방안 제시
-```
-
-## 이의 심각도 판별
+## LAER Response Framework
 
 ```
-🟢 소프트 이의 (정보 부족)
-  → 추가 정보 제공으로 해결
-  → "좀 더 알려주세요" = 관심 신호
+L - Listen
+  "I understand that's a concern. Could you tell me more about that?"
 
-🟡 미디엄 이의 (절차/타이밍)
-  → 일정/프로세스 조정으로 해결
-  → "지금은 어렵지만..." = 타이밍 조정 가능
+A - Acknowledge
+  "That makes perfect sense. Other customers have had the same concern initially."
 
-🔴 하드 이의 (근본적 부적합)
-  → 제품 변경 또는 딜 포기
-  → "우리와 맞지 않아요" = 솔직한 평가 필요
+E - Explore
+  "Specifically, which aspect concerns you the most?"
+  → Uncover the real reason behind the surface-level objection
+
+R - Respond
+  Present specific data, case studies, and solutions
 ```
 
-## 사전 이의 대응 (Pre-emptive)
+## Objection Severity Assessment
 
 ```
-제안서에 미리 포함할 FAQ:
+GREEN Soft Objection (Information gap)
+  → Resolved by providing additional information
+  → "Tell me more" = Signal of interest
 
-Q: "도입 기간은 얼마나 걸리나요?"
-A: "평균 N주, 유사 규모 고객 기준. 단계별 마일스톤 포함."
+YELLOW Medium Objection (Process/Timing)
+  → Resolved by adjusting schedule/process
+  → "Not now, but..." = Timing can be adjusted
 
-Q: "기존 시스템과 연동되나요?"
-A: "주요 시스템(SAP, Salesforce 등) API 연동 지원. 커스텀 연동 N주."
-
-Q: "데이터 보안은 어떻게 하나요?"
-A: "ISO 27001 인증, SOC 2 Type II, 국내 IDC 운영."
-
-Q: "해지하면 데이터는?"
-A: "전체 데이터 CSV/API 추출 지원. 계약 해지 후 90일 보관."
+RED Hard Objection (Fundamental mismatch)
+  → Requires product changes or deal withdrawal
+  → "It's not a fit for us" = Honest assessment needed
 ```
 
-## 협상 전략 매트릭스
+## Pre-emptive Objection Handling
 
 ```
-            고객 가격 민감도
-            낮음          높음
-고객   높  │ 프리미엄    │ 가치 증명    │
-가치       │ 풀패키지    │ ROI 강조     │
-인식   낮  │ 교육+시연   │ 파일럿/할인  │
+FAQ to include in the proposal proactively:
+
+Q: "How long does implementation take?"
+A: "Average N weeks, based on similarly sized customers. Includes phased milestones."
+
+Q: "Does it integrate with our existing systems?"
+A: "Supports API integration with major systems (SAP, Salesforce, etc.). Custom integration takes N weeks."
+
+Q: "How do you handle data security?"
+A: "ISO 27001 certified, SOC 2 Type II compliant, hosted in certified data centers."
+
+Q: "What happens to our data if we cancel?"
+A: "Full data export via CSV/API. Data retained for 90 days after contract termination."
 ```
 
-## 이의 대응 스크립트 템플릿
+## Negotiation Strategy Matrix
+
+```
+            Customer Price Sensitivity
+            Low              High
+Customer  High │ Premium      │ Value Proof    │
+Value          │ Full Package │ ROI Emphasis   │
+Perception Low │ Educate+Demo │ Pilot/Discount │
+```
+
+## Objection Response Script Template
 
 ```markdown
-### 이의: [이의 내용]
-**분류**: [Budget/Authority/Need/Timeline/Competition]
-**심각도**: [🟢/🟡/🔴]
+### Objection: [Objection content]
+**Classification**: [Budget/Authority/Need/Timeline/Competition]
+**Severity**: [GREEN/YELLOW/RED]
 
-**즉각 대응** (30초):
-"[인정 문구]. [탐색 질문]."
+**Immediate Response** (30 seconds):
+"[Acknowledgment]. [Exploratory question]."
 
-**상세 대응** (2분):
-1. [데이터/사례 1]
-2. [데이터/사례 2]
-3. [제안/대안]
+**Detailed Response** (2 minutes):
+1. [Data/case study 1]
+2. [Data/case study 2]
+3. [Proposal/alternative]
 
-**후속 액션**:
-- [보내줄 자료]
-- [다음 미팅 의제]
+**Follow-up Actions**:
+- [Materials to send]
+- [Next meeting agenda]
 ```

@@ -1,100 +1,100 @@
 ---
 name: spaced-repetition
-description: "간격 반복(Spaced Repetition) 알고리즘을 활용한 어휘·문법 복습 스케줄 설계 전문 스킬. review-coach 에이전트가 에빙하우스 망각곡선에 기반한 최적 복습 주기를 산출하고 장기 기억 전환율을 극대화할 때 활용한다. '간격 반복', '에빙하우스', '복습 스케줄', '망각곡선', 'SRS', 'Anki 방식' 등의 맥락에서 자동 적용한다. 단, Anki/Quizlet 등 외부 앱 연동이나 실시간 알림 시스템 구축은 이 스킬의 범위가 아니다."
+description: "A specialized skill for designing vocabulary and grammar review schedules using Spaced Repetition algorithms. Used by the review-coach agent to calculate optimal review intervals based on the Ebbinghaus forgetting curve and maximize long-term memory conversion rates. Automatically applied in contexts such as 'spaced repetition', 'Ebbinghaus', 'review schedule', 'forgetting curve', 'SRS', 'Anki method'. However, external app integration (Anki/Quizlet) and real-time notification system construction are outside the scope of this skill."
 ---
 
-# Spaced Repetition — 간격 반복 알고리즘 도구
+# Spaced Repetition — Spaced Repetition Algorithm Tool
 
-review-coach 에이전트의 복습 설계 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the review-coach agent's review design capabilities.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **review-coach** — 복습 스케줄, 약점 보강, 장기 기억 전환
+- **review-coach** — Review scheduling, weakness reinforcement, long-term memory retention
 
-## 에빙하우스 망각곡선 기반 복습 주기
+## Ebbinghaus Forgetting Curve-Based Review Intervals
 
-### 기본 복습 간격 (SM-2 알고리즘 변형)
+### Base Review Intervals (SM-2 Algorithm Variant)
 
-| 복습 차수 | 간격 | 잔존율 목표 | 행동 |
-|----------|------|-----------|------|
-| 1차 복습 | 학습 후 1일 | 80%+ | 전체 항목 복습 |
-| 2차 복습 | 3일 후 | 75%+ | 1차에서 틀린 항목 집중 |
-| 3차 복습 | 7일 후 | 70%+ | 2차에서 틀린 항목 + 전체 샘플 |
-| 4차 복습 | 14일 후 | 70%+ | 약점 항목 + 랜덤 샘플 |
-| 5차 복습 | 30일 후 | 65%+ | 장기기억 확인 테스트 |
-| 6차+ | 60일, 120일... | 60%+ | 유지 복습 |
+| Review Round | Interval | Retention Target | Action |
+|-------------|----------|-----------------|--------|
+| 1st review | 1 day after learning | 80%+ | Review all items |
+| 2nd review | 3 days later | 75%+ | Focus on items missed in 1st review |
+| 3rd review | 7 days later | 70%+ | Items missed in 2nd review + full sample |
+| 4th review | 14 days later | 70%+ | Weak items + random sample |
+| 5th review | 30 days later | 65%+ | Long-term memory confirmation test |
+| 6th+ | 60, 120 days... | 60%+ | Maintenance review |
 
-### 난이도 기반 간격 조정
+### Difficulty-Based Interval Adjustment
 
-학습자 응답 결과에 따라 간격을 동적 조정한다:
+Dynamically adjust intervals based on learner response quality:
 
-| 응답 품질 | 점수 | 간격 계수 | 다음 간격 |
-|----------|------|---------|----------|
-| 완벽 기억 (즉답) | 5 | × 2.5 | 크게 연장 |
-| 맞음 (약간 고민) | 4 | × 2.0 | 연장 |
-| 맞음 (많이 고민) | 3 | × 1.5 | 소폭 연장 |
-| 틀림 (보자마자 생각남) | 2 | × 1.0 | 유지 |
-| 틀림 (생각 안 남) | 1 | × 0.5 | 단축 |
-| 완전 망각 | 0 | 리셋 | 처음부터 |
+| Response Quality | Score | Interval Factor | Next Interval |
+|-----------------|-------|----------------|---------------|
+| Perfect recall (instant) | 5 | x 2.5 | Significantly extended |
+| Correct (slight hesitation) | 4 | x 2.0 | Extended |
+| Correct (much hesitation) | 3 | x 1.5 | Slightly extended |
+| Incorrect (recalled after seeing) | 2 | x 1.0 | Maintained |
+| Incorrect (could not recall) | 1 | x 0.5 | Shortened |
+| Complete blank | 0 | Reset | Start over |
 
-### 간격 계산 공식
-
-```
-다음_간격 = 이전_간격 × EF(Ease Factor)
-
-EF 갱신:
-EF' = EF + (0.1 - (5-q) × (0.08 + (5-q) × 0.02))
-(q = 응답 품질 0-5)
-
-EF 최소값: 1.3 (너무 쉬워지지 않도록)
-```
-
-## 어휘 카테고리별 복습 전략
-
-| 카테고리 | 최적 기법 | 복습 빈도 |
-|---------|---------|----------|
-| 고빈도 기초 어휘 | 문맥 속 반복 노출 | 매일 자연 노출 |
-| 중빈도 실용 어휘 | 플래시카드 + 예문 | SM-2 알고리즘 적용 |
-| 저빈도 전문 어휘 | 주제별 묶음 학습 | 주제 학습 시 집중 |
-| 관용 표현 | 상황별 롤플레이 | 주 2-3회 |
-| 문법 패턴 | 변환 드릴 + 작문 | SM-2 + 주간 작문 |
-
-## 복습 세션 설계 원칙
-
-### 세션 구성 (20분 기준)
+### Interval Calculation Formula
 
 ```
-[시작] 워밍업 (2분)
-  → 전 세션 핵심 3개 퀵 리콜
+next_interval = previous_interval x EF (Ease Factor)
 
-[핵심] 간격 반복 복습 (12분)
-  → 기한 도래 카드 20-30개
-  → 어려운 카드 먼저 (Interleaving)
+EF update:
+EF' = EF + (0.1 - (5-q) x (0.08 + (5-q) x 0.02))
+(q = response quality 0-5)
 
-[강화] 약점 집중 (4분)
-  → 2회 연속 틀린 항목 재학습
-  → 연상/어원/이미지 기억법 적용
-
-[마무리] 자기 평가 (2분)
-  → 오늘 학습 난이도 자가 평가
-  → 다음 세션 예고
+EF minimum: 1.3 (prevents intervals from becoming too short)
 ```
 
-### 최적 학습 분량
+## Vocabulary Category-Specific Review Strategies
 
-| 학습자 레벨 | 신규 항목/일 | 복습 항목/일 | 총 시간 |
-|-----------|-----------|-----------|---------|
-| 입문 (A1) | 5-8개 | 15-25개 | 15-20분 |
-| 초급 (A2) | 8-12개 | 25-40개 | 20-30분 |
-| 중급 (B1-B2) | 10-15개 | 30-50개 | 25-35분 |
-| 고급 (C1+) | 5-10개 | 20-30개 | 20-25분 |
+| Category | Optimal Technique | Review Frequency |
+|----------|------------------|-----------------|
+| High-frequency basic vocabulary | Repeated exposure in context | Daily natural exposure |
+| Medium-frequency practical vocabulary | Flashcards + example sentences | SM-2 algorithm applied |
+| Low-frequency specialized vocabulary | Thematic cluster learning | Focus during topic study |
+| Idiomatic expressions | Situational role-play | 2-3 times per week |
+| Grammar patterns | Transformation drills + writing | SM-2 + weekly writing |
 
-## 기억 강화 기법 (복습 시 적용)
+## Review Session Design Principles
 
-| 기법 | 설명 | 적용 시점 |
-|------|------|----------|
-| 인출 연습 | 힌트 없이 먼저 떠올리기 시도 | 모든 복습 |
-| 정교화 | 왜 이 답인지 설명하기 | 2회 이상 맞춘 항목 |
-| 인터리빙 | 유형을 섞어서 복습 | 복습 세션 순서 |
-| 이중 부호화 | 텍스트 + 이미지 + 소리 | 1차 학습 시 |
-| 자기참조 효과 | 개인 경험과 연결 | 어휘 예문 만들기 |
+### Session Structure (20-minute baseline)
+
+```
+[Start] Warm-up (2 min)
+  -> Quick recall of 3 key items from previous session
+
+[Core] Spaced Repetition Review (12 min)
+  -> 20-30 due cards
+  -> Harder cards first (Interleaving)
+
+[Reinforcement] Weakness Focus (4 min)
+  -> Re-learn items missed 2+ consecutive times
+  -> Apply association/etymology/imagery mnemonics
+
+[Wrap-up] Self-Assessment (2 min)
+  -> Self-rate today's session difficulty
+  -> Preview next session
+```
+
+### Optimal Study Volume
+
+| Learner Level | New Items/Day | Review Items/Day | Total Time |
+|--------------|--------------|-----------------|-----------|
+| Beginner (A1) | 5-8 | 15-25 | 15-20 min |
+| Elementary (A2) | 8-12 | 25-40 | 20-30 min |
+| Intermediate (B1-B2) | 10-15 | 30-50 | 25-35 min |
+| Advanced (C1+) | 5-10 | 20-30 | 20-25 min |
+
+## Memory Enhancement Techniques (Applied During Review)
+
+| Technique | Description | When to Apply |
+|-----------|-------------|--------------|
+| Retrieval practice | Attempt to recall without hints first | Every review |
+| Elaboration | Explain why this is the correct answer | Items answered correctly 2+ times |
+| Interleaving | Mix different item types during review | Review session ordering |
+| Dual coding | Text + image + audio | During initial learning |
+| Self-reference effect | Connect to personal experience | Creating vocabulary example sentences |

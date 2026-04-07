@@ -1,27 +1,38 @@
 # Thesis Advisor Harness
 
-논문 작성의 주제선정→문헌조사→방법론→집필→교정 에이전트 팀 하네스.
+An agent team harness for thesis writing: topic selection, literature review, methodology, writing, and proofreading.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── topic-explorer.md
-│   ├── literature-analyst.md
-│   ├── methodology-expert.md
-│   ├── writing-coach.md
-│   └── proofreader.md
+│   ├── topic-explorer.md        — Topic Explorer (research gaps, trends, feasibility)
+│   ├── literature-analyst.md    — Literature Analyst (systematic review, critical analysis)
+│   ├── methodology-expert.md    — Methodology Expert (research design, data collection/analysis)
+│   ├── writing-coach.md         — Writing Coach (structure, academic style, argumentation)
+│   └── proofreader.md           — Proofreader (grammar, formatting, citations, consistency)
 ├── skills/
 │   ├── thesis-advisor/
-│   │   └── skill.md              — 오케스트레이터
-│   ├── research-methodology/
-│   │   └── skill.md              — 연구 방법론 (설계 매트릭스, 표본, 타당도·신뢰도)
-│   └── academic-writing-style/
-│       └── skill.md              — 학술 글쓰기 (논문 구조, 문체, APA 인용)
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md             — Orchestrator (team coordination, workflow, error handling)
+│   ├── academic-writing-style/
+│   │   └── skill.md             — Academic Writing Style (APA/MLA, hedging, metadiscourse)
+│   └── research-methodology/
+│       └── skill.md             — Research Methodology (quantitative/qualitative, design, validity)
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/thesis-advisor` 스킬을 트리거하거나 자연어로 요청한다.
+Trigger the `/thesis-advisor` skill, or make a natural language request such as "Help me with my thesis."
+
+## Deliverables
+
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_topic_exploration.md` — Topic exploration report
+- `02_literature_review.md` — Literature analysis report
+- `03_methodology.md` — Methodology design document
+- `04_writing_guide.md` — Writing guide
+- `05_proofreading.md` — Proofreading report
+- `06_review_report.md` — Review report

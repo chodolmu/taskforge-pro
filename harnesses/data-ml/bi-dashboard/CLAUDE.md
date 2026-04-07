@@ -1,37 +1,37 @@
 # BI Dashboard Harness
 
-BI 대시보드 구축의 데이터웨어하우스 설계→KPI 정의→시각화→자동 보고를 에이전트 팀이 협업하여 생성하는 하네스.
+BI dashboard construction: a harness where an agent team collaborates to perform KPI design → data engineering → dashboard building → report automation → review.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── data-engineer.md       — 데이터 엔지니어 (웨어하우스 설계, ETL, 데이터모델링)
-│   ├── kpi-designer.md        — KPI 설계자 (지표 정의, 계산 로직, 목표치 설정)
-│   ├── dashboard-builder.md   — 대시보드 빌더 (시각화 설계, 레이아웃, 인터랙션)
-│   ├── report-automator.md    — 보고서 자동화 (정기 보고, 알림 설정, 배포)
-│   └── bi-reviewer.md         — BI 검증자 (데이터 정합성, 지표 검증, UX 검토)
+│   ├── kpi-designer.md        — KPI Designer (metric tree, calculation logic, target setting)
+│   ├── data-engineer.md       — Data Engineer (data modeling, ETL pipeline, data quality)
+│   ├── dashboard-builder.md   — Dashboard Builder (layout, charts, filters, interactivity)
+│   ├── report-automator.md    — Report Automator (scheduled reports, alerts, distribution)
+│   └── bi-reviewer.md         — BI Reviewer (accuracy verification, UX review, performance optimization)
 ├── skills/
 │   ├── bi-dashboard/
-│       └── skill.md           — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
-│   ├── kpi-tree-builder/
-│   │   └── skill.md           — KPI 트리 (분해 방법론, 도메인 템플릿, 임계값)
-│   └── chart-selector/
-│       └── skill.md           — 차트 선택 (의사결정 트리, 차트별 규칙, 레이아웃)
-└── CLAUDE.md                  — 이 파일
+│   │   └── skill.md              — Orchestrator (team coordination, workflow, error handling)
+│   ├── chart-selector/
+│   │   └── skill.md              — Chart type selection guide
+│   └── kpi-tree-builder/
+│       └── skill.md              — KPI tree design methodology guide
+└── CLAUDE.md                  — This file
 ```
 
-## 사용법
+## Usage
 
-`/bi-dashboard` 스킬을 트리거하거나, "BI 대시보드 만들어줘" 같은 자연어로 요청한다.
+Trigger the `/bi-dashboard` skill or use natural language like "Build a BI dashboard for me."
 
-## 산출물
+## Outputs
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_data_warehouse_design.md` — 데이터 웨어하우스 설계서
-- `02_kpi_definition.md` — KPI 정의서
-- `03_dashboard_spec.md` — 대시보드 시각화 명세
-- `04_report_automation.md` — 자동 보고 설정서
-- `05_review_report.md` — 검증 보고서
+All outputs are stored in the `_workspace/` directory:
+- `00_input.md` — User input and business requirements
+- `01_kpi_design.md` — KPI tree and metric definitions
+- `02_data_model.md` — Data model and ETL pipeline design
+- `03_dashboard_specs/` — Dashboard specifications and layout
+- `04_automation_config.md` — Report automation and alert settings
+- `05_review_report.md` — Quality review and optimization report

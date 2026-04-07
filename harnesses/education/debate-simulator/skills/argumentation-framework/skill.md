@@ -1,123 +1,122 @@
 ---
 name: argumentation-framework
-description: "토론 논증 구축에 필요한 Toulmin 논증 모델, 증거 유형 분류, 반박 전략을 체계적으로 제공하는 전문 스킬. pro-debater와 con-debater가 견고한 논증을 구축하고 상대 논거를 효과적으로 반박할 때 활용한다. '논증 구조', 'Toulmin 모델', '논거 구축', '반박 전략', '증거 유형', '논증 강화' 등의 맥락에서 자동 적용한다. 단, 법률적 변론이나 학술 논문의 논증 구조 작성은 이 스킬의 범위가 아니다."
+description: "A specialized skill that systematically provides the Toulmin argument model, evidence type classification, and rebuttal strategies for debate argumentation. Used by pro-debater and con-debater agents to construct robust arguments and effectively rebut opposing claims. Automatically applied in contexts such as 'argumentation structure', 'Toulmin model', 'argument construction', 'rebuttal strategy', 'evidence types', 'argument strengthening'. However, legal advocacy and academic paper argumentation structure are outside the scope of this skill."
 ---
 
-# Argumentation Framework — 논증 구축 프레임워크
+# Argumentation Framework — Argument Construction Framework
 
-pro-debater, con-debater 에이전트의 논증 구축 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the pro-debater and con-debater agents' argumentation capabilities.
 
-## 적용 대상 에이전트
+## Target Agents
 
-- **pro-debater** — 찬성 논거 구축, 반박 대비
-- **con-debater** — 반대 논거 구축, 대안 제시
+- **pro-debater** — Pro argument construction, rebuttal preparation
+- **con-debater** — Con argument construction, alternative proposals
 
-## Toulmin 논증 모델
+## Toulmin Argument Model
 
-### 6요소 구조
-
-```
-[데이터/증거]  ──→  그러므로  ──→  [주장]
-     (Data)           │           (Claim)
-                      │
-               [보증/논거]     [한정어]
-               (Warrant)    (Qualifier)
-                  │         "대체로", "~일 수 있다"
-                  │
-              [뒷받침]      [반증]
-              (Backing)    (Rebuttal)
-              보증의 근거    예외/반례
-```
-
-### 각 요소 설명
-
-| 요소 | 역할 | 예시 (논제: "원격근무를 확대해야 한다") |
-|------|------|--------------------------------------|
-| 주장 (Claim) | 입증하려는 진술 | "원격근무를 확대해야 한다" |
-| 데이터 (Data) | 주장을 뒷받침하는 사실 | "원격근무 기업의 생산성이 13% 높았다 (Stanford, 2015)" |
-| 보증 (Warrant) | 데이터→주장의 논리적 다리 | "생산성 향상은 기업 경쟁력을 높이므로" |
-| 뒷받침 (Backing) | 보증의 추가 근거 | "OECD 보고서에 따르면 생산성은 GDP 성장의 핵심 동인" |
-| 한정어 (Qualifier) | 주장의 강도 조절 | "대부분의 지식노동 직종에서" |
-| 반증 (Rebuttal) | 예외/반론 인정 | "단, 현장 노동이 필수인 제조업은 제외" |
-
-## 논증 유형 (Appeal Types)
-
-| 유형 | 설명 | 효과적 사용 | 주의점 |
-|------|------|-----------|-------|
-| 로고스 (Logos) | 논리, 데이터, 통계 | 정책 토론, 분석 주제 | 데이터 왜곡 경계 |
-| 에토스 (Ethos) | 신뢰성, 권위 | 전문가 인용, 기관 보고서 | 권위 남용 경계 |
-| 파토스 (Pathos) | 감정, 공감 | 사회적 이슈, 가치 토론 | 감정적 조작 경계 |
-| 카이로스 (Kairos) | 적시성, 시의성 | 시사 이슈 | 긴급성 과장 경계 |
-
-## 증거 유형 및 강도
-
-### 증거 피라미드 (강도순)
+### 6-Element Structure
 
 ```
-        [메타분석/체계적 리뷰]
-            가장 강력
-       /                    \
-  [실험 연구]         [대규모 설문]
-      정량적 인과            정량적 상관
-    /          \          /           \
-[사례연구]  [전문가 의견]  [통계 데이터]  [유추/비유]
-    정성적       권위      기술적        설명력
+[Data/Evidence]  -->  Therefore  -->  [Claim]
+     (Data)             |           (Claim)
+                        |
+                  [Warrant]       [Qualifier]
+                  (Warrant)      "generally," "may"
+                     |
+                  [Backing]      [Rebuttal]
+                  (Backing)     (Rebuttal)
+              Warrant's support   Exceptions/counterexamples
 ```
 
-### 증거 품질 체크리스트
+### Element Descriptions
 
-- [ ] 출처가 명확한가? (저자, 기관, 연도)
-- [ ] 피어리뷰 된 연구인가?
-- [ ] 표본 크기가 충분한가?
-- [ ] 최신 데이터인가? (5년 이내 권장)
-- [ ] 맥락이 현재 논제와 적합한가?
-- [ ] 상관관계를 인과관계로 오해하지 않았는가?
+| Element | Role | Example (Resolution: "Remote work should be expanded") |
+|---------|------|-------------------------------------------------------|
+| Claim | Statement to be proven | "Remote work should be expanded" |
+| Data | Facts supporting the claim | "Remote workers' productivity was 13% higher (Stanford, 2015)" |
+| Warrant | Logical bridge from data to claim | "Because productivity gains increase corporate competitiveness" |
+| Backing | Additional support for the warrant | "OECD reports identify productivity as the key driver of GDP growth" |
+| Qualifier | Adjusts claim strength | "For most knowledge-work occupations" |
+| Rebuttal | Acknowledges exceptions/counterarguments | "Excluding manufacturing where on-site work is essential" |
 
-## 반박 전략 5-Type
+## Argument Types (Appeal Types)
 
-### Type 1: 전제 공격 (Attacking Premises)
+| Type | Description | Effective Use | Caution |
+|------|-------------|-------------|---------|
+| Logos | Logic, data, statistics | Policy debates, analytical topics | Guard against data distortion |
+| Ethos | Credibility, authority | Expert citations, institutional reports | Guard against authority abuse |
+| Pathos | Emotion, empathy | Social issues, value debates | Guard against emotional manipulation |
+| Kairos | Timeliness, relevance | Current events | Guard against urgency exaggeration |
 
-상대의 데이터나 가정 자체에 문제를 제기한다:
-- "그 연구는 표본이 50명에 불과합니다"
-- "그 데이터는 2015년 것으로 현재와 맥락이 다릅니다"
+## Evidence Types and Strength
 
-### Type 2: 논리 공격 (Attacking Logic)
+### Evidence Pyramid (by strength)
 
-데이터→주장의 논리적 연결을 끊는다:
-- "생산성 향상이 반드시 확대의 근거가 되지는 않습니다"
-- "상관관계가 인과관계를 의미하지 않습니다"
+```
+        [Meta-analysis / Systematic Review]
+              Strongest
+       /                        \
+  [Experimental Studies]    [Large-Scale Surveys]
+    Quantitative causal       Quantitative correlational
+    /          \              /              \
+[Case Studies]  [Expert Opinion]  [Statistical Data]  [Analogy]
+   Qualitative     Authority        Descriptive      Explanatory
+```
 
-### Type 3: 반례 제시 (Counter-Example)
+### Evidence Quality Checklist
 
-주장을 반박하는 구체적 사례를 든다:
-- "Yahoo는 원격근무를 폐지한 후 실적이 개선되었습니다"
+- [ ] Is the source clearly identified? (Author, institution, year)
+- [ ] Is it peer-reviewed research?
+- [ ] Is the sample size sufficient?
+- [ ] Is the data recent? (Within 5 years recommended)
+- [ ] Is the context appropriate for the current resolution?
+- [ ] Is correlation being mistaken for causation?
 
-### Type 4: 비용-편익 공격 (Cost-Benefit)
+## 5-Type Rebuttal Strategies
 
-상대의 이익보다 비용/부작용이 크다고 주장한다:
-- "생산성은 올라도 조직 문화 훼손과 고립감이라는 비용이 더 큽니다"
+### Type 1: Attacking Premises
 
-### Type 5: 대안 제시 (Counter-Proposal)
+Challenge the opponent's data or assumptions directly:
+- "That study had a sample of only 50 people"
+- "That data is from 2015 and the context has changed"
 
-상대의 방안보다 더 나은 대안을 제시한다:
-- "원격근무 확대 대신, 하이브리드 모델이 더 효과적입니다"
+### Type 2: Attacking Logic
 
-## 교차심문 질문 설계
+Break the logical connection from data to claim:
+- "Productivity gains do not necessarily justify expansion"
+- "Correlation does not imply causation"
 
-### 질문 유형
+### Type 3: Counter-Example
 
-| 유형 | 목적 | 예시 |
-|------|------|------|
-| 명확화 질문 | 모호한 주장 구체화 요구 | "정확히 어떤 범위의 원격근무를 말씀하시는 건가요?" |
-| 함정 질문 | 모순으로 유도 | "그렇다면 생산성이 떨어지는 직무도 원격근무를 해야 하나요?" |
-| 양자택일 | 어떤 답을 해도 불리하게 | "A라면 ~문제, B라면 ~문제, 어느 쪽인가요?" |
-| 증거 도전 | 데이터의 신뢰성 공격 | "그 연구의 표본은 어떤 집단이었나요?" |
+Present specific cases that refute the claim:
+- "Yahoo saw improved performance after eliminating remote work"
 
-## 논증 강도 자체 평가 매트릭스
+### Type 4: Cost-Benefit Attack
 
-| 기준 | 1점 (약) | 3점 (보통) | 5점 (강) |
-|------|---------|-----------|---------|
-| 증거 품질 | 개인 의견 | 뉴스/보고서 | 학술 연구 |
-| 논리 연결 | 비약 있음 | 대체로 논리적 | 빈틈 없음 |
-| 반박 내성 | 쉽게 반박 가능 | 일부 반박 가능 | 반박 어려움 |
-| 독창성 | 일반적 주장 | 새로운 관점 | 독창적 프레임 |
+Argue that costs/side effects outweigh the benefits:
+- "Productivity may rise, but organizational culture damage and isolation are even greater costs"
+
+### Type 5: Counter-Proposal
+
+Present an alternative better than the opponent's approach:
+- "Instead of expanding remote work, a hybrid model is more effective"
+
+## Cross-Examination Question Design
+
+### Question Types
+
+| Type | Purpose | Example |
+|------|---------|---------|
+| Clarification | Demand specificity on vague claims | "Exactly what scope of remote work are you referring to?" |
+| Trap | Lead to contradiction | "Then should jobs where productivity drops also go remote?" |
+| Dilemma | Either answer is disadvantageous | "If A, then [problem]; if B, then [problem]. Which is it?" |
+| Evidence challenge | Attack data reliability | "What population was sampled in that study?" |
+
+## Argument Strength Self-Assessment Matrix
+
+| Criterion | 1 pt (Weak) | 3 pts (Average) | 5 pts (Strong) |
+|----------|-------------|-----------------|----------------|
+| Evidence quality | Personal opinion | News/reports | Academic research |
+| Logical connection | Contains leaps | Generally logical | Airtight |
+| Rebuttal resistance | Easily rebutted | Partially rebuttable | Hard to rebut |
+| Originality | Common argument | New perspective | Original framework |

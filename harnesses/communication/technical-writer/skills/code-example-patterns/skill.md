@@ -1,110 +1,110 @@
 ---
 name: code-example-patterns
-description: "기술 문서용 코드 예제 패턴 라이브러리. doc-writer 에이전트가 코드 예제, 튜토리얼을 작성할 때 참조. '코드 예제 패턴', '튜토리얼 코드 작성' 요청 시 사용. 단, 실제 코드 컴파일이나 테스트 실행은 범위 밖."
+description: "technical document code example pattern library. doc-writer agent code example, writingto do when reference. 'code example pattern', ' code writing' request when usage. However, actual code file test execution scope outside."
 ---
 
-# Code Example Patterns — 코드 예제 패턴 라이브러리
+# Code Example Patterns — code example pattern library
 
-doc-writer 에이전트가 기술 문서에 포함할 코드 예제의 품질을 높이는 패턴.
+doc-writer agent technical document includedto do code example quality pattern.
 
-## 5단계 예제 구조
+## 5stage example structure
 
 ```
-1. 목표 선언 — "이 코드는 X를 수행합니다"
-2. 사전 조건 — 라이브러리, 환경 변수, 설정
-3. 핵심 코드 — 최소 작동 예제
-4. 실행 결과 — 예상 출력
-5. 확장 포인트 — "다음 단계로 Y를 할 수 있습니다"
+1. goal — " code X perform"
+2. companybefore condition — library, environment number, setting
+3. core code — minimum work example
+4. execution result — expected capability
+5. extension point — "next stage Y to do number "
 ```
 
-## 좋은 예제 vs 나쁜 예제
+## example vs example
 
-**나쁜 예제** (컨텍스트 없음):
+** example** ( None):
 ```python
 result = client.process(data)
 ```
 
-**좋은 예제** (자기완결적):
+** example** (specialistbasisquality):
 ```python
 # pip install example-sdk
 from example_sdk import Client
 
 client = Client(api_key="your-api-key")
-data = {"name": "테스트", "value": 42}
+data = {"name": "test", "value": 42}
 result = client.process(data)
-print(result.status)  # "success"
+print(result.status) # "success"
 ```
 
-## 언어별 스타일 가이드
+## by style guide
 
 ### Python
-- 임포트 순서: 표준 → 서드파티 → 로컬
-- 타입 힌트 포함 (3.10+)
-- docstring: Google 스타일 (Args, Returns, Raises)
-- f-string 사용, format() 지양
+- order: tablelevel → from → 
+- type included (3.10+)
+- docstring: Google style (Args, Returns, Raises)
+- f-string usage, format degree
 
 ### TypeScript
-- ESM import 사용 (require 지양)
-- async/await 사용 (Promise 체이닝 지양)
-- 인터페이스/타입 명시
-- try/catch로 에러 처리
+- ESM import usage (require degree)
+- async/await usage (Promise degree)
+- person/type specify
+- try/catch error processing
 
 ### cURL
-- 줄바꿈(\)으로 가독성 확보
-- 환경변수로 민감 정보 분리
-- 예상 응답을 주석으로 포함
+- (\)as readability secure
+- environmentnumber information minute
+- expected annotationas included
 
-## 튜토리얼 코드 구성 패턴
+## code composition pattern
 
-### 패턴 1: 점진적 구축 (Progressive Build)
+### pattern 1: pointquality building (Progressive Build)
 ```
-Step 1: 최소 동작 코드
-Step 2: 입력 처리 추가
-Step 3: 에러 처리 추가
-Step 4: 설정 외부화
-Step 5: 프로덕션 코드
+Step 1: minimum work code
+Step 2: input processing addition
+Step 3: error processing addition
+Step 4: setting external
+Step 5: code
 ```
-각 단계에서 **변경 부분만 강조**, 기존 코드는 `...`으로 축약.
+each stagefrom **change departmentminute only **, existing code `...`as approx..
 
-### 패턴 2: 문제-해결 쌍
+### pattern 2: problem- 
 ```markdown
-#### 문제: [구체적 문제 설명]
-#### 해결: [코드와 함께 해결 방법]
+#### problem: [specific problem description]
+#### : [code and method]
 ```
 
-### 패턴 3: 비교 테이블
-| 방식 | 장점 | 단점 | 코드 |
+### pattern 3: comparison 
+| method | advantage | disadvantage | code |
 |------|------|------|------|
-| 동기 | 단순 | 블로킹 | `result = fetch()` |
-| 비동기 | 성능 | 복잡 | `result = await fetch()` |
+| basis | | | `result = fetch` |
+| basis | nature | | `result = await fetch` |
 
-## 코드 주석 규칙
+## code annotation rule
 
-| 규칙 | 설명 |
+| rule | description |
 |------|------|
-| WHY 주석 | "왜" 이렇게 작성했는지 |
-| WHAT 금지 | "무엇"은 코드 자체로 |
-| 한글 주석 | 한국어 문서에서 한글 |
-| TODO 금지 | 예제에 미완성 금지 |
-| 하드코딩 설명 | "실제 환경에서는..." 주석 |
+| WHY annotation | "" writingdegree |
+| WHAT prohibited | "" code specialist |
+| Korean annotation | Korean documentfrom Korean |
+| TODO prohibited | example un-nature prohibited |
+| description | "actual environmentfrom..." annotation |
 
-## 민감 정보 처리
+## information processing
 
 ```python
-# 올바름: 환경변수
+# : environmentnumber
 api_key = os.environ["API_KEY"]
 
-# 문서용 플레이스홀더
-api_key = "your-api-key-here"  # 실제 키로 교체
+# document placeholder
+api_key = "your-api-key-here" # actual 
 ```
 
-## 품질 체크리스트
+## quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| 자기완결성 | import~실행까지 복사-붙여넣기 동작 |
-| 에러 처리 | try/catch 포함 |
-| 타입 정보 | 변수/파라미터/반환값 타입 명시 |
-| 실행 결과 | 예상 출력 포함 |
-| 민감 정보 | 하드코딩 시크릿 없음 |
-| 버전 명시 | 언어/라이브러리 버전 |
+| specialistbasisnature | import~executionto company-basis work |
+| error processing | try/catch included |
+| type information | number/un-/exchange type specify |
+| execution result | expected capability included |
+| information | when None |
+| version specify | /library version |

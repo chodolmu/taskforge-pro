@@ -1,119 +1,121 @@
+```markdown
 ---
 name: gdpr-pipa-cross-reference
-description: "GDPR과 한국 개인정보보호법(PIPA)의 교차 참조 데이터베이스. 'privacy-law-analyst'와 'consent-designer' 에이전트가 다중 법역의 개인정보보호 요건을 분석하고 동의서를 설계할 때 이 스킬의 조문 매핑과 차이 분석을 반드시 활용해야 한다. 'GDPR vs PIPA 비교', '법률 요건 교차 분석', '글로벌 준수 방안' 등에 사용한다. 단, 데이터 플로우 매핑이나 기술적 보호조치 설계는 이 스킬의 범위가 아니다."
+description: "Cross-reference database for GDPR and Korea's Personal Information Protection Act (PIPA). The 'privacy-law-analyst' and 'consent-designer' agents must use this skill's article mappings and gap analysis when analyzing multi-jurisdiction privacy requirements and designing consent forms. Use for 'GDPR vs PIPA comparison', 'legal requirements cross-analysis', 'global compliance strategies', etc. Note: data flow mapping and technical safeguard design are outside the scope of this skill."
 ---
 
-# GDPR-PIPA Cross Reference — GDPR·PIPA 교차 참조 DB
+# GDPR-PIPA Cross Reference — GDPR & PIPA Cross-Reference DB
 
-EU GDPR과 한국 개인정보보호법(PIPA)의 조문별 매핑, 차이 분석, 통합 준수 가이드.
+Article-level mapping, gap analysis, and unified compliance guide for EU GDPR and Korea's Personal Information Protection Act (PIPA).
 
-## 핵심 원칙 교차 매핑
+## Core Principles Cross-Mapping
 
-| 원칙 | GDPR (조문) | PIPA (조문) | 차이점 |
-|------|-----------|-----------|--------|
-| 합법성 | Art.6 (6개 법적 근거) | 제15조 (동의 원칙) | GDPR이 더 많은 법적 근거 |
-| 목적 제한 | Art.5(1)(b) | 제3조 제1호 | 유사 |
-| 최소 수집 | Art.5(1)(c) | 제3조 제1호, 제16조 | 유사 |
-| 정확성 | Art.5(1)(d) | 제3조 제3호 | 유사 |
-| 보유 제한 | Art.5(1)(e) | 제21조 | 유사 |
-| 보안 | Art.5(1)(f), Art.32 | 제29조 | GDPR 더 상세 |
-| 책임성 | Art.5(2) | 제3조 제8호 | GDPR 더 강조 |
+| Principle | GDPR (Article) | PIPA (Article) | Differences |
+|-----------|---------------|----------------|-------------|
+| Lawfulness | Art.6 (6 legal bases) | Art.15 (Consent principle) | GDPR provides more legal bases |
+| Purpose Limitation | Art.5(1)(b) | Art.3 No.1 | Similar |
+| Data Minimization | Art.5(1)(c) | Art.3 No.1, Art.16 | Similar |
+| Accuracy | Art.5(1)(d) | Art.3 No.3 | Similar |
+| Storage Limitation | Art.5(1)(e) | Art.21 | Similar |
+| Security | Art.5(1)(f), Art.32 | Art.29 | GDPR more detailed |
+| Accountability | Art.5(2) | Art.3 No.8 | GDPR more emphasized |
 
-## 동의 요건 비교
+## Consent Requirements Comparison
 
-### GDPR 유효 동의 4요건
-
-```
-1. 자유롭게 제공 (Freely given)
-   - 거부해도 불이익 없음
-   - 서비스 제공 조건으로 불필요한 동의 금지
-
-2. 구체적 (Specific)
-   - 처리 목적별 분리 동의
-   - 포괄적 동의 불가
-
-3. 정보에 기반 (Informed)
-   - 처리자 신원, 목적, 권리 사전 고지
-   - 명확하고 평이한 언어
-
-4. 명확한 행위 (Unambiguous)
-   - 적극적 행위 (사전 체크 금지)
-   - 묵시적 동의 불인정
-```
-
-### PIPA 동의 요건
+### GDPR's 4 Requirements for Valid Consent
 
 ```
-1. 고지 후 동의 (제15조, 제17조)
-   - 수집·이용 목적, 항목, 보유기간 고지
-   - 필수·선택 분리
+1. Freely given
+   - No detriment for refusal
+   - Bundling unnecessary consent with service provision is prohibited
 
-2. 별도 동의가 필요한 경우
-   - 민감정보 (제23조)
-   - 고유식별정보 (제24조)
-   - 마케팅 목적 (제22조)
-   - 제3자 제공 (제17조)
-   - 국외 이전 (제28조의8)
+2. Specific
+   - Separate consent per processing purpose
+   - Blanket consent not permitted
 
-3. 동의 방법
-   - 서면, 전자적 방법
-   - 중요 내용 글씨 크기·색상 구분
+3. Informed
+   - Prior notice of controller identity, purpose, and rights
+   - Clear and plain language
+
+4. Unambiguous indication
+   - Affirmative action required (no pre-checked boxes)
+   - Implied consent not recognized
 ```
 
-### 실무 차이 포인트
+### PIPA Consent Requirements
 
-| 항목 | GDPR | PIPA | 통합 준수 방안 |
-|------|------|------|-------------|
-| 사전 체크박스 | 금지 | 금지 | Opt-in 방식 |
-| 번들링 금지 | 엄격 (Art.7(4)) | 필수/선택 분리 | 목적별 개별 동의 |
-| 철회 용이성 | 동의만큼 용이 | 동의 방법과 절차 동등 | 원클릭 철회 UI |
-| 아동 동의 | 16세 미만 보호자 | 14세 미만 법정대리인 | 14세 기준 (더 엄격) |
-| 동의 증명 | 컨트롤러 입증 | 처리자 입증 | 동의 로그 보관 |
+```
+1. Notice and Consent (Art.15, Art.17)
+   - Notify of collection/use purpose, items, and retention period
+   - Mandatory and optional items must be separated
 
-## 정보주체 권리 매핑
+2. Cases requiring separate consent
+   - Sensitive information (Art.23)
+   - Unique identification information (Art.24)
+   - Marketing purposes (Art.22)
+   - Third-party provision (Art.17)
+   - Cross-border transfer (Art.28-8)
 
-| 권리 | GDPR | PIPA | 보장 수준 |
-|------|------|------|----------|
-| 열람권 | Art.15 | 제35조 | 양 법 유사 |
-| 정정권 | Art.16 | 제36조 | 양 법 유사 |
-| 삭제권(잊힐 권리) | Art.17 | 제36조 | GDPR 더 강력 |
-| 처리 제한권 | Art.18 | 제37조 | GDPR 더 상세 |
-| 이동권 | Art.20 | 제35조의2 (신설) | PIPA 2023 도입 |
-| 반대권 | Art.21 | 제37조 | GDPR 프로파일링 포함 |
-| 자동결정 거부권 | Art.22 | 제37조의2 (신설) | 양 법 유사 |
+3. Consent methods
+   - Written or electronic methods
+   - Important content must be distinguished by font size and color
+```
 
-## 국외 이전 규제 비교
+### Practical Differences
 
-| 항목 | GDPR | PIPA |
+| Item | GDPR | PIPA | Unified Compliance Approach |
+|------|------|------|-----------------------------|
+| Pre-checked boxes | Prohibited | Prohibited | Opt-in method |
+| Bundling prohibition | Strict (Art.7(4)) | Mandatory/optional separation | Separate consent per purpose |
+| Ease of withdrawal | As easy as giving consent | Equivalent to consent method and procedure | One-click withdrawal UI |
+| Child consent | Under 16: parental consent | Under 14: legal guardian consent | Age 14 threshold (stricter) |
+| Proof of consent | Controller must demonstrate | Processor must demonstrate | Retain consent logs |
+
+## Data Subject Rights Mapping
+
+| Right | GDPR | PIPA | Level of Protection |
+|-------|------|------|---------------------|
+| Right of Access | Art.15 | Art.35 | Similar under both laws |
+| Right to Rectification | Art.16 | Art.36 | Similar under both laws |
+| Right to Erasure (Right to be Forgotten) | Art.17 | Art.36 | GDPR stronger |
+| Right to Restriction of Processing | Art.18 | Art.37 | GDPR more detailed |
+| Right to Data Portability | Art.20 | Art.35-2 (newly added) | Introduced in PIPA 2023 |
+| Right to Object | Art.21 | Art.37 | GDPR includes profiling |
+| Right to Object to Automated Decision-Making | Art.22 | Art.37-2 (newly added) | Similar under both laws |
+
+## Cross-Border Transfer Regulation Comparison
+
+| Item | GDPR | PIPA |
 |------|------|------|
-| 원칙 | 적정성 결정국 또는 적합한 보호조치 | 동의 또는 보호조치 |
-| 적정성 결정 | EU 집행위 결정 | 보호위원회 지정 |
-| 표준계약조항 | SCC (Art.46(2)(c)) | 표준개인정보보호조항 |
-| BCR | Art.47 | 해당 없음 |
-| 예외 | Art.49 (동의, 계약 이행 등) | 정보주체 동의 |
+| Principle | Adequacy decision country or appropriate safeguards | Consent or safeguards |
+| Adequacy Decision | European Commission decision | Personal Information Protection Commission designation |
+| Standard Contractual Clauses | SCC (Art.46(2)(c)) | Standard Personal Information Protection Clauses |
+| BCR | Art.47 | Not applicable |
+| Exceptions | Art.49 (consent, contract performance, etc.) | Data subject consent |
 
-## 과태료·과징금 비교
+## Fines and Penalties Comparison
 
-| 구분 | GDPR | PIPA |
-|------|------|------|
-| 최대 과징금 | 전 세계 매출 4% 또는 2천만 유로 | 전체 매출 3% |
-| 경미한 위반 | 전 세계 매출 2% 또는 1천만 유로 | 5천만원 과태료 |
-| 형사처벌 | 회원국 재량 | 5년 이하 징역 |
-| 집단소송 | Art.80 (단체소송) | 집단분쟁조정, 단체소송 |
+| Category | GDPR | PIPA |
+|----------|------|------|
+| Maximum Fine | 4% of global turnover or EUR 20 million | 3% of total revenue |
+| Minor Violations | 2% of global turnover or EUR 10 million | KRW 50 million administrative fine |
+| Criminal Penalties | At member state discretion | Up to 5 years imprisonment |
+| Class Actions | Art.80 (representative actions) | Class dispute mediation, representative actions |
 
-## 통합 준수 체크리스트
+## Unified Compliance Checklist
 
-글로벌 서비스 시 양 법 동시 충족을 위한 최소 요건:
+Minimum requirements for simultaneously satisfying both laws for global services:
 
-- [ ] 처리 활동 기록부(RoPA) 작성 (GDPR Art.30 + PIPA 제30조)
-- [ ] DPO/CPO 지정 (GDPR Art.37 + PIPA 제31조)
-- [ ] 영향평가(DPIA/PIA) 실시 (GDPR Art.35 + PIPA 제33조)
-- [ ] 목적별 분리 동의 + Opt-in (양 법 공통)
-- [ ] 국외 이전 시 SCC + 동의 (양 법 중복 적용)
-- [ ] 72시간 내 침해 신고 (GDPR Art.33 + PIPA 제34조)
-- [ ] 정보주체 권리 행사 절차 (양 법 통합)
+- [ ] Maintain Records of Processing Activities (RoPA) (GDPR Art.30 + PIPA Art.30)
+- [ ] Designate DPO/CPO (GDPR Art.37 + PIPA Art.31)
+- [ ] Conduct impact assessments (DPIA/PIA) (GDPR Art.35 + PIPA Art.33)
+- [ ] Separate consent per purpose + Opt-in (common to both laws)
+- [ ] SCC + consent for cross-border transfers (dual application of both laws)
+- [ ] Report breaches within 72 hours (GDPR Art.33 + PIPA Art.34)
+- [ ] Data subject rights exercise procedures (unified under both laws)
 
-## 참고
+## References
 
-- GDPR 2016/679, 한국 개인정보보호법(2023 전면개정) 기반
-- 상세 조문 매핑: `references/gdpr-pipa-article-map.md` 참조
+- Based on GDPR 2016/679 and Korea's Personal Information Protection Act (2023 comprehensive revision)
+- Detailed article mapping: see `references/gdpr-pipa-article-map.md`
+```

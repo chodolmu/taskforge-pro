@@ -1,125 +1,125 @@
 ---
 name: thesis-advisor
-description: "논문 작성 종합 지원 파이프라인. 주제선정→문헌조사→방법론설계→집필→교정을 에이전트 팀이 협업하여 수행한다. '논문 도와줘', '연구 주제 잡아줘', '문헌 검토', '방법론 설계', '논문 써줘', '논문 교정', '학위 논문', '학술지 투고', '연구 설계', 'literature review' 등 학술 논문 작성 전반에 이 스킬을 사용한다. 기존 원고나 문헌 목록이 있으면 해당 단계를 보강한다. 단, 실제 데이터 수집·분석 실행, 통계 소프트웨어 조작, 학술지 투고 시스템 조작은 이 스킬의 범위가 아니다."
+description: "A thesis writing support full pipeline. An agent team collaborates to perform topic selection, literature review, methodology design, writing, and proofreading. Use this skill for requests like 'help with my thesis', 'find a research topic', 'literature review', 'methodology design', 'write my thesis', 'proofread my thesis', 'dissertation', 'journal submission', 'research design', and other academic thesis writing needs. Existing manuscripts or reference lists can augment the relevant phase. However, actual data collection/analysis execution, statistical software operation, and journal submission system operation are outside the scope of this skill."
 ---
 
-# Thesis Advisor — 논문 작성 종합 지원 파이프라인
+# Thesis Advisor — Thesis Writing Support Full Pipeline
 
-논문의 주제선정→문헌조사→방법론→집필→교정을 에이전트 팀이 협업하여 수행한다.
+An agent team collaborates to perform topic selection, literature review, methodology design, writing, and proofreading.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## Agent Roster
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| topic-explorer | `.claude/agents/topic-explorer.md` | 주제 탐색, 연구질문 수립 | general-purpose |
-| literature-analyst | `.claude/agents/literature-analyst.md` | 문헌 조사, 비판적 검토 | general-purpose |
-| methodology-expert | `.claude/agents/methodology-expert.md` | 연구설계, 분석방법 선정 | general-purpose |
-| writing-coach | `.claude/agents/writing-coach.md` | 논문 구조 설계, 초고 작성 | general-purpose |
-| proofreader | `.claude/agents/proofreader.md` | 교정, 형식 검증, 일관성 검토 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| topic-explorer | `.claude/agents/topic-explorer.md` | Topic exploration, research question formulation | general-purpose |
+| literature-analyst | `.claude/agents/literature-analyst.md` | Literature survey, critical review | general-purpose |
+| methodology-expert | `.claude/agents/methodology-expert.md` | Research design, analysis method selection | general-purpose |
+| writing-coach | `.claude/agents/writing-coach.md` | Thesis structure design, draft writing | general-purpose |
+| proofreader | `.claude/agents/proofreader.md` | Proofreading, format verification, consistency review | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Orchestrator performs directly)
 
-1. 사용자 입력에서 추출한다:
-    - **학문 분야**: 전공, 세부 분야
-    - **논문 유형**: 석사/박사/학술지/학부 졸업논문
-    - **관심 주제** (선택): 구체적 주제 또는 키워드
-    - **지도교수 연구 분야** (선택): 연구실 방향성
-    - **기존 자료** (선택): 기존 원고, 문헌 목록, 데이터
-    - **마감일** (선택): 제출 기한
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 자료가 있으면 `_workspace/`에 복사하고 해당 Phase를 조정한다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Discipline**: Major and sub-field
+    - **Thesis type**: Master's / Doctoral / Journal article / Undergraduate thesis
+    - **Topic of interest** (optional): Specific topic or keywords
+    - **Advisor's research area** (optional): Lab research direction
+    - **Existing materials** (optional): Existing manuscripts, reference lists, data
+    - **Deadline** (optional): Submission date
+2. Create a `_workspace/` directory at the project root
+3. Organize the input and save it to `_workspace/00_input.md`
+4. If existing materials are provided, copy them to `_workspace/` and adjust the relevant phase
+5. Determine the **execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 주제 탐색·선정 | topic-explorer | 없음 | `_workspace/01_topic_proposal.md` |
-| 2 | 문헌 조사·검토 | literature-analyst | 작업 1 | `_workspace/02_literature_review.md` |
-| 3 | 방법론 설계 | methodology-expert | 작업 1, 2 | `_workspace/03_methodology_design.md` |
-| 4 | 논문 초고 작성 | writing-coach | 작업 1, 2, 3 | `_workspace/04_draft_manuscript.md` |
-| 5 | 교정·검증 | proofreader | 작업 4 | `_workspace/05_proofread_report.md` |
+| Order | Task | Agent | Depends On | Deliverable |
+|-------|------|-------|-----------|-------------|
+| 1 | Topic exploration | topic-explorer | None | `_workspace/01_topic_proposal.md` |
+| 2 | Literature review | literature-analyst | Task 1 | `_workspace/02_literature_review.md` |
+| 3 | Methodology design | methodology-expert | Tasks 1, 2 | `_workspace/03_methodology_design.md` |
+| 4 | Draft writing | writing-coach | Tasks 1, 2, 3 | `_workspace/04_draft_manuscript.md` |
+| 5 | Proofreading | proofreader | Task 4 | `_workspace/05_proofread_report.md` |
 
-**팀원 간 소통 흐름:**
-- topic-explorer 완료 → literature-analyst에게 연구질문·키워드 전달, methodology-expert에게 가설·변수 전달
-- literature-analyst 완료 → methodology-expert에게 선행연구 방법론 동향 전달, writing-coach에게 문헌 검토 내용 전달
-- methodology-expert 완료 → writing-coach에게 방법론 설계 전문 전달
-- writing-coach 완료 → proofreader에게 초고 전문 전달
-- proofreader 완료 → 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 (최대 2회)
+**Inter-agent communication flow:**
+- topic-explorer completes -> sends research questions and keywords to literature-analyst; sends hypotheses and variables to methodology-expert
+- literature-analyst completes -> sends methodology trends from prior studies to methodology-expert; sends literature review content to writing-coach
+- methodology-expert completes -> sends full methodology design to writing-coach
+- writing-coach completes -> sends completed draft to proofreader
+- proofreader completes -> on critical findings, requests corrections from the relevant agent (max 2 rounds)
 
-### Phase 3: 통합 및 최종 보고
+### Phase 3: Integration and Final Report
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 교정 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다
+1. Verify all files in `_workspace/`
+2. Confirm that all critical proofreading items have been addressed
+3. Report the final summary to the user
 
-## 작업 규모별 모드
+## Task-Scale Modes
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "논문 처음부터 끝까지", "풀 지원" | **풀 파이프라인** | 5명 전원 |
-| "연구 주제 잡아줘" | **주제 탐색 모드** | topic-explorer 단독 |
-| "문헌 검토 해줘" | **문헌 검토 모드** | topic-explorer + literature-analyst |
-| "방법론 설계해줘" | **방법론 모드** | methodology-expert 단독 (기존 RQ 활용) |
-| "논문 써줘", "초고 작성" | **집필 모드** | writing-coach + proofreader |
-| "논문 교정해줘" (기존 원고) | **교정 모드** | proofreader 단독 |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|----------------|
+| "Thesis from start to finish", "full support" | **Full Pipeline** | All 5 agents |
+| "Help me find a research topic" | **Topic Exploration Mode** | topic-explorer only |
+| "Do a literature review" | **Literature Review Mode** | topic-explorer + literature-analyst |
+| "Design my methodology" | **Methodology Mode** | methodology-expert only (uses existing RQ) |
+| "Write my thesis", "draft writing" | **Writing Mode** | writing-coach + proofreader |
+| "Proofread my thesis" (existing manuscript) | **Proofreading Mode** | proofreader only |
 
-**기존 자료 활용**: 사용자가 기존 원고, 문헌 목록 등을 제공하면 해당 단계를 건너뛰거나 보강한다.
+**Existing material usage**: If the user provides existing manuscripts, reference lists, etc., skip or augment the relevant phase.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information exchange, revision requests |
+| Task-based | TaskCreate/TaskUpdate | Track progress |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{order}_{agent}_{deliverable}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 학술 DB 검색 실패 | 웹 검색으로 대체, 보고서에 "검색 제한" 명시 |
-| 분야 특정 불가 | 사용자에게 분야 좁히기 질문, 관심사 기반 추론 |
-| 기존 원고 형식 불명확 | 일반적 학위 논문 형식 적용 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행 |
-| 교정에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재검증 (최대 2회) |
+| Error Type | Strategy |
+|-----------|----------|
+| Academic DB search failure | Substitute with web search; note "search limited" in report |
+| Cannot determine field | Ask user narrowing questions; infer from interests |
+| Existing manuscript format unclear | Apply standard dissertation format |
+| Agent failure | Retry once -> proceed without that deliverable if still failing |
+| Critical finding in proofreading | Request correction from relevant agent -> re-verify (max 2 rounds) |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "교육학 석사 논문을 쓰려고 해. 플립러닝이 학습 동기에 미치는 영향에 관심이 있어."
-**기대 결과**:
-- 주제 제안: 플립러닝×학습동기 관련 연구 갭 발견, RQ 3~5개, 후보 주제 비교
-- 문헌 검토: 플립러닝·학습동기 선행연구 20편+, 이론적 프레임워크
-- 방법론: 준실험 설계 또는 설문 조사, 표본·도구·분석 방법
-- 초고: 석사 논문 구조(6장), 서론~연구방법까지 완성
-- 교정: 형식·문체·일관성 검증
+### Normal Flow
+**Prompt**: "I want to write an education master's thesis. I'm interested in the impact of flipped learning on learning motivation."
+**Expected Results**:
+- Topic proposal: Discover research gap in flipped learning x motivation, 3-5 RQs, candidate topic comparison
+- Literature review: 20+ prior studies on flipped learning and motivation, theoretical framework
+- Methodology: Quasi-experimental design or survey, sample/instruments/analysis methods
+- Draft: Master's thesis structure (6 chapters), Introduction through Methods completed
+- Proofreading: Format, style, and consistency verification
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 원고 교정해줘" + 논문 파일 첨부
-**기대 결과**:
-- 교정 모드 (proofreader 단독)
-- 문법·형식·일관성 검증 보고서
+### Existing File Flow
+**Prompt**: "Proofread this manuscript" + thesis file attached
+**Expected Results**:
+- Proofreading Mode (proofreader only)
+- Grammar, format, and consistency verification report
 
-### 에러 흐름
-**프롬프트**: "논문 주제 추천해줘, 분야는 아직 안 정했어"
-**기대 결과**:
-- 관심사·강점 파악 질문으로 분야를 좁힌 후 주제 탐색 모드로 진행
+### Error Flow
+**Prompt**: "Recommend a thesis topic; I haven't decided on a field yet"
+**Expected Results**:
+- Ask questions about interests and strengths to narrow the field, then proceed with topic exploration
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-에이전트의 도메인 전문성을 강화하는 확장 스킬:
+Extension skills that enhance each agent's domain expertise:
 
-| 에이전트 | 확장 스킬 | 역할 |
-|---------|----------|------|
-| methodology-expert | `research-methodology` | 연구 설계 매트릭스, 표본 크기 산출, 타당도·신뢰도, 분석 방법 선택 |
-| writing-coach, proofreader | `academic-writing-style` | 논문 장별 구조, 학술 문체 규칙, APA 인용, 교정 체크리스트 |
+| Agent | Extension Skill | Role |
+|-------|----------------|------|
+| methodology-expert | `research-methodology` | Research design matrix, sample size calculation, validity/reliability, analysis method selection |
+| writing-coach, proofreader | `academic-writing-style` | Per-chapter thesis structure, academic style rules, APA citations, proofreading checklist |

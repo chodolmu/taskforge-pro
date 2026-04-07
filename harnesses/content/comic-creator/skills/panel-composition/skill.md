@@ -1,119 +1,119 @@
 ---
 name: panel-composition
-description: "스토리보더(storyboarder)와 이미지생성자(image-generator)가 사용하는 패널 구도 전문 스킬. 만화 패널 레이아웃 패턴, 카메라 앵글, 시선 유도, 페이지 리듬 설계 방법론을 제공한다. '패널 레이아웃', '구도', '콘티 설계', '시선 유도' 등에 활용한다."
+description: "A panel composition skill used by the storyboarder and image-generator agents. Provides comic panel layout patterns, camera angles, gaze flow design, and page rhythm methodologies. Used for 'panel layout,' 'composition,' 'storyboard design,' 'gaze flow,' and related topics."
 ---
 
-# Panel Composition — 패널 구도 전문 방법론
+# Panel Composition — Panel Composition Methodology
 
-storyboarder와 image-generator 에이전트가 만화 패널을 설계하고 이미지를 생성할 때 활용하는 구도 전문 지식.
+Expert knowledge used by the storyboarder and image-generator agents when designing comic panels and generating images.
 
-## 왜 구도가 만화를 결정하는가
+## Why Composition Defines Comics
 
-만화는 **시간을 공간으로 변환하는 매체**다. 영화는 시간이 흐르지만, 만화는 독자가 시선을 이동하며 시간을 만든다. 패널의 크기, 형태, 배치가 곧 시간과 감정의 연출이다.
+Comics are a **medium that converts time into space**. Unlike film where time flows automatically, comics rely on the reader's gaze movement to create time. Panel size, shape, and arrangement are the tools for directing time and emotion.
 
-## 기본 패널 레이아웃 패턴
+## Basic Panel Layout Patterns
 
-### 4컷 만화 레이아웃
+### 4-Panel Comic Layouts
 
-| 패턴 | 구조 | 적합한 이야기 |
-|------|------|-------------|
-| **기승전결** | 동일 크기 4칸 세로 | 코미디, 일상 관찰 |
-| **와이드 클로즈** | 와이드→표준→표준→클로즈업 | 드라마, 감정 강조 |
-| **줌 인** | 원경→중경→근경→클로즈업 | 긴장 고조, 발견 |
-| **시간 점프** | 과거→현재→현재→결과 | 대비, 성장 |
+| Pattern | Structure | Best For |
+|---------|-----------|----------|
+| **Setup-Development-Twist-Punchline** | 4 equal vertical panels | Comedy, observational humor |
+| **Wide to Close** | Wide -> Standard -> Standard -> Close-up | Drama, emotional emphasis |
+| **Zoom In** | Long shot -> Medium -> Close -> Extreme close-up | Building tension, discovery |
+| **Time Jump** | Past -> Present -> Present -> Result | Contrast, growth |
 
-### 웹툰 레이아웃 (세로 스크롤)
+### Webtoon Layout (Vertical Scroll)
 
-| 연출 기법 | 패널 구성 | 효과 |
-|----------|---------|------|
-| **여백 확장** | 패널 사이 여백을 2~3배로 | 시간 경과, 여운 |
-| **풀폭 패널** | 화면 전체 너비 사용 | 임팩트, 장면 전환 |
-| **긴 세로 패널** | 높이가 긴 패널 | 낙하, 고도, 압도감 |
-| **연속 컷** | 작은 패널 3~5개 연속 | 빠른 액션, 긴장 |
-| **무음 패널** | 대사 없는 풍경/표정 | 감정 여백, 독자 해석 유도 |
+| Technique | Panel Composition | Effect |
+|-----------|------------------|--------|
+| **Expanded Spacing** | 2-3x normal spacing between panels | Time passage, lingering emotion |
+| **Full-Width Panel** | Uses entire screen width | Impact, scene transition |
+| **Tall Vertical Panel** | Vertically elongated panel | Falling, height, overwhelming scale |
+| **Rapid Cuts** | 3-5 small panels in succession | Fast action, tension |
+| **Silent Panel** | Scenery/expression with no dialogue | Emotional space, reader interpretation |
 
-## 카메라 앵글별 감정 효과
+## Camera Angle Emotional Effects
 
-| 앵글 | 감정 효과 | 사용 상황 | 프롬프트 키워드 |
-|------|---------|----------|-------------|
-| **로우앵글 (올려다봄)** | 위압, 권위, 영웅적 | 등장인물 소개, 대립 | "low angle shot, looking up" |
-| **하이앵글 (내려다봄)** | 나약, 고립, 전체상 | 위기, 고독 | "high angle shot, bird's eye" |
-| **아이레벨 (눈높이)** | 동등, 객관적 | 대화, 일상 | "eye level shot" |
-| **더치앵글 (기울임)** | 불안, 긴장, 혼란 | 심리 불안, 위험 | "dutch angle, tilted frame" |
-| **오버숄더 (어깨 너머)** | 대화의 긴장, 시점 | 대화, 대립 | "over the shoulder shot" |
-| **POV (1인칭)** | 몰입, 독자=캐릭터 | 공포, 발견 | "POV shot, first person" |
+| Angle | Emotional Effect | Use Case | Prompt Keywords |
+|-------|-----------------|----------|----------------|
+| **Low Angle (looking up)** | Intimidation, authority, heroic | Character introductions, confrontation | "low angle shot, looking up" |
+| **High Angle (looking down)** | Vulnerability, isolation, overview | Crisis, solitude | "high angle shot, bird's eye" |
+| **Eye Level** | Equality, objectivity | Conversation, daily life | "eye level shot" |
+| **Dutch Angle (tilted)** | Unease, tension, confusion | Psychological tension, danger | "dutch angle, tilted frame" |
+| **Over-the-Shoulder** | Conversational tension, POV | Dialogue, confrontation | "over the shoulder shot" |
+| **POV (First Person)** | Immersion, reader = character | Horror, discovery | "POV shot, first person" |
 
-## 패널 크기와 시간의 관계
-
-```
-작은 패널 = 짧은 시간 (빠른 액션, 순간)
-큰 패널 = 긴 시간 (여유, 감정, 풍경)
-테두리 없는 패널 = 시간 정지 (몽상, 플래시백)
-```
-
-### 크기별 사용 가이드
-
-| 크기 | 비율 | 용도 |
-|------|------|------|
-| **소 (1/6 페이지)** | 15% | 리액션, 효과음, 순간 포착 |
-| **중 (1/4 페이지)** | 25% | 표준 대화, 일반 행동 |
-| **대 (1/2 페이지)** | 50% | 감정적 순간, 액션 하이라이트 |
-| **풀 (전체 페이지)** | 100% | 에스타블리싱 샷, 클라이맥스 |
-| **더블 스프레드 (2페이지)** | 200% | 최고 임팩트, 전투 파노라마 |
-
-## 시선 유도 (Reading Flow)
-
-### Z-패턴 (서양식)
-```
-→ → → →
-        ↓
-← ← ← ←
-↓
-→ → → →
-```
-
-### 역Z-패턴 (한국 만화/웹툰)
-```
-← ← ← ←
-↓
-→ → → →
-        ↓
-← ← ← ←
-```
-
-### 시선 유도 규칙
-
-1. **진입점 (Entry Point)**: 각 페이지에서 독자의 시선이 처음 닿는 곳 — 가장 중요한 정보 배치
-2. **시선 경로 (Gaze Path)**: 캐릭터의 시선 방향이 다음 패널을 가리키도록
-3. **말풍선 순서**: 위→아래, 왼쪽→오른쪽 순으로 배치 (한국어 가로쓰기 기준)
-4. **액션 방향**: 오른쪽을 향하는 동작 = 전진/진행, 왼쪽 = 후퇴/회상
-
-## 페이지 리듬 설계: 음악적 패턴
-
-| 리듬 패턴 | 패널 구성 | 효과 |
-|----------|---------|------|
-| **강-약-강-약** | 큰-작은-큰-작은 | 안정적, 대화 장면 |
-| **약-약-약-강!** | 작은-작은-작은-풀페이지 | 긴장 축적 → 폭발 |
-| **강-약-약-약** | 큰 도입 → 작은 진행 | 장면 전환 후 디테일 |
-| **균등** | 모두 같은 크기 | 시간의 균일한 흐름, 일상 |
-| **점강** | 큰→중→작→작 | 줌인, 집중 |
-| **점증** | 작→작→중→큰 | 줌아웃, 스케일 확대 |
-
-## 이미지 생성 프롬프트 구조
+## Panel Size and Time Relationship
 
 ```
-[스타일] [앵글] [구도]. [인물 묘사]. [동작/표정].
-[배경/환경]. [조명]. [감정/분위기].
-[텍스트 지시: 한글 대사 또는 NO TEXT]
+Small panel = Short time (fast action, instant)
+Large panel = Long time (leisure, emotion, scenery)
+Borderless panel = Time freeze (daydream, flashback)
 ```
 
-### 프롬프트 예시
+### Size Usage Guide
+
+| Size | Ratio | Use |
+|------|-------|-----|
+| **Small (1/6 page)** | 15% | Reactions, SFX, capturing a moment |
+| **Medium (1/4 page)** | 25% | Standard dialogue, regular actions |
+| **Large (1/2 page)** | 50% | Emotional moments, action highlights |
+| **Full (entire page)** | 100% | Establishing shots, climaxes |
+| **Double Spread (2 pages)** | 200% | Maximum impact, battle panoramas |
+
+## Gaze Flow (Reading Flow)
+
+### Z-Pattern (Western)
+```
+-> -> -> ->
+           v
+<- <- <- <-
+v
+-> -> -> ->
+```
+
+### Reverse-Z (Korean/Webtoon)
+```
+<- <- <- <-
+v
+-> -> -> ->
+           v
+<- <- <- <-
+```
+
+### Gaze Flow Rules
+
+1. **Entry Point**: Where the reader's eyes land first on each page — place the most important information here
+2. **Gaze Path**: Character gaze direction should point toward the next panel
+3. **Bubble Order**: Top-to-bottom, left-to-right (for left-to-right reading languages)
+4. **Action Direction**: Rightward motion = advance/progress; leftward = retreat/flashback
+
+## Page Rhythm Design: Musical Patterns
+
+| Rhythm Pattern | Panel Composition | Effect |
+|---------------|------------------|--------|
+| **Strong-Weak-Strong-Weak** | Large-Small-Large-Small | Stable, conversation scenes |
+| **Weak-Weak-Weak-STRONG!** | Small-Small-Small-Full page | Tension buildup -> explosion |
+| **Strong-Weak-Weak-Weak** | Large opening -> small progression | Scene transition then detail |
+| **Even** | All same size | Uniform time flow, daily life |
+| **Decreasing** | Large -> Medium -> Small -> Small | Zoom in, focus |
+| **Increasing** | Small -> Small -> Medium -> Large | Zoom out, scale expansion |
+
+## Image Generation Prompt Structure
 
 ```
-Korean manhwa style, medium shot, slightly low angle.
+[Style] [Angle] [Composition]. [Character description]. [Action/Expression].
+[Background/Environment]. [Lighting]. [Emotion/Atmosphere].
+[Text instruction: dialogue text or NO TEXT]
+```
+
+### Prompt Example
+
+```
+Manga style, medium shot, slightly low angle.
 A young woman with short black hair in a lab coat,
 looking surprised with wide eyes, holding a broken test tube.
 Modern laboratory background with blue LED lighting.
 Dramatic side lighting, tense atmosphere.
-Speech bubble text MUST be in Korean: '이건... 불가능한 결과야'
+NO TEXT in the image.
 ```

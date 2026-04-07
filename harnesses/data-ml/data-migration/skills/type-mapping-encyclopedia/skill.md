@@ -1,62 +1,62 @@
 ---
 name: type-mapping-encyclopedia
-description: "RDBMS 간 데이터 타입 매핑 테이블, RDBMS↔NoSQL 변환 패턴, 문자셋/콜레이션 변환, 특수 타입 처리 가이드. '타입 매핑', '데이터 타입 변환', 'MySQL PostgreSQL 변환', 'Oracle 마이그레이션', '문자셋 변환', '콜레이션', 'AUTO_INCREMENT 시퀀스', 'JSON 타입' 등 스키마 타입 변환 시 이 스킬을 사용한다. schema-mapper의 타입 변환 역량을 강화한다. 단, ETL 스크립트 작성이나 검증 쿼리는 이 스킬의 범위가 아니다."
+description: "RDBMS-to-RDBMS data type mapping tables, RDBMS-to-NoSQL conversion patterns, character set/collation conversion, and special type handling guide. Use this skill for requests involving 'type mapping', 'data type conversion', 'MySQL PostgreSQL conversion', 'Oracle migration', 'character set conversion', 'collation', 'AUTO_INCREMENT sequence', 'JSON type', etc. Enhances schema-mapper's type conversion capabilities. Note: ETL script writing and validation queries are outside the scope of this skill."
 ---
 
-# Type Mapping Encyclopedia — 데이터 타입 매핑 백과사전
+# Type Mapping Encyclopedia — Data Type Mapping Reference
 
-RDBMS 간 데이터 타입 매핑, 특수 타입 변환, 문자셋 처리를 위한 종합 레퍼런스.
+A comprehensive reference for RDBMS-to-RDBMS data type mapping, special type conversions, and character set handling.
 
-## MySQL → PostgreSQL 매핑
+## MySQL to PostgreSQL Mapping
 
-| MySQL | PostgreSQL | 주의사항 |
-|-------|-----------|---------|
-| TINYINT | SMALLINT | TINYINT UNSIGNED → SMALLINT |
+| MySQL | PostgreSQL | Notes |
+|-------|-----------|-------|
+| TINYINT | SMALLINT | TINYINT UNSIGNED -> SMALLINT |
 | INT | INTEGER | |
-| INT UNSIGNED | BIGINT | PostgreSQL에 UNSIGNED 없음 |
+| INT UNSIGNED | BIGINT | PostgreSQL has no UNSIGNED |
 | BIGINT | BIGINT | |
 | FLOAT | REAL | |
 | DOUBLE | DOUBLE PRECISION | |
-| DECIMAL(M,N) | NUMERIC(M,N) | 동일 |
+| DECIMAL(M,N) | NUMERIC(M,N) | Identical |
 | VARCHAR(N) | VARCHAR(N) | |
 | CHAR(N) | CHAR(N) | |
 | TEXT | TEXT | |
-| MEDIUMTEXT | TEXT | PostgreSQL TEXT 크기 제한 없음 |
+| MEDIUMTEXT | TEXT | PostgreSQL TEXT has no size limit |
 | LONGTEXT | TEXT | |
 | BLOB | BYTEA | |
-| LONGBLOB | BYTEA | 또는 Large Object |
+| LONGBLOB | BYTEA | Or use Large Object |
 | DATE | DATE | |
-| DATETIME | TIMESTAMP | MySQL: UTC 아님, PG: 타임존 옵션 |
-| TIMESTAMP | TIMESTAMPTZ | MySQL: UTC 변환 자동 |
+| DATETIME | TIMESTAMP | MySQL: not UTC; PG: timezone option |
+| TIMESTAMP | TIMESTAMPTZ | MySQL: auto UTC conversion |
 | TIME | TIME | |
 | YEAR | SMALLINT | |
-| ENUM('a','b') | VARCHAR + CHECK | 또는 CREATE TYPE |
-| SET('a','b') | VARCHAR[] | 또는 정규화 |
-| JSON | JSONB | JSONB 권장 (인덱싱 가능) |
+| ENUM('a','b') | VARCHAR + CHECK | Or CREATE TYPE |
+| SET('a','b') | VARCHAR[] | Or normalize |
+| JSON | JSONB | JSONB recommended (indexable) |
 | BIT(N) | BIT(N) | |
-| BOOLEAN | BOOLEAN | MySQL TINYINT(1) → BOOLEAN |
-| AUTO_INCREMENT | GENERATED ALWAYS AS IDENTITY | 또는 SERIAL (레거시) |
+| BOOLEAN | BOOLEAN | MySQL TINYINT(1) -> BOOLEAN |
+| AUTO_INCREMENT | GENERATED ALWAYS AS IDENTITY | Or SERIAL (legacy) |
 
-### 특수 변환 패턴
+### Special Conversion Patterns
 
 ```sql
--- MySQL ENUM → PostgreSQL
--- 방법 1: CHECK 제약
+-- MySQL ENUM -> PostgreSQL
+-- Method 1: CHECK constraint
 CREATE TABLE orders (
     status VARCHAR(20) CHECK (status IN ('pending', 'paid', 'shipped'))
 );
 
--- 방법 2: 사용자 정의 타입
+-- Method 2: Custom type
 CREATE TYPE order_status AS ENUM ('pending', 'paid', 'shipped');
 CREATE TABLE orders (status order_status);
 
--- MySQL AUTO_INCREMENT → PostgreSQL IDENTITY
+-- MySQL AUTO_INCREMENT -> PostgreSQL IDENTITY
 -- MySQL:
 CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY);
 -- PostgreSQL:
 CREATE TABLE users (id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY);
 
--- MySQL ON UPDATE CURRENT_TIMESTAMP → PostgreSQL 트리거
+-- MySQL ON UPDATE CURRENT_TIMESTAMP -> PostgreSQL trigger
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $$
 BEGIN NEW.updated_at = CURRENT_TIMESTAMP; RETURN NEW; END;
@@ -65,39 +65,39 @@ CREATE TRIGGER update_timestamp BEFORE UPDATE ON users
 FOR EACH ROW EXECUTE FUNCTION update_modified_column();
 ```
 
-## Oracle → PostgreSQL 매핑
+## Oracle to PostgreSQL Mapping
 
-| Oracle | PostgreSQL | 주의사항 |
-|--------|-----------|---------|
-| NUMBER | NUMERIC | 정밀도 지정 필요 |
-| NUMBER(N,0) | INTEGER/BIGINT | 크기에 따라 선택 |
+| Oracle | PostgreSQL | Notes |
+|--------|-----------|-------|
+| NUMBER | NUMERIC | Precision specification required |
+| NUMBER(N,0) | INTEGER/BIGINT | Choose based on size |
 | VARCHAR2(N) | VARCHAR(N) | |
 | CHAR(N) | CHAR(N) | |
 | CLOB | TEXT | |
 | BLOB | BYTEA | |
-| DATE | TIMESTAMP | Oracle DATE는 시간 포함! |
+| DATE | TIMESTAMP | Oracle DATE includes time! |
 | TIMESTAMP WITH TIME ZONE | TIMESTAMPTZ | |
 | RAW | BYTEA | |
-| LONG | TEXT | 사용 중단 권장 |
-| NVARCHAR2 | VARCHAR | PostgreSQL UTF-8 기본 |
-| ROWID | 없음 | ctid 또는 자체 키 사용 |
-| SEQUENCE | SEQUENCE | 구문 유사 |
+| LONG | TEXT | Deprecated — migration recommended |
+| NVARCHAR2 | VARCHAR | PostgreSQL defaults to UTF-8 |
+| ROWID | N/A | Use ctid or custom key |
+| SEQUENCE | SEQUENCE | Similar syntax |
 | SYSDATE | CURRENT_TIMESTAMP | |
 | NVL() | COALESCE() | |
 | DECODE() | CASE WHEN | |
 
-## RDBMS → MongoDB 변환 패턴
+## RDBMS to MongoDB Conversion Patterns
 
-### 정규화 해제 전략
+### Denormalization Strategy
 
 ```
-관계형:                          문서형:
-┌─ users ─┐  ┌─ orders ─┐      {
-│ id       │  │ id       │        _id: ObjectId,
-│ name     │  │ user_id  │→       name: "홍길동",
-│ email    │  │ total    │        email: "hong@test.com",
-└──────────┘  │ items[]  │        orders: [
-              └──────────┘          { total: 50000,
+Relational:                      Document:
++- users -+  +- orders -+      {
+| id       |  | id       |        _id: ObjectId,
+| name     |  | user_id  |->      name: "John Doe",
+| email    |  | total    |        email: "john@test.com",
++----------+  | items[]  |        orders: [
+               +----------+          { total: 50000,
                                       items: [
                                         { product: "A", qty: 2 }
                                       ]
@@ -106,63 +106,63 @@ FOR EACH ROW EXECUTE FUNCTION update_modified_column();
                                 }
 ```
 
-### 임베딩 vs 참조 결정
+### Embedding vs. Reference Decision
 
-| 기준 | 임베딩 (내포) | 참조 (분리) |
-|------|-------------|-----------|
-| 관계 | 1:1, 1:Few | 1:Many, M:N |
-| 읽기 패턴 | 항상 함께 조회 | 독립 조회 빈번 |
-| 변경 빈도 | 부모와 동시 변경 | 독립 변경 빈번 |
-| 데이터 크기 | < 16MB (문서 제한) | 크기 무관 |
-| 중복 | 허용 가능 | 중복 제거 필요 |
+| Criterion | Embedding (Nested) | Reference (Separate) |
+|-----------|-------------------|---------------------|
+| Relationship | 1:1, 1:Few | 1:Many, M:N |
+| Read pattern | Always queried together | Frequently queried independently |
+| Update frequency | Updated with parent | Updated independently |
+| Data size | < 16MB (document limit) | Size independent |
+| Duplication | Acceptable | Deduplication required |
 
-## 문자셋/콜레이션 변환
+## Character Set / Collation Conversion
 
-### MySQL → PostgreSQL
+### MySQL to PostgreSQL
 
 ```sql
--- MySQL 문자셋 확인
+-- MySQL character set check
 SHOW VARIABLES LIKE 'character_set%';
 SELECT character_set_name, collation_name
 FROM information_schema.columns WHERE table_name = 'users';
 
--- PostgreSQL 콜레이션
--- MySQL utf8mb4_general_ci → PostgreSQL ICU 콜레이션
+-- PostgreSQL collation
+-- MySQL utf8mb4_general_ci -> PostgreSQL ICU collation
 CREATE COLLATION korean_ci (
     provider = icu, locale = 'ko-u-ks-level1', deterministic = false
 );
 
--- 대소문자 무시 비교
--- MySQL: utf8mb4_general_ci (기본)
--- PostgreSQL: citext 확장 또는 LOWER() 인덱스
+-- Case-insensitive comparison
+-- MySQL: utf8mb4_general_ci (default)
+-- PostgreSQL: citext extension or LOWER() index
 CREATE EXTENSION IF NOT EXISTS citext;
 ALTER TABLE users ALTER COLUMN email TYPE citext;
 ```
 
-### 인코딩 변환 주의사항
+### Encoding Conversion Notes
 
-| 이슈 | 증상 | 해결 |
-|------|------|------|
-| MySQL utf8 (3바이트) | 이모지 깨짐 | utf8mb4로 변환 후 마이그레이션 |
-| Latin1 → UTF8 | 한글 깨짐 | 바이너리 중간 단계 경유 |
-| EUC-KR → UTF8 | 특수 한자 손실 | 매핑 테이블 사용 |
-| CP949 → UTF8 | 확장 한글 확인 | iconv 사전 검증 |
+| Issue | Symptom | Solution |
+|-------|---------|----------|
+| MySQL utf8 (3-byte) | Emojis break | Convert to utf8mb4 before migration |
+| Latin1 to UTF8 | CJK characters corrupted | Route through binary intermediate step |
+| EUC-KR to UTF8 | Rare CJK characters lost | Use mapping tables |
+| CP949 to UTF8 | Extended characters need verification | Pre-validate with iconv |
 
-## 비가역 변환 목록
+## Irreversible Conversion Inventory
 
-| 변환 | 비가역 이유 | 대응 |
-|------|-----------|------|
-| ENUM → VARCHAR | 허용 값 제약 손실 | CHECK 제약 추가 |
-| UNSIGNED INT → INT | 음수 범위 확장 | 비즈니스 규칙으로 보강 |
-| DATETIME → TIMESTAMPTZ | 타임존 정보 추가 필요 | 기본 TZ 가정 명시 |
-| ROWID → ctid | 물리적 위치 의존 | 논리적 키로 대체 |
-| Oracle DATE → PG DATE | 시간 부분 손실 | TIMESTAMP 사용 |
-| CLOB → TEXT | 동작은 동일 | — |
+| Conversion | Reason for Irreversibility | Mitigation |
+|-----------|--------------------------|-----------|
+| ENUM -> VARCHAR | Allowed value constraint lost | Add CHECK constraint |
+| UNSIGNED INT -> INT | Negative range expanded | Reinforce with business rules |
+| DATETIME -> TIMESTAMPTZ | Timezone info must be added | Explicitly state assumed TZ |
+| ROWID -> ctid | Physical location dependent | Replace with logical key |
+| Oracle DATE -> PG DATE | Time portion lost | Use TIMESTAMP instead |
+| CLOB -> TEXT | Behavior is identical | -- |
 
-## 타입 매핑 검증 쿼리
+## Type Mapping Verification Queries
 
 ```sql
--- 소스 (MySQL)
+-- Source (MySQL)
 SELECT column_name, data_type, column_type,
        character_maximum_length, numeric_precision, numeric_scale,
        is_nullable, column_default, extra
@@ -170,7 +170,7 @@ FROM information_schema.columns
 WHERE table_schema = 'mydb' AND table_name = 'orders'
 ORDER BY ordinal_position;
 
--- 타깃 (PostgreSQL)
+-- Target (PostgreSQL)
 SELECT column_name, data_type, udt_name,
        character_maximum_length, numeric_precision, numeric_scale,
        is_nullable, column_default

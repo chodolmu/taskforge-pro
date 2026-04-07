@@ -1,134 +1,134 @@
 ---
 name: prior-art-search-strategy
-description: "특허 선행기술 조사의 전략적 검색 방법론. 'prior-art-researcher' 에이전트가 선행기술을 검색하고 신규성·진보성을 판단할 때 이 스킬의 검색 전략, 분류코드 체계, 분석 프레임워크를 반드시 활용해야 한다. '선행기술 검색', '신규성 판단', '진보성 분석' 등에 사용한다. 단, 청구항 작성이나 명세서 기술은 이 스킬의 범위가 아니다."
+description: "A strategic search methodology for patent prior art investigation. The 'prior-art-researcher' agent must use this skill's search strategies, classification code system, and analysis frameworks when searching prior art and determining novelty and inventive step. Used for 'prior art search', 'novelty determination', 'inventive step analysis', etc. Note: Claim drafting or specification writing is outside the scope of this skill."
 ---
 
-# Prior Art Search Strategy — 선행기술 검색 전략 가이드
+# Prior Art Search Strategy — Prior Art Search Strategy Guide
 
-체계적 선행기술 조사를 위한 검색 전략, IPC/CPC 분류 활용, 분석 프레임워크.
+Search strategies, IPC/CPC classification utilization, and analysis frameworks for systematic prior art investigation.
 
-## 검색 전략 3단계 프레임워크
+## 3-Phase Search Strategy Framework
 
-### 1단계: 발명 분해 (Invention Decomposition)
-
-```
-발명 → 기술적 과제 → 해결 수단 → 구성요소
-
-분해 매트릭스:
-| 구성요소 | 기능 | 연결관계 | 기술분야 | 핵심 키워드 |
-|---------|------|---------|---------|-----------|
-| A       | F1   | A→B    | 센서    | sensor, 감지 |
-| B       | F2   | B→C    | AI     | neural, 학습 |
-| C       | F3   | C→출력  | 제어    | control, 조절 |
-```
-
-### 2단계: 검색식 설계
-
-**키워드 확장 규칙**
-```
-핵심 키워드 → 동의어 → 상위 개념 → 하위 개념
-
-예: "인공지능"
-  동의어: AI, artificial intelligence, 기계학습, machine learning
-  상위: 데이터 처리, 컴퓨터 시스템
-  하위: CNN, RNN, transformer, 딥러닝, deep learning
-```
-
-**검색식 구조**
-```
-(구성요소A 키워드 OR 동의어) AND
-(구성요소B 키워드 OR 동의어) AND
-(기능/효과 키워드 OR 동의어)
-
-검색 범위 조절:
-  넓은 검색: A AND B (2개 조합)
-  중간 검색: A AND B AND C (3개 조합)
-  좁은 검색: A AND B AND C AND D (4개+ 조합)
-```
-
-### 3단계: 검색 실행 순서
-
-| 순서 | 데이터베이스 | 목적 | 커버리지 |
-|------|------------|------|---------|
-| 1 | KIPRIS (한국 특허) | 국내 선행기술 | 한국 등록/공개 |
-| 2 | Google Patents | 글로벌 개관 | 전 세계 특허 |
-| 3 | Espacenet (EPO) | 유럽·PCT | EP, WO |
-| 4 | USPTO (미국) | 미국 특허 | US |
-| 5 | 학술 DB (Google Scholar) | 비특허 문헌 | 논문, 학위논문 |
-| 6 | 웹 검색 | 공지 기술 | 제품, 블로그, 뉴스 |
-
-## IPC/CPC 분류코드 활용
-
-### 주요 기술분야별 분류코드
-
-| 기술분야 | IPC | 설명 |
-|---------|-----|------|
-| IoT/센서 | G01D, H04W | 측정, 무선통신 |
-| AI/머신러닝 | G06N | 컴퓨터 시스템 기반 모델 |
-| 이미지 처리 | G06T, G06V | 이미지 데이터 처리, 인식 |
-| 블록체인 | H04L 9/00 | 암호화 배치 |
-| 모바일 앱 | G06F 3/04 | 사용자 인터페이스 |
-| 배터리 | H01M | 전기화학적 에너지 |
-| 자율주행 | B60W, G05D | 차량 제어, 경로 제어 |
-| 바이오 | C12N, A61K | 유전공학, 의약 |
-
-## 신규성·진보성 판단 프레임워크
-
-### 신규성 분석 매트릭스
+### Phase 1: Invention Decomposition
 
 ```
-| 청구항 구성요소 | 선행기술 1 | 선행기술 2 | 선행기술 3 |
-|---------------|----------|----------|----------|
-| A: [구성]      | ○ 동일   | ○ 동일   | × 없음   |
-| B: [구성]      | ○ 동일   | × 없음   | ○ 동일   |
-| C: [구성]      | × 없음   | ○ 동일   | × 없음   |
-| D: [구성]      | × 없음   | × 없음   | × 없음   |
+Invention -> Technical Problem -> Solution Means -> Components
 
-판단: 모든 구성이 하나의 선행기술에 있으면 → 신규성 없음
-      하나라도 빠지면 → 신규성 인정 가능
+Decomposition Matrix:
+| Component | Function | Relationship | Tech Field | Core Keywords |
+|-----------|----------|-------------|-----------|--------------|
+| A         | F1       | A->B        | Sensor    | sensor, detection |
+| B         | F2       | B->C        | AI        | neural, learning |
+| C         | F3       | C->Output   | Control   | control, adjust |
 ```
 
-### 진보성 분석: TSM 테스트
+### Phase 2: Search Query Design
 
+**Keyword Expansion Rules**
 ```
-T (Teaching): 선행기술이 결합을 가르치는가?
-S (Suggestion): 결합을 시사하는 기재가 있는가?
-M (Motivation): 당업자가 결합할 동기가 있는가?
+Core keyword -> Synonyms -> Broader concepts -> Narrower concepts
 
-판단 흐름:
-1. 가장 가까운 선행기술(primary) 선정
-2. 차이점 구성요소 식별
-3. 차이점을 포함하는 제2 선행기술(secondary) 탐색
-4. 결합 동기 존재 여부 판단
-5. 결합 시 예상치 못한 효과 여부 확인
+Example: "artificial intelligence"
+  Synonyms: AI, machine learning, ML
+  Broader: data processing, computer system
+  Narrower: CNN, RNN, transformer, deep learning
 ```
 
-## 조사 보고서 출력 구조
+**Search Query Structure**
+```
+(Component A keywords OR synonyms) AND
+(Component B keywords OR synonyms) AND
+(Function/Effect keywords OR synonyms)
+
+Scope adjustment:
+  Broad search: A AND B (2 elements)
+  Medium search: A AND B AND C (3 elements)
+  Narrow search: A AND B AND C AND D (4+ elements)
+```
+
+### Phase 3: Search Execution Order
+
+| Order | Database | Purpose | Coverage |
+|-------|----------|---------|---------|
+| 1 | KIPRIS (Korean Patents) | Domestic prior art | Korean registrations/publications |
+| 2 | Google Patents | Global overview | Worldwide patents |
+| 3 | Espacenet (EPO) | Europe and PCT | EP, WO |
+| 4 | USPTO (US) | US patents | US |
+| 5 | Academic DB (Google Scholar) | Non-patent literature | Papers, theses |
+| 6 | Web search | Publicly known technology | Products, blogs, news |
+
+## IPC/CPC Classification Code Utilization
+
+### Classification Codes by Major Technical Field
+
+| Technical Field | IPC | Description |
+|----------------|-----|-------------|
+| IoT/Sensors | G01D, H04W | Measurement, wireless communication |
+| AI/Machine Learning | G06N | Computer system-based models |
+| Image Processing | G06T, G06V | Image data processing, recognition |
+| Blockchain | H04L 9/00 | Cryptographic arrangements |
+| Mobile Apps | G06F 3/04 | User interfaces |
+| Batteries | H01M | Electrochemical energy |
+| Autonomous Driving | B60W, G05D | Vehicle control, route control |
+| Biotech | C12N, A61K | Genetic engineering, pharmaceuticals |
+
+## Novelty and Inventive Step Judgment Framework
+
+### Novelty Analysis Matrix
+
+```
+| Claim Element | Prior Art 1 | Prior Art 2 | Prior Art 3 |
+|-------------- |------------|------------|------------|
+| A: [element]  | O Same     | O Same     | X Absent   |
+| B: [element]  | O Same     | X Absent   | O Same     |
+| C: [element]  | X Absent   | O Same     | X Absent   |
+| D: [element]  | X Absent   | X Absent   | X Absent   |
+
+Judgment: If all elements exist in a single prior art -> No novelty
+          If even one is missing -> Novelty may be recognized
+```
+
+### Inventive Step Analysis: TSM Test
+
+```
+T (Teaching): Does the prior art teach the combination?
+S (Suggestion): Is there a suggestion to combine in the description?
+M (Motivation): Does a person skilled in the art have motivation to combine?
+
+Judgment flow:
+1. Select the closest prior art (primary)
+2. Identify differentiating elements
+3. Search for secondary prior art containing the differentiating elements
+4. Determine whether combination motivation exists
+5. Check for unexpected effects from the combination
+```
+
+## Search Report Output Structure
 
 ```markdown
-## 선행기술 조사 보고서
+## Prior Art Search Report
 
-### 검색 전략
-- 검색식: [기재]
-- DB: [사용한 데이터베이스]
-- 검색 건수: [조회 결과 수]
+### Search Strategy
+- Search query: [Described]
+- DB: [Databases used]
+- Search results: [Number of results]
 
-### 핵심 선행기술 (상위 5건)
+### Key Prior Art (Top 5)
 
-#### [선행기술 1] — [문헌번호]
-- **제목**: [발명의 명칭]
-- **출원일/공개일**: [일자]
-- **핵심 기술**: [요약]
-- **관련 구성요소**: A(○), B(○), C(×), D(×)
-- **차별점**: [본 발명과의 차이]
+#### [Prior Art 1] — [Document No.]
+- **Title**: [Title of invention]
+- **Filing/Publication Date**: [Date]
+- **Key Technology**: [Summary]
+- **Related Components**: A(O), B(O), C(X), D(X)
+- **Differentiation**: [Difference from the present invention]
 
-### 신규성·진보성 종합 의견
-- **신규성**: [인정/부인] — 근거: [설명]
-- **진보성**: [인정/의문] — 근거: [설명]
-- **회피 설계 방향**: [제안]
+### Novelty and Inventive Step Comprehensive Opinion
+- **Novelty**: [Recognized/Denied] — Basis: [Explanation]
+- **Inventive Step**: [Recognized/Questionable] — Basis: [Explanation]
+- **Design-Around Direction**: [Suggestion]
 ```
 
-## 참고
+## Notes
 
-- KIPRIS, Google Patents, Espacenet 활용
-- 상세 검색 전략: `references/search-strategy-detail.md` 참조
+- Utilizes KIPRIS, Google Patents, Espacenet
+- Detailed search strategies: See `references/search-strategy-detail.md`

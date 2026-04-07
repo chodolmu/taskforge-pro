@@ -1,120 +1,120 @@
 ---
 name: brand-archetype
-description: "브랜드전략가(brand-strategist)와 카피라이터(copywriter)가 사용하는 브랜드 아키타입 스킬. 융의 12 아키타입 기반 브랜드 성격 설계, 톤앤보이스 매핑, 스토리텔링 프레임워크를 제공한다. '브랜드 성격', '아키타입', '톤앤보이스', '브랜드 스토리' 등에 활용한다."
+description: "A brand archetype skill used by the brand-strategist and copywriter agents. Provides Jungian 12-archetype-based brand personality design, tone-and-voice mapping, and storytelling frameworks. Used for 'brand personality,' 'archetypes,' 'tone and voice,' 'brand story,' and related topics."
 ---
 
-# Brand Archetype — 브랜드 아키타입 방법론
+# Brand Archetype — Brand Archetype Methodology
 
-brand-strategist와 copywriter 에이전트가 브랜드 성격과 보이스를 설계할 때 활용하는 아키타입 전문 지식.
+Expert knowledge used by brand-strategist and copywriter agents when designing brand personality and voice.
 
-## 왜 아키타입인가
+## Why Archetypes
 
-소비자는 제품을 사는 것이 아니라 **"이 브랜드가 나를 대변한다"는 감정**을 산다. 아키타입은 수천 년간 인류의 무의식에 각인된 보편적 캐릭터다. 이것을 브랜드에 입히면 직관적 연결이 형성된다.
+Consumers do not buy products — they buy the **feeling that "this brand represents me."** Archetypes are universal characters imprinted in humanity's collective unconscious over thousands of years. Mapping them onto a brand creates an intuitive connection.
 
-## 12 아키타입 전체 맵
+## Full Map of 12 Archetypes
 
-### 4가지 핵심 동기 축
-
-```
-                    자유/해방
-                       ↑
-              반항아 | 마법사 | 탐험가
-    소속감 ←  어릿광대 | --- | 영웅   → 자아실현
-              평범인 | 돌봄이 | 통치자
-                       ↓
-                    안정/통제
-```
-
-### 아키타입 상세
-
-| # | 아키타입 | 핵심 욕구 | 두려움 | 브랜드 약속 | 톤 | 대표 브랜드 |
-|---|---------|---------|--------|-----------|---|-----------|
-| 1 | **영웅 (Hero)** | 세상을 더 낫게 | 나약함 | "당신도 할 수 있다" | 용감, 도전적 | Nike, FedEx |
-| 2 | **돌봄이 (Caregiver)** | 타인을 보호 | 이기심 | "우리가 돌봐드립니다" | 따뜻, 신뢰 | 존슨앤존슨, Volvo |
-| 3 | **통치자 (Ruler)** | 질서와 통제 | 혼란 | "최고의 선택" | 권위, 프리미엄 | 메르세데스, Rolex |
-| 4 | **마법사 (Magician)** | 변화를 만듦 | 예상치 못한 결과 | "불가능을 가능으로" | 영감, 비전 | Apple, Disney |
-| 5 | **탐험가 (Explorer)** | 새로운 경험 | 갇힘, 순응 | "경계를 넘어" | 대담, 자유 | Jeep, Patagonia |
-| 6 | **반항아 (Rebel)** | 규칙 파괴 | 무력감 | "규칙은 깨라고 있다" | 도발, 날것 | Harley-Davidson, Virgin |
-| 7 | **연인 (Lover)** | 친밀한 관계 | 외로움 | "당신은 특별합니다" | 감각적, 열정 | 샤넬, 고디바 |
-| 8 | **창작자 (Creator)** | 가치 있는 것을 만듦 | 평범함 | "상상을 현실로" | 창의, 실험 | LEGO, Adobe |
-| 9 | **어릿광대 (Jester)** | 즐거움 | 지루함 | "인생을 즐겨라" | 유머, 재치 | 배달의민족, M&M |
-| 10 | **현자 (Sage)** | 진실 발견 | 무지 | "진실을 알려드립니다" | 지적, 분석 | Google, BBC |
-| 11 | **평범인 (Everyman)** | 소속감 | 소외 | "우리는 같은 편" | 친근, 실용 | IKEA, 이마트 |
-| 12 | **순수자 (Innocent)** | 행복 | 처벌 | "세상은 아름답다" | 순수, 낙관 | 코카콜라, Dove |
-
-## 아키타입 선택 프로세스
-
-### Step 1: 브랜드 성격 키워드에서 후보 도출
-
-사용자가 원하는 브랜드 이미지에서 키워드를 추출하고, 가장 부합하는 아키타입 2~3개를 후보로 선정한다.
-
-### Step 2: 주 아키타입 + 부 아키타입 조합
-
-하나의 아키타입만 사용하면 천편일률적이 된다. **주 아키타입(70%) + 부 아키타입(30%)**을 조합한다.
-
-| 조합 예시 | 결과 성격 | 예시 브랜드 |
-|----------|---------|-----------|
-| 영웅 + 현자 | 지적인 용기 | 테슬라 |
-| 돌봄이 + 창작자 | 창의적 양육 | 레고 듀플로 |
-| 반항아 + 어릿광대 | 유쾌한 도발 | 배달의민족 |
-| 탐험가 + 마법사 | 신비로운 모험 | 에어비앤비 |
-| 통치자 + 연인 | 우아한 권위 | 샤넬 |
-
-### Step 3: 금기 조합 확인
-
-| 금기 조합 | 이유 |
-|----------|------|
-| 순수자 + 반항아 | 모순된 메시지 |
-| 통치자 + 어릿광대 | 권위를 스스로 훼손 |
-| 평범인 + 마법사 | 평범과 비범의 충돌 |
-
-## 아키타입→톤앤보이스 변환
-
-### 톤앤보이스 명세서 템플릿
+### Four Core Motivation Axes
 
 ```
-## 브랜드 보이스 가이드
-
-### 아키타입: [주 아키타입] + [부 아키타입]
-
-### 우리는 이렇게 말합니다
-- [형용사 1]: [구체적 설명과 예시]
-- [형용사 2]: [구체적 설명과 예시]
-- [형용사 3]: [구체적 설명과 예시]
-
-### 우리는 이렇게 말하지 않습니다
-- [금지 형용사 1]: [왜 안 되는지 + 잘못된 예시]
-- [금지 형용사 2]: [왜 안 되는지 + 잘못된 예시]
-
-### 보이스 스펙트럼
-격식 ●○○○○ 캐주얼
-진지 ○○●○○ 유머
-권위 ○○○●○ 친근
-절제 ○●○○○ 표현적
-
-### 터치포인트별 톤 조절
-| 터치포인트 | 톤 조절 방향 | 예시 |
-|-----------|------------|------|
-| 웹사이트 메인 | 정석 보이스 | [예시 문장] |
-| SNS | 캐주얼 +20% | [예시 문장] |
-| 고객 서비스 | 공감 +30% | [예시 문장] |
-| 공식 보도자료 | 격식 +30% | [예시 문장] |
-| 에러 메시지 | 친근 +40% | [예시 문장] |
+                    Freedom / Liberation
+                           ^
+                Rebel  | Magician | Explorer
+    Belonging <  Jester |   ---   |  Hero    > Self-Actualization
+               Everyman | Caregiver| Ruler
+                           v
+                    Stability / Control
 ```
 
-## 브랜드 스토리 프레임워크
+### Archetype Details
 
-### 5장 구조
+| # | Archetype | Core Desire | Fear | Brand Promise | Tone | Representative Brands |
+|---|-----------|------------|------|---------------|------|---------------------|
+| 1 | **Hero** | Make the world better | Weakness | "You can do it too" | Brave, challenging | Nike, FedEx |
+| 2 | **Caregiver** | Protect others | Selfishness | "We'll take care of you" | Warm, trustworthy | Johnson & Johnson, Volvo |
+| 3 | **Ruler** | Order and control | Chaos | "The finest choice" | Authoritative, premium | Mercedes, Rolex |
+| 4 | **Magician** | Create transformation | Unintended consequences | "Making the impossible possible" | Inspirational, visionary | Apple, Disney |
+| 5 | **Explorer** | New experiences | Confinement, conformity | "Beyond boundaries" | Bold, free | Jeep, Patagonia |
+| 6 | **Rebel** | Break rules | Powerlessness | "Rules are made to be broken" | Provocative, raw | Harley-Davidson, Virgin |
+| 7 | **Lover** | Intimate relationships | Loneliness | "You are special" | Sensual, passionate | Chanel, Godiva |
+| 8 | **Creator** | Make something of value | Mediocrity | "Imagination made real" | Creative, experimental | LEGO, Adobe |
+| 9 | **Jester** | Enjoyment | Boredom | "Enjoy life" | Humorous, witty | M&M, Old Spice |
+| 10 | **Sage** | Discover truth | Ignorance | "We reveal the truth" | Intellectual, analytical | Google, BBC |
+| 11 | **Everyman** | Belonging | Exclusion | "We're on your side" | Friendly, practical | IKEA, Target |
+| 12 | **Innocent** | Happiness | Punishment | "The world is beautiful" | Pure, optimistic | Coca-Cola, Dove |
 
-1. **창업 동기 (Why)**: 세상의 어떤 문제에 분노/안타까움을 느꼈는가?
-2. **발견 (Insight)**: 그 문제의 진짜 원인을 어떻게 발견했는가?
-3. **해결 (Solution)**: 어떤 독특한 방식으로 해결하는가?
-4. **증거 (Proof)**: 실제로 어떤 변화가 일어났는가?
-5. **초대 (Invitation)**: 고객을 이 여정에 어떻게 초대하는가?
+## Archetype Selection Process
 
-### 스토리텔링 규칙
+### Step 1: Derive Candidates from Brand Personality Keywords
 
-- **고객이 영웅이다**: 브랜드는 "가이드" 역할 (도널드 밀러의 StoryBrand)
-- **적(敵)을 명확히 한다**: 비효율, 불공정, 무지, 지루함 등
-- **구체적 디테일**: "많은 사람"이 아닌 "32세 직장인 수진씨"
-- **감정 먼저, 논리 나중에**: 왜 이 브랜드가 존재해야 하는가 → 무엇을 하는가
+Extract keywords from the user's desired brand image and shortlist the 2-3 most fitting archetypes.
+
+### Step 2: Combine Primary + Secondary Archetype
+
+Using only one archetype leads to a generic result. Combine a **primary archetype (70%) + secondary archetype (30%)**.
+
+| Combination Example | Resulting Personality | Example Brand |
+|--------------------|---------------------|---------------|
+| Hero + Sage | Intellectual courage | Tesla |
+| Caregiver + Creator | Creative nurturing | LEGO Duplo |
+| Rebel + Jester | Playful provocation | Dollar Shave Club |
+| Explorer + Magician | Mystical adventure | Airbnb |
+| Ruler + Lover | Elegant authority | Chanel |
+
+### Step 3: Check Forbidden Combinations
+
+| Forbidden Combination | Reason |
+|----------------------|--------|
+| Innocent + Rebel | Contradictory messaging |
+| Ruler + Jester | Self-undermining authority |
+| Everyman + Magician | Conflict between ordinary and extraordinary |
+
+## Archetype-to-Tone-and-Voice Conversion
+
+### Tone and Voice Specification Template
+
+```
+## Brand Voice Guide
+
+### Archetype: [Primary Archetype] + [Secondary Archetype]
+
+### We speak like this
+- [Adjective 1]: [Specific description and examples]
+- [Adjective 2]: [Specific description and examples]
+- [Adjective 3]: [Specific description and examples]
+
+### We never speak like this
+- [Forbidden adjective 1]: [Why not + incorrect examples]
+- [Forbidden adjective 2]: [Why not + incorrect examples]
+
+### Voice Spectrum
+Formal  *----  Casual
+Serious  --*--  Humorous
+Authoritative  ---*-  Friendly
+Restrained  -*---  Expressive
+
+### Tone Adjustment by Touchpoint
+| Touchpoint | Tone Adjustment | Example |
+|-----------|----------------|---------|
+| Website Main | Standard voice | [Example sentence] |
+| Social Media | Casual +20% | [Example sentence] |
+| Customer Service | Empathetic +30% | [Example sentence] |
+| Press Release | Formal +30% | [Example sentence] |
+| Error Messages | Friendly +40% | [Example sentence] |
+```
+
+## Brand Story Framework
+
+### Five-Chapter Structure
+
+1. **Founding Motivation (Why)**: What problem in the world sparked anger or concern?
+2. **Insight**: How was the root cause of that problem discovered?
+3. **Solution**: What unique approach addresses it?
+4. **Proof**: What real changes have occurred?
+5. **Invitation**: How is the customer invited into this journey?
+
+### Storytelling Rules
+
+- **The customer is the hero**: The brand plays the "guide" role (Donald Miller's StoryBrand)
+- **Define a clear enemy**: Inefficiency, unfairness, ignorance, boredom, etc.
+- **Use specific details**: Not "many people" but "Sarah, a 32-year-old working professional"
+- **Emotion first, logic second**: Why must this brand exist? -> What does it do?

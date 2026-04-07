@@ -1,123 +1,123 @@
 ---
 name: coding-bootcamp
-description: "코딩 교육 종합 파이프라인. 커리큘럼설계→실습과제→코드리뷰→프로젝트→포트폴리오를 에이전트 팀이 협업하여 수행한다. '코딩 배우고 싶어', '개발자 되고 싶어', '프로그래밍 커리큘럼', '코딩 과제', '코드 리뷰해줘', '포트폴리오 만들어줘', '개발자 취업 준비', '부트캠프', '프로젝트 기획', '기술 면접 준비' 등 코딩 교육 전반에 이 스킬을 사용한다. 기존 코드나 학습 이력이 있으면 해당 단계를 보강한다. 단, 실시간 화상 강의, 유료 학습 플랫폼 계정 관리, 실제 배포 인프라 설정은 이 스킬의 범위가 아니다."
+description: "A coding education full pipeline. An agent team collaborates to deliver curriculum design, hands-on exercises, code review, projects, and portfolio building. Use this skill for requests like 'I want to learn coding', 'I want to become a developer', 'programming curriculum', 'coding exercises', 'review my code', 'build a portfolio', 'developer job prep', 'bootcamp', 'project planning', 'tech interview prep', and other coding education needs. Existing code or study history can augment the relevant phase. However, live video lectures, paid learning platform account management, and actual deployment infrastructure setup are outside the scope of this skill."
 ---
 
-# Coding Bootcamp — 코딩 교육 종합 파이프라인
+# Coding Bootcamp — Coding Education Full Pipeline
 
-코딩 교육의 커리큘럼→실습과제→코드리뷰→프로젝트→포트폴리오를 에이전트 팀이 협업하여 수행한다.
+An agent team collaborates to deliver curriculum design, exercises, code review, projects, and portfolio building.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 4명이 SendMessage로 직접 통신하며 협업한다.
+**Agent Team** — 4 agents communicate directly via SendMessage and collaborate.
 
-## 에이전트 구성
+## Agent Roster
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| curriculum-designer | `.claude/agents/curriculum-designer.md` | 커리큘럼 설계, 기술 스택 선정 | general-purpose |
-| exercise-creator | `.claude/agents/exercise-creator.md` | 실습 과제 출제, 테스트케이스 | general-purpose |
-| code-reviewer | `.claude/agents/code-reviewer.md` | 코드 리뷰, 품질 피드백 | general-purpose |
-| mentor | `.claude/agents/mentor.md` | 프로젝트 설계, 포트폴리오, 커리어 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| curriculum-designer | `.claude/agents/curriculum-designer.md` | Curriculum design, tech stack selection | general-purpose |
+| exercise-creator | `.claude/agents/exercise-creator.md` | Exercise creation, test cases | general-purpose |
+| code-reviewer | `.claude/agents/code-reviewer.md` | Code review, quality feedback | general-purpose |
+| mentor | `.claude/agents/mentor.md` | Project design, portfolio, career guidance | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Orchestrator performs directly)
 
-1. 사용자 입력에서 추출한다:
-    - **현재 수준**: 프로그래밍 경험, 사용 언어
-    - **목표**: 희망 직군, 취업/이직/사이드프로젝트
-    - **학습 시간** (선택): 주당 학습 가능 시간
-    - **기간** (선택): 목표 기간
-    - **기존 코드** (선택): 리뷰 대상 코드, 기존 프로젝트
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+    - **Current level**: Programming experience, languages used
+    - **Goal**: Desired role, employment / career switch / side project
+    - **Study time** (optional): Weekly available hours
+    - **Duration** (optional): Target timeline
+    - **Existing code** (optional): Code for review, existing projects
+2. Create a `_workspace/` directory at the project root
+3. Organize the input and save it to `_workspace/00_input.md`
+4. Determine the **execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 커리큘럼 설계 | curriculum-designer | 없음 | `_workspace/01_curriculum.md` |
-| 2 | 실습과제 출제 | exercise-creator | 작업 1 | `_workspace/02_exercises/` |
-| 3a | 코드 리뷰 | code-reviewer | 작업 1 | `_workspace/03_code_review.md` |
-| 3b | 프로젝트 설계 | mentor | 작업 1 | `_workspace/04_project_spec.md` |
-| 4 | 포트폴리오 가이드 | mentor | 작업 3a, 3b | `_workspace/05_portfolio_guide.md` |
+| Order | Task | Agent | Depends On | Deliverable |
+|-------|------|-------|-----------|-------------|
+| 1 | Curriculum design | curriculum-designer | None | `_workspace/01_curriculum.md` |
+| 2 | Exercise creation | exercise-creator | Task 1 | `_workspace/02_exercises/` |
+| 3a | Code review | code-reviewer | Task 1 | `_workspace/03_code_review.md` |
+| 3b | Project design | mentor | Task 1 | `_workspace/04_project_spec.md` |
+| 4 | Portfolio guide | mentor | Tasks 3a, 3b | `_workspace/05_portfolio_guide.md` |
 
-작업 3a(코드 리뷰)와 3b(프로젝트 설계)는 **병렬 실행**한다.
+Tasks 3a (code review) and 3b (project design) run **in parallel**.
 
-**팀원 간 소통 흐름:**
-- curriculum-designer 완료 → exercise-creator에게 주차별 학습 목표 전달, code-reviewer에게 단계별 기대 수준 전달, mentor에게 전체 로드맵 전달
-- exercise-creator 완료 → code-reviewer에게 모범 답안 검증 요청, mentor에게 실습-프로젝트 연결점 공유
-- code-reviewer 완료 → mentor에게 학습자 코딩 패턴·강점/약점 전달
-- mentor는 모든 정보를 종합하여 프로젝트 기획서와 포트폴리오 가이드를 작성한다
+**Inter-agent communication flow:**
+- curriculum-designer completes -> sends weekly learning objectives to exercise-creator; sends per-phase quality expectations to code-reviewer; sends overall roadmap to mentor
+- exercise-creator completes -> sends model solution verification request to code-reviewer; shares exercise-project connection points with mentor
+- code-reviewer completes -> sends learner coding patterns and strengths/weaknesses to mentor
+- mentor synthesizes all information to write the project spec and portfolio guide
 
-### Phase 3: 통합 및 최종 보고
+### Phase 3: Integration and Final Report
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 커리큘럼→과제→프로젝트→포트폴리오의 일관성을 검증한다
-3. 최종 요약을 사용자에게 보고한다
+1. Verify all files in `_workspace/`
+2. Verify consistency across curriculum -> exercises -> project -> portfolio
+3. Report the final summary to the user
 
-## 작업 규모별 모드
+## Task-Scale Modes
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "코딩 처음부터 배우고 싶어", "부트캠프" | **풀 파이프라인** | 4명 전원 |
-| "커리큘럼만 만들어줘" | **커리큘럼 모드** | curriculum-designer 단독 |
-| "이 주제 실습 과제 만들어줘" | **과제 모드** | exercise-creator 단독 |
-| "이 코드 리뷰해줘" (코드 제공) | **리뷰 모드** | code-reviewer 단독 |
-| "프로젝트 기획해줘" | **프로젝트 모드** | mentor 단독 |
-| "포트폴리오 만들어줘", "취업 준비" | **커리어 모드** | mentor 단독 |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|----------------|
+| "I want to learn coding from scratch", "bootcamp" | **Full Pipeline** | All 4 agents |
+| "Just create a curriculum" | **Curriculum Mode** | curriculum-designer only |
+| "Create exercises for this topic" | **Exercise Mode** | exercise-creator only |
+| "Review this code" (code provided) | **Review Mode** | code-reviewer only |
+| "Plan a project for me" | **Project Mode** | mentor only |
+| "Help me build a portfolio", "job prep" | **Career Mode** | mentor only |
 
-**기존 데이터 활용**: 사용자가 기존 코드를 제공하면 code-reviewer가 리뷰하고, 학습 이력이 있으면 커리큘럼에 반영한다.
+**Existing data usage**: If the user provides existing code, code-reviewer reviews it; if study history is provided, it is reflected in the curriculum.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information exchange |
+| Task-based | TaskCreate/TaskUpdate | Track progress |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{order}_{agent}_{deliverable}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 학습자 수준 불명확 | 간단한 진단 코딩 문제로 수준 평가 |
-| 목표 미정 | 범용 풀스택 커리큘럼 기본 제공 |
-| 웹 검색 실패 | 일반적 기술 트렌드 지식으로 작업 |
-| 특수 언어/프레임워크 | 핵심 원리 중심으로 커리큘럼 설계, 언어 특화는 리소스 안내 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행 |
+| Error Type | Strategy |
+|-----------|----------|
+| Learner level unclear | Assess with simple diagnostic coding problems |
+| Goal undefined | Provide a general full-stack curriculum by default |
+| Web search failure | Work from general technology trend knowledge |
+| Specialized language/framework | Design around core principles; refer to language-specific resources |
+| Agent failure | Retry once -> proceed without that deliverable if still failing |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "비전공자인데 프론트엔드 개발자가 되고 싶어. 하루 3시간 학습 가능하고, 6개월 안에 취업하고 싶어."
-**기대 결과**:
-- 커리큘럼: HTML/CSS→JS→React 기반 24주 로드맵
-- 실습 과제: 주차별 난이도 조절된 과제 + 테스트케이스
-- 프로젝트: 포트폴리오용 실전 프로젝트 2~3개 기획
-- 포트폴리오: GitHub 프로필 + 이력서 + 면접 준비 가이드
+### Normal Flow
+**Prompt**: "I'm a non-developer and I want to become a frontend developer. I can study 3 hours a day and want to get hired within 6 months."
+**Expected Results**:
+- Curriculum: HTML/CSS -> JS -> React 24-week roadmap
+- Exercises: Difficulty-calibrated exercises per week + test cases
+- Project: 2-3 portfolio-worthy real-world project specs
+- Portfolio: GitHub profile + resume + interview prep guide
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 코드 좀 봐줘" + 코드 파일 첨부
-**기대 결과**:
-- 리뷰 모드 (code-reviewer 단독)
-- 코드 품질 평가 + 구체적 개선 제안 + 성장 로드맵
+### Existing File Flow
+**Prompt**: "Take a look at this code" + code file attached
+**Expected Results**:
+- Review Mode (code-reviewer only)
+- Code quality assessment + specific improvement suggestions + growth roadmap
 
-### 에러 흐름
-**프롬프트**: "코딩 배우고 싶은데 뭘 해야 할지 모르겠어"
-**기대 결과**:
-- 수준 진단 + 관심사 파악 질문 → 범용 풀스택 커리큘럼 제공
-- 학습 시간은 하루 2시간 기본값 적용
+### Error Flow
+**Prompt**: "I want to learn coding but have no idea where to start"
+**Expected Results**:
+- Level diagnosis + interest exploration questions -> provide a general full-stack curriculum
+- Default to 2 hours/day study time
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-에이전트의 도메인 전문성을 강화하는 확장 스킬:
+Extension skills that enhance each agent's domain expertise:
 
-| 에이전트 | 확장 스킬 | 역할 |
-|---------|----------|------|
-| exercise-creator | `code-kata-generator` | 5-Tier 난이도 체계, 과제 템플릿, 테스트케이스 설계, 스캐폴딩 |
-| mentor | `tech-interview-prep` | UMPIRE 풀이법, 시스템 디자인 4단계, STAR 행동면접, 포트폴리오 연결 |
+| Agent | Extension Skill | Role |
+|-------|----------------|------|
+| exercise-creator | `code-kata-generator` | 5-Tier difficulty system, exercise templates, test case design, scaffolding |
+| mentor | `tech-interview-prep` | UMPIRE problem-solving method, 4-step system design, STAR behavioral interviews, portfolio integration |

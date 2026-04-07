@@ -1,135 +1,135 @@
 ---
 name: hashtag-science
-description: "해시태그분석가(hashtag-analyst)가 사용하는 해시태그 과학 전문 스킬. 해시태그 피라미드 전략, 경쟁도 분석, 트렌드 예측, 플랫폼별 최적 해시태그 전략을 제공한다. '해시태그', '키워드 전략', '트렌드 분석', '해시태그 리서치' 등에 활용한다."
+description: "A specialized skill for the hashtag-analyst agent covering hashtag science. Provides hashtag pyramid strategy, competition analysis, trend prediction, and platform-specific optimal hashtag strategies. Use for 'hashtags,' 'keyword strategy,' 'trend analysis,' 'hashtag research,' and similar topics."
 ---
 
-# Hashtag Science — 해시태그 과학 방법론
+# Hashtag Science — Hashtag Science Methodology
 
-hashtag-analyst 에이전트가 해시태그 전략을 설계할 때 활용하는 전문 지식.
+Specialized knowledge used by the hashtag-analyst agent when designing hashtag strategies.
 
-## 왜 해시태그 "과학"인가
+## Why Hashtag "Science"
 
-해시태그는 감으로 붙이는 것이 아니다. **검색 가능성, 경쟁도, 타깃 정확도**를 계산하여 최적 조합을 설계하는 것이다.
+Hashtags are not applied by intuition. They involve calculating **discoverability, competition level, and targeting accuracy** to design optimal combinations.
 
-## 해시태그 피라미드 전략
+## Hashtag Pyramid Strategy
 
 ```
-        ╱╲
-       ╱ 1 ╲  ← 대형 (100만+ 게시물)
-      ╱─────╲     2~3개: 운이 좋으면 발견
-     ╱   2    ╲  ← 중형 (10만~100만)
-    ╱───────────╲     5~7개: 핵심 전장
-   ╱      3       ╲  ← 소형 (1만~10만)
-  ╱─────────────────╲     5~8개: 타깃 도달
- ╱         4          ╲  ← 니치 (1만 미만)
-╱───────────────────────╲     3~5개: 커뮤니티 진입
+        /\
+       / 1 \  <- Large (1M+ posts)
+      /------\     2-3: Discovered with luck
+     /   2    \  <- Medium (100K-1M)
+    /----------\     5-7: Core battlefield
+   /      3     \  <- Small (10K-100K)
+  /--------------\     5-8: Targeted reach
+ /         4      \  <- Niche (under 10K)
+/------------------\     3-5: Community entry
 ```
 
-### 계층별 역할
+### Role by Tier
 
-| 계층 | 게시물 수 | 역할 | 전략 |
-|------|---------|------|------|
-| **대형** | 100만+ | 카테고리 표시 | #마케팅, #스타트업 — 최대 3개 |
-| **중형** | 10만~100만 | 핵심 도달 | 타깃의 실제 검색어 — 5~7개 |
-| **소형** | 1만~10만 | 경쟁 우위 | 구체적 주제어 — 5~8개 |
-| **니치** | 1만 미만 | 커뮤니티 | 업계 전문 용어 — 3~5개 |
-| **브랜드** | 자체 | 추적/캠페인 | #브랜드명, #캠페인명 — 1~2개 |
+| Tier | Post Count | Role | Strategy |
+|------|-----------|------|----------|
+| **Large** | 1M+ | Category indicator | #marketing, #startup — max 3 |
+| **Medium** | 100K-1M | Core reach | Target's actual search terms — 5-7 |
+| **Small** | 10K-100K | Competitive advantage | Specific topic terms — 5-8 |
+| **Niche** | Under 10K | Community | Industry-specific terminology — 3-5 |
+| **Brand** | Proprietary | Tracking/Campaign | #BrandName, #CampaignName — 1-2 |
 
-## 플랫폼별 해시태그 전략
+## Platform-Specific Hashtag Strategies
 
 ### Instagram
 
-| 항목 | 권장 |
-|------|------|
-| 개수 | 15~25개 (최대 30개 중 20~25개 사용) |
-| 배치 | 캡션 하단 또는 첫 댓글 |
-| 구성 | 피라미드 비율 준수 |
-| 금지 | 금지 해시태그 (shadowban 위험), 무관한 대형 태그 |
-| 로테이션 | 매 포스트마다 30% 이상 교체 (반복 = 스팸 판정) |
+| Item | Recommendation |
+|------|---------------|
+| Count | 15-25 (use 20-25 of the max 30) |
+| Placement | Bottom of caption or first comment |
+| Composition | Follow pyramid ratios |
+| Prohibited | Banned hashtags (shadowban risk), unrelated large tags |
+| Rotation | Change 30%+ per post (repetition = spam detection) |
 
 ### TikTok
 
-| 항목 | 권장 |
-|------|------|
-| 개수 | 3~5개 (캡션 글자수 제한) |
-| 배치 | 캡션에 직접 |
-| 구성 | 트렌드 1~2개 + 니치 2~3개 |
-| 특수 | #fyp #foryou는 효과 없음 (공식 부정) |
-| 전략 | 트렌드 사운드 + 니치 해시태그 조합이 최적 |
+| Item | Recommendation |
+|------|---------------|
+| Count | 3-5 (caption character limit) |
+| Placement | Directly in caption |
+| Composition | 1-2 trending + 2-3 niche |
+| Special | #fyp #foryou have no effect (officially denied) |
+| Strategy | Trending sound + niche hashtag combination is optimal |
 
 ### LinkedIn
 
-| 항목 | 권장 |
-|------|------|
-| 개수 | 3~5개 (과다 사용 시 스팸 판정) |
-| 배치 | 포스트 맨 하단 |
-| 구성 | 산업 키워드 2~3개 + 직군 키워드 1~2개 |
-| 전략 | 팔로우 가능한 해시태그 활용 (#마케팅, #스타트업) |
+| Item | Recommendation |
+|------|---------------|
+| Count | 3-5 (excessive use flagged as spam) |
+| Placement | Bottom of post |
+| Composition | 2-3 industry keywords + 1-2 role keywords |
+| Strategy | Use followable hashtags (#marketing, #startup) |
 
 ### X/Twitter
 
-| 항목 | 권장 |
-|------|------|
-| 개수 | 1~2개 (3개 이상은 engagement 감소) |
-| 배치 | 트윗 본문에 자연스럽게 |
-| 구성 | 트렌딩 1개 + 니치 1개 |
-| 전략 | 해시태그보다 키워드 자연 삽입이 더 효과적 |
+| Item | Recommendation |
+|------|---------------|
+| Count | 1-2 (3+ decreases engagement) |
+| Placement | Naturally within tweet body |
+| Composition | 1 trending + 1 niche |
+| Strategy | Natural keyword insertion is more effective than hashtags |
 
-## 해시태그 리서치 프로세스
+## Hashtag Research Process
 
-### Step 1: 시드 키워드 수집
+### Step 1: Seed Keyword Collection
 
-| 소스 | 방법 |
-|------|------|
-| 경쟁사 | 경쟁 계정의 인기 포스트 해시태그 수집 |
-| 자동완성 | 인스타/틱톡 검색창에 키워드 입력 → 자동완성 수집 |
-| 관련 태그 | 해시태그 페이지의 "관련 해시태그" 수집 |
-| 커뮤니티 | 타깃 독자가 사용하는 해시태그 관찰 |
+| Source | Method |
+|--------|--------|
+| Competitors | Collect hashtags from competitor accounts' popular posts |
+| Autocomplete | Enter keywords in Instagram/TikTok search -> collect autocomplete suggestions |
+| Related Tags | Collect "related hashtags" from hashtag pages |
+| Community | Observe hashtags used by the target audience |
 
-### Step 2: 해시태그 분석 매트릭스
+### Step 2: Hashtag Analysis Matrix
 
-| 해시태그 | 게시물 수 | 계층 | 관련도 | 경쟁도 | 최종 점수 |
-|---------|---------|------|--------|--------|----------|
-| #[태그] | XXX,XXX | 대/중/소/니치 | 1~5 | 1~5 | 가중 합계 |
-
-```
-최종 점수 = (관련도 x 0.5) + (적정 경쟁도 x 0.3) + (최신 트렌드 x 0.2)
-
-- 관련도: 콘텐츠와 정확히 일치하는 정도
-- 적정 경쟁도: 너무 높지도, 너무 낮지도 않은 것이 최적 (역U자 곡선)
-- 최신 트렌드: 성장 중인 태그는 가산점
-```
-
-### Step 3: 세트 구성
-
-포스트 유형별 해시태그 세트를 사전 구성한다:
+| Hashtag | Post Count | Tier | Relevance | Competition | Final Score |
+|---------|-----------|------|-----------|-------------|-------------|
+| #[tag] | XXX,XXX | Large/Med/Small/Niche | 1-5 | 1-5 | Weighted sum |
 
 ```
-[교육 콘텐츠 세트]
-대형: #마케팅 #비즈니스
-중형: #마케팅전략 #디지털마케팅 #콘텐츠마케팅 #SNS마케팅 #마케팅팁
-소형: #마케팅공부 #마케터일상 #퍼포먼스마케팅 #그로스해킹 #브랜딩전략
-니치: #마케터성장 #주니어마케터 #마케팅실무
-브랜드: #브랜드명
+Final Score = (Relevance x 0.5) + (Optimal Competition x 0.3) + (Trending x 0.2)
 
-[제품 소개 세트]
-[커뮤니티 세트]
-[트렌드 세트]
+- Relevance: Degree of exact match with content
+- Optimal Competition: Neither too high nor too low is optimal (inverted U-curve)
+- Trending: Growing tags get bonus points
 ```
 
-## 금지 해시태그 관리
+### Step 3: Set Composition
 
-### Shadowban 위험 해시태그
+Pre-compose hashtag sets by post type:
 
-일부 해시태그는 Instagram 등에서 콘텐츠 노출을 제한하는 "섀도우밴" 대상이 될 수 있다:
+```
+[Educational Content Set]
+Large: #marketing #business
+Medium: #marketingstrategy #digitalmarketing #contentmarketing #snsmarketing #marketingtips
+Small: #marketinglearning #marketerlife #performancemarketing #growthhacking #brandingstrategy
+Niche: #marketergrowth #juniormarketer #marketingpractice
+Brand: #BrandName
 
-- 성적/폭력적 의미로 오용되는 해시태그
-- 스팸 봇이 대량 사용하는 해시태그
-- 특정 시기에 임시 제한되는 해시태그
+[Product Showcase Set]
+[Community Set]
+[Trend Set]
+```
 
-### 방지 전략
+## Banned Hashtag Management
 
-1. 사용 전에 해시태그를 검색하여 정상 노출되는지 확인
-2. "최신 게시물" 탭이 비어있으면 제한 가능성
-3. 해시태그 세트를 매번 30% 이상 교체
-4. 콘텐츠와 무관한 대형 해시태그 사용 금지
+### Shadowban Risk Hashtags
+
+Some hashtags can trigger "shadowbans" on platforms like Instagram, limiting content visibility:
+
+- Hashtags misused for sexual/violent meanings
+- Hashtags heavily used by spam bots
+- Hashtags temporarily restricted during certain periods
+
+### Prevention Strategy
+
+1. Search the hashtag before use to confirm normal visibility
+2. If the "recent posts" tab is empty, restriction is likely
+3. Change 30%+ of hashtag sets each time
+4. Do not use large hashtags unrelated to the content

@@ -1,171 +1,171 @@
 ---
 name: rice-prioritizer
-description: "RICE 프레임워크로 기능의 우선순위를 체계적으로 결정하는 방법론. 'RICE 분석', '기능 우선순위', '백로그 우선순위', '기능 스코어링', '우선순위 프레임워크' 등 제품 기능 우선순위 결정 시 사용한다. 단, Jira/Linear 티켓 자동 생성, 실시간 대시보드 구축은 이 스킬의 범위가 아니다."
+description: "A methodology for systematically determining feature priorities using the RICE framework. Used for 'RICE analysis,' 'feature prioritization,' 'backlog prioritization,' 'feature scoring,' and 'prioritization frameworks' when deciding on product feature priorities. Note: Automatic Jira/Linear ticket creation and real-time dashboard building are outside the scope of this skill."
 ---
 
-# RICE Prioritizer — 기능 우선순위 결정 프레임워크
+# RICE Prioritizer — Feature Prioritization Framework
 
-strategist와 prd-writer의 기능 우선순위 결정을 강화하는 스킬.
+A skill that enhances the feature prioritization decisions of strategist and prd-writer.
 
-## 대상 에이전트
+## Target Agents
 
-- **strategist** — 로드맵의 이니셔티브 우선순위를 결정한다
-- **prd-writer** — PRD 내 기능 우선순위를 RICE로 정당화한다
+- **strategist** — Determines roadmap initiative priorities
+- **prd-writer** — Justifies feature priorities within the PRD using RICE
 
-## RICE 스코어 공식
-
-```
-RICE Score = (Reach × Impact × Confidence) / Effort
-```
-
-### Reach (도달 범위)
+## RICE Score Formula
 
 ```
-정의: 이 기능이 일정 기간 내 영향을 미치는 사용자/이벤트 수
-
-측정 기준:
-  - 분기당 영향받는 사용자 수
-  - 월간 트리거될 이벤트 수
-  - 고객 요청 건수
-
-예시:
-  검색 개선: 10,000명/분기 (전체 사용자의 80%)
-  다크모드: 3,000명/분기 (설문 희망자)
-  CSV 내보내기: 500명/분기 (엔터프라이즈만)
-
-주의: 추정은 데이터 기반 (GA, 설문, CS 티켓)
+RICE Score = (Reach x Impact x Confidence) / Effort
 ```
 
-### Impact (영향도)
+### Reach
 
 ```
-정의: 개별 사용자에게 미치는 영향의 크기
+Definition: The number of users/events this feature will affect within a given period
 
-점수 체계 (Intercom 방식):
-  3 = Massive — 전환율/리텐션 대폭 개선
-  2 = High — 의미 있는 개선
-  1 = Medium — 보통 수준 개선
-  0.5 = Low — 미미한 개선
-  0.25 = Minimal — 거의 체감 없음
+Measurement criteria:
+  - Number of affected users per quarter
+  - Number of events triggered per month
+  - Number of customer requests
 
-판단 기준:
-  - 핵심 메트릭(전환, 리텐션, NPS) 영향도
-  - 사용자 고통의 심각도
-  - 차별화 기여도
+Examples:
+  Search improvement: 10,000/quarter (80% of all users)
+  Dark mode: 3,000/quarter (survey respondents)
+  CSV export: 500/quarter (enterprise only)
+
+Note: Estimates should be data-driven (GA, surveys, CS tickets)
 ```
 
-### Confidence (확신도)
+### Impact
 
 ```
-정의: Reach와 Impact 추정의 신뢰 수준
+Definition: The magnitude of impact on individual users
 
-점수 체계:
-  100% = High — 데이터 기반 (A/B 테스트, 정량 분석)
-  80% = Medium — 정성 조사 (인터뷰, 설문)
-  50% = Low — 직감, 제한된 데이터
-  20% = Moonshot — 순수 가설
+Scoring scale (Intercom method):
+  3 = Massive — Major improvement in conversion/retention
+  2 = High — Meaningful improvement
+  1 = Medium — Moderate improvement
+  0.5 = Low — Minor improvement
+  0.25 = Minimal — Barely noticeable
 
-주의: Confidence가 50% 이하면 먼저 검증 실험 진행
+Evaluation criteria:
+  - Impact on core metrics (conversion, retention, NPS)
+  - Severity of user pain
+  - Contribution to differentiation
 ```
 
-### Effort (노력)
+### Confidence
 
 ```
-정의: 구현에 필요한 인력-월 (person-months)
+Definition: Level of confidence in the Reach and Impact estimates
 
-산출 방법:
-  1. 엔지니어링: 개발 + 코드리뷰 + QA
-  2. 디자인: 와이어프레임 + UI + 사용성 테스트
-  3. 기타: PM 조율, 문서화, 런칭
+Scoring scale:
+  100% = High — Data-driven (A/B tests, quantitative analysis)
+  80% = Medium — Qualitative research (interviews, surveys)
+  50% = Low — Intuition, limited data
+  20% = Moonshot — Pure hypothesis
 
-단위: person-month (최소 0.5)
-
-예시:
-  검색 개선: 2 PM (백엔드 1, 프론트 0.5, QA 0.5)
-  다크모드: 1.5 PM
-  CSV 내보내기: 0.5 PM
+Note: If Confidence is 50% or below, conduct a validation experiment first
 ```
 
-## RICE 계산 예시
+### Effort
 
 ```
-| 기능 | Reach | Impact | Confidence | Effort | Score |
-|------|-------|--------|------------|--------|-------|
-| 검색 개선 | 10000 | 2 | 80% | 2 | 8000 |
-| 다크모드 | 3000 | 1 | 80% | 1.5 | 1600 |
-| CSV 내보내기 | 500 | 2 | 100% | 0.5 | 2000 |
-| AI 추천 | 8000 | 3 | 50% | 4 | 3000 |
+Definition: Person-months required for implementation
 
-우선순위: 검색 > AI추천 > CSV > 다크모드
+Calculation method:
+  1. Engineering: Development + Code Review + QA
+  2. Design: Wireframes + UI + Usability Testing
+  3. Other: PM coordination, documentation, launch
+
+Unit: person-month (minimum 0.5)
+
+Examples:
+  Search improvement: 2 PM (Backend 1, Frontend 0.5, QA 0.5)
+  Dark mode: 1.5 PM
+  CSV export: 0.5 PM
 ```
 
-## 보완 프레임워크
+## RICE Calculation Example
+
+```
+| Feature | Reach | Impact | Confidence | Effort | Score |
+|---------|-------|--------|------------|--------|-------|
+| Search improvement | 10000 | 2 | 80% | 2 | 8000 |
+| Dark mode | 3000 | 1 | 80% | 1.5 | 1600 |
+| CSV export | 500 | 2 | 100% | 0.5 | 2000 |
+| AI recommendations | 8000 | 3 | 50% | 4 | 3000 |
+
+Priority: Search > AI Recommendations > CSV > Dark Mode
+```
+
+## Supplementary Frameworks
 
 ### RICE + Strategic Alignment
 
 ```
-조정 RICE = RICE Score × Strategic Weight
+Adjusted RICE = RICE Score x Strategic Weight
 
 Strategic Weight:
-  1.5: 핵심 전략 이니셔티브와 직결
-  1.0: 간접적 관련
-  0.7: 전략과 무관한 유지보수
+  1.5: Directly tied to a core strategic initiative
+  1.0: Indirectly related
+  0.7: Maintenance work unrelated to strategy
 
-→ 전략적으로 중요하나 RICE 낮은 항목 보정
+→ Corrects for items that are strategically important but have low RICE scores
 ```
 
-### ICE (간소 버전)
+### ICE (Simplified Version)
 
 ```
-ICE = Impact × Confidence × Ease
+ICE = Impact x Confidence x Ease
 
 Impact: 1-10
 Confidence: 1-10
-Ease: 1-10 (Effort의 역수)
+Ease: 1-10 (inverse of Effort)
 
-용도: 빠른 의사결정, 소규모 팀
+Use case: Quick decisions, small teams
 ```
 
-### MoSCoW (범주형)
+### MoSCoW (Categorical)
 
 ```
-Must have — 없으면 출시 불가
-Should have — 중요하지만 우회 가능
-Could have — 있으면 좋지만 필수 아님
-Won't have — 이번 릴리스에서 제외
+Must have — Cannot launch without it
+Should have — Important but workaround exists
+Could have — Nice to have but not essential
+Won't have — Excluded from this release
 
-용도: 스코프 결정, 이해관계자 소통
+Use case: Scope decisions, stakeholder communication
 ```
 
-## 우선순위 매트릭스 시각화
+## Priority Matrix Visualization
 
 ```
-높은 Impact
+High Impact
      │
-     │  Quick Wins  │  Strategic
-     │  (높은 우선)  │  (계획적 투자)
-     │──────────────┼──────────────
-     │  Fill-ins    │  Avoid
-     │  (시간 남을때) │  (회피)
-     │
-     └─────────────────────────── 높은 Effort
+     │  Quick Wins    │  Strategic
+     │  (High priority)│  (Planned investment)
+     │────────────────┼────────────────
+     │  Fill-ins      │  Avoid
+     │  (When time    │  (Deprioritize)
+     │   permits)     │
+     └──────────────────────────── High Effort
 ```
 
-## 산출물 템플릿
+## Deliverable Template
 
 ```markdown
-## 기능 우선순위 분석
+## Feature Priority Analysis
 
-### RICE 스코어보드
-| # | 기능 | R | I | C | E | Score | 순위 |
-|---|------|---|---|---|---|-------|------|
+### RICE Scoreboard
+| # | Feature | R | I | C | E | Score | Rank |
+|---|---------|---|---|---|---|-------|------|
 
-### 로드맵 반영
-- Now (이번 스프린트): [기능 1, 2]
-- Next (다음 분기): [기능 3, 4]  
-- Later (추후): [기능 5, 6]
+### Roadmap Integration
+- Now (This Sprint): [Feature 1, 2]
+- Next (Next Quarter): [Feature 3, 4]
+- Later (Future): [Feature 5, 6]
 
-### 주요 가정 및 리스크
-- [가정 1]: 검증 방법
-- [리스크 1]: 완화 방안
+### Key Assumptions and Risks
+- [Assumption 1]: Validation method
+- [Risk 1]: Mitigation plan
 ```

@@ -1,64 +1,64 @@
 ---
 name: chunking-strategy-guide
-description: "RAG 파이프라인의 문서 청킹 전략을 체계적으로 설계하는 방법론. '청킹 전략', '문서 분할', 'RAG 청킹', '임베딩 최적화', '시맨틱 청킹', '텍스트 분할' 등 RAG 데이터 전처리 시 사용한다. 단, 벡터 DB 인프라 구축, 임베딩 모델 학습은 이 스킬의 범위가 아니다."
+description: "Methodology for systematically designing document chunking strategies for RAG pipelines. Use this skill for 'chunking strategy', 'document splitting', 'RAG chunking', 'embedding optimization', 'semantic chunking', 'text splitting', and other RAG data preprocessing tasks. Note: vector DB infrastructure construction and embedding model training are outside the scope of this skill."
 ---
 
-# Chunking Strategy Guide — RAG 문서 청킹 전략
+# Chunking Strategy Guide — RAG Document Chunking Strategy
 
-rag-architect의 데이터 전처리 역량을 강화하는 스킬.
+A skill that enhances the data preprocessing capabilities of the rag-architect.
 
-## 대상 에이전트
+## Target Agents
 
-- **rag-architect** — 문서를 효과적으로 청킹하여 검색 품질을 높인다
-- **eval-specialist** — 청킹 전략의 검색 품질을 평가한다
+- **rag-architect** — Effectively chunks documents to improve retrieval quality
+- **eval-specialist** — Evaluates the retrieval quality of chunking strategies
 
-## 청킹 전략 비교표
+## Chunking Strategy Comparison
 
-| 전략 | 원리 | 장점 | 단점 | 적합 |
-|------|------|------|------|------|
-| 고정 크기 | N토큰 단위 절단 | 구현 간단 | 의미 단절 | 로그, 코드 |
-| 문장 기반 | 문장 단위 분리 | 의미 보존 | 크기 불균등 | 뉴스, 블로그 |
-| 단락 기반 | 빈 줄 기준 | 논리 단위 유지 | 단락 크기 편차 | 문서, 리포트 |
-| 시맨틱 | 임베딩 유사도 기준 | 최고 품질 | 느림, 비용 | 복잡한 문서 |
-| 재귀적 | 계층적 분리자 | 균형적 | 설정 복잡 | 범용 |
-| 마크다운 | 헤딩 기준 | 구조 보존 | MD 전용 | 기술 문서 |
+| Strategy | Principle | Advantages | Disadvantages | Best For |
+|----------|----------|-----------|--------------|---------|
+| Fixed-size | Cut at N-token intervals | Simple implementation | Semantic breaks | Logs, code |
+| Sentence-based | Split by sentence | Preserves meaning | Uneven sizes | News, blogs |
+| Paragraph-based | Split at blank lines | Maintains logical units | Paragraph size variance | Documents, reports |
+| Semantic | Based on embedding similarity | Highest quality | Slow, costly | Complex documents |
+| Recursive | Hierarchical separators | Balanced | Complex configuration | General-purpose |
+| Markdown | Based on headings | Preserves structure | MD-only | Technical docs |
 
-## 청킹 파라미터 가이드
+## Chunking Parameter Guide
 
-### 최적 청크 크기
-
-```
-| 문서 유형 | 청크 크기 | 오버랩 | 이유 |
-|----------|----------|--------|------|
-| FAQ | 100-200 토큰 | 0 | 질문-답변 쌍이 짧음 |
-| 기술 문서 | 300-500 토큰 | 50 | 코드+설명 단위 |
-| 법률 문서 | 500-800 토큰 | 100 | 조항 단위 |
-| 학술 논문 | 400-600 토큰 | 80 | 단락 단위 |
-| 채팅 로그 | 200-300 토큰 | 30 | 대화 턴 단위 |
-| 소설/에세이 | 300-500 토큰 | 50 | 장면/단락 단위 |
-```
-
-### 오버랩 비율 공식
+### Optimal Chunk Sizes
 
 ```
-optimal_overlap = chunk_size * 0.1 ~ 0.2
-
-규칙:
-- 독립적 문서 (FAQ): 오버랩 0
-- 연속적 문서 (매뉴얼): 10-15%
-- 고밀도 문서 (법률): 15-20%
-- 최대 오버랩: chunk_size의 25% 초과 금지
+| Document Type | Chunk Size | Overlap | Rationale |
+|--------------|-----------|---------|-----------|
+| FAQ | 100-200 tokens | 0 | Q&A pairs are short |
+| Technical docs | 300-500 tokens | 50 | Code + explanation units |
+| Legal documents | 500-800 tokens | 100 | Article units |
+| Academic papers | 400-600 tokens | 80 | Paragraph units |
+| Chat logs | 200-300 tokens | 30 | Conversation turn units |
+| Fiction/essays | 300-500 tokens | 50 | Scene/paragraph units |
 ```
 
-## 시맨틱 청킹 알고리즘
+### Overlap Ratio Formula
+
+```
+optimal_overlap = chunk_size * 0.1 to 0.2
+
+Rules:
+- Independent documents (FAQ): Overlap 0
+- Sequential documents (manuals): 10-15%
+- Dense documents (legal): 15-20%
+- Maximum overlap: Never exceed 25% of chunk_size
+```
+
+## Semantic Chunking Algorithm
 
 ```python
 def semantic_chunking(text, model, threshold=0.5):
     """
-    1. 문장 단위로 분리
-    2. 인접 문장 쌍의 임베딩 코사인 유사도 계산
-    3. 유사도가 threshold 이하인 지점에서 분리
-    4. 최소/최대 청크 크기 제약 적용
+    1. Split into sentences
+    2. Calculate cosine similarity of adjacent sentence embeddings
+    3. Split at points where similarity falls below threshold
+    4. Apply min/max chunk size constraints
     """
     sentences = split_sentences(text)
     embeddings = model.encode(sentences)
@@ -73,78 +73,78 @@ def semantic_chunking(text, model, threshold=0.5):
     return enforce_size_limits(chunks, min=100, max=800)
 ```
 
-## 문서 유형별 전처리 파이프라인
+## Per-Document-Type Preprocessing Pipeline
 
 ### PDF
 
 ```
-PDF → 텍스트 추출 (pdfplumber/pymupdf)
-→ 헤더/푸터 제거
-→ 페이지 번호 제거
-→ 표 → 마크다운 변환
-→ 이미지 → alt text / OCR
-→ 메타데이터 추출 (제목, 저자, 날짜)
-→ 청킹
+PDF > Text extraction (pdfplumber/pymupdf)
+> Remove headers/footers
+> Remove page numbers
+> Tables > Markdown conversion
+> Images > alt text / OCR
+> Metadata extraction (title, author, date)
+> Chunking
 ```
 
-### HTML/웹페이지
+### HTML/Webpages
 
 ```
-HTML → 본문 추출 (trafilatura/readability)
-→ 네비게이션/사이드바/광고 제거
-→ 마크다운 변환
-→ 링크 텍스트 보존 ([텍스트](URL))
-→ 테이블 보존
-→ 메타데이터 추출 (title, description)
-→ 청킹
+HTML > Body extraction (trafilatura/readability)
+> Remove navigation/sidebar/ads
+> Markdown conversion
+> Preserve link text ([text](URL))
+> Preserve tables
+> Metadata extraction (title, description)
+> Chunking
 ```
 
-### 코드
+### Code
 
 ```
-코드 → AST 파싱
-→ 함수/클래스 단위 분리
-→ docstring + 시그니처 + 본문
-→ 파일 경로 메타데이터 추가
-→ 관련 테스트 코드 연결
-→ 청킹 (함수 단위)
+Code > AST parsing
+> Split by function/class
+> Docstring + signature + body
+> Add file path metadata
+> Link related test code
+> Chunking (function-level)
 ```
 
-## 메타데이터 강화 전략
+## Metadata Enrichment Strategy
 
 ```python
 chunk_with_metadata = {
-    "text": "청크 텍스트...",
+    "text": "Chunk text...",
     "metadata": {
         "source": "document.pdf",
         "page": 5,
-        "section": "3.2 아키텍처",
-        "heading_hierarchy": ["3. 설계", "3.2 아키텍처"],
+        "section": "3.2 Architecture",
+        "heading_hierarchy": ["3. Design", "3.2 Architecture"],
         "chunk_index": 12,
         "total_chunks": 45,
         "created_at": "2025-01-15",
         "document_type": "technical_spec",
-        "language": "ko"
+        "language": "en"
     }
 }
 ```
 
-## 청킹 품질 평가 메트릭
+## Chunking Quality Evaluation Metrics
 
-| 메트릭 | 공식 | 기준 |
-|--------|------|------|
-| 정보 완전성 | 원본 핵심 정보 / 전체 핵심 정보 | >= 95% |
-| 의미 단절률 | 문장 중간 절단 / 전체 청크 | <= 5% |
-| 크기 균일성 | 1 - (std / mean) | >= 0.7 |
-| 검색 정밀도 | 관련 청크 / 반환 청크 (top-5) | >= 60% |
-| 검색 재현율 | 반환 관련 / 전체 관련 (top-10) | >= 80% |
+| Metric | Formula | Threshold |
+|--------|---------|-----------|
+| Information completeness | Original key info / total key info | >= 95% |
+| Semantic break rate | Mid-sentence cuts / total chunks | <= 5% |
+| Size uniformity | 1 - (std / mean) | >= 0.7 |
+| Retrieval precision | Relevant chunks / returned chunks (top-5) | >= 60% |
+| Retrieval recall | Returned relevant / total relevant (top-10) | >= 80% |
 
-## 임베딩 모델 선택 가이드
+## Embedding Model Selection Guide
 
-| 모델 | 차원 | 한국어 | 비용 | 용도 |
-|------|------|--------|------|------|
-| text-embedding-3-small | 1536 | 양호 | $0.02/1M | 범용, 비용 효율 |
-| text-embedding-3-large | 3072 | 양호 | $0.13/1M | 고품질 |
-| multilingual-e5-large | 1024 | 우수 | 무료(로컬) | 한국어 특화 |
-| bge-m3 | 1024 | 우수 | 무료(로컬) | 다국어, 긴 컨텍스트 |
-| voyage-multilingual-2 | 1024 | 우수 | $0.12/1M | 다국어 최고 |
+| Model | Dimensions | Multilingual | Cost | Use Case |
+|-------|-----------|-------------|------|---------|
+| text-embedding-3-small | 1536 | Good | $0.02/1M | General-purpose, cost-efficient |
+| text-embedding-3-large | 3072 | Good | $0.13/1M | High quality |
+| multilingual-e5-large | 1024 | Excellent | Free (local) | Multilingual specialization |
+| bge-m3 | 1024 | Excellent | Free (local) | Multilingual, long context |
+| voyage-multilingual-2 | 1024 | Excellent | $0.12/1M | Best multilingual |

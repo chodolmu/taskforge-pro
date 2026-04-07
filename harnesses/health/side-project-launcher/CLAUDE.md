@@ -1,37 +1,37 @@
 # Side Project Launcher Harness
 
-사이드프로젝트 기획의 아이디어검증→기술스택선정→MVP스펙→개발로드맵→런칭체크리스트를 에이전트 팀이 협업하여 생성하는 하네스.
+companyproject basis ideaverify→tech stack→MVP→developmentroadmap→launchchecklist A harness where an agent team collaborates to produce deliverables.
 
-## 구조
+## structure
 
 ```
 .claude/
 ├── agents/
-│   ├── idea-validator.md      — 아이디어 검증 (시장 분석, 경쟁 조사, 차별화)
-│   ├── techstack-analyst.md   — 기술스택 분석 (선정 기준, 비교, 추천)
-│   ├── mvp-designer.md        — MVP 설계 (핵심 기능, 와이어프레임, 스펙)
-│   ├── roadmap-builder.md     — 로드맵 작성 (개발 일정, 마일스톤, 런칭 전략)
-│   └── launch-reviewer.md    — 교차 검증 (아이디어↔기술↔MVP↔로드맵 정합성)
+│ ├── idea-validator.md — idea verify (market analysis, competition research, differentiation)
+│ ├── techstack-analyst.md — tech stack analysis ( standard, comparison, recommendation)
+│ ├── mvp-designer.md — MVP design (core feature, , )
+│ ├── roadmap-builder.md — roadmap writing (development schedule, milestone, launch strategy)
+│ └── launch-reviewer.md — cross-verification (idea↔technical↔MVP↔roadmap consistency)
 ├── skills/
-│   ├── side-project-launcher/
-│   │   └── skill.md           — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
-│   ├── market-sizing-calculator/
-│   │   └── skill.md           — 시장 규모 계산기 (idea-validator용)
-│   └── techstack-decision-matrix/
-│       └── skill.md           — 기술스택 의사결정 매트릭스 (techstack-analyst용)
-└── CLAUDE.md                  — 이 파일
+│ ├── side-project-launcher/
+│ │ └── skill.md — Orchestrator (team , workflow, error handling)
+│ ├── market-sizing-calculator/
+│ │ └── skill.md — market scale totalbasis (idea-validator)
+│ └── techstack-decision-matrix/
+│ └── skill.md — tech stack decision-making matrix (techstack-analyst)
+└── CLAUDE.md — file
 ```
 
-## 사용법
+## usage
 
-`/side-project-launcher` 스킬을 트리거하거나, "사이드프로젝트 기획 도와줘" 같은 자연어로 요청한다.
+`/side-project-launcher` skill , "companyproject basis " specialistannual request.
 
-## 산출물
+## deliverable
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_idea_validation.md` — 아이디어 검증 보고서
-- `02_techstack_recommendation.md` — 기술스택 추천서
-- `03_mvp_spec.md` — MVP 스펙 문서
-- `04_roadmap_launch.md` — 개발 로드맵 + 런칭 체크리스트
-- `05_review_report.md` — 리뷰 보고서
+all deliverable `_workspace/` save:
+- `00_input.md` — user input organization
+- `01_idea_validation.md` — idea verify report
+- `02_techstack_recommendation.md` — tech stack recommendationfrom
+- `03_mvp_spec.md` — MVP document
+- `04_roadmap_launch.md` — development roadmap + launch checklist
+- `05_review_report.md` — review report

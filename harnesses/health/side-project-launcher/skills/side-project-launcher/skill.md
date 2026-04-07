@@ -1,122 +1,122 @@
 ---
 name: side-project-launcher
-description: "사이드프로젝트 기획을 에이전트 팀이 협업하여 종합 설계하는 파이프라인. '사이드프로젝트 기획', '사이드 프로젝트 아이디어', '토이 프로젝트', 'MVP 만들고 싶어', '앱 하나 만들어 보고 싶어', '서비스 런칭', '1인 개발', 'indie hacking', '주말 프로젝트', '기술스택 뭘로', '사이드 허슬' 등 사이드프로젝트 기획 전반에 이 스킬을 사용한다. 기존 아이디어가 있는 경우에도 기술스택 선정이나 MVP 설계를 지원한다. 단, 실제 코드 작성, 디자인 시안 제작, 도메인/서버 구매 대행은 이 스킬의 범위가 아니다."
+description: "companyproject basis A pipeline where an agent team collaborates for comprehensive planning. 'companyproject basis', 'company project idea', ' project', 'MVP ', ' reporting ', 'service launch', '1person development', 'indie hacking', 'week project', 'tech stack ', 'company ' etc. companyproject basis before skill usage. existing idea case also tech stack MVP design degreeKRW. However, actual code writing, specialistperson whenplan work, person/from versus is outside this skill's scope."
 ---
 
-# Side Project Launcher — 사이드프로젝트 기획 파이프라인
+# Side Project Launcher — companyproject basis pipeline
 
-아이디어검증→기술스택선정→MVP스펙→개발로드맵→런칭체크리스트를 에이전트 팀이 협업하여 한 번에 생성한다.
+ideaverify→tech stack→MVP→developmentroadmap→launchchecklist An agent team collaborates to generate all deliverables at once.
 
-## 실행 모드
+## execution mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**agent team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## agent composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| agent | file | role | type |
 |---------|------|------|------|
-| idea-validator | `.claude/agents/idea-validator.md` | 시장 분석, 경쟁 조사, 차별화 검증 | general-purpose |
-| techstack-analyst | `.claude/agents/techstack-analyst.md` | 기술스택 비교, 추천, 인프라 설계 | general-purpose |
-| mvp-designer | `.claude/agents/mvp-designer.md` | 핵심 기능 정의, 와이어프레임, 스펙 | general-purpose |
-| roadmap-builder | `.claude/agents/roadmap-builder.md` | 개발 일정, 런칭 전략, 체크리스트 | general-purpose |
-| launch-reviewer | `.claude/agents/launch-reviewer.md` | 교차 검증, 실행 가능성 확인 | general-purpose |
+| idea-validator | `.claude/agents/idea-validator.md` | market analysis, competition research, differentiation verify | general-purpose |
+| techstack-analyst | `.claude/agents/techstack-analyst.md` | tech stack comparison, recommendation, person design | general-purpose |
+| mvp-designer | `.claude/agents/mvp-designer.md` | core feature definition, , | general-purpose |
+| roadmap-builder | `.claude/agents/roadmap-builder.md` | development schedule, launch strategy, checklist | general-purpose |
+| launch-reviewer | `.claude/agents/launch-reviewer.md` | cross-verification, execution possiblenature confirm | general-purpose |
 
-## 워크플로우
+## workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: preparation (Orchestrator directly perform)
 
-1. 사용자 입력에서 추출한다:
-    - **아이디어**: 만들고 싶은 것, 해결하려는 문제
-    - **개발 역량** (선택): 사용 가능한 기술, 개발 경험 수준
-    - **가용 시간** (선택): 주당 투입 가능 시간
-    - **예산** (선택): 월 운영 비용 한도
-    - **기존 파일** (선택): 기획서, 와이어프레임 등
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+ - **idea**: , problem
+ - **development competency** (optional): usage possibleKorean technical, development level
+ - ** time** (optional): week deploy possible time
+ - **budget** (optional): month operations cost Korean
+ - **existing file** (optional): basisfrom, etc.
+2. `_workspace/` Create the directory at the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. If existing files are provided, copy them to `_workspace/`and skip the corresponding Phase
+5. Determine the **execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: team composition and execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| order | task | responsible | dependency | deliverable |
 |------|------|------|------|--------|
-| 1 | 아이디어 검증 | validator | 없음 | `_workspace/01_idea_validation.md` |
-| 2 | 기술스택 선정 | techstack | 작업 1 | `_workspace/02_techstack_recommendation.md` |
-| 3 | MVP 설계 | designer | 작업 1, 2 | `_workspace/03_mvp_spec.md` |
-| 4 | 로드맵·런칭 | roadmap | 작업 2, 3 | `_workspace/04_roadmap_launch.md` |
-| 5 | 런칭 리뷰 | reviewer | 작업 1~4 | `_workspace/05_review_report.md` |
+| 1 | idea verify | validator | None | `_workspace/01_idea_validation.md` |
+| 2 | tech stack | techstack | task 1 | `_workspace/02_techstack_recommendation.md` |
+| 3 | MVP design | designer | task 1, 2 | `_workspace/03_mvp_spec.md` |
+| 4 | roadmap·launch | roadmap | task 2, 3 | `_workspace/04_roadmap_launch.md` |
+| 5 | launch review | reviewer | task 1~4 | `_workspace/05_review_report.md` |
 
-**팀원 간 소통 흐름:**
-- validator 완료 → techstack에게 프로젝트 유형·난이도, designer에게 UVP·차별화 포인트, roadmap에게 시장 타이밍 전달
-- techstack 완료 → designer에게 기술 제약·구현 난이도, roadmap에게 학습 시간·기술 리스크 전달
-- designer 완료 → roadmap에게 기능별 소요 시간·우선순위 전달
-- reviewer는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**teamKRW between flow:**
+- validator complete → techstackto project type·difficulty, designerto UVP·differentiation point, roadmapto market deliver
+- techstack complete → designerto technical constraint·implementation difficulty, roadmapto learning time·technical risk deliver
+- designer complete → roadmapto featureby time·priority deliver
+- reviewer all deliverable cross-verification. 🔴 required revision findings when Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: integration and final deliverable
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 리뷰 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다
+1. `_workspace/` Verify all files in the directory
+2. review reportConfirm that all critical revisions from the review report have been addressed
+3. Report the final summary to the user
 
-## 작업 규모별 모드
+## task scaleby mode
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| user request pattern | execution mode | deploy agent |
 |----------------|----------|-------------|
-| "사이드프로젝트 전체 기획" | **풀 파이프라인** | 5명 전원 |
-| "이 아이디어 검증해줘" | **검증 모드** | validator + reviewer |
-| "기술스택 추천해줘" (아이디어 있음) | **기술 모드** | validator + techstack + reviewer |
-| "MVP 스펙 짜줘" (기술 결정됨) | **MVP 모드** | designer + roadmap + reviewer |
-| "런칭 체크리스트 만들어줘" | **런칭 모드** | roadmap + reviewer |
+| "companyproject overall basis" | **Full pipeline** | 5people beforeKRW |
+| " idea verifyplease do" | **verify mode** | validator + reviewer |
+| "tech stack recommendationplease do" (idea ) | **technical mode** | validator + techstack + reviewer |
+| "MVP " (technical decision) | **MVP mode** | designer + roadmap + reviewer |
+| "launch checklist create it" | **launch mode** | roadmap + reviewer |
 
-**기존 파일 활용**: 사용자가 기획서, 기술스택 결정 등을 제공하면 해당 단계를 건너뛴다.
+**existing file utilization**: user basisfrom, tech stack decision etc. provide applicable stage case.
 
-## 데이터 전달 프로토콜
+## data deliver protocol
 
-| 전략 | 방식 | 용도 |
+| strategy | method | also |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| File-based | `_workspace/` | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information transfer, revision requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{}_{agent}_{deliverable}.{extensionspecialist}`
 
-## 에러 핸들링
+## error handling
 
-| 에러 유형 | 전략 |
+| error type | strategy |
 |----------|------|
-| 아이디어 미제시 | 트렌드 기반 아이디어 3개 제안 후 선택 유도 |
-| 개발 경험 없음 | 노코드/로코드 우선 추천, 학습 로드맵 포함 |
-| 웹 검색 실패 | 일반적 시장 지식으로 분석, "데이터 제한" 명시 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰 보고서에 누락 명시 |
-| 리뷰에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
+| idea un-present | trend based idea 3items proposal after optional also |
+| development None | code/code recommendation, learning roadmap included |
+| web search failure | general market degreeas analysis, "data limitation" specify |
+| agent failure | Retry once -> proceed without that deliverable, note the gap in the review report |
+| reviewfrom 🔴 findings | Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds) |
 
-## 테스트 시나리오
+## test scenario
 
-### 정상 흐름
-**프롬프트**: "개발자 면접 준비를 도와주는 웹앱을 사이드프로젝트로 만들고 싶어. React 쓸 줄 알고 주말에 개발할 거야."
-**기대 결과**:
-- 검증: 면접 준비 시장 분석, 기존 서비스(LeetCode, 프로그래머스) 대비 차별화
-- 기술: React + Supabase + Vercel 추천, 무료 티어 활용
-- MVP: 핵심 기능 3~5개, 텍스트 와이어프레임, 데이터 모델
-- 로드맵: 4주 스프린트, Product Hunt 런칭 전략
-- 리뷰: 전체 정합성 검증, 리스크 매트릭스
+### flow
+**Prompt**: "developmentspecialist interview preparation week web companyproject . React week developmentto do ."
+**expected result**:
+- verify: interview preparation market analysis, existing service(LeetCode, ) versus differentiation
+- technical: React + Supabase + Vercel recommendation, free utilization
+- MVP: core feature 3~5items, , data model
+- roadmap: 4week sprint, Product Hunt launch strategy
+- review: overall consistency verify, risk matrix
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이미 아이디어 검증은 했고 기술스택도 정했어. MVP 스펙만 짜줘" + 기획서 첨부
-**기대 결과**:
-- MVP 모드: designer + roadmap + reviewer 투입
-- validator, techstack은 건너뜀
+### existing file utilization flow
+**Prompt**: "un- idea verify tech stack also . MVP only " + basisfrom department
+**expected result**:
+- MVP mode: designer + roadmap + reviewer deploy
+- validator, techstack case
 
-### 에러 흐름
-**프롬프트**: "뭔가 만들어보고 싶은데 아이디어가 없어"
-**기대 결과**:
-- validator가 사용자 관심사 질문 또는 트렌드 기반 아이디어 3개 제안
-- 선택 후 풀 파이프라인 진행
-- 리뷰 보고서에 "아이디어 탐색 단계" 명시
+### error flow
+**Prompt**: " reporting idea "
+**expected result**:
+- validator user company question or trend based idea 3items proposal
+- optional after Full pipeline progress
+- review report "idea stage" specify
 
-## 에이전트별 확장 스킬
+## agentby extension skill
 
-| 에이전트 | 확장 스킬 | 용도 |
+| agent | extension skill | also |
 |---------|----------|------|
-| idea-validator | `market-sizing-calculator` | TAM/SAM/SOM 산출, 수익 모델 검증 |
-| techstack-analyst | `techstack-decision-matrix` | 기술스택 비교 매트릭스, 인프라 비용 계산 |
+| idea-validator | `market-sizing-calculator` | TAM/SAM/SOM calculation, revenue model verify |
+| techstack-analyst | `techstack-decision-matrix` | tech stack comparison matrix, person cost total |

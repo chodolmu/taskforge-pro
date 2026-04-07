@@ -1,123 +1,123 @@
 ---
 name: quality-attribute-analyzer
-description: "아키텍처 결정에서 품질 속성(Quality Attributes)을 체계적으로 분석하고 트레이드오프를 정량화하는 전문 스킬. tradeoff-evaluator 에이전트가 성능/확장성/보안 등 품질 속성 간 트레이드오프를 평가할 때 활용한다. '품질 속성', 'QA 분석', '-ility', '성능 요구사항', '확장성', '보안', 'CAP 정리' 등의 맥락에서 자동 적용한다. 단, 실제 성능 테스트 실행이나 보안 감사는 이 스킬의 범위가 아니다."
+description: "A specialized skill for systematically analyzing quality attributes in architecture decisions and quantifying tradeoffs. Used by the tradeoff-evaluator agent when evaluating tradeoffs between quality attributes such as performance, scalability, and security. Automatically applied in contexts involving 'quality attributes,' 'QA analysis,' '-ility,' 'performance requirements,' 'scalability,' 'security,' or 'CAP theorem.' Note: actual performance test execution and security audits are outside the scope of this skill."
 ---
 
-# Quality Attribute Analyzer — 품질 속성 분석 도구
+# Quality Attribute Analyzer — Quality Attribute Analysis Tool
 
-tradeoff-evaluator 에이전트의 품질 속성 분석 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the tradeoff-evaluator agent's quality attribute analysis capabilities.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **tradeoff-evaluator** — 품질 속성 가중 평가, 리스크-보상 분석
+- **tradeoff-evaluator** — Quality attribute weighted evaluation, risk-reward analysis
 
-## 핵심 품질 속성 (-ility) 사전
+## Core Quality Attribute (-ility) Dictionary
 
-### 런타임 품질 속성
+### Runtime Quality Attributes
 
-| 속성 | 정의 | 측정 지표 | 일반 목표 |
-|------|------|----------|----------|
-| **성능** (Performance) | 응답 시간, 처리량 | p50/p99 레이턴시, TPS | p99 < 200ms |
-| **확장성** (Scalability) | 부하 증가 시 대응력 | 선형 스케일링 여부 | 10x 부하에서 선형 |
-| **가용성** (Availability) | 시스템 가동 시간 | Uptime %, MTBF | 99.9% (Three 9s) |
-| **신뢰성** (Reliability) | 오류 없는 작동 | 장애율, MTTR | MTTR < 30분 |
-| **보안** (Security) | 위협으로부터 보호 | 취약점 수, 침해 건수 | OWASP Top 10 대응 |
+| Attribute | Definition | Measurement Metrics | Typical Targets |
+|-----------|-----------|---------------------|-----------------|
+| **Performance** | Response time, throughput | p50/p99 latency, TPS | p99 < 200ms |
+| **Scalability** | Ability to handle increased load | Linear scaling capability | Linear at 10x load |
+| **Availability** | System uptime | Uptime %, MTBF | 99.9% (Three 9s) |
+| **Reliability** | Error-free operation | Failure rate, MTTR | MTTR < 30 min |
+| **Security** | Protection from threats | Vulnerability count, breach incidents | OWASP Top 10 coverage |
 
-### 개발/운영 품질 속성
+### Development/Operations Quality Attributes
 
-| 속성 | 정의 | 측정 지표 |
-|------|------|----------|
-| **유지보수성** (Maintainability) | 수정 용이성 | 코드 복잡도, 변경 리드타임 |
-| **테스트 용이성** (Testability) | 테스트 작성 용이 | 커버리지, 테스트 실행 시간 |
-| **배포 용이성** (Deployability) | 배포 빈도, 안전성 | 배포 빈도, 롤백 시간 |
-| **관찰 가능성** (Observability) | 시스템 상태 파악 | 로그, 메트릭, 트레이싱 |
+| Attribute | Definition | Measurement Metrics |
+|-----------|-----------|---------------------|
+| **Maintainability** | Ease of modification | Code complexity, change lead time |
+| **Testability** | Ease of writing tests | Coverage, test execution time |
+| **Deployability** | Deployment frequency and safety | Deployment frequency, rollback time |
+| **Observability** | System state visibility | Logs, metrics, tracing |
 
-## 품질 속성 트레이드오프 매트릭스
+## Quality Attribute Tradeoff Matrix
 
-### 일반적 트레이드오프 관계
+### Common Tradeoff Relationships
 
-| 속성 A ↑ | → 속성 B ↓ | 이유 |
-|---------|-----------|------|
-| 성능 | 유지보수성 | 최적화 코드는 복잡해짐 |
-| 보안 | 성능/사용성 | 인증/암호화 오버헤드 |
-| 확장성 | 일관성 | CAP 정리 |
-| 가용성 | 일관성 | CAP 정리 |
-| 유연성 | 성능 | 추상화 레이어 오버헤드 |
+| Attribute A (up) | Attribute B (down) | Reason |
+|-------------------|-------------------|--------|
+| Performance | Maintainability | Optimized code becomes more complex |
+| Security | Performance/Usability | Authentication/encryption overhead |
+| Scalability | Consistency | CAP theorem |
+| Availability | Consistency | CAP theorem |
+| Flexibility | Performance | Abstraction layer overhead |
 
-### CAP 정리 의사결정
-
-```
-분산 시스템에서 3가지 중 2가지만 보장 가능:
-- Consistency (일관성)
-- Availability (가용성)
-- Partition tolerance (분할 허용)
-
-실무 선택:
-┌──────────┬──────────┬──────────┐
-│   CP     │    AP    │    CA    │
-│ 일관성+  │ 가용성+  │ 일관성+  │
-│ 분할허용 │ 분할허용 │ 가용성   │
-├──────────┼──────────┼──────────┤
-│ HBase    │ Cassandra│ 전통RDBMS│
-│ MongoDB  │ DynamoDB │ (단일노드)│
-│ Redis    │ CouchDB  │          │
-└──────────┴──────────┴──────────┘
-```
-
-## 가중 평가 매트릭스 (Weighted Scoring)
-
-### 평가 절차
+### CAP Theorem Decision Making
 
 ```
-1. 품질 속성별 가중치 설정 (합계 100%)
-2. 각 대안을 속성별로 1-5점 평가
-3. 가중 점수 = 가중치 × 점수
-4. 총점으로 대안 순위화
+In distributed systems, only 2 of 3 can be guaranteed:
+- Consistency
+- Availability
+- Partition tolerance
+
+Practical choices:
++----------+----------+----------+
+|    CP    |    AP    |    CA    |
+| Consist. | Avail. + | Consist. |
+| + Part.  | Part.    | + Avail. |
++----------+----------+----------+
+| HBase    | Cassandra| Trad.    |
+| MongoDB  | DynamoDB | RDBMS    |
+| Redis    | CouchDB  | (single) |
++----------+----------+----------+
 ```
 
-### 템플릿
+## Weighted Evaluation Matrix (Weighted Scoring)
+
+### Evaluation Procedure
+
+```
+1. Set weights per quality attribute (totaling 100%)
+2. Score each alternative 1-5 per attribute
+3. Weighted score = Weight x Score
+4. Rank alternatives by total score
+```
+
+### Template
 
 ```markdown
-| 품질 속성 | 가중치 | 대안A | 가중A | 대안B | 가중B | 대안C | 가중C |
-|----------|--------|------|------|------|------|------|------|
-| 성능 | 25% | 4 | 1.00 | 3 | 0.75 | 5 | 1.25 |
-| 확장성 | 20% | 5 | 1.00 | 4 | 0.80 | 3 | 0.60 |
-| 보안 | 20% | 3 | 0.60 | 4 | 0.80 | 4 | 0.80 |
-| 유지보수성 | 15% | 2 | 0.30 | 4 | 0.60 | 3 | 0.45 |
-| 비용 | 10% | 3 | 0.30 | 5 | 0.50 | 2 | 0.20 |
-| 학습곡선 | 10% | 4 | 0.40 | 3 | 0.30 | 2 | 0.20 |
-| **합계** | **100%** | | **3.60** | | **3.75** | | **3.50** |
+| Quality Attribute | Weight | Alt A | Wtd A | Alt B | Wtd B | Alt C | Wtd C |
+|-------------------|--------|-------|-------|-------|-------|-------|-------|
+| Performance | 25% | 4 | 1.00 | 3 | 0.75 | 5 | 1.25 |
+| Scalability | 20% | 5 | 1.00 | 4 | 0.80 | 3 | 0.60 |
+| Security | 20% | 3 | 0.60 | 4 | 0.80 | 4 | 0.80 |
+| Maintainability | 15% | 2 | 0.30 | 4 | 0.60 | 3 | 0.45 |
+| Cost | 10% | 3 | 0.30 | 5 | 0.50 | 2 | 0.20 |
+| Learning Curve | 10% | 4 | 0.40 | 3 | 0.30 | 2 | 0.20 |
+| **Total** | **100%** | | **3.60** | | **3.75** | | **3.50** |
 ```
 
-### 가중치 결정 기준
+### Weight Determination Guidelines
 
-| 프로젝트 유형 | 성능 | 확장성 | 보안 | 유지보수 | 비용 |
-|-------------|------|--------|------|---------|------|
-| 스타트업 MVP | 10% | 15% | 10% | 25% | 25% |
-| 핀테크 | 20% | 15% | 30% | 15% | 10% |
-| 소셜 플랫폼 | 25% | 30% | 10% | 15% | 10% |
-| 기업 내부 시스템 | 10% | 10% | 20% | 25% | 25% |
+| Project Type | Performance | Scalability | Security | Maintainability | Cost |
+|-------------|-------------|-------------|----------|-----------------|------|
+| Startup MVP | 10% | 15% | 10% | 25% | 25% |
+| Fintech | 20% | 15% | 30% | 15% | 10% |
+| Social Platform | 25% | 30% | 10% | 15% | 10% |
+| Enterprise Internal System | 10% | 10% | 20% | 25% | 25% |
 
-## ATAM(Architecture Tradeoff Analysis Method) 간소화
+## Simplified ATAM (Architecture Tradeoff Analysis Method)
 
-### 6단계 분석
+### 6-Step Analysis
 
 ```
-1. 아키텍처 드라이버 식별
-   → 핵심 비즈니스 목표 + 품질 속성 시나리오
+1. Identify Architecture Drivers
+   -> Core business goals + quality attribute scenarios
 
-2. 유틸리티 트리 작성
-   → 품질 속성 → 세부 항목 → 시나리오 → 우선순위(H/M/L)
+2. Create Utility Tree
+   -> Quality attributes -> Sub-items -> Scenarios -> Priority (H/M/L)
 
-3. 아키텍처 접근 방식 분석
-   → 각 접근 방식이 시나리오에 미치는 영향
+3. Analyze Architecture Approaches
+   -> Impact of each approach on scenarios
 
-4. 민감점/트레이드오프 식별
-   → 어떤 결정이 어떤 속성에 민감한가
+4. Identify Sensitivity Points / Tradeoffs
+   -> Which decisions are sensitive to which attributes
 
-5. 리스크/비리스크 분류
-   → 해결된 트레이드오프 vs 미해결 리스크
+5. Classify Risks / Non-risks
+   -> Resolved tradeoffs vs. unresolved risks
 
-6. 결과 정리
-   → ADR에 반영할 핵심 트레이드오프 목록
+6. Compile Results
+   -> List of key tradeoffs to reflect in the ADR
 ```

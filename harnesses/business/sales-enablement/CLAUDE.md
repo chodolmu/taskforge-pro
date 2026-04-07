@@ -1,37 +1,37 @@
 # Sales Enablement Harness
 
-영업 지원 파이프라인: 고객분석→제안서→프레젠테이션→팔로업을 에이전트 팀이 협업하여 생성하는 하네스.
+A sales enablement pipeline where an agent team collaborates to produce: Customer Analysis, Proposal, Presentation, and Follow-up Plan.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── customer-analyst.md      — 고객 분석 (니즈, 의사결정구조, 예산, 경쟁현황)
-│   ├── proposal-writer.md       — 제안서 작성 (솔루션 매칭, 가격, ROI 산출)
-│   ├── presenter.md             — 프레젠테이션 설계 (스토리라인, 슬라이드 구성)
-│   ├── followup-manager.md      — 팔로업 관리 (일정, 이메일, 이의 대응)
-│   └── sales-reviewer.md        — 교차 검증 (고객↔제안서↔PT↔팔로업 정합성)
+│   ├── customer-analyst.md      — Customer Analysis (needs, decision structure, budget, competitive landscape)
+│   ├── proposal-writer.md       — Proposal Writing (solution matching, pricing, ROI calculation)
+│   ├── presenter.md             — Presentation Design (storyline, slide structure)
+│   ├── followup-manager.md      — Follow-up Management (scheduling, emails, objection handling)
+│   └── sales-reviewer.md        — Cross-Verification (customer-proposal-presentation-followup consistency)
 ├── skills/
 │   ├── sales-enablement/
-│       └── skill.md             — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│       └── skill.md             — Orchestrator (team coordination, workflow, error handling)
 │   ├── roi-calculator/
-│   │   └── skill.md             — ROI 계산 (TCO, Payback, 가치 정량화)
+│   │   └── skill.md             — ROI Calculator (TCO, Payback, value quantification)
 │   └── objection-handler/
-│       └── skill.md             — 이의 대응 (BANT+C, LAER, 협상 전략)
-└── CLAUDE.md                    — 이 파일
+│       └── skill.md             — Objection Handling (BANT+C, LAER, negotiation strategy)
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/sales-enablement` 스킬을 트리거하거나, "영업 제안서 만들어줘" 같은 자연어로 요청한다.
+Trigger the `/sales-enablement` skill, or make a natural language request such as "Create a sales proposal."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_customer_analysis.md` — 고객 분석서
-- `02_proposal.md` — 제안서
-- `03_presentation.md` — 프레젠테이션 구성안
-- `04_followup_plan.md` — 팔로업 계획서
-- `05_review_report.md` — 리뷰 보고서
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_customer_analysis.md` — Customer analysis report
+- `02_proposal.md` — Proposal
+- `03_presentation.md` — Presentation outline
+- `04_followup_plan.md` — Follow-up plan
+- `05_review_report.md` — Review report

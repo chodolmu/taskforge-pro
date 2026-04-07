@@ -1,123 +1,123 @@
 ---
 name: scenario-narrative-engine
-description: "시나리오 설계 시 각 시나리오의 서사(narrative)를 생생하게 구성하고 타임라인과 조기 경보 신호를 설계하는 전문 스킬. scenario-designer 에이전트가 2x2 매트릭스 기반 시나리오를 서사화할 때 활용한다. '시나리오 서사', '시나리오 스토리', '타임라인', '조기 경보 신호', 'early warning' 등의 맥락에서 자동 적용한다. 단, 소설적 픽션 창작이나 영화 시나리오 작성은 이 스킬의 범위가 아니다."
+description: "A specialized skill for vividly constructing each scenario's narrative and designing timelines and early warning signals during scenario design. Used by the scenario-designer agent when narrativizing 2x2 matrix-based scenarios. Automatically applied in contexts such as 'scenario narrative', 'scenario story', 'timeline', 'early warning signals', 'early warning'. However, fictional novel writing or movie screenplay creation are outside the scope of this skill."
 ---
 
-# Scenario Narrative Engine — 시나리오 서사 구성 도구
+# Scenario Narrative Engine — Scenario Narrative Construction Tool
 
-scenario-designer 에이전트의 시나리오 서사 구성 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the scenario narrative construction capabilities of the scenario-designer agent.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **scenario-designer** — 2x2 매트릭스 시나리오 서사화, 타임라인 설계
+- **scenario-designer** — 2x2 matrix scenario narrativization, timeline design
 
-## 2x2 시나리오 매트릭스 구성법
+## 2x2 Scenario Matrix Construction Method
 
-### 기본 구조
+### Basic Structure
 
 ```
-                    축 A: [변수명] 높음
-                         │
-   시나리오 2             │           시나리오 1
-   [시나리오명]            │           [시나리오명]
-   "서사적 부제"           │           "서사적 부제"
-                         │
-축 B: 낮음 ──────────────┼────────────── 축 B: 높음
-                         │
-   시나리오 3             │           시나리오 4
-   [시나리오명]            │           [시나리오명]
-   "서사적 부제"           │           "서사적 부제"
-                         │
-                    축 A: [변수명] 낮음
+                    Axis A: [Variable] High
+                         |
+   Scenario 2            |           Scenario 1
+   [Scenario Name]       |           [Scenario Name]
+   "Narrative subtitle"  |           "Narrative subtitle"
+                         |
+Axis B: Low ─────────────┼──────────────── Axis B: High
+                         |
+   Scenario 3            |           Scenario 4
+   [Scenario Name]       |           [Scenario Name]
+   "Narrative subtitle"  |           "Narrative subtitle"
+                         |
+                    Axis A: [Variable] Low
 ```
 
-### 시나리오 명명 규칙
+### Scenario Naming Rules
 
-| 원칙 | 좋은 예 | 나쁜 예 |
-|------|---------|---------|
-| 직관적 은유 사용 | "실리콘 봄" | "시나리오 A" |
-| 감정/이미지 환기 | "디지털 빙하기" | "기술 둔화" |
-| 2-4 단어 | "조용한 혁명" | "기술 규제 강화와 시장 위축 시나리오" |
-| 가치 중립적 | "두 갈래 길" | "최악의 상황" |
+| Principle | Good Example | Bad Example |
+|-----------|-------------|-------------|
+| Use intuitive metaphor | "Silicon Spring" | "Scenario A" |
+| Evoke emotion/imagery | "Digital Ice Age" | "Tech Slowdown" |
+| 2-4 words | "Quiet Revolution" | "Technology Regulation Strengthening and Market Contraction Scenario" |
+| Value-neutral | "Fork in the Road" | "Worst Case" |
 
-## 시나리오 서사 작성 템플릿
+## Scenario Narrative Writing Template
 
-각 시나리오는 다음 구조로 서술한다:
+Each scenario is described with the following structure:
 
-### 1. 핵심 전제 (1문단)
-- 두 축의 극단값이 왜 이 조합으로 나타났는지
-- 근본 원인(Root Cause)
+### 1. Core Premise (1 paragraph)
+- Why this combination of extreme values on both axes emerged
+- Root Cause
 
-### 2. 전개 타임라인 (연도별 주요 사건)
+### 2. Development Timeline (yearly key events)
 
 ```markdown
-### 타임라인
+### Timeline
 
-| 시점 | 사건 | 신호 | 영향 |
-|------|------|------|------|
-| Y+1 | [트리거 이벤트] | [관찰 가능 지표] | [1차 영향] |
-| Y+2 | [연쇄 반응] | [강화/약화 신호] | [산업 변화] |
-| Y+3 | [구조적 전환] | [뉴노멀 신호] | [패러다임 시프트] |
-| Y+5 | [안정화/새로운 균형] | [정착 지표] | [장기 구조] |
+| Timepoint | Event | Signal | Impact |
+|-----------|-------|--------|--------|
+| Y+1 | [Trigger event] | [Observable indicator] | [Primary impact] |
+| Y+2 | [Chain reaction] | [Strengthening/weakening signal] | [Industry change] |
+| Y+3 | [Structural transformation] | [New normal signal] | [Paradigm shift] |
+| Y+5 | [Stabilization/new equilibrium] | [Settlement indicators] | [Long-term structure] |
 ```
 
-### 3. 핵심 특성 (5가지)
-- 시장 구조
-- 기술 환경
-- 규제 프레임워크
-- 경쟁 역학
-- 소비자/사용자 행동
+### 3. Key Characteristics (5 items)
+- Market structure
+- Technology environment
+- Regulatory framework
+- Competitive dynamics
+- Consumer/user behavior
 
-### 4. 승자와 패자
-- 이 시나리오에서 성장하는 플레이어 유형
-- 이 시나리오에서 쇠퇴하는 플레이어 유형
+### 4. Winners and Losers
+- Player types that thrive in this scenario
+- Player types that decline in this scenario
 
-### 5. 조기 경보 신호 (3-5개)
-- 이 시나리오로 진입하고 있음을 알려주는 관찰 가능한 지표
+### 5. Early Warning Signals (3-5 items)
+- Observable indicators that signal entry into this scenario
 
-## 조기 경보 신호 설계 프레임워크
+## Early Warning Signal Design Framework
 
-### 신호 유형 분류
+### Signal Type Classification
 
-| 유형 | 정의 | 예시 | 모니터링 주기 |
-|------|------|------|-------------|
-| 선행 지표 | 변화 전 나타나는 신호 | 특허 출원 건수 급증 | 분기 |
-| 동행 지표 | 변화와 동시에 나타남 | 시장 점유율 변동 | 월간 |
-| 약신호 | 미약하지만 의미 있는 변화 | 스타트업 투자 방향 변화 | 분기 |
-| 와일드카드 | 예상 밖 충격 | 규제 전환, 기술 돌파 | 상시 |
+| Type | Definition | Example | Monitoring Frequency |
+|------|-----------|---------|---------------------|
+| Leading indicator | Appears before change | Patent filing surge | Quarterly |
+| Concurrent indicator | Appears with change | Market share shift | Monthly |
+| Weak signal | Subtle but meaningful change | Startup investment direction shift | Quarterly |
+| Wild card | Unexpected shock | Regulatory reversal, tech breakthrough | Continuous |
 
-### 신호 설계 원칙
+### Signal Design Principles
 
-1. **관찰 가능**: 공개 데이터로 추적할 수 있어야 한다
-2. **측정 가능**: 정량적 임계값(threshold)을 정의한다
-3. **시차 충분**: 대응할 시간을 확보할 수 있는 선행 지표
-4. **고유성**: 특정 시나리오에만 해당하는 독점적 신호
+1. **Observable**: Must be trackable with publicly available data
+2. **Measurable**: Define quantitative thresholds
+3. **Sufficient Lead Time**: Leading indicators that allow response time
+4. **Uniqueness**: Exclusive signals specific to a particular scenario
 
-### 신호 카드 템플릿
+### Signal Card Template
 
 ```markdown
-#### 조기 경보 신호 #N
+#### Early Warning Signal #N
 
-- **신호명**: [명확한 이름]
-- **관련 시나리오**: [해당 시나리오]
-- **데이터 소스**: [어디서 관찰하는가]
-- **임계값**: [어떤 수준이면 경보를 울리는가]
-- **모니터링 주기**: [얼마나 자주 확인하는가]
-- **대응 행동**: [이 신호가 발생하면 무엇을 하는가]
+- **Signal Name**: [Clear name]
+- **Related Scenario**: [Which scenario]
+- **Data Source**: [Where to observe]
+- **Threshold**: [At what level to trigger alert]
+- **Monitoring Frequency**: [How often to check]
+- **Response Action**: [What to do when this signal occurs]
 ```
 
-## 시나리오 간 교차 분석
+## Cross-Scenario Analysis
 
-### 공통 요소 매트릭스
+### Common Element Matrix
 
-| 요소 | 시나리오1 | 시나리오2 | 시나리오3 | 시나리오4 | 공통? |
-|------|----------|----------|----------|----------|------|
-| 요소A | O | O | O | O | 확정 트렌드 |
-| 요소B | O | X | O | X | 축 A 의존 |
-| 요소C | O | O | X | X | 축 B 의존 |
+| Element | Scenario 1 | Scenario 2 | Scenario 3 | Scenario 4 | Common? |
+|---------|-----------|-----------|-----------|-----------|---------|
+| Element A | O | O | O | O | Predetermined trend |
+| Element B | O | X | O | X | Axis A dependent |
+| Element C | O | O | X | X | Axis B dependent |
 
-### 로버스트 전략 식별
+### Robust Strategy Identification
 
-4개 시나리오 모두에서 유효한 행동 = **로버스트 전략** (무조건 실행)
-2-3개에서 유효한 행동 = **헤지 전략** (조건부 실행)
-1개에서만 유효한 행동 = **옵션** (신호 확인 후 실행)
+Actions valid across all 4 scenarios = **Robust strategy** (execute unconditionally)
+Actions valid in 2-3 scenarios = **Hedge strategy** (conditional execution)
+Actions valid in only 1 scenario = **Option** (execute after signal confirmation)

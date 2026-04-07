@@ -1,39 +1,39 @@
 # Social Media Manager Harness
 
-SNS 콘텐츠 달력·포스트작성·해시태그·성과분석을 에이전트 팀이 협업하여 생성하는 하네스.
+A harness where an agent team collaborates to produce SNS content calendars, post copy, hashtags, and performance analysis.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── sns-strategist.md       — SNS 전략가 (채널분석, 콘텐츠달력, 캠페인설계)
-│   ├── copywriter.md           — 카피라이터 (포스트작성, 캡션, CTA)
-│   ├── visual-planner.md       — 비주얼기획자 (이미지컨셉, 카드뉴스, 릴스기획)
-│   ├── hashtag-analyst.md      — 해시태그분석가 (해시태그전략, 트렌드분석, 성과예측)
-│   └── performance-reviewer.md — 성과검증자 (KPI정렬, 콘텐츠품질, 정합성)
+│   ├── sns-strategist.md       — SNS Strategist (channel analysis, content calendar, campaign design)
+│   ├── copywriter.md           — Copywriter (post writing, captions, CTAs)
+│   ├── visual-planner.md       — Visual Planner (image concepts, card news, Reels planning)
+│   ├── hashtag-analyst.md      — Hashtag Analyst (hashtag strategy, trend analysis, performance prediction)
+│   └── performance-reviewer.md — Performance Reviewer (KPI alignment, content quality, consistency)
 ├── skills/
 │   ├── social-media-manager/
-│   │   └── skill.md            — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md            — Orchestrator (team coordination, workflow, error handling)
 │   ├── platform-algorithms/
-│   │   └── skill.md            — sns-strategist+visual-planner 확장 (알고리즘, 골든타임)
+│   │   └── skill.md            — sns-strategist+visual-planner extension (algorithms, golden hours)
 │   ├── viral-copywriting/
-│   │   └── skill.md            — copywriter 확장 (15 훅 패턴, 감정 트리거, CTA)
+│   │   └── skill.md            — copywriter extension (15 hook patterns, emotion triggers, CTAs)
 │   └── hashtag-science/
-│       └── skill.md            — hashtag-analyst 확장 (피라미드 전략, 리서치, 섀도우밴)
-└── CLAUDE.md                   — 이 파일
+│       └── skill.md            — hashtag-analyst extension (pyramid strategy, research, shadowban)
+└── CLAUDE.md                   — This file
 ```
 
-## 사용법
+## Usage
 
-`/social-media-manager` 스킬을 트리거하거나, "SNS 콘텐츠 만들어줘" 같은 자연어로 요청한다.
+Trigger the `/social-media-manager` skill, or make a natural language request such as "Create SNS content."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_strategy.md` — SNS 전략/콘텐츠 달력
-- `02_posts.md` — 포스트 카피 모음
-- `03_visuals.md` — 비주얼 기획서
-- `04_hashtags.md` — 해시태그 전략서
-- `05_review_report.md` — 리뷰 보고서
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_strategy.md` — SNS strategy/content calendar
+- `02_posts.md` — Post copy collection
+- `03_visuals.md` — Visual plan
+- `04_hashtags.md` — Hashtag strategy
+- `05_review_report.md` — Review report

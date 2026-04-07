@@ -1,102 +1,102 @@
 ---
 name: financial-ratio-analyzer
-description: "투자자 보고서 작성 시 재무비율 분석의 깊이를 높이는 전문 스킬. financial-analyst 에이전트가 P&L, 현금흐름, 재무지표를 분석할 때 체계적인 비율 분석 프레임워크를 제공한다. '재무비율 분석', '수익성 지표', '유동성 분석', '레버리지 비율', 'DuPont 분석' 등의 맥락에서 자동 적용한다. 단, 회계 감사 의견 제공이나 GAAP/IFRS 전환 작업은 이 스킬의 범위가 아니다."
+description: "A specialized skill that deepens financial ratio analysis for investor report writing. Provides the financial-analyst agent with a systematic ratio analysis framework when analyzing P&L, cash flow, and financial metrics. Automatically applied in contexts such as 'financial ratio analysis', 'profitability metrics', 'liquidity analysis', 'leverage ratios', 'DuPont analysis'. However, providing audit opinions or GAAP/IFRS conversion work are outside the scope of this skill."
 ---
 
-# Financial Ratio Analyzer — 재무비율 심층 분석 도구
+# Financial Ratio Analyzer — Financial Ratio Deep Analysis Tool
 
-financial-analyst 에이전트의 재무 분석 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the financial analysis capabilities of the financial-analyst agent.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **financial-analyst** — 재무비율 분석 시 이 스킬의 프레임워크를 활용
+- **financial-analyst** — Uses this skill's framework during financial ratio analysis
 
-## 5대 재무비율 카테고리
+## 5 Financial Ratio Categories
 
-### 1. 수익성 비율 (Profitability Ratios)
+### 1. Profitability Ratios
 
-| 비율 | 공식 | 해석 기준 | 업종별 벤치마크 |
-|------|------|----------|---------------|
-| 매출총이익률 | (매출 - COGS) / 매출 × 100 | 40%+ 우수 | SaaS 70-80%, 제조 25-35% |
-| 영업이익률 | 영업이익 / 매출 × 100 | 15%+ 양호 | SaaS 20-30%, 유통 3-5% |
-| 순이익률 | 순이익 / 매출 × 100 | 10%+ 건전 | SaaS 15-25%, 건설 2-4% |
-| ROE | 순이익 / 자기자본 × 100 | 15%+ 목표 | 산업 평균 10-12% |
-| ROA | 순이익 / 총자산 × 100 | 5%+ 건전 | 금융 0.5-1%, IT 8-15% |
-| ROIC | NOPAT / 투하자본 × 100 | WACC 초과 시 가치창출 | WACC+3%p 이상 우수 |
+| Ratio | Formula | Interpretation Criteria | Industry Benchmarks |
+|-------|---------|------------------------|---------------------|
+| Gross Margin | (Revenue - COGS) / Revenue x 100 | 40%+ Excellent | SaaS 70-80%, Manufacturing 25-35% |
+| Operating Margin | Operating Income / Revenue x 100 | 15%+ Good | SaaS 20-30%, Retail 3-5% |
+| Net Margin | Net Income / Revenue x 100 | 10%+ Healthy | SaaS 15-25%, Construction 2-4% |
+| ROE | Net Income / Equity x 100 | 15%+ Target | Industry Average 10-12% |
+| ROA | Net Income / Total Assets x 100 | 5%+ Healthy | Finance 0.5-1%, IT 8-15% |
+| ROIC | NOPAT / Invested Capital x 100 | Value creation when exceeding WACC | WACC+3%p+ Excellent |
 
-### 2. 유동성 비율 (Liquidity Ratios)
+### 2. Liquidity Ratios
 
-| 비율 | 공식 | 안전 기준 |
-|------|------|----------|
-| 유동비율 | 유동자산 / 유동부채 | 150-200% 양호 |
-| 당좌비율 | (유동자산 - 재고) / 유동부채 | 100%+ 건전 |
-| 현금비율 | 현금성자산 / 유동부채 | 20%+ 최소 |
-| Cash Runway | 현금 / 월간 소진율 | 스타트업 18개월+ 권장 |
+| Ratio | Formula | Safety Criteria |
+|-------|---------|----------------|
+| Current Ratio | Current Assets / Current Liabilities | 150-200% Good |
+| Quick Ratio | (Current Assets - Inventory) / Current Liabilities | 100%+ Healthy |
+| Cash Ratio | Cash & Equivalents / Current Liabilities | 20%+ Minimum |
+| Cash Runway | Cash / Monthly Burn Rate | 18+ months recommended for startups |
 
-### 3. 레버리지 비율 (Leverage Ratios)
+### 3. Leverage Ratios
 
-| 비율 | 공식 | 경고 수준 |
-|------|------|----------|
-| 부채비율 | 총부채 / 자기자본 × 100 | 200% 초과 시 주의 |
-| 이자보상배율 | EBIT / 이자비용 | 3배 미만 시 위험 |
-| 순차입금/EBITDA | (차입금 - 현금) / EBITDA | 3x 초과 시 주의 |
-| 자기자본비율 | 자기자본 / 총자산 × 100 | 30%+ 건전 |
+| Ratio | Formula | Warning Level |
+|-------|---------|---------------|
+| Debt-to-Equity | Total Debt / Equity x 100 | Caution above 200% |
+| Interest Coverage | EBIT / Interest Expense | Risk below 3x |
+| Net Debt/EBITDA | (Debt - Cash) / EBITDA | Caution above 3x |
+| Equity Ratio | Equity / Total Assets x 100 | 30%+ Healthy |
 
-### 4. 효율성 비율 (Efficiency Ratios)
+### 4. Efficiency Ratios
 
-| 비율 | 공식 | 개선 방향 |
-|------|------|----------|
-| 매출채권 회전율 | 매출 / 평균 매출채권 | 높을수록 양호 |
-| 재고자산 회전율 | COGS / 평균 재고 | 업종별 상이 |
-| CCC (현금전환주기) | DSO + DIO - DPO | 낮을수록 양호 |
+| Ratio | Formula | Improvement Direction |
+|-------|---------|----------------------|
+| Receivables Turnover | Revenue / Average Receivables | Higher is better |
+| Inventory Turnover | COGS / Average Inventory | Varies by industry |
+| CCC (Cash Conversion Cycle) | DSO + DIO - DPO | Lower is better |
 
-### 5. 성장성 비율 (Growth Ratios)
+### 5. Growth Ratios
 
-| 비율 | 공식 | 스타트업 기준 |
-|------|------|-------------|
-| 매출 성장률 | (당기 - 전기) / 전기 × 100 | T2D3: 3x→3x→2x→2x→2x |
-| EPS 성장률 | (당기EPS - 전기EPS) / 전기EPS × 100 | 상장사 15%+ 우수 |
+| Ratio | Formula | Startup Criteria |
+|-------|---------|------------------|
+| Revenue Growth | (Current - Prior) / Prior x 100 | T2D3: 3x→3x→2x→2x→2x |
+| EPS Growth | (Current EPS - Prior EPS) / Prior EPS x 100 | Public 15%+ Excellent |
 
-## DuPont 분석 프레임워크
+## DuPont Analysis Framework
 
-ROE를 3단계로 분해하여 수익성의 근본 원인을 파악한다:
+Decompose ROE into 3 components to identify root causes of profitability:
 
 ```
-ROE = 순이익률 × 총자산회전율 × 재무레버리지
-    = (순이익/매출) × (매출/총자산) × (총자산/자기자본)
+ROE = Net Margin x Asset Turnover x Financial Leverage
+    = (Net Income/Revenue) x (Revenue/Total Assets) x (Total Assets/Equity)
 ```
 
-**5-Factor DuPont 확장:**
+**5-Factor DuPont Extension:**
 ```
-ROE = 세후이자부담 × 이자부담 × 영업이익률 × 자산회전율 × 레버리지
-    = (NI/EBT) × (EBT/EBIT) × (EBIT/매출) × (매출/총자산) × (총자산/자기자본)
+ROE = Tax Burden x Interest Burden x Operating Margin x Asset Turnover x Leverage
+    = (NI/EBT) x (EBT/EBIT) x (EBIT/Revenue) x (Revenue/Total Assets) x (Total Assets/Equity)
 ```
 
-## SaaS 특화 메트릭
+## SaaS-Specific Metrics
 
-| 메트릭 | 공식 | 건전 기준 |
-|--------|------|----------|
-| ARR | MRR × 12 | YoY 100%+ 성장 (초기) |
-| NRR | (기초MRR + 확장 - 축소 - 이탈) / 기초MRR | 115%+ 우수 |
-| LTV | ARPA × 매출총이익률 / 월간이탈률 | LTV/CAC > 3x |
-| CAC | 영업마케팅비 / 신규고객수 | Payback < 18개월 |
-| Rule of 40 | 매출성장률(%) + 영업이익률(%) | 40%+ 목표 |
-| Magic Number | 순신규ARR / 전분기 S&M비용 | 0.75+ 양호 |
-| Burn Multiple | 순소진액 / 순신규ARR | 1.5x 미만 효율적 |
+| Metric | Formula | Health Criteria |
+|--------|---------|----------------|
+| ARR | MRR x 12 | YoY 100%+ growth (early stage) |
+| NRR | (Beginning MRR + Expansion - Contraction - Churn) / Beginning MRR | 115%+ Excellent |
+| LTV | ARPA x Gross Margin / Monthly Churn Rate | LTV/CAC > 3x |
+| CAC | Sales & Marketing Expense / New Customers | Payback < 18 months |
+| Rule of 40 | Revenue Growth Rate (%) + Operating Margin (%) | 40%+ Target |
+| Magic Number | Net New ARR / Prior Quarter S&M Expense | 0.75+ Good |
+| Burn Multiple | Net Burn / Net New ARR | Below 1.5x Efficient |
 
-## 투자자 유형별 강조 비율
+## Ratios to Emphasize by Investor Type
 
-| 투자자 유형 | 핵심 관심 비율 | 프레이밍 |
-|------------|---------------|---------|
-| VC (초기) | 성장률, Burn Rate, Runway | 성장 잠재력 강조 |
-| VC (후기) | Unit Economics, Rule of 40 | 효율적 성장 증명 |
-| PE | EBITDA 마진, FCF, ROIC | 현금 창출력 강조 |
-| 상장 주주 | EPS, ROE, 배당수익률 | 주주 가치 환원 |
-| 채권자 | 이자보상배율, 부채비율 | 상환 안정성 강조 |
+| Investor Type | Key Ratios of Interest | Framing |
+|-------------|----------------------|---------|
+| VC (Early) | Growth Rate, Burn Rate, Runway | Emphasize growth potential |
+| VC (Late) | Unit Economics, Rule of 40 | Prove efficient growth |
+| PE | EBITDA Margin, FCF, ROIC | Emphasize cash generation |
+| Public Shareholders | EPS, ROE, Dividend Yield | Shareholder value return |
+| Creditors | Interest Coverage, Debt-to-Equity | Emphasize repayment stability |
 
-## 분석 보고서 작성 원칙
+## Analysis Report Writing Principles
 
-1. **전기 대비 변동 분석** — 각 비율의 QoQ/YoY 변동과 원인
-2. **업종 벤치마크 비교** — 동종 업계 상위/하위 25% 대비 포지셔닝
-3. **경고 플래그** — 기준값 이탈 항목 자동 하이라이트
-4. **트렌드 해석** — 3~5개 분기 트렌드에서 패턴 도출
+1. **Period-over-Period Variance Analysis** — QoQ/YoY changes and causes for each ratio
+2. **Industry Benchmark Comparison** — Positioning vs. peer top/bottom 25%
+3. **Warning Flags** — Auto-highlight items deviating from threshold values
+4. **Trend Interpretation** — Derive patterns from 3-5 quarter trends

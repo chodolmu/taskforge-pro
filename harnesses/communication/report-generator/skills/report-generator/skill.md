@@ -1,130 +1,130 @@
 ---
 name: report-generator
-description: "업무 보고서를 에이전트 팀이 협업하여 데이터수집→분석→시각화→집필→요약까지 한 번에 생성하는 풀 파이프라인. '업무 보고서 만들어줘', '월간 보고서 작성', '분기 실적 보고', '프로젝트 보고서', '시장분석 보고서', '경영 보고서', 'KPI 보고서', '데이터 분석 보고서', '실적 요약 보고' 등 업무 보고서 작성 전반에 이 스킬을 사용한다. 기존 데이터나 분석 결과가 있는 경우에도 시각화, 집필, 요약을 지원한다. 단, 실시간 BI 대시보드 구축, 데이터베이스 직접 연동, ERP 시스템 통합은 이 스킬의 범위가 아니다."
+description: "work report agent team to datacollection→analysis→visualization→→summaryto Korean creation Full pipeline. 'work report create it', 'monthbetween report writing', 'minutebasis results reporting', 'project report', 'marketanalysis report', ' report', 'KPI report', 'data analysis report', 'results summary reporting' etc. work report writing before skill usage. existing data analysis result case also visualization, , summary degreeKRW. However, actualtime BI dashboard building, data directly annual, ERP whensystem integration is outside this skill's scope."
 ---
 
-# Report Generator — 업무 보고서 풀 파이프라인
+# Report Generator — work report Full pipeline
 
-업무 보고서의 데이터수집→분석→시각화→집필→요약을 에이전트 팀이 협업하여 한 번에 생성한다.
+work report datacollection→analysis→visualization→→summary An agent team collaborates to generate all deliverables at once.
 
-## 실행 모드
+## execution mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**agent team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## agent composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| agent | file | role | type |
 |---------|------|------|------|
-| data-collector | `.claude/agents/data-collector.md` | 데이터 소스 탐색, 수치 추출, 정제 | general-purpose |
-| analyst | `.claude/agents/analyst.md` | 통계 분석, 트렌드, 인사이트 도출 | general-purpose |
-| visualizer | `.claude/agents/visualizer.md` | 차트, 테이블, 다이어그램 명세 | general-purpose |
-| report-writer | `.claude/agents/report-writer.md` | 보고서 구조화 및 집필 | general-purpose |
-| executive-summarizer | `.claude/agents/executive-summarizer.md` | 경영진 요약, 교차 검증 | general-purpose |
+| data-collector | `.claude/agents/data-collector.md` | data , figure , refinement | general-purpose |
+| analyst | `.claude/agents/analyst.md` | statistics analysis, trend, insight derive | general-purpose |
+| visualizer | `.claude/agents/visualizer.md` | chart, , diagram peopletax | general-purpose |
+| report-writer | `.claude/agents/report-writer.md` | report structure and | general-purpose |
+| executive-summarizer | `.claude/agents/executive-summarizer.md` | management summary, cross-verification | general-purpose |
 
-## 워크플로우
+## workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: preparation (Orchestrator directly perform)
 
-1. 사용자 입력에서 추출한다:
-    - **보고서 주제**: 무엇에 대한 보고서인가
-    - **보고 유형**: 정기(월간/분기/연간) / 프로젝트 / 분석
-    - **보고 대상**: 경영진 / 팀장 / 실무자 / 외부
-    - **기간**: 보고 대상 기간
-    - **기존 자료** (선택): 사용자가 제공한 데이터, 분석 결과, 이전 보고서
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다 (아래 "작업 규모별 모드" 참조)
+1. Extract from user input:
+ - **report week**: regarding reportperson
+ - **reporting type**: basis(monthbetween/minutebasis/annualbetween) / project / analysis
+ - **reporting target**: management / team / actualspecialist / external
+ - **duration**: reporting target duration
+ - **existing material** (optional): user provideKorean data, analysis result, before report
+2. `_workspace/` Create the directory at the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. If existing files are provided, copy them to `_workspace/`and skip the corresponding Phase
+5. Determine the **execution mode** based on the scope of the request ( "task scaleby mode" reference)
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: team composition and execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| order | task | responsible | dependency | deliverable |
 |------|------|------|------|--------|
-| 1 | 데이터 수집 | collector | 없음 | `_workspace/01_data_collection.md` |
-| 2 | 데이터 분석 | analyst | 작업 1 | `_workspace/02_analysis_report.md` |
-| 3a | 시각화 명세 | visualizer | 작업 2 | `_workspace/03_visualization_spec.md` |
-| 3b | 보고서 집필 | writer | 작업 2 | `_workspace/04_full_report.md` |
-| 4 | 요약 및 검증 | summarizer | 작업 3a, 3b | `_workspace/05_executive_summary.md` |
+| 1 | data collection | collector | None | `_workspace/01_data_collection.md` |
+| 2 | data analysis | analyst | task 1 | `_workspace/02_analysis_report.md` |
+| 3a | visualization peopletax | visualizer | task 2 | `_workspace/03_visualization_spec.md` |
+| 3b | report | writer | task 2 | `_workspace/04_full_report.md` |
+| 4 | summary and verify | summarizer | task 3a, 3b | `_workspace/05_executive_summary.md` |
 
-작업 3a(시각화)와 3b(집필)는 **병렬 실행**한다. 둘 다 작업 2(분석)에만 의존한다.
+task 3a(visualization) and 3b ** execution**. task 2(analysis) only dependency.
 
-**팀원 간 소통 흐름:**
-- collector 완료 → analyst에게 데이터셋+품질 메모 전달, visualizer에게 정량 데이터 하이라이트 전달
-- analyst 완료 → visualizer에게 시각화 제안 전달, writer에게 인사이트+논리 전개 제안 전달
-- visualizer 완료 → writer에게 시각화 명세+삽입 위치 전달
-- writer 완료 → summarizer에게 보고서 전문 전달
-- summarizer는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**teamKRW between flow:**
+- collector complete → analystto data+quality deliver, visualizerto data deliver
+- analyst complete → visualizerto visualization proposal deliver, writerto insight+ beforeitems proposal deliver
+- visualizer complete → writerto visualization peopletax+ position deliver
+- writer complete → summarizerto report specialist deliver
+- summarizer all deliverable cross-verification. 🔴 required revision findings when Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: integration and final deliverable
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 검증 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 데이터 수집 — `01_data_collection.md`
-    - 분석 보고서 — `02_analysis_report.md`
-    - 시각화 명세 — `03_visualization_spec.md`
-    - 최종 보고서 — `04_full_report.md`
-    - 경영진 요약 — `05_executive_summary.md`
+1. `_workspace/` Verify all files in the directory
+2. verify reportConfirm that all critical revisions from the review report have been addressed
+3. Report the final summary to the user:
+ - data collection — `01_data_collection.md`
+ - analysis report — `02_analysis_report.md`
+ - visualization peopletax — `03_visualization_spec.md`
+ - final report — `04_full_report.md`
+ - management summary — `05_executive_summary.md`
 
-## 작업 규모별 모드
+## task scaleby mode
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| user request pattern | execution mode | deploy agent |
 |----------------|----------|-------------|
-| "업무 보고서 만들어줘", "풀 보고서" | **풀 파이프라인** | 5명 전원 |
-| "이 데이터로 분석 보고서 써줘" (데이터 제공) | **분석 모드** | analyst + visualizer + writer + summarizer |
-| "이 보고서 요약해줘" (보고서 제공) | **요약 모드** | summarizer 단독 |
-| "시각화만 해줘" (분석 결과 제공) | **시각화 모드** | visualizer + summarizer |
-| "이 보고서 검토해줘" | **검토 모드** | summarizer 단독 |
+| "work report create it", "Full report" | **Full pipeline** | 5people beforeKRW |
+| " data analysis report " (data provide) | **analysis mode** | analyst + visualizer + writer + summarizer |
+| " report summaryplease do" (report provide) | **summary mode** | summarizer |
+| "visualization only please do" (analysis result provide) | **visualization mode** | visualizer + summarizer |
+| " report reviewplease do" | **review mode** | summarizer |
 
-**기존 파일 활용**: 사용자가 데이터, 분석 결과 등 기존 파일을 제공하면 해당 단계를 건너뛴다.
+**existing file utilization**: user data, analysis result etc. existing file provide applicable stage case.
 
-## 데이터 전달 프로토콜
+## data deliver protocol
 
-| 전략 | 방식 | 용도 |
+| strategy | method | also |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
+| File-based | `_workspace/` | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information transfer, revision requests |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{}_{agent}_{deliverable}.{extensionspecialist}`
 
-## 에러 핸들링
+## error handling
 
-| 에러 유형 | 전략 |
+| error type | strategy |
 |----------|------|
-| 웹 검색 실패 | 수집가가 사용자 제공 자료 기반으로 작업, "외부 데이터 미확보" 명시 |
-| 데이터 부족 | 보유 데이터 범위 내 분석 수행, 추가 확보 가능 항목 명시 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 검증 보고서에 누락 명시 |
-| 검증에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
-| 보고 대상 불명확 | 경영진 보고 형식(PREP 구조)을 기본값으로 적용 |
+| web search failure | collection user provide material basedas task, "external data un-secure" specify |
+| data insufficient | report data scope within analysis perform, addition secure possible item specify |
+| agent failure | Retry once -> proceed without that deliverable, verify report specify |
+| verifyfrom 🔴 findings | Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds) |
+| reporting target people | management reporting (PREP structure) basicas applied |
 
-## 테스트 시나리오
+## test scenario
 
-### 정상 흐름
-**프롬프트**: "2024년 4분기 매출 실적 보고서를 만들어줘. 보고 대상은 경영진이야."
-**기대 결과**:
-- 데이터 수집: 매출 관련 공개 데이터, 산업 트렌드 수집
-- 분석: 전년 동기 대비, 분기별 추이, 업계 평균 비교
-- 시각화: 매출 추이 선형 차트, 제품별 비중 원형 차트, KPI 테이블
-- 보고서: PREP 구조, 경영진 톤, 액션 아이템 3개 이상
-- 요약: 1페이지 경영진 요약 + 정합성 매트릭스 전항목 확인
+### flow
+**Prompt**: "2024year 4minutebasis sales performance report create it. reporting target management."
+**expected result**:
+- data collection: sales related items data, trend collection
+- analysis: beforeyear basis versus, minutebasisby , total pyeongbalanced comparison
+- visualization: sales chart, by proportion KRW chart, KPI 
+- report: PREP structure, management tone, 3items or more
+- summary: 1degree management summary + consistency matrix beforeitem confirm
 
-### 기존 데이터 활용 흐름
-**프롬프트**: "이 CSV 데이터로 분석 보고서 만들어줘" + 데이터 파일 제공
-**기대 결과**:
-- 데이터 수집 단계 건너뜀
-- 제공된 데이터를 `_workspace/01_data_collection.md`로 정리
-- analyst + visualizer + writer + summarizer 투입
+### existing data utilization flow
+**Prompt**: " CSV data analysis report create it" + data file provide
+**expected result**:
+- data collection stage case
+- providedone data `_workspace/01_data_collection.md` organization
+- analyst + visualizer + writer + summarizer deploy
 
-### 에러 흐름
-**프롬프트**: "시장 동향 보고서 만들어줘, 자료는 없어"
-**기대 결과**:
-- 수집가가 웹 검색으로 공개 데이터 확보 시도
-- 검색 실패 시 일반적 시장 지식 기반으로 작업
-- 검증 보고서에 "데이터 제한 — 웹 검색 기반 추정치 활용" 명시
+### error flow
+**Prompt**: "market report create it, material "
+**expected result**:
+- collection web searchas items data secure when
+- search failure when general market degree basedas task
+- verify report "data limitation — web search based estimationvalue utilization" specify
 
-## 에이전트별 확장 스킬
+## agentby extension skill
 
-| 확장 스킬 | 경로 | 대상 에이전트 | 역할 |
+| extension skill | | target agent | role |
 |----------|------|-------------|------|
-| data-visualization-guide | `.claude/skills/data-visualization-guide/skill.md` | visualizer | 차트 선택 프레임워크, 시각화 원칙, 색상 규칙 |
-| kpi-dashboard-patterns | `.claude/skills/kpi-dashboard-patterns/skill.md` | analyst, executive-summarizer | KPI 정의, 대시보드 레이아웃, 분산/트렌드 분석 |
+| data-visualization-guide | `.claude/skills/data-visualization-guide/skill.md` | visualizer | chart optional framework, visualization principle, rule |
+| kpi-dashboard-patterns | `.claude/skills/kpi-dashboard-patterns/skill.md` | analyst, executive-summarizer | KPI definition, dashboard , minute/trend analysis |

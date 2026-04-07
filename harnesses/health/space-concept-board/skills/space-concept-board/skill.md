@@ -1,128 +1,128 @@
 ---
 name: space-concept-board
-description: "공간 인테리어 컨셉보드를 에이전트 팀이 협업하여 한 번에 생성하는 풀 파이프라인. '인테리어 컨셉 잡아줘', '거실 꾸미고 싶어', '방 분위기 바꾸고 싶어', '인테리어 무드보드', '가구 추천해줘', '공간 스타일링', '컬러팔레트 짜줘', '인테리어 예산', '셀프 인테리어', '홈스타일링', '원룸 인테리어', '사무실 인테리어' 등 공간 꾸미기 전반에 이 스킬을 사용한다. 기존 무드보드가 있는 경우에도 아이템 큐레이션이나 예산 관리를 지원한다. 단, 실제 시공 시행(타일 시공, 전기 배선), 3D 렌더링, AR 가구 배치 앱 연동은 이 스킬의 범위가 아니다."
+description: "A full pipeline where an agent team collaborates to generate an interior space concept board all at once. Use this skill for 'interior concept design', 'living room makeover', 'room atmosphere change', 'interior moodboard', 'furniture recommendations', 'space styling', 'color palette design', 'interior budget', 'DIY interior', 'home styling', 'studio interior', 'office interior', and all other space decoration tasks. Also supports item curation and budget management when an existing moodboard is provided. Actual construction work (tile installation, electrical wiring), 3D rendering, and AR furniture placement app integration are outside this skill's scope."
 ---
 
-# Space Concept Board — 공간 인테리어 컨셉보드 파이프라인
+# Space Concept Board Pipeline
 
-공간의 스타일분석→무드보드→컬러팔레트→가구·소품리스트→예산표→쇼핑가이드를 에이전트 팀이 협업하여 한 번에 생성한다.
+An agent team collaborates to generate style analysis, moodboard, color palette, furniture/accessory list, budget sheet, and shopping guide all at once.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| style-analyst | `.claude/agents/style-analyst.md` | 공간 파악, 스타일 진단, 레퍼런스 수집 | general-purpose |
-| moodboard-designer | `.claude/agents/moodboard-designer.md` | 컬러팔레트, 텍스처, 소재 구성 | general-purpose |
-| item-curator | `.claude/agents/item-curator.md` | 가구·소품 선정, 배치 제안, 구매처 조사 | general-purpose |
-| budget-manager | `.claude/agents/budget-manager.md` | 가격 조사, 예산표, 쇼핑가이드 | general-purpose |
-| concept-reviewer | `.claude/agents/concept-reviewer.md` | 교차 검증, 정합성 확인 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| style-analyst | `.claude/agents/style-analyst.md` | Space assessment, style diagnosis, reference collection | general-purpose |
+| moodboard-designer | `.claude/agents/moodboard-designer.md` | Color palette, texture, material composition | general-purpose |
+| item-curator | `.claude/agents/item-curator.md` | Furniture/accessory selection, layout proposals, vendor research | general-purpose |
+| budget-manager | `.claude/agents/budget-manager.md` | Price research, budget sheet, shopping guide | general-purpose |
+| concept-reviewer | `.claude/agents/concept-reviewer.md` | Cross-verification, consistency checks | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Orchestrator performs directly)
 
-1. 사용자 입력에서 추출한다:
-    - **공간 정보**: 유형(거실/침실/서재/원룸), 면적, 구조
-    - **스타일 선호** (선택): 좋아하는 스타일, 레퍼런스 이미지
-    - **예산** (선택): 총 예산 범위
-    - **제약 조건** (선택): 임대/자가, 시공 가능 범위, 반려동물/아이
-    - **기존 파일** (선택): 사용자가 제공한 무드보드, 가구 리스트 등
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다 (아래 "작업 규모별 모드" 참조)
+1. Extract from user input:
+    - **Space information**: Type (living room/bedroom/study/studio), area, structure
+    - **Style preference** (optional): Preferred styles, reference images
+    - **Budget** (optional): Total budget range
+    - **Constraints** (optional): Rental/owned, renovation scope, pets/children
+    - **Existing files** (optional): User-provided moodboard, furniture list, etc.
+2. Create a `_workspace/` directory at the project root
+3. Organize inputs and save to `_workspace/00_input.md`
+4. If existing files are provided, copy them to `_workspace/` and skip the corresponding phase
+5. Determine the **execution mode** based on the scope of the request (see "Modes by Request Scale" below)
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 스타일 분석 | analyst | 없음 | `_workspace/01_style_analysis.md` |
-| 2 | 무드보드 설계 | designer | 작업 1 | `_workspace/02_moodboard.md` |
-| 3 | 아이템 큐레이션 | curator | 작업 1, 2 | `_workspace/03_item_list.md` |
-| 4 | 예산표·쇼핑가이드 | budget | 작업 1, 2, 3 | `_workspace/04_budget_shopping.md` |
-| 5 | 컨셉 리뷰 | reviewer | 작업 1~4 | `_workspace/05_review_report.md` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1 | Style analysis | analyst | None | `_workspace/01_style_analysis.md` |
+| 2 | Moodboard design | designer | Task 1 | `_workspace/02_moodboard.md` |
+| 3 | Item curation | curator | Tasks 1, 2 | `_workspace/03_item_list.md` |
+| 4 | Budget/shopping guide | budget | Tasks 1, 2, 3 | `_workspace/04_budget_shopping.md` |
+| 5 | Concept review | reviewer | Tasks 1-4 | `_workspace/05_review_report.md` |
 
-**팀원 간 소통 흐름:**
-- analyst 완료 → designer에게 추천 스타일·레퍼런스 전달, curator에게 공간 조건·제약 전달, budget에게 예산 범위·임대 여부 전달
-- designer 완료 → curator에게 컬러팔레트·소재 보드 전달, budget에게 추천 소재·브랜드 전달
-- curator 완료 → budget에게 전체 아이템 리스트·가격대 전달
-- reviewer는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**Inter-team communication flow:**
+- analyst complete -> Deliver recommended styles and references to designer, spatial conditions and constraints to curator, budget range and rental status to budget
+- designer complete -> Deliver color palette and material board to curator, recommended materials and brands to budget
+- curator complete -> Deliver full item list and price ranges to budget
+- reviewer cross-verifies all deliverables. If critical issues are found, request revision from the relevant agent -> rework -> re-verify (up to 2 rounds)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 리뷰 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 스타일 분석 — `01_style_analysis.md`
-    - 무드보드 + 컬러팔레트 — `02_moodboard.md`
-    - 가구·소품 리스트 — `03_item_list.md`
-    - 예산표 + 쇼핑가이드 — `04_budget_shopping.md`
-    - 리뷰 보고서 — `05_review_report.md`
+1. Verify all files in `_workspace/`
+2. Confirm all critical issues from the review report have been addressed
+3. Report the final summary to the user:
+    - Style analysis — `01_style_analysis.md`
+    - Moodboard + color palette — `02_moodboard.md`
+    - Furniture/accessory list — `03_item_list.md`
+    - Budget sheet + shopping guide — `04_budget_shopping.md`
+    - Review report — `05_review_report.md`
 
-## 작업 규모별 모드
+## Modes by Request Scale
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "인테리어 컨셉 전체 잡아줘" | **풀 파이프라인** | 5명 전원 |
-| "무드보드만 만들어줘" | **무드보드 모드** | analyst + designer + reviewer |
-| "가구 추천해줘" (스타일 제시됨) | **아이템 모드** | curator + budget + reviewer |
-| "인테리어 예산 짜줘" (리스트 있음) | **예산 모드** | budget + reviewer |
-| "이 컨셉보드 검토해줘" | **리뷰 모드** | reviewer 단독 |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|----------------|-----------------|
+| "Design the full interior concept" | **Full Pipeline** | All 5 agents |
+| "Just create a moodboard" | **Moodboard Mode** | analyst + designer + reviewer |
+| "Recommend furniture" (style provided) | **Item Mode** | curator + budget + reviewer |
+| "Plan my interior budget" (list provided) | **Budget Mode** | budget + reviewer |
+| "Review this concept board" | **Review Mode** | reviewer only |
 
-**기존 파일 활용**: 사용자가 무드보드, 아이템 리스트 등을 제공하면, 해당 파일을 `_workspace/`의 적절한 번호 위치에 복사하고 해당 단계의 에이전트는 건너뛴다.
+**Existing file usage**: When the user provides a moodboard, item list, etc., copy the file to the appropriate numbered position in `_workspace/` and skip that stage's agent.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information transfer, revision requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{sequence}_{agent}_{deliverable}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 공간 정보 부족 | 한국 아파트(84㎡) 기본값 적용, 보고서에 "추정치" 명시 |
-| 웹 검색 실패 | 일반 인테리어 지식 기반 작업, "데이터 제한" 명시 |
-| 예산 미제시 | 공간 유형별 평균 예산 제안 후 진행 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰 보고서에 누락 명시 |
-| 리뷰에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
+| Error Type | Strategy |
+|-----------|----------|
+| Insufficient space information | Apply standard apartment (84 sq m) defaults, note "estimated" in the report |
+| Web search failure | Work from general interior knowledge, note "data limitations" |
+| Budget not specified | Suggest average budgets by space type, then proceed |
+| Agent failure | Retry once -> If still failing, proceed without that deliverable, note the gap in the review report |
+| Critical issue found in review | Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds) |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "25평 아파트 거실을 스칸디나비안 스타일로 꾸미고 싶어. 예산은 500만원이야."
-**기대 결과**:
-- 스타일 분석: 스칸디나비안 핵심 요소 + 25평 거실 조건 반영
-- 무드보드: 화이트/라이트그레이 중심 컬러팔레트 + 원목·리넨 소재
-- 아이템: 소파·테이블·조명·러그 등 15~20개 품목 + 사이즈 확인
-- 예산표: 500만원 내 배분 + 3단계 구매 우선순위
-- 리뷰: 정합성 매트릭스 전항목 확인
+### Normal Flow
+**Prompt**: "I want to decorate my 900 sq ft apartment living room in Scandinavian style. My budget is $5,000."
+**Expected Results**:
+- Style analysis: Scandinavian core elements + living room conditions applied
+- Moodboard: White/light gray centered color palette + natural wood and linen materials
+- Items: 15-20 products including sofa, table, lighting, rug + size verification
+- Budget: Allocation within $5,000 + 3-phase purchase priorities
+- Review: All items in consistency matrix verified
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 무드보드에 맞는 가구 추천해줘" + 무드보드 파일 첨부
-**기대 결과**:
-- 기존 무드보드를 `_workspace/02_moodboard.md`로 복사
-- 아이템 모드: curator + budget + reviewer 투입
-- analyst, designer는 건너뜀
+### Existing File Flow
+**Prompt**: "Recommend furniture that matches this moodboard" + moodboard file attached
+**Expected Results**:
+- Existing moodboard copied to `_workspace/02_moodboard.md`
+- Item mode: curator + budget + reviewer deployed
+- analyst, designer are skipped
 
-### 에러 흐름
-**프롬프트**: "방 예쁘게 꾸미고 싶은데 뭐부터 해야 할지 모르겠어"
-**기대 결과**:
-- 공간 정보 부족 → analyst가 공간 유형·면적 질문 또는 기본값 적용
-- 스타일 미정 → analyst가 대비되는 3가지 스타일 제안
-- 예산 미정 → budget이 공간 유형별 평균 예산 제시
+### Error Flow
+**Prompt**: "I want to make my room look nice but I don't know where to start"
+**Expected Results**:
+- Insufficient space information -> analyst asks about space type/area or applies defaults
+- No style preference -> analyst proposes 3 contrasting styles
+- No budget specified -> budget presents average budgets by space type
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-| 에이전트 | 확장 스킬 | 용도 |
-|---------|----------|------|
-| moodboard-designer, style-analyst | `color-harmony-engine` | 색채 이론, 배색 공식, 스타일별 팔레트 DB |
-| item-curator, style-analyst | `spatial-layout-guide` | 가구 배치 규칙, 치수 기준, 동선 설계 |
+| Agent | Extension Skill | Purpose |
+|-------|----------------|---------|
+| moodboard-designer, style-analyst | `color-harmony-engine` | Color theory, palette formulas, style-specific palette database |
+| item-curator, style-analyst | `spatial-layout-guide` | Furniture placement rules, dimension standards, traffic flow design |

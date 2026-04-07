@@ -1,131 +1,131 @@
 ---
 name: madr-template-engine
-description: "MADR(Markdown Any Decision Record) 표준 포맷으로 ADR을 구조화하고 상태 관리를 체계화하는 전문 스킬. adr-author와 impact-tracker가 표준 포맷의 ADR 문서를 작성하고 결정 이력을 추적할 때 활용한다. 'MADR 포맷', 'ADR 템플릿', '결정 상태', 'ADR 번호 체계', '결정 이력' 등의 맥락에서 자동 적용한다. 단, Git 커밋 훅 설정이나 CI/CD 파이프라인 구축은 이 스킬의 범위가 아니다."
+description: "A specialized skill for structuring ADRs in MADR (Markdown Any Decision Record) standard format and systematizing status management. Used by the adr-author and impact-tracker agents when writing standard-format ADR documents and tracking decision history. Automatically applied in contexts involving 'MADR format,' 'ADR template,' 'decision status,' 'ADR numbering system,' or 'decision history.' Note: Git commit hook setup and CI/CD pipeline construction are outside the scope of this skill."
 ---
 
-# MADR Template Engine — ADR 표준 포맷 도구
+# MADR Template Engine — ADR Standard Format Tool
 
-adr-author, impact-tracker 에이전트의 ADR 문서화 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the ADR documentation capabilities of the adr-author and impact-tracker agents.
 
-## 적용 대상 에이전트
+## Target Agents
 
-- **adr-author** — MADR 포맷 ADR 문서 작성
-- **impact-tracker** — ADR 간 의존관계 추적, 상태 관리
+- **adr-author** — MADR format ADR document writing
+- **impact-tracker** — Inter-ADR dependency tracking, status management
 
-## MADR 표준 템플릿
+## MADR Standard Template
 
 ```markdown
-# ADR-{NNN}: {결정 제목}
+# ADR-{NNN}: {Decision Title}
 
-## 상태
+## Status
 
 {Proposed | Accepted | Deprecated | Superseded by ADR-XXX}
 
-## 날짜
+## Date
 
 {YYYY-MM-DD}
 
-## 컨텍스트
+## Context
 
-{이 결정을 하게 된 배경, 문제 상황, 제약 조건}
+{Background, problem situation, and constraints that led to this decision}
 
-## 의사결정 드라이버
+## Decision Drivers
 
-* {드라이버 1: 예) 응답 시간 200ms 이내 필요}
-* {드라이버 2: 예) 팀 규모 5명의 학습 곡선}
-* {드라이버 3: 예) 예산 제약 월 100만원}
+* {Driver 1: e.g., Response time must be under 200ms}
+* {Driver 2: e.g., Learning curve for a team of 5}
+* {Driver 3: e.g., Monthly budget constraint of $X}
 
-## 고려한 대안
+## Considered Alternatives
 
-### 대안 1: {대안명}
+### Alternative 1: {Name}
 
-{설명}
+{Description}
 
-* 장점: {좋은 점, 왜냐하면 ...}
-* 장점: {좋은 점, 왜냐하면 ...}
-* 단점: {나쁜 점, 왜냐하면 ...}
+* Pro: {Benefit, because ...}
+* Pro: {Benefit, because ...}
+* Con: {Drawback, because ...}
 
-### 대안 2: {대안명}
+### Alternative 2: {Name}
 
-{설명}
+{Description}
 
-* 장점: {좋은 점, 왜냐하면 ...}
-* 단점: {나쁜 점, 왜냐하면 ...}
-* 단점: {나쁜 점, 왜냐하면 ...}
+* Pro: {Benefit, because ...}
+* Con: {Drawback, because ...}
+* Con: {Drawback, because ...}
 
-### 대안 3: {대안명}
+### Alternative 3: {Name}
 
-{설명 - 최소 3개 대안 비교}
+{Description — compare at least 3 alternatives}
 
-## 결정
+## Decision
 
-대안 {N}: {대안명}을 선택한다.
+We choose Alternative {N}: {Name}.
 
-### 선택 근거
+### Selection Rationale
 
-{왜 이 대안을 선택했는지 구체적으로}
+{Specific reasons for choosing this alternative}
 
-### 기각 근거
+### Rejection Rationale
 
-* 대안 {X}를 기각한 이유: {이유}
-* 대안 {Y}를 기각한 이유: {이유}
+* Alternative {X} was rejected because: {Reason}
+* Alternative {Y} was rejected because: {Reason}
 
-## 결과
+## Consequences
 
-### 긍정적 영향
+### Positive Impact
 
-* {예상되는 긍정적 결과}
+* {Expected positive outcome}
 
-### 부정적 영향
+### Negative Impact
 
-* {감수해야 할 트레이드오프}
+* {Tradeoff that must be accepted}
 
-### 후속 조치
+### Follow-up Actions
 
-* [ ] {필요한 후속 작업 1}
-* [ ] {필요한 후속 작업 2}
+* [ ] {Required follow-up task 1}
+* [ ] {Required follow-up task 2}
 
-## 관련 ADR
+## Related ADRs
 
-* ADR-{XXX}: {관련 결정}
-* ADR-{YYY}: {이 결정에 영향받는 결정}
+* ADR-{XXX}: {Related decision}
+* ADR-{YYY}: {Decision affected by this one}
 ```
 
-## ADR 상태 관리
+## ADR Status Management
 
-### 상태 전이도
+### Status Transition Diagram
 
 ```
-[Proposed] → [Accepted] → [Deprecated]
-                    ↓
+[Proposed] -> [Accepted] -> [Deprecated]
+                    |
               [Superseded by ADR-XXX]
 ```
 
-| 상태 | 의미 | 조건 |
-|------|------|------|
-| Proposed | 검토 중 | 작성 직후 |
-| Accepted | 채택됨 | 이해관계자 합의 |
-| Deprecated | 더 이상 유효하지 않음 | 전제 변경 |
-| Superseded | 새 ADR로 대체됨 | 대안 재평가 |
+| Status | Meaning | Condition |
+|--------|---------|-----------|
+| Proposed | Under review | Immediately after writing |
+| Accepted | Adopted | Stakeholder consensus |
+| Deprecated | No longer valid | Premises changed |
+| Superseded | Replaced by new ADR | Alternative re-evaluation |
 
-## ADR 번호 체계
+## ADR Numbering System
 
-### 번호 부여 규칙
+### Numbering Rules
 
 ```
-ADR-{순번}: {카테고리 코드}-{결정 제목}
+ADR-{Sequence}: {Category Code}-{Decision Title}
 
-카테고리 코드:
-  ARCH - 아키텍처 패턴
-  DATA - 데이터 저장/처리
-  INFRA - 인프라/배포
-  SEC - 보안
-  API - API 설계
-  UI - 프론트엔드
-  PROC - 프로세스/방법론
+Category Codes:
+  ARCH - Architecture patterns
+  DATA - Data storage/processing
+  INFRA - Infrastructure/deployment
+  SEC - Security
+  API - API design
+  UI - Frontend
+  PROC - Process/methodology
 ```
 
-### ADR 디렉토리 구조
+### ADR Directory Structure
 
 ```
 docs/adr/
@@ -133,45 +133,45 @@ docs/adr/
 ├── 0002-data-postgresql-selection.md
 ├── 0003-infra-kubernetes-adoption.md
 ├── 0004-api-rest-vs-graphql.md
-├── index.md  ← ADR 목록 및 상태 대시보드
+├── index.md  <- ADR list and status dashboard
 └── template.md
 ```
 
-## ADR 작성 품질 체크리스트
+## ADR Writing Quality Checklist
 
-### 필수 요소
+### Required Elements
 
-- [ ] 컨텍스트가 배경을 충분히 설명하는가?
-- [ ] 의사결정 드라이버가 명확한가?
-- [ ] 3개 이상 대안을 비교했는가?
-- [ ] 각 대안의 장단점이 구체적인가?
-- [ ] 선택 근거가 논리적인가?
-- [ ] 기각 근거가 명시되어 있는가?
-- [ ] 트레이드오프가 솔직하게 기술되었는가?
-- [ ] 후속 조치가 구체적인가?
+- [ ] Does the context sufficiently explain the background?
+- [ ] Are the decision drivers clear?
+- [ ] Were at least 3 alternatives compared?
+- [ ] Are the pros and cons of each alternative specific?
+- [ ] Is the selection rationale logical?
+- [ ] Are rejection reasons explicitly stated?
+- [ ] Are tradeoffs honestly described?
+- [ ] Are follow-up actions specific?
 
-### 흔한 실수
+### Common Mistakes
 
-| 실수 | 개선 방법 |
-|------|----------|
-| 결정만 있고 맥락 없음 | "왜 이 결정이 필요했는가" 먼저 작성 |
-| 대안 1개만 기술 | 기각된 대안도 반드시 기록 |
-| 장점만 기술 | 단점과 트레이드오프 솔직히 기록 |
-| 너무 길거나 짧음 | 1-3페이지 권장 |
-| 업데이트 안 됨 | 상태 전이 시 반드시 업데이트 |
+| Mistake | Improvement |
+|---------|-------------|
+| Decision stated without context | Write "why was this decision needed" first |
+| Only one alternative described | Always document rejected alternatives too |
+| Only pros listed | Honestly record cons and tradeoffs |
+| Too long or too short | 1-3 pages recommended |
+| Never updated | Always update when status transitions occur |
 
-## ADR 의존성 그래프 (impact-tracker용)
+## ADR Dependency Graph (for impact-tracker)
 
 ```markdown
-### ADR 의존성 맵
+### ADR Dependency Map
 
-ADR-001 (마이크로서비스)
-  ├── ADR-002 (서비스 간 통신: gRPC)
-  ├── ADR-003 (서비스 디스커버리: Consul)
-  ├── ADR-004 (분산 추적: Jaeger)
+ADR-001 (Microservices)
+  ├── ADR-002 (Inter-service communication: gRPC)
+  ├── ADR-003 (Service discovery: Consul)
+  ├── ADR-004 (Distributed tracing: Jaeger)
   └── ADR-005 (API Gateway: Kong)
-       └── ADR-006 (인증: OAuth2 + JWT)
+       └── ADR-006 (Authentication: OAuth2 + JWT)
 
-영향 분석:
-ADR-001이 Deprecated 되면 → ADR-002~006 모두 재검토 필요
+Impact Analysis:
+If ADR-001 is Deprecated -> ADR-002 through ADR-006 all require re-review
 ```

@@ -1,36 +1,36 @@
 # Coding Bootcamp Harness
 
-코딩 교육의 커리큘럼설계→실습과제→코드리뷰→프로젝트→포트폴리오를 에이전트 팀이 협업하여 수행하는 하네스.
+A harness where an agent team collaborates to deliver coding education: curriculum design, hands-on exercises, code review, projects, and portfolio building.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── curriculum-designer.md  — 커리큘럼 설계 (학습경로, 단계별 목표)
-│   ├── exercise-creator.md     — 실습과제 출제 (난이도별 문제, 테스트케이스)
-│   ├── code-reviewer.md        — 코드 리뷰 (품질, 패턴, 개선점)
-│   └── mentor.md               — 멘토 (프로젝트 설계, 포트폴리오, 커리어)
+│   ├── curriculum-designer.md   — Curriculum Designer (learning path, tech stack, schedule)
+│   ├── exercise-creator.md      — Exercise Creator (by difficulty, project-based)
+│   ├── code-reviewer.md         — Code Reviewer (quality, patterns, improvements)
+│   └── mentor.md                — Mentor (learning strategy, motivation, career)
 ├── skills/
 │   ├── coding-bootcamp/
-│   │   └── skill.md            — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│       └── skill.md             — Orchestrator (team coordination, workflow, error handling)
 │   ├── code-kata-generator/
-│   │   └── skill.md            — 코딩 과제 설계 (5-Tier 난이도, 테스트케이스, 스캐폴딩)
+│   │   └── skill.md             — Code Kata Generator (algorithms, patterns, difficulty)
 │   └── tech-interview-prep/
-│       └── skill.md            — 기술 면접 준비 (UMPIRE, 시스템 디자인, STAR 행동면접)
-└── CLAUDE.md                   — 이 파일
+│       └── skill.md             — Tech Interview Prep (by type, mock interviews)
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/coding-bootcamp` 스킬을 트리거하거나, "코딩 배우고 싶어" 같은 자연어로 요청한다.
+Trigger the `/coding-bootcamp` skill, or make a natural language request such as "Help me learn to code."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_curriculum.md` — 커리큘럼
-- `02_exercises/` — 실습과제 디렉토리
-- `03_code_review.md` — 코드 리뷰 보고서
-- `04_project_spec.md` — 프로젝트 기획서
-- `05_portfolio_guide.md` — 포트폴리오 가이드
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_curriculum.md` — Curriculum
+- `02_exercises.md` — Practice exercises
+- `03_code_review.md` — Code review results
+- `04_project_guide.md` — Project guide
+- `05_review_report.md` — Review report

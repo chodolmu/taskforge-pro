@@ -1,145 +1,96 @@
 ---
 name: unit-economics-calculator
-description: "스타트업의 유닛 이코노믹스(LTV, CAC, 마진, BEP)를 체계적으로 계산하는 방법론. '유닛이코노믹스 계산', 'LTV 계산', 'CAC 분석', '손익분기점', '고객당 경제성', '단위 수익성' 등 유닛 이코노믹스 분석 시 사용한다. 단, 회계 장부 작성, 세무 신고, 재무감사는 이 스킬의 범위가 아니다."
+description: "Methodology for systematically calculating startup unit economics (LTV, CAC, margin, BEP). Use this skill for 'unit economics calculation', 'LTV calculation', 'CAC analysis', 'break-even point', 'per-customer economics', 'unit profitability', and other unit economics analysis tasks. Note: bookkeeping, tax filing, and financial auditing are outside the scope of this skill."
 ---
 
-# Unit Economics Calculator — 유닛 이코노믹스 계산기
+# Unit Economics Calculator — Unit Economics Calculation Methodology
 
-business-modeler와 pitch-creator의 재무 분석을 강화하는 스킬.
+A skill that enhances the business-modeler's financial analysis capabilities.
 
-## 대상 에이전트
+## Target Agents
 
-- **business-modeler** — 비즈니스 모델의 경제적 타당성을 검증한다
-- **pitch-creator** — 투자자 설득용 핵심 재무 수치를 산출한다
+- **business-modeler** — Calculates unit economics systematically
+- **launch-reviewer** — Validates financial assumptions
 
-## 핵심 공식 모음
+## Core Metrics
 
-### CAC (고객 획득 비용)
-
+### CAC (Customer Acquisition Cost)
 ```
-CAC = 총 마케팅+영업 비용 / 신규 고객 수
+CAC = Total Marketing & Sales Spend / New Customers Acquired
 
-채널별 CAC:
-  Paid_CAC = 광고비 / 광고 통한 신규 고객
-  Organic_CAC = (콘텐츠+SEO 비용) / 오가닉 신규 고객
-  Blended_CAC = 전체 비용 / 전체 신규 고객
+Components:
+- Advertising spend (paid channels)
+- Sales team costs (salary + commission)
+- Marketing tool costs
+- Content production costs
 
-주의: 인건비(마케팅팀, 영업팀) 포함 여부 명시
-```
-
-### LTV (고객 생애 가치)
-
-```
-단순 LTV:
-  LTV = ARPU × 평균 이용 기간(월)
-
-구독 모델 LTV:
-  LTV = ARPU / 월간 이탈률
-  예: 월 5만원, 이탈률 5% → LTV = 100만원
-
-마진 반영 LTV:
-  LTV = (ARPU × 매출총이익률) / 이탈률
-  예: 5만원 × 70% / 5% = 70만원
-
-코호트 기반 LTV:
-  LTV = Σ(월별 잔존율 × 월 ARPU × 매출총이익률)
-  → 가장 정확, 12~24개월 데이터 필요
+Blended CAC vs. Channel-specific CAC
 ```
 
-### LTV:CAC 비율
-
+### LTV (Lifetime Value)
 ```
-LTV:CAC = LTV / CAC
+Simple: LTV = ARPU x Average Customer Lifespan
+Detailed: LTV = ARPU x Gross Margin x (1 / Churn Rate)
 
-| 비율 | 해석 |
-|------|------|
-| < 1:1 | 위험: 고객당 손실 |
-| 1-2:1 | 경고: 마진 부족 |
-| 3:1 | 건강: 투자 유치 기준 |
-| > 5:1 | 주의: 성장 투자 부족 가능 |
+For subscription:
+  LTV = Monthly ARPU x Gross Margin x (1 / Monthly Churn Rate)
 
-CAC 회수 기간:
-  Payback = CAC / (월 ARPU × 매출총이익률)
-  기준: < 12개월 (B2C), < 18개월 (B2B)
+For e-commerce:
+  LTV = AOV x Purchase Frequency x Customer Lifespan x Gross Margin
 ```
 
-### 매출총이익률 (Gross Margin)
-
+### Key Ratios
 ```
-매출총이익률 = (매출 - 매출원가) / 매출 × 100
+LTV/CAC Ratio:
+  < 1x: Unsustainable (losing money per customer)
+  1-3x: Improving but risky
+  >= 3x: Healthy (industry benchmark)
+  > 5x: May be underinvesting in growth
 
-SaaS 매출원가:
-  - 서버/인프라 비용
-  - 제3자 API 비용
-  - CS 인건비 (직접)
-  - 결제 수수료
+Payback Period:
+  = CAC / Monthly Gross Profit per Customer
+  Target: <= 12 months (SaaS), <= 6 months (e-commerce)
 
-건강한 기준:
-  SaaS: 70-85%
-  마켓플레이스: 15-30%
-  이커머스: 30-50%
-  하드웨어: 20-40%
-```
-
-### BEP (손익분기점)
-
-```
-BEP (수량) = 고정비 / (단가 - 변동비)
-BEP (매출) = 고정비 / 매출총이익률
-
-시간 기반 BEP:
-  월간 고정비 = 인건비 + 임대료 + 인프라 + 기타
-  월간 공헌이익 = (ARPU - 변동비) × 월 신규고객
-  BEP 도달 시점 = 누적 공헌이익 >= 누적 고정비 + 초기투자
+Gross Margin:
+  = (Revenue - COGS) / Revenue x 100
+  SaaS target: 70-85%
+  E-commerce target: 30-50%
+  Marketplace target: 60-80% (of take rate)
 ```
 
-## 비즈니스 모델별 벤치마크
-
-### SaaS
-
-| 지표 | 시드 | 시리즈A | 시리즈B+ |
-|------|------|---------|---------|
-| MRR | 50-200만 | 500만-2000만 | 5000만+ |
-| 성장률(MoM) | 15-20% | 10-15% | 5-10% |
-| 이탈률(월) | 5-10% | 3-5% | 1-3% |
-| LTV:CAC | 2:1+ | 3:1+ | 4:1+ |
-| CAC 회수 | < 18개월 | < 12개월 | < 9개월 |
-| NRR | 90%+ | 100%+ | 110%+ |
-| 매출총이익률 | 60%+ | 70%+ | 75%+ |
-
-### 마켓플레이스
-
-| 지표 | 초기 | 성장 | 성숙 |
-|------|------|------|------|
-| 수수료율 | 5-10% | 10-20% | 15-30% |
-| 공급자 획득비 | 높음 | 중간 | 낮음 |
-| 수요자 획득비 | 중간 | 낮아짐 | 낮음 |
-| 유동성 | < 30% | 30-60% | 60%+ |
-
-## 3개년 재무 예측 프레임워크
-
+### Break-Even Point (BEP)
 ```
-연도별 주요 가정:
-  Year 1: 제품-시장 적합성 검증
-  Year 2: 성장 가속
-  Year 3: 수익성 확보
+BEP (units) = Fixed Costs / (Price - Variable Cost per Unit)
+BEP (revenue) = Fixed Costs / Contribution Margin Ratio
 
-월별 예측 테이블:
-| 월 | 신규고객 | 이탈 | 활성고객 | MRR | 비용 | 순이익 |
-|----|---------|----- |---------|-----|------|--------|
-
-시나리오 분석:
-  낙관적: 가정 × 1.3
-  기본: 가정 × 1.0
-  비관적: 가정 × 0.7
+Monthly BEP:
+  Fixed monthly costs / (ARPU - Variable cost per user)
 ```
 
-## 투자자 관점 핵심 질문
+## Scenario Analysis Template
 
 ```
-1. "LTV:CAC가 3:1 이상인가?" → 지속가능 성장 증명
-2. "CAC 회수 기간이 12개월 이내인가?" → 현금 흐름 건전성
-3. "매출총이익률이 70% 이상인가?" → SaaS 기준
-4. "월 이탈률이 5% 이하인가?" → 제품-시장 적합성
-5. "NRR이 100% 이상인가?" → 기존 고객 성장
+| Metric | Conservative | Base | Optimistic |
+|--------|-------------|------|-----------|
+| Monthly new customers | | | |
+| Churn rate | | | |
+| ARPU | | | |
+| CAC | | | |
+| Gross margin | | | |
+| LTV | | | |
+| LTV/CAC | | | |
+| Payback period | | | |
+| Monthly burn | | | |
+| Runway (months) | | | |
+| BEP month | | | |
 ```
+
+## Industry Benchmarks
+
+| Metric | SaaS | E-Commerce | Marketplace |
+|--------|------|-----------|-------------|
+| Gross Margin | 70-85% | 30-50% | 60-80% |
+| LTV/CAC | >= 3x | >= 3x | >= 3x |
+| Payback | <= 12mo | <= 6mo | <= 12mo |
+| Churn (monthly) | 3-7% | N/A | 5-10% |
+| NRR | > 100% | N/A | N/A |

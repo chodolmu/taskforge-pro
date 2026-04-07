@@ -1,125 +1,80 @@
 ---
 name: steep-framework
-description: "시나리오 기획에서 핵심 변수를 체계적으로 식별하기 위한 STEEP/PESTEL 분석 프레임워크. variable-analyst 에이전트가 거시환경 변수를 스캔하고 불확실성-영향력 매트릭스를 구성할 때 활용한다. 'STEEP 분석', 'PESTEL', '거시환경 분석', '환경 스캐닝', '메가트렌드' 등의 맥락에서 자동 적용한다. 단, 실시간 경제 지표 수집이나 계량경제 모델링은 이 스킬의 범위가 아니다."
+description: "A STEEP macro-environment analysis methodology for systematic identification of scenario planning variables. Used by the variable-analyst agent for comprehensive environmental scanning. Automatically applied in contexts such as 'STEEP analysis', 'macro-environment analysis', 'environmental scanning', 'driving forces', 'megatrends'. However, real-time data collection and econometric model construction are outside the scope of this skill."
 ---
 
-# STEEP Framework — 거시환경 변수 분석 도구
+# STEEP Framework — Macro-Environment Analysis Tool
 
-variable-analyst 에이전트의 환경 스캐닝 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the environmental scanning capabilities of the variable-analyst agent.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **variable-analyst** — 핵심 변수 식별, 불확실성 평가 시 활용
+- **variable-analyst** — Systematic identification of key variables using the STEEP framework
 
-## STEEP 6대 차원 스캐닝 가이드
+## STEEP 6-Dimension Scanning
 
-### S — 사회적(Social) 변수
+### Dimension Definitions
 
-| 하위 범주 | 스캔 질문 | 지표 예시 |
-|----------|----------|----------|
-| 인구 구조 | 타깃 인구의 성장/감소? | 출생률, 고령화율, 도시화율 |
-| 생활방식 | 소비/근무 패턴 변화? | 원격근무율, 1인가구 비율 |
-| 가치관 | 사회적 가치 이동? | ESG 인식, 다양성 수용도 |
-| 교육 수준 | 인재풀 변화? | STEM 졸업생 수, 리스킬링 수요 |
-| 건강 | 헬스케어 수요 변화? | 평균 수명, 정신건강 이슈 |
+| Dimension | Scope | Example Variables |
+|-----------|-------|-------------------|
+| **S** Social | Demographics, lifestyle, values, education | Aging population, remote work adoption, DEI awareness |
+| **T** Technological | Innovation, adoption rate, disruption | AI adoption, quantum computing, cybersecurity threats |
+| **E** Economic | Growth, inflation, trade, labor market | Interest rate changes, supply chain restructuring, gig economy |
+| **E** Environmental | Climate, resources, sustainability | Carbon regulation, ESG pressure, resource scarcity |
+| **P** Political | Government policy, regulation, geopolitics | Data privacy regulation, trade wars, political polarization |
+| **L** Legal | Laws, compliance, intellectual property | Antitrust regulation, labor law changes, patent disputes |
 
-### T — 기술적(Technological) 변수
+### Scanning Checklist per Dimension
 
-| 하위 범주 | 스캔 질문 | 지표 예시 |
-|----------|----------|----------|
-| 핵심 기술 | 파괴적 기술의 성숙도? | 가트너 하이프 사이클 위치 |
-| 인프라 | 기술 인프라 보급률? | 5G 커버리지, 클라우드 채택률 |
-| R&D | 연구개발 투자 트렌드? | 산업별 R&D/매출 비율 |
-| 디지털 전환 | 자동화/AI 도입 속도? | AI 도입률, 자동화 대체율 |
-| 사이버 보안 | 보안 위협 수준? | 침해 건수, 보안 투자 |
+For each dimension, investigate:
+1. **Current State**: What is happening now?
+2. **Direction of Change**: Which way is the trend moving?
+3. **Speed of Change**: How fast? (Gradual/Rapid/Discontinuous)
+4. **Certainty**: Is this predetermined or uncertain?
+5. **Impact**: How does it affect our industry/organization?
 
-### E — 경제적(Economic) 변수
+## Uncertainty-Impact Matrix
 
-| 하위 범주 | 스캔 질문 | 지표 예시 |
-|----------|----------|----------|
-| 거시 경제 | 경기 사이클 위치? | GDP 성장률, 금리, 인플레이션 |
-| 산업 경제 | 업종 성장/위축? | 시장 규모 CAGR, M&A 규모 |
-| 노동 시장 | 인건비/인재 경쟁? | 실업률, 이직률, 임금 상승률 |
-| 환율/무역 | 글로벌 교역 변화? | 환율 변동, 관세율 |
-| 자본 시장 | 자금 조달 환경? | 벤처 투자 규모, 금리 스프레드 |
-
-### E — 환경적(Environmental) 변수
-
-| 하위 범주 | 스캔 질문 | 지표 예시 |
-|----------|----------|----------|
-| 기후 변화 | 물리적 리스크? | 탄소 배출량, 기온 변화 |
-| 자원 | 원자재 가용성? | 희토류 가격, 수자원 |
-| 규제 | 환경 규제 강화? | 탄소세, RE100 |
-| 순환 경제 | 재활용/재사용 트렌드? | 폐기물 규제, 순환 경제 매출 |
-
-### P — 정치적(Political) 변수
-
-| 하위 범주 | 스캔 질문 | 지표 예시 |
-|----------|----------|----------|
-| 정부 정책 | 산업 지원/규제 방향? | 정부 예산, 산업 정책 |
-| 지정학 | 국제 관계 리스크? | 무역 분쟁, 공급망 분단 |
-| 규제 환경 | 법적 프레임워크 변화? | 데이터 보호법, 독점규제 |
-| 정치 안정성 | 정권 교체 영향? | 선거 주기, 정책 연속성 |
-
-## 불확실성-영향력 매트릭스 구성법
-
-### 1단계: 변수 스코어링
-
-각 변수에 대해 2개 축으로 평가한다:
-
-| 척도 | 불확실성(U) | 영향력(I) |
-|------|-----------|----------|
-| 1 | 거의 확정적 | 영향 미미 |
-| 2 | 방향 예측 가능 | 일부 영향 |
-| 3 | 불확실하나 범위 한정 | 상당한 영향 |
-| 4 | 매우 불확실 | 핵심 영향 |
-| 5 | 전혀 예측 불가 | 산업 판도 변화 |
-
-### 2단계: 4분면 매핑
+### 4-Quadrant Classification
 
 ```
-불확실성 높음
-    │
-    │  [모니터링]     [시나리오 축 후보]
-    │   U↑ I↓           U↑ I↑
-    │                    ← 핵심 드라이버
-    ├──────────────────────────
-    │  [무시]          [확정 트렌드]
-    │   U↓ I↓           U↓ I↑
-    │                    ← 모든 시나리오의 공통 전제
-    │
-    └────────────────────── 영향력 높음
+Impact (High)
+    |  Q2: Predetermined     Q1: Scenario Drivers
+    |  (Certain Trends)      (Matrix Axes)
+    |  → Apply to all        → 2 axes for matrix
+    |    scenarios
+    |
+    |  Q4: Background         Q3: Monitor
+    |  (Ignore)               (Wild Cards)
+    |  → Minimal attention    → Watch list
+    |
+Impact (Low)
+    +--- Uncertainty (Low) ---- Uncertainty (High)
 ```
 
-### 3단계: 시나리오 축 선정 기준
+### Assessment Criteria
 
-**U↑ I↑ 영역**에서 2개의 독립적인 변수를 선택한다:
-- **독립성**: 두 변수 간 상관관계가 낮아야 한다 (상관계수 < 0.3)
-- **양극성**: 높음/낮음의 극단값이 의미 있어야 한다
-- **포괄성**: 두 축의 조합이 산업의 미래를 넓게 커버해야 한다
+| Score | Uncertainty | Impact |
+|-------|-----------|--------|
+| 5 | Completely unpredictable, multiple possible outcomes | Existential impact on business model |
+| 4 | Difficult to predict, 2-3 plausible outcomes | Significant impact on core revenue |
+| 3 | Somewhat predictable but variable | Moderate impact on operations |
+| 2 | Mostly predictable with minor variations | Limited departmental impact |
+| 1 | Nearly certain, single expected outcome | Negligible impact |
 
-## 확정 트렌드 vs 핵심 불확실성
+## Trend Classification
 
-| 구분 | 정의 | 처리 |
-|------|------|------|
-| 확정 트렌드 | 방향이 확실한 메가트렌드 | 모든 시나리오의 **공통 전제**로 포함 |
-| 핵심 불확실성 | 방향을 예측할 수 없는 변수 | **시나리오 축**으로 사용 |
-| 와일드카드 | 발생 확률 낮지만 영향 극대 | 시나리오 **스트레스 테스트**에 활용 |
+### Predetermined Trends
+- High certainty of direction (uncertainty score 1-2)
+- Applied as constants across all scenarios
+- Example: Aging population in developed nations
 
-## 산업별 핵심 변수 라이브러리 (참조용)
+### Critical Uncertainties
+- High uncertainty AND high impact (Q1 quadrant)
+- Used as scenario matrix axes
+- Example: AI regulation direction (restrictive vs. permissive)
 
-### 기술/IT
-핵심 불확실성: AI 규제 수준, 오픈소스 vs 독점 모델, 데이터 주권
-확정 트렌드: 클라우드 이전, AI 도입 확산, 사이버 보안 강화
-
-### 에너지/모빌리티
-핵심 불확실성: 배터리 기술 돌파, 탄소세 수준, 수소경제 실현 시점
-확정 트렌드: 전기차 전환, 재생에너지 확대, ESG 규제 강화
-
-### 헬스케어/바이오
-핵심 불확실성: 규제 승인 타임라인, 유전자 치료 수용도, 보험 급여 범위
-확정 트렌드: 고령화, 디지털 헬스, 정밀의료
-
-### 금융
-핵심 불확실성: CBDC 도입 시점, 빅테크 금융 진출 규모, 글로벌 금리 방향
-확정 트렌드: 핀테크 확산, 규제 강화, 데이터 기반 심사
+### Wild Cards
+- Low probability but potentially high impact events
+- Included as shock events within specific scenarios
+- Example: Pandemic, technology breakthrough, geopolitical crisis

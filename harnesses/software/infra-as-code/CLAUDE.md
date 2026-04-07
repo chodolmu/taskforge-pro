@@ -1,37 +1,37 @@
 # Infra as Code Harness
 
-Infrastructure as Code(IaC) 설계 및 구현을 에이전트 팀이 협업하여 수행하는 하네스. Terraform/Pulumi 기반 환경 구성, 보안, 비용 최적화 파이프라인을 자동화한다.
+An agent team harness for Infrastructure as Code (IaC) design and implementation. Automates Terraform/Pulumi-based environment configuration, security, and cost optimization pipelines.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── infra-architect.md        — 인프라 설계 (아키텍처, 모듈 구조, 환경 분리)
-│   ├── security-engineer.md      — 보안 엔지니어 (IAM, 네트워크, 암호화, 컴플라이언스)
-│   ├── cost-optimizer.md         — 비용 최적화 (리소스 사이징, 예약, FinOps)
-│   ├── drift-detector.md         — 드리프트 감지 (상태 검증, 정책 준수, 자동 교정)
-│   └── iac-reviewer.md           — 교차 검증 (설계↔보안↔비용↔드리프트 정합성)
+│   ├── infra-architect.md        — Infrastructure design (architecture, module structure, environment separation)
+│   ├── security-engineer.md      — Security engineer (IAM, networking, encryption, compliance)
+│   ├── cost-optimizer.md         — Cost optimization (resource sizing, reservations, FinOps)
+│   ├── drift-detector.md         — Drift detection (state verification, policy compliance, auto-remediation)
+│   └── iac-reviewer.md           — Cross-validation (design <-> security <-> cost <-> drift consistency)
 ├── skills/
 │   ├── infra-as-code/
-│   │   └── skill.md              — 오케스트레이터 (팀 조율, 워크플로우, 에러핸들링)
+│   │   └── skill.md              — Orchestrator (team coordination, workflow, error handling)
 │   ├── terraform-module-patterns/
-│   │   └── skill.md              — Terraform 모듈 설계 패턴 가이드
+│   │   └── skill.md              — Terraform module design pattern guide
 │   └── cloud-cost-models/
-│       └── skill.md              — 클라우드 비용 모델 및 FinOps 가이드
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md              — Cloud cost model and FinOps guide
+└── CLAUDE.md                     — This file
 ```
 
-## 사용법
+## Usage
 
-`/infra-as-code` 스킬을 트리거하거나, "인프라 코드 설계해줘" 같은 자연어로 요청한다.
+Trigger the `/infra-as-code` skill, or make a natural language request such as "design infrastructure code."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_infra_design.md` — 인프라 설계서
-- `02_security_design.md` — 보안 설계서
-- `03_cost_analysis.md` — 비용 분석 보고서
-- `04_drift_policy.md` — 드리프트 감지 정책
-- `05_review_report.md` — 최종 리뷰 보고서
+All deliverables are stored in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_infra_design.md` — Infrastructure design document
+- `02_security_design.md` — Security design document
+- `03_cost_analysis.md` — Cost analysis report
+- `04_drift_policy.md` — Drift detection policy
+- `05_review_report.md` — Final review report

@@ -1,133 +1,133 @@
 ---
 name: documentary-research
-description: "다큐멘터리 제작을 위한 리서치, 구성안, 인터뷰 질문, 내레이션 대본을 에이전트 팀이 협업하여 한 번에 생성하는 풀 프로덕션 파이프라인. '다큐멘터리 기획해줘', '다큐 구성안 짜줘', '다큐멘터리 리서치', '인터뷰 질문 만들어줘', '내레이션 대본 써줘', '탐사 보도 기획', '다큐 시나리오' 등 다큐멘터리 제작 전반에 이 스킬을 사용한다. 기존 리서치 자료가 있는 경우에도 구성안 작성이나 내레이션 대본 작성을 지원한다. 단, 실제 영상 촬영·편집(Premiere, DaVinci), 인터뷰 섭외·진행, 방송 송출은 이 스킬의 범위가 아니다."
+description: "A full production pipeline where an agent team collaborates to generate documentary research, treatments, interview questions, and narration scripts all at once. Use this skill for 'plan a documentary,' 'create a documentary treatment,' 'documentary research,' 'create interview questions,' 'write a narration script,' 'investigative reporting plan,' 'documentary scenario,' and all other aspects of documentary production. Also supports treatment writing or narration scripting when existing research materials are provided. Note: actual video filming/editing (Premiere, DaVinci), interview scheduling/conducting, and broadcast transmission are outside the scope of this skill."
 ---
 
-# Documentary Research — 다큐멘터리 제작 풀 프로덕션 파이프라인
+# Documentary Research — Documentary Production Full Pipeline
 
-다큐멘터리의 리서치→구성안→인터뷰질문→내레이션 대본을 에이전트 팀이 협업하여 한 번에 생성한다.
+An agent team collaborates to generate documentary research, treatments, interview questions, and narration scripts all at once.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 members communicate directly via SendMessage and cross-validate each other's work.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| researcher | `.claude/agents/researcher.md` | 자료조사, 통계수집, 출처정리 | general-purpose |
-| story-architect | `.claude/agents/story-architect.md` | 3막 구성안, 씬 분할, 서사 아크 | general-purpose |
-| interviewer | `.claude/agents/interviewer.md` | 인터뷰 대상 선정, 질문 설계 | general-purpose |
-| narrator | `.claude/agents/narrator.md` | 내레이션 대본, 톤, 리듬 | general-purpose |
-| fact-checker | `.claude/agents/fact-checker.md` | 팩트 검증, 출처 확인, 편향성 점검 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| researcher | `.claude/agents/researcher.md` | Research, statistics collection, source organization | general-purpose |
+| story-architect | `.claude/agents/story-architect.md` | 3-act treatment, scene division, narrative arc | general-purpose |
+| interviewer | `.claude/agents/interviewer.md` | Interview subject selection, question design | general-purpose |
+| narrator | `.claude/agents/narrator.md` | Narration script, tone, rhythm | general-purpose |
+| fact-checker | `.claude/agents/fact-checker.md` | Fact verification, source confirmation, bias check | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Performed Directly by the Orchestrator)
 
-1. 사용자 입력에서 추출한다:
-   - **주제**: 다큐멘터리가 다룰 주제
-   - **형식**: 탐사형/인물형/역사형/관찰형
-   - **분량**: 15분/30분/60분/90분
-   - **톤** (선택): 객관적/감성적/긴장감/성찰적
-   - **기존 파일** (선택): 리서치 자료, 기획서 등
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+   - **Topic**: The subject the documentary will cover
+   - **Format**: Investigative/Character-driven/Historical/Observational
+   - **Length**: 15 min/30 min/60 min/90 min
+   - **Tone** (optional): Objective/Emotional/Tense/Reflective
+   - **Existing Files** (optional): Research materials, proposals, etc.
+2. Create the `_workspace/` directory in the project root
+3. Organize the input and save it to `_workspace/00_input.md`
+4. If existing files are present, copy them to `_workspace/` and skip the corresponding Phase
+5. **Determine the execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 리서치 | researcher | 없음 | `_workspace/01_research_brief.md` |
-| 2 | 구성안 작성 | story-architect | 작업 1 | `_workspace/02_structure.md` |
-| 3a | 인터뷰 가이드 | interviewer | 작업 1, 2 | `_workspace/03_interview_guide.md` |
-| 3b | 내레이션 대본 | narrator | 작업 1, 2 | `_workspace/04_narration_script.md` |
-| 4 | 팩트체크/리뷰 | fact-checker | 작업 1, 3a, 3b | `_workspace/05_review_report.md` |
+| Order | Task | Assigned To | Dependencies | Deliverable |
+|-------|------|------------|--------------|-------------|
+| 1 | Research | researcher | None | `_workspace/01_research_brief.md` |
+| 2 | Treatment writing | story-architect | Task 1 | `_workspace/02_structure.md` |
+| 3a | Interview guide | interviewer | Tasks 1, 2 | `_workspace/03_interview_guide.md` |
+| 3b | Narration script | narrator | Tasks 1, 2 | `_workspace/04_narration_script.md` |
+| 4 | Fact-check/Review | fact-checker | Tasks 1, 3a, 3b | `_workspace/05_review_report.md` |
 
-작업 3a(인터뷰)와 3b(내레이션)는 **병렬 실행**한다. 둘 다 작업 1(리서치)과 2(구성안)에 의존한다.
+Tasks 3a (interview) and 3b (narration) are **executed in parallel**. Both depend on Tasks 1 (research) and 2 (treatment).
 
-**팀원 간 소통 흐름:**
-- researcher 완료 → story-architect에게 타임라인·핵심사실 전달, interviewer에게 전문가 목록 전달
-- story-architect 완료 → interviewer에게 씬별 인터뷰 필요사항 전달, narrator에게 톤·감정흐름 전달
-- interviewer ↔ narrator: 인터뷰 주제를 공유하여 내레이션과의 중복 방지
-- fact-checker는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**Inter-team communication flow:**
+- researcher complete -> Deliver timelines and key facts to story-architect, deliver expert list to interviewer
+- story-architect complete -> Deliver scene-by-scene interview needs to interviewer, deliver tone and emotional flow to narrator
+- interviewer <-> narrator: Share interview topics to prevent overlap with narration
+- fact-checker cross-validates all deliverables. When RED Must Fix is found, request revisions from the relevant agent -> rework -> re-verify (up to 2 times)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 리뷰 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-   - 리서치 브리프 — `01_research_brief.md`
-   - 구성안 — `02_structure.md`
-   - 인터뷰 가이드 — `03_interview_guide.md`
-   - 내레이션 대본 — `04_narration_script.md`
-   - 팩트체크 보고서 — `05_review_report.md`
+1. Verify all files in `_workspace/`
+2. Confirm that all RED Must Fix items from the review report have been addressed
+3. Report the final summary to the user:
+   - Research brief — `01_research_brief.md`
+   - Treatment — `02_structure.md`
+   - Interview guide — `03_interview_guide.md`
+   - Narration script — `04_narration_script.md`
+   - Fact-check report — `05_review_report.md`
 
-## 작업 규모별 모드
+## Modes by Task Scale
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "다큐멘터리 기획해줘", "풀 프로덕션" | **풀 파이프라인** | 5명 전원 |
-| "리서치만 해줘" | **리서치 모드** | researcher + fact-checker |
-| "이 자료로 구성안 짜줘" (기존 파일) | **구성 모드** | story-architect + fact-checker |
-| "인터뷰 질문만 만들어줘" | **인터뷰 모드** | researcher + interviewer + fact-checker |
-| "내레이션 대본만 써줘" (기존 구성안) | **내레이션 모드** | narrator + fact-checker |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|-----------------|
+| "Plan a documentary," "Full production" | **Full Pipeline** | All 5 |
+| "Just do the research" | **Research Mode** | researcher + fact-checker |
+| "Create a treatment from this material" (existing files) | **Treatment Mode** | story-architect + fact-checker |
+| "Just create interview questions" | **Interview Mode** | researcher + interviewer + fact-checker |
+| "Just write the narration script" (existing treatment) | **Narration Mode** | narrator + fact-checker |
 
-**기존 파일 활용**: 사용자가 리서치 자료, 구성안 등을 제공하면, 해당 파일을 `_workspace/`의 적절한 위치에 복사하고 해당 에이전트는 건너뛴다.
+**Using Existing Files**: When the user provides research materials, treatments, etc., copy the files to the appropriate location in `_workspace/` and skip the corresponding agents.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-Based | `_workspace/` directory | Storing and sharing major deliverables |
+| Message-Based | SendMessage | Real-time delivery of key information, revision requests |
+| Task-Based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{산출물명}.{확장자}`
+File naming convention: `{sequence}_{deliverable_name}.{extension}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 웹 검색 실패 | 일반 지식 기반으로 작업, 보고서에 "데이터 제한" 명시 |
-| 한쪽 관점만 발견 | 의도적으로 반대 관점 검색, 실패 시 보고서에 명시 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰 보고서에 누락 명시 |
-| 리뷰에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
-| 민감한 주제 | 법적·윤리적 리스크를 보고서에 명시, 전문 법률 자문 권고 |
+| Error Type | Strategy |
+|-----------|----------|
+| Web search failure | Work based on general knowledge, note "data limitations" in report |
+| Only one perspective found | Intentionally search for opposing perspectives, note in report if not found |
+| Agent failure | 1 retry -> if still fails, proceed without that deliverable, note omission in review report |
+| RED found in review | Request revision from relevant agent -> rework -> re-verify (up to 2 times) |
+| Sensitive topic | Note legal/ethical risks in report, recommend professional legal counsel |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "한국의 1인 가구 증가와 사회적 고립 문제에 대한 30분 다큐멘터리를 기획해줘"
-**기대 결과**:
-- 리서치: 통계(1인 가구 비율, 사회적 고립 지표), 전문가 목록, 다각적 관점
-- 구성안: 3막 구조, 7~10씬, 감정 곡선(공감→심화→희망)
-- 인터뷰: 사회학 교수, 1인 가구 당사자, 정책 담당자 등 5~7명 가이드
-- 내레이션: 약 7,500단어 대본, 영상 지시 포함
-- 팩트체크: 통계 출처 확인, 균형성 검증
+### Normal Flow
+**Prompt**: "Plan a 30-minute documentary about the rise in single-person households and social isolation"
+**Expected Result**:
+- Research: Statistics (single-person household ratio, social isolation indicators), expert list, multiple perspectives
+- Treatment: 3-act structure, 7-10 scenes, emotion curve (empathy -> deepening -> hope)
+- Interviews: 5-7 person guide including sociology professor, single-person household member, policy official, etc.
+- Narration: Approx. 7,500-word script with visual directions
+- Fact-check: Statistical source verification, balance verification
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 리서치 자료로 다큐 구성안이랑 내레이션 대본 써줘" + 리서치 파일 첨부
-**기대 결과**:
-- 기존 리서치를 `_workspace/01_research_brief.md`로 복사
-- 구성 모드 + 내레이션 모드 병합: story-architect + narrator + fact-checker 투입
-- researcher, interviewer는 건너뜀
+### Existing File Utilization Flow
+**Prompt**: "Write a documentary treatment and narration script from this research" + research file attached
+**Expected Result**:
+- Copy existing research to `_workspace/01_research_brief.md`
+- Treatment Mode + Narration Mode combined: Deploy story-architect + narrator + fact-checker
+- Skip researcher, interviewer
 
-### 에러 흐름
-**프롬프트**: "다큐 리서치만 해줘, 주제는 아무거나 사회 이슈"
-**기대 결과**:
-- 리서치 모드로 전환 (researcher + fact-checker)
-- 주제가 불분명하므로 리서처가 최근 사회 이슈 3개를 제안 후 진행
-- 팩트체크 보고서에 "구성안/인터뷰/내레이션 미생성" 명시
+### Error Flow
+**Prompt**: "Just do documentary research, any social issue topic"
+**Expected Result**:
+- Switch to Research Mode (researcher + fact-checker)
+- Topic unclear, so researcher proposes 3 recent social issues then proceeds
+- Fact-check report notes "Treatment/Interview/Narration not generated"
 
-## 에이전트별 확장 스킬
+## Extended Skills per Agent
 
-각 에이전트는 다음 확장 스킬의 전문 지식을 활용하여 산출물의 품질을 높인다:
+Each agent leverages the following extended skills' specialized knowledge to enhance deliverable quality:
 
-| 에이전트 | 확장 스킬 | 제공 지식 |
-|---------|----------|----------|
-| researcher, fact-checker | `/investigative-research` | PRIMA 자료 계층, CRAAP 신뢰도 평가, 삼각검증, 편향성 분석 |
-| story-architect, narrator | `/narrative-structure` | 5가지 서사 유형, 3막 구조, 감정 곡선, 씬 배열 전략 |
-| interviewer | `/interview-design` | VOICE 대상 선정, 깔때기 질문 모델, 유형별 전략, 윤리 원칙 |
+| Agent | Extended Skill | Knowledge Provided |
+|-------|---------------|-------------------|
+| researcher, fact-checker | `/investigative-research` | PRIMA source hierarchy, CRAAP reliability assessment, triangulation, bias analysis |
+| story-architect, narrator | `/narrative-structure` | 5 narrative types, 3-act structure, emotion curves, scene arrangement strategy |
+| interviewer | `/interview-design` | VOICE subject selection, funnel question model, type-specific strategies, ethics principles |

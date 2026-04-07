@@ -1,159 +1,159 @@
 ---
 name: intent-taxonomy-builder
-description: "챗봇의 의도(Intent) 분류 체계를 체계적으로 설계하는 방법론. '의도 분류 설계', 'intent 체계', 'NLU 의도 목록', '엔티티 사전', '슬롯 설계' 등 챗봇 의도 분류 체계 설계 시 사용한다. 단, 실제 NLU 모델 학습, 클라우드 NLU 서비스 배포는 이 스킬의 범위가 아니다."
+description: "Methodology for systematically designing a chatbot's intent classification taxonomy. Use this skill for 'intent taxonomy design', 'intent system', 'NLU intent list', 'entity dictionary', 'slot design', and other chatbot intent classification taxonomy design tasks. Note: actual NLU model training and cloud NLU service deployment are outside the scope of this skill."
 ---
 
-# Intent Taxonomy Builder — 의도 분류 체계 설계 방법론
+# Intent Taxonomy Builder — Intent Classification Taxonomy Design Methodology
 
-nlu-developer와 conversation-designer의 의도 분류 설계를 강화하는 스킬.
+A skill that enhances intent classification design for the nlu-developer and conversation-designer.
 
-## 대상 에이전트
+## Target Agents
 
-- **nlu-developer** — 의도/엔티티/슬롯 체계를 설계할 때 사용
-- **conversation-designer** — 대화 시나리오와 의도를 매핑할 때 사용
+- **nlu-developer** — Used when designing intent/entity/slot systems
+- **conversation-designer** — Used when mapping conversation scenarios to intents
 
-## 의도 분류 체계 설계 프레임워크
+## Intent Classification Taxonomy Design Framework
 
-### 1단계: 도메인 의도 수집
-
-```
-사용자 발화 수집 → 그룹핑 → 의도 후보 도출
-
-수집 소스:
-- 기존 FAQ 문서
-- CS 문의 로그
-- 경쟁사 챗봇 분석
-- 사용자 인터뷰/설문
-- 도메인 전문가 브레인스토밍
-```
-
-### 2단계: 의도 계층 구조
+### Step 1: Domain Intent Collection
 
 ```
-Level 0 (도메인)
-├── Level 1 (카테고리)
-│   ├── Level 2 (세부 의도)
+Collect user utterances > Group > Derive intent candidates
+
+Collection sources:
+- Existing FAQ documents
+- Customer service inquiry logs
+- Competitor chatbot analysis
+- User interviews/surveys
+- Domain expert brainstorming
+```
+
+### Step 2: Intent Hierarchy
+
+```
+Level 0 (Domain)
+├── Level 1 (Category)
+│   ├── Level 2 (Specific intent)
 │   └── Level 2
 └── Level 1
     └── Level 2
 
-예시 (이커머스):
+Example (E-commerce):
 commerce
-├── order (주문)
-│   ├── order.place — "주문하고 싶어요"
-│   ├── order.status — "주문 상태 확인"
-│   ├── order.cancel — "주문 취소해줘"
-│   └── order.modify — "주문 변경하고 싶어요"
-├── product (상품)
-│   ├── product.search — "이런 상품 있어요?"
-│   ├── product.detail — "이 상품 상세 정보"
-│   └── product.compare — "두 상품 비교해줘"
-├── payment (결제)
-│   ├── payment.method — "결제 방법 알려줘"
-│   ├── payment.refund — "환불 요청"
-│   └── payment.receipt — "영수증 발급"
-└── general (일반)
-    ├── general.greeting — "안녕하세요"
-    ├── general.goodbye — "감사합니다"
-    └── general.fallback — (미인식)
+├── order
+│   ├── order.place — "I want to place an order"
+│   ├── order.status — "Check my order status"
+│   ├── order.cancel — "Cancel my order"
+│   └── order.modify — "I want to change my order"
+├── product
+│   ├── product.search — "Do you have this kind of product?"
+│   ├── product.detail — "Details about this product"
+│   └── product.compare — "Compare these two products"
+├── payment
+│   ├── payment.method — "What payment methods are available?"
+│   ├── payment.refund — "Refund request"
+│   └── payment.receipt — "Issue a receipt"
+└── general
+    ├── general.greeting — "Hello"
+    ├── general.goodbye — "Thank you"
+    └── general.fallback — (unrecognized)
 ```
 
-### 3단계: 의도 품질 체크리스트
+### Step 3: Intent Quality Checklist
 
-| 기준 | 설명 | 통과 조건 |
-|------|------|----------|
-| 상호배타성 | 의도 간 중복 없음 | 발화 1개 = 의도 1개 |
-| 완전성 | 모든 사용자 시나리오 커버 | fallback < 10% |
-| 균형성 | 의도당 학습 데이터 균등 | 최소 20개 발화/의도 |
-| 명확성 | 이름만으로 목적 파악 | `verb.noun` 형식 |
-| 적정 개수 | 관리 가능 범위 | 20~50개 (소규모), 50~150개 (대규모) |
+| Criterion | Description | Pass Condition |
+|-----------|------------|----------------|
+| Mutual exclusivity | No overlap between intents | 1 utterance = 1 intent |
+| Completeness | Covers all user scenarios | fallback < 10% |
+| Balance | Even training data per intent | Minimum 20 utterances/intent |
+| Clarity | Purpose clear from name alone | `verb.noun` format |
+| Appropriate count | Manageable range | 20-50 (small-scale), 50-150 (large-scale) |
 
-## 엔티티 설계 방법론
+## Entity Design Methodology
 
-### 엔티티 유형
+### Entity Types
 
-| 유형 | 설명 | 예시 |
-|------|------|------|
-| 시스템 엔티티 | 플랫폼 내장 | @sys.date, @sys.number, @sys.email |
-| 사전 엔티티 | 도메인 고정 목록 | 메뉴명, 사이즈, 색상 |
-| 패턴 엔티티 | 정규식 기반 | 주문번호(`ORD-\d{8}`), 전화번호 |
-| 복합 엔티티 | 엔티티 조합 | 주소(시+구+동), 날짜범위 |
+| Type | Description | Examples |
+|------|------------|---------|
+| System entity | Platform built-in | @sys.date, @sys.number, @sys.email |
+| Dictionary entity | Domain fixed list | Menu items, sizes, colors |
+| Pattern entity | Regex-based | Order number (`ORD-\d{8}`), phone number |
+| Composite entity | Entity combinations | Address (city+district+street), date range |
 
-### 엔티티-슬롯 매핑
-
-```
-의도: order.place
-필수 슬롯:
-  - product_name (@product) — "아메리카노"
-  - quantity (@sys.number) — "두 잔"
-선택 슬롯:
-  - size (@size) — "톨 사이즈"
-  - option (@option) — "얼음 적게"
-  - takeout (@boolean) — "포장이요"
-
-슬롯 미충족 시 → 프롬프트:
-  - product_name 누락: "어떤 메뉴를 주문하시겠어요?"
-  - quantity 누락: "몇 개 주문하시겠어요?"
-```
-
-## 학습 데이터 생성 가이드
-
-### 발화 변형 패턴
+### Entity-Slot Mapping
 
 ```
-원본: "주문 취소하고 싶어요"
+Intent: order.place
+Required slots:
+  - product_name (@product) — "Americano"
+  - quantity (@sys.number) — "two"
+Optional slots:
+  - size (@size) — "tall size"
+  - option (@option) — "less ice"
+  - takeout (@boolean) — "to go"
 
-변형 전략:
-1. 어미 변형: "취소해주세요", "취소할래요", "취소 부탁드립니다"
-2. 표현 대체: "주문 철회", "주문 취소", "주문 안 할래요"
-3. 문맥 추가: "방금 주문한 거 취소", "아까 시킨 것 취소"
-4. 오타/축약: "주문취소", "취소여", "캔슬"
-5. 간접 표현: "주문한 거 안 받고 싶어요", "그냥 안 살래요"
-6. 엔티티 포함: "ORD-12345678 취소해줘"
+When slot is unfilled > Prompt:
+  - product_name missing: "What would you like to order?"
+  - quantity missing: "How many would you like?"
 ```
 
-### 발화 수 가이드
+## Training Data Generation Guide
 
-| 의도 복잡도 | 최소 발화 수 | 권장 발화 수 |
-|-----------|------------|------------|
-| 단순 (인사/작별) | 10 | 20 |
-| 보통 (조회/확인) | 20 | 50 |
-| 복잡 (주문/변경) | 30 | 80 |
-| 혼동 가능 (유사 의도) | 50 | 100+ |
-
-## 의도 혼동 매트릭스 분석
+### Utterance Variation Patterns
 
 ```
-높은 혼동 쌍 예시:
-- order.cancel ↔ payment.refund (취소 vs 환불)
-- product.search ↔ product.detail (검색 vs 상세)
-- order.modify ↔ order.cancel (변경 vs 취소)
+Original: "I want to cancel my order"
 
-해결 전략:
-1. 차별화 발화 추가 (각 의도의 고유 키워드 강화)
-2. 의도 합병 (구분 불필요시)
-3. 컨텍스트 의존 분리 (대화 상태 기반)
-4. 확인 질문 ("취소를 원하시나요, 환불을 원하시나요?")
+Variation strategies:
+1. Ending variation: "Please cancel", "Cancel this", "I'd like to cancel please"
+2. Expression substitution: "Revoke order", "Undo order", "I don't want my order anymore"
+3. Context addition: "Cancel the order I just placed", "Cancel what I ordered earlier"
+4. Typos/abbreviations: "cancle order", "cancel plz", "cxl"
+5. Indirect expression: "I don't want to receive my order", "I changed my mind"
+6. With entity: "Cancel ORD-12345678"
 ```
 
-## 산출물 템플릿
+### Utterance Count Guide
+
+| Intent Complexity | Minimum Utterances | Recommended Utterances |
+|------------------|-------------------|----------------------|
+| Simple (greeting/goodbye) | 10 | 20 |
+| Medium (lookup/confirmation) | 20 | 50 |
+| Complex (order/modification) | 30 | 80 |
+| Easily confused (similar intents) | 50 | 100+ |
+
+## Intent Confusion Matrix Analysis
+
+```
+High-confusion pair examples:
+- order.cancel <> payment.refund (cancel vs refund)
+- product.search <> product.detail (search vs detail)
+- order.modify <> order.cancel (modify vs cancel)
+
+Resolution strategies:
+1. Add distinguishing utterances (strengthen unique keywords for each intent)
+2. Merge intents (when distinction is unnecessary)
+3. Context-dependent separation (based on dialog state)
+4. Clarifying question ("Do you want to cancel or get a refund?")
+```
+
+## Deliverable Template
 
 ```yaml
 intent_taxonomy:
   - intent: order.place
-    description: "새 주문 접수"
+    description: "Place a new order"
     examples:
-      - "아메리카노 두 잔 주문할게요"
-      - "이거 주문하고 싶어요"
+      - "I'd like to order two Americanos"
+      - "I want to order this"
     required_slots:
       - name: product_name
         entity: "@product"
-        prompt: "어떤 메뉴를 주문하시겠어요?"
+        prompt: "What would you like to order?"
     optional_slots:
       - name: quantity
         entity: "@sys.number"
         default: 1
     responses:
-      success: "{product_name} {quantity}개 주문 접수되었습니다."
-      slot_missing: "주문할 메뉴를 말씀해 주세요."
+      success: "Your order for {quantity} {product_name}(s) has been placed."
+      slot_missing: "Please tell me what you'd like to order."
 ```

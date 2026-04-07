@@ -1,134 +1,134 @@
 ---
 name: operations-manual
-description: "업무 매뉴얼 자동 생성 파이프라인. 기존 문서·코드를 분석하여 프로세스 플로차트, 단계별 매뉴얼, FAQ, 교육자료를 에이전트 팀이 협업 생성한다. '업무 매뉴얼 만들어줘', '운영 절차서 작성', 'SOP 자동 생성', '프로세스 문서화', '매뉴얼 작성', '업무 가이드 만들기', '절차서 자동화', '교육 자료 만들어줘' 등 업무 프로세스 문서화 전반에 이 스킬을 사용한다. 코드 리뷰, 기술 문서 번역, 마케팅 콘텐츠 작성은 이 스킬의 범위가 아니다."
+description: "An automated operations manual generation pipeline. An agent team collaborates to analyze existing documents and code to produce process flowcharts, step-by-step manuals, FAQs, and training materials. Use this skill for 'create operations manual', 'write SOP', 'auto-generate SOP', 'process documentation', 'manual writing', 'create work guide', 'procedure automation', 'create training materials', and similar process documentation topics. Code review, technical document translation, and marketing content creation are out of scope."
 ---
 
-# Operations Manual — 업무 매뉴얼 자동 생성 파이프라인
+# Operations Manual — Automated Operations Manual Generation Pipeline
 
-기존 문서·코드·위키를 분석하여 프로세스 플로차트, 단계별 매뉴얼, FAQ, 교육자료를 에이전트 팀이 협업 생성한다.
+Analyzes existing documents, code, and wikis to produce process flowcharts, step-by-step manuals, FAQs, and training materials through agent team collaboration.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 members communicate directly via SendMessage and cross-validate each other's work.
 
-## 에이전트 구성
+## Agent Roster
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| document-analyst | `.claude/agents/document-analyst.md` | 기존 문서/코드 분석, 프로세스 추출 | general-purpose |
-| flowchart-designer | `.claude/agents/flowchart-designer.md` | Mermaid 플로차트, RACI 매트릭스 | general-purpose |
-| manual-writer | `.claude/agents/manual-writer.md` | 단계별 절차서, 체크리스트 | general-purpose |
-| faq-builder | `.claude/agents/faq-builder.md` | FAQ, 트러블슈팅, 에스컬레이션 | general-purpose |
-| training-producer | `.claude/agents/training-producer.md` | 퀴즈, 실습과제, 요약카드 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| document-analyst | `.claude/agents/document-analyst.md` | Existing document/code analysis, process extraction | general-purpose |
+| flowchart-designer | `.claude/agents/flowchart-designer.md` | Mermaid flowcharts, RACI matrix | general-purpose |
+| manual-writer | `.claude/agents/manual-writer.md` | Step-by-step procedures, checklists | general-purpose |
+| faq-builder | `.claude/agents/faq-builder.md` | FAQ, troubleshooting, escalation | general-purpose |
+| training-producer | `.claude/agents/training-producer.md` | Quizzes, hands-on exercises, summary cards | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (performed directly by the orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **대상 프로세스**: 매뉴얼화할 업무/시스템 범위
-    - **소스 자료**: 기존 문서 경로, 코드 저장소, 위키 URL
-    - **대상 독자**: 신입/경력/관리자 등 매뉴얼 사용자
-    - **제약 조건** (선택): 특정 포맷 요구, 기존 매뉴얼 템플릿
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 매뉴얼이 있으면 `_workspace/`에 복사하고 업데이트 모드로 전환한다
-5. 요청 범위에 따라 **실행 모드를 결정**한다 (아래 "작업 규모별 모드" 참조)
+1. Extract from user input:
+    - **Target processes**: Scope of work/systems to document
+    - **Source materials**: Existing document paths, code repositories, wiki URLs
+    - **Target audience**: New hires/experienced staff/managers — manual users
+    - **Constraints** (optional): Specific format requirements, existing manual templates
+2. Create the `_workspace/` directory in the project root
+3. Organize the input and save to `_workspace/00_input.md`
+4. If an existing manual is provided, copy to `_workspace/` and switch to update mode
+5. Determine the **execution mode** based on the request scope (see "Execution Modes by Scope" below)
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-팀을 구성하고 작업을 할당한다. 작업 간 의존 관계:
+Assemble the team and assign tasks. Task dependencies:
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 문서·코드 분석 | analyst | 없음 | `_workspace/01_document_analysis.md` |
-| 2 | 프로세스 플로차트 | designer | 작업 1 | `_workspace/02_process_flowcharts.md` |
-| 3a | 단계별 매뉴얼 | writer | 작업 1, 2 | `_workspace/03_step_by_step_manual.md` |
-| 3b | FAQ·트러블슈팅 | faq | 작업 1, 2 | `_workspace/04_faq_troubleshooting.md` |
-| 4 | 교육자료 | producer | 작업 3a, 3b | `_workspace/05_training_materials.md` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1 | Document/code analysis | analyst | None | `_workspace/01_document_analysis.md` |
+| 2 | Process flowcharts | designer | Task 1 | `_workspace/02_process_flowcharts.md` |
+| 3a | Step-by-step manual | writer | Tasks 1, 2 | `_workspace/03_step_by_step_manual.md` |
+| 3b | FAQ/troubleshooting | faq | Tasks 1, 2 | `_workspace/04_faq_troubleshooting.md` |
+| 4 | Training materials | producer | Tasks 3a, 3b | `_workspace/05_training_materials.md` |
 
-작업 3a(매뉴얼)와 3b(FAQ)는 **병렬 실행**한다. 둘 다 작업 1, 2에만 의존하므로 동시에 시작할 수 있다.
+Tasks 3a (manual) and 3b (FAQ) run **in parallel**. Both depend only on Tasks 1 and 2, so they can start simultaneously.
 
-**팀원 간 소통 흐름:**
-- analyst 완료 → designer에게 프로세스 인벤토리·분기 조건 전달, writer에게 절차 원시 데이터·용어 사전 전달, faq에게 갭 분석·암묵지 전달
-- designer 완료 → writer에게 플로차트·RACI 전달, faq에게 예외 흐름 전달, producer에게 Level 0 맵 전달
-- writer/faq 완료 → producer에게 매뉴얼 구조, FAQ 핵심 항목 전달
-- producer는 모든 산출물을 기반으로 교육자료를 생성하고, 매뉴얼-교육자료 정합성을 최종 검증
+**Inter-team communication flow:**
+- analyst completes → sends process inventory/branching conditions to designer, raw procedure data/glossary to writer, gap analysis/tacit knowledge to faq
+- designer completes → sends flowcharts/RACI to writer, exception flows to faq, Level 0 map to producer
+- writer/faq complete → sends manual structure and key FAQ items to producer
+- producer generates training materials from all deliverables and performs final consistency validation between manual and training materials
 
-### Phase 3: 통합 검증 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-오케스트레이터가 최종 통합 검증을 수행한다:
+The orchestrator performs final integration validation:
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 교차 검증 체크리스트:
-    - [ ] 플로차트의 모든 프로세스가 매뉴얼에 절차로 기술되었는가
-    - [ ] 매뉴얼의 예외 상황이 FAQ에 반영되었는가
-    - [ ] 용어 사전의 모든 용어가 매뉴얼에서 일관되게 사용되었는가
-    - [ ] 교육자료의 퀴즈가 매뉴얼 내용과 일치하는가
-3. 불일치 발견 시 해당 에이전트에게 수정 요청 (최대 2회)
-4. `_workspace/06_review_report.md`에 검증 결과를 저장한다
-5. 최종 요약을 사용자에게 보고한다
+1. Verify all files in `_workspace/`
+2. Cross-validation checklist:
+    - [ ] All flowchart processes are described as procedures in the manual
+    - [ ] All manual exception situations are reflected in the FAQ
+    - [ ] All glossary terms are used consistently in the manual
+    - [ ] Quiz content in training materials matches the manual
+3. Request corrections from the relevant agent if discrepancies are found (up to 2 rounds)
+4. Save validation results to `_workspace/06_review_report.md`
+5. Report the final summary to the user
 
-## 작업 규모별 모드
+## Execution Modes by Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "업무 매뉴얼 전체 만들어줘" | **풀 파이프라인** | 5명 전원 |
-| "이 코드 프로세스 분석해줘" | **분석 모드** | analyst + designer |
-| "이 절차서에 FAQ 추가해줘" (기존 파일) | **FAQ 모드** | faq + producer |
-| "기존 매뉴얼 업데이트해줘" | **업데이트 모드** | analyst(변경점만) + writer + faq |
-| "교육자료만 만들어줘" (기존 매뉴얼) | **교육 모드** | producer 단독 |
+| User Request Pattern | Execution Mode | Agents Involved |
+|---------------------|----------------|-----------------|
+| "Create a complete operations manual" | **Full Pipeline** | All 5 |
+| "Analyze this code's processes" | **Analysis Mode** | analyst + designer |
+| "Add FAQ to this procedure doc" (existing file) | **FAQ Mode** | faq + producer |
+| "Update the existing manual" | **Update Mode** | analyst (changes only) + writer + faq |
+| "Just create training materials" (existing manual) | **Training Mode** | producer solo |
 
-**기존 파일 활용**: 사용자가 기존 매뉴얼, 절차서, 플로차트를 제공하면 해당 파일을 `_workspace/`의 적절한 위치에 복사하고, 해당 단계의 에이전트는 건너뛴다.
+**Leveraging existing files**: When the user provides existing manuals, procedures, or flowcharts, copy those files to the appropriate location in `_workspace/` and skip the corresponding agent's phase.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+| Strategy | Method | Usage |
+|----------|--------|-------|
+| File-based | `_workspace/` directory | Primary deliverable storage and sharing |
+| Message-based | SendMessage | Real-time key information transfer, correction requests |
+| Task-based | TaskCreate/TaskUpdate | Progress tracking, dependency management |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{order}_{agent}_{deliverable}.{ext}`
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 소스 파일 접근 불가 | analyst가 접근 가능한 소스만으로 작업, 보고서에 "미분석 소스" 목록 명시 |
-| 프로세스 추출 불가 | 사용자에게 핵심 프로세스 인터뷰 질문 제시, 답변 기반으로 작업 |
-| 문서 간 모순 | 코드 기반 동작을 우선 채택, 모순 사항을 갭 분석에 기록 |
-| Mermaid 렌더링 한계 | 복잡한 다이어그램은 서브 프로세스로 분리, 텍스트 설명 보완 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 검증 보고서에 누락 명시 |
+| Error Type | Strategy |
+|-----------|----------|
+| Source file inaccessible | analyst works with accessible sources only, lists "unanalyzed sources" in report |
+| Process extraction impossible | Present interview questions for key processes to user, work from answers |
+| Document contradictions | Prioritize code-based behavior, record contradictions in gap analysis |
+| Mermaid rendering limitations | Split complex diagrams into sub-processes, supplement with text descriptions |
+| Agent failure | 1 retry → proceed without that deliverable if still failing, note omission in review report |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "우리 팀의 배포 프로세스 매뉴얼을 만들어줘. 소스는 deploy.sh, CI 설정 파일, 기존 위키 문서가 있어"
-**기대 결과**:
-- 분석 보고서: 3개 소스 분석, 프로세스 인벤토리, 용어 사전
-- 플로차트: 배포 프로세스 Level 0~1, 롤백 예외 흐름 포함
-- 매뉴얼: 배포 전/중/후 단계별 절차서, 체크리스트
-- FAQ: 배포 실패 시 트러블슈팅, 롤백 의사결정 트리
-- 교육자료: 신규 개발자용 배포 실습 과제
+### Normal Flow
+**Prompt**: "Create a deployment process manual for our team. Sources include deploy.sh, CI config files, and existing wiki docs."
+**Expected Results**:
+- Analysis report: 3 sources analyzed, process inventory, glossary
+- Flowcharts: Deployment process Levels 0-1, including rollback exception flows
+- Manual: Pre/during/post deployment step-by-step procedures, checklists
+- FAQ: Deployment failure troubleshooting, rollback decision tree
+- Training materials: Deployment hands-on exercise for new developers
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 절차서를 기반으로 FAQ랑 교육자료만 추가해줘" + 기존 매뉴얼 파일
-**기대 결과**:
-- 기존 매뉴얼을 `_workspace/03_step_by_step_manual.md`로 복사
-- FAQ 모드: faq가 매뉴얼에서 예외 상황 추출하여 FAQ 작성
-- producer가 매뉴얼 기반 교육자료 생성
+### Existing File Flow
+**Prompt**: "Based on this procedure doc, just add FAQ and training materials" + existing manual file
+**Expected Results**:
+- Existing manual copied to `_workspace/03_step_by_step_manual.md`
+- FAQ mode: faq extracts exception situations from the manual to create FAQs
+- producer generates training materials based on the manual
 
-### 에러 흐름
-**프롬프트**: "고객 CS 프로세스 매뉴얼 만들어줘, 문서는 없고 구두로 설명할게"
-**기대 결과**:
-- analyst가 사용자 설명 기반으로 프로세스 추출 (인터뷰 모드)
-- 보고서에 "구두 설명 기반 — 현장 검증 필요" 명시
-- 모든 산출물에 "[검증 필요]" 태그 포함
+### Error Flow
+**Prompt**: "Create a customer service process manual, there are no docs, I'll explain verbally"
+**Expected Results**:
+- analyst extracts processes from user description (interview mode)
+- Report specifies "Based on verbal description — field verification required"
+- All deliverables include "[Verification needed]" tags
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-| 확장 스킬 | 경로 | 대상 에이전트 | 역할 |
-|----------|------|-------------|------|
-| flowchart-standards | `.claude/skills/flowchart-standards/skill.md` | flowchart-designer | 플로차트 표기법, 프로세스 패턴, 복잡도 관리 |
-| knowledge-base-design | `.claude/skills/knowledge-base-design/skill.md` | faq-builder, manual-writer | FAQ 설계, 트러블슈팅 진단 트리, 지식 수명주기 |
+| Extension Skill | Path | Target Agent | Role |
+|----------------|------|--------------|------|
+| flowchart-standards | `.claude/skills/flowchart-standards/skill.md` | flowchart-designer | Flowchart notation, process patterns, complexity management |
+| knowledge-base-design | `.claude/skills/knowledge-base-design/skill.md` | faq-builder, manual-writer | FAQ design, troubleshooting diagnostic trees, knowledge lifecycle |

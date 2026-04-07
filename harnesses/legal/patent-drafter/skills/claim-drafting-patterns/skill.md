@@ -1,127 +1,125 @@
 ---
 name: claim-drafting-patterns
-description: "특허 청구항의 전략적 작성 패턴과 권리범위 설계 가이드. 'claim-drafter'와 'patent-reviewer' 에이전트가 청구항을 작성하거나 검증할 때 이 스킬의 작성 패턴, 용어 규칙, 종속항 전략을 반드시 활용해야 한다. '청구항 작성', '권리범위 설계', '종속항 전략' 등에 사용한다. 단, 전체 특허 오케스트레이션이나 선행기술 조사는 이 스킬의 범위가 아니다."
+description: "Strategic drafting patterns and claim scope design guide for patent claims. The 'claim-drafter' and 'patent-reviewer' agents must use this skill's drafting patterns, terminology rules, and dependent claim strategies when writing or verifying claims. Used for 'claim drafting', 'claim scope design', 'dependent claim strategy', etc. Note: Overall patent orchestration or prior art search is outside the scope of this skill."
 ---
 
-# Claim Drafting Patterns — 청구항 작성 패턴 가이드
+# Claim Drafting Patterns — Claim Drafting Pattern Guide
 
-특허 청구항의 전략적 구성, 용어 선택, 권리범위 최적화 방법론.
+Strategic composition, terminology selection, and claim scope optimization methodology for patent claims.
 
-## 청구항 유형별 작성 패턴
+## Drafting Patterns by Claim Type
 
-### 장치(물건) 청구항 구조
-
-```
-[발명의 명칭]에 있어서,
-[구성요소 A]와;
-상기 [구성요소 A]에 연결되어, [기능 1]을 수행하는 [구성요소 B]와;
-상기 [구성요소 B]로부터 [데이터/신호]를 수신하여, [기능 2]를 수행하는 [구성요소 C]를 포함하는
-[발명의 명칭].
-```
-
-### 방법(프로세스) 청구항 구조
+### Apparatus (Article) Claim Structure
 
 ```
-[목적]을 위한 방법에 있어서,
-(a) [주체]가 [동작 1]하는 단계;
-(b) 상기 (a) 단계의 결과에 기초하여 [동작 2]하는 단계; 및
-(c) 상기 [조건]에 따라 [동작 3]하는 단계를 포함하는
-[목적]을 위한 방법.
+In a [title of invention],
+[Component A];
+[Component B] connected to said [Component A] and performing [Function 1]; and
+[Component C] receiving [data/signal] from said [Component B] and performing [Function 2],
+comprising [title of invention].
 ```
 
-### 컴퓨터 프로그램 청구항
+### Method (Process) Claim Structure
 
 ```
-프로세서에 의해 실행될 때,
-[동작 1]하는 동작;
-[동작 2]하는 동작; 및
-[동작 3]하는 동작을 수행하도록 하는 명령어를 저장하는
-비일시적 컴퓨터 판독 가능 기록매체.
+A method for [purpose], comprising:
+(a) a step of [subject] performing [Action 1];
+(b) a step of performing [Action 2] based on the result of step (a); and
+(c) a step of performing [Action 3] according to [condition].
 ```
 
-## 권리범위 설계 전략
-
-### 계층적 청구항 구조 (Claim Tree)
+### Computer Program Claim
 
 ```
-독립항 1 (장치 — 최광의)
-  ├── 종속항 2: 구성요소 A 상세화
-  ├── 종속항 3: 구성요소 B 상세화
-  ├── 종속항 4: 연결 방식 한정
-  └── 종속항 5: 추가 구성요소 D 포함
-
-독립항 6 (방법 — 최광의)
-  ├── 종속항 7: 단계 세분화
-  ├── 종속항 8: 조건 추가
-  └── 종속항 9: 부가 단계
-
-독립항 10 (기록매체)
+A non-transitory computer-readable recording medium storing instructions that, when executed by a processor, cause the processor to perform operations comprising:
+performing [Action 1];
+performing [Action 2]; and
+performing [Action 3].
 ```
 
-### 권리범위 조절 기법
+## Claim Scope Design Strategy
 
-| 기법 | 설명 | 예시 |
-|------|------|------|
-| 상위 개념화 | 구체적 구현을 포괄하는 상위 용어 | "센서" → "감지 수단" |
-| 기능적 표현 | 구조 대신 기능으로 한정 | "데이터를 저장하는 수단" |
-| 개방형 전이구 | "포함하는(comprising)" 사용 | 열거 외 추가 구성 허용 |
-| 선택적 한정 | "바람직하게는" 종속항에서 | 독립항 범위 유지 |
-| 수치 범위 | 넓은 범위 → 좁은 범위 계층 | 독립항 "1-100", 종속항 "10-50" |
-
-## 용어 사용 규칙
-
-### 반드시 피해야 할 표현
-
-| 금지 표현 | 문제점 | 대체 표현 |
-|----------|--------|----------|
-| "약", "대략" | 범위 불명확 (기재불비) | 수치 범위 명시 |
-| "~등" | 범위 불특정 | 구체적 열거 또는 상위 개념 |
-| "최적의", "우수한" | 주관적, 비교 기준 없음 | 객관적 기준 제시 |
-| "종래의", "기존의" | 시점 불명확 | 구체적 기술 특정 |
-| "필요에 따라" | 임의적 구성 | 조건 명시 |
-
-### 선행사(antecedent) 규칙
+### Hierarchical Claim Structure (Claim Tree)
 
 ```
-첫 등장: "하나의 [구성요소]" 또는 "[구성요소]"
-재등장: "상기 [구성요소]" (the + 동일 명칭)
+Independent Claim 1 (Apparatus — broadest)
+  +-- Dependent Claim 2: Component A elaboration
+  +-- Dependent Claim 3: Component B elaboration
+  +-- Dependent Claim 4: Connection method limitation
+  +-- Dependent Claim 5: Additional Component D inclusion
 
-위반 예: "센서" → "상기 감지기" (명칭 불일치 = 기재불비)
+Independent Claim 6 (Method — broadest)
+  +-- Dependent Claim 7: Step subdivision
+  +-- Dependent Claim 8: Condition addition
+  +-- Dependent Claim 9: Additional step
+
+Independent Claim 10 (Recording medium)
 ```
 
-## 거절 이유 대응 패턴
+### Scope Adjustment Techniques
 
-### 신규성 거절 (제29조 제1항)
+| Technique | Description | Example |
+|-----------|-------------|---------|
+| Generalization | Use broader terms that encompass specific implementations | "sensor" -> "detection means" |
+| Functional Expression | Define by function instead of structure | "means for storing data" |
+| Open Transition | Use "comprising" | Allows additional elements beyond those listed |
+| Optional Limitation | "Preferably" in dependent claims | Maintains independent claim scope |
+| Numerical Range | Broad range -> Narrow range hierarchy | Independent "1-100", Dependent "10-50" |
+
+## Terminology Rules
+
+### Expressions to Avoid
+
+| Prohibited Expression | Problem | Alternative |
+|----------------------|---------|-------------|
+| "about", "approximately" | Scope unclear (description deficiency) | Specify numerical range |
+| "such as", "etc." | Range unspecified | Specific enumeration or broader concept |
+| "optimal", "superior" | Subjective, no comparison basis | Present objective criteria |
+| "conventional", "existing" | Unclear time reference | Specify particular technology |
+| "as needed" | Arbitrary composition | Specify conditions |
+
+### Antecedent Rules
 
 ```
-대응 전략:
-1. 선행기술과의 차이점 구성요소 식별
-2. 차이점 구성을 독립항에 추가 한정 (보정)
-3. 의견서에서 차이점의 기술적 의의 주장
-4. 종속항 병합으로 범위 축소 (차선책)
+First appearance: "a [component]" or "[component]"
+Re-appearance: "said [component]" or "the [component]" (same term)
+
+Violation example: "sensor" -> "said detector" (name mismatch = description deficiency)
 ```
 
-### 진보성 거절 (제29조 제2항)
+## Rejection Response Patterns
+
+### Novelty Rejection (Article 29, Paragraph 1)
 
 ```
-대응 전략:
-1. 결합 동기 부재 주장: "선행기술들을 결합할 동기가 없다"
-2. 예상치 못한 효과 주장: "결합으로 시너지 효과 발생"
-3. 기술적 편견 주장: "당업자가 시도하지 않을 방향"
-4. 상업적 성공 증거: "시장에서의 성공이 진보성 방증"
+Response strategy:
+1. Identify differentiating elements from prior art
+2. Add differentiating elements to independent claim (amendment)
+3. Argue technical significance of differences in opinion statement
+4. Merge dependent claims to narrow scope (fallback)
 ```
 
-## 청구항 자가 점검 체크리스트
+### Inventive Step Rejection (Article 29, Paragraph 2)
 
-- [ ] 독립항이 최광의 범위를 커버하는가
-- [ ] 모든 용어의 선행사가 명확한가
-- [ ] 전이구가 개방형("포함하는")인가
-- [ ] 종속항이 단계적으로 범위를 좁히는가
-- [ ] 장치+방법+기록매체 3종 청구항 세트인가
-- [ ] 명세서의 모든 실시예가 청구항에 포섭되는가
-- [ ] 부호 번호가 명세서·도면과 일치하는가
+```
+Response strategy:
+1. Argue lack of combination motivation: "There is no motivation to combine the prior art references"
+2. Argue unexpected effects: "The combination produces synergistic effects"
+3. Argue technical prejudice: "A direction a person skilled in the art would not attempt"
+4. Commercial success evidence: "Market success demonstrates inventive step"
+```
 
-## 참고
+## Claim Self-Check Checklist
 
-- 한국 특허법 및 심사기준 기반
-- 상세 작성례: `references/claim-examples.md` 참조
+- [ ] Does the independent claim cover the broadest scope
+- [ ] Are all term antecedents clear
+- [ ] Is the transition phrase open-ended ("comprising")
+- [ ] Do dependent claims progressively narrow the scope
+- [ ] Is there a 3-type claim set (apparatus + method + recording medium)
+- [ ] Are all specification embodiments covered by claims
+- [ ] Do reference numerals match specification and drawings
+
+## Notes
+
+- Based on Patent Act and examination guidelines
+- Detailed drafting examples: See `references/claim-examples.md`

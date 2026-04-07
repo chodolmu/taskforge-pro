@@ -1,138 +1,138 @@
 ---
 name: facilitation-techniques
-description: "회의 퍼실리테이션 기법 라이브러리. agenda-architect와 followup-planner 에이전트가 효과적인 회의를 설계할 때 참조. '퍼실리테이션', '회의 진행 기법', '워크숍 설계' 요청 시 사용. 단, 실제 회의 진행이나 화상회의 도구 운영은 범위 밖."
+description: "meeting facilitation technique library. agenda-architect and followup-planner agent effectiveperson meeting designto do when reference. 'facilitation', 'meeting progress technique', ' design' request when usage. However, actual meeting progress meeting tool operations scope outside."
 ---
 
-# Facilitation Techniques — 퍼실리테이션 기법 라이브러리
+# Facilitation Techniques — facilitation technique library
 
-agenda-architect / followup-planner 에이전트의 회의 설계 역량을 강화하는 기법 모음.
+agenda-architect / followup-planner agent meeting design competency technique .
 
-## 회의 유형별 퍼실리테이션 설계
+## meeting typeby facilitation design
 
-| 회의 유형 | 목적 | 시간 | 권장 기법 |
+| meeting type | purpose | time | recommended technique |
 |----------|------|------|----------|
-| 브레인스토밍 | 아이디어 발산 | 30~60분 | 6-3-5, 라운드로빈 |
-| 의사결정 | 합의/선택 | 30~60분 | DACI, Dot Voting |
-| 문제해결 | 근본원인→해결 | 60~90분 | 5 Whys, 피시본 |
-| 전략수립 | 방향 설정 | 90~120분 | SWOT, 시나리오 |
-| 회고 | 개선 도출 | 45~60분 | Start-Stop-Continue |
-| 킥오프 | 정렬/공유 | 60~90분 | 프로젝트 캔버스 |
+| person | idea | 30~60minute | 6-3-5, |
+| decision-making | /optional | 30~60minute | DACI, Dot Voting |
+| problem | cause→ | 60~90minute | 5 Whys, when |
+| strategyestablish | direction setting | 90~120minute | SWOT, scenario |
+| | improvement derive | 45~60minute | Start-Stop-Continue |
+| | / | 60~90minute | project |
 
-## 아이디어 발산 기법
+## idea technique
 
 ### 6-3-5 Brainwriting
 
 ```
-규칙:
-- 6명 참가
-- 각자 3개 아이디어 작성 (5분)
-- 옆 사람에게 전달 → 기존 아이디어 발전/추가 (5분)
-- 5라운드 반복
-- 총 산출: 최대 108개 아이디어 (30분)
+rule:
+- 6people 
+- eachspecialist 3items idea writing (5minute)
+- companyto deliver → existing idea before/addition (5minute)
+- 5 
+- total calculation: versus 108items idea (30minute)
 
-장점: 발언력 편중 방지, 내성적 참가자 참여 보장
+advantage: capability during degree, withinnaturequality participant report
 ```
 
-### Lightning Demos (번개 데모)
+### Lightning Demos (items demo)
 
 ```
-1. 각 참가자가 벤치마크 사례 1개 준비 (사전)
-2. 3분씩 데모/발표
-3. "Big Ideas" 포스트잇에 영감 기록
-4. 클러스터링 → 핵심 아이디어 도출
+1. each participant value case 1items preparation (companybefore)
+2. 3minute demo/presentation
+3. "Big Ideas" post basisrecord
+4. → core idea derive
 ```
 
-## 문제해결 기법
+## problem technique
 
-### 5 Whys 구조
+### 5 Whys structure
 
 ```
-문제: [현상 기술]
-Why 1: 왜 [현상]이 발생했는가? → [원인 1]
-Why 2: 왜 [원인 1]이 발생했는가? → [원인 2]
-Why 3: 왜 [원인 2]이 발생했는가? → [원인 3]
-Why 4: 왜 [원인 3]이 발생했는가? → [원인 4]
-Why 5: 왜 [원인 4]이 발생했는가? → [근본 원인]
+problem: [current technical]
+Why 1: [current] occurrence? → [cause 1]
+Why 2: [cause 1] occurrence? → [cause 2]
+Why 3: [cause 2] occurrence? → [cause 3]
+Why 4: [cause 3] occurrence? → [cause 4]
+Why 5: [cause 4] occurrence? → [ cause]
 
-→ 근본 원인에 대한 시정 조치 수립
+→ cause regarding when action establish
 ```
 
-### 피시본 다이어그램 (Ishikawa)
+### when diagram (Ishikawa)
 
 ```mermaid
 flowchart LR
-    M1[사람] --> P[문제]
-    M2[프로세스] --> P
-    M3[시스템] --> P
-    M4[환경] --> P
-    M5[데이터] --> P
-    M6[외부요인] --> P
+ M1[company] --> P[problem]
+ M2[process] --> P
+ M3[whensystem] --> P
+ M4[environment] --> P
+ M5[data] --> P
+ M6[externalperson] --> P
 ```
 
-6M 카테고리: Man, Method, Machine, Material, Measurement, Mother Nature
+6M category: Man, Method, Machine, Material, Measurement, Mother Nature
 
-## 시간 관리 기법
+## time management technique
 
-### 타임박스 가이드
+### guide
 
-| 활동 | 권장 시간 | 최대 |
+| | recommended time | versus |
 |------|----------|------|
-| 아이스브레이커 | 5분 | 10분 |
-| 컨텍스트 공유 | 10분 | 15분 |
-| 개인 작업 (조용히) | 5~10분 | 15분 |
-| 소그룹 토론 | 10~15분 | 20분 |
-| 전체 공유 | 인당 2~3분 | 인당 5분 |
-| 의사결정 | 10~15분 | 30분 |
-| 팔로업 정리 | 5분 | 10분 |
+| | 5minute | 10minute |
+| | 10minute | 15minute |
+| itemsperson task  | 5~10minute | 15minute |
+| debate | 10~15minute | 20minute |
+| overall | person 2~3minute | person 5minute |
+| decision-making | 10~15minute | 30minute |
+| organization | 5minute | 10minute |
 
-### Parking Lot (주차장)
+### Parking Lot (weekgap)
 
 ```
-회의 중 본 주제에서 벗어나는 토론이 발생하면:
-1. "좋은 포인트입니다. Parking Lot에 기록하겠습니다"
-2. 별도 보드에 기록
-3. 회의 종료 전 Parking Lot 리뷰
-4. 각 항목의 후속 조치 지정
+meeting during weekfrom debate occurrence:
+1. " point. Parking Lot basisrecord"
+2. by also report basisrecord
+3. meeting before Parking Lot review
+4. each item afterwithin action degree
 ```
 
-## 회고 기법
+## technique
 
 ### Start-Stop-Continue
 
-| 카테고리 | 질문 |
+| category | question |
 |---------|------|
-| **Start** | 새로 시작해야 할 것은? |
-| **Stop** | 멈춰야 할 것은? |
-| **Continue** | 계속해야 할 것은? |
+| **Start** | whenwork to do ? |
+| **Stop** | to do ? |
+| **Continue** | totalwithin to do ? |
 
-### 4Ls 회고
+### 4Ls 
 
-| L | 질문 |
+| L | question |
 |---|------|
-| **Liked** | 좋았던 것은? |
-| **Learned** | 배운 것은? |
-| **Lacked** | 부족했던 것은? |
-| **Longed for** | 바랐던 것은? |
+| **Liked** | ? |
+| **Learned** | ? |
+| **Lacked** | insufficient ? |
+| **Longed for** | ? |
 
-## 팔로업 구조화
+## structure
 
-### SMART 액션아이템
+### SMART 
 
-| 요소 | 설명 | 예시 |
+| element | description | examplewhen |
 |------|------|------|
-| 구체적 | 무엇을 할 것인가 | "고객 설문 문항 초안 작성" |
-| 측정 가능 | 완료 기준 | "20문항, 5분 이내 소요" |
-| 담당자 | 누가 | 김팀장 |
-| 기한 | 언제까지 | 1/31까지 |
-| 추적 방법 | 어디서 확인 | Jira PROJ-123 |
+| specific | to do person | "client document document plan writing" |
+| possible | complete standard | "20document, 5minute within " |
+| person responsible | | team |
+| deadline | to | 1/31to |
+| tracking method | from confirm | Jira PROJ-123 |
 
-## 품질 체크리스트
+## quality checklist
 
-| 항목 | 기준 |
+| item | standard |
 |------|------|
-| 안건당 시간 배분 | 타임박스 명시 |
-| 참가자 역할 | 퍼실리테이터/서기/타임키퍼 지정 |
-| Ground Rules | 회의 시작 시 공유 |
-| 발언 균형 | 기법으로 보장 (라운드로빈 등) |
-| 액션아이템 | SMART 기준 충족 |
-| Parking Lot | 미해결 이슈 후속 지정 |
+| agenda item time allocation | specify |
+| participant role | actual/frombasis/ degree |
+| Ground Rules | meeting whenwork when |
+| balanced | techniqueas report ( etc.) |
+| | SMART standard |
+| Parking Lot | un- issue afterwithin degree |

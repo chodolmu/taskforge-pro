@@ -1,38 +1,37 @@
 # RFP Responder Harness
 
-RFI/RFP 응답서 작성을 위한 요구사항 분석, 역량 매칭, 기술 제안, 가격 제안, 차별화 전략까지 에이전트 팀이 협업하는 하네스.
+A harness where an agent team collaborates to create RFI/RFP responses: requirements analysis, capability matching, technical proposal, pricing proposal, and differentiation strategy.
 
-## 구조
+## Structure
 
 ```
 .claude/
 ├── agents/
-│   ├── requirement-analyst.md    — 요구사항 분석
-│   ├── capability-matcher.md     — 역량 매칭
-│   ├── technical-proposer.md     — 기술 제안서 작성
-│   ├── pricing-strategist.md     — 가격 제안
-│   └── proposal-reviewer.md      — 교차 검증
+│   ├── requirement-analyst.md   — Requirement Analyst (mandatory/optional, evaluation criteria)
+│   ├── capability-matcher.md    — Capability Matcher (strength/gap analysis, evidence)
+│   ├── technical-proposer.md    — Technical Proposer (architecture, methodology, timeline)
+│   ├── pricing-strategist.md    — Pricing Strategist (cost, margin, competitive positioning)
+│   └── proposal-reviewer.md    — Proposal Reviewer (requirements-capability-technical-pricing consistency)
 ├── skills/
 │   ├── rfp-responder/
-│   │   └── skill.md              — 오케스트레이터 (팀 조율, 워크플로우, 에러 핸들링)
+│       └── skill.md             — Orchestrator (team coordination, workflow, error handling)
 │   ├── win-theme-builder/
-│   │   └── skill.md              — Win Theme 구축 (차별화 전략, Ghost Team 분석)
+│   │   └── skill.md             — Win Theme Builder (differentiation, messaging, evidence)
 │   └── pricing-calculator/
-│       └── skill.md              — 가격 산정 (SW 원가, FP/MM, 투찰 전략)
-└── CLAUDE.md                     — 이 파일
+│       └── skill.md             — Pricing Calculator (cost estimation, margin, discounts)
+└── CLAUDE.md                    — This file
 ```
 
-## 사용법
+## Usage
 
-`/rfp-responder` 스킬을 트리거하거나, "RFP 응답서 작성해줘" 같은 자연어로 요청한다.
+Trigger the `/rfp-responder` skill, or make a natural language request such as "Create an RFP response."
 
-## 산출물
+## Deliverables
 
-모든 산출물은 `_workspace/` 디렉토리에 저장된다:
-- `00_input.md` — 사용자 입력 정리
-- `01_requirement_analysis.md` — 요구사항 분석서
-- `02_capability_matrix.md` — 역량 매칭 매트릭스
-- `03_technical_proposal.md` — 기술 제안서
-- `04_pricing_proposal.md` — 가격 제안서
-- `05_differentiation_strategy.md` — 차별화 전략서
-- `06_review_report.md` — 리뷰 보고서
+All deliverables are saved in the `_workspace/` directory:
+- `00_input.md` — Organized user input
+- `01_requirement_analysis.md` — Requirements analysis
+- `02_capability_matching.md` — Capability matching table
+- `03_technical_proposal.md` — Technical proposal
+- `04_pricing_proposal.md` — Pricing proposal
+- `05_review_report.md` — Review report

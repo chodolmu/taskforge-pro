@@ -1,120 +1,120 @@
 ---
 name: budget-rule-engine
-description: "정부 보조금/지원사업의 예산 편성 규정과 비목별 산정 기준을 체계적으로 제공하는 전문 스킬. budget-designer 에이전트가 예산을 편성할 때 비목별 상한선, 산출 근거 작성법, 정산 규정을 적용하는 데 활용한다. '예산 편성 규정', '비목별 기준', '예산 상한', '정산 가이드', '대응자금' 등의 맥락에서 자동 적용한다. 단, 실제 회계 처리나 세금 신고는 이 스킬의 범위가 아니다."
+description: "A specialized skill providing systematic government grant/funding budget preparation rules and per-category calculation standards. Used by the budget-designer agent when applying per-category ceilings, calculation basis writing methods, and settlement rules during budget preparation. Automatically applied in contexts such as 'budget preparation rules', 'per-category standards', 'budget ceilings', 'settlement guide', 'matching funds'. However, actual accounting processing and tax filing are outside the scope of this skill."
 ---
 
-# Budget Rule Engine — 보조금 예산 편성 규정 엔진
+# Budget Rule Engine — Grant Budget Preparation Rules Engine
 
-budget-designer 에이전트의 예산 편성 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the budget preparation capabilities of the budget-designer agent.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **budget-designer** — 비목별 예산 산정, 규정 준수, 정산 가이드
+- **budget-designer** — Per-category budget calculation, compliance, settlement guide
 
-## 정부 R&D 과제 표준 비목 체계
+## Government R&D Standard Budget Category System
 
-### 직접비
+### Direct Costs
 
-| 비목 | 하위 항목 | 상한 비율 | 산출 근거 |
-|------|----------|----------|----------|
-| 인건비 | 내부인건비, 외부인건비 | 총액의 60% 이내 (통상) | 인건비 단가표 × 참여율 × 참여기간 |
-| 연구장비·재료비 | 기기구입, 시약재료, 소프트웨어 | 총액의 40% 이내 | 견적서 기반 |
-| 연구활동비 | 국내외 여비, 회의비, 수용비 | 인건비의 20% 이내 | 항목별 산출 |
-| 연구수당 | 연구책임자·참여연구원 수당 | 직접비의 20% 이내 | 인원 × 단가 |
-| 위탁연구비 | 외부 연구기관 위탁 | 총액의 30% 이내 | 위탁계약(안) |
+| Category | Sub-Items | Ceiling Ratio | Calculation Basis |
+|---------|-----------|---------------|-------------------|
+| Labor | Internal labor, External labor | Within 60% of total (typical) | Labor rate table x Participation rate x Duration |
+| Equipment & Materials | Equipment purchase, Reagents/materials, Software | Within 40% of total | Quotation-based |
+| Research Activity | Domestic/international travel, Meetings, Supplies | Within 20% of labor | Per-item calculation |
+| Research Allowance | PI and researcher allowances | Within 20% of direct costs | Headcount x Unit rate |
+| Subcontracting | External institution subcontracting | Within 30% of total | Subcontract agreement (draft) |
 
-### 간접비
+### Indirect Costs
 
-| 비목 | 산출 | 상한 |
-|------|------|------|
-| 간접비 | (직접비 - 위탁연구비) × 간접비율 | 기관별 간접비율 적용 (대학 33%, 기업 17% 등) |
+| Category | Calculation | Ceiling |
+|---------|-----------|---------|
+| Indirect Costs | (Direct costs - Subcontracting) x Indirect rate | Per-institution indirect rate (Universities 33%, Companies 17%, etc.) |
 
-## 인건비 산정 기준
+## Labor Cost Calculation Standards
 
-### 내부인건비 계산법
-
-```
-월 인건비 = 연봉 / 12 (또는 인건비 테이블 단가)
-과제 인건비 = 월 인건비 × 참여율(%) × 참여기간(월)
-```
-
-| 직급 | 정부 과제 기준 단가 (월, 참고) | 참여율 범위 |
-|------|--------------------------|-----------|
-| 책임연구원 | 500-800만원 | 10-30% |
-| 선임연구원 | 400-600만원 | 20-50% |
-| 연구원 | 300-450만원 | 30-100% |
-| 연구보조원 | 200-300만원 | 50-100% |
-
-### 외부인건비 (학생연구원 등)
-
-| 구분 | 단가 | 비고 |
-|------|------|------|
-| 박사과정 | 200-250만원/월 | 풀타임 기준 |
-| 석사과정 | 150-180만원/월 | 풀타임 기준 |
-| 학부연구생 | 80-120만원/월 | 파트타임 |
-
-## 연구장비·재료비 산정 원칙
-
-### 기기구입비
-
-1. **필요성 입증**: 기존 보유 장비로 불가한 이유
-2. **가격 근거**: 2개 이상 견적서 (1,000만원 이상)
-3. **감가상각**: 구입 vs 임차 비교 (임차 우선 원칙)
-4. **공동활용**: 구입 장비의 공동활용 계획 명시
-
-### 재료비
+### Internal Labor Calculation
 
 ```
-재료비 = 단가 × 수량 × 사용횟수
-
-산출 근거 예시:
-- 시약 A: @50,000원 × 10개 × 3회 실험 = 1,500,000원
-- 소모품 B: @3,000원 × 100개 × 12개월 = 3,600,000원
+Monthly Labor Cost = Annual Salary / 12 (or labor rate table unit price)
+Project Labor Cost = Monthly Cost x Participation Rate (%) x Duration (months)
 ```
 
-## 예산 편성 체크리스트
+| Grade | Government Project Standard Rate (Monthly, Reference) | Participation Rate Range |
+|-------|------------------------------------------------------|------------------------|
+| Principal Investigator | $4,000-6,500 | 10-30% |
+| Senior Researcher | $3,200-4,800 | 20-50% |
+| Researcher | $2,400-3,600 | 30-100% |
+| Research Assistant | $1,600-2,400 | 50-100% |
 
-### 규정 준수 확인
+### External Labor (Student Researchers, etc.)
 
-- [ ] 비목별 상한 비율 준수
-- [ ] 인건비 단가가 기준 범위 이내
-- [ ] 기관부담금(대응자금) 비율 충족
-- [ ] 간접비율이 기관 협약 비율 이내
-- [ ] 위탁연구비가 상한 이내
-- [ ] 장비 구입비에 견적 근거 첨부
+| Category | Rate | Notes |
+|---------|------|-------|
+| PhD Candidate | $1,600-2,000/month | Full-time basis |
+| MS Candidate | $1,200-1,450/month | Full-time basis |
+| Undergraduate Researcher | $650-950/month | Part-time |
 
-### 정산 대비 확인
+## Equipment & Materials Calculation Principles
 
-- [ ] 모든 비목에 산출 근거가 명확한가?
-- [ ] 비목 간 전용 제한 규정 확인
-- [ ] 이월 가능 여부 확인
-- [ ] 카드 사용 의무 항목 확인
-- [ ] 증빙 서류 목록 사전 정리
+### Equipment Purchase
 
-## 대응자금 (기관부담금) 가이드
+1. **Justify necessity**: Reason existing equipment is insufficient
+2. **Price basis**: 2+ quotations (for items over $8,000)
+3. **Depreciation**: Compare purchase vs. lease (lease-first principle)
+4. **Shared use**: Specify shared usage plan for purchased equipment
 
-| 사업 유형 | 정부 지원 비율 | 기관 부담 비율 | 현금/현물 비율 |
-|----------|-------------|-------------|-------------|
-| 중소기업 R&D | 75% | 25% | 현금 10%+ |
-| 중견기업 R&D | 50-65% | 35-50% | 현금 20%+ |
-| 대기업 R&D | 33-50% | 50-67% | 현금 30%+ |
-| 소상공인 지원 | 80-100% | 0-20% | 자율 |
-| 창업 지원 | 70-100% | 0-30% | 자율 |
+### Materials
 
-## 예산 산출 근거 작성 템플릿
+```
+Material Cost = Unit Price x Quantity x Usage Frequency
+
+Calculation Basis Example:
+- Reagent A: @$40 x 10 units x 3 experiments = $1,200
+- Consumable B: @$2.40 x 100 units x 12 months = $2,880
+```
+
+## Budget Preparation Checklist
+
+### Compliance Verification
+
+- [ ] Per-category ceiling ratios met
+- [ ] Labor rates within standard ranges
+- [ ] Matching fund (institutional contribution) ratio satisfied
+- [ ] Indirect cost rate within institutional agreement rate
+- [ ] Subcontracting within ceiling
+- [ ] Quotation basis attached for equipment purchases
+
+### Settlement Preparation
+
+- [ ] Clear calculation basis for all categories?
+- [ ] Budget transfer restrictions between categories verified?
+- [ ] Carryover eligibility confirmed?
+- [ ] Card usage mandatory items confirmed?
+- [ ] Supporting document list pre-organized?
+
+## Matching Fund (Institutional Contribution) Guide
+
+| Program Type | Government Funding Ratio | Institutional Share | Cash/In-kind Ratio |
+|-------------|------------------------|--------------------|--------------------|
+| SME R&D | 75% | 25% | Cash 10%+ |
+| Mid-size R&D | 50-65% | 35-50% | Cash 20%+ |
+| Large Enterprise R&D | 33-50% | 50-67% | Cash 30%+ |
+| Small Business Support | 80-100% | 0-20% | Flexible |
+| Startup Support | 70-100% | 0-30% | Flexible |
+
+## Budget Calculation Basis Writing Template
 
 ```markdown
-### 비목: [비목명]
-### 세부항목: [세부항목명]
+### Category: [Category Name]
+### Sub-Item: [Sub-Item Name]
 
-| 항목 | 산출 내역 | 금액(원) |
-|------|----------|---------|
-| [항목1] | [단가] × [수량] × [기간/횟수] | [금액] |
-| [항목2] | [산출 근거 상세] | [금액] |
-| **소계** | | **[합계]** |
+| Item | Calculation Details | Amount |
+|------|--------------------|----|
+| [Item 1] | [Unit Price] x [Quantity] x [Duration/Frequency] | [Amount] |
+| [Item 2] | [Detailed calculation basis] | [Amount] |
+| **Subtotal** | | **[Total]** |
 
-**산출 근거:**
-- [왜 이 항목이 필요한지 설명]
-- [수량/횟수의 근거]
-- [단가의 근거 (시세, 견적서, 기준단가표)]
+**Calculation Basis:**
+- [Why this item is needed]
+- [Basis for quantity/frequency]
+- [Basis for unit price (market rate, quotation, standard rate table)]
 ```

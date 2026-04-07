@@ -1,137 +1,137 @@
 ---
 name: tech-interview-prep
-description: "개발자 기술 면접 준비를 체계적으로 지원하는 전문 스킬. mentor 에이전트가 포트폴리오 기반 면접 전략, 시스템 디자인 면접, 행동 면접(STAR)을 준비할 때 활용한다. '기술 면접', '코딩 면접', '시스템 디자인', 'STAR 면접', '행동 면접', '개발자 면접 준비' 등의 맥락에서 자동 적용한다. 단, 실시간 모의 면접 진행이나 채용 기업 내부 정보 제공은 이 스킬의 범위가 아니다."
+description: "A specialized skill for systematically supporting developer technical interview preparation. Used by the mentor agent to prepare portfolio-based interview strategies, system design interviews, and behavioral interviews (STAR). Automatically applied in contexts such as 'technical interview', 'coding interview', 'system design', 'STAR interview', 'behavioral interview', 'developer interview prep'. However, conducting live mock interviews and providing company internal information are outside the scope of this skill."
 ---
 
-# Tech Interview Prep — 개발자 기술 면접 준비 도구
+# Tech Interview Prep — Developer Technical Interview Preparation Tool
 
-mentor 에이전트의 면접 준비 지원 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the mentor agent's interview preparation support capabilities.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **mentor** — 프로젝트 설계, 포트폴리오, 커리어 코칭
+- **mentor** — Project design, portfolio, career coaching
 
-## 기술 면접 3대 영역
+## Three Pillars of Technical Interviews
 
-### 1. 코딩 면접 (Coding Interview)
+### 1. Coding Interview
 
-#### 핵심 주제 및 출제 빈도
+#### Key Topics and Frequency
 
-| 주제 | 출제 빈도 | 필수 패턴 |
-|------|---------|----------|
-| 배열/문자열 | 매우 높음 | Two Pointers, Sliding Window |
-| 해시맵 | 높음 | 빈도 카운팅, 그룹핑 |
-| 트리/그래프 | 높음 | DFS, BFS, 최단경로 |
-| DP | 중간 | Top-down, Bottom-up |
-| 스택/큐 | 중간 | 모노톤 스택, BFS |
-| 이진탐색 | 중간 | Parametric Search |
+| Topic | Frequency | Essential Patterns |
+|-------|----------|-------------------|
+| Arrays/Strings | Very high | Two Pointers, Sliding Window |
+| Hash Maps | High | Frequency counting, grouping |
+| Trees/Graphs | High | DFS, BFS, shortest path |
+| DP | Medium | Top-down, Bottom-up |
+| Stacks/Queues | Medium | Monotone stack, BFS |
+| Binary Search | Medium | Parametric Search |
 
-#### 문제 풀이 프레임워크 (UMPIRE)
-
-```
-U - Understand: 문제 완전히 이해 (엣지 케이스 질문)
-M - Match: 알려진 패턴과 매칭
-P - Plan: 의사코드 작성
-I - Implement: 코드 구현
-R - Review: 코드 리뷰 + 시간/공간 복잡도 분석
-E - Evaluate: 테스트케이스 실행 + 최적화 논의
-```
-
-### 2. 시스템 디자인 면접 (System Design)
-
-#### 접근 프레임워크 (4단계)
+#### Problem-Solving Framework (UMPIRE)
 
 ```
-[Step 1] 요구사항 정의 (5분)
-  - 기능적 요구사항 (핵심 기능 3-5개)
-  - 비기능적 요구사항 (DAU, QPS, 응답시간, 가용성)
-  - 규모 추정 (Back-of-the-envelope estimation)
-
-[Step 2] 고수준 설계 (10분)
-  - 핵심 컴포넌트 다이어그램
-  - API 설계 (RESTful endpoints)
-  - 데이터 모델 (스키마 설계)
-
-[Step 3] 상세 설계 (15분)
-  - 병목 지점 식별 및 해결
-  - 확장성 전략 (수평/수직 스케일링)
-  - 캐싱, 메시징, CDN 등
-
-[Step 4] 트레이드오프 논의 (5분)
-  - CAP 정리 관점의 선택 근거
-  - 대안과의 비교
-  - 모니터링/장애 대응
+U - Understand: Fully understand the problem (ask about edge cases)
+M - Match: Match to known patterns
+P - Plan: Write pseudocode
+I - Implement: Write the code
+R - Review: Code review + time/space complexity analysis
+E - Evaluate: Run test cases + discuss optimization
 ```
 
-#### 주요 시스템 디자인 주제
+### 2. System Design Interview
 
-| 주제 | 핵심 포인트 | 난이도 |
-|------|-----------|-------|
-| URL Shortener | 해시 함수, 충돌 처리, 리다이렉트 | 초급 |
-| Rate Limiter | Token Bucket, 분산 카운터 | 초급 |
-| Chat System | WebSocket, 메시지 큐, 읽음 처리 | 중급 |
-| News Feed | Fan-out, 캐싱, 랭킹 | 중급 |
-| 검색 엔진 | 역인덱스, 분산 크롤링 | 고급 |
-| 동영상 스트리밍 | CDN, 어댑티브 비트레이트, 트랜스코딩 | 고급 |
-
-### 3. 행동 면접 (Behavioral Interview)
-
-#### STAR 프레임워크
+#### Approach Framework (4 Steps)
 
 ```
-S - Situation: 배경/상황 설명 (간결하게)
-T - Task: 본인의 역할/과제 (구체적으로)
-A - Action: 취한 행동 (why + how)
-R - Result: 결과 (정량적 + 교훈)
+[Step 1] Requirements Definition (5 min)
+  - Functional requirements (3-5 core features)
+  - Non-functional requirements (DAU, QPS, latency, availability)
+  - Scale estimation (Back-of-the-envelope estimation)
+
+[Step 2] High-Level Design (10 min)
+  - Core component diagram
+  - API design (RESTful endpoints)
+  - Data model (schema design)
+
+[Step 3] Detailed Design (15 min)
+  - Identify and resolve bottlenecks
+  - Scalability strategy (horizontal/vertical scaling)
+  - Caching, messaging, CDN, etc.
+
+[Step 4] Trade-off Discussion (5 min)
+  - CAP theorem-based rationale
+  - Comparison with alternatives
+  - Monitoring/failure response
 ```
 
-#### 핵심 질문 유형 및 준비 포인트
+#### Key System Design Topics
 
-| 질문 유형 | 예시 | 답변 포인트 |
-|----------|------|-----------|
-| 기술적 도전 | "어려운 버그를 해결한 경험?" | 디버깅 과정, 체계적 접근 |
-| 갈등 해결 | "팀원과 의견 충돌 경험?" | 경청, 데이터 기반 설득 |
-| 리더십 | "팀을 이끈 경험?" | 목표 설정, 동기 부여 |
-| 실패 경험 | "실패에서 배운 점?" | 자기 인식, 성장 |
-| 우선순위 | "여러 과제 동시 처리?" | 시간 관리, 판단 기준 |
+| Topic | Key Points | Difficulty |
+|-------|-----------|-----------|
+| URL Shortener | Hash functions, collision handling, redirect | Beginner |
+| Rate Limiter | Token Bucket, distributed counters | Beginner |
+| Chat System | WebSocket, message queues, read receipts | Intermediate |
+| News Feed | Fan-out, caching, ranking | Intermediate |
+| Search Engine | Inverted index, distributed crawling | Advanced |
+| Video Streaming | CDN, adaptive bitrate, transcoding | Advanced |
 
-## 포트폴리오-면접 연결 전략
+### 3. Behavioral Interview
 
-### 프로젝트 발표 프레임워크
+#### STAR Framework
+
+```
+S - Situation: Describe the background/context (briefly)
+T - Task: Your role/assignment (specifically)
+A - Action: Actions taken (why + how)
+R - Result: Outcomes (quantitative + lessons learned)
+```
+
+#### Key Question Types and Preparation Points
+
+| Question Type | Example | Answer Focus |
+|--------------|---------|-------------|
+| Technical challenge | "Tell me about a difficult bug you solved" | Debugging process, systematic approach |
+| Conflict resolution | "Describe a disagreement with a teammate" | Active listening, data-driven persuasion |
+| Leadership | "Tell me about leading a team" | Goal setting, motivation |
+| Failure experience | "What did you learn from a failure?" | Self-awareness, growth |
+| Prioritization | "How do you handle multiple tasks?" | Time management, decision criteria |
+
+## Portfolio-to-Interview Connection Strategy
+
+### Project Presentation Framework
 
 ```markdown
-### 프로젝트: [프로젝트명]
+### Project: [Project Name]
 
-**기술 스택**: [사용 기술]
-**기간**: [기간]
-**팀 규모**: [N명 중 본인 역할]
+**Tech stack**: [Technologies used]
+**Duration**: [Duration]
+**Team size**: [N people, your role]
 
-**왜 이 기술을 선택했나?**
-→ [대안 비교 + 선택 근거]
+**Why did you choose this technology?**
+-> [Alternatives compared + selection rationale]
 
-**가장 어려웠던 기술적 문제는?**
-→ [문제 → 시도 → 해결 → 결과]
+**What was the most difficult technical challenge?**
+-> [Problem -> attempts -> solution -> outcome]
 
-**다시 한다면 다르게 할 것은?**
-→ [자기 성찰 + 성장 증명]
+**What would you do differently if you did it again?**
+-> [Self-reflection + evidence of growth]
 
-**정량적 성과:**
-→ [성능 개선 %, 사용자 수, 코드 품질 지표]
+**Quantitative outcomes:**
+-> [Performance improvement %, user count, code quality metrics]
 ```
 
-## 면접 준비 체크리스트
+## Interview Preparation Checklist
 
-### 코딩 면접 (2-4주 전)
-- [ ] 핵심 패턴 20개 각 2-3문제씩 풀기
-- [ ] 시간 제한 연습 (45분/문제)
-- [ ] 소리 내어 사고 과정 설명하기 연습
+### Coding Interview (2-4 weeks before)
+- [ ] Solve 2-3 problems for each of the 20 core patterns
+- [ ] Practice under time constraints (45 min/problem)
+- [ ] Practice explaining thought process out loud
 
-### 시스템 디자인 (1-2주 전)
-- [ ] 주요 시스템 6-8개 설계 연습
-- [ ] Back-of-the-envelope 계산 연습
-- [ ] 트레이드오프 논의 준비
+### System Design (1-2 weeks before)
+- [ ] Practice designing 6-8 major systems
+- [ ] Practice back-of-the-envelope calculations
+- [ ] Prepare trade-off discussions
 
-### 행동 면접 (1주 전)
-- [ ] STAR 스토리 5-7개 준비
-- [ ] 프로젝트 3개 깊이 있는 발표 준비
-- [ ] 회사별 문화/가치 리서치
+### Behavioral Interview (1 week before)
+- [ ] Prepare 5-7 STAR stories
+- [ ] Prepare in-depth presentations on 3 projects
+- [ ] Research each company's culture/values

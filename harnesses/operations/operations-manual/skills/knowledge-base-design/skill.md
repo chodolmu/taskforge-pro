@@ -1,125 +1,125 @@
 ---
 name: knowledge-base-design
-description: "지식 베이스 구축 가이드. faq-builder와 manual-writer 에이전트가 FAQ, 트러블슈팅 가이드를 체계적으로 구성할 때 참조. 'FAQ 설계', '지식 관리', '트러블슈팅 가이드' 요청 시 사용. 단, 위키 시스템 구축은 범위 밖."
+description: "Knowledge base design guide. Referenced by faq-builder and manual-writer agents when systematically organizing FAQs and troubleshooting guides. Used for 'FAQ design', 'knowledge management', 'troubleshooting guide' requests. Note: wiki system implementation is out of scope."
 ---
 
-# Knowledge Base Design — 지식 베이스 구축 가이드
+# Knowledge Base Design
 
-faq-builder / manual-writer 에이전트의 지식 체계화 역량 강화.
+Enhances the knowledge systematization capabilities of faq-builder / manual-writer agents.
 
-## FAQ 설계 원칙
+## FAQ Design Principles
 
-### FAQ 카테고리 설계
+### FAQ Category Design
 
 ```
-1단계: 사용자 여정 기반 분류
-  시작하기 → 기본 사용 → 고급 기능 → 트러블슈팅 → 관리
+Step 1: User journey-based classification
+  Getting started → Basic usage → Advanced features → Troubleshooting → Administration
 
-2단계: 각 카테고리 5~10개 질문
-  - 빈도 높은 순 정렬
-  - 질문은 사용자 언어로
+Step 2: 5-10 questions per category
+  - Sort by frequency (highest first)
+  - Write questions in user language
 
-3단계: 크로스 레퍼런스
-  - 관련 FAQ 간 링크
-  - 매뉴얼 해당 섹션 링크
+Step 3: Cross-references
+  - Link between related FAQs
+  - Link to corresponding manual sections
 ```
 
-### FAQ 작성 템플릿
+### FAQ Writing Template
 
 ```markdown
-## Q: [사용자가 실제로 묻는 형태의 질문]
+## Q: [Question in the form users actually ask]
 
-**A:** [1~2문장 핵심 답변]
+**A:** [1-2 sentence key answer]
 
-[필요 시 상세 설명]
+[Detailed explanation if needed]
 
-**단계:**
-1. [구체적 행동 1]
-2. [구체적 행동 2]
-3. [구체적 행동 3]
+**Steps:**
+1. [Specific action 1]
+2. [Specific action 2]
+3. [Specific action 3]
 
-> 참고: [관련 매뉴얼 섹션 링크]
-> 관련 질문: [관련 FAQ 링크]
+> Reference: [Link to related manual section]
+> Related question: [Link to related FAQ]
 ```
 
-### FAQ 품질 규칙
+### FAQ Quality Rules
 
-| 규칙 | 설명 |
-|------|------|
-| 질문 = 사용자 언어 | 전문용어 아닌 일상 표현 |
-| 답변 = 1줄 요약 + 상세 | 스캔하기 쉽게 |
-| 1 FAQ = 1 주제 | 복합 질문은 분리 |
-| 스크린샷/다이어그램 | 시각적 설명 포함 |
-| 갱신 날짜 | 마지막 검증일 명시 |
+| Rule | Description |
+|------|-------------|
+| Question = User language | Everyday expressions, not jargon |
+| Answer = 1-line summary + details | Easy to scan |
+| 1 FAQ = 1 topic | Split compound questions |
+| Screenshots/diagrams | Include visual explanations |
+| Updated date | Specify last verified date |
 
-## 트러블슈팅 가이드 구조
+## Troubleshooting Guide Structure
 
-### 증상 기반 진단 트리
+### Symptom-Based Diagnostic Tree
 
 ```mermaid
 flowchart TD
-    S([증상: X가 안 됩니다]) --> Q1{네트워크 연결 상태?}
-    Q1 -->|연결됨| Q2{로그인 상태?}
-    Q1 -->|안됨| FIX1[네트워크 확인 → 재시도]
-    Q2 -->|로그인됨| Q3{권한 있는가?}
-    Q2 -->|안됨| FIX2[재로그인]
-    Q3 -->|있음| FIX3[캐시 삭제 → 재시도]
-    Q3 -->|없음| FIX4[관리자에게 권한 요청]
+    S([Symptom: X is not working]) --> Q1{Network connection?}
+    Q1 -->|Connected| Q2{Logged in?}
+    Q1 -->|Not connected| FIX1[Check network → Retry]
+    Q2 -->|Logged in| Q3{Has permissions?}
+    Q2 -->|Not logged in| FIX2[Re-login]
+    Q3 -->|Yes| FIX3[Clear cache → Retry]
+    Q3 -->|No| FIX4[Request permissions from admin]
 ```
 
-### 트러블슈팅 카드 템플릿
+### Troubleshooting Card Template
 
 ```markdown
-## 문제: [증상 설명]
+## Problem: [Symptom description]
 
-### 영향
-- 영향 범위: [전체/부분/개인]
-- 긴급도: [즉시/24시간/72시간]
+### Impact
+- Scope: [All/Partial/Individual]
+- Urgency: [Immediate/24 hours/72 hours]
 
-### 원인 후보
-| # | 원인 | 확률 | 확인 방법 |
-|---|------|------|----------|
-| 1 | [가장 흔한 원인] | 높음 | [확인 명령/방법] |
-| 2 | [두 번째 원인] | 중간 | [확인 명령/방법] |
-| 3 | [드문 원인] | 낮음 | [확인 명령/방법] |
+### Possible Causes
+| # | Cause | Likelihood | How to Verify |
+|---|-------|-----------|---------------|
+| 1 | [Most common cause] | High | [Verification command/method] |
+| 2 | [Second cause] | Medium | [Verification command/method] |
+| 3 | [Rare cause] | Low | [Verification command/method] |
 
-### 해결 절차
-**원인 1일 경우:**
-1. [단계 1]
-2. [단계 2]
-3. 확인: [성공 기준]
+### Resolution Steps
+**If Cause 1:**
+1. [Step 1]
+2. [Step 2]
+3. Verify: [Success criteria]
 
-### 에스컬레이션
-- 30분 내 미해결 → [L2 담당자]
-- 서비스 장애 → [긴급 연락처]
+### Escalation
+- Not resolved within 30 min → [L2 owner]
+- Service outage → [Emergency contact]
 ```
 
-## 지식 관리 수명주기
+## Knowledge Management Lifecycle
 
-| 단계 | 활동 | 주기 |
-|------|------|------|
-| 생성 | 신규 절차/FAQ 작성 | 수시 |
-| 검토 | 정확성/최신성 확인 | 분기 |
-| 갱신 | 변경사항 반영 | 수시 |
-| 폐기 | 불필요 문서 아카이브 | 연간 |
-| 측정 | 조회수, 유용성, 피드백 | 월간 |
+| Phase | Activity | Frequency |
+|-------|----------|-----------|
+| Create | Write new procedures/FAQs | As needed |
+| Review | Verify accuracy/currency | Quarterly |
+| Update | Reflect changes | As needed |
+| Retire | Archive obsolete documents | Annually |
+| Measure | Views, usefulness, feedback | Monthly |
 
-## 검색성 최적화
+## Search Optimization
 
-| 기법 | 설명 |
-|------|------|
-| 키워드 태깅 | 사용자 검색어 기반 태그 |
-| 동의어 매핑 | "안 됨" = "오류" = "에러" |
-| 카테고리 계층 | 최대 3단계 |
-| 관련 문서 링크 | 상호 참조 5개 이내 |
-| 요약 (Excerpt) | 검색 결과에 표시될 요약 |
+| Technique | Description |
+|-----------|-------------|
+| Keyword tagging | Tags based on user search terms |
+| Synonym mapping | "not working" = "error" = "failure" |
+| Category hierarchy | Maximum 3 levels |
+| Related document links | Up to 5 cross-references |
+| Summary (Excerpt) | Summary displayed in search results |
 
-## 품질 체크리스트
+## Quality Checklist
 
-| 항목 | 기준 |
-|------|------|
-| FAQ 수 | 카테고리당 5~10개 |
-| 트러블슈팅 | 상위 10개 문제 커버 |
-| 진단 트리 | 3단계 이내 해결 도달 |
-| 에스컬레이션 | 시간 기준 명시 |
-| 갱신 날짜 | 모든 문서에 표시 |
+| Item | Criteria |
+|------|----------|
+| FAQ count | 5-10 per category |
+| Troubleshooting | Covers top 10 issues |
+| Diagnostic tree | Resolution reached in 3 steps or fewer |
+| Escalation | Time-based criteria specified |
+| Updated date | Displayed on all documents |

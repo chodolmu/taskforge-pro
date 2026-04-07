@@ -1,103 +1,103 @@
 ---
 name: kpi-benchmark-engine
-description: "KPI 대시보드 설계 시 산업별 벤치마크 데이터와 KPI 선정 프레임워크를 제공하는 전문 스킬. kpi-designer 에이전트가 핵심 메트릭을 선정하고 벤치마크를 설정할 때 활용한다. 'KPI 벤치마크', '핵심 지표 선정', '성과 지표', 'OKR 지표', '산업별 KPI' 등의 맥락에서 자동 적용한다. 단, BI 도구(Tableau, Power BI) 실제 대시보드 구현이나 실시간 데이터 파이프라인 구축은 이 스킬의 범위가 아니다."
+description: "A specialized skill providing industry-specific benchmark data and KPI selection frameworks for KPI dashboard design. Used by the kpi-designer agent when selecting key metrics and setting benchmarks. Automatically applied in contexts such as 'KPI benchmarks', 'key metric selection', 'performance indicators', 'OKR metrics', 'industry KPIs'. However, actual BI tool (Tableau, Power BI) dashboard implementation and real-time data pipeline construction are outside the scope of this skill."
 ---
 
-# KPI Benchmark Engine — KPI 벤치마크 및 선정 프레임워크
+# KPI Benchmark Engine — KPI Benchmark and Selection Framework
 
-kpi-designer 에이전트의 KPI 설계 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the KPI design capabilities of the kpi-designer agent.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **kpi-designer** — KPI 선정, 벤치마크 설정, 대시보드 구성 시 활용
+- **kpi-designer** — Used for KPI selection, benchmark setting, and dashboard composition
 
-## KPI 선정 프레임워크: SMART-R
+## KPI Selection Framework: SMART-R
 
-| 기준 | 설명 | 검증 질문 |
-|------|------|----------|
-| **S**pecific | 구체적 정의 | "이 KPI의 정확한 계산식은?" |
-| **M**easurable | 정량 측정 가능 | "데이터 소스는 어디인가?" |
-| **A**ctionable | 행동 유도 | "이 KPI가 악화되면 어떤 조치를 취하는가?" |
-| **R**elevant | 전략 목표 연결 | "이 KPI는 어떤 전략 목표에 기여하는가?" |
-| **T**ime-bound | 주기 명확 | "측정 빈도(일/주/월/분기)는?" |
-| **R**eliable | 조작 불가 | "이 KPI를 게이밍할 수 있는가?" |
+| Criterion | Description | Validation Question |
+|-----------|------------|---------------------|
+| **S**pecific | Specifically defined | "What is the exact formula for this KPI?" |
+| **M**easurable | Quantitatively measurable | "Where is the data source?" |
+| **A**ctionable | Drives action | "What action do we take when this KPI deteriorates?" |
+| **R**elevant | Linked to strategic objectives | "Which strategic objective does this KPI contribute to?" |
+| **T**ime-bound | Clear frequency | "What is the measurement frequency (daily/weekly/monthly/quarterly)?" |
+| **R**eliable | Not gameable | "Can this KPI be gamed?" |
 
-## 산업별 핵심 KPI 벤치마크
+## Industry-Specific Core KPI Benchmarks
 
-### SaaS / 소프트웨어
+### SaaS / Software
 
-| KPI | 시드 | 시리즈A | 시리즈B+ | 상장 |
-|-----|------|---------|---------|------|
-| ARR 성장률 | 200%+ | 100-200% | 50-100% | 20-40% |
+| KPI | Seed | Series A | Series B+ | Public |
+|-----|------|---------|----------|--------|
+| ARR Growth | 200%+ | 100-200% | 50-100% | 20-40% |
 | NRR | 100%+ | 110%+ | 115%+ | 120%+ |
 | Gross Margin | 60%+ | 65%+ | 70%+ | 75%+ |
-| CAC Payback (월) | <24 | <18 | <15 | <12 |
+| CAC Payback (months) | <24 | <18 | <15 | <12 |
 | LTV/CAC | >3x | >3x | >4x | >5x |
-| Logo Churn (월) | <5% | <3% | <2% | <1% |
+| Logo Churn (monthly) | <5% | <3% | <2% | <1% |
 
-### 이커머스 / D2C
+### E-commerce / D2C
 
-| KPI | 초기 | 성장기 | 성숙기 |
-|-----|------|-------|-------|
-| GMV 성장률 | 100%+ | 40-80% | 15-25% |
+| KPI | Early | Growth | Mature |
+|-----|-------|--------|--------|
+| GMV Growth | 100%+ | 40-80% | 15-25% |
 | Take Rate | 5-15% | 10-20% | 15-25% |
-| 재구매율 | 20%+ | 30%+ | 40%+ |
+| Repeat Purchase Rate | 20%+ | 30%+ | 40%+ |
 
-### 핀테크
+### Fintech
 
-| KPI | 벤치마크 |
-|-----|----------|
-| TPV 성장률 | QoQ 20%+ |
+| KPI | Benchmark |
+|-----|-----------|
+| TPV Growth | QoQ 20%+ |
 | Revenue/TPV | 1-3% |
-| 부실률 | <2% |
+| Default Rate | <2% |
 
-### 제조 / 하드웨어
+### Manufacturing / Hardware
 
-| KPI | 벤치마크 |
-|-----|----------|
-| OEE | 85%+ 세계수준 |
-| 수율 | 95%+ |
-| 원재료비율 | 30-50% |
+| KPI | Benchmark |
+|-----|-----------|
+| OEE | 85%+ World-class |
+| Yield | 95%+ |
+| Raw Material Ratio | 30-50% |
 
-## KPI 피라미드 구조
+## KPI Pyramid Structure
 
 ```
            [North Star Metric]
-              (1개 핵심 지표)
+              (1 core metric)
           /         |         \
-    [Primary KPIs]  (3-5개)
-    재무 | 성장 | 효율 | 고객
+    [Primary KPIs]  (3-5)
+    Financial | Growth | Efficiency | Customer
       /     |     \      \
-  [Secondary KPIs] (10-15개)
-  세부 운영 지표, 선행 지표
+  [Secondary KPIs] (10-15)
+  Detailed operational metrics, leading indicators
 ```
 
-### North Star Metric 선정 가이드
+### North Star Metric Selection Guide
 
-| 사업 모델 | North Star 후보 | 이유 |
-|----------|----------------|------|
-| SaaS B2B | ARR 또는 NRR | 반복 매출의 질 |
-| 마켓플레이스 | GMV 또는 MAU | 양면 시장 건강도 |
-| 컨슈머 앱 | DAU/MAU 비율 | 사용자 참여도 |
-| 핀테크 | TPV 또는 활성고객 수 | 거래 규모 |
+| Business Model | North Star Candidates | Reason |
+|---------------|----------------------|--------|
+| SaaS B2B | ARR or NRR | Quality of recurring revenue |
+| Marketplace | GMV or MAU | Two-sided market health |
+| Consumer App | DAU/MAU Ratio | User engagement |
+| Fintech | TPV or Active Customers | Transaction scale |
 
-## 시각화 권장 형식
+## Visualization Format Recommendations
 
-| KPI 유형 | 권장 차트 | 이유 |
-|---------|---------|------|
-| 트렌드 | 라인 차트 | 방향성 직관적 파악 |
-| 비중/구성 | 도넛/스택 바 | 비율 한눈에 |
-| 목표 대비 | 게이지/불릿 차트 | 갭 시각화 |
-| 벤치마크 | 수평 바 + 기준선 | 상대 포지셔닝 |
-| 코호트 | 히트맵 | 시간별 패턴 |
+| KPI Type | Recommended Chart | Reason |
+|---------|------------------|--------|
+| Trend | Line Chart | Intuitive direction visibility |
+| Composition | Donut/Stacked Bar | Ratios at a glance |
+| vs. Target | Gauge/Bullet Chart | Gap visualization |
+| Benchmark | Horizontal Bar + Reference Line | Relative positioning |
+| Cohort | Heatmap | Time-based patterns |
 
-## 벤치마크 소싱 및 신뢰도
+## Benchmark Sourcing and Reliability
 
-| 소스 유형 | 예시 | 신뢰도 |
-|----------|------|--------|
-| 리서치 기관 | Bessemer, OpenView | 높음 |
-| 동종 상장사 IR | 10-K, Investor Day | 높음 |
-| 업계 리포트 | Gartner, IDC | 중간 |
-| 자체 히스토리 | 전분기/전년 동기 | 높음 |
+| Source Type | Examples | Reliability |
+|-----------|---------|-------------|
+| Research Institutions | Bessemer, OpenView | High |
+| Peer Public Company IR | 10-K, Investor Day | High |
+| Industry Reports | Gartner, IDC | Medium |
+| Internal History | Prior Quarter/Prior Year Same Period | High |
 
-보고서에 벤치마크 인용 시 반드시 **소스, 시점, 샘플 크기**를 명시한다.
+When citing benchmarks in reports, always specify **source, date, and sample size**.

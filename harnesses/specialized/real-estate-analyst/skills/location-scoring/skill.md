@@ -1,130 +1,130 @@
 ---
 name: location-scoring
-description: "입지 평가 스코어카드. location-analyst 에이전트가 부동산 입지를 체계적으로 평가할 때 참조. '입지 분석', '입지 평가', '상권 분석' 요청 시 사용. 단, 현장 실사 대행이나 측량은 범위 밖."
+description: "Location scoring scorecard. Referenced by the location-analyst agent for systematic real estate location evaluation. Use for requests involving 'location analysis', 'location assessment', or 'commercial area analysis'. On-site inspections and surveying are out of scope."
 ---
 
-# Location Scoring — 입지 평가 스코어카드
+# Location Scoring — Location Evaluation Scorecard
 
-location-analyst 에이전트의 입지 분석 체계화.
+Systematizes the location-analyst agent's location analysis capabilities.
 
-## 입지 평가 프레임워크
+## Location Evaluation Framework
 
-### 가중 스코어카드
+### Weighted Scorecard
 
-| 평가 항목 | 가중치(주거) | 가중치(상업) | 가중치(오피스) |
-|----------|-----------|-----------|------------|
-| 교통 접근성 | 25% | 20% | 30% |
-| 생활 인프라 | 20% | 10% | 10% |
-| 학군 | 20% | 5% | 5% |
-| 개발 호재 | 15% | 20% | 20% |
-| 인구/상권 | 5% | 25% | 15% |
-| 환경/안전 | 10% | 10% | 10% |
-| 미래 가치 | 5% | 10% | 10% |
+| Evaluation Category | Weight (Residential) | Weight (Commercial) | Weight (Office) |
+|--------------------|---------------------|--------------------|-----------------|
+| Transit Accessibility | 25% | 20% | 30% |
+| Living Infrastructure | 20% | 10% | 10% |
+| School District | 20% | 5% | 5% |
+| Development Catalysts | 15% | 20% | 20% |
+| Population/Commercial Area | 5% | 25% | 15% |
+| Environment/Safety | 10% | 10% | 10% |
+| Future Value | 5% | 10% | 10% |
 
-### 항목별 평가 기준
+### Category Scoring Criteria
 
-#### 교통 접근성
+#### Transit Accessibility
 
-| 점수 | 기준 |
-|------|------|
-| 5 | 지하철역 도보 5분 이내, 2개 이상 노선 |
-| 4 | 지하철역 도보 10분, 버스 다수 |
-| 3 | 지하철역 도보 15분, 주요 도로 접근 |
-| 2 | 지하철 원거리, 버스 의존 |
-| 1 | 대중교통 불편, 자차 필수 |
+| Score | Criteria |
+|-------|----------|
+| 5 | Subway station within 5-minute walk, 2+ lines |
+| 4 | Subway station within 10-minute walk, multiple bus routes |
+| 3 | Subway station within 15-minute walk, major road access |
+| 2 | Subway distant, bus-dependent |
+| 1 | Poor public transit, personal vehicle required |
 
-#### 학군 (주거용)
+#### School District (Residential)
 
-| 점수 | 기준 |
-|------|------|
-| 5 | 특목고/강남8학군급, 학원가 밀집 |
-| 4 | 우수 학군, 교육 환경 양호 |
-| 3 | 평균 학군, 기본 교육 시설 |
-| 2 | 학군 약세, 학원 부족 |
-| 1 | 교육 인프라 미흡 |
+| Score | Criteria |
+|-------|----------|
+| 5 | Top-tier specialized schools, dense tutoring district |
+| 4 | Strong school district, good educational environment |
+| 3 | Average school district, basic educational facilities |
+| 2 | Weak school district, limited tutoring options |
+| 1 | Inadequate educational infrastructure |
 
-#### 개발 호재
+#### Development Catalysts
 
-| 점수 | 기준 |
-|------|------|
-| 5 | 확정 개발 (착공/시행), 직접 수혜 |
-| 4 | 확정 개발, 간접 수혜 |
-| 3 | 추진 중 (인허가 단계) |
-| 2 | 계획 단계 (불확실) |
-| 1 | 호재 없음 또는 혐오시설 |
+| Score | Criteria |
+|-------|----------|
+| 5 | Confirmed development (under construction/in effect), direct beneficiary |
+| 4 | Confirmed development, indirect beneficiary |
+| 3 | In progress (permitting stage) |
+| 2 | Planning stage (uncertain) |
+| 1 | No catalysts or presence of nuisance facilities |
 
-## 상권 분석 프레임워크
+## Commercial Area Analysis Framework
 
-### 상권 유형
+### Commercial Area Types
 
-| 유형 | 특성 | 적합 업종 |
-|------|------|----------|
-| 역세권 | 유동인구 높음, 임대료 높음 | F&B, 편의점, 약국 |
-| 오피스 상권 | 주중 점심, 직장인 | 식당, 카페, 편의점 |
-| 주거 상권 | 안정적, 단골 | 슈퍼, 세탁, 학원 |
-| 대학가 | 젊은 층, 트렌드 | 카페, 주점, 패션 |
-| 관광 상권 | 주말/성수기, 변동 큼 | 음식, 기념품, 숙박 |
+| Type | Characteristics | Suitable Businesses |
+|------|----------------|-------------------|
+| Transit Hub | High foot traffic, high rents | F&B, convenience stores, pharmacies |
+| Office District | Weekday lunch crowd, office workers | Restaurants, cafes, convenience stores |
+| Residential Area | Stable, repeat customers | Grocery, laundry, tutoring centers |
+| University Area | Young demographic, trend-driven | Cafes, bars, fashion retail |
+| Tourist Area | Weekends/peak season, high variability | Dining, souvenirs, lodging |
 
-### 유동인구 분석
+### Foot Traffic Analysis
 
 ```
-평가 지표:
-- 주중 평균 유동인구
-- 주말 평균 유동인구
-- 시간대별 분포 (피크 타임)
-- 연령대/성별 비율
-- 목적 (통근/쇼핑/여가)
+Evaluation Metrics:
+- Average weekday foot traffic
+- Average weekend foot traffic
+- Time-of-day distribution (peak times)
+- Age/gender breakdown
+- Purpose (commuting/shopping/leisure)
 
-데이터 소스:
-- 통계청 유동인구 데이터
-- 카드사 매출 데이터
-- 현장 조사 (2시간 × 3타임)
+Data Sources:
+- National statistics foot traffic data
+- Credit card transaction data
+- On-site surveys (2 hours x 3 time slots)
 ```
 
-## 미래 가치 평가
+## Future Value Assessment
 
-### 발전 잠재력 지표
+### Development Potential Indicators
 
-| 지표 | 긍정 신호 | 부정 신호 |
-|------|----------|----------|
-| 인구 추이 | 전입 > 전출 | 인구 감소 |
-| 거래량 | 증가 추세 | 감소/정체 |
-| 신규 공급 | 적정 (수요 대비) | 과잉 공급 |
-| 개발 계획 | GTX, 신도시, 산단 | 규제, 혐오시설 |
-| 임대 수요 | 대기 수요 존재 | 공실 증가 |
+| Indicator | Positive Signal | Negative Signal |
+|-----------|----------------|----------------|
+| Population Trends | Inflow > Outflow | Population decline |
+| Transaction Volume | Upward trend | Decline/stagnation |
+| New Supply | Balanced (relative to demand) | Oversupply |
+| Development Plans | Express rail, new towns, industrial parks | Restrictions, nuisance facilities |
+| Rental Demand | Waitlist demand exists | Rising vacancies |
 
-## 입지 비교 보고서 템플릿
+## Location Comparison Report Template
 
 ```markdown
-## 입지 비교: A지역 vs B지역 vs C지역
+## Location Comparison: Area A vs Area B vs Area C
 
-### 종합 스코어
+### Overall Scores
 
-| 항목 | A지역 | B지역 | C지역 |
-|------|-------|-------|-------|
-| 교통 | 4.5 | 3.8 | 4.0 |
+| Category | Area A | Area B | Area C |
+|----------|--------|--------|--------|
+| Transit | 4.5 | 3.8 | 4.0 |
 | ... | ... | ... | ... |
-| **가중 총점** | **4.12** | **3.75** | **3.90** |
+| **Weighted Total** | **4.12** | **3.75** | **3.90** |
 
-### 장단점 요약
+### Strengths & Weaknesses Summary
 
-#### A지역
-- 강점: [구체적 강점]
-- 약점: [구체적 약점]
-- 기회: [개발 호재 등]
-- 위협: [리스크 요소]
+#### Area A
+- Strengths: [Specific strengths]
+- Weaknesses: [Specific weaknesses]
+- Opportunities: [Development catalysts, etc.]
+- Threats: [Risk factors]
 
-### 투자 의견
-[종합적 판단 및 추천 순위]
+### Investment Opinion
+[Overall assessment and ranked recommendation]
 ```
 
-## 품질 체크리스트
+## Quality Checklist
 
-| 항목 | 기준 |
-|------|------|
-| 평가 항목 | 7대 항목 가중치 적용 |
-| 비교 대상 | 3곳 이상 |
-| 데이터 근거 | 공공 데이터 활용 |
-| 현장 확인 | 사진/현장 노트 |
-| SWOT | 각 입지별 SWOT |
-| 미래 전망 | 3~5년 예측 |
+| Item | Criteria |
+|------|----------|
+| Evaluation Categories | All 7 categories with weights applied |
+| Comparison Targets | 3 or more locations |
+| Data Basis | Public data utilized |
+| On-Site Verification | Photos/field notes |
+| SWOT | SWOT analysis per location |
+| Future Outlook | 3-5 year forecast |

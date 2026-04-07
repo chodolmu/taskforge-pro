@@ -1,135 +1,106 @@
 ---
 name: scenario-planner
-description: "시나리오 기획 풀 파이프라인. 핵심 변수 정의→시나리오 매트릭스 구성→영향 분석→대응 전략→의사결정 문서를 에이전트 팀이 협업하여 생성한다. '시나리오 분석', '미래 시나리오', '시나리오 플래닝', '전략 시나리오', '불확실성 분석', '시나리오 기획해줘', '시나리오 매트릭스', '대응 전략 수립', '의사결정 지원' 등 시나리오 기반 전략 기획 전반에 이 스킬을 사용한다. 기존 분석 자료가 있는 경우에도 부분 파이프라인을 지원한다. 단, 실시간 데이터 수집 시스템 구축, 전사적 리스크 관리(ERM) 소프트웨어 연동, 몬테카를로 시뮬레이션 코드 실행은 이 스킬의 범위가 아니다."
+description: "A scenario planning full pipeline. An agent team collaborates to generate key variable definition, scenario matrix construction, impact analysis, response strategy, and decision documents. Use this skill for requests like 'scenario analysis', 'future scenarios', 'scenario planning', 'strategic scenarios', 'uncertainty analysis', 'plan scenarios for me', 'scenario matrix', 'response strategy development', 'decision support', and other scenario-based strategic planning needs. Also supports partial pipelines when existing analysis materials are available. However, real-time data collection system construction, enterprise risk management (ERM) software integration, and Monte Carlo simulation code execution are outside the scope of this skill."
 ---
 
-# Scenario Planner — 시나리오 기획 풀 파이프라인
+# Scenario Planner — Scenario Planning Full Pipeline
 
-핵심 변수 정의→시나리오 매트릭스→영향 분석→대응 전략→의사결정 문서를 에이전트 팀이 협업하여 생성한다.
+An agent team collaborates to generate key variable definition, scenario matrix, impact analysis, response strategy, and decision documents.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — 5 members communicate directly via SendMessage and perform cross-validation.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| variable-analyst | `.claude/agents/variable-analyst.md` | 핵심 변수 식별, STEEP 분석, 시나리오 축 결정 | general-purpose |
-| scenario-designer | `.claude/agents/scenario-designer.md` | 2x2 매트릭스, 시나리오 서사, 조기 경보 신호 | general-purpose |
-| impact-assessor | `.claude/agents/impact-assessor.md` | 시나리오별 영향 분석, 리스크-기회 매핑 | general-purpose |
-| strategy-architect | `.claude/agents/strategy-architect.md` | 로버스트/헤지/옵션 전략, 의사결정 트리거 | general-purpose |
-| integration-reviewer | `.claude/agents/integration-reviewer.md` | 교차 검증, 정합성 확인, 통합 문서 편집 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| variable-analyst | `.claude/agents/variable-analyst.md` | Key variable identification, STEEP analysis, scenario axis determination | general-purpose |
+| scenario-designer | `.claude/agents/scenario-designer.md` | 2x2 matrix, scenario narratives, early warning signals | general-purpose |
+| impact-assessor | `.claude/agents/impact-assessor.md` | Per-scenario impact analysis, risk-opportunity mapping | general-purpose |
+| strategy-architect | `.claude/agents/strategy-architect.md` | Robust/hedge/option strategies, decision triggers | general-purpose |
+| integration-reviewer | `.claude/agents/integration-reviewer.md` | Cross-validation, consistency verification, integrated document editing | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (Performed directly by orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **의사결정 주제**: 시나리오 분석의 대상이 되는 전략적 질문
-    - **시간 지평**: 분석 대상 기간 (미지정 시 3~5년 기본)
-    - **분석 범위**: 산업, 지역, 조직 범위
-    - **기존 자료** (선택): 사용자가 제공한 분석 보고서, 데이터 등
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다 (아래 "작업 규모별 모드" 참조)
+1. Extract from user input:
+    - **Decision Topic**: The strategic question subject to scenario analysis
+    - **Time Horizon**: Analysis target period (default 3-5 years if unspecified)
+    - **Analysis Scope**: Industry, region, organizational scope
+    - **Existing Materials** (optional): Analysis reports, data provided by user
+2. Create `_workspace/` directory at the project root
+3. Organize the input and save to `_workspace/00_input.md`
+4. If existing files are provided, copy them to `_workspace/` and skip the corresponding Phase
+5. Determine **execution mode** based on request scope (see "Execution Modes by Request Scale" below)
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-팀을 구성하고 작업을 할당한다. 작업 간 의존 관계:
+Assemble the team and assign tasks. Task dependencies:
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 핵심 변수 분석 | variable-analyst | 없음 | `_workspace/01_variable_analysis.md` |
-| 2 | 시나리오 매트릭스 | scenario-designer | 작업 1 | `_workspace/02_scenario_matrix.md` |
-| 3 | 영향 분석 | impact-assessor | 작업 1, 2 | `_workspace/03_impact_assessment.md` |
-| 4 | 대응 전략 수립 | strategy-architect | 작업 2, 3 | `_workspace/04_response_strategy.md` |
-| 5 | 통합 리뷰 + 의사결정 문서 | integration-reviewer | 작업 1~4 | `_workspace/05_decision_document.md`, `_workspace/06_review_report.md` |
+| Order | Task | Assigned To | Dependencies | Deliverable |
+|-------|------|-------------|-------------|-------------|
+| 1 | Key Variable Analysis | variable-analyst | None | `_workspace/01_variable_analysis.md` |
+| 2 | Scenario Matrix | scenario-designer | Task 1 | `_workspace/02_scenario_matrix.md` |
+| 3 | Impact Analysis | impact-assessor | Tasks 1, 2 | `_workspace/03_impact_assessment.md` |
+| 4 | Response Strategy | strategy-architect | Tasks 2, 3 | `_workspace/04_response_strategy.md` |
+| 5 | Integration Review + Decision Document | integration-reviewer | Tasks 1-4 | `_workspace/05_decision_document.md`, `_workspace/06_review_report.md` |
 
-**팀원 간 소통 흐름:**
-- variable-analyst 완료 → scenario-designer에게 시나리오 축·극단값·확정 트렌드 전달
-- scenario-designer 완료 → impact-assessor에게 4개 시나리오 서사·지표·조기 경보 신호 전달
-- impact-assessor 완료 → strategy-architect에게 공통 영향·핵심 리스크/기회·취약 영역 전달
-- integration-reviewer는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**Inter-team Communication Flow:**
+- variable-analyst completes → delivers scenario axes, extreme values, predetermined trends to scenario-designer
+- scenario-designer completes → delivers 4 scenario narratives, metrics, early warning signals to impact-assessor
+- impact-assessor completes → delivers common impacts, key risks/opportunities, vulnerable areas to strategy-architect
+- integration-reviewer cross-validates all deliverables. If 🔴 Must Fix items are found, sends revision requests to the relevant agent → rework → re-validate (up to 2 times)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-리뷰어의 보고서를 기반으로 최종 산출물을 정리한다:
+Based on the reviewer's report, finalize all deliverables:
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 리뷰 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 핵심 변수 분석서 — `01_variable_analysis.md`
-    - 시나리오 매트릭스 — `02_scenario_matrix.md`
-    - 영향 분석 보고서 — `03_impact_assessment.md`
-    - 대응 전략서 — `04_response_strategy.md`
-    - 통합 의사결정 문서 — `05_decision_document.md`
-    - 리뷰 보고서 — `06_review_report.md`
+1. Verify all files in `_workspace/`
+2. Confirm that all 🔴 Must Fix items from the review report have been addressed
+3. Report the final summary to the user:
+    - Key Variable Analysis Report — `01_variable_analysis.md`
+    - Scenario Matrix — `02_scenario_matrix.md`
+    - Impact Analysis Report — `03_impact_assessment.md`
+    - Response Strategy Document — `04_response_strategy.md`
+    - Integrated Decision Document — `05_decision_document.md`
+    - Review Report — `06_review_report.md`
 
-## 작업 규모별 모드
+## Execution Modes by Request Scale
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "시나리오 분석 풀로 해줘", "시나리오 기획" | **풀 파이프라인** | 5명 전원 |
-| "핵심 변수만 분석해줘" | **변수 분석 모드** | variable-analyst + reviewer |
-| "이 변수로 시나리오 매트릭스 만들어줘" | **매트릭스 모드** | scenario-designer + reviewer |
-| "이 시나리오들의 영향 분석해줘" | **영향 분석 모드** | impact-assessor + strategy-architect + reviewer |
-| "대응 전략만 수립해줘" | **전략 모드** | strategy-architect + reviewer |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|----------------|-----------------|
+| "Full scenario analysis", "Scenario planning" | **Full Pipeline** | All 5 |
+| "Just analyze the key variables" | **Variable Analysis Mode** | variable-analyst + reviewer |
+| "Design a scenario matrix" | **Matrix Mode** | variable-analyst + scenario-designer + reviewer |
+| "Analyze impact for this scenario" | **Impact Mode** | impact-assessor + reviewer |
+| "Develop response strategies" | **Strategy Mode** | strategy-architect + reviewer |
+| "Review this scenario plan" | **Review Mode** | reviewer only |
 
-**기존 파일 활용**: 사용자가 기존 분석 자료를 제공하면, 해당 파일을 `_workspace/`의 적절한 위치에 복사하고 해당 단계의 에이전트는 건너뛴다.
+## Data Transfer Protocol
 
-## 데이터 전달 프로토콜
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Storing and sharing main deliverables |
+| Message-based | SendMessage | Real-time key information transfer, revision requests |
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
-| 태스크 기반 | TaskCreate/TaskUpdate | 진행 상황 추적, 의존 관계 관리 |
+## Error Handling
 
-파일명 컨벤션: `{순번}_{산출물명}.{확장자}`
+| Error Type | Strategy |
+|-----------|----------|
+| Insufficient topic information | Ask follow-up questions about industry, scope, time horizon |
+| Web search failure | Work from general knowledge, note "data limited" |
+| Agent failure | Retry once → if still fails, proceed without that deliverable |
+| 🔴 found in review | Send revision request to the relevant agent → rework → re-validate (up to 2 times) |
+| Logical contradiction between deliverables | Request reconciliation from all related agents, resolve root cause |
 
-## 에러 핸들링
+## Agent Extension Skills
 
-| 에러 유형 | 전략 |
-|----------|------|
-| 웹 검색 실패 | 변수분석가가 일반 지식 기반으로 작업, 보고서에 "데이터 제한" 명시 |
-| 사용자 정보 부족 | 산업/주제 기반 일반 STEEP 분석 수행, 추가 정보 요청 사항 명시 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행, 리뷰 보고서에 누락 명시 |
-| 리뷰에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
-| 시나리오 간 논리 모순 | scenario-designer에게 전제 조정 요청, 조정 사유 문서화 |
+Extension skills that enhance agent domain expertise:
 
-## 테스트 시나리오
-
-### 정상 흐름
-**프롬프트**: "2025~2030년 한국 전기차 배터리 산업의 시나리오를 기획해줘. 우리 회사는 2차전지 소재 중견기업이야."
-**기대 결과**:
-- 변수 분석: STEEP 기반 20개+ 변수, 불확실성-영향력 매트릭스, 핵심 축 2개 선정
-- 시나리오 매트릭스: 2x2 매트릭스, 4개 시나리오 서사 (타임라인 포함), 조기 경보 신호
-- 영향 분석: 6개 차원 히트맵, 리스크/기회 매핑, 크로스 시나리오 비교
-- 대응 전략: 로버스트/헤지/옵션 전략, 의사결정 트리거 맵, 실행 로드맵
-- 통합 문서: Executive Summary + 경영진 보고용 요약
-
-### 기존 파일 활용 흐름
-**프롬프트**: "이 산업 분석 보고서를 기반으로 시나리오 매트릭스와 대응 전략만 만들어줘" + 분석 파일 첨부
-**기대 결과**:
-- 기존 분석을 `_workspace/01_variable_analysis.md`로 매핑
-- variable-analyst 건너뛰고 scenario-designer부터 실행
-- 필요 시 기존 분석에서 핵심 축을 추출
-
-### 에러 흐름
-**프롬프트**: "AI 산업 시나리오 분석해줘"
-**기대 결과**:
-- 범위가 넓으므로 변수분석가가 범위 좁히기 제안 (예: "생성형 AI의 기업 채택" 등)
-- 시간 지평 미지정 → 3~5년 기본 적용
-- 웹 검색으로 최신 트렌드 반영 시도
-
-## 에이전트별 확장 스킬
-
-에이전트의 도메인 전문성을 강화하는 확장 스킬:
-
-| 에이전트 | 확장 스킬 | 역할 |
-|---------|----------|------|
-| variable-analyst | `steep-framework` | STEEP 6대 차원 스캐닝, 불확실성-영향력 매트릭스, 시나리오 축 선정 |
-| scenario-designer | `scenario-narrative-engine` | 2x2 매트릭스 서사화, 타임라인 설계, 조기 경보 신호 |
-| strategy-architect | `decision-trigger-mapper` | 의사결정 트리거 맵, 리얼옵션 사고, 전략 포트폴리오(로버스트/헤지/옵션) |
+| Skill | File | Target Agents | Role |
+|-------|------|---------------|------|
+| steep-framework | `.claude/skills/steep-framework/skill.md` | variable-analyst | STEEP 6-dimension scanning, uncertainty-impact matrix, trend classification |
+| scenario-narrative-engine | `.claude/skills/scenario-narrative-engine/skill.md` | scenario-designer | 2x2 matrix construction, timeline development, early warning signal design |
+| decision-trigger-mapper | `.claude/skills/decision-trigger-mapper/skill.md` | strategy-architect | Real options thinking, strategy portfolio, trigger card design, execution roadmap |

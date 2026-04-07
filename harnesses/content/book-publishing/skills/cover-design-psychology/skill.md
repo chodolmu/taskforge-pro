@@ -1,104 +1,104 @@
 ---
 name: cover-design-psychology
-description: "표지디자이너(cover-designer)가 사용하는 표지 디자인 심리학 스킬. 장르별 표지 컨벤션, 타이포그래피 전략, 색상 심리, 썸네일 테스트, AI 이미지 생성 프롬프트 설계를 제공한다. '표지 디자인', '북커버', '장르별 표지', '표지 컨셉' 등에 활용한다."
+description: "A specialized skill for the cover-designer agent covering cover design psychology. Provides genre-specific cover conventions, typography strategy, color psychology, thumbnail testing, and AI image generation prompt design. Use for 'cover design,' 'book cover,' 'genre covers,' 'cover concept,' and similar topics."
 ---
 
-# Cover Design Psychology — 표지 디자인 심리학 방법론
+# Cover Design Psychology — Cover Design Psychology Methodology
 
-cover-designer 에이전트가 표지를 설계하고 이미지를 생성할 때 활용하는 전문 지식.
+Specialized knowledge used by the cover-designer agent when designing covers and generating images.
 
-## 왜 표지 심리학인가
+## Why Cover Psychology
 
-독자의 **67%가 표지를 보고 책을 집어든다**. 온라인 서점에서는 썸네일 크기로 표지가 노출되므로, 작은 크기에서도 눈에 띄어야 한다. 표지는 "첫 문장보다 먼저 읽히는 메시지"다.
+**67% of readers pick up a book based on its cover**. In online bookstores, covers are displayed at thumbnail size, so they must stand out even when small. The cover is "the message read before the first sentence."
 
-## 장르별 표지 컨벤션
+## Genre-Specific Cover Conventions
 
-### 비즈니스/자기계발
+### Business/Self-Help
 
-| 요소 | 컨벤션 | 이유 |
-|------|--------|------|
-| **배경** | 단색 또는 그라데이션 | 깔끔, 전문적 |
-| **타이포** | 큰 볼드 제목, 부제는 작게 | 제목이 핵심 메시지 |
-| **이미지** | 없거나 아이콘/심볼 | 개념 전달 |
-| **색상** | 파랑, 검정, 흰색 (신뢰) | 전문성 |
-| **저자명** | 크게 (유명인) / 작게 (신인) | 권위 활용 |
+| Element | Convention | Reason |
+|---------|-----------|--------|
+| **Background** | Solid color or gradient | Clean, professional |
+| **Typography** | Large bold title, small subtitle | Title IS the core message |
+| **Image** | None or icons/symbols | Concept communication |
+| **Color** | Blue, black, white (trust) | Professionalism |
+| **Author Name** | Large (celebrity) / Small (debut) | Leveraging authority |
 
-### 소설 (문학)
+### Fiction (Literary)
 
-| 요소 | 컨벤션 | 이유 |
-|------|--------|------|
-| **배경** | 분위기 있는 일러스트/사진 | 세계관 암시 |
-| **타이포** | 장르에 맞는 서체 | 장르 신호 |
-| **이미지** | 인물 실루엣, 상징적 오브젝트 | 호기심 유발 |
-| **색상** | 장르에 따라 다름 (아래 참조) | 감정 유도 |
+| Element | Convention | Reason |
+|---------|-----------|--------|
+| **Background** | Atmospheric illustration/photo | Hints at the world |
+| **Typography** | Genre-appropriate typeface | Genre signaling |
+| **Image** | Character silhouettes, symbolic objects | Curiosity trigger |
+| **Color** | Varies by genre (see below) | Emotional induction |
 
-### 소설 장르별 색상 코드
+### Fiction Genre Color Codes
 
-| 장르 | 주 색상 | 보조 색상 | 분위기 |
-|------|--------|---------|--------|
-| **로맨스** | 분홍, 빨강 | 금색, 흰색 | 따뜻함, 열정 |
-| **스릴러/미스터리** | 검정, 어두운 빨강 | 흰색, 은색 | 긴장, 위험 |
-| **판타지** | 보라, 짙은 파랑 | 금색, 은색 | 신비, 장엄 |
-| **SF** | 파랑, 은색 | 검정, 네온 | 미래, 테크 |
-| **공포** | 검정, 짙은 빨강 | 흰색 | 공포, 피 |
-| **역사** | 세피아, 갈색 | 금색, 크림 | 고전, 시대감 |
+| Genre | Primary Color | Secondary Color | Mood |
+|-------|--------------|----------------|------|
+| **Romance** | Pink, Red | Gold, White | Warmth, passion |
+| **Thriller/Mystery** | Black, Dark red | White, Silver | Tension, danger |
+| **Fantasy** | Purple, Deep blue | Gold, Silver | Mystery, grandeur |
+| **Sci-Fi** | Blue, Silver | Black, Neon | Future, tech |
+| **Horror** | Black, Deep red | White | Fear, blood |
+| **Historical** | Sepia, Brown | Gold, Cream | Classic, period feel |
 
-### 에세이
+### Essay
 
-| 요소 | 컨벤션 | 이유 |
-|------|--------|------|
-| **배경** | 부드러운 색상 또는 텍스처 | 개인적, 감성적 |
-| **타이포** | 손글씨 느낌 또는 세리프 | 인간미, 문학성 |
-| **이미지** | 미니멀 일러스트, 수채화 | 감성적 분위기 |
-| **색상** | 파스텔, 따뜻한 톤 | 편안함, 친밀감 |
+| Element | Convention | Reason |
+|---------|-----------|--------|
+| **Background** | Soft colors or textures | Personal, emotional |
+| **Typography** | Handwritten feel or serif | Humanity, literariness |
+| **Image** | Minimal illustration, watercolor | Emotional atmosphere |
+| **Color** | Pastel, warm tones | Comfort, intimacy |
 
-## 타이포그래피 전략
+## Typography Strategy
 
-### 서체 선택 가이드
+### Font Selection Guide
 
-| 서체 카테고리 | 느낌 | 적합 장르 |
-|-------------|------|----------|
-| **세리프 (명조)** | 고전적, 권위, 문학적 | 문학소설, 역사, 학술 |
-| **산세리프 (고딕)** | 현대적, 깔끔, 직접적 | 비즈니스, 자기계발, 기술 |
-| **스크립트 (필기)** | 감성적, 개인적, 우아 | 에세이, 로맨스, 시 |
-| **디스플레이** | 독특, 강렬, 장르적 | 공포, 판타지, 아동 |
-| **모노스페이스** | 기술적, 해커 느낌 | 프로그래밍, SF |
+| Font Category | Feel | Suitable Genres |
+|--------------|------|----------------|
+| **Serif** | Classic, authoritative, literary | Literary fiction, history, academic |
+| **Sans-serif** | Modern, clean, direct | Business, self-help, technical |
+| **Script** | Emotional, personal, elegant | Essay, romance, poetry |
+| **Display** | Unique, bold, genre-specific | Horror, fantasy, children's |
+| **Monospace** | Technical, hacker feel | Programming, sci-fi |
 
-### 제목 가독성 규칙
+### Title Readability Rules
 
-1. **3단어 이하**: 제목이 길면 폰트를 키울 수 없다
-2. **계층 구조**: 제목 > 부제 > 저자명 크기 순서
-3. **색상 대비**: 배경과 텍스트의 대비율 4.5:1 이상
-4. **여백**: 텍스트 주변에 충분한 여백 (숨쉬는 공간)
-5. **썸네일 테스트**: 3cm x 4cm로 축소해도 제목이 읽히는가?
+1. **3 words or fewer**: Long titles prevent large font sizes
+2. **Hierarchy**: Title > Subtitle > Author name in descending size
+3. **Color Contrast**: Background-to-text contrast ratio 4.5:1 or higher
+4. **Whitespace**: Sufficient margins around text (breathing room)
+5. **Thumbnail Test**: Is the title readable when shrunk to 3cm x 4cm?
 
-## 표지 레이아웃 패턴
+## Cover Layout Patterns
 
-### 5가지 기본 레이아웃
+### 5 Basic Layouts
 
-| 패턴 | 구성 | 적합 장르 |
-|------|------|----------|
-| **Big Title** | 대형 제목 + 단색 배경 | 비즈니스, 자기계발 |
-| **Image Dominant** | 전면 이미지 + 오버레이 제목 | 소설, 여행, 요리 |
-| **Split** | 상하/좌우 분할 (이미지+텍스트) | 비문학, 에세이 |
-| **Central Focus** | 중앙 오브젝트 + 주변 여백 | 미니멀, 예술 |
-| **Pattern/Texture** | 패턴 배경 + 중앙 제목 | 에세이, 시, 교양 |
+| Pattern | Composition | Suitable Genres |
+|---------|-------------|-----------------|
+| **Big Title** | Large title + solid background | Business, self-help |
+| **Image Dominant** | Full-bleed image + overlay title | Fiction, travel, cooking |
+| **Split** | Top/bottom or left/right division (image+text) | Non-fiction, essay |
+| **Central Focus** | Central object + surrounding whitespace | Minimal, art |
+| **Pattern/Texture** | Pattern background + centered title | Essay, poetry, culture |
 
-## AI 이미지 생성 표지 프롬프트
+## AI Image Generation Cover Prompts
 
-### 프롬프트 구조
+### Prompt Structure
 
 ```
-Book cover design for [장르] book titled "[제목]".
-[표지 레이아웃 패턴 설명].
-[핵심 비주얼 요소].
-[색상 팔레트].
-[분위기/감정].
+Book cover design for [genre] book titled "[title]".
+[Cover layout pattern description].
+[Core visual elements].
+[Color palette].
+[Mood/emotion].
 Professional quality, high resolution.
-Typography: [제목 텍스트 in Korean: "한글 제목"]
+Typography: [title text: "Title Here"]
 ```
 
-### 예시 프롬프트
+### Example Prompt
 
 ```
 Book cover design for business self-help book.
@@ -106,25 +106,25 @@ Big title layout on solid dark navy background.
 Minimalist golden compass icon in center.
 Color palette: deep navy (#1a1a2e), gold (#c9a959), white.
 Professional, authoritative, premium atmosphere.
-Typography text MUST be in Korean: "나침반 리더십" in bold sans-serif, gold color.
-Subtitle in white: "방향을 잃지 않는 리더의 5가지 원칙"
+Typography text: "Compass Leadership" in bold sans-serif, gold color.
+Subtitle in white: "5 Principles of Leaders Who Never Lose Direction"
 ```
 
-## 표지 A/B 테스트
+## Cover A/B Testing
 
-### 테스트 요소 우선순위
+### Test Element Priority
 
-| 순위 | 요소 | 영향력 |
-|------|------|--------|
-| 1 | 컬러 스킴 | 첫인상의 60% |
-| 2 | 제목 타이포 | 가독성과 장르 신호 |
-| 3 | 이미지/일러스트 | 감정적 반응 |
-| 4 | 레이아웃 | 전문성 인식 |
-| 5 | 부제/저자명 크기 | 정보 전달 |
+| Rank | Element | Impact |
+|------|---------|--------|
+| 1 | Color scheme | 60% of first impression |
+| 2 | Title typography | Readability and genre signaling |
+| 3 | Image/illustration | Emotional response |
+| 4 | Layout | Perceived professionalism |
+| 5 | Subtitle/author name size | Information delivery |
 
-### 3초 테스트
+### 3-Second Test
 
-1. 표지를 3초간 보여주고 가린다
-2. "이 책이 무엇에 관한 것 같나요?" → 장르/주제 인식 확인
-3. "이 책을 집어들고 싶나요?" → 매력도 확인
-4. "어떤 느낌이 드나요?" → 감정 반응 확인
+1. Show the cover for 3 seconds, then hide it
+2. "What do you think this book is about?" -> Verify genre/topic recognition
+3. "Would you pick up this book?" -> Verify attractiveness
+4. "What feeling does it give you?" -> Verify emotional response

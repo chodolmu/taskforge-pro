@@ -1,116 +1,116 @@
 ---
 name: interview-techniques
-description: "팟캐스트 대본작가(scriptwriter)가 사용하는 인터뷰 기법 전문 스킬. 게스트 대담에서 깊이 있는 대화를 이끌어내는 질문 설계, 대화 흐름 관리, 감정 곡선 설계 방법론을 제공한다. '인터뷰 질문 설계', '대담 구조', '게스트 질문', '대화 흐름' 등에 이 스킬의 지식을 활용한다."
+description: "Interview technique skill used by the podcast scriptwriter. Provides question design, conversation flow management, and emotional arc design methodologies for drawing out deep conversations in guest interviews. Use this skill's knowledge for 'interview question design,' 'conversation structure,' 'guest questions,' 'dialogue flow,' and similar requests."
 ---
 
-# Interview Techniques — 팟캐스트 인터뷰 전문 방법론
+# Interview Techniques — Podcast Interview Methodology
 
-scriptwriter 에이전트가 대담형 에피소드 대본을 작성할 때 활용하는 인터뷰 설계 전문 지식.
+Specialist interview design knowledge used by the scriptwriter agent when crafting interview-format episode scripts.
 
-## 왜 이 스킬이 필요한가
+## Why This Skill Is Needed
 
-팟캐스트 인터뷰는 일반 인터뷰와 다르다. **청취자가 보이지 않는 상태에서 오직 음성만으로** 긴장감과 몰입을 만들어야 한다. 좋은 질문이 좋은 대답을 만들고, 좋은 대답이 청취 유지율을 결정한다.
+Podcast interviews are different from standard interviews. You must create tension and immersion **using only audio, with no visible audience**. Good questions yield good answers, and good answers determine listener retention.
 
-## 질문 설계 프레임워크: DEPTH 모델
+## Question Design Framework: The DEPTH Model
 
-| 단계 | 약자 | 설명 | 예시 |
-|------|------|------|------|
-| **D**oor-opener | 문 열기 | 게스트가 편안하게 시작할 수 있는 진입점 | "이 분야에 처음 관심을 갖게 된 계기가 뭔가요?" |
-| **E**xplore | 탐색 | 표면 아래의 이야기를 끌어내는 확장 질문 | "그때 가장 어려웠던 점은 뭐였나요?" |
-| **P**rovoke | 도발 | 통념에 도전하거나 반대 의견을 유도 | "반대로 ~라고 주장하는 사람도 있잖아요?" |
-| **T**urn | 전환 | 새로운 주제 영역으로 자연스럽게 넘어가기 | "그 이야기를 들으니까 ~이 궁금해지는데요" |
-| **H**eart | 핵심 | 에피소드 핵심 메시지를 응축하는 클로징 질문 | "오늘 대화를 한 문장으로 요약한다면?" |
+| Stage | Acronym | Description | Example |
+|-------|---------|-------------|---------|
+| **D**oor-opener | Opening | An entry point where the guest can start comfortably | "What first drew you to this field?" |
+| **E**xplore | Exploration | Follow-up questions that surface the story beneath the surface | "What was the hardest part about that time?" |
+| **P**rovoke | Provocation | Challenge conventional wisdom or invite an opposing view | "Some people argue the opposite — what do you think?" |
+| **T**urn | Transition | Shift naturally to a new topic area | "Hearing that makes me curious about..." |
+| **H**eart | Core | A closing question that distills the episode's key message | "If you could sum up today's conversation in one sentence?" |
 
-### DEPTH 적용 규칙
+### DEPTH Application Rules
 
-1. **D는 반드시 첫 질문이어야 한다** — 게스트가 긴장을 풀기 전에 어려운 질문을 던지지 않는다
-2. **E는 최소 2회 반복한다** — "왜?"를 3번 물으면 진짜 이야기가 나온다 (도요타의 5 Whys 원리)
-3. **P는 세그먼트당 최대 1회** — 과도한 도발은 적대적 인터뷰가 된다
-4. **T에서 이전 답변의 키워드를 인용한다** — "아까 ~라고 하셨는데"로 시작하면 대화가 이어진다
-5. **H는 에피소드 마지막 5분에 배치한다** — 핵심 메시지를 마무리 시점에 각인시킨다
+1. **D must be the first question** — never hit the guest with a tough question before they've relaxed
+2. **E should be repeated at least twice** — asking "why?" three times gets you the real story (Toyota's 5 Whys principle)
+3. **P no more than once per segment** — excessive provocation turns the interview adversarial
+4. **T should quote a keyword from the previous answer** — starting with "You mentioned earlier that..." creates natural continuity
+5. **H goes in the final 5 minutes** — anchor the core message at the conclusion
 
-## 질문 유형별 패턴 라이브러리
+## Question Type Pattern Library
 
-### 1. 스토리 유도 질문 (Story Elicitation)
-- "그 순간으로 돌아간다면, 어떤 장면이 떠오르세요?"
-- "가장 예상 밖이었던 반응은 뭐였나요?"
-- "그 결정을 내리기 직전에 무슨 생각을 하고 계셨어요?"
+### 1. Story Elicitation Questions
+- "If you could go back to that moment, what scene comes to mind?"
+- "What was the most unexpected reaction you received?"
+- "Right before you made that decision, what was going through your head?"
 
-**왜 효과적인가**: 추상적 설명 대신 구체적 장면을 요구하면 감각적 디테일이 나온다. 청취자는 통계보다 이야기에 몰입한다.
+**Why they work**: Asking for specific scenes instead of abstract explanations produces sensory detail. Listeners engage with stories more than statistics.
 
-### 2. 대비 질문 (Contrast Questions)
-- "시작할 때의 자신과 지금의 자신, 가장 큰 차이는?"
-- "업계에서 모두가 동의하는 것 중에 당신만 동의하지 않는 것은?"
-- "외부에서 보는 이미지와 실제의 가장 큰 갭은?"
+### 2. Contrast Questions
+- "How are you different now compared to when you started?"
+- "What's something everyone in the industry agrees on, but you disagree with?"
+- "What's the biggest gap between your public image and reality?"
 
-**왜 효과적인가**: 대비 구조는 인지적 긴장을 만든다. 청취자가 "어, 그건 뭐지?"하며 집중한다.
+**Why they work**: Contrast structures create cognitive tension. Listeners perk up and think, "Wait, what's that about?"
 
-### 3. 구체화 질문 (Specification Questions)
-- "구체적으로 어떤 숫자/규모였나요?"
-- "예를 들면 어떤 케이스가 있었나요?"
-- "그 과정을 단계별로 설명해주실 수 있나요?"
+### 3. Specification Questions
+- "Can you put a specific number or scale on that?"
+- "Can you give me a concrete example?"
+- "Could you walk through that process step by step?"
 
-**왜 효과적인가**: 모호한 답변은 팟캐스트에서 치명적이다. 청취자가 머릿속에 그림을 그릴 수 있어야 한다.
+**Why they work**: Vague answers are deadly in podcasts. Listeners need to be able to paint a picture in their minds.
 
-### 4. 감정 접근 질문 (Emotional Access)
-- "그때 솔직히 기분이 어떠셨어요?"
-- "그 소식을 들었을 때 처음 든 생각은?"
-- "지금 돌아보면 어떤 감정이 드세요?"
+### 4. Emotional Access Questions
+- "Honestly, how did that make you feel?"
+- "What was the first thought that crossed your mind when you heard that news?"
+- "Looking back now, what emotions come up?"
 
-**왜 효과적인가**: 정보는 귀로 듣지만 감정은 가슴으로 듣는다. 감정이 실린 답변은 청취 유지율을 20~40% 높인다.
+**Why they work**: Information enters through the ears, but emotion reaches the heart. Emotionally charged answers boost retention by 20–40%.
 
-## 대화 흐름 설계: 감정 곡선
+## Conversation Flow Design: The Emotional Arc
 
-### 감정 곡선 규칙
+### Emotional Arc Rules
 
-1. **오프닝**: 중간 강도로 시작 — 너무 높으면 갈 곳이 없고, 너무 낮으면 이탈
-2. **세그먼트 1 피크**: 첫 번째 감정적 고조점 — "이거 재밌다"를 느끼게 하는 순간
-3. **중간 밸리**: 의도적 완급 조절 — 계속 긴장하면 지친다. 유머나 가벼운 화제로 쉬어간다
-4. **세그먼트 3 클라이맥스**: 가장 강렬한 감정적 순간 — 깨달음, 충격, 감동의 정점
-5. **클로징 안착**: 부드럽게 감정을 내려놓되, 여운을 남긴다
+1. **Opening**: Start at medium intensity — too high leaves nowhere to go; too low causes drop-off
+2. **Segment 1 Peak**: The first emotional high point — the moment listeners feel "this is good"
+3. **Mid-Valley**: Intentional pacing change — sustained tension is exhausting. Use humor or lighter topics to give listeners a break
+4. **Segment 3 Climax**: The most intense emotional moment — the peak of insight, surprise, or emotional resonance
+5. **Closing Landing**: Bring the emotion down gently while leaving a lingering impression
 
-### 세그먼트 간 전환 테크닉
+### Segment Transition Techniques
 
-| 테크닉 | 문구 패턴 | 사용 상황 |
-|--------|----------|----------|
-| **브릿지 요약** | "방금 ~ 이야기를 해주셨는데, 이게 ~와도 연결되는 것 같아요" | 주제 확장 |
-| **청취자 대변** | "아마 듣고 계신 분들 중에 ~라고 생각하시는 분도 계실 텐데" | 관점 전환 |
-| **의외성 카드** | "사실 제가 이 질문을 준비하면서 깜짝 놀란 게 있거든요" | 에너지 재점화 |
-| **콜백** | "아까 첫 번째 세그먼트에서 ~라고 하셨잖아요. 그런데..." | 서사적 연결 |
+| Technique | Phrase Pattern | Use Case |
+|-----------|---------------|----------|
+| **Bridge Summary** | "You just talked about X, and I think that connects to Y..." | Topic expansion |
+| **Listener Proxy** | "I'm sure some listeners are thinking..." | Perspective shift |
+| **Surprise Card** | "Actually, something really surprised me when I was preparing this question" | Energy reignition |
+| **Callback** | "You said something in the first segment about... But now..." | Narrative connection |
 
-## 에피소드 유형별 질문 구조
+## Episode Type-Specific Question Structures
 
-### 솔로 에피소드
-- 가상의 청취자 질문을 2~3개 배치: "여러분이 제게 자주 묻는 질문이 있는데요..."
-- 자기 경험을 스토리 형태로 전달 (Before → Struggle → After)
-- 5분마다 청취자에게 직접 말을 건다: "여러분은 어떠세요?"
+### Solo Episodes
+- Place 2–3 hypothetical listener questions: "A question I get asked a lot is..."
+- Deliver personal experiences in story form (Before → Struggle → After)
+- Address the listener directly every 5 minutes: "What about you?"
 
-### 대담 에피소드 (1:1)
-- DEPTH 모델을 정확히 따른다
-- 게스트 답변 후 반드시 1~2문장 리액션 (침묵 금지, 과도한 맞장구도 금지)
-- 예/아니오로 끝나는 질문 비율을 전체의 10% 미만으로 유지
+### Interview Episodes (1:1)
+- Follow the DEPTH model precisely
+- Always add 1–2 sentences of reaction after the guest's answer (no dead silence, but no excessive agreement either)
+- Keep yes/no questions under 10% of the total
 
-### 패널 에피소드 (3인 이상)
-- "~에 대해 A님은 어떻게 생각하세요? B님은 다른 의견이신 것 같은데..."
-- 발언 시간 균형을 위해 패널별 질문 수를 사전 할당
-- 패널 간 직접 대화를 유도: "A님 의견에 대해 B님은 동의하세요?"
+### Panel Episodes (3+ participants)
+- "What do you think about X, [Panelist A]? [Panelist B], it seems like you might have a different view..."
+- Pre-allocate question counts per panelist to balance speaking time
+- Encourage direct dialogue between panelists: "Do you agree with [A]'s take?"
 
-## 금지 패턴
+## Prohibited Patterns
 
-| 금지 항목 | 이유 | 대안 |
-|----------|------|------|
-| "자기소개 부탁드립니다" | 지루한 첫 질문의 전형 | 게스트의 흥미로운 일화로 시작 |
-| "네, 네, 맞아요" 연발 | 청취자에게 아무 정보 없는 소음 | "그 부분이 흥미로운 게..." |
-| 3분 이상 호스트 독백 | 게스트를 초대한 의미가 없어짐 | 30초 이내로 요약 후 질문 |
-| 대본 그대로 읽기 | 자연스러움이 사라짐 | 키워드만 메모하고 대화체로 |
-| 모든 질문을 순서대로 | 기계적 인터뷰가 됨 | 답변 흐름에 따라 순서 유동적으로 |
+| Prohibited | Reason | Alternative |
+|-----------|--------|------------|
+| "Could you introduce yourself?" | The quintessential boring opening | Start with an interesting anecdote about the guest |
+| Repeated "yeah, yeah, exactly" | Adds no information for listeners — just noise | "That's interesting because..." |
+| 3+ minute host monologue | Defeats the purpose of having a guest | Summarize in under 30 seconds, then ask |
+| Reading the script verbatim | Kills spontaneity | Keep only keywords as notes and speak conversationally |
+| All questions in order | Feels mechanical | Adapt the sequence based on the answer flow |
 
-## 게스트 사전조사 체크리스트
+## Guest Pre-Research Checklist
 
-대본 작성 전에 반드시 확인해야 할 항목:
+Must-verify items before writing the script:
 
-- [ ] 게스트의 최근 3개월 활동 (강연, 출판, 인터뷰)
-- [ ] 다른 팟캐스트 출연 에피소드 (같은 질문 반복 방지)
-- [ ] SNS에서 자주 다루는 주제 (게스트의 열정 포인트)
-- [ ] 논란이 있는 발언이나 입장 (Provoke 질문 소재)
-- [ ] 개인적 에피소드 (인간미를 보여줄 질문 소재)
+- [ ] Guest's activity over the past 3 months (talks, publications, interviews)
+- [ ] Other podcast appearances (avoid repeating the same questions)
+- [ ] Topics they frequently discuss on social media (their passion points)
+- [ ] Any controversial statements or positions (material for Provoke questions)
+- [ ] Personal anecdotes (material for humanizing questions)

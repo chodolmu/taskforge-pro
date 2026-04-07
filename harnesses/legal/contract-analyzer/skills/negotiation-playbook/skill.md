@@ -1,112 +1,112 @@
 ---
 name: negotiation-playbook
-description: "계약 협상 전략과 수정안 제시 플레이북. 'clause-drafter'와 'comparison-reviewer' 에이전트가 수정안을 작성하거나 협상 포인트를 도출할 때 이 스킬의 전략 프레임워크와 문구 템플릿을 반드시 활용해야 한다. '협상 전략', '수정안 제시', '계약 조건 조율' 등 계약 협상 관련 작업에 사용한다. 단, 전체 계약 오케스트레이션이나 리스크 점수 산출은 이 스킬의 범위가 아니다."
+description: "A contract negotiation strategy and amendment proposal playbook. The 'clause-drafter' and 'comparison-reviewer' agents must use this skill's strategy framework and wording templates when drafting amendments or deriving negotiation points. Used for contract negotiation-related tasks such as 'negotiation strategy', 'amendment proposal', 'contract terms coordination', etc. Note: Overall contract orchestration or risk score calculation is outside the scope of this skill."
 ---
 
-# Negotiation Playbook — 계약 협상 전략 플레이북
+# Negotiation Playbook — Contract Negotiation Strategy Playbook
 
-계약 조항별 협상 전략, 대안 문구 템플릿, 양보-교환 매트릭스를 제공한다.
+Provides clause-level negotiation strategies, alternative wording templates, and concession-exchange matrices.
 
-## 협상 기본 프레임워크: BATNA-ZOPA 분석
+## Basic Negotiation Framework: BATNA-ZOPA Analysis
 
-### 협상력 진단 공식
-
-```
-협상력 = (대안_강도 × 0.3) + (시간_여유 × 0.2) + (정보_우위 × 0.2) + (시장_지위 × 0.3)
-
-각 항목 1-10점 척도
-
-결과: 8-10 공격적 | 5-7 균형 | 1-4 방어적 핵심 집중
-```
-
-### 양보-교환 매트릭스
-
-| 양보 난이도 | 우리에게 중요 | 상대에게 중요 | 전략 |
-|-----------|-------------|-------------|------|
-| 쉬운 양보 | 낮음 | 높음 | 먼저 양보하여 선의 표시 |
-| 교환 카드 | 높음 | 높음 | 조건부 교환 |
-| 사수 항목 | 높음 | 낮음 | 절대 양보 불가 |
-| 무관 항목 | 낮음 | 낮음 | 빠르게 합의 |
-
-## 조항별 협상 전략 및 대안 문구
-
-### 손해배상 — 단계적 양보안
-
-**을 입장 (배상 제한)**
-```
-원안: "을은 일체의 손해를 배상한다"
-→ 1단계: "직접적·통상적 손해에 한하며, 총 배상액은 계약금액의 100%를 한도로 한다"
-→ 2단계: "배상 한도는 최근 12개월 지급액, 간접·결과적 손해 제외"
-→ 3단계: "해당 건 기성금 범위 내, 입증 책임은 갑에게"
-```
-
-### 지식재산권 — 수정 전략
-
-| 원안 | 위험 | 수정안 | 협상 포인트 |
-|------|------|--------|-----------|
-| 모든 결과물 갑 귀속 | IP 전부 상실 | 갑 목적 범위 내 라이선스 | "범용 모듈은 을 보유" |
-| 소스코드 포함 양도 | 후속 사업 불가 | 실행파일 인도 + 에스크로 | "사업 연속성 보장" |
-| 제3자 SW 포함 양도 | 라이선스 위반 | 제3자 SW 제외 명시 | "오픈소스 조건 고지" |
-
-### 해지 조항 — 균형 템플릿
+### Negotiating Power Diagnosis Formula
 
 ```
-제X조 (해지)
-① 양 당사자는 [30/60]일 전 서면 통지로 해지할 수 있다.
-② 중대 위반 시, [14]일 이내 시정 최고 후 미시정 시 즉시 해지.
-③ 해지 시 이행분 대가 정산.
-④ 비밀유지, 손해배상, IP 조항은 존속.
+negotiating_power = (alternative_strength x 0.3) + (time_flexibility x 0.2) + (information_advantage x 0.2) + (market_position x 0.3)
+
+Each item on a 1-10 scale
+
+Result: 8-10 Aggressive | 5-7 Balanced | 1-4 Defensive, focus on essentials
 ```
 
-### 대금 지급 — 레버리지 전략
+### Concession-Exchange Matrix
 
-| 현재 조건 | 개선안 | 교환 제안 |
-|----------|--------|----------|
-| 완료 후 60일 | 월별 기성 지급 | "기성 시 2% 할인" |
-| 검수 후 30일 | 검수 기간 14일 한정 | "간주검수 조항 추가" |
-| 일시불 후불 | 선급 30%+중간 40%+잔금 30% | "선급 시 이행보증보험" |
+| Concession Difficulty | Important to Us | Important to Them | Strategy |
+|----------------------|----------------|-------------------|----------|
+| Easy Concession | Low | High | Concede first as a goodwill gesture |
+| Exchange Card | High | High | Conditional exchange |
+| Must-Hold Item | High | Low | Non-negotiable |
+| Irrelevant Item | Low | Low | Agree quickly |
 
-## 협상 커뮤니케이션 4단계 구조
+## Clause-Level Negotiation Strategies and Alternative Wording
 
+### Damages — Graduated Concession Plan
+
+**Party B Perspective (Liability Limitation)**
 ```
-[1] 감사 + 관계 확인
-"양측의 성공적 파트너십을 기대합니다."
-
-[2] 구체적 우려 (객관적 근거)
-"업계 표준 관행 및 판례에 비추어 우려가 있습니다."
-
-[3] 대안 제시 (양측 이익 강조)
-"갑측 보호 목적도 달성하면서 을측 우려도 해소하는 방안입니다."
-
-[4] 유연성 시사
-"다른 대안이 있다면 적극 논의하겠습니다."
+Original: "Party B shall indemnify all damages"
+-> Step 1: "Limited to direct and ordinary damages, with total liability capped at 100% of contract value"
+-> Step 2: "Cap at last 12 months of payments, excluding indirect and consequential damages"
+-> Step 3: "Within the scope of milestone payments for the relevant deliverable, burden of proof on Party A"
 ```
 
-## 협상 결렬 시 BATNA 활용 화법
+### Intellectual Property — Amendment Strategy
+
+| Original | Risk | Amendment | Negotiation Point |
+|----------|------|-----------|-------------------|
+| All deliverables vest in Party A | Total IP loss | License within scope of Party A's purpose | "Generic modules retained by Party B" |
+| Transfer including source code | Cannot pursue subsequent business | Executable delivery + escrow | "Business continuity assurance" |
+| Transfer including third-party SW | License violation | Explicitly exclude third-party SW | "Open source conditions disclosure" |
+
+### Termination Clause — Balanced Template
 
 ```
-"현 조건으로는 내부 승인이 어렵습니다.
-[핵심 3개 조항] 합의 시 나머지는 귀사 안 수용 가능합니다."
+Article X (Termination)
+1. Either party may terminate with [30/60] days written notice.
+2. In case of material breach, immediate termination after [14]-day cure notice if not remedied.
+3. Payment settlement for work performed upon termination.
+4. Confidentiality, damages, and IP clauses survive termination.
 ```
 
-## 협상 결과 평가
+### Payment — Leverage Strategy
+
+| Current Terms | Improvement | Exchange Offer |
+|--------------|-------------|----------------|
+| 60 days after completion | Monthly milestone payments | "2% discount on milestone payments" |
+| 30 days after acceptance | Acceptance period limited to 14 days | "Add deemed acceptance clause" |
+| Lump sum post-delivery | 30% advance + 40% interim + 30% balance | "Performance bond for advance payment" |
+
+## Negotiation Communication 4-Step Structure
 
 ```
-성과 = Σ(조항별 개선도 × 중요도) / Σ(중요도)
-개선도: 원안 유지 0 | 부분 개선 50 | 대안 반영 80 | 완전 달성 100
-결과: 80+ 우수 | 60-79 양호 | 40-59 보통 | 40 미만 재협상 권고
+[1] Gratitude + Relationship Affirmation
+"We look forward to a successful partnership."
+
+[2] Specific Concern (Objective Basis)
+"Based on industry standard practices and case law, we have concerns."
+
+[3] Alternative Proposal (Emphasize Mutual Benefit)
+"This proposal achieves Party A's protection goals while addressing Party B's concerns."
+
+[4] Signal Flexibility
+"We are open to discussing alternative approaches."
 ```
 
-## 불공정 약관 심사 기준 (공정위)
+## BATNA Deployment When Negotiations Stall
 
-| 유형 | 기준 | 근거 |
-|------|------|------|
-| 면책 조항 | 사업자 고의·과실 면책 불가 | 약관법 제7조 |
-| 손해배상 제한 | 소비자 배상청구 부당 제한 | 약관법 제7조 |
-| 해제·해지 | 소비자 해제권 부당 제한 | 약관법 제9조 |
-| 관할 합의 | 소비자에게 불리한 전속관할 | 약관법 제14조 |
+```
+"We are unable to obtain internal approval under the current terms.
+If we can reach agreement on [3 key clauses], we can accept your position on the remainder."
+```
 
-## 참고
+## Negotiation Outcome Evaluation
 
-- 공정거래위원회 불공정약관 심사지침 반영
-- 상세 사례: `references/negotiation-cases.md` 참조
+```
+result = sum(improvement_per_clause x importance) / sum(importance)
+improvement: Original maintained 0 | Partial improvement 50 | Alternative reflected 80 | Fully achieved 100
+outcome: 80+ Excellent | 60-79 Good | 40-59 Average | Under 40 Renegotiation recommended
+```
+
+## Unfair Terms Review Criteria
+
+| Type | Criterion | Legal Basis |
+|------|----------|-------------|
+| Indemnification Clause | Cannot exempt intentional/negligent acts by provider | Standard Terms Act, Article 7 |
+| Damages Limitation | Cannot unreasonably limit consumer claims | Standard Terms Act, Article 7 |
+| Cancellation/Termination | Cannot unreasonably limit consumer's right to cancel | Standard Terms Act, Article 9 |
+| Jurisdiction Agreement | Cannot impose unfavorable exclusive jurisdiction on consumer | Standard Terms Act, Article 14 |
+
+## Notes
+
+- Reflects fair trade commission unfair terms review guidelines
+- Detailed cases: See `references/negotiation-cases.md`

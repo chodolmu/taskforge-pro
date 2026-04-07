@@ -1,125 +1,125 @@
 ---
 name: data-migration
-description: "데이터 마이그레이션의 소스 분석, 스키마 매핑, 변환 스크립트 생성, 검증 쿼리 설계, 롤백 계획을 에이전트 팀이 협업하여 수행하는 풀 마이그레이션 파이프라인. '데이터 마이그레이션', 'DB 이관', '데이터 이전', '스키마 변환', '데이터베이스 이관 계획', 'ETL 스크립트', '데이터 이행', 'DB 마이그레이션 검증', '시스템 전환' 등 데이터 마이그레이션 전반에 이 스킬을 사용한다. 단, 실시간 CDC 스트리밍 구축, 클라우드 인프라 프로비저닝, 애플리케이션 코드 마이그레이션은 이 스킬의 범위가 아니다."
+description: "Full migration pipeline where an agent team collaborates to perform source analysis, schema mapping, transformation script generation, validation query design, and rollback planning. Use this skill for requests like 'data migration', 'DB migration', 'data transfer', 'schema conversion', 'database migration plan', 'ETL scripts', 'data transition', 'DB migration validation', 'system cutover', etc. Note: real-time CDC streaming setup, cloud infrastructure provisioning, and application code migration are outside the scope of this skill."
 ---
 
-# Data Migration — 데이터 마이그레이션 풀 파이프라인
+# Data Migration — Full Migration Pipeline
 
-소스분석→스키마매핑→변환스크립트→검증쿼리→롤백계획을 에이전트 팀이 협업하여 수행한다.
+An agent team collaborates to perform source analysis, schema mapping, transformation script generation, validation queries, and rollback planning.
 
-## 실행 모드
+## Execution Mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**Agent Team** — Five agents communicate directly via SendMessage and perform cross-validation.
 
-## 에이전트 구성
+## Agent Composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
-|---------|------|------|------|
-| source-analyst | `.claude/agents/source-analyst.md` | 소스 분석, 데이터 프로파일링 | general-purpose |
-| schema-mapper | `.claude/agents/schema-mapper.md` | 스키마 매핑, 변환 규칙 설계 | general-purpose |
-| script-developer | `.claude/agents/script-developer.md` | ETL 스크립트, 성능 최적화 | general-purpose |
-| validation-engineer | `.claude/agents/validation-engineer.md` | 검증 쿼리, 정합성 테스트 | general-purpose |
-| rollback-planner | `.claude/agents/rollback-planner.md` | 롤백 계획, 비상 대응 | general-purpose |
+| Agent | File | Role | Type |
+|-------|------|------|------|
+| source-analyst | `.claude/agents/source-analyst.md` | Source analysis, data profiling | general-purpose |
+| schema-mapper | `.claude/agents/schema-mapper.md` | Schema mapping, transformation rule design | general-purpose |
+| script-developer | `.claude/agents/script-developer.md` | ETL scripts, performance optimization | general-purpose |
+| validation-engineer | `.claude/agents/validation-engineer.md` | Validation queries, integrity tests | general-purpose |
+| rollback-planner | `.claude/agents/rollback-planner.md` | Rollback planning, emergency response | general-purpose |
 
-## 워크플로우
+## Workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: Preparation (performed directly by the orchestrator)
 
-1. 사용자 입력에서 추출한다:
-    - **소스 시스템**: DBMS 종류, 버전, 접속 정보, 스키마 범위
-    - **타깃 시스템**: DBMS 종류, 버전, 기존 스키마 유무
-    - **마이그레이션 범위**: 전체/부분, 대상 테이블, 데이터 기간
-    - **제약 조건**: 다운타임 허용 시간, 성능 요구사항, 일정
-2. `_workspace/` 디렉토리와 하위 디렉토리를 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract the following from user input:
+    - **Source system**: DBMS type, version, connection info, schema scope
+    - **Target system**: DBMS type, version, existing schema availability
+    - **Migration scope**: Full/partial, target tables, data time range
+    - **Constraints**: Allowable downtime, performance requirements, schedule
+2. Create the `_workspace/` directory and subdirectories
+3. Organize the input and save it to `_workspace/00_input.md`
+4. If pre-existing files are available, copy them to `_workspace/` and skip the corresponding phase
+5. **Determine the execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: Team Assembly and Execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
-|------|------|------|------|--------|
-| 1 | 소스 분석 | source-analyst | 없음 | `01_source_analysis.md` |
-| 2 | 스키마 매핑 | schema-mapper | 작업 1 | `02_schema_mapping.md` |
-| 3a | 변환 스크립트 | script-developer | 작업 2 | `03_migration_scripts/` |
-| 3b | 검증 스위트 | validation-engineer | 작업 1, 2 | `04_validation_suite.md` |
-| 4 | 롤백 계획 | rollback-planner | 작업 1, 2, 3a, 3b | `05_rollback_plan.md` |
+| Order | Task | Owner | Dependencies | Deliverable |
+|-------|------|-------|-------------|-------------|
+| 1 | Source analysis | source-analyst | None | `01_source_analysis.md` |
+| 2 | Schema mapping | schema-mapper | Task 1 | `02_schema_mapping.md` |
+| 3a | Transformation scripts | script-developer | Task 2 | `03_migration_scripts/` |
+| 3b | Validation suite | validation-engineer | Tasks 1, 2 | `04_validation_suite.md` |
+| 4 | Rollback plan | rollback-planner | Tasks 1, 2, 3a, 3b | `05_rollback_plan.md` |
 
-작업 3a(스크립트)와 3b(검증)는 **병렬 실행**한다.
+Tasks 3a (scripts) and 3b (validation) run **in parallel**.
 
-**팀원 간 소통 흐름:**
-- source-analyst 완료 → schema-mapper에게 소스 스키마 전달, script-developer에게 볼륨·순서 전달, validation-engineer에게 무결성 규칙 전달
-- schema-mapper 완료 → script-developer에게 매핑 명세 전달, validation-engineer에게 변환 규칙 전달, rollback-planner에게 역매핑 가능 여부 전달
-- script-developer 완료 → rollback-planner에게 트랜잭션 경계 전달
-- validation-engineer 완료 → rollback-planner에게 롤백 트리거 조건 전달
-- rollback-planner는 전체 계획을 수립하고 위험 항목을 각 에이전트에 피드백
+**Inter-agent communication flow:**
+- source-analyst completes > passes source schema to schema-mapper, volume/order to script-developer, integrity rules to validation-engineer
+- schema-mapper completes > passes mapping spec to script-developer, transformation rules to validation-engineer, reverse mapping feasibility to rollback-planner
+- script-developer completes > passes transaction boundaries to rollback-planner
+- validation-engineer completes > passes rollback trigger conditions to rollback-planner
+- rollback-planner develops the overall plan and feeds back risk items to each agent
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: Integration and Final Deliverables
 
-1. `_workspace/` 내 모든 산출물을 확인한다
-2. 산출물 간 정합성을 검증한다 (매핑↔스크립트, 검증↔매핑, 롤백↔스크립트)
-3. 최종 마이그레이션 실행 체크리스트를 사용자에게 보고한다
+1. Verify all deliverables in `_workspace/`
+2. Validate cross-deliverable consistency (mapping vs. scripts, validation vs. mapping, rollback vs. scripts)
+3. Present the final migration execution checklist to the user
 
-## 작업 규모별 모드
+## Execution Modes by Request Scope
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
-|----------------|----------|-------------|
-| "마이그레이션 전체 계획" | **풀 파이프라인** | 5명 전원 |
-| "소스 DB 분석만" | **분석 모드** | source-analyst 단독 |
-| "스키마 매핑만 해줘" | **매핑 모드** | source-analyst + schema-mapper |
-| "ETL 스크립트만 생성" | **스크립트 모드** | script-developer (매핑 전제) |
-| "검증 쿼리만 만들어줘" | **검증 모드** | validation-engineer (매핑 전제) |
-| "롤백 계획만 세워줘" | **롤백 모드** | rollback-planner (전체 분석 전제) |
+| User Request Pattern | Execution Mode | Agents Deployed |
+|---------------------|---------------|----------------|
+| "Full migration plan" | **Full pipeline** | All 5 agents |
+| "Analyze the source DB only" | **Analysis mode** | source-analyst only |
+| "Just do schema mapping" | **Mapping mode** | source-analyst + schema-mapper |
+| "Generate ETL scripts only" | **Script mode** | script-developer (assumes mapping exists) |
+| "Create validation queries only" | **Validation mode** | validation-engineer (assumes mapping exists) |
+| "Just create a rollback plan" | **Rollback mode** | rollback-planner (assumes full analysis exists) |
 
-**기존 파일 활용**: 사용자가 기존 DDL, ERD, 스키마 매핑 문서 등을 제공하면, 해당 파일을 `_workspace/`의 적절한 위치에 복사하고 해당 단계의 에이전트는 건너뛴다.
+**Reusing existing files**: If the user provides existing DDL, ERD, or schema mapping documents, copy those files to the appropriate location in `_workspace/` and skip the corresponding agent.
 
-## 데이터 전달 프로토콜
+## Data Transfer Protocol
 
-| 전략 | 방식 | 용도 |
-|------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 산출물 문서 |
-| 스크립트 기반 | `_workspace/03_migration_scripts/` | 실행 가능한 코드 |
-| 메시지 기반 | SendMessage | 핵심 정보 전달, 피드백 |
+| Strategy | Method | Purpose |
+|----------|--------|---------|
+| File-based | `_workspace/` directory | Deliverable documents |
+| Script-based | `_workspace/03_migration_scripts/` | Executable code |
+| Message-based | SendMessage | Key information transfer, feedback |
 
-## 에러 핸들링
+## Error Handling
 
-| 에러 유형 | 전략 |
-|----------|------|
-| DB 접속 불가 | DDL/ERD 문서 기반 분석으로 대체 |
-| 타깃 스키마 미정 | 소스 기반 추천 타깃 스키마 자동 생성 |
-| 호환 불가 타입 | 중간 타입 경유 2단계 변환 제안 |
-| 대용량 테이블(>1억행) | 파티션 단위 마이그레이션 전략 |
-| 에이전트 실패 | 1회 재시도 후 해당 산출물 없이 진행 |
+| Error Type | Strategy |
+|-----------|----------|
+| DB connection unavailable | Fall back to DDL/ERD document-based analysis |
+| Target schema undecided | Auto-generate recommended target schema based on source |
+| Incompatible types | Propose two-stage conversion via intermediate type |
+| Very large tables (>100M rows) | Partition-level migration strategy |
+| Agent failure | Retry once; if still failing, proceed without that deliverable |
 
-## 테스트 시나리오
+## Test Scenarios
 
-### 정상 흐름
-**프롬프트**: "MySQL 5.7에서 PostgreSQL 16으로 전자상거래 DB를 마이그레이션하는 계획을 세워줘"
-**기대 결과**:
-- 소스 분석: MySQL 스키마 역공학, 데이터 프로파일링, 의존성 그래프
-- 스키마 매핑: MySQL→PostgreSQL 타입 매핑, 자동증가→시퀀스 변환, 문자셋 처리
-- 스크립트: Python ETL 코드, 배치 처리, 인덱스 관리 SQL
-- 검증: 행 수, 체크섬, FK 무결성, 변환 정확성 쿼리
-- 롤백: 백업 전략, Go/No-Go 기준, 단계별 롤백 절차
+### Normal Flow
+**Prompt**: "Create a plan to migrate an e-commerce DB from MySQL 5.7 to PostgreSQL 16"
+**Expected result**:
+- Source analysis: MySQL schema reverse-engineering, data profiling, dependency graph
+- Schema mapping: MySQL to PostgreSQL type mapping, auto-increment to sequence conversion, character set handling
+- Scripts: Python ETL code, batch processing, index management SQL
+- Validation: Row count, checksum, FK integrity, transformation accuracy queries
+- Rollback: Backup strategy, Go/No-Go criteria, step-by-step rollback procedures
 
-### 기존 파일 활용 흐름
-**프롬프트**: "이 DDL 파일로 타깃 PostgreSQL 매핑만 해줘"
-**기대 결과**:
-- DDL 파싱으로 source-analyst가 스키마 분석
-- schema-mapper가 PostgreSQL 타깃 매핑 생성
-- script-developer, validation-engineer, rollback-planner는 미투입
+### Existing File Reuse Flow
+**Prompt**: "Map this DDL file to a PostgreSQL target only"
+**Expected result**:
+- source-analyst parses the DDL for schema analysis
+- schema-mapper generates the PostgreSQL target mapping
+- script-developer, validation-engineer, and rollback-planner are not deployed
 
-### 에러 흐름
-**프롬프트**: "Oracle에서 MongoDB로 마이그레이션해줘" (RDBMS→NoSQL)
-**기대 결과**:
-- source-analyst가 관계형 구조 분석
-- schema-mapper가 RDBMS→Document 모델 변환 전략 제시 (정규화 해제, 임베딩 vs 참조)
-- 비가역 변환 다수 발생 → rollback-planner가 아카이브 보존 전략 수립
+### Error Flow
+**Prompt**: "Migrate from Oracle to MongoDB" (RDBMS to NoSQL)
+**Expected result**:
+- source-analyst analyzes the relational structure
+- schema-mapper proposes an RDBMS-to-document model conversion strategy (denormalization, embedding vs. references)
+- Many irreversible transformations arise > rollback-planner develops an archive preservation strategy
 
 
-## 에이전트별 확장 스킬
+## Agent Extension Skills
 
-| 스킬 | 경로 | 강화 대상 에이전트 | 역할 |
-|------|------|-----------------|------|
-| type-mapping-encyclopedia | `.claude/skills/type-mapping-encyclopedia/skill.md` | schema-mapper | MySQL/Oracle/PostgreSQL 타입 매핑, RDBMS→NoSQL, 문자셋 변환 |
-| data-validation-patterns | `.claude/skills/data-validation-patterns/skill.md` | validation-engineer | 5단계 검증(건수→스키마→값→참조→비즈니스), Go/No-Go 체크리스트 |
+| Skill | Path | Enhanced Agent | Role |
+|-------|------|---------------|------|
+| type-mapping-encyclopedia | `.claude/skills/type-mapping-encyclopedia/skill.md` | schema-mapper | MySQL/Oracle/PostgreSQL type mapping, RDBMS-to-NoSQL, character set conversion |
+| data-validation-patterns | `.claude/skills/data-validation-patterns/skill.md` | validation-engineer | 5-level validation (count > schema > value > referential > business), Go/No-Go checklist |

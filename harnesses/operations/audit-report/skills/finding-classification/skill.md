@@ -1,124 +1,124 @@
 ---
 name: finding-classification
-description: "감사 발견사항 분류 및 보고 프레임워크. findings-analyst와 recommendation-writer 에이전트가 발견사항을 체계적으로 분류하고 개선 권고를 작성할 때 참조. '발견사항 분류', '감사 보고', '개선 권고' 요청 시 사용. 단, 법적 제재 결정이나 징계 절차는 범위 밖."
+description: "Audit finding classification and reporting framework. Referenced by findings-analyst and recommendation-writer agents when systematically classifying findings and writing improvement recommendations. Used for 'finding classification', 'audit reporting', 'improvement recommendations' requests. Note: legal sanction decisions and disciplinary procedures are out of scope."
 ---
 
-# Finding Classification — 발견사항 분류 프레임워크
+# Finding Classification — Finding Classification Framework
 
-findings-analyst / recommendation-writer 에이전트의 발견사항 분류 및 보고 역량 강화.
+Enhances the finding classification and reporting capabilities of findings-analyst / recommendation-writer agents.
 
-## 발견사항 등급 체계
+## Finding Rating System
 
-### 4등급 분류
+### 4-Level Classification
 
-| 등급 | 명칭 | 정의 | 대응 기한 |
-|------|------|------|----------|
-| Critical | 심각 | 중대 손실/법규 위반 위험 | 즉시 (7일) |
-| High | 높음 | 중요 통제 실패, 반복 발생 | 30일 |
-| Medium | 보통 | 부분적 통제 미흡, 개선 필요 | 90일 |
-| Low | 낮음 | 효율성 개선, 모범사례 제안 | 180일 |
+| Rating | Name | Definition | Response Timeline |
+|--------|------|-----------|-------------------|
+| Critical | Critical | Risk of major loss/regulatory violation | Immediate (7 days) |
+| High | High | Key control failure, recurring | 30 days |
+| Medium | Medium | Partial control deficiency, improvement needed | 90 days |
+| Low | Low | Efficiency improvement, best practice suggestion | 180 days |
 
-### 분류 의사결정 트리
+### Classification Decision Tree
 
 ```
-Q1: 재무적 영향 ₩1억 이상 또는 법규 위반?
+Q1: Financial impact exceeds $100K or regulatory violation?
 ├── YES → Critical
-└── NO → Q2: 통제 실패가 반복적인가?
+└── NO → Q2: Is the control failure recurring?
     ├── YES → High
-    └── NO → Q3: 시정 조치 없으면 악화 가능?
+    └── NO → Q3: Could it worsen without corrective action?
         ├── YES → Medium
         └── NO → Low
 ```
 
-## 발견사항 보고서 구조
+## Finding Report Structure
 
-### 발견사항 카드 (Finding Card)
+### Finding Card
 
 ```markdown
-## Finding F-[번호]: [제목]
+## Finding F-[Number]: [Title]
 
-### 등급: [Critical/High/Medium/Low]
+### Rating: [Critical/High/Medium/Low]
 
-### 조건 (Condition)
-[발견된 현재 상태 — 사실만 기술]
+### Condition
+[Current state discovered — facts only]
 
-### 기준 (Criteria)
-[적용되어야 할 기준/규정/정책]
+### Criteria
+[Standard/regulation/policy that should apply]
 
-### 원인 (Cause)
-[왜 기준과 차이가 발생했는가]
+### Cause
+[Why the gap between criteria and condition occurred]
 
-### 영향 (Effect)
-[현재/잠재적 영향 — 가능하면 정량화]
+### Effect
+[Current/potential impact — quantify where possible]
 
-### 권고 (Recommendation)
-[구체적 개선 조치]
+### Recommendation
+[Specific improvement actions]
 
-### 경영진 의견 (Management Response)
-[담당 부서의 대응 계획]
-- 합의 여부: □ 동의 □ 부분 동의 □ 미동의
-- 시정 조치: [구체적 행동]
-- 담당자: [이름/직함]
-- 완료 기한: [YYYY-MM-DD]
+### Management Response
+[Responsible department's response plan]
+- Agreement: □ Agree □ Partially agree □ Disagree
+- Corrective action: [Specific action]
+- Owner: [Name/Title]
+- Completion deadline: [YYYY-MM-DD]
 ```
 
-## 근본원인 분석 (Root Cause)
+## Root Cause Analysis
 
-### 원인 카테고리
+### Cause Categories
 
-| 카테고리 | 설명 | 예시 |
-|---------|------|------|
-| 정책/절차 미비 | 규정이 없거나 불충분 | 승인 절차 미수립 |
-| 인력/역량 | 교육 부족, 인원 부족 | 담당자 미교육 |
-| 시스템/도구 | IT 통제 미흡 | 접근 권한 관리 미비 |
-| 감독/모니터링 | 관리자 검토 부재 | 대사 미수행 |
-| 의사소통 | 정보 전달 실패 | 정책 변경 미공유 |
+| Category | Description | Example |
+|----------|-------------|---------|
+| Policy/Procedure gap | Regulation missing or insufficient | Approval procedure not established |
+| Personnel/Competency | Training or staffing deficiency | Owner not trained |
+| System/Tools | IT control deficiency | Access rights management gaps |
+| Supervision/Monitoring | Management review absence | Reconciliation not performed |
+| Communication | Information transfer failure | Policy changes not shared |
 
-## 개선 권고 작성 규칙
+## Recommendation Writing Rules
 
-### SMART 권고
+### SMART Recommendations
 
 ```
-나쁜 예: "통제를 강화해야 한다"
-좋은 예: "2025년 6월까지 모든 ₩500만 이상 지출에
-         이중 승인 절차를 도입하고, 
-         월간 대사를 통해 준수 여부를 확인한다"
+Bad example: "Controls should be strengthened"
+Good example: "By June 2025, implement dual approval 
+             for all expenditures exceeding $50,000, 
+             and verify compliance through monthly reconciliation"
 ```
 
-### 권고 우선순위
+### Recommendation Priority Scoring
 
-| 기준 | 배점 |
-|------|------|
-| 위험 감소 효과 | 40% |
-| 구현 용이성 | 25% |
-| 비용 효율 | 20% |
-| 시급성 | 15% |
+| Criteria | Weight |
+|----------|--------|
+| Risk reduction effect | 40% |
+| Implementation ease | 25% |
+| Cost efficiency | 20% |
+| Urgency | 15% |
 
-## 이행 추적 대장
+## Implementation Tracking Ledger
 
-| Finding | 등급 | 시정 조치 | 담당 | 기한 | 상태 | 검증일 |
-|---------|------|---------|------|------|------|--------|
-| F-01 | Critical | [조치] | [이름] | [날짜] | 진행중 | - |
-| F-02 | High | [조치] | [이름] | [날짜] | 완료 | [날짜] |
+| Finding | Rating | Corrective Action | Owner | Deadline | Status | Verification Date |
+|---------|--------|-------------------|-------|----------|--------|-------------------|
+| F-01 | Critical | [Action] | [Name] | [Date] | In progress | - |
+| F-02 | High | [Action] | [Name] | [Date] | Completed | [Date] |
 
-### 상태 정의
+### Status Definitions
 
-| 상태 | 설명 |
-|------|------|
-| 미착수 | 시정 조치 시작 전 |
-| 진행중 | 시정 조치 수행 중 |
-| 완료 | 시정 완료, 검증 대기 |
-| 검증 완료 | 감사인 검증 통과 |
-| 종결 | 최종 종결 |
-| 기한 초과 | 기한 경과, 미완료 |
+| Status | Description |
+|--------|-------------|
+| Not started | Before corrective action begins |
+| In progress | Corrective action underway |
+| Completed | Correction done, awaiting verification |
+| Verified | Auditor verification passed |
+| Closed | Finalized |
+| Overdue | Past deadline, incomplete |
 
-## 품질 체크리스트
+## Quality Checklist
 
-| 항목 | 기준 |
-|------|------|
-| 4C 구조 | Condition, Criteria, Cause, Effect |
-| 등급 일관성 | 의사결정 트리 적용 |
-| 정량화 | 영향을 금액/건수로 표시 |
-| 권고 SMART | 구체적+측정+기한 |
-| 경영진 의견 | 합의/미합의 기록 |
-| 추적 | 이행 상태 5단계 관리 |
+| Item | Criteria |
+|------|----------|
+| 4C structure | Condition, Criteria, Cause, Effect |
+| Rating consistency | Decision tree applied |
+| Quantification | Impact expressed in amounts/counts |
+| SMART recommendations | Specific + Measurable + Time-bound |
+| Management response | Agreement/disagreement recorded |
+| Tracking | 5-stage status management |

@@ -1,148 +1,148 @@
 ---
 name: information-architecture
-description: "지식베이스의 정보 구조(IA)를 설계하는 전문 스킬. taxonomy-designer 에이전트가 분류 체계, 네비게이션, 레이블링 시스템을 설계할 때 활용한다. '정보 구조', 'IA 설계', '카테고리 설계', '네비게이션', '사이트맵', '카드 소팅' 등의 맥락에서 자동 적용한다. 단, UX 리서치 실행이나 UI 프로토타이핑은 이 스킬의 범위가 아니다."
+description: "A specialized skill for designing the information architecture (IA) of knowledge bases. Used by the taxonomy-designer agent when designing classification systems, navigation, and labeling systems. Automatically applied in contexts involving 'information architecture,' 'IA design,' 'category design,' 'navigation,' 'sitemap,' or 'card sorting.' Note: UX research execution and UI prototyping are outside the scope of this skill."
 ---
 
-# Information Architecture — 정보 구조 설계 도구
+# Information Architecture — IA Design Tool
 
-taxonomy-designer 에이전트의 분류 체계 설계 역량을 강화하는 전문 스킬.
+A specialized skill that enhances the taxonomy-designer agent's classification system design capabilities.
 
-## 적용 대상 에이전트
+## Target Agent
 
-- **taxonomy-designer** — 분류 체계, 태그, 네비게이션 설계
+- **taxonomy-designer** — Classification systems, tags, navigation design
 
-## IA 설계 4대 체계
+## 4 IA Design Systems
 
-### 1. 조직 체계 (Organization System)
+### 1. Organization System
 
-| 분류 방식 | 적용 시 | 예시 |
-|----------|--------|------|
-| 주제별 | 내용이 명확한 도메인 | 개발/디자인/마케팅 |
-| 대상별 | 사용자 그룹이 다른 경우 | 신입/경력/관리자 |
-| 과업별 | 사용자 행동 중심 | 시작하기/개발하기/배포하기 |
-| 혼합형 | 복합 지식베이스 | 카테고리 + 태그 |
+| Classification Method | When to Apply | Examples |
+|----------------------|---------------|----------|
+| By topic | When domains are clearly defined | Development / Design / Marketing |
+| By audience | When user groups differ | New hires / Experienced / Managers |
+| By task | When centered on user actions | Getting Started / Developing / Deploying |
+| Hybrid | For complex knowledge bases | Categories + Tags |
 
-### 분류 깊이 가이드
-
-```
-최적: 3-4단계 (7±2 법칙)
-
-1단계: 5-9개 대분류
-2단계: 분류당 3-7개 중분류  
-3단계: 분류당 3-10개 문서
-4단계: (필요 시) 문서 내 섹션으로 처리
-```
-
-### 2. 레이블링 체계 (Labeling System)
-
-| 원칙 | 좋은 예 | 나쁜 예 |
-|------|---------|---------|
-| 사용자 언어 | "시작하기" | "Initial Configuration" |
-| 일관된 문법 | "~하기" 통일 | "설치", "설정하기", "배포법" |
-| 구체적 | "React 컴포넌트 작성" | "컴포넌트" |
-| 중복 없음 | 하나의 의미 하나의 레이블 | 같은 내용 다른 이름 |
-
-### 3. 네비게이션 체계 (Navigation System)
-
-| 유형 | 용도 | 위치 |
-|------|------|------|
-| 글로벌 네비게이션 | 전체 구조 접근 | 사이드바/상단 |
-| 로컬 네비게이션 | 현재 섹션 탐색 | 서브 메뉴/TOC |
-| 맥락 네비게이션 | 관련 콘텐츠 연결 | 인라인 링크, "관련 문서" |
-| 브레드크럼 | 현재 위치 표시 | 페이지 상단 |
-| 검색 | 직접 접근 | 전역 검색바 |
-
-### 4. 검색 체계 (Search System)
-
-| 요소 | 설계 항목 |
-|------|----------|
-| 검색 범위 | 전체/카테고리별/태그별 |
-| 인덱싱 | 제목/본문/태그/메타데이터 |
-| 동의어 사전 | deploy=배포, config=설정 |
-| 패싯 필터 | 카테고리, 태그, 날짜, 작성자 |
-
-## 분류 체계 설계 프로세스
-
-### Step 1: 카드 소팅 (Card Sorting)
+### Depth Guidelines
 
 ```
-1. 모든 지식 항목을 카드로 나열
-2. 유사한 카드를 그룹핑
-3. 각 그룹에 레이블 부여
-4. 그룹 간 관계 설정 (부모-자식, 형제)
-5. 결과를 덴드로그램으로 시각화
+Optimal: 3-4 levels (7 plus/minus 2 rule)
+
+Level 1: 5-9 top-level categories
+Level 2: 3-7 subcategories per category
+Level 3: 3-10 documents per subcategory
+Level 4: (if needed) Handle as sections within documents
 ```
 
-### Step 2: 사이트맵 구성
+### 2. Labeling System
+
+| Principle | Good Example | Bad Example |
+|-----------|-------------|-------------|
+| User language | "Getting Started" | "Initial Configuration Procedures" |
+| Consistent grammar | Uniform verb form | Mix of nouns and verb phrases |
+| Specific | "Writing React Components" | "Components" |
+| No duplicates | One meaning per label | Same content, different names |
+
+### 3. Navigation System
+
+| Type | Purpose | Location |
+|------|---------|----------|
+| Global Navigation | Access to overall structure | Sidebar / Top bar |
+| Local Navigation | Browse current section | Sub-menu / TOC |
+| Contextual Navigation | Connect related content | Inline links, "Related Articles" |
+| Breadcrumb | Show current location | Top of page |
+| Search | Direct access | Global search bar |
+
+### 4. Search System
+
+| Element | Design Items |
+|---------|-------------|
+| Search scope | Entire / By category / By tag |
+| Indexing | Title / Body / Tags / Metadata |
+| Synonym dictionary | deploy = deployment, config = configuration |
+| Facet filters | Category, tag, date, author |
+
+## Taxonomy Design Process
+
+### Step 1: Card Sorting
+
+```
+1. List all knowledge items as cards
+2. Group similar cards
+3. Assign labels to each group
+4. Establish relationships between groups (parent-child, sibling)
+5. Visualize results as a dendrogram
+```
+
+### Step 2: Sitemap Construction
 
 ```markdown
-## 지식베이스 사이트맵
+## Knowledge Base Sitemap
 
-├── 시작하기 (Getting Started)
-│   ├── 환경 설정
-│   ├── 첫 번째 프로젝트
-│   └── 핵심 개념
-├── 개발 가이드 (Development)
-│   ├── 아키텍처
-│   ├── 코딩 컨벤션
-│   ├── API 레퍼런스
-│   └── 테스트
-├── 배포 (Deployment)
-│   ├── CI/CD
-│   ├── 환경별 설정
-│   └── 모니터링
-├── 운영 (Operations)
-│   ├── 장애 대응
-│   ├── 백업/복구
-│   └── 보안
-└── 참고 (Reference)
-    ├── FAQ
-    ├── 용어집
-    └── 변경 이력
++-- Getting Started
+|   +-- Environment Setup
+|   +-- First Project
+|   +-- Core Concepts
++-- Development Guide
+|   +-- Architecture
+|   +-- Coding Conventions
+|   +-- API Reference
+|   +-- Testing
++-- Deployment
+|   +-- CI/CD
+|   +-- Environment-Specific Configuration
+|   +-- Monitoring
++-- Operations
+|   +-- Incident Response
+|   +-- Backup/Recovery
+|   +-- Security
++-- Reference
+    +-- FAQ
+    +-- Glossary
+    +-- Changelog
 ```
 
-### Step 3: 교차 참조 맵
+### Step 3: Cross-Reference Map
 
 ```
-[문서 A] ←──관련──→ [문서 B]
-    │                    │
-  선행학습              후속학습
-    │                    │
-[문서 C]              [문서 D]
+[Document A] <--related--> [Document B]
+    |                          |
+  prerequisite              follow-up
+    |                          |
+[Document C]              [Document D]
 ```
 
-## 태그 체계 설계
+## Tag System Design
 
-### 태그 유형
+### Tag Types
 
-| 유형 | 예시 | 목적 |
-|------|------|------|
-| 주제 태그 | #react, #docker | 기술 분류 |
-| 수준 태그 | #초급, #중급, #고급 | 난이도 필터 |
-| 유형 태그 | #튜토리얼, #레퍼런스, #가이드 | 콘텐츠 형식 |
-| 상태 태그 | #초안, #검토중, #확정 | 문서 상태 |
+| Type | Examples | Purpose |
+|------|---------|---------|
+| Topic tags | #react, #docker | Technology classification |
+| Level tags | #beginner, #intermediate, #advanced | Difficulty filtering |
+| Type tags | #tutorial, #reference, #guide | Content format |
+| Status tags | #draft, #in-review, #published | Document status |
 
-### 태그 거버넌스
+### Tag Governance
 
-| 규칙 | 설명 |
-|------|------|
-| 통제 어휘 | 미리 정의된 태그만 사용 |
-| 계층 태그 | 상위/하위 관계 정의 |
-| 동의어 관리 | JS = JavaScript, 하나로 통일 |
-| 태그 리뷰 | 분기별 미사용 태그 정리 |
+| Rule | Description |
+|------|-------------|
+| Controlled vocabulary | Only use predefined tags |
+| Hierarchical tags | Define parent/child relationships |
+| Synonym management | JS = JavaScript, unify to one |
+| Tag review | Clean up unused tags quarterly |
 
-## YAML 프론트매터 표준
+## YAML Front Matter Standard
 
 ```yaml
 ---
-title: "문서 제목"
-category: "개발 가이드"
-subcategory: "아키텍처"
-tags: [react, frontend, 중급]
-author: "작성자"
+title: "Document Title"
+category: "Development Guide"
+subcategory: "Architecture"
+tags: [react, frontend, intermediate]
+author: "Author Name"
 created: "2024-01-15"
 updated: "2024-03-20"
-status: "확정"
+status: "published"
 related:
   - /development/coding-conventions
   - /reference/api

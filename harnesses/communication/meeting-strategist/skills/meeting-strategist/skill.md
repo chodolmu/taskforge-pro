@@ -1,129 +1,129 @@
 ---
 name: meeting-strategist
-description: "회의 전략 문서를 에이전트 팀이 협업하여 안건구조설계→배경자료조사→의사결정프레임워크→회의록템플릿→팔로업플랜까지 한 번에 생성하는 풀 파이프라인. '회의 준비해줘', '회의 안건 만들어줘', '미팅 준비 자료', '회의 전략', '의사결정 회의 설계', '이사회 안건', '프로젝트 킥오프 회의', '팀 미팅 준비', '워크숍 설계' 등 회의 준비 전반에 이 스킬을 사용한다. 기존 안건이 있으면 배경자료·프레임워크·템플릿 작성을 지원한다. 단, 실제 회의 진행(화상회의 시스템 운영), 회의실 예약, 참석자 일정 조율은 이 스킬의 범위가 아니다."
+description: "meeting strategy document agent team to agenda itemstructuredesign→backgroundmaterialresearch→decision-makingframework→meetingrecordtemplate→to Korean creation Full pipeline. 'meeting preparationplease do', 'meeting agenda item create it', 'un- preparation material', 'meeting strategy', 'decision-making meeting design', 'company agenda item', 'project meeting', 'team un- preparation', ' design' etc. meeting preparation before skill usage. existing agenda item backgroundmaterial·framework·template writing degreeKRW. However, actual meeting progress(meeting whensystem operations), meetingactual exampleapprox., attendee schedule is outside this skill's scope."
 ---
 
-# Meeting Strategist — 회의 전략 문서 풀 파이프라인
+# Meeting Strategist — meeting strategy document Full pipeline
 
-회의 전략 문서의 안건구조설계→배경자료조사→의사결정프레임워크→회의록템플릿→팔로업플랜을 에이전트 팀이 협업하여 한 번에 생성한다.
+meeting strategy document agenda itemstructuredesign→backgroundmaterialresearch→decision-makingframework→meetingrecordtemplate→ An agent team collaborates to generate all deliverables at once.
 
-## 실행 모드
+## execution mode
 
-**에이전트 팀** — 5명이 SendMessage로 직접 통신하며 교차 검증한다.
+**agent team** — 5 agents communicate directly via SendMessage and cross-verify each other's work.
 
-## 에이전트 구성
+## agent composition
 
-| 에이전트 | 파일 | 역할 | 타입 |
+| agent | file | role | type |
 |---------|------|------|------|
-| agenda-architect | `.claude/agents/agenda-architect.md` | 안건 구조, 시간 배분, 참석자 역할 | general-purpose |
-| background-researcher | `.claude/agents/background-researcher.md` | 배경 데이터, 이해관계자, 사례 조사 | general-purpose |
-| framework-designer | `.claude/agents/framework-designer.md` | 판단 기준, 옵션 매트릭스, 합의 방법 | general-purpose |
-| template-builder | `.claude/agents/template-builder.md` | 회의록, 기록지, 추적표 템플릿 | general-purpose |
-| followup-planner | `.claude/agents/followup-planner.md` | 실행 추적, 교차 검증 | general-purpose |
+| agenda-architect | `.claude/agents/agenda-architect.md` | agenda item structure, time allocation, attendee role | general-purpose |
+| background-researcher | `.claude/agents/background-researcher.md` | background data, stakeholder, case research | general-purpose |
+| framework-designer | `.claude/agents/framework-designer.md` | judgment standard, option matrix, method | general-purpose |
+| template-builder | `.claude/agents/template-builder.md` | meetingrecord, basisrecorddegree, trackingtable template | general-purpose |
+| followup-planner | `.claude/agents/followup-planner.md` | execution tracking, cross-verification | general-purpose |
 
-## 워크플로우
+## workflow
 
-### Phase 1: 준비 (오케스트레이터 직접 수행)
+### Phase 1: preparation (Orchestrator directly perform)
 
-1. 사용자 입력에서 추출한다:
-    - **회의 유형**: 정기보고/의사결정/브레인스토밍/문제해결/킥오프/회고
-    - **회의 목적**: 달성하고자 하는 구체적 목표
-    - **참석자**: 인원, 역할, 직급
-    - **시간**: 예정 소요 시간
-    - **기존 자료** (선택): 이전 회의록, 안건 초안, 관련 보고서
-2. `_workspace/` 디렉토리를 프로젝트 루트에 생성한다
-3. 입력을 정리하여 `_workspace/00_input.md`에 저장한다
-4. 기존 파일이 있으면 `_workspace/`에 복사하고 해당 Phase를 건너뛴다
-5. 요청 범위에 따라 **실행 모드를 결정**한다
+1. Extract from user input:
+ - **meeting type**: basisreporting/decision-making/person/problem//
+ - **meeting purpose**: natureandspecialist specific goal
+ - **attendee**: personKRW, role, grade
+ - **time**: example time
+ - **existing material** (optional): before meetingrecord, agenda item plan, related report
+2. `_workspace/` Create the directory at the project root
+3. Organize input and save to `_workspace/00_input.md`
+4. If existing files are provided, copy them to `_workspace/`and skip the corresponding Phase
+5. Determine the **execution mode** based on the scope of the request
 
-### Phase 2: 팀 구성 및 실행
+### Phase 2: team composition and execution
 
-| 순서 | 작업 | 담당 | 의존 | 산출물 |
+| order | task | responsible | dependency | deliverable |
 |------|------|------|------|--------|
-| 1 | 안건 구조 설계 | architect | 없음 | `_workspace/01_agenda_design.md` |
-| 2a | 배경 자료 조사 | researcher | 작업 1 | `_workspace/02_background_brief.md` |
-| 2b | 의사결정 프레임워크 | designer | 작업 1 | `_workspace/03_decision_framework.md` |
-| 3 | 문서 템플릿 생성 | builder | 작업 1, 2b | `_workspace/04_meeting_templates.md` |
-| 4 | 팔로업 플랜 및 검증 | planner | 작업 2a, 2b, 3 | `_workspace/05_followup_plan.md` |
+| 1 | agenda item structure design | architect | None | `_workspace/01_agenda_design.md` |
+| 2a | background material research | researcher | task 1 | `_workspace/02_background_brief.md` |
+| 2b | decision-making framework | designer | task 1 | `_workspace/03_decision_framework.md` |
+| 3 | document template creation | builder | task 1, 2b | `_workspace/04_meeting_templates.md` |
+| 4 | and verify | planner | task 2a, 2b, 3 | `_workspace/05_followup_plan.md` |
 
-작업 2a(배경조사)와 2b(프레임워크)는 **병렬 실행**한다. 둘 다 작업 1(안건)에만 의존한다.
+task 2a(backgroundresearch) and 2b(framework) ** execution**. task 1(agenda item) only dependency.
 
-**팀원 간 소통 흐름:**
-- architect 완료 → researcher에게 필요 배경 자료 목록 전달, designer에게 의사결정 안건+초기 옵션 전달
-- researcher 완료 → designer에게 데이터+제약조건 전달, builder에게 사전 정보 전달
-- designer 완료 → builder에게 기록 양식+투표 양식 전달
-- planner는 모든 산출물을 교차 검증. 🔴 필수 수정 발견 시 해당 에이전트에게 수정 요청 → 재작업 → 재검증 (최대 2회)
+**teamKRW between flow:**
+- architect complete → researcherto needed background material list deliver, designerto decision-making agenda item+initial option deliver
+- researcher complete → designerto data+constraintcondition deliver, builderto companybefore information deliver
+- designer complete → builderto basisrecord +table deliver
+- planner all deliverable cross-verification. 🔴 required revision findings when Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds)
 
-### Phase 3: 통합 및 최종 산출물
+### Phase 3: integration and final deliverable
 
-1. `_workspace/` 내 모든 파일을 확인한다
-2. 검증 보고서의 🔴 필수 수정이 모두 반영되었는지 확인한다
-3. 최종 요약을 사용자에게 보고한다:
-    - 안건 설계서 — `01_agenda_design.md`
-    - 배경 자료 — `02_background_brief.md`
-    - 의사결정 프레임워크 — `03_decision_framework.md`
-    - 회의 문서 템플릿 — `04_meeting_templates.md`
-    - 팔로업 플랜 — `05_followup_plan.md`
+1. `_workspace/` Verify all files in the directory
+2. verify reportConfirm that all critical revisions from the review report have been addressed
+3. Report the final summary to the user:
+ - agenda item designfrom — `01_agenda_design.md`
+ - background material — `02_background_brief.md`
+ - decision-making framework — `03_decision_framework.md`
+ - meeting document template — `04_meeting_templates.md`
+ - — `05_followup_plan.md`
 
-## 작업 규모별 모드
+## task scaleby mode
 
-| 사용자 요청 패턴 | 실행 모드 | 투입 에이전트 |
+| user request pattern | execution mode | deploy agent |
 |----------------|----------|-------------|
-| "회의 준비해줘", "회의 전략 문서 전체" | **풀 파이프라인** | 5명 전원 |
-| "안건만 짜줘" | **안건 모드** | architect + planner |
-| "이 안건으로 배경자료 조사해줘" (안건 제공) | **조사 모드** | researcher + planner |
-| "의사결정 프레임워크만" | **프레임워크 모드** | designer + planner |
-| "회의록 템플릿만 만들어줘" | **템플릿 모드** | builder 단독 |
+| "meeting preparationplease do", "meeting strategy document overall" | **Full pipeline** | 5people beforeKRW |
+| "agenda item only " | **agenda item mode** | architect + planner |
+| " agenda itemas backgroundmaterial researchplease do" (agenda item provide) | **research mode** | researcher + planner |
+| "decision-making framework" | **framework mode** | designer + planner |
+| "meetingrecord template only create it" | **template mode** | builder |
 
-**기존 파일 활용**: 사용자가 안건, 이전 회의록 등을 제공하면 해당 단계를 건너뛴다.
+**existing file utilization**: user agenda item, before meetingrecord etc. provide applicable stage case.
 
-## 데이터 전달 프로토콜
+## data deliver protocol
 
-| 전략 | 방식 | 용도 |
+| strategy | method | also |
 |------|------|------|
-| 파일 기반 | `_workspace/` 디렉토리 | 주요 산출물 저장 및 공유 |
-| 메시지 기반 | SendMessage | 실시간 핵심 정보 전달, 수정 요청 |
+| File-based | `_workspace/` | Store and share major deliverables |
+| Message-based | SendMessage | Real-time key information transfer, revision requests |
 
-파일명 컨벤션: `{순번}_{에이전트}_{산출물}.{확장자}`
+File naming convention: `{}_{agent}_{deliverable}.{extensionspecialist}`
 
-## 에러 핸들링
+## error handling
 
-| 에러 유형 | 전략 |
+| error type | strategy |
 |----------|------|
-| 회의 목적 불명확 | 사용자에게 회의 유형과 목표를 확인 질문 |
-| 참석자 정보 없음 | 범용 역할(진행자/서기/참석자)로 설계 |
-| 웹 검색 실패 | 사용자 제공 자료와 일반 지식 기반 작업, "외부 데이터 미확보" 명시 |
-| 에이전트 실패 | 1회 재시도 → 실패 시 해당 산출물 없이 진행 |
-| 검증에서 🔴 발견 | 해당 에이전트에 수정 요청 → 재작업 → 재검증 (최대 2회) |
+| meeting purpose people | userto meeting type and goal confirm question |
+| attendee information None | role(facilitator/frombasis/attendee) design |
+| web search failure | user provide material and day degree based task, "external data un-secure" specify |
+| agent failure | Retry once -> proceed without that deliverable |
+| verifyfrom 🔴 findings | Request revision from the relevant agent -> rework -> re-verify (up to 2 rounds) |
 
-## 테스트 시나리오
+## test scenario
 
-### 정상 흐름
-**프롬프트**: "다음 주 경영진 회의 준비해줘. 2025년 하반기 사업 계획 확정이 목적이고, 3개 안건이 있어: 신사업 진출 결정, 인력 충원 계획, 마케팅 예산 배분. 참석자는 CEO, CFO, COO, 마케팅 이사, HR 이사. 2시간 회의야."
-**기대 결과**:
-- 안건 설계: 3개 안건의 시간 배분, 진행 방식, 성공 기준
-- 배경 자료: 각 안건별 데이터, 이해관계자 분석, 벤치마크
-- 프레임워크: 3개 안건의 평가 기준, 옵션 매트릭스, RAPID
-- 템플릿: 회의록, 결정 기록지, 액션아이템 추적표
-- 팔로업: 실행 계획 + 정합성 매트릭스 전항목 확인
+### flow
+**Prompt**: "next week management meeting preparationplease do. 2025year basis company plan purpose, 3items agenda item : company decision, personcapability KRW plan, budget allocation. attendee CEO, CFO, COO, company, HR company. 2time meeting."
+**expected result**:
+- agenda item design: 3items agenda item time allocation, progress method, nature standard
+- background material: each agenda itemby data, stakeholder analysis, value
+- framework: 3items agenda item assessment standard, option matrix, RAPID
+- template: meetingrecord, decision basisrecorddegree, trackingtable
+- : execution plan + consistency matrix beforeitem confirm
 
-### 기존 안건 활용 흐름
-**프롬프트**: "이 안건으로 회의 배경자료랑 프레임워크 만들어줘" + 안건 파일 제공
-**기대 결과**:
-- 안건 설계 건너뜀
-- 제공된 안건을 `_workspace/01_agenda_design.md`로 복사
-- researcher + designer + builder + planner 투입
+### existing agenda item utilization flow
+**Prompt**: " agenda itemas meeting backgroundmaterial framework create it" + agenda item file provide
+**expected result**:
+- agenda item design case
+- providedone agenda item `_workspace/01_agenda_design.md` company
+- researcher + designer + builder + planner deploy
 
-### 에러 흐름
-**프롬프트**: "팀 회의 준비해줘"
-**기대 결과**:
-- 회의 목적과 안건이 불명확하므로 사용자에게 확인 질문
-- 답변 기반으로 작업 진행
-- 검증 보고서에 "사용자 입력 기반 추정 — 안건 확정 필요" 명시
+### error flow
+**Prompt**: "team meeting preparationplease do"
+**expected result**:
+- meeting purpose and agenda item people userto confirm question
+- answer basedas task progress
+- verify report "user input based estimation — agenda item needed" specify
 
-## 에이전트별 확장 스킬
+## agentby extension skill
 
-| 확장 스킬 | 경로 | 대상 에이전트 | 역할 |
+| extension skill | | target agent | role |
 |----------|------|-------------|------|
-| decision-frameworks | `.claude/skills/decision-frameworks/skill.md` | framework-designer | DACI, 가중 매트릭스, 기대값 분석, 합의 방법 |
-| facilitation-techniques | `.claude/skills/facilitation-techniques/skill.md` | agenda-architect, followup-planner | 퍼실리테이션 기법, 시간 관리, 회고 패턴 |
+| decision-frameworks | `.claude/skills/decision-frameworks/skill.md` | framework-designer | DACI, during matrix, expected analysis, method |
+| facilitation-techniques | `.claude/skills/facilitation-techniques/skill.md` | agenda-architect, followup-planner | facilitation technique, time management, pattern |

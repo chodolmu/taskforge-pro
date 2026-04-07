@@ -1,143 +1,143 @@
 ---
 name: spatial-layout-guide
-description: "가구 배치와 공간 동선을 최적화하는 레이아웃 가이드. 'item-curator'와 'style-analyst' 에이전트가 가구를 선정하고 배치를 제안할 때 이 스킬의 배치 규칙, 치수 기준, 동선 설계법을 반드시 활용해야 한다. '가구 배치', '공간 레이아웃', '동선 설계' 등에 사용한다. 단, 색채 설계나 예산 관리는 이 스킬의 범위가 아니다."
+description: "A layout guide for optimizing furniture placement and spatial traffic flow. The 'item-curator' and 'style-analyst' agents must use this skill's placement rules, dimension standards, and traffic flow design methods when selecting and arranging furniture. Used for 'furniture placement', 'spatial layout', 'traffic flow design', etc. Color design and budget management are outside this skill's scope."
 ---
 
-# Spatial Layout Guide — 공간 레이아웃·가구 배치 가이드
+# Spatial Layout Guide
 
-인테리어 가구 배치의 치수 규칙, 동선 설계, 공간별 레이아웃 패턴.
+Interior furniture placement dimension rules, traffic flow design, and layout patterns by room type.
 
-## 기본 치수 규칙
+## Basic Dimension Rules
 
-### 통행 간격 기준
+### Clearance Standards
 
-| 위치 | 최소 간격 | 권장 간격 | 비고 |
-|------|----------|----------|------|
-| 주 동선 (복도) | 80cm | 90-120cm | 2인 교차 가능 |
-| 가구 사이 통로 | 60cm | 75-90cm | 1인 통행 |
-| 식탁 뒤 의자공간 | 75cm | 90-100cm | 의자 빼기+통행 |
-| TV~소파 거리 | TV 대각선 × 1.5 | × 2.0 | 시청 거리 |
-| 침대 양옆 | 60cm | 75cm | 이불 정리 |
-| 주방 작업 삼각형 | 각 변 1.2-2.7m | 총합 4-8m | 효율적 동선 |
+| Location | Minimum | Recommended | Notes |
+|----------|---------|-------------|-------|
+| Main pathway (hallway) | 80cm | 90-120cm | Two-person passing |
+| Between furniture | 60cm | 75-90cm | Single-person passage |
+| Behind dining chairs | 75cm | 90-100cm | Chair pull-out + passage |
+| TV to sofa distance | TV diagonal x 1.5 | x 2.0 | Viewing distance |
+| Bedside clearance | 60cm | 75cm | Bedmaking space |
+| Kitchen work triangle | Each side 1.2-2.7m | Total 4-8m | Efficient workflow |
 
-### 가구 기본 치수 (cm)
+### Standard Furniture Dimensions (cm)
 
-| 가구 | 폭(W) | 깊이(D) | 높이(H) | 비고 |
-|------|-------|--------|--------|------|
-| 2인 소파 | 140-170 | 80-90 | 80-85 | 좁은 거실 |
-| 3인 소파 | 190-230 | 85-95 | 80-85 | 표준 |
-| L자 소파 | 250-300 | 85-95 | 80-85 | 넓은 거실 |
-| 커피테이블 | 100-130 | 50-70 | 40-45 | 소파높이-5cm |
-| 4인 식탁 | 120-140 | 80 | 75 | 원형 Φ100 |
-| 6인 식탁 | 160-180 | 80-90 | 75 | |
-| 싱글 침대 | 100 | 200 | 45-50 | 1인용 |
-| 더블 침대 | 150 | 200 | 45-50 | 커플 최소 |
-| 퀸 침대 | 160 | 200 | 45-50 | 표준 커플 |
-| 킹 침대 | 180 | 200 | 45-50 | 넓은 침실 |
-| 책상 | 120-160 | 60-80 | 72-75 | 모니터 기준 |
-| 옷장 | 60-100 | 55-60 | 200-240 | 슬라이딩은 깊이+ |
+| Furniture | Width (W) | Depth (D) | Height (H) | Notes |
+|-----------|----------|----------|-----------|-------|
+| 2-seat sofa | 140-170 | 80-90 | 80-85 | Small living room |
+| 3-seat sofa | 190-230 | 85-95 | 80-85 | Standard |
+| L-shaped sofa | 250-300 | 85-95 | 80-85 | Large living room |
+| Coffee table | 100-130 | 50-70 | 40-45 | Sofa height minus 5cm |
+| 4-person dining table | 120-140 | 80 | 75 | Round: diameter 100 |
+| 6-person dining table | 160-180 | 80-90 | 75 | |
+| Single bed | 100 | 200 | 45-50 | One person |
+| Double bed | 150 | 200 | 45-50 | Couple minimum |
+| Queen bed | 160 | 200 | 45-50 | Standard couple |
+| King bed | 180 | 200 | 45-50 | Large bedroom |
+| Desk | 120-160 | 60-80 | 72-75 | Monitor-based |
+| Wardrobe | 60-100 | 55-60 | 200-240 | Sliding doors need extra depth |
 
-## 공간별 레이아웃 패턴
+## Layout Patterns by Room
 
-### 거실
+### Living Room
 
 ```
-패턴 A: 대면형 (넓은 거실)
-  [소파] ←→ [소파/암체어]
-       [커피테이블]
+Pattern A: Face-to-face (large living room)
+  [Sofa] <-> [Sofa/Armchair]
+       [Coffee Table]
            [TV]
 
-패턴 B: L자형 (표준 거실)
-  [소파 ─────]
-  [소  ]  [커피테이블]
-  [파  ]       [TV]
+Pattern B: L-shaped (standard living room)
+  [Sofa ----------]
+  [So  ]  [Coffee Table]
+  [fa  ]       [TV]
 
-패턴 C: 일자형 (좁은 거실/원룸)
-  [소파 ─────]
-  [커피테이블]
+Pattern C: Linear (small living room/studio)
+  [Sofa ----------]
+  [Coffee Table]
       [TV]
 ```
 
-### 침실
+### Bedroom
 
 ```
-패턴 A: 중앙 배치
-  [사이드]  [침 대]  [사이드]
-                [드레서]
+Pattern A: Center placement
+  [Nightstand]  [Bed]  [Nightstand]
+                [Dresser]
 
-패턴 B: 한쪽 배치 (좁은 방)
-  [침 대]  [사이드]
-  [옷장 ────────]
+Pattern B: One-side placement (small room)
+  [Bed]  [Nightstand]
+  [Wardrobe ----------]
 
-채광 규칙: 침대 머리 = 창문 옆 또는 맞은편 (직사광 회피)
+Lighting rule: Headboard beside or opposite window (avoid direct sunlight)
 ```
 
-### 주방
+### Kitchen
 
 ```
-작업 삼각형 (Work Triangle):
-  [냉장고] ←1.2-2.7m→ [싱크대] ←1.2-2.7m→ [레인지]
+Work Triangle:
+  [Fridge] <-1.2-2.7m-> [Sink] <-1.2-2.7m-> [Range]
 
-레이아웃 유형:
-  I형: 한 벽 직선 (원룸/좁은 주방)
-  L형: 코너 활용 (표준)
-  U형: 3면 활용 (넓은 주방)
-  아일랜드형: 중앙 테이블 (20평+)
-  갤리형: 양쪽 벽 (통로형)
+Layout types:
+  I-shape: Single wall straight (studio/small kitchen)
+  L-shape: Corner utilization (standard)
+  U-shape: Three-wall use (large kitchen)
+  Island: Center table (650+ sq ft)
+  Galley: Both walls (corridor type)
 ```
 
-### 서재/홈오피스
+### Study/Home Office
 
 ```
-책상 위치 원칙:
-  1. 자연광 측면 입사 (정면 눈부심 방지)
-  2. 문이 보이는 방향 (심리적 안정)
-  3. 벽과 15-20cm 이격 (환기)
-  4. 콘센트 접근성
+Desk placement principles:
+  1. Natural light from the side (avoid frontal glare)
+  2. Face the door (psychological comfort)
+  3. 15-20cm gap from wall (ventilation)
+  4. Outlet accessibility
 
-[창문]
-     [책상 ───]
-     [의자]
-[책장]         [수납]
+[Window]
+     [Desk ------]
+     [Chair]
+[Bookshelf]         [Storage]
 ```
 
-## 한국 아파트 표준 평면 활용
+## Standard Apartment Floor Plan Tips
 
-### 국민평형(84㎡/25평) 레이아웃 팁
-
-```
-거실: 약 5.5 × 3.5m
-  → 3인 소파(220cm) + 커피테이블 + TV장 + 사이드테이블
-  → L자 소파 시 공간 여유 확인 (최소 300cm 벽면)
-
-주방: 약 3 × 3m
-  → L형 또는 I형 + 아일랜드 식탁(공간 허용 시)
-  → 냉장고 위치: 입구 근처 (동선 최소)
-
-안방: 약 3.5 × 3.5m
-  → 퀸 침대(160cm) + 양측 사이드 테이블
-  → 드레서 or 화장대는 창가
-
-작은방: 약 3 × 2.5m
-  → 싱글 침대 + 책상 (또는 벙커침대+책상)
-```
-
-## 조명 배치 가이드
-
-### 조명 3층 구조
+### Standard Unit (84 sq m / 900 sq ft) Layout Tips
 
 ```
-앰비언트 (전체): 천장등, 매입등 — 공간 전체 밝기
-태스크 (작업): 데스크램프, 펜던트 — 작업 영역 집중
-악센트 (분위기): 플로어램프, 캔들 — 분위기 연출
+Living room: approx. 5.5 x 3.5m
+  -> 3-seat sofa (220cm) + coffee table + TV stand + side table
+  -> For L-shaped sofa, verify clearance (minimum 300cm wall space)
 
-높이 기준:
-  펜던트(식탁 위): 식탁면 위 75-90cm
-  플로어램프: 소파 옆, 독서 높이 120-150cm
-  벽등: 바닥에서 150-170cm
+Kitchen: approx. 3 x 3m
+  -> L-shape or I-shape + island table (if space permits)
+  -> Fridge location: near entrance (minimize traffic)
+
+Master bedroom: approx. 3.5 x 3.5m
+  -> Queen bed (160cm) + nightstands on both sides
+  -> Dresser or vanity near window
+
+Second bedroom: approx. 3 x 2.5m
+  -> Single bed + desk (or loft bed + desk)
 ```
 
-## 참고
+## Lighting Placement Guide
 
-- 한국 아파트 표준 평면, 인체공학 기준
-- 상세 배치도: `references/layout-templates.md` 참조
+### Three-Layer Lighting Structure
+
+```
+Ambient (overall): Ceiling fixtures, recessed lights — overall room brightness
+Task (work): Desk lamp, pendant — focused work area lighting
+Accent (mood): Floor lamp, candles — atmosphere creation
+
+Height standards:
+  Pendant (over dining table): 75-90cm above table surface
+  Floor lamp: Beside sofa, reading height 120-150cm
+  Wall sconce: 150-170cm from floor
+```
+
+## References
+
+- Standard apartment floor plans and ergonomic standards
+- Detailed layout templates: see `references/layout-templates.md`
