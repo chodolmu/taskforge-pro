@@ -10,12 +10,9 @@ AI presents "this is how it should behave," and the user confirms and records re
 
 ## Philosophy
 
-**Show the expected behavior, then ask if reality matches.**
+**Follow the validation plan from discover. If you can't follow it, say so — don't silently substitute.**
 
-AI presents: "Clicking this button should open a modal."
-User response:
-- "Yes" / "Right" / "Next" → pass
-- Anything else → record as issue; severity is automatically inferred by AI (never ask about severity)
+The spec-card's `validationStrategy` defines HOW to verify. Verify must follow that plan. If something blocks the plan (MCP not connected, server not running), tell the user and ask what to do — never quietly fall back to code-only validation.
 
 ## Prerequisites
 
@@ -24,50 +21,88 @@ User response:
 
 ## Flow
 
-### 1. Extract Test Items
+### 1. Check Validation Environment
 
-Extract testable items from the sprint's handoff files.
-If server/DB changes are included, add a cold-start smoke test at the front.
+**Before anything else**, check if the validation plan from spec-card can actually be executed:
 
-### 2. Check for Existing Session
+Read `_workspace/spec-card.json` → `validationStrategy`
+
+For each validation method, check readiness:
+
+| Validation type | Check method | If not ready |
+|----------------|-------------|--------------|
+| Build command | Try running it | Report the error |
+| MCP-based check | Check if MCP server responds | "MCP server ({name}) is not connected. Please connect it first, or tell me how you'd like to proceed." |
+| Browser check | Check if Playwright MCP is available | "Browser verification requires Playwright MCP. Please connect it, or I'll create a manual checklist instead." |
+| CLI run check | Try running it | Report the error |
+| Manual check | Always ready | Proceed |
+
+**Critical rule**: If the spec-card says "verify via Unity MCP play mode" but Unity MCP is not connected:
+- ❌ WRONG: Silently read the code and say "looks correct"
+- ✅ RIGHT: "The validation plan requires Unity MCP, but it's not connected. Options: (1) Connect it now, (2) Switch to manual verification for this sprint"
+
+**Always get user confirmation before changing the validation method.**
+
+### 2. Extract Test Items
+
+From the sprint's completed tasks, build a test checklist:
+
+1. Read all task `acceptanceCriteria` and `mustHaves.truths` in the sprint
+2. Group by feature area
+3. For each item, write a **concrete verification step** (not just "confirm it works")
+
+### 3. Check for Existing Session
 
 If `_workspace/validations/uat-sprint-{id}.md` already exists:
 - "Would you like to continue the previous UAT, or start fresh?"
 
-### 3. Run Tests
+### 4. Run Tests — One at a Time
 
-Process one test at a time:
+Present each test with **specific, actionable steps**:
 
 ```
 ## Test 1/6: Main Page Load
 
-**Expected behavior**: Opening localhost:3000 in the browser shows the main page with a card layout.
-- Navigation bar at the top
-- 2-column card grid
-- Each card has a title and description
+📋 How to verify:
+1. Open localhost:3000 in your browser
+2. Check the following:
+   □ Is there a navigation bar at the top?
+   □ Are cards displayed in a 2-column grid?
+   □ Does each card have a title and description?
 
-Please confirm →
+→ Let me know: OK / describe the issue
 ```
 
-### 4. Record Results
+**Rules for writing test steps:**
+- Tell the user exactly WHAT to do (open this URL, click this button, type this text)
+- Tell them exactly WHAT to look for (specific visual elements, specific text, specific behavior)
+- One test = one user action + one observable result
+- Never write "confirm it works" — always specify what "works" means
+
+**If MCP (Playwright/browser) IS connected:**
+- Take a screenshot after each navigation
+- Show the screenshot to the user: "This is what I see. Does it match?"
+- Automate clicks/form fills where possible, but still ask the user to confirm the result
+
+### 5. Record Results
 
 Based on the user's response:
 
 - **pass**: Move to the next test
 - **issue**: Record the problem description + auto-infer severity
 
-Severity criteria (automatic):
+Severity criteria (automatic, never ask the user about severity):
 - **blocker**: Core feature non-functional (page won't load, crash)
 - **major**: Main feature misbehaves (data not showing, button not working)
 - **minor**: Secondary feature abnormal (sort broken, wrong color)
 - **cosmetic**: Visual issue (spacing, font size)
 
-### 5. Diagnose (if issues found)
+### 6. Diagnose (if issues found)
 
 If an issue is found, run parallel debug agents to investigate the cause.
 Record investigation results in the UAT file.
 
-### 6. Save UAT File
+### 7. Save UAT File
 
 Save to `_workspace/validations/uat-sprint-{id}.md`:
 
@@ -75,11 +110,17 @@ Save to `_workspace/validations/uat-sprint-{id}.md`:
 ---
 status: complete | partial | testing
 sprint: m1-s1
+validationMethod: planned | fallback-manual
 started: 2026-04-07T...
 updated: 2026-04-07T...
 ---
 
 # UAT — Sprint m1-s1
+
+## Validation Environment
+- Build: ✅ working
+- MCP (Playwright): ❌ not connected → switched to manual (user approved)
+- Run check: ✅ working
 
 ## Results Summary
 - Passed: 4/6
@@ -88,24 +129,26 @@ updated: 2026-04-07T...
 ## Test Results
 
 ### 1. Main Page Load
+How verified: User opened localhost:3000 in browser
 Expected: Card layout main page displayed
 Result: pass
 
 ### 2. Card Click
+How verified: User clicked first card
 Expected: Navigate to detail page
 Result: issue (major)
 Description: 404 error on click
 Cause: Missing detail page route in routing config
 File: src/routes.js:15
 
-## Outstanding Issues (Gaps)
+## Outstanding Issues
 - truth: "Click card navigates to detail page"
   severity: major
   root_cause: "Missing route"
   artifacts: ["src/routes.js"]
 ```
 
-### 7. Follow-up
+### 8. Follow-up
 
 - No issues: "UAT passed! Proceed to the next sprint or run `/taskforge-audit` for milestone validation"
 - Issues found: "N issues found. Fix with `/taskforge-retry`, or add fix tasks with `/taskforge-plan-edit`"

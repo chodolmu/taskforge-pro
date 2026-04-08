@@ -353,7 +353,27 @@ Total tasks: 24 | haiku 8 / sonnet 16
 Parallelizable: 16 (67%)
 ```
 
-Guide the user: "Use `/taskforge-plan-approve` to proceed with this plan."
-Also note that they can describe changes in natural language. (e.g., "Milestone 2 looks too big", "I want to do search first")
-AI will incorporate the feedback and rewrite the plan. No need for the user to touch the JSON directly.
-Mention `/taskforge-plan-edit` only as an emergency option for fine-grained adjustments.
+Ask the user: "This is the plan. Changes needed, or shall we proceed?"
+- If the user describes changes ("Milestone 2 looks too big", "I want to do search first"), incorporate the feedback and rewrite the plan. No need for the user to touch the JSON directly. Mention `/taskforge-plan-edit` only as an emergency option for fine-grained adjustments.
+- If the user approves ("looks good", "proceed", "go ahead"):
+
+## Plan Approval (built-in)
+
+On approval:
+1. Add `"status": "approved"` and `"approvedAt"` to `_workspace/project-plan.json`
+2. Initialize `_workspace/execution-state.json`:
+   ```json
+   {
+     "projectId": "...",
+     "status": "ready",
+     "currentMilestone": null,
+     "currentSprint": null,
+     "currentTask": null,
+     "completedTasks": [],
+     "failedTasks": [],
+     "skippedTasks": [],
+     "totalCost": 0,
+     "startedAt": null
+   }
+   ```
+3. Guide the user: "Plan approved. Start the first task with `/taskforge-execute`!"

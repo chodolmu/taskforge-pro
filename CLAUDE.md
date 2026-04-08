@@ -16,60 +16,34 @@ Core philosophy: **Break it down, be explicit, start clean, work with experts.**
 ## Workflow
 
 ```
-/taskforge-discover → /taskforge-plan → /taskforge-plan-approve
+/taskforge-discover → /taskforge-plan (includes approval)
     ↓
-  [/taskforge-discuss]  ← Identify gray areas (optional)
-    ↓
-  /taskforge-execute (repeat, wave parallelism supported)
+  /taskforge-execute (repeat) or /taskforge-execute-all (auto)
     ↓
   /taskforge-validate   ← goal-backward enforcement
     ↓
   [/taskforge-verify]   ← Interactive UAT (optional)
     ↓
-  /taskforge-refresh → next sprint
-    ↓
-  [/taskforge-audit]    ← Milestone regression validation (optional)
-    ↓
-  /taskforge-wrap
+  next sprint (auto-refresh built into execute-all)
 ```
 
 ### Project Kickoff
 - `/taskforge-discover` — Define the project through conversation, generate a SpecCard
-- `/taskforge-plan` — Opus PM breaks down milestones/sprints/tasks (wave parallelism + mustHaves)
+- `/taskforge-plan` — Opus PM breaks down milestones/sprints/tasks, includes approval at the end
 - `/taskforge-plan-edit` — Edit the plan (add/remove/modify tasks)
-- `/taskforge-plan-approve` — Approve the plan, ready for execution
-
-### Pre-Execution
-- `/taskforge-discuss` — Identify gray areas and record decisions before a sprint begins
 
 ### Execution
-- `/taskforge-execute` — Execute the next single task (wave parallelism + acceptance criteria)
-- `/taskforge-execute-all` — Auto-run through the end of the sprint continuously
+- `/taskforge-execute` — Execute the next single task (includes retry/skip built-in)
+- `/taskforge-execute-all` — Auto-run through the sprint (includes plan refresh at sprint boundary)
 - `/taskforge-quick` — Run a quick single task without a plan
-- `/taskforge-handoff` — Generate a work history record (usually called automatically by /taskforge-execute)
 
-### Validation (3 Levels)
-- `/taskforge-validate` — Goal-backward validation (truths → artifacts → wiring)
-- `/taskforge-verify` — Interactive UAT (user confirms directly)
-- `/taskforge-audit` — Cross-milestone regression validation
+### Validation
+- `/taskforge-validate` — Goal-backward validation at task/sprint/milestone level
+- `/taskforge-verify` — Interactive UAT (user confirms directly, follows spec-card validation plan)
 
 ### Monitoring
 - `/taskforge-status` — Display full progress tree
 - `/taskforge-cost` — Per-model cost summary
-
-### Adaptation
-- `/taskforge-refresh` — Refresh the follow-up plan after a sprint completes
-- `/taskforge-pivot` — Change direction, fully redesign the remaining plan
-- `/taskforge-retry` — Retry a failed task
-- `/taskforge-skip` — Skip a task
-
-### Direct Harness Access
-- `/taskforge-browse-harness` — Browse the 100-harness catalog
-- `/taskforge-use-harness` — Run a harness directly without the PM
-
-### Session Management
-- `/taskforge-resume` — Pick up the project in a new session
-- `/taskforge-wrap` — Finish the project (final QA + report)
 - `/taskforge-help` — Full usage guide
 
 ## Work Breakdown Hierarchy
@@ -109,7 +83,7 @@ Skills and harnesses are bundled in the `harnesses/` directory. No separate inst
 |------|--------|--------|------|
 | Task | On every completion | Build, type-check, lint + acceptance criteria | `/taskforge-validate` |
 | Sprint | On sprint completion | Goal-backward (truths→artifacts→wiring) + code review | `/taskforge-validate` + `/taskforge-verify` |
-| Milestone | On milestone completion | Cross-regression validation + full QA | `/taskforge-audit` |
+| Milestone | On milestone completion | Cross-regression (3-source) + full QA | `/taskforge-validate milestone` |
 
 ### Goal-Backward Validation (absorbed from GSD)
 1. **Truths**: What must be true for the goal to be achieved
@@ -141,45 +115,31 @@ Full list in `harnesses/INDEX.md`. Categories:
 _workspace/
 ├── spec-card.json              — Project definition (discover)
 ├── project-plan.json           — Task plan tree (plan) — includes wave/mustHaves
+├── conventions.md              — Project conventions (plan)
 ├── execution-state.json        — Execution state (execute)
-├── contexts/                   — Decision records (discuss)
-│   └── sprint-{id}.md
-├── handoffs/                   — Per-task handoff records
+├── handoffs/                   — Per-task handoff records (conditional)
 │   └── {task-id}.json
 ├── validations/                — Validation results
 │   ├── task-{id}.json         — Task validation
 │   ├── sprint-{id}.json       — Sprint goal-backward validation
 │   ├── uat-sprint-{id}.md     — Interactive UAT
-│   ├── milestone-{id}.json    — Milestone validation
-│   └── audit-milestone-{id}.md — Regression audit
-└── project-report.md           — Completion report (wrap)
+│   └── audit-milestone-{id}.md — Milestone cross-regression
+└── project-report.md           — Completion report (optional)
 ```
 
 ## Skill Structure
 
 ```
 skills/
-├── taskforge-discover/SKILL.md           — Project definition
-├── taskforge-discuss/SKILL.md            — Gray area identification (NEW)
-├── taskforge-plan/SKILL.md               — Work breakdown (enhanced)
-├── taskforge-plan-edit/SKILL.md          — Plan editing
-├── taskforge-plan-approve/SKILL.md       — Plan approval
-├── taskforge-execute/SKILL.md            — Task execution (enhanced)
-├── taskforge-execute-all/SKILL.md        — Sprint auto-execution (enhanced)
-├── taskforge-quick/SKILL.md              — Quick execution (NEW)
-├── taskforge-handoff/SKILL.md            — Work history
-├── taskforge-validate/SKILL.md           — Validation (significantly enhanced)
-├── taskforge-verify/SKILL.md             — Interactive UAT (NEW)
-├── taskforge-audit/SKILL.md              — Regression validation (NEW)
-├── taskforge-status/SKILL.md             — Progress tracking
-├── taskforge-cost/SKILL.md               — Cost summary
-├── taskforge-refresh/SKILL.md            — Plan refresh
-├── taskforge-pivot/SKILL.md              — Direction change
-├── taskforge-retry/SKILL.md              — Retry
-├── taskforge-skip/SKILL.md               — Skip
-├── taskforge-resume/SKILL.md             — Session resume
-├── taskforge-wrap/SKILL.md               — Project wrap-up
-├── taskforge-browse-harness/SKILL.md     — Harness search (NEW)
-├── taskforge-use-harness/SKILL.md        — Direct harness execution (NEW)
-└── taskforge-help/SKILL.md               — Usage guide (NEW)
+├── taskforge-discover/SKILL.md       — Project definition
+├── taskforge-plan/SKILL.md           — Work breakdown + approval (Opus PM)
+├── taskforge-plan-edit/SKILL.md      — Plan editing
+├── taskforge-execute/SKILL.md        — Task execution (retry/skip/handoff built-in)
+├── taskforge-execute-all/SKILL.md    — Sprint auto-execution (refresh built-in)
+├── taskforge-quick/SKILL.md          — Quick execution
+├── taskforge-validate/SKILL.md       — Validation (task/sprint/milestone)
+├── taskforge-verify/SKILL.md         — Interactive UAT
+├── taskforge-status/SKILL.md         — Progress tracking
+├── taskforge-cost/SKILL.md           — Cost summary
+└── taskforge-help/SKILL.md           — Usage guide
 ```

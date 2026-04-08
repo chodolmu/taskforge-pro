@@ -84,11 +84,38 @@ Integration validation according to the sprint's `validationStrategy`:
 
 5. Generate results report (using verification-report template)
 
-### 3. Milestone Validation → Delegated to `/taskforge-audit`
+### 3. Milestone Validation (cross-regression)
 
-Milestone-level validation is handled by the `/taskforge-audit` skill. When a milestone is complete:
-- "Run `/taskforge-audit` for milestone validation (3-source cross-validation + regression audit)"
-- If `/taskforge-validate milestone` is called, automatically redirect to `/taskforge-audit` guidance
+When a milestone is complete, cross-reference three sources to verify nothing is missing:
+
+| Source | What to check |
+|--------|--------------|
+| **Plan** (project-plan.json) | Each task's mustHaves, acceptanceCriteria |
+| **Handoffs** (handoffs/*.json) | Actual work performed, changed files, known issues |
+| **Code** (actual filesystem) | File existence, connections (import/export), behavior |
+
+**Flow:**
+
+1. Collect mustHaves from all tasks within the milestone (truths, artifacts, keyLinks)
+
+2. Artifact validation:
+   - `[VERIFIED]` — exists, has content
+   - `[STUB]` — exists but contains only TODOs
+   - `[MISSING]` — file not found
+   - `[ORPHANED]` — exists but not imported anywhere
+
+3. Wiring validation:
+   - `[WIRED]` — import + actual usage confirmed
+   - `[PARTIAL]` — imported but unused
+   - `[NOT_WIRED]` — has exports but no imports
+
+4. Truth validation — synthesize artifact + wiring results for each truth
+
+5. Anti-pattern scan across entire codebase (TODO/FIXME, empty bodies, console.log, hardcoded secrets)
+
+6. Handoff cross-check — verify all `knownIssues` from handoffs are resolved
+
+Save to `_workspace/validations/audit-milestone-{id}.md`
 
 ## Saving Validation Results
 

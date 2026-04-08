@@ -152,7 +152,27 @@ After execution:
 When validation fails or an error occurs:
 - Record the failure reason
 - Increment retry_count
-- Notify the user: "[Retry: `/taskforge-retry`] [Skip: `/taskforge-skip`] [Check status: `/taskforge-status`]"
+
+**Auto-retry (built-in):**
+1. Add the failure reason to context: "Previous attempt failed because: [reason]. Avoid this approach."
+2. Re-execute in the same session (no new agent needed)
+3. If failed 2 times in a row, stop and ask the user:
+   ```
+   ⚠️ Task failed 2 times.
+   Failure reason: [summary]
+   
+   Options:
+   - Try once more (different approach)
+   - Skip this task and move on
+   - Fix it yourself, then run `/taskforge-execute` to continue
+   ```
+
+**Skip (built-in):**
+When the user says "skip" or "move on":
+1. Check if downstream tasks depend on this task
+2. If yes: warn and ask whether to also skip dependents or remove the dependency
+3. Set task status to `skipped` with reason and timestamp
+4. Continue to the next task
 
 ## Sprint/Milestone Completion Detection
 
@@ -160,4 +180,4 @@ After a task completes, if all tasks in that sprint are complete:
 - "Sprint [name] complete! Run `/taskforge-validate` for integration validation."
 
 If all sprints in a milestone are complete:
-- "Milestone [name] complete! Run `/taskforge-audit` for milestone validation."
+- "Milestone [name] complete! Run `/taskforge-validate milestone` for full validation."

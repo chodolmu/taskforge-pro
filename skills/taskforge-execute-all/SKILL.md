@@ -70,6 +70,21 @@ Sprint 1.1 "Canvas Setup" complete
 If the user says "stop", "halt", "pause", or similar mid-execution, stop after the current task completes.
 Then use `/taskforge-execute` to continue one at a time, or `/taskforge-execute-all` to resume continuous execution.
 
+## Sprint Boundary: Auto-Refresh (built-in)
+
+After a sprint completes and validation passes, automatically refresh the follow-up plan:
+
+1. Read all handoffs from the completed sprint (design decisions, issues discovered)
+2. Check remaining tasks — do any `plan` fields need updating based on what actually happened?
+3. If changes needed:
+   - Modify task plans to reflect actual design decisions
+   - Add tasks if new work was discovered
+   - Remove tasks if work is no longer needed
+   - Show the user a brief change summary
+4. If no changes needed: proceed silently
+
+This replaces the old `/taskforge-refresh` — it happens automatically at sprint boundaries.
+
 ## Notes
 
 - Auto-execution runs one sprint at a time only. Do not auto-run an entire milestone at once.
