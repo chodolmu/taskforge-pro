@@ -54,8 +54,9 @@ Why this matters: When context grows too long, AI starts ignoring early instruct
 
 Use the appropriate model based on the task's `model` field:
 - `haiku`: Simple work. Fast and cheap.
-- `sonnet`: General implementation. Balanced choice.
-- `opus`: Complex design/logic. Highest quality.
+- `sonnet`: General and complex implementation. The plan already provides detailed specs, so sonnet handles both medium and hard tasks.
+
+Note: Opus is reserved for planning/validation phases (PM, Discovery, Milestone QA), not for task execution. All execution tasks use haiku or sonnet.
 
 ### 4. Execution
 
@@ -75,9 +76,16 @@ Load the harness specified in the task and execute via multi-agent collaboration
 Harness load path: `harnesses/{category}/{harness-name}/`
 Agents within the harness divide the work by role.
 
-### 5. Acceptance Criteria Validation (NEW)
+### 5. Self-Review
 
-After execution, before moving on, verify the acceptance criteria:
+After writing code, **re-read the changed files** and check:
+- Does the code match the task plan?
+- Are acceptance criteria actually met (not just "I think I did it")?
+- Any obvious bugs, missing imports, or broken references?
+
+This happens in the same execution context — no extra agent, no extra pipeline. Just "read what you wrote before saying you're done." Catches issues that would otherwise require a retry (which costs far more tokens than a quick re-read).
+
+### 6. Acceptance Criteria Validation
 
 ```
 Acceptance Criteria Check:
@@ -90,7 +98,7 @@ If any criteria fail:
 - Agent automatically attempts a fix (1 time)
 - If still failing after retry, report to the user
 
-### 6. Platform-Specific Validation
+### 7. Platform-Specific Validation
 
 Refer to `validationStrategy` in `_workspace/spec-card.json` to run **project-appropriate validation**.
 Instead of hardcoded `build`, `typecheck`, follow the strategy defined in discover.
@@ -114,7 +122,7 @@ Automated validation complete. Manual confirmation needed:
 → After confirming, run `/taskforge-execute` to proceed to the next task
 ```
 
-### 7. Completion Processing
+### 8. Completion Processing
 
 After execution:
 
@@ -139,7 +147,7 @@ After execution:
    → Run `/taskforge-execute` to continue, or `/taskforge-status` to check overall progress
 ```
 
-### 7. On Failure
+### 9. On Failure
 
 When validation fails or an error occurs:
 - Record the failure reason

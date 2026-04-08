@@ -198,7 +198,11 @@ For all subsequent tasks, use appropriate items in `validation.auto` based on th
 |------------|-------|----------|
 | easy | haiku | Boilerplate, config files, simple copy/move, CSS changes, constant definitions |
 | medium | sonnet | General feature implementation, bug fixes, refactoring, API integration |
-| hard | opus | Architecture design, complex algorithms, cascading multi-file changes, optimization |
+| hard | sonnet | Complex implementation, multi-file changes, optimization — plan already provides detailed spec |
+
+**Why hard tasks use sonnet, not opus**: The plan phase (Opus PM) already produces detailed, executable specs — endpoint-by-endpoint API design, DB schemas, directory structure, etc. Execution is "implement according to spec," which sonnet handles well. Opus remains reserved for **planning and validation** where design judgment is needed, not for following a spec.
+
+Fixed assignments (unchanged): PM (planning) = opus, Discovery = opus, Sprint validation = sonnet, Milestone QA = opus
 
 ## Execution Mode Determination (3 Modes)
 
@@ -326,7 +330,7 @@ Save to `_workspace/project-plan.json`:
   ],
   "createdAt": "2026-04-07T...",
   "totalTasks": 24,
-  "modelDistribution": { "haiku": 8, "sonnet": 12, "opus": 4 },
+  "modelDistribution": { "haiku": 8, "sonnet": 16 },
   "waveStats": { "maxWave": 3, "parallelizable": 16 }
 }
 ```
@@ -345,7 +349,7 @@ Milestone 1: Basic Game Loop (8 tasks)
       ├─ Wave 1: Dino rendering [medium/sonnet]
       └─ Wave 2: Jump physics [medium/sonnet] + Duck [medium/sonnet]
       
-Total tasks: 24 | haiku 8 / sonnet 12 / opus 4
+Total tasks: 24 | haiku 8 / sonnet 16
 Parallelizable: 16 (67%)
 ```
 

@@ -88,8 +88,9 @@ Project
 |------------|-------|----------|
 | easy | haiku | Boilerplate, config, simple copy, CSS |
 | medium | sonnet | General feature implementation, bug fixes, refactoring |
-| hard | opus | Architecture design, complex algorithms, multi-file changes |
+| hard | sonnet | Complex implementation, multi-file changes — plan provides detailed spec |
 
+Opus is reserved for **planning and validation** where design judgment is needed, not for task execution.
 Fixed assignments: PM (planning) = opus, Discovery = opus, Sprint validation = sonnet, Milestone QA = opus
 
 ## Execution Modes (3 Types)

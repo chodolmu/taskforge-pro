@@ -32,7 +32,7 @@ Wave 3: [t6] — depends on Wave 2, single execution
 ### Execution Flow
 
 For each task, perform the same flow as `/taskforge-execute`:
-- Assemble context → route model → execute → check acceptance criteria → handoff → validate
+- Assemble context → route model → execute → self-review → check acceptance criteria → conditional handoff → validate
 
 ### Failure Handling
 

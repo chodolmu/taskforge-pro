@@ -8,6 +8,29 @@ description: Generates a handoff document recording the current task's work hist
 After a task completes, record the work as a structured handoff document.
 The goal is to allow the next agent handling subsequent tasks to understand the necessary context without reading the full history.
 
+## Conditional Handoff (Cost Optimization)
+
+**Not every task needs a full handoff.** Generate handoffs only when they add value:
+
+| Condition | Action |
+|-----------|--------|
+| Task has downstream dependents (other tasks list this task in `dependencies`) | ✅ Full handoff |
+| Task is the last in a wave or sprint | ✅ Full handoff |
+| Task has no dependents AND is not last in wave/sprint | ⚡ Lightweight record only |
+
+**Lightweight record** — instead of a full handoff JSON, just append to `execution-state.json`:
+```json
+{
+  "taskId": "m1-s1-t1",
+  "status": "completed",
+  "filesChanged": ["src/styles.css"],
+  "completedAt": "2026-04-08T..."
+}
+```
+No summary, no designDecisions, no nextTaskNotes. Just the changed files list (from git diff).
+
+**Why**: Handoff generation costs tokens — sometimes more than the easy task itself. If no future task reads this handoff, those tokens are wasted.
+
 ## Why It Matters
 
 Since each task starts in a fresh context, the handoff is the only way to pass results from a previous task forward.
