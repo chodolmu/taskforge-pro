@@ -9,6 +9,16 @@ Validate the work output of the project. Three-level validation framework + goal
 
 **Core principle**: Task complete ≠ Goal achieved. Tasks can be marked "done" with placeholders, so validate backward from the goal to confirm it actually works.
 
+## Gating Policy (IMPORTANT)
+
+| Level | Gating | Rationale |
+|-------|--------|-----------|
+| Task | **inline / blocking** | Cheap; catches local breakage immediately |
+| Sprint | **async / non-blocking** | Advisory only — runs in background, does NOT stall the next sprint. Preserves wave parallelism across sprint boundaries |
+| Milestone | **blocking gate** | This is where goal-backward + cross-regression decide whether to ship. Sprint warnings accumulated since the last gate roll into this review |
+
+Sprint validation must never block `/taskforge-execute-all` from continuing into the next sprint. Surface warnings in the result file; the milestone gate is the enforcement point.
+
 ## 3-Level Validation
 
 ### 1. Task Validation (automatic, on every task completion)
@@ -40,7 +50,9 @@ Acceptance:
 
 If any item fails, treat the task as incomplete.
 
-### 2. Sprint Validation (after sprint completes)
+### 2. Sprint Validation (after sprint completes — ASYNC, non-blocking)
+
+**Run mode**: This validation is launched in the background and does NOT block the next sprint from starting. Results are written to `_workspace/validations/sprint-{id}.json` with `status: "advisory"`. Failures here become warnings — they are surfaced in `/taskforge-status` and rolled into the next milestone gate. Only the milestone gate can halt progression.
 
 Integration validation according to the sprint's `validationStrategy`:
 
@@ -84,7 +96,9 @@ Integration validation according to the sprint's `validationStrategy`:
 
 5. Generate results report (using verification-report template)
 
-### 3. Milestone Validation (cross-regression)
+### 3. Milestone Validation (cross-regression — BLOCKING gate)
+
+**Run mode**: This is the only blocking validation. The next milestone cannot start until this passes. Any sprint-level advisory warnings accumulated since the last milestone gate are pulled in and reviewed here.
 
 When a milestone is complete, cross-reference three sources to verify nothing is missing:
 
@@ -146,9 +160,9 @@ Save to `_workspace/validations/audit-milestone-{id}.md`
 
 ## On Failure
 
-- **Task validation failure**: Guide to retry with `/taskforge-retry`
-- **Sprint validation failure**: Opus analyzes failure cause → auto-suggests fix tasks → execute after user approval
-- **Milestone validation failure**: Opus full review → suggests fix sprint → user confirmation
+- **Task validation failure** (inline/blocking): Guide to retry with `/taskforge-retry`. The task does not count as complete.
+- **Sprint validation failure** (async/advisory): Do NOT halt execution. Record warnings in `sprint-{id}.json` with `status: "advisory"`, surface them in `/taskforge-status`, and carry them into the next milestone gate. The user is notified but the next sprint proceeds.
+- **Milestone validation failure** (blocking): Opus full review → suggests fix sprint that addresses both the milestone failures and any accumulated sprint advisories → user confirmation required before continuing.
 
 ## Usage
 

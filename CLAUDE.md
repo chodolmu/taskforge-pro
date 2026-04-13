@@ -19,13 +19,17 @@ Core philosophy: **Break it down, be explicit, start clean, work with experts.**
 /taskforge-discover → /taskforge-plan (includes approval)
     ↓
   /taskforge-execute (repeat) or /taskforge-execute-all (auto)
+    ↓ (sprint boundaries are NON-blocking — sprint validation runs async in background)
+  next sprint → next sprint → ... (waves keep flowing across sprint boundaries)
     ↓
-  /taskforge-validate   ← goal-backward enforcement
+  /taskforge-validate milestone   ← BLOCKING gate: goal-backward + cross-regression
     ↓
   [/taskforge-verify]   ← Interactive UAT (optional)
     ↓
-  next sprint (auto-refresh built into execute-all)
+  next milestone
 ```
+
+**Validation gating policy**: Only milestone validation is a blocking gate. Task validation is inline (cheap), sprint validation is async/non-blocking (advisory). This preserves wave parallelism across sprint boundaries — the executor doesn't stall waiting for sprint review.
 
 ### Project Kickoff
 - `/taskforge-discover` — Define the project through conversation, generate a SpecCard
@@ -79,11 +83,13 @@ Skills and harnesses are bundled in the `harnesses/` directory. No separate inst
 
 ## Validation Framework
 
-| Unit | Timing | Method | Tool |
-|------|--------|--------|------|
-| Task | On every completion | Build, type-check, lint + acceptance criteria | `/taskforge-validate` |
-| Sprint | On sprint completion | Goal-backward (truths→artifacts→wiring) + code review | `/taskforge-validate` + `/taskforge-verify` |
-| Milestone | On milestone completion | Cross-regression (3-source) + full QA | `/taskforge-validate milestone` |
+| Unit | Timing | Method | Gating | Tool |
+|------|--------|--------|--------|------|
+| Task | On every completion | Build, type-check, lint + acceptance criteria | **inline** (blocks task) | `/taskforge-validate` |
+| Sprint | On sprint completion | Goal-backward (truths→artifacts→wiring) + code review | **async / non-blocking** (advisory only — next sprint starts immediately) | `/taskforge-validate` + `/taskforge-verify` |
+| Milestone | On milestone completion | Cross-regression (3-source) + full QA | **blocking gate** (must pass to move on) | `/taskforge-validate milestone` |
+
+**Why this gating**: Blocking on every sprint serializes the executor and kills wave parallelism across sprint boundaries. Task validation stays inline because it's cheap and catches local breakage early. Sprint validation runs in the background and surfaces warnings, but does not stall the next sprint's waves. The milestone gate is where goal-backward + cross-regression actually decide whether to ship — failures here trigger fix sprints, and any sprint-level warnings accumulated since the last gate are rolled into that review.
 
 ### Goal-Backward Validation (absorbed from GSD)
 1. **Truths**: What must be true for the goal to be achieved

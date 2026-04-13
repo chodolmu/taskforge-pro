@@ -61,8 +61,9 @@ Sprint 1.1 "Canvas Setup" complete
   Validation: build ✅ typecheck ✅
   Acceptance: all passed
 
-  → Run `/taskforge-validate` for sprint integration validation
-  → Or run `/taskforge-execute-all` to continue with the next sprint
+  → Sprint validation launched in background (advisory, non-blocking)
+  → Continuing into the next sprint immediately
+  → Milestone gate will run when the milestone completes
 ```
 
 ## Stopping
@@ -70,9 +71,19 @@ Sprint 1.1 "Canvas Setup" complete
 If the user says "stop", "halt", "pause", or similar mid-execution, stop after the current task completes.
 Then use `/taskforge-execute` to continue one at a time, or `/taskforge-execute-all` to resume continuous execution.
 
-## Sprint Boundary: Auto-Refresh (built-in)
+## Sprint Boundary: Async Validation + Auto-Refresh (built-in)
 
-After a sprint completes and validation passes, automatically refresh the follow-up plan:
+At every sprint boundary:
+
+1. **Launch sprint validation in the background** (`/taskforge-validate sprint`, async). It is advisory only and must NOT block the next sprint. Results land in `_workspace/validations/sprint-{id}.json` with `status: "advisory"`. Failures become warnings carried into the next milestone gate.
+2. **Refresh the follow-up plan** (below).
+3. **Immediately start the next sprint's Wave 1** — do not wait for the background validation to finish.
+
+This is the core change that makes wave parallelism work across sprint boundaries: the executor never stalls on sprint review.
+
+### Auto-Refresh
+
+After a sprint completes, automatically refresh the follow-up plan:
 
 1. Read all handoffs from the completed sprint (design decisions, issues discovered)
 2. Check remaining tasks — do any `plan` fields need updating based on what actually happened?
@@ -87,6 +98,6 @@ This replaces the old `/taskforge-refresh` — it happens automatically at sprin
 
 ## Notes
 
-- Auto-execution runs one sprint at a time only. Do not auto-run an entire milestone at once.
-  Reason: Validation and plan refreshes are needed between sprints.
-- Always stop at the end of a sprint and guide the user to validate.
+- Auto-execution runs through sprints continuously within a single milestone. Sprint validation is async and advisory, so the executor flows from one sprint into the next without stopping.
+- Halt automatically at the **milestone boundary** — that is the blocking validation gate. Guide the user to run `/taskforge-validate milestone` before starting the next milestone.
+- Sprint advisories accumulated during the milestone are surfaced in `/taskforge-status` and rolled into the milestone gate review.
