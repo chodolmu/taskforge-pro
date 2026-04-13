@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Unified Project Manager plugin for Claude Code. TaskForge PM + 100 Domain Expert Harnesses + Goal-backward Validation.",
-    "version": "1.0.4"
+    "version": "1.0.5"
   },
   "plugins": [
     {
       "name": "taskforge-pro",
       "source": "./",
       "description": "Unified Project Manager. PM automation + 100 domain expert harnesses + goal-backward validation.",
-      "version": "1.0.4",
+      "version": "1.0.5",
       "author": {
         "name": "Cho Jun"
       },
