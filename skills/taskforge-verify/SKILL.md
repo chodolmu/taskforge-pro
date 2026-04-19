@@ -1,6 +1,6 @@
 ---
 name: taskforge-verify
-description: Runs an interactive UAT where the user confirms directly by eye. Use when the user says "/taskforge-verify", "I'll check it myself", "let me test it", "show me", "UAT", "manual testing", or similar. AI guides the expected behavior and the user confirms whether it matches. Use "/taskforge-validate" for automated code validation and "/taskforge-audit" for comprehensive milestone audits.
+description: Runs an interactive UAT where the user confirms directly by eye. Use when the user says "/taskforge-verify", "I'll check it myself", "let me test it", "show me", "UAT", "manual testing", or similar. AI guides the expected behavior and the user confirms whether it matches. Use "/taskforge-validate" for automated code validation, "/taskforge-validate milestone" for comprehensive milestone cross-regression, and "/taskforge-playtest" for game-specific hands-on confirmation.
 ---
 
 # Verify — Interactive UAT
@@ -16,6 +16,9 @@ The spec-card's `validationStrategy` defines HOW to verify. Verify must follow t
 
 ## Prerequisites
 
+- A project must exist with a completed sprint
+- **Project selection**: Same as `/taskforge-execute` — auto-select if only one, ask if multiple
+- All file paths below are relative to `_workspace/projects/{projectId}/`
 - All tasks in the target sprint must be in completed state
 - If not: "Please complete the sprint first"
 
@@ -25,7 +28,7 @@ The spec-card's `validationStrategy` defines HOW to verify. Verify must follow t
 
 **Before anything else**, check if the validation plan from spec-card can actually be executed:
 
-Read `_workspace/spec-card.json` → `validationStrategy`
+Read `spec-card.json` → `validationStrategy`
 
 For each validation method, check readiness:
 
@@ -53,7 +56,7 @@ From the sprint's completed tasks, build a test checklist:
 
 ### 3. Check for Existing Session
 
-If `_workspace/validations/uat-sprint-{id}.md` already exists:
+If `validations/uat-sprint-{id}.md` already exists:
 - "Would you like to continue the previous UAT, or start fresh?"
 
 ### 4. Run Tests — One at a Time
@@ -104,7 +107,7 @@ Record investigation results in the UAT file.
 
 ### 7. Save UAT File
 
-Save to `_workspace/validations/uat-sprint-{id}.md`:
+Save to `validations/uat-sprint-{id}.md` (under `_workspace/projects/{projectId}/`):
 
 ```markdown
 ---
@@ -150,6 +153,17 @@ File: src/routes.js:15
 
 ### 8. Follow-up
 
-- No issues: "UAT passed! Proceed to the next sprint or run `/taskforge-audit` for milestone validation"
-- Issues found: "N issues found. Fix with `/taskforge-retry`, or add fix tasks with `/taskforge-plan-edit`"
-- Blocker found: "There is a blocker issue that must be resolved before proceeding"
+- No issues: "UAT 통과! 다음 스프린트로 진행하거나, 마일스톤이 끝났다면 `/taskforge-validate milestone`을 실행하세요."
+- Issues found: "N개 이슈가 발견됐어요. `/taskforge-execute`로 재시도하거나 `/taskforge-plan-edit`으로 수정 태스크를 추가할 수 있어요."
+- Blocker found: "Blocker 이슈가 있어 다음 단계로 넘어가기 전에 해결이 필요해요."
+
+## Integration with v2 Skills
+
+| Skill | Relationship |
+|-------|--------------|
+| `/taskforge-validate` | Automated code checks. Run before verify for catching build/typecheck issues |
+| `/taskforge-validate milestone` | Blocking gate — run after verify at milestone boundary |
+| `/taskforge-playtest` | Game-specific extension with fun metrics and M0 core-fun gate. Prefer playtest for games |
+| `/taskforge-retro` | Reads UAT file as evidence alongside validation results |
+
+The `verification.md` file (created by `/taskforge-discover`) provides the baseline "done" criteria. UAT should check those items in addition to acceptanceCriteria from the plan.

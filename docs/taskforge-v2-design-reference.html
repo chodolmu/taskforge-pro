@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>TaskForge v2 설계 참고서 — Few-shot Reference</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #161a22;
+    --panel-2: #1c2130;
+    --border: #2a2f3d;
+    --text: #e6e8ee;
+    --muted: #8b93a7;
+    --accent: #7aa2f7;
+    --good: #9ece6a;
+    --warn: #e0af68;
+    --bad: #f7768e;
+    --code-bg: #0b0d12;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+    background: var(--bg); color: var(--text);
+    max-width: 980px; margin: 0 auto; padding: 40px 24px;
+    line-height: 1.7;
+  }
+  h1 { font-size: 2rem; border-bottom: 2px solid var(--accent); padding-bottom: 12px; }
+  h2 { font-size: 1.5rem; margin-top: 2.5rem; color: var(--accent); border-left: 4px solid var(--accent); padding-left: 12px; }
+  h3 { font-size: 1.15rem; margin-top: 1.8rem; color: #c0caf5; }
+  h4 { font-size: 1rem; color: var(--muted); margin-top: 1.4rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  p, li { color: var(--text); }
+  code { background: var(--code-bg); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; color: #f7768e; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px; overflow-x: auto; }
+  pre code { background: none; color: #c0caf5; padding: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; background: var(--panel); border-radius: 8px; overflow: hidden; }
+  th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--panel-2); color: var(--accent); font-weight: 600; }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin: 16px 0; }
+  .panel.good { border-left: 4px solid var(--good); }
+  .panel.warn { border-left: 4px solid var(--warn); }
+  .panel.bad { border-left: 4px solid var(--bad); }
+  .panel.accent { border-left: 4px solid var(--accent); }
+  .tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.8em; font-weight: 600; margin-right: 6px; }
+  .tag.p0 { background: #4a1e24; color: #f7768e; }
+  .tag.p1 { background: #4a3a1e; color: #e0af68; }
+  .tag.p2 { background: #1e3a4a; color: #7aa2f7; }
+  .tag.drop { background: #2a2f3d; color: var(--muted); text-decoration: line-through; }
+  .tag.visible { background: #1e4a2e; color: #9ece6a; }
+  .tag.internal { background: #2a2f3d; color: #8b93a7; }
+  .evidence { font-size: 0.92em; color: var(--muted); border-left: 2px solid var(--border); padding-left: 12px; margin: 8px 0; }
+  .evidence strong { color: var(--accent); }
+  ul, ol { padding-left: 24px; }
+  li { margin: 6px 0; }
+  .toc { background: var(--panel-2); padding: 16px 24px; border-radius: 8px; margin-bottom: 32px; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { margin: 4px 0; }
+  .toc a { color: var(--accent); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  .meta { color: var(--muted); font-size: 0.9em; }
+  blockquote { border-left: 4px solid var(--warn); padding: 8px 16px; margin: 16px 0; background: var(--panel); color: #c0caf5; font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>TaskForge v2 설계 참고서</h1>
+<p class="meta">목적: few-shot 프롬프팅 레퍼런스 · 대상: 비개발자 포함 · 상태: 설계안 (미구현)</p>
+
+<div class="toc">
+  <strong>목차</strong>
+  <ul>
+    <li><a href="#vision">1. Vision — 이 도구가 해결하려는 것</a></li>
+    <li><a href="#problem">2. 문제 인식 — 기존 TaskForge의 한계</a></li>
+    <li><a href="#principles">3. 핵심 원칙 — AI 친화적이라는 것</a></li>
+    <li><a href="#workflow">4. 새 워크플로우 — 3층 구조 + JIT</a></li>
+    <li><a href="#improvements">5. 7개 개선안 — 무엇을 추가할 것인가</a></li>
+    <li><a href="#dropped">6. 버린 아이디어 — 무엇을 추가하지 않을 것인가</a></li>
+    <li><a href="#directories">7. 디렉토리 구조</a></li>
+    <li><a href="#ux">8. 비개발자 UX — 용어 숨기기</a></li>
+    <li><a href="#research">9. 리서치 근거 요약</a></li>
+    <li><a href="#differentiation">10. 차별화 3요소</a></li>
+    <li><a href="#sources">11. Sources</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<h2 id="vision">1. Vision — 이 도구가 해결하려는 것</h2>
+
+<div class="panel accent">
+<p><strong>TaskForge v2는 사람 PM을 흉내내는 도구가 아니다. AI의 망각과 세션 단절을 파일시스템으로 보상하는 도구다.</strong></p>
+</div>
+
+<p>비개발자도 Claude Code로 큰 프로젝트 (특히 게임) 을 완성할 수 있게 하는 것. 핵심은:</p>
+<ul>
+  <li>AI는 매 세션 기억이 증발한다 → <strong>파일이 기억을 대신한다</strong></li>
+  <li>AI는 빈칸 추측을 못한다 → <strong>spec + 레퍼런스가 의도를 고정한다</strong></li>
+  <li>AI는 35분 지나면 품질이 떨어진다 → <strong>작업은 작게, 검증은 자주</strong></li>
+  <li>사용자는 개발자가 아닐 수 있다 → <strong>용어는 숨기고 질문으로만 수집</strong></li>
+</ul>
+
+<hr>
+
+<h2 id="problem">2. 문제 인식 — 기존 TaskForge의 한계</h2>
+
+<h3>문제 1: 큰 프로젝트 진행 불가</h3>
+<p>Discover 한 번으로 마일스톤 5개, 태스크 80개를 앞에서 다 정의하려 함.
+현실에선 그 시점엔 결정할 수 없는 것이 너무 많음. 결과: Opus PM이 3번째 마일스톤부터 헛소리 시작.</p>
+
+<h3>문제 2: 작은 작업에도 오버엔지니어링</h3>
+<p>CSS 한 줄 수정에도 discover→plan→execute 풀 플로우를 돌림. "이 도구 쓰느니 내가 직접 하는 게 빠른데?" 순간 발생.</p>
+<div class="evidence">
+<strong>근거:</strong> Martin Fowler / Marmelab 실측 — Kiro에서 간단한 날짜 표시 기능에 8 파일 1300줄 spec 생성. "sledgehammer to crack a nut" 문제는 Kiro/Spec Kit/BMAD 전부의 약점.
+</div>
+
+<h3>문제 3: 자연어 spec만으론 의도 전달 부족</h3>
+<p>"카드 게임 UI 만들어줘"로는 AI가 Slay the Spire인지 Hearthstone인지 모름. 자연어는 노이즈가 낌.</p>
+<div class="evidence">
+<strong>근거:</strong> CodePromptEval 벤치마크 — GPT-4o가 few-shot 추가로 47.1% → 57.5% pass@1 (+10.4%p). 코드 생성에서 특히 효과적 — naming patterns, error handling, abstractions, test structure 같은 컨벤션을 암묵적으로 전달.
+</div>
+
+<h3>문제 4: 세션 간 망각</h3>
+<p>태스크 2가 태스크 1의 결정을 모름. Handoff가 "의존성 있을 때만"이라 누락됨.</p>
+<div class="evidence">
+<strong>근거:</strong> "Why Your Multi-Agent Chain Fails at Agent 3" — 3번째 에이전트부터 컨텍스트 유실. 명시적 handoff 없이 "앞선 에이전트가 알려줬겠지" 가정이 깨짐.
+</div>
+
+<h3>문제 5: PM이 "Opus니까 똑똑하다" 가정</h3>
+<p>강제 체크 규칙이 없어서 PM도 빈틈 많은 spec을 통과시킴.</p>
+
+<hr>
+
+<h2 id="principles">3. 핵심 원칙 — AI 친화적이라는 것</h2>
+
+<p>사람 파이프라인과 AI 파이프라인의 차이:</p>
+
+<table>
+  <tr><th>영역</th><th>사람 방식</th><th>AI 친화적 방식</th></tr>
+  <tr><td>계획</td><td>앞에 다 짜고 시작</td><td><strong>JIT</strong> — 필요할 때만 상세화</tr></td>
+  <tr><td>문서</td><td>참고용</td><td><strong>정본(source of truth)</strong></td></tr>
+  <tr><td>회의</td><td>대화로 동기화</td><td><strong>명시적 handoff 파일</strong></td></tr>
+  <tr><td>결정</td><td>암묵적</td><td><strong>즉시 decisions/ 기록</strong></td></tr>
+  <tr><td>집중</td><td>8시간 지속</td><td><strong>35분 태스크 상한</strong></td></tr>
+  <tr><td>컨텍스트</td><td>누적됨</td><td><strong>매 세션 리셋, 파일로 복원</strong></td></tr>
+  <tr><td>검증</td><td>팀 리뷰</td><td><strong>self-verifier 체크리스트</strong></td></tr>
+</table>
+
+<div class="panel accent">
+<h4>8개 설계 원칙</h4>
+<ol>
+  <li><strong>JIT 계획</strong> — Vision만 고정, 나머지는 필요한 시점에 상세화</li>
+  <li><strong>파일시스템 = 기억</strong> — 모든 맥락을 파일로, 세션 간 증발 방지</li>
+  <li><strong>Spec은 계약</strong> — outcomes / scope / constraints / prior decisions / tasks / verification 6요소 필수</li>
+  <li><strong>크기별 루트 분기</strong> — tiny / normal / feature / milestone 4단계, 오버엔지니어링 방지</li>
+  <li><strong>명시적 Handoff</strong> — 조건부가 아닌 기본값. tiny만 스킵 허용</li>
+  <li><strong>자연어보다 레퍼런스</strong> — 작동하는 예시가 10줄 spec보다 강하다</li>
+  <li><strong>복잡한 결정엔 CoT 스캐폴드</strong> — "알아서 해" 금지, 생각 순서 제공</li>
+  <li><strong>중요 산출물은 Verifier로 재검증</strong> — 자연어 체크리스트로 self-verify</li>
+</ol>
+</div>
+
+<hr>
+
+<h2 id="workflow">4. 새 워크플로우 — 3층 구조 + JIT</h2>
+
+<h3>전체 플로우</h3>
+<pre><code>Phase 0. VISION         → vision.json (고정, 안 바뀜)
+   ↓
+Phase 1. CONCEPT        → concept.json (교체 가능, M0 retro에서만 수정)
+   ↓
+Phase 2. ROADMAP        → roadmap.json (느슨한 sketch, 마일스톤 리스트만)
+   ↓
+Phase 3. M0 PROTOTYPE   → 재미/가능성 검증 + 레퍼런스 생산
+   ↓  ← M0 retro에서 concept 뒤집기 가능
+Phase 4. MILESTONE LOOP (반복)
+   ├─ discover {M}    (그 마일스톤만 sketch → full로 승격)
+   ├─ plan {M}        (스프린트/태스크 분해)
+   ├─ execute         (태스크 실행)
+   ├─ validate        (자동 검증)
+   ├─ playtest/UAT    (사용자가 직접 확인, 정성 피드백)
+   └─ retro           (배운 것 → roadmap 갱신)
+   ↓
+Phase 5. POLISH &amp; SHIP</code></pre>
+
+<h3>3층 구조 — 핵심 아이디어</h3>
+
+<table>
+  <tr><th>층</th><th>파일</th><th>성격</th><th>변경 가능성</th></tr>
+  <tr><td>Vision</td><td>vision.json</td><td>프로젝트의 "왜"</td><td>안 바뀜 (바뀌면 새 프로젝트)</td></tr>
+  <tr><td>Concept</td><td>concept.json</td><td>구현 방향 (장르, 코어 루프)</td><td>M0 retro에서만 가능</td></tr>
+  <tr><td>Roadmap</td><td>roadmap.json</td><td>마일스톤 리스트</td><td>매 retro마다 갱신</td></tr>
+  <tr><td>Plan</td><td>project-plan.json</td><td>현재 마일스톤의 태스크</td><td>현재 active 한 개만 full</td></tr>
+</table>
+
+<h3>마일스톤 상세 레벨 3단계</h3>
+<ul>
+  <li><code>name-only</code> — 이름만. "언젠가 할 것."</li>
+  <li><code>sketch</code> — 목적, 대략 범위, openQuestions. plan은 없음.</li>
+  <li><code>full</code> — spec-card + plan 완전 분해. <strong>현재 active 마일스톤만 이 상태.</strong></li>
+</ul>
+
+<hr>
+
+<h2 id="improvements">5. 7개 개선안 — 무엇을 추가할 것인가</h2>
+
+<h3>① Vision / Concept / Roadmap 3층 분리 + JIT Discover
+<span class="tag p0">P0</span> <span class="tag visible">사용자 가시</span></h3>
+<p>현재 마일스톤만 full spec. 나머지는 sketch. 각 마일스톤 끝에서 retro → 다음 마일스톤 discover.</p>
+<div class="evidence">
+<strong>근거:</strong> HTN (Hierarchical Task Network) — AI 계획의 표준. JIT 루프 "Plan→Act→Reflect→Repeat"는 agentic 계획의 핵심.<br>
+<strong>반대 근거도 있음:</strong> "AI agents benefit from MORE detailed upfront planning than human teams" — AI는 빈칸 추측을 못함.<br>
+<strong>결론:</strong> Vision은 detailed upfront, 마일스톤은 JIT. 균형.
+</div>
+
+<h3>② 작업 크기 분기 게이트
+<span class="tag p0">P0</span> <span class="tag visible">사용자 가시</span></h3>
+<p>진입 시 먼저 분류: tiny / normal / feature / milestone.</p>
+
+<table>
+  <tr><th>크기</th><th>예시</th><th>루트</th></tr>
+  <tr><td>tiny (5분)</td><td>CSS 색 변경</td><td><code>/taskforge-quick</code>, spec 없이</td></tr>
+  <tr><td>normal (35분)</td><td>버그 수정, 단일 기능</td><td>acceptance criteria만, spec 없음</td></tr>
+  <tr><td>feature (여러 태스크)</td><td>로그인 플로우 전체</td><td>full SDD (requirements → design → tasks)</td></tr>
+  <tr><td>milestone (마일스톤 단위)</td><td>결제 통합</td><td>retro + replan 루프 포함</td></tr>
+</table>
+
+<div class="evidence">
+<strong>근거:</strong> Kiro/BMAD 전부의 약점 — "sledgehammer to crack a nut". TaskForge의 차별화 포인트.<br>
+단 복잡한 ML classifier는 오버킬. 간단한 규칙 기반으로 충분.
+</div>
+
+<h3>③ References 레이어 (few-shot / CoT / verifier)
+<span class="tag p0">P0</span> <span class="tag visible">사용자 가시</span></h3>
+
+<p>3개 디렉토리:</p>
+<ul>
+  <li><code>references/</code> — 검증된 프로토타입/샘플 (HTML, 스크린샷, 예시 JSON)</li>
+  <li><code>prompts/cot/</code> — CoT 스캐폴드 템플릿 (결정 시 생각 순서)</li>
+  <li><code>verifiers/</code> — 자연어 체크리스트</li>
+</ul>
+
+<p>수집은 질문으로:</p>
+<pre><code>Q1. 비슷한 게임/앱 있어요? (유튜브 링크, 스크린샷, 게임 이름 OK)
+    → references/ 저장
+Q2. 디자인 톤 비슷한 이미지 있어요?
+    → references/visual/ 저장
+Q3. 이것만은 꼭 지켜야 한다는 규칙?
+    → constraints.md 저장
+Q4. "완성됐다"를 뭘로 판단해요? (3가지)
+    → verification.md 저장</code></pre>
+
+<div class="evidence">
+<strong>근거:</strong> CodePromptEval — few-shot이 +10.4%p 성능 향상. 코드에서 특히 강력. AWS Agentic Arcade 사례도 evaluation agent를 별도 station으로 운영.
+</div>
+
+<h3>④ contextManifest (AGENTS.md 표준 준수)
+<span class="tag p1">P1</span> <span class="tag internal">내부</span></h3>
+
+<p>태스크마다 "이 파일을 이 순서로 읽어라" 명시. 우리 식 새 포맷 만들지 않고 <strong>AGENTS.md 표준 준수</strong> (호환성).</p>
+
+<pre><code>{
+  "taskId": "T-M1-003",
+  "contextManifest": [
+    { "path": "vision.json", "priority": 0 },
+    { "path": "concept.json", "priority": 1 },
+    { "path": "references/ui-pattern-login.html", "priority": 2 },
+    { "path": "decisions/D001-auth-strategy.md", "priority": 3 },
+    { "path": "handoffs/T-M1-002.json", "priority": 4 }
+  ]
+}</code></pre>
+
+<div class="evidence">
+<strong>근거:</strong> AGENTS.md는 이미 Codex/Cursor 등이 채택한 업계 표준. arxiv 2602.20478 "Codified Context: Infrastructure for AI Agents in a Complex Codebase".
+</div>
+
+<h3>⑤ PM 강제 체크리스트 (6-area)
+<span class="tag p1">P1</span> <span class="tag internal">내부</span></h3>
+
+<p>PM이 plan 생성 후 자동 검증:</p>
+<ol>
+  <li>Commands — 실행 명령이 명시됐나?</li>
+  <li>Testing — 검증 방법이 있나?</li>
+  <li>Project structure — 파일 위치가 정해졌나?</li>
+  <li>Code style — 스타일 가이드 참조 있나?</li>
+  <li>Git workflow — 브랜치/커밋 규칙 있나?</li>
+  <li>Boundaries — 하면 안 되는 것이 명시됐나?</li>
+</ol>
+<p>+ 추가: 태스크 35분 이하인가? verification criteria가 자연어로 체크 가능한가?</p>
+
+<div class="evidence">
+<strong>근거:</strong> Addy Osmani / O'Reilly — "Use the six-area checklist as a sanity check before handing off to the agent". 업계 정설.
+</div>
+
+<h3>⑥ Handoff 기본 ON
+<span class="tag p1">P1</span> <span class="tag internal">내부</span></h3>
+
+<p>조건부가 아닌 기본값. tiny 태스크만 스킵 허용.</p>
+
+<pre><code>{
+  "taskId": "T-M1-002",
+  "completedAt": "2026-04-20T...",
+  "whatChanged": ["auth/login.ts 생성", "auth/types.ts 수정"],
+  "decisionsMade": ["D001: JWT 대신 세션 쿠키 사용"],
+  "hintsForNext": "로그인 성공 시 /dashboard 리다이렉트 필요",
+  "openItems": ["비밀번호 재설정 플로우 미구현"]
+}</code></pre>
+
+<div class="evidence">
+<strong>근거:</strong> OpenAI Agents SDK / LangChain 모두 handoff를 1급 시민으로 다룸. "Why Your Multi-Agent Chain Fails at Agent 3" — 명시적 handoff 없으면 3번째부터 깨짐.
+</div>
+
+<h3>⑦ 가드레일 (비용/시간 상한)
+<span class="tag p1">P1</span> <span class="tag internal">내부</span></h3>
+
+<p>태스크당:</p>
+<ul>
+  <li><code>maxTurns</code> — 기본 20</li>
+  <li><code>maxCostUSD</code> — 기본 $2</li>
+  <li><code>maxWallTimeMin</code> — 기본 35</li>
+</ul>
+<p>초과 시 자동 중단 + 현재 상태 저장 + 사용자 확인.</p>
+
+<div class="evidence">
+<strong>근거:</strong> "a single runaway agent can burn through API budgets in hours" — 실제 발생하는 문제. 비용 거의 0, 이득 명확.
+</div>
+
+<hr>
+
+<h2 id="dropped">6. 버린 아이디어 — 무엇을 추가하지 않을 것인가</h2>
+
+<div class="panel warn">
+기능 경쟁으로 가면 BMAD/Spec Kit의 열화판이 된다. 아래는 <strong>명시적으로 거부</strong>한 항목들.
+</div>
+
+<table>
+  <tr><th>아이디어</th><th>거부 이유</th></tr>
+  <tr>
+    <td>patterns/ 전역 경험 축적</td>
+    <td>장기적 가치 있지만 비개발자 UX에 안 맞고 정체성 벗어남. 실전 1~2 프로젝트 후 재평가.</td>
+  </tr>
+  <tr>
+    <td>별도 Verifier 에이전트</td>
+    <td>self-verifier 체크리스트로 충분. 복잡도 대비 이득 적음.</td>
+  </tr>
+  <tr>
+    <td>Agent Teams (peer-to-peer 통신)</td>
+    <td>Claude Code 자체 기능. 지금 TaskForge엔 오버엔지니어링. 필요하면 위에 얹기.</td>
+  </tr>
+  <tr>
+    <td>Living Spec (spec-as-source, Tessl 방식)</td>
+    <td>야심 찬 방향이지만 과거 MDD 실패 반복 위험. 지금은 하지 않음.</td>
+  </tr>
+  <tr>
+    <td>다중 모델 교차검증</td>
+    <td>비용 2배, 품질 개선 한계.</td>
+  </tr>
+  <tr>
+    <td>의존성 자동 탐지 / 영향 추적</td>
+    <td>IDE 영역. TaskForge가 할 일 아님.</td>
+  </tr>
+  <tr>
+    <td>decisions/ 정식화 (1차 릴리스)</td>
+    <td>"중요한 결정만"의 기준이 모호. 쓰다 보면 자연 추가. 1차에선 뺌.</td>
+  </tr>
+</table>
+
+<hr>
+
+<h2 id="directories">7. 디렉토리 구조</h2>
+
+<pre><code>_workspace/projects/{projectId}/
+├── vision.json              고정 불변층 (왜)
+├── concept.json             구현 방향 (M0 retro에서만 변경)
+├── roadmap.json             마일스톤 리스트 (느슨함)
+├── spec-card.json           현재 active 마일스톤의 spec
+├── project-plan.json        현재 active 마일스톤의 태스크
+├── constraints.md           절대 규칙
+├── verification.md          완성 체크리스트
+│
+├── references/              검증된 레퍼런스 (few-shot 재료)
+│   ├── ui-pattern-login.html
+│   ├── visual/
+│   │   └── mood-reference.png
+│   └── card-schema.example.json
+│
+├── prompts/
+│   └── cot/                 CoT 스캐폴드 템플릿
+│       ├── balance-decision.md
+│       └── system-design.md
+│
+├── verifiers/               자연어 체크리스트
+│   └── card-schema-check.md
+│
+├── handoffs/                태스크 간 맥락 전달 (기본 ON)
+│   └── {task-id}.json
+│
+├── locks/                   멀티세션 안전
+│   └── {task-id}.lock
+│
+├── milestones/              과거 마일스톤 아카이브
+│   ├── M0/
+│   │   ├── spec-card.json
+│   │   ├── plan.json
+│   │   ├── retrospective.md
+│   │   ├── playtest.md
+│   │   └── validations/
+│   └── M1/...
+│
+├── validations/             현재 마일스톤 검증
+│   ├── task-{id}.json
+│   ├── sprint-{id}.json
+│   └── audit-milestone-{id}.md
+│
+└── execution-state.json     실행 상태</code></pre>
+
+<hr>
+
+<h2 id="ux">8. 비개발자 UX — 용어 숨기기</h2>
+
+<div class="panel good">
+<strong>원칙:</strong> few-shot, CoT, verifier, spec 같은 용어는 <strong>절대 노출 안 함</strong>. 사용자는 질문에 답하고 파일을 모으기만.
+</div>
+
+<h3>번역표</h3>
+<table>
+  <tr><th>전문 용어</th><th>사용자에게 보이는 것</th></tr>
+  <tr><td>Few-shot prompting</td><td><strong>"비슷한 예시 모으기"</strong> — "이런 느낌으로 만들고 싶어요"</td></tr>
+  <tr><td>Chain of Thought</td><td><strong>"생각 순서 정하기"</strong> — "이 결정 내릴 땐 뭘 먼저 봐요?"</td></tr>
+  <tr><td>Verifier</td><td><strong>"완성 체크리스트"</strong> — "이걸 다 통과하면 OK"</td></tr>
+  <tr><td>Reference</td><td><strong>"본보기"</strong> — "이거랑 비슷하게"</td></tr>
+  <tr><td>Spec</td><td><strong>"설계 메모"</strong> — 혹은 아예 언급 안 함</td></tr>
+  <tr><td>Handoff</td><td><strong>(노출 안 함, 시스템 내부)</strong></td></tr>
+</table>
+
+<h3>CoT 노출 예시 (복잡한 결정 태스크)</h3>
+<pre><code>이건 중요한 결정이라 [생각 순서]를 먼저 정할게요:
+  1. 현재 플레이어 능력치 확인
+  2. 비슷한 위치 보스들 비교
+  3. 극단 케이스 점검
+  4. 최종 제안
+
+이 순서로 진행할까요? [Y/n/순서 수정]</code></pre>
+<p>"CoT"라는 말 없이 동일 효과. 다음에 비슷한 태스크 오면 재사용.</p>
+
+<h3>Verifier 노출 예시</h3>
+<pre><code>완성 체크리스트 (verification.md):
+□ 로그인 버튼을 눌렀을 때 3초 안에 반응한다
+□ 잘못된 비밀번호 입력 시 "다시 확인해주세요" 문구가 뜬다
+□ 모바일 화면에서도 버튼이 눌린다</code></pre>
+<p>실행 에이전트가 완료 후 이 체크리스트를 스스로 읽고 통과/실패 표시. self-verifier.</p>
+
+<hr>
+
+<h2 id="research">9. 리서치 근거 요약</h2>
+
+<h3>정량 근거</h3>
+<div class="panel">
+  <ul>
+    <li><strong>Few-shot 효과:</strong> 정확도 +10%, F1 +7% (일반), 코드 생성 GPT-4o +10.4%p pass@1</li>
+    <li><strong>AI 성능 저하 시점:</strong> 35분 후 degradation 관찰</li>
+    <li><strong>Tool calling 실패율:</strong> 실전 3-15%</li>
+    <li><strong>God Agent 라우팅 오류:</strong> 20+ 툴 시 잘못된 툴 선택 30%</li>
+  </ul>
+</div>
+
+<h3>핵심 실패 모드 (Columbia DAPLab, 2026)</h3>
+<ol>
+  <li>Context loss — 대형 프로젝트에서 아키텍처 이해 상실</li>
+  <li>Silent errors — placeholder, TODO, skipped test 은폐</li>
+  <li>Reasoning loops — 같은 실패 반복, 비용 폭주</li>
+  <li>Security vulns — API key 노출, 접근 제어 미준수</li>
+  <li>God Agent — 하나의 에이전트가 모든 것을 하려 함</li>
+  <li>Greenfield 우수 vs Real 실패 — 스니펫은 이해, 시스템은 못함</li>
+</ol>
+
+<h3>검증된 패턴</h3>
+<table>
+  <tr><th>패턴</th><th>출처</th></tr>
+  <tr><td>Planner/Worker 분리 (큰 머리 + 실행자)</td><td>Anthropic, OpenAI, Google</td></tr>
+  <tr><td>HTN 계층 분해</td><td>AI 계획 이론 표준</td></tr>
+  <tr><td>Spec-Driven 6-area 체크리스트</td><td>Addy Osmani, O'Reilly</td></tr>
+  <tr><td>AGENTS.md 컨텍스트 파일</td><td>Codex, Cursor 등 다수 채택</td></tr>
+  <tr><td>명시적 Handoff 1급 시민</td><td>OpenAI SDK, LangChain</td></tr>
+  <tr><td>Evaluation agent 분리 (게임)</td><td>AWS Agentic Arcade</td></tr>
+  <tr><td>Task locking (멀티세션)</td><td>Claude Code Agent Teams 공식</td></tr>
+</table>
+
+<h3>경고등 (Marmelab의 "Waterfall Strikes Back")</h3>
+<blockquote>
+Spec-Driven Development는 잘못 쓰면 워터폴 복귀다. 실행 전 spec을 다 쓰는 것 = 워터폴.
+TaskForge도 이 덫을 피해야 한다 — 실행 → 배움 → spec 갱신 루프가 자연스럽게 돌아야 함.
+</blockquote>
+
+<hr>
+
+<h2 id="differentiation">10. 차별화 3요소</h2>
+
+<div class="panel bad">
+<strong>경고:</strong> "또 다른 SDD 프레임워크"로 수렴하면 패배. BMAD/Spec Kit/Kiro와 기능 경쟁하지 말 것.
+</div>
+
+<div class="panel good">
+<h4>TaskForge v2의 차별화는 세 가지로 좁힌다</h4>
+<ol>
+  <li><strong>한국어 + 비개발자 UX</strong> — 용어 숨김, 질문 기반 수집. 경쟁 도구 전부 영어 + 개발자 타겟.</li>
+  <li><strong>작업 크기 자동 분기</strong> — tiny/normal/feature/milestone 4단계. 경쟁 도구 전부 "sledgehammer to crack a nut" 문제.</li>
+  <li><strong>Claude Code 네이티브</strong> — 스킬/서브에이전트/락 기본 활용. 별도 IDE 아닌 Claude Code 위에서 돌아감.</li>
+</ol>
+</div>
+
+<h3>구현 우선순위</h3>
+<table>
+  <tr><th>Phase</th><th>항목</th></tr>
+  <tr>
+    <td><span class="tag p0">P0</span> 먼저</td>
+    <td>① Vision/Concept/Roadmap 3층 &nbsp; ② 작업 크기 분기 &nbsp; ③ References 레이어</td>
+  </tr>
+  <tr>
+    <td><span class="tag p1">P1</span> P0와 함께</td>
+    <td>④ contextManifest (AGENTS.md) &nbsp; ⑤ PM 6-area 체크리스트 &nbsp; ⑥ Handoff 기본 ON &nbsp; ⑦ 가드레일</td>
+  </tr>
+  <tr>
+    <td><span class="tag p2">P2</span> 실전 후 재평가</td>
+    <td>Evaluation agent / patterns/ / Living spec / decisions/ 정식화</td>
+  </tr>
+</table>
+
+<hr>
+
+<h2 id="sources">11. Sources</h2>
+
+<h3>JIT &amp; 계획 이론</h3>
+<ul>
+  <li><a href="https://www.tungstenautomation.com/learn/blog/the-agentic-ai-planning-pattern">Agentic AI Planning Pattern for Enterprise Workflows</a></li>
+  <li><a href="https://medium.com/@FrankGoortani/ai-agile-and-the-return-of-detailed-planning-a-new-balance-for-leaders-469d09831a70">AI, Agile, and the Return of Detailed Planning</a></li>
+  <li><a href="https://zylos.ai/research/2026-01-16-long-running-ai-agents">Long-Running AI Agents and Task Decomposition - Zylos</a></li>
+</ul>
+
+<h3>계층 분해 / Task Routing</h3>
+<ul>
+  <li><a href="https://www.geeksforgeeks.org/artificial-intelligence/hierarchical-task-network-htn-planning-in-ai/">HTN Planning - GeeksforGeeks</a></li>
+  <li><a href="https://www.ibm.com/think/topics/ai-agent-planning">What is AI Agent Planning - IBM</a></li>
+  <li><a href="https://www.patronus.ai/ai-agent-development/ai-agent-routing">AI Agent Routing - Patronus</a></li>
+  <li><a href="https://www.anthropic.com/research/building-effective-agents">Building Effective AI Agents - Anthropic</a></li>
+</ul>
+
+<h3>Few-shot / 프롬프팅</h3>
+<ul>
+  <li><a href="https://www.morphllm.com/few-shot-prompting">Few-Shot Prompting Research &amp; Code Generation Guide 2026 - Morph</a></li>
+  <li><a href="https://www.promptingguide.ai/techniques/fewshot">Few-Shot Prompting - Prompting Guide</a></li>
+</ul>
+
+<h3>Handoff &amp; Context</h3>
+<ul>
+  <li><a href="https://openai.github.io/openai-agents-python/handoffs/">Handoffs - OpenAI Agents SDK</a></li>
+  <li><a href="https://dev.to/whoffagents/why-your-multi-agent-chain-fails-at-agent-3-and-the-one-line-fix-23la">Why Multi-Agent Chain Fails at Agent 3 - DEV</a></li>
+  <li><a href="https://agents.md/">AGENTS.md - 공식 표준</a></li>
+  <li><a href="https://arxiv.org/abs/2602.20478">Codified Context Infrastructure - arxiv</a></li>
+  <li><a href="https://developers.googleblog.com/architecting-efficient-context-aware-multi-agent-framework-for-production/">Context-aware multi-agent framework - Google</a></li>
+</ul>
+
+<h3>Spec 품질</h3>
+<ul>
+  <li><a href="https://addyosmani.com/blog/good-spec/">How to Write a Good Spec for AI Agents - Addy Osmani</a></li>
+  <li><a href="https://www.oreilly.com/radar/how-to-write-a-good-spec-for-ai-agents/">How to Write a Good Spec for AI Agents - O'Reilly</a></li>
+</ul>
+
+<h3>SDD 도구 비교 / 경고</h3>
+<ul>
+  <li><a href="https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html">Understanding SDD: Kiro, Spec Kit, Tessl - Martin Fowler</a></li>
+  <li><a href="https://marmelab.com/blog/2025/11/12/spec-driven-development-waterfall-strikes-back.html">SDD: The Waterfall Strikes Back - Marmelab</a></li>
+  <li><a href="https://github.com/cameronsjo/spec-compare">Spec Compare (6 도구) - GitHub</a></li>
+  <li><a href="https://github.com/github/spec-kit">GitHub Spec Kit</a></li>
+  <li><a href="https://github.com/bmad-code-org/BMAD-METHOD">BMAD-METHOD - GitHub</a></li>
+  <li><a href="https://kiro.dev/">Kiro - AWS</a></li>
+</ul>
+
+<h3>실패 모드</h3>
+<ul>
+  <li><a href="https://daplab.cs.columbia.edu/general/2026/01/08/9-critical-failure-patterns-of-coding-agents.html">9 Critical Failure Patterns of Coding Agents - Columbia DAPLab</a></li>
+  <li><a href="https://dev.to/nebulagg/why-90-of-ai-agent-projects-fail-and-the-patterns-that-fix-it-1dma">Why 90% of AI Agent Projects Fail - DEV</a></li>
+  <li><a href="https://github.com/vectara/awesome-agent-failures">Awesome Agent Failures - GitHub</a></li>
+</ul>
+
+<h3>게임 개발 사례</h3>
+<ul>
+  <li><a href="https://aws.amazon.com/blogs/gametech/ai-assisted-game-production-from-static-concept-to-interactive-prototype/">AI-assisted game production - AWS</a></li>
+  <li><a href="https://tanujarora.in/blog/2026-04-15-spec-driven-development-in-game-dev-a-complete-guide/">SDD in Game Dev - Tanuj Arora</a></li>
+</ul>
+
+<h3>Claude Code 오케스트레이션</h3>
+<ul>
+  <li><a href="https://code.claude.com/docs/en/agent-teams">Agent Teams - Anthropic Docs</a></li>
+  <li><a href="https://addyosmani.com/blog/code-agent-orchestra/">Code Agent Orchestra - Addy Osmani</a></li>
+</ul>
+
+<hr>
+
+<p class="meta">TaskForge v2 Design Reference — 이 문서는 구현 전 설계안이며, 실전 1~2개 프로젝트를 거쳐 검증될 예정.</p>
+
+</body>
+</html>

@@ -1,319 +1,201 @@
 ---
 name: taskforge-plan
-description: Automatically breaks down a project into milestones → sprints → tasks based on the SpecCard. Use when the user says "/taskforge-plan", "make a plan", "break down the work", "split it up", or similar. Used as the next step after discover is complete. Generates a plan that includes wave parallelism, acceptance criteria, and mustHaves.
+description: Automatically breaks down the current milestone into sprints → tasks based on the SpecCard. Use when the user says "/taskforge-plan", "make a plan", "break down the work", or similar. v2 change: plans only the ACTIVE milestone (JIT), not the whole project at once. Opus PM with mandatory 6-area checklist.
 ---
 
-# Plan — Project Work Breakdown (Opus PM)
+# Plan — Milestone Work Breakdown (v2 JIT + PM Checklist)
 
-Break the entire project into milestones → sprints → tasks based on the SpecCard.
-This is the most critical step in the project, so it runs with the Opus model.
+Break the **current active milestone** into sprints → tasks based on its SpecCard.
 
-**Core principle: The user does not directly edit the plan.** AI creates a good plan; the user only approves it. If the plan is weak, AI should investigate further and ask questions to improve it — not delegate the editing to the user.
+**v2 key changes**:
+1. **JIT scope**: Plan only the active milestone. Future milestones stay as `sketch` until their turn.
+2. **PM 6-area checklist**: Mandatory self-validation before showing plan to user.
+3. **35-minute task ceiling**: Any task estimated over 35 min is automatically split.
+4. **contextManifest**: Every task specifies which files to read and in what order.
+5. **References injected**: Tasks reference `references/` and `prompts/cot/` from discover.
+6. **Guardrails**: maxTurns / maxCostUSD / maxWallTimeMin on every task.
+
+This is the most critical step, so it runs with the Opus model.
+
+**Core principle**: The user does not directly edit the plan. AI creates a good plan; the user only approves it.
 
 ## Prerequisites
 
-- `_workspace/spec-card.json` must exist
-- If missing: "Please define the project first with `/taskforge-discover`"
+- `_workspace/projects/{projectId}/spec-card.json` must exist for the active milestone
+- `roadmap.json` must exist (v2) — to know which milestone is active
+- **Project selection**: auto-select if only one project, ask if multiple
+- All paths below are relative to `_workspace/projects/{projectId}/`
 
 ## Plan Creation Flow
 
-A plan is not simply chopping a spec-card into tasks. It goes through **research → questions → design → validation**.
+### Phase 0: Determine Active Milestone (v2)
+
+1. Read `roadmap.json` → find milestone with `status: "active"` and `detail: "full"`
+2. Read `spec-card.json` for that milestone
+3. Read `vision.json` and `concept.json` if they exist — for global constraints
+4. Read `constraints.md` if it exists
+5. Read `references/` list (to know what's available for injection)
+6. Read `prompts/cot/` list (to know what CoT templates exist)
+7. If no active milestone found: "먼저 /taskforge-discover로 이번 마일스톤을 정의해주세요."
 
 ### Phase 1: Codebase Analysis
 
-If existing code exists in the project directory, analyze it first:
+If existing code exists in the project directory:
+1. File tree scan (Glob) — understand full structure
+2. Read key files — entry points, config files, main modules
+3. Verify actual tech stack matches spec-card
+4. Identify existing patterns — code style, architecture, naming conventions
 
-1. **File tree scan** — Understand the full structure (Glob)
-2. **Read key files** — Entry points, config files, main modules (Read)
-3. **Verify tech stack** — Check actual technologies used in package.json, .csproj, project.godot, etc.
-4. **Identify existing patterns** — Code style, architecture patterns, naming conventions
-
-If there is no existing code (new project), skip Phase 1.
-
-If analysis conflicts with the spec-card (e.g., spec-card says React but code is Vue), confirm with the user.
+If no existing code (new project): skip Phase 1.
+If analysis conflicts with spec-card: confirm with user.
 
 ### Phase 2: Identify Gaps and Ask Questions
 
-Based on the spec-card and codebase analysis, identify areas where **information is insufficient** to create the plan.
-
-If there are gaps, ask the user. Do not ask all questions at once — start with the most important.
+Based on spec-card and codebase, find insufficient areas. Only ask what AI cannot decide.
 
 Gap types:
-- **Missing architecture decisions**: "Is login session-based or JWT-based?"
-- **Unclear scope**: "Does it include an admin panel, or just the user-facing side?"
-- **Unconfirmed technical constraints**: "What Unity version? Is the MCP server already installed?"
-- **Priority conflicts**: "Features A and B conflict — which takes priority?"
-- **External dependencies**: "Which payment gateway for billing integration? Do you have an API key?"
+- Missing architecture decisions scoped to this milestone
+- Unclear scope: "Does this include X or just Y?"
+- Unconfirmed technical constraints
+- Priority conflicts between features
 
-**Question principles:**
-- If AI can make the decision, decide and record the rationale in the plan (don't ask the user unnecessarily)
-- Only ask about things only the user can answer (business decisions, environmental constraints, etc.)
-- Reflect answers in the spec-card as well (add to designDecisions)
+**Decision principle**: If AI can decide → decide and record in `decisions/D{n}-{topic}.md`. Only ask if it's a user-only decision (business, preference, environment).
 
-### Phase 3: Conventions + Breakdown Design
+### Phase 3: Conventions
 
-Before breaking down tasks, establish project conventions and save them to `_workspace/conventions.md`.
+Before breaking down tasks, establish/update `conventions.md`:
 
-**Why conventions matter**: Every task executes in a clean context. Without shared conventions, task A might use `#FF4444` for cancel buttons while task B uses `#E53935`. Conventions are the single source of truth that keeps all tasks consistent — and they persist across quick fixes too.
-
-**What to define** (based on project type):
-
-For UI projects:
-- Color palette (primary, secondary, danger, success, etc.)
-- Typography (font family, sizes, weights)
-- Component naming convention
-- File/folder structure pattern
-- Spacing/layout system
-
-For code projects:
-- Naming conventions (camelCase, snake_case, etc.)
-- File/folder structure pattern
-- Error handling pattern
-- API response format
-- State management approach
-
-For game projects:
-- Asset naming convention
-- Scene/level structure
-- Input handling pattern
-- Physics/collision layer naming
-- UI style guide
-
-For all projects:
-- Language/framework-specific idioms to follow
-- Import ordering
-- Test naming convention (if tests exist)
-
-**How conventions are generated**:
-- If existing code: extract patterns from Phase 1 analysis (don't invent — document what's already there)
-- If new project: derive from tech stack + spec-card design decisions
-- Keep it concise — one page max. Rules, not essays.
-
-**Example** (`_workspace/conventions.md`):
 ```markdown
 # Project Conventions
 
 ## Colors
 - Primary: #3B82F6
-- Danger/Cancel: #EF4444
-- Success: #10B981
-- Text: #1F2937
-- Background: #F9FAFB
+- Danger: #EF4444
 
-## Components
-- One component per file
-- Name: PascalCase (LoginButton.jsx)
-- Styles: co-located CSS module (LoginButton.module.css)
-
-## File Structure
-- src/components/ — UI components
-- src/pages/ — route pages
-- src/utils/ — shared utilities
-- src/api/ — API client functions
+## Components  
+- One component per file, PascalCase
 
 ## Code Style
-- Functions: camelCase
-- Constants: UPPER_SNAKE_CASE
-- async/await over .then() chains
+- async/await over .then()
 - Early returns over nested if/else
 ```
 
-**Who reads conventions**:
-- Every `/taskforge-execute` task gets conventions injected into context
-- `/taskforge-quick` reads conventions before making changes
-- `/taskforge-validate` checks for convention violations
+Every task execution reads this file. Every quick fix reads this file. This is the consistency anchor.
 
-After conventions are set, break down into milestones → sprints → tasks.
+### Phase 4: Work Breakdown
 
-### Phase 4: Self-Validate the Plan
-
-Validate before saving the plan:
-
-**Check 1 — Executability**: Can code be written from just the `plan` field of each task?
-- Vague plan: "Create appropriate UI" → ❌ Unclear what to build
-- Good plan: "Create an email + password form in src/components/Login.jsx. POST to /api/auth/login on submit" → ✅
-
-**Check 2 — Connectivity**: Are there any gaps in the dependency chain between tasks?
-- If Task B uses a file created by Task A, but A is not in B's dependencies → ❌
-
-**Check 3 — Completeness**: Are all must-have features from the spec-card covered by tasks?
-- If "search feature" is in spec-card but no search-related task in the plan → ❌
-
-**Check 4 — Verifiability**: Are each task's acceptanceCriteria actually auto/manually verifiable?
-
-If issues are found during validation, **self-correct** without showing to the user, then re-validate. Only ask the user about problems that cannot be self-corrected.
-
-## Breakdown Hierarchy
+Break the milestone into: **Sprints → Tasks → Waves**
 
 ```
-Project
-  └─ Milestone — A shippable or demo-able unit
-       └─ Sprint — A verifiable unit
-            └─ Task — The smallest unit an AI agent can complete in one session
-                 └─ Wave — Tasks in the same wave can run in parallel
+Milestone (active only)
+  └─ Sprint — verifiable unit
+       └─ Task — completable in one session (≤35 min)
+            └─ Wave — tasks in same wave run in parallel
 ```
 
-## Breakdown Principles
+**Breakdown rules**:
+1. **Task size ceiling**: Estimated ≤35 min. If over → split automatically.
+2. **Completion condition**: Definable in one sentence: "done when..."
+3. **Minimize dependencies**: Enable parallel execution.
+4. **Validation environment first**: Prerequisites from spec-card → milestone 1, sprint 1, wave 1.
+5. **Harness as tool**: Only assign harness mode when genuine domain need exists.
 
-1. **Task size**: Changes spanning one to a few files. Split if too large.
-2. **Completion condition**: Must be definable in a single sentence: "done when..."
-3. **Minimize dependencies**: Minimize dependencies to allow parallel execution.
-4. **Harness as a tool**: Only assign harness mode when a genuine business need arises. Do not create work to justify using a harness.
-5. **Validation environment first**: If spec-card has `validationStrategy.prerequisites`, place those setup items as tasks in **milestone 1, sprint 1, wave 1**.
-
-## Auto-Generating Validation Environment Tasks
-
-If spec-card has `validationStrategy`:
-
-1. Convert each item in the `prerequisites` array to a task
-2. Place in milestone 1, sprint 1, wave 1 (before all code work)
-3. For subsequent tasks, `validation.auto` is sourced from the spec-card's validation strategy
-
-**Example — Unity project:**
-```
-spec-card.validationStrategy:
-  prerequisites:
-    - { step: "Create Unity project", type: "setup" }
-    - { step: "Install and connect Unity MCP server", type: "tool" }
-
-→ Auto-generated tasks:
-  m1-s1-t1: "Create Unity project" [easy/haiku, wave 1]
-    acceptanceCriteria: ["Assets/ directory exists", "ProjectSettings/ exists"]
-  m1-s1-t2: "Install and verify Unity MCP server connection" [medium/sonnet, wave 1]
-    acceptanceCriteria: ["MCP connection test passes"]
-```
-
-**Example — Web project (no prerequisites):**
-→ Start directly with feature tasks, no environment setup tasks
-
-For all subsequent tasks, use appropriate items in `validation.auto` based on the spec-card strategy:
-- Unity: `["unity-build", "unity-console-check"]`
-- Node.js: `["build", "typecheck", "lint"]`
-- Python: `["run", "ruff", "mypy"]`
-- Web HTML: `["open-browser"]` (manual if automation is not possible)
-
-## Difficulty Rating Criteria
-
+**Difficulty → Model mapping**:
 | Difficulty | Model | Criteria |
-|------------|-------|----------|
-| easy | haiku | Boilerplate, config files, simple copy/move, CSS changes, constant definitions |
-| medium | sonnet | General feature implementation, bug fixes, refactoring, API integration |
-| hard | sonnet | Complex implementation, multi-file changes, optimization — plan already provides detailed spec |
+|-----------|-------|---------|
+| easy | haiku | Boilerplate, config, CSS, constants |
+| medium | sonnet | General features, bug fixes, refactoring |
+| hard | sonnet | Complex multi-file — plan provides detailed spec |
 
-**Why hard tasks use sonnet, not opus**: The plan phase (Opus PM) already produces detailed, executable specs — endpoint-by-endpoint API design, DB schemas, directory structure, etc. Execution is "implement according to spec," which sonnet handles well. Opus remains reserved for **planning and validation** where design judgment is needed, not for following a spec.
+Opus: planning + milestone QA only. Never execution.
 
-Fixed assignments (unchanged): PM (planning) = opus, Discovery = opus, Sprint validation = sonnet, Milestone QA = opus
+### Phase 5: PM 6-Area Checklist (v2 mandatory)
 
-## Execution Mode Determination (3 Modes)
+Before saving the plan, Opus PM self-validates every task against 6 areas:
 
-| Mode | Criteria | Example |
-|------|----------|---------|
-| **single** | One perspective is sufficient, no domain expertise needed | "Build the HTML skeleton" |
-| **single + skills** | One perspective but domain expertise raises quality | "Apply API security" + api-security-checklist |
-| **harness** | Multiple expert perspectives + cross-validation needed | "Design game balancing" → game-balance harness |
+| Area | Check |
+|------|-------|
+| 1. Commands | Does the task have a specific, runnable command or action? |
+| 2. Testing | Is there a verifiable acceptance criterion (not subjective)? |
+| 3. Project structure | Are file paths explicit? |
+| 4. Code style | Does conventions.md apply? Is it referenced? |
+| 5. Boundaries | Is it clear what's OUT of scope for this task? |
+| 6. References | Are relevant references/CoT templates linked in contextManifest? |
 
-### Skill Injection Decision
+**+ v2 extra checks**:
+- Task estimated ≤35 min? (if not: split)
+- Verification criteria in natural language (user-checkable)?
+- contextManifest complete?
+- Guardrails set?
 
-There are 100 harnesses in `harnesses/`, each containing domain-specific skills.
-Even without using a full harness, **injecting just the skill raises quality.**
+If any check fails: **self-correct** before showing to user. Ask user only for issues AI cannot fix.
 
-Skill examples:
-- `api-security-checklist` — OWASP Top 10, auth patterns, input validation
-- `component-patterns` — 6 React component design patterns, state management strategies
-- `quest-design-patterns` — 12 quest archetypes, reward psychology, difficulty curves
-- `hook-writing` — 15 hook patterns, retention psychology
+### Phase 6: Self-Validate the Plan
 
-When creating tasks, Opus PM evaluates "Is there a skill that helps here?" and adds it to the `skills` field.
-Just as we don't create work to justify a harness, **we don't create work to justify a skill.** Work comes first; skills assist.
+**Check 1 — Executability**: Can code be written from just the `plan` field?
+- Bad: "Create appropriate UI" ❌
+- Good: "Create email+password form in src/components/Login.jsx. POST to /api/auth/login on submit." ✅
 
-The harness/skill catalog is available in `harnesses/INDEX.md`.
+**Check 2 — Connectivity**: No gaps in dependency chain between tasks.
 
-## Wave Design (NEW)
+**Check 3 — Completeness**: All must-have features from spec-card covered.
 
-Assign wave numbers to tasks within a sprint to optimize parallel execution.
+**Check 4 — Verifiability**: Each task's acceptanceCriteria is actually checkable.
 
-**Rules:**
-- Wave 1: Tasks with no dependencies (can run simultaneously)
-- Wave 2: Tasks that depend on wave 1
-- Wave N: Tasks that depend on wave N-1
-- Tasks in the same wave must not conflict on files
+**Check 5 — Anti-stub**: No task that would produce a TODO/placeholder result (detect in plan description).
 
-**Example:**
-```
-Sprint 1.1:
-  Wave 1: [HTML skeleton, CSS reset, constant definitions] — parallel
-  Wave 2: [Game loop, input handling] — parallel after Wave 1
-  Wave 3: [Wire up integration] — after Wave 2
-```
-
-## Acceptance Criteria Design (NEW)
-
-Specify verifiable completion conditions for each task.
-
-**Good acceptance criteria:**
-- `src/index.html file exists` — can be verified by file existence check
-- `Contains <!DOCTYPE html> tag` — can be verified by grep
-- `npm run build completes without errors` — verifiable by running command
-
-**Bad acceptance criteria:**
-- `Code is clean` — subjective, unverifiable
-- `Performance is good` — no standard defined
-
-## Must-Haves Design (NEW)
-
-Design mustHaves for goal-backward validation for each task:
-
-- **truths**: Observable behaviors that must be true when this task is achieved
-- **artifacts**: Concrete file paths that must exist
-- **keyLinks**: Connections between files (A imports B which is used in C)
-
-## Validation Methods
-
-Design a validation strategy for each unit:
-
-- **Task**: Auto validation items in `validation.auto` + `acceptanceCriteria`
-- **Sprint**: Describe integration validation method in `validationStrategy`
-- **Milestone**: Describe QA method in `validationStrategy`
+Self-correct without showing to user. Ask user only for uncorrectable issues.
 
 ## Output Format
 
-Save to `_workspace/project-plan.json`:
+Save to `project-plan.json`:
 
 ```json
 {
   "projectName": "Project Name",
+  "milestoneId": "M1",
   "milestones": [
     {
-      "id": "m1",
+      "id": "M1",
       "name": "Milestone name",
-      "description": "What will be done when complete",
+      "description": "What will be demo-able when complete",
       "validationStrategy": "How to validate",
       "sprints": [
         {
-          "id": "m1-s1",
+          "id": "M1-S1",
           "name": "Sprint name",
           "description": "Description",
           "dependencies": [],
           "validationStrategy": "Integration validation method",
           "tasks": [
             {
-              "id": "m1-s1-t1",
+              "id": "M1-S1-T1",
               "name": "Task name",
               "description": "What needs to be done",
-              "plan": "Specifically how to do it",
+              "plan": "Specifically how — file paths, function names, exact behavior",
               "dependencies": [],
               "difficulty": "easy | medium | hard",
-              "model": "haiku | sonnet | opus",
+              "model": "haiku | sonnet",
               "wave": 1,
-              "executionMode": "single | harness",
+              "executionMode": "single | single+skills | harness",
               "harnessId": null,
               "skills": [],
+              "contextManifest": [
+                { "path": "vision.json", "priority": 0 },
+                { "path": "concept.json", "priority": 1 },
+                { "path": "conventions.md", "priority": 2 },
+                { "path": "references/ui-pattern.html", "priority": 3 },
+                { "path": "decisions/D001-auth.md", "priority": 4 },
+                { "path": "handoffs/M1-S1-T0.json", "priority": 5 }
+              ],
+              "cotTemplate": "prompts/cot/balance-decision.md",
               "acceptanceCriteria": [
-                "src/index.html file exists",
-                "Contains <!DOCTYPE html> tag"
+                "src/index.html exists",
+                "Contains <!DOCTYPE html> tag",
+                "npm run build completes without errors"
               ],
               "mustHaves": {
-                "truths": ["Page renders correctly in the browser"],
+                "truths": ["Page renders correctly in browser"],
                 "artifacts": ["src/index.html"],
                 "keyLinks": []
               },
@@ -321,59 +203,70 @@ Save to `_workspace/project-plan.json`:
                 "auto": ["build", "typecheck"],
                 "manual": null
               },
-              "estimatedFiles": ["src/index.html"]
+              "guardrails": {
+                "maxTurns": 20,
+                "maxCostUSD": 2.0,
+                "maxWallTimeMin": 35
+              },
+              "estimatedFiles": ["src/index.html"],
+              "estimatedMinutes": 15
             }
           ]
         }
       ]
     }
   ],
-  "createdAt": "2026-04-07T...",
-  "totalTasks": 24,
-  "modelDistribution": { "haiku": 8, "sonnet": 16 },
-  "waveStats": { "maxWave": 3, "parallelizable": 16 }
+  "createdAt": "2026-04-20T...",
+  "totalTasks": 12,
+  "modelDistribution": { "haiku": 4, "sonnet": 8 },
+  "waveStats": { "maxWave": 3, "parallelizable": 8 }
 }
 ```
 
 ## Showing the User
 
-After saving, show a tree-format summary:
+After saving, show tree-format summary:
 
 ```
-Milestone 1: Basic Game Loop (8 tasks)
-  ├─ Sprint 1.1: Canvas Setup (5 tasks, 3 waves)
-  │   ├─ Wave 1: HTML skeleton [easy/haiku] + CSS reset [easy/haiku]
-  │   ├─ Wave 2: Game loop [medium/sonnet] + Input handling [medium/sonnet]
-  │   └─ Wave 3: Wire up integration [medium/sonnet]
-  └─ Sprint 1.2: Character (3 tasks, 2 waves)
-      ├─ Wave 1: Dino rendering [medium/sonnet]
-      └─ Wave 2: Jump physics [medium/sonnet] + Duck [medium/sonnet]
-      
-Total tasks: 24 | haiku 8 / sonnet 16
-Parallelizable: 16 (67%)
+마일스톤 M1: 기본 게임 루프 (12 태스크)
+  ├─ 스프린트 1: 캔버스 셋업 (5 태스크, 3 웨이브)
+  │   ├─ Wave 1: HTML 뼈대 [쉬움/빠름] + CSS 리셋 [쉬움/빠름]
+  │   ├─ Wave 2: 게임 루프 [보통] + 입력 처리 [보통]
+  │   └─ Wave 3: 통합 연결 [보통]
+  └─ 스프린트 2: 캐릭터 (3 태스크, 2 웨이브)
+      ├─ Wave 1: 캐릭터 렌더링 [보통]
+      └─ Wave 2: 점프 물리 [보통] + 웅크리기 [보통]
+
+총 태스크: 12 | 빠름 4개 / 보통 8개
+병렬 가능: 8개 (67%)
+예상 비용: ~$0.50 | 예상 시간: ~45분
 ```
 
-Ask the user: "This is the plan. Changes needed, or shall we proceed?"
-- If the user describes changes ("Milestone 2 looks too big", "I want to do search first"), incorporate the feedback and rewrite the plan. No need for the user to touch the JSON directly. Mention `/taskforge-plan-edit` only as an emergency option for fine-grained adjustments.
-- If the user approves ("looks good", "proceed", "go ahead"):
+Ask the user: "계획이에요. 바꿀 부분이 있나요, 아니면 진행할까요?"
 
-## Plan Approval (built-in)
+## Plan Approval
 
 On approval:
-1. Add `"status": "approved"` and `"approvedAt"` to `_workspace/project-plan.json`
-2. Initialize `_workspace/execution-state.json`:
-   ```json
-   {
-     "projectId": "...",
-     "status": "ready",
-     "currentMilestone": null,
-     "currentSprint": null,
-     "currentTask": null,
-     "completedTasks": [],
-     "failedTasks": [],
-     "skippedTasks": [],
-     "totalCost": 0,
-     "startedAt": null
-   }
-   ```
-3. Guide the user: "Plan approved. Start the first task with `/taskforge-execute`!"
+1. Add `"status": "approved"`, `"approvedAt"` to `project-plan.json`
+2. Initialize `execution-state.json`:
+```json
+{
+  "projectId": "card-battle",
+  "milestoneId": "M1",
+  "status": "ready",
+  "currentSprint": null,
+  "currentTask": null,
+  "completedTasks": [],
+  "failedTasks": [],
+  "skippedTasks": [],
+  "totalCost": 0,
+  "guardrailEvents": [],
+  "startedAt": null
+}
+```
+3. Create `locks/` directory
+4. Create `telemetry.jsonl` with header entry:
+```json
+{"t":"...","event":"plan_approved","milestoneId":"M1","totalTasks":12,"estimatedCostUSD":0.5}
+```
+5. Guide: "계획 승인됐어요. /taskforge-execute로 첫 번째 작업을 시작해볼까요!"

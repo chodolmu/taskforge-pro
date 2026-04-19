@@ -1,186 +1,214 @@
 ---
 name: taskforge-discover
-description: Defines a new project and generates a SpecCard. Use this skill when the user says "create a project", "start a new project", "I want to build something", "/taskforge-discover", or similar. Also triggers when the user has a project idea that hasn't been fully defined yet.
+description: Defines the current milestone in detail and generates a SpecCard. Use when the user says "/taskforge-discover", "define this milestone", "let's detail M1", or similar. In v2, discover runs per-milestone (JIT), not once for the whole project. If the user hasn't run /taskforge-vision yet, suggest it first for large projects.
 ---
 
-# Discover — Project Definition
+# Discover — Milestone Spec Definition (v2 JIT)
 
-A skill that defines the project clearly through conversation and generates a SpecCard for subsequent planning.
+A skill that takes a milestone from `sketch` → `full` by asking focused questions and generating a SpecCard.
 
-Use friendly, accessible language so non-developers feel comfortable. Use technical terms only when necessary, and always explain them.
+**v2 key change**: Discover runs *per milestone*, not once for the whole project. Only the active milestone gets a full spec. Future milestones stay as `sketch` or `name-only` until their turn.
 
-## Flow
+Use friendly, accessible language. Never expose technical terms like "spec", "handoff", "few-shot", or "CoT" to the user.
 
-### Step 1: Understand the Idea
+## Step 0: Context Check
 
-Start with a single question: "What would you like to build?"
+### Check for vision/roadmap (v2)
+1. Look for `_workspace/projects/{projectId}/vision.json` and `roadmap.json`
+2. If they **exist**: read them — this is a milestone-level discover. Show the user:
+   ```
+   프로젝트: {projectName}
+   지금 작업할 마일스톤: {milestoneId} — {milestoneTitle}
+   목적: {purpose}
+   미결 질문: {openQuestions}
+   
+   이 마일스톤을 자세히 정의해볼게요.
+   ```
+3. If they **don't exist** and this looks like a large project (user mentions multiple phases/milestones): suggest `/taskforge-vision` first.
+   ```
+   큰 프로젝트처럼 보여요. 먼저 전체 방향을 가볍게 잡고 싶으면 /taskforge-vision을 써보세요.
+   지금 바로 시작하고 싶으면 계속 진행할게요.
+   ```
+4. If this is a small/single-milestone project: proceed directly (no vision needed).
 
-From the user's response, identify:
-- What they want to build (project type)
-- Why they want to build it (motivation/purpose)
-- Who will use it (target users)
+### Check for existing projects
+Before starting, scan `_workspace/projects/`:
+- If projects exist, show them and ask: new project or continue existing?
 
-Do not ask all questions at once. Gather information naturally, one at a time, through conversation.
+## Step 1: Understand the Milestone Goal
 
-### Step 2: Define Core Features
+If coming from vision/roadmap, the milestone purpose is already known. Confirm and refine:
+- "이 마일스톤 끝나면 뭘 보여줄 수 있어야 해요?" (What should be demo-able when this milestone is done?)
+- "지금 가장 확실한 것과, 아직 모르는 것을 나눠봐요."
 
-Once the idea is clear, organize the core features.
+If starting fresh (no vision):
+- Start with: "뭘 만들고 싶으세요?"
+- One question at a time. Don't interrogate.
 
-From what the user describes, distinguish:
-- Features that are absolutely necessary (must-have)
-- Features that would be nice to have (nice-to-have)
+## Step 2: Collect Reference Materials (Few-shot layer — hidden from user)
 
-If the user has trouble listing features, suggest examples from similar services/apps: "Would you also need something like this?"
+This step collects materials that will be silently converted into few-shot references for AI execution. **Never use terms like "few-shot" or "reference injection" with the user.**
 
-### Step 3: Tech Stack
+Ask naturally:
+- "비슷한 느낌의 게임이나 앱이 있어요? 이름, 링크, 스크린샷 뭐든 OK예요."
+  → Save to `references/`
+- "디자인 톤이 비슷한 이미지가 있나요? (없어도 됩니다)"
+  → Save to `references/visual/`
+- "이것만은 꼭 지켜야 한다는 규칙이 있나요?"
+  → Save to `constraints.md`
 
-If the user is a developer, ask about their preferred tech stack.
-If the user is a non-developer, AI recommends an appropriate stack with a brief explanation.
+**M0 prototype milestone special handling**:
+- Frame it as: "이 단계에서 만든 결과물이 앞으로 모든 작업의 본보기가 돼요. 지금 가장 '이런 느낌이었으면' 하는 게 있나요?"
+- Whatever they provide becomes the primary reference for all future milestones.
 
-Examples:
-- "For a browser-based game, HTML + JavaScript is the best fit. No installation needed — runs directly in the browser."
-- "For a mobile app, I'd recommend React Native. Build once, run on both iPhone and Android."
+## Step 3: Decisions for This Milestone
 
-### Step 4: Design Decisions
+Identify decisions needed *only for this milestone*. Don't front-load decisions for future milestones.
 
-Organize upfront decisions required based on the project's characteristics.
+Gap types to check:
+- Architecture choices scoped to this milestone
+- Unclear scope boundaries ("does this include X or not?")
+- Technical constraints ("which Unity version?", "online or offline?")
 
-Examples:
-- Single-player vs. multiplayer
-- Whether it works offline
-- Data storage method (local vs. server)
-- Whether responsive design is needed
+**Decision principles**:
+- If AI can decide: decide and record in `decisions/D{n}-{topic}.md`. Don't ask the user.
+- Only ask about things only the user can answer (business, preference, constraints).
+- Record each decision: what was decided and why.
 
-For items the user finds hard to decide, AI recommends and explains the reasoning.
-
-### Step 5: Validation Strategy
-
-Define "how to verify the finished product" based on the tech stack and project type.
-If the user has difficulty deciding, AI recommends based on the project type.
-
-Items to define:
-
-1. **Build/compile check** — Command to put the project in a runnable state
-2. **Run check** — How to actually run it and verify there are no errors
-3. **Quality check** — Code-level validation such as lint, type checking
-4. **Functional check** — How to verify that core features actually work
-
-Platform examples:
-
-| Platform | Build | Run check | Quality check | Functional check |
-|----------|-------|-----------|---------------|-----------------|
-| Web (HTML/JS) | None | Open in browser | eslint | Confirm no console errors |
-| Node.js/TS | `npm run build` | `node dist/index.js` | tsc, eslint | Verify API response |
-| Unity (C#) | Unity MCP build | Unity play mode | Roslyn analyzer | Scene load + basic behavior |
-| Godot (GDScript) | Godot CLI export | Godot --headless run | GDScript lint | Verify scene tree |
-| Python | None | `python main.py` | ruff, mypy | Match expected output |
-| React/Next.js | `npm run build` | `npm run dev` | tsc, eslint | Verify page rendering |
-| Flutter | `flutter build` | `flutter run` | `dart analyze` | Verify widget tree |
-
-The validation strategy includes not just "what commands to run" but also **what must be prepared before validation is possible**.
-
-Example — Unity game project:
-```
-Validation strategy:
-  Prerequisites:
-    1. Create Unity project (version: 2022.3 LTS)
-    2. Install Unity MCP server and connect to Claude Code
-    3. Test MCP connection (ping)
-  Build check: Unity MCP → BuildPipeline.BuildPlayer
-  Run check: Unity MCP → EditorApplication.EnterPlaymode
-  Quality check: Roslyn analyzer warnings = 0
-  Functional check: Scene load → play mode → no console errors
+**Decision file format** (`decisions/D001-topic.md`):
+```markdown
+# D001: {주제}
+- 상태: 결정됨
+- 결정: {내용}
+- 이유: {근거}
+- 영향받는 파일: []
+- 재검토 조건: {언제 다시 볼지}
 ```
 
-Example — Godot game:
-```
-Validation strategy:
-  Prerequisites:
-    1. Create Godot project (version: 4.x)
-    2. Configure Godot MCP server (if available)
-    3. If not: use CLI export method
-  Build check: godot --headless --export-release
-  Run check: godot --headless --run (check error code)
-  Quality check: GDScript lint
-  Functional check: Manual — provide the user a checklist after running
-```
+## Step 4: Completion Checklist (Verifier layer — shown as plain checklist)
 
-AI recommendation principles:
-- **Prerequisites are critical** — If validation tools (MCP, CLI, etc.) are not present, include installation/setup in the plan first
-- Only suggest methods that can actually run in the user's environment
-- "Cannot automate validation" is a valid answer — convert that item to a manual confirmation checklist
-- Automate where possible; ask the user when automation isn't feasible
-- Prerequisite items are automatically placed as tasks in `/taskforge-plan`
+Define "done" for this milestone. Frame as a simple checklist:
+- "이 마일스톤이 끝났다고 말하려면 뭐가 돼야 해요? 3가지만 말해줘요."
 
-### Step 6: Confirm and Save
+Convert answers to a verifiable checklist in `verification.md`:
+```markdown
+# {milestoneId} 완성 체크리스트
 
-Show the gathered information as a SpecCard summary:
-
-```
-Project: [Name]
-Type: [Web app / Game / CLI / etc.]
-Description: [One or two sentence description]
-
-Core Features:
-1. [Feature A]
-2. [Feature B]
-3. [Feature C]
-
-Tech Stack: [HTML, JavaScript, ...]
-
-Design Decisions:
-- [Decision 1]
-- [Decision 2]
-
-Validation Strategy:
-  Prerequisites: [Environment setup, MCP configuration, etc.]
-  Build: [Build command or "none"]
-  Run: [How to verify execution]
-  Quality: [Lint/type check, etc.]
-  Functional: [How to verify core features work]
+□ {조건 1 — 사용자가 직접 확인 가능한 문장}
+□ {조건 2}
+□ {조건 3}
 ```
 
-If the user says "looks good" / confirms, save the SpecCard.
-If they request changes, update only the relevant parts and show it again.
+**Good criteria**: "로그인 버튼을 누르면 3초 안에 반응한다" (testable)
+**Bad criteria**: "코드가 깔끔하다" (subjective)
+
+## Step 5: Tech Stack & Validation Strategy
+
+If user is non-developer: AI recommends and briefly explains.
+If user is developer: ask preferred stack.
+
+Define validation strategy (same as v1 — platform-specific commands).
+
+## Step 6: CoT Scaffold Generation (hidden from user)
+
+For complex decision tasks identified in this milestone, silently generate a CoT template in `prompts/cot/`:
+
+If a task involves a complex judgment (e.g., balance tuning, system design):
+- Generate `prompts/cot/{topic}.md` with a reasoning scaffold:
+  ```markdown
+  # {주제} 결정 순서
+  1. 현재 상태 확인
+  2. 영향 범위 계산
+  3. 극단 케이스 점검
+  4. 최종 제안
+  ```
+- This is injected silently into execution context for matching tasks.
+
+## Step 7: Confirm and Save
+
+Show gathered information as a SpecCard summary (in plain language):
+
+```
+마일스톤: {id} — {title}
+목표: {what will be demo-able when done}
+핵심 기능:
+  1. {feature A}
+  2. {feature B}
+기술: {stack}
+본보기 자료: {references collected, if any}
+완성 기준: {checklist summary}
+결정된 사항: {decisions made}
+```
+
+On user confirmation: save.
+On requested changes: update only relevant parts and show again.
 
 ## SpecCard Storage
 
-Save to `_workspace/spec-card.json` in the project working directory.
+### Project ID (if new project)
+Generate from name: lowercase, spaces→hyphens, remove special chars.
+Example: "Card Battle" → `card-battle`
 
+### Files to create/update
+
+```
+_workspace/projects/{projectId}/
+├── spec-card.json              ← This milestone's full spec
+├── verification.md             ← Completion checklist
+├── constraints.md              ← Hard rules (append if exists)
+├── references/                 ← Reference materials collected
+│   └── {files from user}
+├── prompts/
+│   └── cot/
+│       └── {topic}.md          ← CoT scaffolds (if any)
+└── decisions/
+    └── D{n}-{topic}.md         ← Decisions made
+```
+
+**spec-card.json schema (v2)**:
 ```json
 {
-  "projectName": "Project Name",
+  "projectId": "card-battle",
+  "projectName": "Card Battle",
+  "milestoneId": "M1",
   "projectType": "game | webapp | mobile | cli | api | other",
-  "description": "One or two sentence project description",
+  "description": "One or two sentence milestone description",
   "targetUser": "Target users",
   "features": [
     { "name": "Feature name", "priority": "must" },
     { "name": "Feature name", "priority": "nice" }
   ],
   "techStack": ["HTML5", "JavaScript", "Canvas API"],
-  "designDecisions": [
-    "Single-player",
-    "Works offline"
-  ],
+  "designDecisions": ["Single-player", "Works offline"],
+  "references": ["references/ui-pattern.html", "references/visual/mood.png"],
+  "cotTemplates": ["prompts/cot/balance-decision.md"],
   "validationStrategy": {
-    "prerequisites": [
-      { "step": "Create Unity project", "type": "setup" },
-      { "step": "Install and connect Unity MCP server", "type": "tool" }
-    ],
-    "build": { "command": "Unity MCP BuildPipeline", "auto": true },
-    "run": { "command": "Unity MCP EnterPlaymode", "auto": true },
-    "quality": { "command": "Roslyn analyzer", "auto": true },
-    "functional": { "method": "Verify no console errors", "auto": false, "checklist": ["Verify scene load", "Verify basic controls"] }
+    "prerequisites": [],
+    "build": { "command": "none", "auto": true },
+    "run": { "command": "open index.html", "auto": false },
+    "quality": { "command": "eslint src/", "auto": true },
+    "functional": { "method": "checklist", "auto": false, "checklist": [] }
   },
-  "createdAt": "2026-04-06T..."
+  "createdAt": "2026-04-20T..."
 }
 ```
 
-If the working directory doesn't exist, ask the user for the project folder location.
+Update `roadmap.json` milestone status: `detail: "sketch"` → `detail: "full"`, `status: "active"`.
+
+## Guardrail Check (v2)
+
+Before finishing, verify:
+- [ ] At least one completion criterion is testable (not subjective)
+- [ ] Milestone scope is achievable (not the entire project)
+- [ ] At least one reference collected (or user explicitly said "없음")
+- [ ] All decisions are recorded in `decisions/`
+
+If any fail: ask one more focused question to fix it before saving.
 
 ## Notes
 
-- Do not ask multiple questions at once. Proceed naturally, like a conversation.
-- It's fine if the user is vague. Helping them clarify is the role of this skill.
-- Do not force non-technical users to choose between technical options. AI makes the judgment and recommends.
-- When done, guide them: "You can now use `/taskforge-plan` to create a work plan."
+- One question at a time. Conversation, not interrogation.
+- Non-developer users: AI decides tech choices and explains briefly.
+- If user is vague: help clarify — that's the job of this skill.
+- When done: "이제 /taskforge-plan으로 작업을 쪼갤 수 있어요."
+- **v2 new**: Also mention "/taskforge-vision을 먼저 실행하면 전체 로드맵을 잡을 수 있어요" if this is a large project.

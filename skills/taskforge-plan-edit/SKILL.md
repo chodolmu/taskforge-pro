@@ -9,8 +9,10 @@ Edit the project plan according to user requests.
 
 ## Prerequisites
 
-- `_workspace/project-plan.json` must exist
-- If missing: "Please create a plan first with `/taskforge-plan`"
+- A project with a plan must exist under `_workspace/projects/{projectId}/`
+- **Project selection**: Same as `/taskforge-execute` — auto-select if only one, ask if multiple
+- All file paths below are relative to `_workspace/projects/{projectId}/`
+- If no plan exists: "Please create a plan first with `/taskforge-plan`"
 
 ## Supported Edits
 
@@ -26,13 +28,17 @@ Edit the project plan according to user requests.
 
 | Field | Notes when editing |
 |-------|--------------------|
-| difficulty/model | Changing difficulty also updates model automatically (easy=haiku, medium=sonnet, hard=opus) |
+| difficulty/model | Changing difficulty also updates model automatically (easy=haiku, medium=sonnet, hard=sonnet). Opus is reserved for PM/validation — never assign opus to an execution task. |
 | wave | Verify no file conflicts within the same wave. Must align with dependency relationships |
 | dependencies | Adding/removing requires recalculating wave numbers |
 | acceptanceCriteria | Write as verifiable statements (file exists, content present, build passes, etc.) |
 | mustHaves | Maintain structure: truths (observable), artifacts (file paths), keyLinks (connections) |
 | skills | Use valid skill names from `harnesses/INDEX.md` |
 | executionMode | When changing to "harness", also specify harnessId |
+| contextManifest (v2) | List of `{ path, priority }` — files read by the task in priority order. Lower priority = read first. Paths relative to project root. |
+| cotTemplate (v2) | Optional path to a CoT scaffold under `prompts/cot/`. Only set for tasks involving complex judgment. |
+| guardrails (v2) | `{ maxTurns, maxCostUSD, maxWallTimeMin }`. Defaults 20 / $2.00 / 35. Raise only with clear justification. |
+| estimatedMinutes (v2) | Must be ≤35. If editing pushes it over, split the task. |
 
 ### Sprint Level
 - **Add/remove/rename/reorder**
@@ -76,20 +82,20 @@ Change only the modified fields and append a change record to the `editHistory` 
 
 ```
 Plan updated:
-  [+] Task added: "Error handling" (m1-s2-t4, medium/sonnet, wave 2)
-  [~] Difficulty changed: "Jump physics" medium→hard (sonnet→opus)
+  [+] Task added: "Error handling" (M1-S2-T4, medium/sonnet, wave 2)
+  [~] Difficulty changed: "Jump physics" medium→hard (both use sonnet)
   [↻] Wave recalculated: Sprint 1.2 (wave 1→2→3)
 
-  Before: 24 tasks | haiku 8 / sonnet 12 / opus 4
-  After:  25 tasks | haiku 8 / sonnet 11 / opus 6
+  Before: 24 tasks | haiku 8 / sonnet 16
+  After:  25 tasks | haiku 8 / sonnet 17
 
-  Approve with `/taskforge-plan-approve` to start execution
-  Let me know if you need more changes
+  변경사항이 반영됐어요. 추가로 고칠 부분이 있으면 말해주세요, 없으면 /taskforge-execute로 진행하세요.
 ```
 
 ## Notes
 
 - Ask for clarification if the edit request is ambiguous
-- For large-scale changes (e.g., restructuring an entire milestone), suggest `/taskforge-pivot`
-- Warn when trying to modify an already-completed task: "This task is already complete. Modifying it will invalidate the handoff and validation results. Proceed?"
+- For restructuring an entire milestone, suggest running `/taskforge-retro` first (if the milestone is finishing) or re-running `/taskforge-plan` (if the plan needs full regeneration)
+- Warn when trying to modify an already-completed task: "이 작업은 이미 완료됐어요. 수정하면 handoff와 검증 결과가 무효화됩니다. 진행할까요?"
 - Editing tasks in an in-progress sprint also requires updating execution-state
+- If `estimatedMinutes` is raised above 35, automatically suggest splitting the task instead

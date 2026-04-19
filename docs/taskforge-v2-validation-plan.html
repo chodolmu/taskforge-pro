@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>TaskForge v2 검증 계획</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #161a22;
+    --panel-2: #1c2130;
+    --border: #2a2f3d;
+    --text: #e6e8ee;
+    --muted: #8b93a7;
+    --accent: #7aa2f7;
+    --good: #9ece6a;
+    --warn: #e0af68;
+    --bad: #f7768e;
+    --code-bg: #0b0d12;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+    background: var(--bg); color: var(--text);
+    max-width: 980px; margin: 0 auto; padding: 40px 24px;
+    line-height: 1.7;
+  }
+  h1 { font-size: 2rem; border-bottom: 2px solid var(--accent); padding-bottom: 12px; }
+  h2 { font-size: 1.5rem; margin-top: 2.5rem; color: var(--accent); border-left: 4px solid var(--accent); padding-left: 12px; }
+  h3 { font-size: 1.15rem; margin-top: 1.8rem; color: #c0caf5; }
+  h4 { font-size: 1rem; color: var(--muted); margin-top: 1.4rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  p, li { color: var(--text); }
+  code { background: var(--code-bg); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; color: #f7768e; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px; overflow-x: auto; }
+  pre code { background: none; color: #c0caf5; padding: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; background: var(--panel); border-radius: 8px; overflow: hidden; }
+  th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--panel-2); color: var(--accent); font-weight: 600; }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin: 16px 0; }
+  .panel.good { border-left: 4px solid var(--good); }
+  .panel.warn { border-left: 4px solid var(--warn); }
+  .panel.bad { border-left: 4px solid var(--bad); }
+  .panel.accent { border-left: 4px solid var(--accent); }
+  .tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.8em; font-weight: 600; margin-right: 6px; }
+  .tag.go { background: #1e4a2e; color: #9ece6a; }
+  .tag.nogo { background: #4a1e24; color: #f7768e; }
+  .tag.phase1 { background: #1e3a4a; color: #7aa2f7; }
+  .tag.phase2 { background: #3a2e1e; color: #e0af68; }
+  .tag.phase3 { background: #2a1e4a; color: #bb9af7; }
+  .tag.critical { background: #4a1e24; color: #f7768e; }
+  .tag.key { background: #4a3a1e; color: #e0af68; }
+  .verdict-go { color: var(--good); font-weight: 600; }
+  .verdict-nogo { color: var(--bad); font-weight: 600; }
+  .evidence { font-size: 0.92em; color: var(--muted); border-left: 2px solid var(--border); padding-left: 12px; margin: 8px 0; }
+  .evidence strong { color: var(--accent); }
+  ul, ol { padding-left: 24px; }
+  li { margin: 6px 0; }
+  .toc { background: var(--panel-2); padding: 16px 24px; border-radius: 8px; margin-bottom: 32px; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { margin: 4px 0; }
+  .toc a { color: var(--accent); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  .meta { color: var(--muted); font-size: 0.9em; }
+  blockquote { border-left: 4px solid var(--warn); padding: 8px 16px; margin: 16px 0; background: var(--panel); color: #c0caf5; font-style: italic; }
+  .phase-header {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--panel-2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px 20px; margin: 20px 0 12px;
+  }
+  .phase-header .phase-num { font-size: 2rem; font-weight: 700; color: var(--accent); line-height: 1; }
+  .phase-header .phase-info { flex: 1; }
+  .phase-header .phase-title { font-size: 1.1rem; font-weight: 600; color: var(--text); }
+  .phase-header .phase-meta { font-size: 0.88em; color: var(--muted); margin-top: 2px; }
+  .cost-row td:nth-child(3) { color: var(--warn); font-weight: 600; }
+  .cost-total td { background: var(--panel-2); font-weight: 600; color: var(--accent); }
+  .improvement-row td:nth-child(2) { color: var(--good); }
+  .improvement-row td:nth-child(3) { color: var(--muted); font-size: 0.9em; }
+  .key-metric { background: var(--panel-2); border: 2px solid var(--warn); border-radius: 8px; padding: 14px 18px; margin: 12px 0; }
+  .key-metric strong { color: var(--warn); }
+  .fail-branch { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin: 10px 0; }
+  .fail-branch h4 { margin-top: 0; color: var(--bad); text-transform: none; font-size: 1rem; letter-spacing: 0; }
+  .fail-branch ul { margin: 0; }
+</style>
+</head>
+<body>
+
+<h1>TaskForge v2 검증 계획</h1>
+<p class="meta">목적: 설계 가설 검증 &nbsp;·&nbsp; 사용자 개입 불필요 (telemetry 자동 수집) &nbsp;·&nbsp; 상태: 사전 선언 (Phase 1 시작 전)</p>
+
+<div class="toc">
+  <strong>목차</strong>
+  <ul>
+    <li><a href="#principles">1. 검증 원칙 4가지</a></li>
+    <li><a href="#telemetry">2. telemetry.jsonl 스키마</a></li>
+    <li><a href="#phase1">3. Phase 1 — Smoke Test (Week 1)</a></li>
+    <li><a href="#phase2">4. Phase 2 — A/B 비교 (Week 2~3)</a></li>
+    <li><a href="#phase3">5. Phase 3 — 실전 검증 (2~3개월)</a></li>
+    <li><a href="#failure">6. 실패 분기 (사전 설계)</a></li>
+    <li><a href="#cost">7. 예상 비용</a></li>
+    <li><a href="#expectations">8. 수치 개선 기대값 (사전 선언)</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<div class="panel accent">
+  <p><strong>사용자 개입 불필요.</strong> 모든 측정은 <code>telemetry.jsonl</code> 자동 수집. 사용자는 결과만 확인. AI가 스스로 판단해서 진행하는 자동 검증 체계.</p>
+</div>
+
+<hr>
+
+<h2 id="principles">1. 검증 원칙 4가지</h2>
+
+<div class="panel accent">
+  <ol>
+    <li><strong>가설 먼저, 지표 나중</strong> — "이 숫자가 이 값 이상이면 성공"을 사전 선언</li>
+    <li><strong>자동 수집 우선</strong> — 수동 집계가 필요한 지표는 측정하지 않음</li>
+    <li><strong>3-Phase 점진 확대</strong> — 1개 → 3개 → 10개 프로젝트 순서</li>
+    <li><strong>실패 시 분기 사전 설계</strong> — Phase별로 "실패 시 무엇을 의심할지" 미리 정함</li>
+  </ol>
+</div>
+
+<hr>
+
+<h2 id="telemetry">2. telemetry.jsonl 스키마</h2>
+
+<p>모든 측정의 근거. <code>_workspace/projects/{id}/telemetry.jsonl</code>에 자동 append.</p>
+
+<pre><code>{"t":"2026-04-20T10:15:00Z","event":"task_start","taskId":"M1-S1-T3","size":"feature","referencesInjected":["ui-pattern.html"],"cotUsed":true,"manifestFiles":5}
+{"t":"2026-04-20T10:33:00Z","event":"task_end","taskId":"M1-S1-T3","outcome":"pass","retryCount":0,"tokens":12450,"costUSD":0.42,"wallMin":18}
+{"t":"2026-04-20T10:33:05Z","event":"handoff_created","taskId":"M1-S1-T3"}
+{"t":"2026-04-20T10:33:10Z","event":"guardrail_triggered","taskId":"M1-S1-T3","type":"maxTurns","value":22,"limit":20}
+{"t":"2026-04-20T10:40:00Z","event":"sprint_validate","sprintId":"M1-S1","passed":true,"stubCount":0}
+{"t":"2026-04-20T11:00:00Z","event":"milestone_validate","milestoneId":"M1","passed":true}
+{"t":"2026-04-20T11:05:00Z","event":"quick_task","description":"버튼 색 변경","outcome":"pass","costUSD":0.001}</code></pre>
+
+<h3>집계 예시 (jq)</h3>
+<pre><code># 태스크당 평균 재작업
+jq -s 'map(select(.event=="task_end")) | (map(.retryCount) | add) / length' telemetry.jsonl
+
+# 첫 시도 pass율
+jq -s 'map(select(.event=="task_end")) | (map(select(.retryCount==0)) | length) / length' telemetry.jsonl
+
+# 레퍼런스 수집률
+jq -s 'map(select(.event=="task_start")) | (map(select(.referencesInjected | length > 0)) | length) / length' telemetry.jsonl</code></pre>
+
+<hr>
+
+<h2 id="phase1">3. Phase 1 — Smoke Test</h2>
+
+<div class="phase-header">
+  <div class="phase-num">P1</div>
+  <div class="phase-info">
+    <div class="phase-title">Smoke Test</div>
+    <div class="phase-meta">Week 1 &nbsp;·&nbsp; 소형 게임 프로젝트 1개 (마일스톤 2개, 태스크 15개 이내)</div>
+  </div>
+  <span class="tag phase1">Week 1</span>
+</div>
+
+<p><strong>목적:</strong> 설계가 기본적으로 돌아가는가? 품질 측정 아님.</p>
+
+<h3>Go/No-Go 기준</h3>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>가설</th>
+    <th>측정 방법</th>
+    <th>임계값</th>
+    <th>실패 시</th>
+  </tr>
+  <tr>
+    <td><strong>S1</strong></td>
+    <td>vision/concept/roadmap 3층이 생성되고 사용된다</td>
+    <td>파일 존재 + telemetry <code>task_start</code>에 <code>manifestFiles &gt; 0</code></td>
+    <td>100%</td>
+    <td class="verdict-nogo">설계 수정</td>
+  </tr>
+  <tr>
+    <td><strong>S2</strong></td>
+    <td>작업 크기 분기가 동작한다</td>
+    <td>tiny → quick, feature → plan 라우팅 정확도</td>
+    <td>8/10 케이스</td>
+    <td class="verdict-nogo">분류 로직 재설계</td>
+  </tr>
+  <tr>
+    <td><strong>S3</strong></td>
+    <td>레퍼런스가 실제 프롬프트에 주입된다</td>
+    <td>telemetry <code>task_start</code>의 <code>referencesInjected</code> 길이 &gt; 0</td>
+    <td>참조 있는 태스크 100%</td>
+    <td class="verdict-nogo">contextManifest 재설계</td>
+  </tr>
+  <tr>
+    <td><strong>S4</strong></td>
+    <td>Handoff 파일이 기본 생성된다</td>
+    <td>handoffs/ 파일 수 / 전체 태스크 수</td>
+    <td>95%+</td>
+    <td class="verdict-nogo">handoff 로직 확인</td>
+  </tr>
+  <tr>
+    <td><strong>S5</strong></td>
+    <td>가드레일이 작동한다</td>
+    <td>maxTurns 인위 초과 시 <code>guardrail_triggered</code> 이벤트</td>
+    <td>발동 확인</td>
+    <td class="verdict-nogo">즉시 수정</td>
+  </tr>
+  <tr>
+    <td><strong>S6</strong></td>
+    <td>프로젝트가 완주된다</td>
+    <td>M1 + M2 전부 <code>milestone_validate passed</code></td>
+    <td>완주</td>
+    <td class="verdict-nogo">원인 분석</td>
+  </tr>
+</table>
+
+<div class="panel good">
+  <strong>Phase 1 완료 조건:</strong> S1~S5 전부 Go, S6 1회 이상 완주
+</div>
+
+<hr>
+
+<h2 id="phase2">4. Phase 2 — A/B 비교</h2>
+
+<div class="phase-header">
+  <div class="phase-num">P2</div>
+  <div class="phase-info">
+    <div class="phase-title">A/B 비교</div>
+    <div class="phase-meta">Week 2~3 &nbsp;·&nbsp; 게임 프로젝트 3개 (소형 / 중형 / 대형)</div>
+  </div>
+  <span class="tag phase2">Week 2~3</span>
+</div>
+
+<p><strong>목적:</strong> v2가 v1보다 실제로 나은가?</p>
+
+<h3>대상 프로젝트</h3>
+
+<table>
+  <tr><th>프로젝트</th><th>크기</th><th>v1 비교 방법</th></tr>
+  <tr>
+    <td><strong>A. 하이퍼캐주얼</strong></td>
+    <td>마일스톤 2개</td>
+    <td>v1으로도 한 번 실행</td>
+  </tr>
+  <tr>
+    <td><strong>B. 덱빌딩 프로토타입</strong></td>
+    <td>마일스톤 3~4개</td>
+    <td>v1 스폿체크</td>
+  </tr>
+  <tr>
+    <td><strong>C. 턴제 전략 일부</strong></td>
+    <td>마일스톤 5+개</td>
+    <td>v1이 실패하는 지점 확인</td>
+  </tr>
+</table>
+
+<h3>핵심 지표 (자동 수집)</h3>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>지표</th>
+    <th>v1 기준선 (가설)</th>
+    <th>v2 목표</th>
+    <th>판정 기준</th>
+  </tr>
+  <tr>
+    <td><strong>A1</strong></td>
+    <td>tiny 작업 소요 시간</td>
+    <td>10~15분</td>
+    <td>2분 이하</td>
+    <td>v2가 v1의 30% 이하</td>
+  </tr>
+  <tr>
+    <td><strong>A2</strong></td>
+    <td>feature 첫 시도 pass율</td>
+    <td>40~55%</td>
+    <td>55%+</td>
+    <td>절대치 55% 이상</td>
+  </tr>
+  <tr>
+    <td><strong>A3</strong></td>
+    <td>태스크당 평균 재작업</td>
+    <td>2.5~3.5회</td>
+    <td>2.0회 이하</td>
+    <td>절대치 2.0 이하</td>
+  </tr>
+  <tr>
+    <td><strong>A4</strong></td>
+    <td>3번째 태스크가 1번째 결정 아는 비율</td>
+    <td>30~50%</td>
+    <td>75%+</td>
+    <td>절대치 75% 이상</td>
+  </tr>
+  <tr style="background: #1c1a10;">
+    <td><strong>A5</strong></td>
+    <td>
+      <span class="tag key">핵심</span>
+      <strong>레퍼런스 수집률</strong>
+    </td>
+    <td>—</td>
+    <td><strong>70%+</strong></td>
+    <td><strong>절대치 70%+ — 가장 중요</strong></td>
+  </tr>
+  <tr>
+    <td><strong>A6</strong></td>
+    <td>M2 도달률</td>
+    <td>20~30%</td>
+    <td>60%+</td>
+    <td>절대치 60% 이상</td>
+  </tr>
+</table>
+
+<div class="key-metric">
+  <strong>핵심 지표: A5 레퍼런스 수집률.</strong>
+  이게 50% 미만이면 다른 지표 다 좋아도 설계 재검토.
+  개선폭의 50%가 이 UX에 달려 있음.
+</div>
+
+<div class="panel">
+  <strong>판정 규칙:</strong> A1~A6 중 4개 이상 목표 달성 → Go
+</div>
+
+<div class="panel good">
+  <strong>Phase 2 완료 조건:</strong> 3개 프로젝트 중 2개 이상 Go
+</div>
+
+<hr>
+
+<h2 id="phase3">5. Phase 3 — 실전 검증</h2>
+
+<div class="phase-header">
+  <div class="phase-num">P3</div>
+  <div class="phase-info">
+    <div class="phase-title">실전 검증</div>
+    <div class="phase-meta">2~3개월 &nbsp;·&nbsp; 프로젝트 7개 추가 (누적 10개)</div>
+  </div>
+  <span class="tag phase3">2~3개월</span>
+</div>
+
+<p><strong>목적:</strong> 장기 안정성 + 에지 케이스</p>
+
+<h3>추가 지표</h3>
+
+<table>
+  <tr><th>지표</th><th>의미</th><th>임계값</th></tr>
+  <tr>
+    <td>프로젝트 중도 포기율</td>
+    <td>도구 때문에 포기</td>
+    <td>20% 이하</td>
+  </tr>
+  <tr>
+    <td>Silent error 탐지율</td>
+    <td>TODO/placeholder 자동 탐지</td>
+    <td>80% 이상</td>
+  </tr>
+  <tr>
+    <td>Spec drift 발생 빈도</td>
+    <td>"이 spec 거짓말이네"</td>
+    <td>마일스톤당 1회 이하</td>
+  </tr>
+  <tr>
+    <td>가드레일 오작동률</td>
+    <td>정상 태스크 잘못 차단</td>
+    <td>5% 이하</td>
+  </tr>
+</table>
+
+<h3>특별 케이스 테스트</h3>
+<ul>
+  <li><strong>프로젝트 중간 대규모 pivot</strong> — vision/concept 분리가 실제로 돕는가?</li>
+  <li><strong>동시 여러 세션</strong> — 락 시스템 현장 검증</li>
+  <li><strong>장기 프로젝트 (1개월+)</strong> — contextManifest 장기 유지</li>
+  <li><strong>비개발자 사용자</strong> — 레퍼런스 수집 UX 체감</li>
+</ul>
+
+<div class="panel good">
+  <strong>Phase 3 완료 조건:</strong> 10개 중 7개 완주 + 4개 지표 전부 임계값 통과
+</div>
+
+<hr>
+
+<h2 id="failure">6. 실패 분기 (사전 설계)</h2>
+
+<p>Phase별 실패 시 무엇을 의심할지 미리 정함:</p>
+
+<div class="fail-branch">
+  <h4>Phase 1 실패 → 코드 버그</h4>
+  <ul>
+    <li><strong>S1~S4 fail:</strong> 기본 기능 미작동 → 수정 후 재시도</li>
+    <li><strong>S5 fail:</strong> 가드레일 설계 오류 → 즉시 수정</li>
+    <li><strong>S6 fail:</strong> 프로젝트 크기 문제 → 더 작은 프로젝트로</li>
+  </ul>
+</div>
+
+<div class="fail-branch">
+  <h4>Phase 2 실패 → 설계 가설 오류</h4>
+  <ul>
+    <li><strong>A5 (레퍼런스) fail:</strong> 비개발자 UX 가설 부정 → 질문/수집 방식 전면 재설계</li>
+    <li><strong>A2/A3 fail:</strong> few-shot 효과 가설 부정 → 레퍼런스 형식 재검토</li>
+    <li><strong>A4 fail:</strong> handoff 가설 부정 → 스키마 재설계</li>
+    <li><strong>A6 fail:</strong> JIT 가설 부정 → 근본 재검토 (가장 심각)</li>
+  </ul>
+</div>
+
+<div class="fail-branch">
+  <h4>Phase 3 실패 → 시장 적합성 문제</h4>
+  <ul>
+    <li><strong>포기율 높음:</strong> 비개발자 타겟 자체 재검토</li>
+    <li><strong>반복 사용 낮음:</strong> 일회성 도구로 인식됨 → patterns/ 도입 재검토</li>
+  </ul>
+</div>
+
+<hr>
+
+<h2 id="cost">7. 예상 비용</h2>
+
+<table>
+  <tr><th>Phase</th><th>기간</th><th>토큰 비용</th></tr>
+  <tr class="cost-row">
+    <td><span class="tag phase1">Phase 1</span></td>
+    <td>1주</td>
+    <td>$20~50</td>
+  </tr>
+  <tr class="cost-row">
+    <td><span class="tag phase2">Phase 2</span></td>
+    <td>2주</td>
+    <td>$200~500</td>
+  </tr>
+  <tr class="cost-row">
+    <td><span class="tag phase3">Phase 3</span></td>
+    <td>2~3개월</td>
+    <td>$500~1500</td>
+  </tr>
+  <tr class="cost-total">
+    <td>합계</td>
+    <td>3~4개월</td>
+    <td>$700~2000</td>
+  </tr>
+</table>
+
+<hr>
+
+<h2 id="expectations">8. 수치 개선 기대값 (사전 선언)</h2>
+
+<p>이 수치는 가설이다. Phase 3까지 진행하며 업데이트됨.</p>
+
+<table>
+  <tr><th>영역</th><th>기존 → v2</th><th>확신도</th></tr>
+  <tr class="improvement-row">
+    <td>tiny 작업 비용</td>
+    <td>-85%</td>
+    <td><span class="tag go">높음</span></td>
+  </tr>
+  <tr class="improvement-row">
+    <td>tiny 작업 시간</td>
+    <td>-80%</td>
+    <td><span class="tag go">높음</span></td>
+  </tr>
+  <tr class="improvement-row">
+    <td>세션 간 결정 연속성</td>
+    <td>30~50% → 75~90%</td>
+    <td><span class="tag go">높음</span></td>
+  </tr>
+  <tr class="improvement-row">
+    <td>feature 첫 시도 pass율</td>
+    <td>40~55% → 55~70%</td>
+    <td><span class="tag key">중간</span></td>
+  </tr>
+  <tr class="improvement-row">
+    <td>마일스톤 M2 도달률</td>
+    <td>20~30% → 60~75%</td>
+    <td><span class="tag key">중간</span></td>
+  </tr>
+  <tr class="improvement-row">
+    <td>재작업 횟수</td>
+    <td>-40%</td>
+    <td><span class="tag key">중간</span></td>
+  </tr>
+  <tr class="improvement-row">
+    <td>비용 예측성</td>
+    <td>낮음 → 높음</td>
+    <td><span class="tag go">높음</span> (가드레일)</td>
+  </tr>
+</table>
+
+<hr>
+
+<blockquote>
+이 문서는 검증 도구다. 수치는 가설이고, Phase 3까지 진행하며 업데이트됨.
+</blockquote>
+
+<p class="meta">TaskForge v2 Validation Plan — 사전 선언 버전. 실전 검증 결과에 따라 갱신 예정.</p>
+
+</body>
+</html>

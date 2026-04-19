@@ -1,183 +1,250 @@
 ---
 name: taskforge-execute
-description: Executes the next available task. Use when the user says "/taskforge-execute", "next task", "run", "go ahead", or similar. This is the core skill for executing tasks one at a time after the plan is approved. Supports wave parallelism and acceptance criteria validation.
+description: Executes the next available task. Use when the user says "/taskforge-execute", "next task", "run", "go ahead", or similar. v2 changes: contextManifest-based file loading, few-shot reference injection, CoT template injection, guardrail enforcement, telemetry logging, silent error detection.
 ---
 
-# Execute — Task Execution (Wave Parallel + Acceptance Criteria)
+# Execute — Task Execution (v2)
 
-Find the next executable task in the plan and run it. Core principle: **Clean context, clear plan, right model.**
+Find the next executable task and run it.
+
+**v2 key changes**:
+1. **contextManifest**: Read files in priority order before execution (not ad-hoc).
+2. **Reference injection**: Automatically include `references/` files listed in task.
+3. **CoT template**: Inject `cotTemplate` if specified — reasoning scaffold before action.
+4. **Guardrails**: Enforce maxTurns / maxCostUSD / maxWallTimeMin. Stop and report if exceeded.
+5. **Silent error detection**: Scan output for TODOs, stubs, placeholders before marking done.
+6. **Telemetry**: Append events to `telemetry.jsonl`.
+
+**Core principle**: Clean context, clear plan, right model, right references.
 
 ## Prerequisites
 
-- `_workspace/project-plan.json` (status: approved)
-- `_workspace/execution-state.json`
-- If missing: "Please approve the plan first with `/taskforge-plan-approve`"
+- `project-plan.json` (status: approved) under `_workspace/projects/{projectId}/`
+- `execution-state.json` exists
+- **Project selection**: auto if one project, ask if multiple
+- All paths relative to `_workspace/projects/{projectId}/`
+
+## Step 0: Task Size Gate (v2)
+
+Before executing, check if the incoming request is actually a plan task or an ad-hoc request:
+
+| Signal | Route |
+|--------|-------|
+| Explicit task ID (e.g. "M1-S1-T2") | Execute that task |
+| User says "next task" / "go" | Find next task from plan |
+| User describes a tiny change ("just fix X") | Suggest `/taskforge-quick` |
+| User describes multi-milestone feature | Suggest `/taskforge-discover` |
+
+This gate prevents execute from being used for work that belongs in a different route.
 
 ## Execution Flow
 
-### 1. Select the Next Task
+### 1. Select Next Task
 
-Find the next task to run from the execution-state:
-- The earliest task in order that has all dependencies completed
-- Exclude tasks already completed/failed/skipped
+Find the next task to run:
+- Earliest task in dependency order with all dependencies completed
+- Exclude: completed / failed / skipped / locked tasks
+- **Lock check**: Read `locks/{task-id}.lock` — skip if exists and < 30 min old
 
-**Wave Parallelism Detection** (NEW):
-If multiple tasks share the same wave number and all dependencies are satisfied:
-- "Wave {n} has {count} tasks that can run in parallel. Would you like to run them in parallel?"
-- On user approval: run in parallel using the Agent tool
-- On refusal: run sequentially
+**Task Locking**:
+```json
+{
+  "sessionId": "{timestamp}-{random}",
+  "acquiredAt": "2026-04-20T10:30:00Z",
+  "taskId": "M1-S1-T3",
+  "expiresAt": "2026-04-20T11:00:00Z"
+}
+```
+Write lock → execute → release lock (always, even on failure).
 
-### 2. Assemble Context
+**Wave parallelism**: If multiple tasks share same wave number and all deps satisfied:
+- "Wave {n}에 병렬 실행 가능한 태스크가 {count}개 있어요. 동시에 실행할까요?"
+- On yes: run in parallel via Agent tool (each acquires own lock)
 
-Prepare the minimal context needed for task execution:
+### 2. Assemble Context (v2 contextManifest)
+
+Read files in the order specified in the task's `contextManifest`, highest priority first:
 
 ```
-What gets injected:
-  1. Task plan (plan field) — what to do and how
-  2. Dependent task handoffs — only what's necessary from prior work
-  3. Project file tree — for understanding current code structure
-  4. Project conventions — _workspace/conventions.md (colors, naming, patterns)
-  5. Validation conditions — what to verify after completion
-  6. Domain skills — domain expertise from the skills field (only when present)
-  7. Decision record — contexts/sprint-{id}.md (only when present)
-  8. Acceptance criteria — completion conditions
-
-What does NOT get injected:
-  - Full conversation history
-  - Detailed content of other tasks
-  - Logs from previous sessions
+Priority 0: vision.json          ← project why / constraints
+Priority 1: concept.json         ← core loop / tech direction
+Priority 2: conventions.md       ← naming, colors, patterns
+Priority 3: references/*.html    ← few-shot examples
+Priority 4: decisions/D*.md      ← relevant decisions
+Priority 5: handoffs/{prev}.json ← what previous task did
 ```
 
-Why this matters: When context grows too long, AI starts ignoring early instructions and quality degrades. Starting fresh each time maintains consistent quality.
+**What gets injected** (in order):
+1. contextManifest files (priority order)
+2. Task plan (the `plan` field — specific how-to)
+3. CoT template if `cotTemplate` is set (reasoning scaffold)
+4. Domain skills if `skills` is non-empty
+5. acceptanceCriteria (what done looks like)
+6. Guardrail limits (what to stop at)
 
-### 3. Model Routing
+**What does NOT get injected**:
+- Full conversation history
+- Other tasks' details
+- Logs from unrelated sessions
 
-Use the appropriate model based on the task's `model` field:
-- `haiku`: Simple work. Fast and cheap.
-- `sonnet`: General and complex implementation. The plan already provides detailed specs, so sonnet handles both medium and hard tasks.
+**CoT template injection** (hidden from user):
+If `cotTemplate` is set, prepend the scaffold to the execution prompt:
+```
+이 작업을 시작하기 전에 다음 순서로 생각해보세요:
+1. {step 1}
+2. {step 2}
+3. {step 3}
+그 다음 구현을 시작하세요.
+```
+User sees the AI thinking through steps — they don't need to know it's a CoT template.
 
-Note: Opus is reserved for planning/validation phases (PM, Discovery, Milestone QA), not for task execution. All execution tasks use haiku or sonnet.
+### 3. Guardrail Check (v2)
 
-### 4. Execution
+Before starting, record guardrail limits from task:
+```json
+{ "maxTurns": 20, "maxCostUSD": 2.0, "maxWallTimeMin": 35 }
+```
 
-#### single mode (default)
-Execute the task plan directly using the assigned model.
-Write code, create/modify files.
+During execution, monitor:
+- If **maxTurns** exceeded: stop, save state, report:
+  ```
+  ⚠️ 이 작업이 예상보다 복잡해요. 지금까지 한 것을 저장하고 멈출게요.
+  계속하려면 /taskforge-execute, 건너뛰거나 분할하려면 /taskforge-plan-edit.
+  ```
+- If **maxCostUSD** exceeded: same stop behavior.
+- If **maxWallTimeMin** exceeded: same stop behavior.
+
+Log to `telemetry.jsonl`:
+```json
+{"t":"...","event":"guardrail_triggered","taskId":"M1-S1-T3","type":"maxTurns","value":22,"limit":20}
+```
+
+### 4. Model Routing
+
+Use `model` field:
+- `haiku`: simple, fast, cheap
+- `sonnet`: general and complex (both medium and hard)
+
+Opus: never for execution. Execution tasks always haiku or sonnet.
+
+### 5. Execute
+
+#### single mode
+Execute task plan directly with assigned model. Write code, create/modify files.
 
 #### single + skills mode
-Same as single, but inject the domain skills specified in the `skills` field into the context.
-Skills are loaded from `harnesses/`. Search path:
-1. `harnesses/*/skills/{skill-name}/skill.md` — search by skill name across all categories
-2. Also includes agent skills inside harnesses
-Even without using a full harness, injecting just the skill's expertise raises quality.
+Same, but inject domain skills from `skills` field.
+Load from `harnesses/*/skills/{skill-name}/skill.md`.
 
 #### harness mode
-Load the harness specified in the task and execute via multi-agent collaboration.
-Harness load path: `harnesses/{category}/{harness-name}/`
-Agents within the harness divide the work by role.
+Load harness, execute via multi-agent collaboration.
 
-### 5. Self-Review
+### 6. Self-Review
 
-After writing code, **re-read the changed files** and check:
-- Does the code match the task plan?
-- Are acceptance criteria actually met (not just "I think I did it")?
-- Any obvious bugs, missing imports, or broken references?
+After writing code, re-read changed files and check:
+- Does code match the task plan?
+- Are acceptance criteria actually met?
+- Any obvious bugs, missing imports, broken references?
 
-This happens in the same execution context — no extra agent, no extra pipeline. Just "read what you wrote before saying you're done." Catches issues that would otherwise require a retry (which costs far more tokens than a quick re-read).
+### 7. Silent Error Detection (v2)
 
-### 6. Acceptance Criteria Validation
+Before marking done, scan all changed files for:
+
+| Pattern | Type |
+|---------|------|
+| `TODO` / `FIXME` / `HACK` | Incomplete work |
+| Empty function bodies `{}` / `pass` | Stub |
+| "Lorem ipsum" / "placeholder" / "dummy" | Placeholder content |
+| `console.log` / `print(` / `debugger` | Debug code |
+| Hardcoded secrets (`password=`, `api_key=`) | Security risk |
+
+If found:
+```
+⚠️ 완료 전 확인이 필요해요:
+  - src/auth.js:42 — TODO: 에러 처리 미완성
+  - src/ui.js:15 — console.log 디버그 코드
+
+수정하고 다시 확인할까요?
+```
+Auto-fix if simple. Report to user if cannot auto-fix.
+
+### 8. Acceptance Criteria Validation
 
 ```
-Acceptance Criteria Check:
-  ✅ src/index.html file exists
-  ✅ Contains <!DOCTYPE html> tag
-  ❌ Contains <canvas id="game"> tag
+완성 기준 확인:
+  ✅ src/index.html 파일 존재
+  ✅ <!DOCTYPE html> 태그 포함
+  ❌ <canvas id="game"> 태그 없음 → 누락
 ```
 
-If any criteria fail:
-- Agent automatically attempts a fix (1 time)
-- If still failing after retry, report to the user
+If any fail: auto-fix once. If still failing after retry: report to user.
 
-### 7. Platform-Specific Validation
+### 9. Platform Validation
 
-Refer to `validationStrategy` in `_workspace/spec-card.json` to run **project-appropriate validation**.
-Instead of hardcoded `build`, `typecheck`, follow the strategy defined in discover.
+Use `validationStrategy` from spec-card:
+- Run build, typecheck, lint, run per spec-card config
+- If manual validation needed: present checklist to user
 
-| Validation item | spec-card field | Behavior |
-|----------------|----------------|----------|
-| Build | `validationStrategy.build` | Run `.command`; auto if `.auto` is true |
-| Run check | `validationStrategy.run` | Run `.command`, check error code |
-| Quality check | `validationStrategy.quality` | Run `.command` |
-| Functional check | `validationStrategy.functional` | If `.auto` is false, present checklist to user |
+### 10. Completion Processing
 
-**If spec-card has no validationStrategy** (legacy compatibility):
-Use the legacy method — run items in the `validation.auto` field: `["build", "typecheck", "lint"]`.
-
-**If there are manual validation items**:
-```
-Automated validation complete. Manual confirmation needed:
-  □ Verify scene load
-  □ Verify basic controls
-  □ No console errors
-→ After confirming, run `/taskforge-execute` to proceed to the next task
-```
-
-### 8. Completion Processing
-
-After execution:
-
-1. **Generate Handoff**: Automatically call `/taskforge-handoff` to record the work history
-2. **Platform validation**: Run validation per spec-card's validationStrategy
-3. **Acceptance Criteria check**: Verify all completion criteria are met
-4. **Update state**: Transition task status in execution-state.json:
-   - `ready` → `in_progress` (on execution start)
-   - `in_progress` → `completed` (on validation pass)
-   - `in_progress` → `failed` (on validation failure or error)
-   - `blocked` → `ready` (automatically when dependency completes)
-   - Also record `startedAt`, `completedAt`, `failedAt` timestamps on transition
-5. **Report result**: Brief report to the user
-
-```
-✅ Task complete: "Build HTML skeleton" (haiku, 45s, $0.002)
-   Files changed: src/index.html
-   Validation: build ✅ typecheck ✅
-   Acceptance: 3/3 ✅
-   
-   Next task: "Implement game loop" [medium/sonnet]
-   → Run `/taskforge-execute` to continue, or `/taskforge-status` to check overall progress
-```
-
-### 9. On Failure
-
-When validation fails or an error occurs:
-- Record the failure reason
-- Increment retry_count
-
-**Auto-retry (built-in):**
-1. Add the failure reason to context: "Previous attempt failed because: [reason]. Avoid this approach."
-2. Re-execute in the same session (no new agent needed)
-3. If failed 2 times in a row, stop and ask the user:
+1. **Telemetry**: Append to `telemetry.jsonl`:
+   ```json
+   {"t":"...","event":"task_end","taskId":"M1-S1-T3","outcome":"pass","retryCount":0,"tokens":12450,"costUSD":0.42,"wallMin":18,"referencesInjected":["ui-pattern.html"],"cotUsed":false}
    ```
-   ⚠️ Task failed 2 times.
-   Failure reason: [summary]
-   
-   Options:
-   - Try once more (different approach)
-   - Skip this task and move on
-   - Fix it yourself, then run `/taskforge-execute` to continue
+2. **Generate Handoff**: Save `handoffs/{task-id}.json`:
+   ```json
+   {
+     "taskId": "M1-S1-T3",
+     "completedAt": "...",
+     "whatChanged": ["src/auth.js created", "src/types.ts modified"],
+     "decisionsMade": ["D002: JWT 대신 세션 쿠키 사용"],
+     "hintsForNext": "로그인 성공 시 /dashboard 리다이렉트 필요",
+     "openItems": ["비밀번호 재설정 플로우 미구현"],
+     "silentErrors": [],
+     "guardrailEvents": []
+   }
+   ```
+   **Handoff is always generated** (not conditional). Only tiny quick-fix tasks skip handoff.
+3. **Platform validation**: Run per spec-card strategy
+4. **Acceptance criteria check**: All must pass
+5. **Update execution-state.json**: ready → in_progress → completed
+6. **Release task lock**: Delete `locks/{task-id}.lock`
+7. **Report**:
+   ```
+   ✅ 완료: "로그인 폼 구현" (보통, 18분, $0.42)
+      변경 파일: src/auth.js, src/components/Login.jsx
+      검증: 빌드 ✅ 타입체크 ✅
+      완성 기준: 3/3 ✅
+      
+      다음: "대시보드 라우팅 연결" [보통/sonnet]
+      → /taskforge-execute로 계속, /taskforge-status로 전체 진행 확인
    ```
 
-**Skip (built-in):**
-When the user says "skip" or "move on":
-1. Check if downstream tasks depend on this task
-2. If yes: warn and ask whether to also skip dependents or remove the dependency
-3. Set task status to `skipped` with reason and timestamp
-4. Continue to the next task
+### 11. On Failure
+
+**Auto-retry (built-in)**:
+1. Add failure reason to context: "이전 시도가 [이유]로 실패했어요. 이 방법은 피해보세요."
+2. Re-execute in same session
+3. After 2 failures: stop and ask:
+   ```
+   ⚠️ 이 작업이 2번 실패했어요.
+   실패 이유: [요약]
+   
+   선택:
+   - 다시 시도 (다른 방법으로)
+   - 건너뛰기
+   - 직접 수정 후 /taskforge-execute 계속
+   ```
+
+Log to telemetry:
+```json
+{"t":"...","event":"task_end","taskId":"...","outcome":"failed","retryCount":2,"failureReason":"..."}
+```
 
 ## Sprint/Milestone Completion Detection
 
-After a task completes, if all tasks in that sprint are complete:
-- "Sprint [name] complete! Run `/taskforge-validate` for integration validation."
+After task completes, if all sprint tasks done:
+- "스프린트 [이름] 완료! /taskforge-validate로 통합 검증을 실행해보세요."
 
-If all sprints in a milestone are complete:
-- "Milestone [name] complete! Run `/taskforge-validate milestone` for full validation."
+If all milestone tasks done:
+- "마일스톤 [이름] 완료! /taskforge-validate milestone으로 최종 검증을 먼저 하고, /taskforge-playtest로 직접 확인해보세요."
