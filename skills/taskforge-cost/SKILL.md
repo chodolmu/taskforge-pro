@@ -45,43 +45,45 @@ For models with no completed tasks yet, use default estimates:
   - sonnet: $0.04/task
 ```
 
-Note: execution tasks only use **haiku** or **sonnet**. Opus is reserved for PM (planning) and milestone QA, and is tracked separately under "Other".
+Note: code-writing (execution) tasks only use **haiku** or **sonnet**. Opus is reserved for judgment work — planning, plan-edit, discover, retro, milestone QA, and harness orchestrators — and is tracked separately under "Other".
 
 ## Output Format
 
+Template — fill from telemetry/state. Do not copy literal labels.
+
 ```
-비용 요약 — Card Battle Game
+비용 요약 — {projectName}
 
 모델별 (실행):
-  haiku:  3 runs,  $0.003  (1%)   | avg $0.001/task
-  sonnet: 8 runs,  $0.32   (92%)  | avg $0.04/task
+  haiku:  {n} runs,  ${cost}  ({pct}%)   | avg ${avg}/task
+  sonnet: {n} runs,  ${cost}  ({pct}%)   | avg ${avg}/task
   ─────────────────────────
-  Subtotal: 11 runs, $0.323
+  Subtotal: {n} runs, ${cost}
 
 단계별:
-  M0 (프로토타입):   $0.15 (8/8 tasks)    ✅ 완료
-  M1 (기본 전투):    $0.17 (3/12 tasks)  🔄 진행 중
-  M2 (덱 빌딩):      미시작
-  M3 (폴리시):       미시작
+  {milestoneId} ({title}):   ${cost} ({done}/{total} tasks)    {statusLabel}
+  {milestoneId} ({title}):   ${cost} ({done}/{total} tasks)    {statusLabel}
+  {milestoneId} ({title}):   미시작
+  {milestoneId} ({title}):   미시작
 
 기타 (PM/검증, opus):
-  계획 (plan):       $0.12
-  마일스톤 QA:        $0.00
-  스프린트 검증:      $0.03  (자동, sonnet)
+  계획 (plan):       ${cost}
+  마일스톤 QA:        ${cost}
+  스프린트 검증:      ${cost}  (자동, sonnet)
   ─────────────────────────
-  Subtotal:          $0.15
+  Subtotal:          ${cost}
 
-총 비용:             $0.473
+총 비용:             ${cost}
 
-가드레일 발동: 1회 (이번 마일스톤)
-  - M1-S1-T3: maxWallTimeMin 초과 (36분)
+가드레일 발동: {n}회 (이번 마일스톤)
+  - {taskId}: {limitName} 초과 ({actualValue})
 
 예상 남은 비용:
-  haiku  × 1 = ~$0.001
-  sonnet × 8 = ~$0.32
-  PM/검증    = ~$0.05
+  haiku  × {n} = ~${cost}
+  sonnet × {n} = ~${cost}
+  PM/검증    = ~${cost}
   ─────────────────────────
-  남은 예상:   ~$0.37
+  남은 예상:   ~${cost}
   총 예상:     ~$0.84
 ```
 

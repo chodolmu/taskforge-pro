@@ -121,23 +121,27 @@ Log to `telemetry.jsonl`:
 
 ### 4. Model Routing
 
-Use `model` field:
+Use the task's `model` field for the **code-writing model**:
 - `haiku`: simple, fast, cheap
 - `sonnet`: general and complex (both medium and hard)
 
-Opus: never for execution. Execution tasks always haiku or sonnet.
+**Opus is never used for code-writing.** It is reserved for judgment work — planning, propagation, orchestration, cross-context analysis. The split is by *work type*, not by step name. If a step inside execution turns out to be a judgment step (see harness mode below), opus may run it; the worker that writes the actual code stays on haiku/sonnet.
 
 ### 5. Execute
 
 #### single mode
-Execute task plan directly with assigned model. Write code, create/modify files.
+Execute task plan directly with the task's `model` (haiku/sonnet). Write code, create/modify files.
 
 #### single + skills mode
-Same, but inject domain skills from `skills` field.
+Same as single, but inject domain skills from `skills` field.
 Load from `harnesses/*/skills/{skill-name}/skill.md`.
 
 #### harness mode
-Load harness, execute via multi-agent collaboration.
+Two-tier model split:
+- **Orchestrator: opus.** Loads the harness, coordinates the team, dispatches sub-tasks, cross-validates outputs, handles errors. This is judgment work — model routing here is opus regardless of the task's `model` field.
+- **Worker agents: haiku/sonnet.** Each worker that actually writes code/content runs on the task's `model` field (or the per-agent model defined in the harness). Opus never writes the worker output directly.
+
+This mirrors the project-wide rule: judgment → opus, code-writing → haiku/sonnet.
 
 ### 6. Self-Review
 
@@ -158,11 +162,11 @@ Before marking done, scan all changed files for:
 | `console.log` / `print(` / `debugger` | Debug code |
 | Hardcoded secrets (`password=`, `api_key=`) | Security risk |
 
-If found:
+If found, show with this format (one line per finding):
 ```
 ⚠️ 완료 전 확인이 필요해요:
-  - src/auth.js:42 — TODO: 에러 처리 미완성
-  - src/ui.js:15 — console.log 디버그 코드
+  - {file}:{line} — {issueType}: {description}
+  - {file}:{line} — {issueType}: {description}
 
 수정하고 다시 확인할까요?
 ```
@@ -170,11 +174,12 @@ Auto-fix if simple. Report to user if cannot auto-fix.
 
 ### 8. Acceptance Criteria Validation
 
+Show each criterion's check result:
 ```
 완성 기준 확인:
-  ✅ src/index.html 파일 존재
-  ✅ <!DOCTYPE html> 태그 포함
-  ❌ <canvas id="game"> 태그 없음 → 누락
+  ✅ {criterion as written in plan}
+  ✅ {criterion as written in plan}
+  ❌ {criterion as written in plan} → {what's missing}
 ```
 
 If any fail: auto-fix once. If still failing after retry: report to user.
@@ -191,32 +196,32 @@ Use `validationStrategy` from spec-card:
    ```json
    {"t":"...","event":"task_end","taskId":"M1-S1-T3","outcome":"pass","retryCount":0,"tokens":12450,"costUSD":0.42,"wallMin":18,"referencesInjected":["ui-pattern.html"],"cotUsed":false}
    ```
-2. **Generate Handoff**: Save `handoffs/{task-id}.json`:
+2. **Generate Handoff**: Save `handoffs/{task-id}.json` with this schema:
    ```json
    {
-     "taskId": "M1-S1-T3",
-     "completedAt": "...",
-     "whatChanged": ["src/auth.js created", "src/types.ts modified"],
-     "decisionsMade": ["D002: JWT 대신 세션 쿠키 사용"],
-     "hintsForNext": "로그인 성공 시 /dashboard 리다이렉트 필요",
-     "openItems": ["비밀번호 재설정 플로우 미구현"],
+     "taskId": "{task-id}",
+     "completedAt": "{ISO-8601 timestamp}",
+     "whatChanged": ["{file path} {created|modified|deleted}", "..."],
+     "decisionsMade": ["{decision id and summary}", "..."],
+     "hintsForNext": "{any context the next task should know — or empty string}",
+     "openItems": ["{known incomplete piece}", "..."],
      "silentErrors": [],
      "guardrailEvents": []
    }
    ```
-   **Handoff is always generated** (not conditional). Only tiny quick-fix tasks skip handoff.
+   Fill all values from the actual task outcome — do not invent details. **Handoff is always generated** (not conditional). Only tiny quick-fix tasks skip handoff.
 3. **Platform validation**: Run per spec-card strategy
 4. **Acceptance criteria check**: All must pass
 5. **Update execution-state.json**: ready → in_progress → completed
 6. **Release task lock**: Delete `locks/{task-id}.lock`
-7. **Report**:
+7. **Report** with this template:
    ```
-   ✅ 완료: "로그인 폼 구현" (보통, 18분, $0.42)
-      변경 파일: src/auth.js, src/components/Login.jsx
-      검증: 빌드 ✅ 타입체크 ✅
-      완성 기준: 3/3 ✅
+   ✅ 완료: "{taskName}" ({difficultyLabel}, {duration}, ${cost})
+      변경 파일: {files joined by comma}
+      검증: {check name} ✅ {check name} ✅
+      완성 기준: {passed}/{total} ✅
       
-      다음: "대시보드 라우팅 연결" [보통/sonnet]
+      다음: "{nextTaskName}" [{difficultyLabel}/{model}]
       → /taskforge-execute로 계속, /taskforge-status로 전체 진행 확인
    ```
 

@@ -88,18 +88,18 @@ If any item fails: treat task as incomplete.
    [UNSATISFIED] "검색 동작" → SearchBar.jsx가 스텁
    ```
 
-   **Step 2 — Artifacts**:
+   **Step 2 — Artifacts** (one line per artifact named in `mustHaves.artifacts`):
    ```
-   [VERIFIED]  src/index.html — 존재, 내용 있음
-   [STUB]      src/Search.jsx — 존재하나 TODO만 있음
-   [MISSING]   src/api.js — 파일 없음
-   [ORPHANED]  src/old.js — 어디서도 import 안 됨
+   [VERIFIED]  {file path} — {evidence: exists, has content, etc.}
+   [STUB]      {file path} — {what makes it a stub}
+   [MISSING]   {file path} — 파일 없음
+   [ORPHANED]  {file path} — 어디서도 import 안 됨
    ```
 
-   **Step 3 — Key Links**:
+   **Step 3 — Key Links** (one line per link named in `mustHaves.keyLinks`):
    ```
-   [WIRED]     App.jsx → Detail.jsx (import + 라우트에서 사용)
-   [NOT_WIRED] auth.js → export 있으나 import 없음
+   [WIRED]     {source} → {target} ({how it's wired})
+   [NOT_WIRED] {source} → {target} ({what's missing})
    ```
 
 3. **Silent Error Scan** (sprint-wide): scan all files changed during sprint

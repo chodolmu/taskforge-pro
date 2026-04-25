@@ -22,33 +22,35 @@ Show the full project progress at a glance in a tree format.
 
 ## Output Format v2
 
+Template — fill values from project state. Do not copy literal example labels.
+
 ```
-프로젝트: Card Battle Game
-비전: 전략적 덱빌딩으로 생각하는 재미를 준다
-현재 마일스톤: M1 — 기본 전투 시스템
+프로젝트: {projectName}
+비전: {vision.elevator}
+현재 마일스톤: {activeMilestoneId} — {activeMilestoneTitle}
 
 마일스톤 진행:
-  M0: 프로토타입 ✅ 완료
-  M1: 기본 전투  [████████░░] 80% — 현재 작업 중
-  M2: 덱 빌딩   ⏳ 대기 (sketch)
-  M3: 폴리시    ⏳ 대기 (name-only)
+  {M0}: {title} ✅ 완료
+  {M1}: {title}  [████████░░] {n}% — 현재 작업 중
+  {M2}: {title}  ⏳ 대기 (sketch)
+  {M3}: {title}  ⏳ 대기 (name-only)
 
-M1 상세:
-  ├─ 스프린트 1: 카드 렌더링  ✅ 완료 (검증 통과)
-  │   ├─ 카드 컴포넌트       ✅ 보통 (2분, $0.04)
-  │   └─ 애니메이션          ✅ 보통 (1분, $0.03)
-  ├─ 스프린트 2: 전투 로직   🔄 진행 중
-  │   ├─ 데미지 계산         ✅ 보통 (1분 30초, $0.03)
-  │   ├─ 차례 관리        → 🔄 실행 중 (보통/sonnet)
-  │   └─ 승패 판정           ⏳ 대기
-  └─ 스프린트 3: UI 통합     ⏳ 대기
+{activeMilestoneId} 상세:
+  ├─ 스프린트 1: {sprintName}  ✅ 완료 (검증 통과)
+  │   ├─ {taskName}       ✅ {difficultyLabel} ({duration}, ${cost})
+  │   └─ {taskName}       ✅ {difficultyLabel} ({duration}, ${cost})
+  ├─ 스프린트 2: {sprintName}   🔄 진행 중
+  │   ├─ {taskName}         ✅ {difficultyLabel} ({duration}, ${cost})
+  │   ├─ {taskName}      → 🔄 실행 중 ({difficultyLabel}/{model})
+  │   └─ {taskName}           ⏳ 대기
+  └─ 스프린트 3: {sprintName}    ⏳ 대기
 
-레퍼런스: 3개 수집됨 (references/ 디렉토리)
-경고: 스프린트 1 — TODO 1개 발견 (src/utils.js:42)
-가드레일: 이번 마일스톤 0회 발동
+레퍼런스: {n}개 수집됨 (references/ 디렉토리)
+경고: 스프린트 {n} — {issueDescription} ({file}:{line})
+가드레일: 이번 마일스톤 {n}회 발동
 
-전체: 4/12 완료 (33%)
-비용: $0.10 (추정 남은 비용: ~$0.40)
+전체: {done}/{total} 완료 ({pct}%)
+비용: ${total} (추정 남은 비용: ~${remaining})
 ```
 
 ## v2 Roadmap Display
@@ -99,54 +101,51 @@ Count guardrail events for the current milestone from `telemetry.jsonl` (field: 
 
 ## Detail Mode
 
-Use `/taskforge-status detail` or `/taskforge-status m1-s1-t2` for detailed info on a specific item:
+Use `/taskforge-status detail` or `/taskforge-status {taskId}` for detailed info on a specific item.
 
+Template:
 ```
-Task: Implement game loop
-Status: ✅ Complete
-Model: sonnet | Elapsed: 2m 15s | Cost: $0.04
+Task: {taskName}
+Status: {statusIcon} {statusLabel}
+Model: {model} | Elapsed: {duration} | Cost: ${cost}
 
 Plan:
-  requestAnimationFrame-based game loop.
-  deltaTime calculation, update/render separated.
+  {plan field — verbatim}
 
 Handoff:
-  gameLoop() function implemented. Targeting 60fps.
-  Separated update(dt) and render(ctx) structure.
-  
-  Design decision: deltaTime-based physics (frame-independent)
-  For next task: ctx is cached as a global variable
+  {whatChanged summary}
+  {decisionsMade — if any}
+  {hintsForNext — if any}
 
-Validation: build ✅ | typecheck ✅
+Validation: {checks with ✅/❌}
 ```
 
 ## Failed Task Display
 
-If there are failed tasks, display them prominently:
+If there are failed tasks, display them prominently. Template:
 
 ```
-  ├─ Collision detection              ❌ Failed (2x) — Build error
-  │   → `/taskforge-execute M1-S2-T3` (재시도) 또는 `/taskforge-plan-edit`에서 스킵/수정
+  ├─ {taskName}              ❌ Failed ({n}x) — {failureReason}
+  │   → `/taskforge-execute {taskId}` (재시도) 또는 `/taskforge-plan-edit`에서 스킵/수정
 ```
 
 ## Locked Task Display
 
-If tasks have active locks (from other sessions), display them:
+If tasks have active locks (from other sessions), display them. Template:
 
 ```
-  ├─ Jump physics                  🔒 Locked (session abc123, since 10:30)
-  ├─ Duck action                   🔒 Locked (session def456, since 10:32)
+  ├─ {taskName}                  🔒 Locked (session {sessionId}, since {time})
 ```
 
 ## Multi-Project Overview
 
-If called without a specific project and multiple projects exist, show a summary of all projects:
+If called without a specific project and multiple projects exist, show a summary of all projects. Template:
 
 ```
 Projects in _workspace/projects/:
-  1. card-battle-ui    [████████░░] 75%  — 18/24 tasks
-  2. inventory-system  [██████████] 100% — complete
-  3. shop-ui           [██░░░░░░░░] 20%  — 4/20 tasks
+  1. {projectId}    [████████░░] {pct}%  — {done}/{total} tasks
+  2. {projectId}    [██████████] 100% — complete
+  3. {projectId}    [██░░░░░░░░] {pct}%  — {done}/{total} tasks
 
 Use `/taskforge-status {projectId}` for details
 ```

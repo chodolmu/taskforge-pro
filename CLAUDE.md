@@ -82,14 +82,31 @@ An all-in-one plugin that lets anyone — including non-developers — complete 
 
 ## Difficulty → Model Mapping
 
+The split is by **work type**, not by skill name. Every step that mostly *writes code* uses haiku/sonnet. Every step that mostly *makes judgments* (planning, propagation, orchestration, cross-context analysis) uses opus.
+
+**Code-writing tasks** (haiku/sonnet only):
+
 | Difficulty | Model | Criteria |
 |------------|-------|----------|
 | easy | haiku | Boilerplate, config, CSS, constants |
 | medium | sonnet | Features, bug fixes, refactoring |
 | hard | sonnet | Complex multi-file (plan provides detailed spec) |
 
-Fixed: PM (planning) = opus, Discovery = opus, Sprint validation = sonnet, Milestone QA = opus.
-**Opus never for execution.**
+**Judgment tasks** (opus required):
+
+| Step | Why opus |
+|------|----------|
+| `/taskforge-vision` | Long-horizon project framing |
+| `/taskforge-discover` | Spec design, gap analysis, decision recording |
+| `/taskforge-plan` | Work breakdown, model routing, 6-area checklist |
+| `/taskforge-plan-edit` | **Cross-file propagation** — edits ripple across roadmap/decisions/constraints/verification |
+| `/taskforge-retro` | Roadmap mutation, learning extraction |
+| `/taskforge-validate` (milestone) | Cross-regression, audit |
+| Harness orchestrator | Team coordination, cross-validation, workflow judgment |
+
+**Opus never for code-writing.** Opus is reserved for judgment/orchestration steps. Inside a harness, the orchestrator runs on opus while the worker agents (the ones that actually write code) stay on haiku/sonnet — same split, applied recursively.
+
+Sprint validation = sonnet (advisory, not gating).
 
 ## Guardrail Defaults (per task)
 

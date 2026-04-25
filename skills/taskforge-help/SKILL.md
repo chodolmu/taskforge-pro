@@ -30,11 +30,11 @@ Check `_workspace/projects/` for existing projects. If multiple exist, show all 
 ```
 TaskForge Pro — 현재 상황
 
-프로젝트: [Name]
-진행: 마일스톤 1/3 — 스프린트 2/4 — 태스크 5/12
+프로젝트: {projectName}
+진행: 마일스톤 {m}/{M} — 스프린트 {s}/{S} — 태스크 {t}/{T}
 
 지금 할 수 있는 것:
-- /taskforge-execute     — 다음 태스크 1개 실행: "게임 루프 구현" [보통]
+- /taskforge-execute     — 다음 태스크 1개 실행: "{nextTaskName}" [{difficultyLabel}]
 - /taskforge-execute-all — 이번 스프린트 끝까지 자동 실행
 - /taskforge-status      — 전체 진행 상황 보기
 ```

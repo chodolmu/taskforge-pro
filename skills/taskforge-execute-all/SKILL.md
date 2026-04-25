@@ -111,14 +111,16 @@ Write to `_workspace/projects/{projectId}/telemetry.jsonl`. Create the file if i
 
 After all tasks in the sprint complete, display:
 
+Template — fill from actual sprint state:
+
 ```
-스프린트 M1-S1 "캔버스 셋업" 완료
+스프린트 {sprintId} "{sprintName}" 완료
 
-  Wave 1 (병렬): HTML 뼈대 ✅ CSS 리셋 ✅
-  Wave 2 (병렬): 게임 루프 ✅ 입력 처리 ✅
-  Wave 3: 통합 연결 ✅
+  Wave {n} (병렬): {taskName} ✅ {taskName} ✅
+  Wave {n} (병렬): {taskName} ✅ {taskName} ✅
+  Wave {n}: {taskName} ✅
 
-  소요: 4분 35초 | 비용: $0.15 | 가드레일 발동: 0회
+  소요: {duration} | 비용: ${cost} | 가드레일 발동: {n}회
 
   다음 단계:
   → 스프린트 검증이 백그라운드에서 진행 중 (결과는 /taskforge-status에서 확인)

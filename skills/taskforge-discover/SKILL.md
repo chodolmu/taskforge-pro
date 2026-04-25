@@ -1,6 +1,7 @@
 ---
 name: taskforge-discover
 description: Defines the current milestone in detail and generates a SpecCard. Use when the user says "/taskforge-discover", "define this milestone", "let's detail M1", or similar. In v2, discover runs per-milestone (JIT), not once for the whole project. If the user hasn't run /taskforge-vision yet, suggest it first for large projects.
+model: opus
 ---
 
 # Discover — Milestone Spec Definition (v2 JIT)
@@ -31,6 +32,25 @@ Use friendly, accessible language. Never expose technical terms like "spec", "ha
    ```
 4. If this is a small/single-milestone project: proceed directly (no vision needed).
 
+### Read prior context (v2 — mandatory for non-M0 milestones)
+
+If this is **not** the first milestone (M0), read all of the following before asking the user any questions. Each file shapes the spec for this milestone:
+
+| Source | What to extract |
+|--------|----------------|
+| `milestones/{previousMilestoneId}/retrospective.md` | "다음 마일스톤에 반영할 것" section — explicit instructions for *this* discover. "예상과 달랐던 것" — assumptions to revisit. |
+| All `decisions/D*.md` files | Decisions already made — do not re-ask. If a decision's `재검토 조건` matches this milestone, flag it. |
+| `constraints.md` | Hard rules. Apply throughout. Do not propose anything that violates them. |
+| `concept.json` | Tech direction. Stay consistent unless concept is still unlocked (`lockedAt: null`). |
+| Previous milestones' `handoffs/` (last 3-5 tasks of the prior milestone) | What actually got built last, what's open, what's next. |
+
+If retrospective.md says something specific about this milestone (e.g. an entry of the form "M{n}: {artifact}에 '{topic}' 추가"), **fold it into the questions you ask the user — don't make them repeat themselves.**
+
+If any of these files contradicts the user's request in this session, surface it:
+```
+이전 회고에서 "{내용}"이라고 정리됐는데, 지금 말씀하신 거랑 다른 방향 같아요. 그때 결정을 바꾸는 거예요, 아니면 제가 잘못 이해한 거예요?
+```
+
 ### Check for existing projects
 Before starting, scan `_workspace/projects/`:
 - If projects exist, show them and ask: new project or continue existing?
@@ -49,8 +69,8 @@ If starting fresh (no vision):
 
 This step collects materials that will be silently converted into few-shot references for AI execution. **Never use terms like "few-shot" or "reference injection" with the user.**
 
-Ask naturally:
-- "비슷한 느낌의 게임이나 앱이 있어요? 이름, 링크, 스크린샷 뭐든 OK예요."
+Ask naturally — adapt the wording to the project type (game / app / tool / site / etc.):
+- "비슷한 느낌의 {projectType}이 있어요? 이름, 링크, 스크린샷 뭐든 OK예요."
   → Save to `references/`
 - "디자인 톤이 비슷한 이미지가 있나요? (없어도 됩니다)"
   → Save to `references/visual/`
@@ -99,8 +119,8 @@ Convert answers to a verifiable checklist in `verification.md`:
 □ {조건 3}
 ```
 
-**Good criteria**: "로그인 버튼을 누르면 3초 안에 반응한다" (testable)
-**Bad criteria**: "코드가 깔끔하다" (subjective)
+**Good criteria**: an observable action with a measurable result (specific user input → specific outcome within a specific bound). Testable.
+**Bad criteria**: subjective adjectives ("clean", "fast", "nice"). Not testable.
 
 ## Step 5: Tech Stack & Validation Strategy
 
@@ -147,7 +167,7 @@ On requested changes: update only relevant parts and show again.
 
 ### Project ID (if new project)
 Generate from name: lowercase, spaces→hyphens, remove special chars.
-Example: "Card Battle" → `card-battle`
+Rule: `name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')`
 
 ### Files to create/update
 
@@ -168,15 +188,15 @@ _workspace/projects/{projectId}/
 **spec-card.json schema (v2)**:
 ```json
 {
-  "projectId": "card-battle",
-  "projectName": "Card Battle",
-  "milestoneId": "M1",
+  "projectId": "{projectId}",
+  "projectName": "{projectName}",
+  "milestoneId": "{milestoneId}",
   "projectType": "game | webapp | mobile | cli | api | other",
   "description": "One or two sentence milestone description",
   "targetUser": "Target users",
   "features": [
-    { "name": "Feature name", "priority": "must" },
-    { "name": "Feature name", "priority": "nice" }
+    { "name": "{feature name}", "priority": "must" },
+    { "name": "{feature name}", "priority": "nice" }
   ],
   "techStack": ["HTML5", "JavaScript", "Canvas API"],
   "designDecisions": ["Single-player", "Works offline"],

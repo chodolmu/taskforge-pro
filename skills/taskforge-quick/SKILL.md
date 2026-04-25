@@ -65,10 +65,7 @@ If project has `references/` directory, quickly scan:
 - If no: proceed without references
 
 ### 4. Determine if a Skill Is Needed
-If domain expertise would help, auto-load relevant skill from `harnesses/`.
-- Security fix → inject `api-security-checklist`
-- Game balance → inject relevant game skill
-- Don't mention "skill injection" to user
+If domain expertise would help, auto-load relevant skill from `harnesses/`. Match the change against `harnesses/INDEX.md` and inject the most relevant skill (e.g. security work → an api-security skill; domain-specific calculation → the matching domain skill). Don't mention "skill injection" to the user.
 
 ### 5. Execute
 - Clean context
@@ -91,10 +88,11 @@ If found: fix or report. Don't mark done if obvious issues exist.
 
 ### 8. Report Result
 
+Template — fill from actual quick-task outcome:
 ```
-✅ 완료: "로그인 버튼 색 변경" (빠름, 30초, $0.001)
-   변경: src/components/LoginButton.css
-   검증: 린트 ✅
+✅ 완료: "{taskDescription}" ({difficultyLabel}, {duration}, ${cost})
+   변경: {file paths joined by comma}
+   검증: {check name} ✅
 ```
 
 ## Notes

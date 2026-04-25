@@ -100,14 +100,14 @@ Milestone (active only)
 4. **Validation environment first**: Prerequisites from spec-card → milestone 1, sprint 1, wave 1.
 5. **Harness as tool**: Only assign harness mode when genuine domain need exists.
 
-**Difficulty → Model mapping**:
+**Difficulty → Code-writing model mapping** (the task's `model` field):
 | Difficulty | Model | Criteria |
 |-----------|-------|---------|
 | easy | haiku | Boilerplate, config, CSS, constants |
 | medium | sonnet | General features, bug fixes, refactoring |
 | hard | sonnet | Complex multi-file — plan provides detailed spec |
 
-Opus: planning + milestone QA only. Never execution.
+Opus is never assigned to a task's code-writing model. Opus runs the *judgment* layer: planning (this skill), discover, plan-edit, retro, milestone QA, and the orchestrator inside harness mode. The split is by work type — code-writing → haiku/sonnet, judgment → opus — applied recursively (a harness orchestrator on opus dispatches workers on haiku/sonnet).
 
 ### Phase 5: PM 6-Area Checklist (v2 mandatory)
 
@@ -132,9 +132,9 @@ If any check fails: **self-correct** before showing to user. Ask user only for i
 
 ### Phase 6: Self-Validate the Plan
 
-**Check 1 — Executability**: Can code be written from just the `plan` field?
-- Bad: "Create appropriate UI" ❌
-- Good: "Create email+password form in src/components/Login.jsx. POST to /api/auth/login on submit." ✅
+**Check 1 — Executability**: Can code be written from just the `plan` field? It must name files, functions, exact behavior, and concrete inputs/outputs.
+- Bad: vague phrases like "{verb} appropriate {noun}" with no file path or behavior ❌
+- Good: explicit "{create|modify} {filePath}. {Specific behavior with named inputs/outputs/calls}." ✅
 
 **Check 2 — Connectivity**: No gaps in dependency chain between tasks.
 
@@ -184,19 +184,19 @@ Save to `project-plan.json`:
                 { "path": "vision.json", "priority": 0 },
                 { "path": "concept.json", "priority": 1 },
                 { "path": "conventions.md", "priority": 2 },
-                { "path": "references/ui-pattern.html", "priority": 3 },
-                { "path": "decisions/D001-auth.md", "priority": 4 },
-                { "path": "handoffs/M1-S1-T0.json", "priority": 5 }
+                { "path": "references/{relevant-file}", "priority": 3 },
+                { "path": "decisions/{relevant-decision}.md", "priority": 4 },
+                { "path": "handoffs/{prev-task-id}.json", "priority": 5 }
               ],
-              "cotTemplate": "prompts/cot/balance-decision.md",
+              "cotTemplate": "prompts/cot/{topic}.md",
               "acceptanceCriteria": [
-                "src/index.html exists",
-                "Contains <!DOCTYPE html> tag",
-                "npm run build completes without errors"
+                "{verifiable statement — file exists / contains X / command Y exits 0}",
+                "{verifiable statement}",
+                "{verifiable statement}"
               ],
               "mustHaves": {
-                "truths": ["Page renders correctly in browser"],
-                "artifacts": ["src/index.html"],
+                "truths": ["{observable behavior}"],
+                "artifacts": ["{file path}"],
                 "keyLinks": []
               },
               "validation": {
@@ -208,7 +208,7 @@ Save to `project-plan.json`:
                 "maxCostUSD": 2.0,
                 "maxWallTimeMin": 35
               },
-              "estimatedFiles": ["src/index.html"],
+              "estimatedFiles": ["{file path}"],
               "estimatedMinutes": 15
             }
           ]
@@ -225,21 +225,21 @@ Save to `project-plan.json`:
 
 ## Showing the User
 
-After saving, show tree-format summary:
+After saving, show tree-format summary. Template:
 
 ```
-마일스톤 M1: 기본 게임 루프 (12 태스크)
-  ├─ 스프린트 1: 캔버스 셋업 (5 태스크, 3 웨이브)
-  │   ├─ Wave 1: HTML 뼈대 [쉬움/빠름] + CSS 리셋 [쉬움/빠름]
-  │   ├─ Wave 2: 게임 루프 [보통] + 입력 처리 [보통]
-  │   └─ Wave 3: 통합 연결 [보통]
-  └─ 스프린트 2: 캐릭터 (3 태스크, 2 웨이브)
-      ├─ Wave 1: 캐릭터 렌더링 [보통]
-      └─ Wave 2: 점프 물리 [보통] + 웅크리기 [보통]
+마일스톤 {milestoneId}: {milestoneTitle} ({totalTasks} 태스크)
+  ├─ 스프린트 {n}: {sprintName} ({n} 태스크, {n} 웨이브)
+  │   ├─ Wave {n}: {taskName} [{difficultyLabel}/{modelLabel}] + {taskName} [{difficultyLabel}/{modelLabel}]
+  │   ├─ Wave {n}: {taskName} [{difficultyLabel}] + {taskName} [{difficultyLabel}]
+  │   └─ Wave {n}: {taskName} [{difficultyLabel}]
+  └─ 스프린트 {n}: {sprintName} ({n} 태스크, {n} 웨이브)
+      ├─ Wave {n}: {taskName} [{difficultyLabel}]
+      └─ Wave {n}: {taskName} [{difficultyLabel}] + {taskName} [{difficultyLabel}]
 
-총 태스크: 12 | 빠름 4개 / 보통 8개
-병렬 가능: 8개 (67%)
-예상 비용: ~$0.50 | 예상 시간: ~45분
+총 태스크: {n} | 빠름 {n}개 / 보통 {n}개
+병렬 가능: {n}개 ({pct}%)
+예상 비용: ~${cost} | 예상 시간: ~{minutes}분
 ```
 
 Ask the user: "계획이에요. 바꿀 부분이 있나요, 아니면 진행할까요?"
@@ -251,8 +251,8 @@ On approval:
 2. Initialize `execution-state.json`:
 ```json
 {
-  "projectId": "card-battle",
-  "milestoneId": "M1",
+  "projectId": "{projectId}",
+  "milestoneId": "{activeMilestoneId}",
   "status": "ready",
   "currentSprint": null,
   "currentTask": null,
@@ -267,6 +267,6 @@ On approval:
 3. Create `locks/` directory
 4. Create `telemetry.jsonl` with header entry:
 ```json
-{"t":"...","event":"plan_approved","milestoneId":"M1","totalTasks":12,"estimatedCostUSD":0.5}
+{"t":"{ISO-8601}","event":"plan_approved","milestoneId":"{activeMilestoneId}","totalTasks":{n},"estimatedCostUSD":{cost}}
 ```
 5. Guide: "계획 승인됐어요. /taskforge-execute로 첫 번째 작업을 시작해볼까요!"

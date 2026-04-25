@@ -1,6 +1,7 @@
 ---
 name: taskforge-vision
 description: Defines the unchanging north star of a project — the Why, core concept, and rough milestone roadmap. Use when the user says "/taskforge-vision", "I want to start a new project", "let's define the vision", "what are we building", or similar. In v2, this replaces the front half of /taskforge-discover. Run this first; then use /taskforge-discover M1 to detail only the current milestone.
+model: opus
 ---
 
 # Vision — North Star Definition
@@ -31,11 +32,11 @@ Three things, saved as three files:
 
 Before asking anything, scan `_workspace/projects/`:
 
-1. If projects already exist, show them:
+1. If projects already exist, show them. Template:
    ```
    You already have projects:
-     1. card-battle-game (started 2026-04-10, 8 of 24 steps done)
-     2. shop-ui (finished)
+     1. {projectId} (started {date}, {done} of {total} steps done)
+     2. {projectId} (finished)
 
    Options:
    - Start a brand new project
@@ -135,12 +136,12 @@ If the user confirms, save all three files. If they want changes, update the rel
 
 ### Project ID
 
-Generate from the project name — lowercase, spaces to hyphens, no special characters.
-Example: "Space Tower Defense" → `space-tower-defense`
+Generate from the project name — lowercase, spaces to hyphens, strip special characters.
+Rule: `name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')`
 
-If a folder with that ID already exists:
+If a folder with that ID already exists, show:
 ```
-A project called "space-tower-defense" already exists (started 2026-04-10).
+A project called "{projectId}" already exists (started {date}).
 Options:
 - Pick a different name
 - Start over (warning: this will erase the old project's data)

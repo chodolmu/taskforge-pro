@@ -1,6 +1,7 @@
 ---
 name: taskforge-retro
 description: Runs a milestone retrospective after validation passes and updates the roadmap. Use when the user says "/taskforge-retro", "let's do a retro", "retrospective", "what did we learn", "update the roadmap", or when a milestone validation has just passed and the next milestone hasn't started yet.
+model: opus
 ---
 
 # Retro — Milestone Retrospective & Roadmap Update
@@ -114,8 +115,8 @@ Save `milestones/{milestoneId}/retrospective.md`:
 - ...
 
 ## roadmap 변경사항
-- M2: openQuestions에 "결제 PG사 선택" 추가
-- M3: "관리자 대시보드" → 우선순위 낮춤
+- {milestoneId}: {field} {action} ({reason if non-obvious})
+- {milestoneId}: {summary of change}
 
 ## 레퍼런스로 추가할 것
 - references/에 추가 권장: ...
@@ -141,7 +142,15 @@ This archive is the "source of truth" for what was built and what was learned at
 
 ### Step 6: Prepare Handoff for Next Discovery
 
-The `retrospective.md` file is automatically picked up by `/taskforge-discover {nextMilestoneId}` when it runs.
+`/taskforge-discover` is required (per its own Step 0) to read `milestones/{milestoneId}/retrospective.md` plus all `decisions/`, `constraints.md`, and recent handoffs before asking any questions. So the retrospective file is the primary handoff to the next discover.
+
+To make that handoff actionable, the **"다음 마일스톤에 반영할 것"** section must be written as concrete instructions, not vague reflections. Each item should name (a) which next-milestone artifact to update, (b) what to add/change/decide, (c) the trigger or reference if any.
+
+Pattern:
+- ❌ Vague reflection — "더 신경써서 계획하자"
+- ✅ Concrete instruction — "M{next} {artifact}에 {what} {action}{; reference if any}"
+
+The exact phrasing depends on what was actually learned this milestone. Do not invent specifics that were not observed.
 
 Tell the user:
 "다음 마일스톤을 시작할 때 `/taskforge-discover`를 실행하면 이번 회고 내용이 자동으로 반영됩니다."
