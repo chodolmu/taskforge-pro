@@ -13,6 +13,19 @@ An all-in-one plugin that lets anyone — including non-developers — complete 
 - **Model Optimization** — Automatic model routing by difficulty (haiku/sonnet/opus)
 - **Clean Context** — Minimal context per task, connected via Handoff
 
+## GUI (Optional)
+
+A local web UI for visualizing project progress is included in `taskforge-gui/`.
+
+**Requirements**: [Node.js](https://nodejs.org) (v18+)
+
+```
+1. git clone https://github.com/chodolmu/taskforge-pro.git
+2. taskforge-pro/taskforge-gui/launch.bat 더블클릭
+```
+
+`node_modules`가 없으면 첫 실행 시 자동으로 `npm install`합니다.
+
 ## Installation
 
 Copy or link to Claude Code's plugin directory:
