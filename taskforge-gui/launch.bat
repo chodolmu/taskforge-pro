@@ -4,6 +4,12 @@ cd /d "%~dp0"
 set PORT=7777
 set URL=http://localhost:%PORT%
 
+:: Install dependencies if needed
+if not exist "%~dp0node_modules" (
+    echo Installing dependencies...
+    npm install --prefix "%~dp0"
+)
+
 :: Start server
 if "%~1"=="" (
     start "TaskForge-GUI-Server" /min cmd /c "node server.js %PORT%"
